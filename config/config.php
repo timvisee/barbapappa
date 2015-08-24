@@ -6,7 +6,7 @@ defined('APP_INIT') or die('Access denied!');
 // Return the config array
 return Array(
     'general' => Array(
-        'site_url'          => '', // http://localhost/app/barapp/
+        'site_url'          => '',
         'site_path'         => '/app/barapp'
     ),
 
@@ -17,15 +17,6 @@ return Array(
         'user' => 'root',
         'password' => 'root',
         'table_prefix' => 'bar_'
-    ),
-
-    'database' => Array(
-        'host' => '127.0.0.1',
-        'port' => 3306,
-        'database' => 'ovrally',
-        'user' => 'root',
-        'password' => 'hoihoi',
-        'table_prefix' => 'ov_'
     ),
 
     'cookie' => Array(
