@@ -2,8 +2,10 @@
 
 namespace app\template;
 
+use app\language\LanguageManager;
 use app\session\SessionManager;
 use app\util\ColorUtils;
+use carbon\core\util\StringUtils;
 
 class PageHeaderBuilder {
 
@@ -14,6 +16,8 @@ class PageHeaderBuilder {
     private $title = null;
     /** @var string|null The URL of the back button, null otherwise. */
     private $backButtonUrl = null;
+    /** @var bool True to show the language button, false otherwise. */
+    private $languageBtn = false;
     /** @var string|null An optional header prefix, null to ignore this option. */
     private $prefix = null;
     /** @var string|null An optional header suffix, null to ignore this option. */
@@ -69,6 +73,7 @@ class PageHeaderBuilder {
         $this->title = $title;
         return $this;
     }
+
     /**
      * Get the back button URL if a back button has been set.
      *
@@ -98,6 +103,33 @@ class PageHeaderBuilder {
         $this->backButtonUrl = $backButtonUrl;
         return $this;
     }
+
+    /**
+     * Check whether the language button should be shown.
+     *
+     * @return bool True if the language button should be shown, false if not.
+     */
+    public function hasLanguageButton() {
+        return $this->languageBtn;
+    }
+
+    /**
+     * Set whether the language button should be shown.
+     *
+     * @param bool $visible True to show the language button, false otherwise.
+     *
+     * @return self Return the current instance to allow method chaining.
+     */
+    public function setLanguageButton($visible) {
+        $this->languageBtn = $visible;
+        return $this;
+    }
+
+
+
+
+
+
 
     /**
      * Get the current prefix.
@@ -163,6 +195,8 @@ class PageHeaderBuilder {
      * Build and print the header.
      */
     public function build() {
+        // TODO: Remove coloring from OVRally
+
         // Define the header background
         $teamColor = null;
         $headerDivStyle = '';
@@ -191,6 +225,13 @@ class PageHeaderBuilder {
 
         if($this->hasBackButton())
             echo '<a href="' . $this->getBackButton() . '" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left" data-direction="reverse">' . __('navigation', 'back') . '</a>';
+
+        if($this->hasLanguageButton()) {
+            if(!StringUtils::equals(LanguageManager::getPreferredLanguage()->getTag(), 'nl-NL'))
+                echo '<a href="language.php?lang_tag=nl-NL" class="ui-btn-right ui-corner-all ui-shadow"><img src="style/image/flag/nl.png" /></a>';
+            else
+                echo '<a href="language.php?lang_tag=en-US" class="ui-btn-right ui-corner-all ui-shadow"><img src="style/image/flag/gb.png" /></a>';
+        }
 
         // Print the prefix
         if($this->hasPrefix())

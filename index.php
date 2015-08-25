@@ -15,7 +15,7 @@ require_once('top.php');
 if(!SessionManager::isLoggedIn()):
 ?>
     <div data-role="page" id="page-login" data-unload="false">
-        <?php PageHeaderBuilder::create()->build(); ?>
+        <?php PageHeaderBuilder::create()->setLanguageButton(true)->build(); ?>
 
         <div data-role="main" class="ui-content">
             <p><?=__('general', 'welcomeByApp'); ?></p>
@@ -27,6 +27,7 @@ if(!SessionManager::isLoggedIn()):
                 <input type="password" name="team_pass" id="team-pass" value="" placeholder="<?=__('account', 'password'); ?>" /><br />
 
                 <input type="submit" id="team-submit" value="<?=__('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                <input type="button" id="team-submit" value="<?=__('account', 'register'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right ui-state-disabled" disabled="" />
             </form>
         </div>
 
