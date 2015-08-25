@@ -52,6 +52,10 @@ Config::load();
 use carbon\core\ErrorHandler;
 ErrorHandler::init(true, true, Config::getValue('app', 'debug'));
 
+// Set up the language manager
+use app\language\LanguageManager;
+LanguageManager::init(true, Config::get('app', 'language.default'));
+
 // Connect to the database
 use app\database\Database;
 Database::connect();

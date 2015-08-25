@@ -11,11 +11,11 @@ return Array(
     ),
 
     'database' => Array(
-        'host' => 'localhost',
+        'host' => '127.0.0.1',
         'port' => 3306,
         'database' => 'barapp',
         'user' => 'root',
-        'password' => 'root',
+        'password' => 'hoihoi',
         'table_prefix' => 'bar_'
     ),
 
@@ -31,6 +31,8 @@ return Array(
 
     'app' => Array(
         // TODO: Disable debug mode on release!
-        'debug' => true
+        'debug' => true,
+        'language.default' => 'nl-NL',
+        'language.directory' => '/language'
     )
 );
