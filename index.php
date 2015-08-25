@@ -24,7 +24,8 @@ if(!SessionManager::isLoggedIn()):
 
             <form method="POST" action="login.php">
                 <input type="text" name="team_user" id="team-user" value="" placeholder="<?=__('account', 'username'); ?>" />
-                <input type="password" name="team_pass" id="team-pass" value="" placeholder="<?=__('account', 'password'); ?>" /><br />
+                <input type="password" name="team_pass" id="team-pass" value="" placeholder="<?=__('account', 'password'); ?>" />
+                <label><input name="checkbox-0 " type="checkbox"><?=__('login', 'rememberLogin'); ?></label><br />
 
                 <input type="submit" id="team-submit" value="<?=__('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
                 <input type="button" id="team-submit" value="<?=__('account', 'register'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right ui-state-disabled" disabled="" />
