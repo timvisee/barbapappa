@@ -3,6 +3,7 @@
 namespace app\language;
 
 use app\config\Config;
+use carbon\core\datetime\DateTime;
 use carbon\core\io\filesystem\directory\Directory;
 use carbon\core\io\filesystem\directory\DirectoryScanner;
 use carbon\core\util\StringUtils;
@@ -17,6 +18,11 @@ defined('CARBON_CORE_INIT') or die('Access denied!');
  * @package app\language
  */
 class LanguageManager {
+
+    /** The name of the language tag cookie. */
+    const LANGUAGE_COOKIE_NAME = 'carbon_lang_tag';
+    /** The time it takes for the language tag cookie to expire. */
+    const LANGUAGE_COOKIE_EXPIRE = '+1 year';
 
     /** @var array List of loaded languages. */
     private static $languages = Array();
@@ -190,6 +196,63 @@ class LanguageManager {
      */
     public static function getUserLanguageTag() {
         return static::$userTag;
+    }
+
+    /**
+     * Set the language tag for the user.
+     *
+     * @param string|null $langTag The language tag of the user, or null.
+     *
+     * @throws Exception Throws if the language tag is unknown or invalid.
+     */
+    public static function setUserLanguageTag($langTag) {
+        // Make sure the tag is valid or null
+        if($langTag !== null && !static::hasWithTag($langTag))
+            throw new Exception('Invalid or unknown language tag.');
+
+        // Set the user tag
+        static::$userTag = $langTag;
+    }
+
+    /**
+     * Return the language tag for this user from a cookie if set.
+     *
+     * @return string|null The language tag, or null if not set.
+     */
+    public static function getUserLanguageTagCookie() {
+        // Return the cookie if it exists, return null otherwise
+        if(isset($_COOKIE[static::LANGUAGE_COOKIE_NAME]))
+            return $_COOKIE[static::LANGUAGE_COOKIE_NAME];
+        return null;
+    }
+
+    /**
+     * Set the language tag for this user in a cookie.
+     *
+     * @param string|null $langTag The language tag of the user, or null to reset.
+     *
+     * @throws Exception Throws if the language tag is unknown or invalid.
+     */
+    public static function setUserLanguageTagCookie($langTag) {
+        // Make sure the tag is valid or null
+        if($langTag !== null && !static::hasWithTag($langTag))
+            throw new Exception('Invalid or unknown language tag.');
+
+        // Get the cookie path and domain
+        $cookieDomain = Config::getValue('cookie', 'domain', '');
+        $cookiePath = Config::getValue('cookie', 'path', '/');
+
+        // Set or reset the cookie
+        if($langTag !== null) {
+            // Determine the expire date time
+            $cookieExpire = DateTime::parse(static::LANGUAGE_COOKIE_EXPIRE);
+
+            // Set a client cookie
+            setcookie(static::LANGUAGE_COOKIE_NAME, $langTag, $cookieExpire->getTimestamp(), $cookiePath, $cookieDomain);
+
+        } else
+            // Set a client cookie
+            setcookie(static::LANGUAGE_COOKIE_NAME, null, -1, $cookiePath, $cookieDomain);
     }
 
     /**

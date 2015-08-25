@@ -89,6 +89,7 @@ function requireLogin() {
             <?php PageHeaderBuilder::create('Whoops!')->setBackButton('index.php')->build(); ?>
 
             <div data-role="main" class="ui-content">
+                <!-- TODO: Make this multi-language! -->
                 <p>Whoops! You need to be logged in to view this page.<br />Please go to the front page to login.</p><br />
 
                 <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse">Go to Front Page</a>
@@ -126,6 +127,7 @@ function requireAdmin() {
             <?php PageHeaderBuilder::create('Whoops!')->setBackButton('index.php')->build(); ?>
 
             <div data-role="main" class="ui-content">
+                <!-- TODO: Make this multi-language! -->
                 <p>Whoops! You don't have the right privileges to visit this page.<br />Please go back to the previous page.</p><br />
 
                 <a href="index.php" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse">Go Back</a>
@@ -148,19 +150,23 @@ function showErrorPage($errorMsg = null) {
     // Show an error page
     ?>
     <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create('Whoops!')->setBackButton('index.php')->build();
+        <?php PageHeaderBuilder::create(__('error', 'oops'))->setBackButton('index.php')->build();
 
         if($errorMsg === null): ?>
             <div data-role="main" class="ui-content">
-                <p>Whoops! An error occurred that couldn't be recovered.<br />Please go back and try it again!</p><br />
+                <p><?=__('error', 'errorOccurred'); ?><br /><?=__('error', 'goBackTryAgain'); ?></p><br />
 
-                <a href="index.php" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse">Go Back</a>
+                <fieldset data-role="controlgroup" data-type="vertical">
+                    <a href="index.php" data-ajax="false" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goBack'); ?></a>
+                </fieldset>
             </div>
         <?php else: ?>
             <div data-role="main" class="ui-content">
                 <p><?=$errorMsg; ?></p><br />
 
-                <a href="index.php" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse">Go Back</a>
+                <fieldset data-role="controlgroup" data-type="vertical">
+                    <a href="index.php" data-ajax="false" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goBack'); ?></a>
+                </fieldset>
             </div>
         <?php endif;
 
