@@ -12,22 +12,31 @@ require_once('app/init.php');
 $site_root = Config::getValue('general', 'site_url', '');
 
 ?>
-
 <!DOCTYPE>
 <html>
 <head>
 
-    <!-- Meta -->
-    <!-- TODO: Add proper meta tags here! -->
     <title><?=APP_NAME; ?></title>
+
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <meta name="description" content="BarApp by Tim Vis&eacute;e">
+    <meta name="keywords" content="BarApp,Bar,App">
+    <meta name="author" content="Tim Vis&eacute;e">
+    <link rel="copyright" href="about.php">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#2A2A2A">
     <meta name="application-name" content="BarApp">
     <meta name="msapplication-TileColor" content="#2a2a2a">
     <meta name="msapplication-config" content="<?=$site_root; ?>style/image/favicon/browserconfig.xml?v=eEEv324W35">
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="BarApp by Tim Vis&eacute;e's">
+    <meta property="og:title" content="BarApp">
+    <meta property="og:image" content="<?=$site_root; ?>style/image/favicon/favicon-194x194.png">
+    <meta property="og:description" content="BarApp by Tim Vis&eacute;e">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="BarApp">
+    <meta name="twitter:image" content="<?=$site_root; ?>style/image/favicon/apple-touch-icon-120x120.png">
+    <meta name="twitter:description" content="BarApp by Tim Vis&eacute;e">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-57x57.png?v=eEEv324W35">
@@ -54,7 +63,7 @@ $site_root = Config::getValue('general', 'site_url', '');
     <script src="<?=$site_root; ?>js/jquery.mobile.settings.js"></script>
     <script src="<?=$site_root; ?>js/main.js"></script>
 
-    <!-- Libraries: jQuery Mobile -->
+    <!-- Library: jQuery Mobile -->
     <link rel="stylesheet" href="<?=$site_root; ?>lib/jquery-mobile/jquery.mobile-1.4.5.min.css" />
     <script src="<?=$site_root; ?>lib/jquery-mobile/jquery.mobile-1.4.5.min.js"></script>
 
