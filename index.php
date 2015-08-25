@@ -14,7 +14,7 @@ require_once('top.php');
 
 if(!SessionManager::isLoggedIn()):
 ?>
-    <div data-role="page" id="page-login" data-unload="false">
+    <div data-role="page" id="page-login">
         <?php PageHeaderBuilder::create()->setLanguageButton(true)->build(); ?>
 
         <div data-role="main" class="ui-content">
