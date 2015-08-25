@@ -56,6 +56,22 @@ ErrorHandler::init(true, true, Config::getValue('app', 'debug'));
 use app\language\LanguageManager;
 LanguageManager::init(true, Config::get('app', 'language.default'));
 
+// Setup a simplified language function
+/**
+ * Get a language value for the current preferred language.
+ *
+ * @param string $section Value section.
+ * @param string $key Value key.
+ * @param string|null $default The default value, or null.
+ *
+ * @return string The language value, or the default.
+ *
+ * @throws Exception Throws if an error occurred.
+ */
+function __($section, $key, $default = null) {
+    return LanguageManager::getValue($section, $key, $default);
+}
+
 // Connect to the database
 use app\database\Database;
 Database::connect();
