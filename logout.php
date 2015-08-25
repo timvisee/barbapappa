@@ -10,13 +10,13 @@ require_once('top.php');
 if(!SessionManager::isLoggedIn()):
     ?>
     <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create('Whoops!')->build(); ?>
+        <?php PageHeaderBuilder::create(__('error', 'oops'))->build(); ?>
 
         <div data-role="main" class="ui-content">
-            <p>Whoops! You're logged out already.<br />Please go back to the front page if you would like to login again.</p><br />
+            <p><?=__('error', 'oops'); ?> <?=__('login', 'alreadyLoggedOut'); ?><br /><?=__('login', 'goToFrontPageToLogin'); ?></p><br />
 
             <fieldset data-role="controlgroup" data-type="vertical">
-                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse">Go to Front Page</a>
+                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goToFrontPage'); ?></a>
             </fieldset>
         </div>
 
@@ -34,10 +34,10 @@ else:
         <?php PageHeaderBuilder::create()->build(); ?>
 
         <div data-role="main" class="ui-content">
-            <p>You've been logged out successfully.</p><br />
+            <p><?=__('login', 'logoutSuccess'); ?></p><br />
 
             <fieldset data-role="controlgroup" data-type="vertical">
-                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse">Go to Front Page</a>
+                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goToFrontPage'); ?></a>
             </fieldset>
         </div>
 

@@ -190,7 +190,7 @@ class PageHeaderBuilder {
         echo '<div data-role="header" style="' . $headerDivStyle . '">';
 
         if($this->hasBackButton())
-            echo '<a href="' . $this->getBackButton() . '" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left" data-direction="reverse">Back</a>';
+            echo '<a href="' . $this->getBackButton() . '" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left" data-direction="reverse">' . __('navigation', 'back') . '</a>';
 
         // Print the prefix
         if($this->hasPrefix())

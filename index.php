@@ -14,20 +14,19 @@ require_once('top.php');
 
 if(!SessionManager::isLoggedIn()):
 ?>
-    <!--suppress HtmlDeprecatedTag -->
     <div data-role="page" id="page-login" data-unload="false">
         <?php PageHeaderBuilder::create()->build(); ?>
 
         <div data-role="main" class="ui-content">
-            <p>Welkom bij BarApp!</p>
+            <p><?=__('general', 'welcomeByApp'); ?></p>
             <br />
-            <p>Selecteer je gebruikersnaam en wachtwoord om in te loggen.</p><br />
+            <p><?=__('login', 'enterUsernamePasswordToLogin'); ?></p><br />
 
             <form method="POST" action="login.php">
-                <input type="text" name="team_user" id="team-user" value="" placeholder="Gebruikersnaam" />
-                <input type="password" name="team_pass" id="team-pass" value="" placeholder="Wachtwoord" /><br />
+                <input type="text" name="team_user" id="team-user" value="" placeholder="<?=__('account', 'username'); ?>" />
+                <input type="password" name="team_pass" id="team-pass" value="" placeholder="<?=__('account', 'password'); ?>" /><br />
 
-                <input type="submit" id="team-submit" value="Inloggen" class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                <input type="submit" id="team-submit" value="<?=__('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
             </form>
         </div>
 
@@ -40,7 +39,6 @@ if(!SessionManager::isLoggedIn()):
         <?php PageHeaderBuilder::create()->build(); ?>
 
         <div data-role="main" class="ui-content">
-
             <?php
 
             // Get the team

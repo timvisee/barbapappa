@@ -33,12 +33,14 @@ else {
 if($error):
     ?>
     <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create('Whoops!')->setBackButton('index.php')->build(); ?>
+        <?php PageHeaderBuilder::create(__('error', 'oops'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
-            <p>Whoops! An error occurred while logging in.<br />Please go back and try it again.</p><br />
+            <p><?=__('error', 'errorOccurred'); ?><br /><?=__('error', 'goBackTryAgain'); ?></p><br />
 
-            <a href="index.php" data-ajax="false" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse">Go Back</a>
+            <fieldset data-role="controlgroup" data-type="vertical">
+                <a href="index.php" data-ajax="false" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goBack'); ?></a>
+            </fieldset>
         </div>
 
         <?php PageFooterBuilder::create()->build(); ?>
@@ -52,13 +54,13 @@ else:
     if(!$passCorrect):
         ?>
         <div data-role="page" id="page-main">
-            <?php PageHeaderBuilder::create('Whoops!')->setBackButton('index.php')->build(); ?>
+            <?php PageHeaderBuilder::create(__('error', 'oops'))->setBackButton('index.php')->build(); ?>
 
             <div data-role="main" class="ui-content">
-                <p>The password you've entered is incorrect.<br />Please go back and try it again.</p><br />
+                <p><?=__('login', 'usernameOrPasswordIncorrect'); ?><br /><?=__('error', 'goBackTryAgain'); ?></p><br />
 
                 <fieldset data-role="controlgroup" data-type="vertical">
-                    <a href="index.php" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse">Go Back</a>
+                    <a href="index.php" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goBack'); ?></a>
                 </fieldset>
             </div>
 
@@ -76,15 +78,14 @@ else:
 
             <div data-role="main" class="ui-content">
                 <p>
-                    Welcome!<br />You've been logged in successfully.
-                    <br /><br />
+                    <?=__('general', 'welcome'); ?>!<br /><?=__('login', 'loginSuccess'); ?>
 
-                    Please check out the <i>Rules & Help</i> page for a general overview of the game concept, rules and strategy tips.
+                    <!-- TODO: Add some additional description here! -->
                 </p>
                 <br />
 
                 <fieldset data-role="controlgroup" data-type="vertical">
-                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-carat-r ui-btn-icon-left">Continue</a>
+                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-carat-r ui-btn-icon-left"><?=__('navigation', 'continue'); ?></a>
                 </fieldset>
             </div>
 

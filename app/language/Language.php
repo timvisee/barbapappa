@@ -94,8 +94,10 @@ class Language {
             throw new Exception('Unable to get language string, invalid section or key.');
 
         // Parse the default value
-        if($default === null)
+        if($default == null)
             $default = '<' . $section . ':' . $key . '>';
+
+        // TODO: These array_key_exists methods don't work properly!
 
         // Make sure this section exists
         if(!array_key_exists($section, $this->content))
