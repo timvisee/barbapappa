@@ -22,12 +22,32 @@ $site_root = Config::getValue('general', 'site_url', '');
     <title><?=APP_NAME; ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#2A2A2A">
+    <meta name="application-name" content="BarApp">
+    <meta name="msapplication-TileColor" content="#2a2a2a">
+    <meta name="msapplication-config" content="<?=$site_root; ?>style/image/favicon/browserconfig.xml?v=eEEv324W35">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="BarApp by Tim Vis&eacute;e's">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="<?=$site_root; ?>style/image/favicon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-57x57.png?v=eEEv324W35">
+    <link rel="apple-touch-icon" sizes="60x60" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-60x60.png?v=eEEv324W35">
+    <link rel="apple-touch-icon" sizes="72x72" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-72x72.png?v=eEEv324W35">
+    <link rel="apple-touch-icon" sizes="76x76" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-76x76.png?v=eEEv324W35">
+    <link rel="apple-touch-icon" sizes="114x114" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-114x114.png?v=eEEv324W35">
+    <link rel="apple-touch-icon" sizes="120x120" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-120x120.png?v=eEEv324W35">
+    <link rel="apple-touch-icon" sizes="144x144" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-144x144.png?v=eEEv324W35">
+    <link rel="apple-touch-icon" sizes="152x152" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-152x152.png?v=eEEv324W35">
+    <link rel="apple-touch-icon" sizes="180x180" href="<?=$site_root; ?>style/image/favicon/apple-touch-icon-180x180.png?v=eEEv324W35">
+    <link rel="icon" type="image/png" href="<?=$site_root; ?>style/image/favicon/favicon-32x32.png?v=eEEv324W35" sizes="32x32">
+    <link rel="icon" type="image/png" href="<?=$site_root; ?>style/image/favicon/favicon-194x194.png?v=eEEv324W35" sizes="194x194">
+    <link rel="icon" type="image/png" href="<?=$site_root; ?>style/image/favicon/favicon-96x96.png?v=eEEv324W35" sizes="96x96">
+    <link rel="icon" type="image/png" href="<?=$site_root; ?>style/image/favicon/android-chrome-192x192.png?v=eEEv324W35" sizes="192x192">
+    <link rel="icon" type="image/png" href="<?=$site_root; ?>style/image/favicon/favicon-16x16.png?v=eEEv324W35" sizes="16x16">
+    <link rel="manifest" href="<?=$site_root; ?>style/image/favicon/manifest.json?v=eEEv324W35">
+    <link rel="shortcut icon" href="<?=$site_root; ?>style/image/favicon/favicon.ico?v=eEEv324W35">
+    <meta name="apple-mobile-web-app-title" content="BarApp">
+    <meta name="msapplication-TileImage" content="<?=$site_root; ?>style/image/favicon/mstile-144x144.png?v=eEEv324W35">
 
     <!-- Script -->
     <script src="<?=$site_root; ?>lib/jquery/jquery-1.11.3.min.js"></script>
