@@ -17,7 +17,7 @@ require_once('top.php');
 if(!SessionManager::isLoggedIn()):
 ?>
     <div data-role="page" id="page-login">
-        <?php PageHeaderBuilder::create()->setLanguageButton(true)->build(); ?>
+        <?php PageHeaderBuilder::create()->setMenuButton(true)->build(); ?>
 
         <div data-role="main" class="ui-content">
             <p><?=__('general', 'welcomeByApp'); ?></p><br />
@@ -31,9 +31,8 @@ if(!SessionManager::isLoggedIn()):
         <?php PageFooterBuilder::create()->build(); ?>
 
         <div data-role="panel" id="main-panel" data-position="left" data-display="reveal" data-theme="a">
-            <h3>Left Panel: Reveal</h3>
-            <p>This panel is positioned on the left with the reveal display mode. The panel markup is <em>after</em> the header, content and footer in the source order.</p>
-            <p>To close, click off the panel, swipe left or right, hit the Esc key, or use the button below:</p>
+            <h3>Sidebar menu</h3>
+            <p>This is the sidebar menu panel.</p><br />
             <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
             <?php
             if(!StringUtils::equals(LanguageManager::getPreferredLanguage()->getTag(), 'nl-NL'))

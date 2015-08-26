@@ -105,22 +105,22 @@ class PageHeaderBuilder {
     }
 
     /**
-     * Check whether the language button should be shown.
+     * Check whether the menu button should be shown.
      *
-     * @return bool True if the language button should be shown, false if not.
+     * @return bool True if the menu button should be shown, false if not.
      */
-    public function hasLanguageButton() {
+    public function hasMenuButton() {
         return $this->languageBtn;
     }
 
     /**
-     * Set whether the language button should be shown.
+     * Set whether the menu button should be shown.
      *
-     * @param bool $visible True to show the language button, false otherwise.
+     * @param bool $visible True to show the menu button, false otherwise.
      *
      * @return self Return the current instance to allow method chaining.
      */
-    public function setLanguageButton($visible) {
+    public function setMenuButton($visible) {
         $this->languageBtn = $visible;
         return $this;
     }
@@ -217,15 +217,13 @@ class PageHeaderBuilder {
         // Print div opening tag, of the header
         echo '<div data-role="header" style="' . $headerDivStyle . '">';
 
+        // Show a back button if set
         if($this->hasBackButton())
             echo '<a href="' . $this->getBackButton() . '" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left" data-direction="reverse">' . __('navigation', 'back') . '</a>';
 
-        if($this->hasLanguageButton()) {
-            if(!StringUtils::equals(LanguageManager::getPreferredLanguage()->getTag(), 'nl-NL'))
-                echo '<a href="language.php?lang_tag=nl-NL" class="ui-btn-right ui-corner-all ui-shadow"><img src="style/image/flag/nl.png" /></a>';
-            else
-                echo '<a href="language.php?lang_tag=en-US" class="ui-btn-right ui-corner-all ui-shadow"><img src="style/image/flag/gb.png" /></a>';
-        }
+        // Show the menu button if set
+        if($this->hasMenuButton())
+            echo '<a href="#main-panel" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-bars">' . __('general', 'menu') . '</a>';
 
         // Print the prefix
         if($this->hasPrefix())
