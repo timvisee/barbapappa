@@ -105,6 +105,50 @@ class UserManager {
     }
 
     /**
+     * Get the user with a username.
+     *
+     * @param string $username The username.
+     *
+     * @return User|null The user with this username, or null if there's no user with this username.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function getUserWithUsername($username) {
+        // Make sure the username is valid
+        if(!AccountUtils::isValidUsername($username))
+            return false;
+
+        // Trim the username
+        $username = trim($username);
+
+        // Prepare a query for the database to list users with this ID
+        $statement = Database::getPDO()->prepare('SELECT user_id FROM ' . static::getDatabaseTableName() . ' WHERE user_username LIKE :user_username');
+        $statement->bindValue(':user_username', $username, PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        // Return the user, or null if no user was found
+        if($statement->rowCount() > 0)
+            return new User($statement->fetch(PDO::FETCH_ASSOC)['user_id']);
+        return null;
+    }
+
+    /**
+     * Check whether there is a user with a specific username.
+     *
+     * @param string $username The username to check for.
+     *
+     * @return bool True if there is an user with this username.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function isUserWithUsername($username) {
+        return static::getUserWithUsername($username) instanceof User;
+    }
+
+    /**
      * Generate a random unique user ID.
      *
      * @return int User id.
@@ -141,13 +185,17 @@ class UserManager {
         if(!AccountUtils::isValidUsername($username))
             throw new Exception('The username is invalid.');
 
-        // TODO: Make sure the username is unique
+        // Make sure the username is unique
+        if(static::isUserWithUsername($username))
+            throw new Exception('This username already exists.');
 
         // Make sure the mail is valid
         if(!AccountUtils::isValidMail($mail))
             throw new Exception('The mail is invalid.');
 
-        // TODO: Make sure the mail is unique
+        // Make sure the mail is unique
+        if(MailManager::isMailWithMail($mail))
+            throw new Exception('The mail already exists.');
 
         // Make sure the full name is valid
         if(!AccountUtils::isValidFullName($nameFull))

@@ -139,6 +139,50 @@ class MailManager {
     }
 
     /**
+     * Get a mail object by an mail address.
+     *
+     * @param string $mail The mail.
+     *
+     * @return Mail|null The mail, or null if there's no mail with this address.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function getMailWithMail($mail) {
+        // Make sure the mail is valid
+        if(!AccountUtils::isValidMail($mail))
+            return false;
+
+        // Trim the mail
+        $mail = trim($mail);
+
+        // Prepare a query for the database to get the mail
+        $statement = Database::getPDO()->prepare('SELECT mail_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_mail LIKE :mail_mail');
+        $statement->bindValue(':mail_mail', $mail, PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        // Return the mail, or null if no mail was found
+        if($statement->rowCount() > 0)
+            return new Mail($statement->fetch(PDO::FETCH_ASSOC)['mail_id']);
+        return null;
+    }
+
+    /**
+     * Check whether there is a mail with a specific mail address.
+     *
+     * @param string $mail The mail.
+     *
+     * @return bool True if there is a mail with this address.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function isMailWithMail($mail) {
+        return static::getMailWithMail($mail) instanceof Mail;
+    }
+
+    /**
      * Create a new mail.
      *
      * @param User $user The user.
@@ -158,7 +202,9 @@ class MailManager {
         if(!AccountUtils::isValidMail($mail))
             throw new Exception('The mail is invalid.');
 
-        // TODO: Make sure the mail is unique
+        // Make sure this mail is unique
+        if(static::isMailWithMail($mail))
+            throw new Exception('This mail already exists.');
 
         // Determine the creation date time
         $createDateTime = DateTime::now();
