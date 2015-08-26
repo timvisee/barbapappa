@@ -4,6 +4,7 @@ namespace app\user;
 
 use app\config\Config;
 use app\database\Database;
+use app\user\meta\UserMeta;
 use carbon\core\datetime\DateTime;
 use carbon\core\hash\Hash;
 use carbon\core\util\StringUtils;
@@ -143,5 +144,69 @@ class User {
      */
     public function getFullName() {
         return $this->getDatabaseValue('user_name_full');
+    }
+
+    /**
+     * Get a user meta value if it exists.
+     *
+     * @param string $key The meta key.
+     *
+     * @return string|null The meta value, or null if it doesn't exist.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function getMeta($key) {
+        // Get the user meta with this key, and make sure it's valid
+        if(($meta = UserMetaManager::getUserMeta($this, $key)) === null)
+            return null;
+
+        // Return the meta value
+        return $meta->getValue();
+    }
+
+    /**
+     * Set user meta. If the meta doesn't exist it is created.
+     *
+     * @param string $key The meta key.
+     * @param string $value The meta value.
+     *
+     * @return UserMeta The user meta as object.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function setMeta($key, $value) {
+        return UserMetaManager::setUserMeta($this, $key, $value);
+    }
+
+    /**
+     * Check whether the user has meta with a specific key.
+     *
+     * @param string $key The meta key.
+     *
+     * @return bool True if this meta exists, false if not.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function hasMeta($key) {
+        return UserMetaManager::isUserMetaWithKey($this, $key);
+    }
+
+    /**
+     * Delete meta if it exists.
+     *
+     * @param string $key The meta key.
+     *
+     * @return bool True if any meta was deleted, false otherwise.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function deleteMeta($key) {
+        // Get the user meta with this key, and make sure it's valid
+        if(($meta = UserMetaManager::getUserMeta($this, $key)) === null)
+            return false;
+
+        // Delete the meta
+        $meta->delete();
+        return true;
     }
 }
