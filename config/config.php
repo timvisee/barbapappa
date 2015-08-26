@@ -25,8 +25,8 @@ return Array(
     ),
 
     'hash' => Array(
-        'hash_algorithm' => 'sha256',
-        'hash_key'  => '7cc8b7833dba1a03dd6d1401aa25262fab029862b494aff2168f1a6b35f1f406'
+        'algorithm' => 'sha256',
+        'salt'  => '7cc8b7833dba1a03dd6d1401aa25262fab029862b494aff2168f1a6b35f1f406'
     ),
 
     'app' => Array(
