@@ -43,7 +43,7 @@ class User {
      *
      * @return mixed The value.
      *
-     * @throws \Exception Throws if an error occurred.
+     * @throws Exception Throws if an error occurred.
      */
     private function getDatabaseValue($columnName) {
         // Prepare a query for the database to list users with this ID
