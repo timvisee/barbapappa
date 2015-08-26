@@ -4,6 +4,7 @@ namespace app\user;
 
 use app\config\Config;
 use app\database\Database;
+use app\mail\MailManager;
 use app\util\AccountUtils;
 use carbon\core\datetime\DateTime;
 use carbon\core\hash\Hash;
@@ -170,21 +171,27 @@ class UserManager {
         // Prepare a query for the picture being added
         $statement = Database::getPDO()->prepare('INSERT INTO ' . static::getDatabaseTableName() .
             ' (user_id, user_username, user_pass_hash, user_hash_salt, user_create_datetime, user_create_ip, user_name_full) ' .
-            'VALUES (:user_id, :user_username, :user_pass_hash, :user_hash_salt, :user_create_datetime, :user_create_ip, :user_name_full');
+            'VALUES (:user_id, :user_username, :user_pass_hash, :user_hash_salt, :user_create_datetime, :user_create_ip, :user_name_full)');
         $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
         $statement->bindValue(':user_username', $username, PDO::PARAM_STR);
         $statement->bindValue(':user_pass_hash', $passwordHash, PDO::PARAM_STR);
         $statement->bindValue(':user_hash_salt', $userSalt, PDO::PARAM_STR);
         // TODO: Use the UTC/GMT timezone!
-        $statement->bindValue(':user_create_datetime', $createDateTime, PDO::PARAM_STR);
+        $statement->bindValue(':user_create_datetime', $createDateTime->toString(), PDO::PARAM_STR);
         $statement->bindValue(':user_create_ip', $ip, PDO::PARAM_STR);
-        $statement->bindValue(':user_name_full_hash', $nameFull, PDO::PARAM_STR);
+        $statement->bindValue(':user_name_full', $nameFull, PDO::PARAM_STR);
 
         // Execute the prepared query
         if(!$statement->execute())
             throw new Exception('Failed to query the database.');
 
+        // Get the user instance
+        $user = new User($userId);
+
+        // Add the user's mail
+        MailManager::createMail($user, $mail);
+
         // Return the created user as object
-        return new User($userId);
+        return $user;
     }
 }

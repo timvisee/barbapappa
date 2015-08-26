@@ -133,7 +133,7 @@ class User {
      * @throws Exception Throws an exception if an error occurred.
      */
     public function getCreationDateTime() {
-        // TODO: Parse as GMT time!
+        // TODO: Use the proper timezone!
         return new DateTime($this->getDatabaseValue('user_create_datetime'));
     }
 
