@@ -4,6 +4,7 @@ namespace app\user;
 
 use app\config\Config;
 use app\database\Database;
+use app\util\AccountUtils;
 use carbon\core\datetime\DateTime;
 use carbon\core\hash\Hash;
 use carbon\core\util\IpUtils;
@@ -134,9 +135,23 @@ class UserManager {
      *
      * @throws Exception throws if an error occurred.
      */
-    // TODO: Add the user mail, and send an approval message!
-    // TODO: Validate the username, password, mail and name!
     public static function createUser($username, $password, $mail, $nameFull) {
+        // Make sure the username is valid
+        if(!AccountUtils::isValidUsername($username))
+            throw new Exception('The username is invalid.');
+
+        // TODO: Make sure the username is unique
+
+        // Make sure the mail is valid
+        if(!AccountUtils::isValidMail($mail))
+            throw new Exception('The mail is invalid.');
+
+        // TODO: Make sure the mail is unique
+
+        // Make sure the full name is valid
+        if(!AccountUtils::isValidFullName($nameFull))
+            throw new Exception('The full name is invalid.');
+
         // Generate a random user ID
         $userId = UserManager::generateNewUserId();
 
