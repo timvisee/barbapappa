@@ -50,4 +50,13 @@ class Hash {
         // Return the hashed data
         return hash_final($context);
     }
+
+    /**
+     * Generate a random salt string.
+     *
+     * @return string Random salt string.
+     */
+    public static function generateSalt() {
+        return md5(mt_rand(0, mt_getrandmax()));
+    }
 }
