@@ -4,6 +4,7 @@ namespace app\user\meta;
 
 use app\database\Database;
 use app\user\User;
+use app\user\UserMetaManager;
 use Exception;
 use PDO;
 
@@ -97,5 +98,40 @@ class UserMeta {
      */
     public function getValue() {
         return $this->getDatabaseValue('user_meta_value');
+    }
+
+    /**
+     * Set the value of this meta.
+     *
+     * @param string $value The new value.
+     *
+     * @throws Exception Throws an exception if an error occurred.
+     */
+    public function setValue($value) {
+        // Prepare a query for the meta being updated
+        $statement = Database::getPDO()->prepare('UPDATE ' . UserMetaManager::getDatabaseTableName() .
+            ' SET user_meta_value=:meta_value' .
+            ' WHERE user_meta_id=:meta_id');
+        $statement->bindValue(':meta_id', $this->getId(), PDO::PARAM_INT);
+        $statement->bindParam(':meta_value', $value, PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+    }
+
+    /**
+     * Delete this meta permanently.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function delete() {
+        // Prepare a query for the meta being deleted
+        $statement = Database::getPDO()->prepare('DELETE FROM ' . UserMetaManager::getDatabaseTableName() . ' WHERE user_meta_id=:meta_id');
+        $statement->bindValue(':meta_id', $this->getId(), PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new \Exception('Failed to query the database.');
     }
 }
