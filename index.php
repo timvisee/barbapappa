@@ -20,17 +20,12 @@ if(!SessionManager::isLoggedIn()):
         <?php PageHeaderBuilder::create()->setLanguageButton(true)->build(); ?>
 
         <div data-role="main" class="ui-content">
-            <p><?=__('general', 'welcomeByApp'); ?></p>
-            <br />
-            <p><?=__('login', 'enterUsernamePasswordToLogin'); ?></p><br />
+            <p><?=__('general', 'welcomeByApp'); ?></p><br />
 
-            <form method="POST" action="login.php">
-                <input type="text" name="login_user" value="" placeholder="<?=__('account', 'username'); ?>" />
-                <input type="password" name="login_pass" value="" placeholder="<?=__('account', 'password'); ?>" /><br />
-
-                <input type="submit" value="<?=__('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
-                <input type="button" value="<?=__('account', 'register'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right ui-state-disabled" disabled="" />
-            </form>
+            <fieldset data-role="controlgroup" data-type="vertical">
+                <a href="login.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'login'); ?></a>
+                <a href="#" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'register'); ?></a>
+            </fieldset>
         </div>
 
         <?php PageFooterBuilder::create()->build(); ?>
