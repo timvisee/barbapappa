@@ -1,5 +1,6 @@
 <?php
 
+use app\language\LanguageManager;
 use app\picture\PictureManager;
 use app\session\SessionManager;
 use app\station\Station;
@@ -8,6 +9,7 @@ use app\team\Team;
 use app\team\TeamManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
+use carbon\core\util\StringUtils;
 
 // Include the page top
 require_once('top.php');
@@ -24,8 +26,7 @@ if(!SessionManager::isLoggedIn()):
 
             <form method="POST" action="login.php">
                 <input type="text" name="login_user" value="" placeholder="<?=__('account', 'username'); ?>" />
-                <input type="password" name="login_pass" value="" placeholder="<?=__('account', 'password'); ?>" />
-                <label><input type="checkbox" name="login_remember"><?=__('login', 'rememberLogin'); ?></label><br />
+                <input type="password" name="login_pass" value="" placeholder="<?=__('account', 'password'); ?>" /><br />
 
                 <input type="submit" value="<?=__('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
                 <input type="button" value="<?=__('account', 'register'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right ui-state-disabled" disabled="" />
@@ -33,6 +34,19 @@ if(!SessionManager::isLoggedIn()):
         </div>
 
         <?php PageFooterBuilder::create()->build(); ?>
+
+        <div data-role="panel" id="main-panel" data-position="left" data-display="reveal" data-theme="a">
+            <h3>Left Panel: Reveal</h3>
+            <p>This panel is positioned on the left with the reveal display mode. The panel markup is <em>after</em> the header, content and footer in the source order.</p>
+            <p>To close, click off the panel, swipe left or right, hit the Esc key, or use the button below:</p>
+            <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
+            <?php
+            if(!StringUtils::equals(LanguageManager::getPreferredLanguage()->getTag(), 'nl-NL'))
+                echo '<a href="language.php?lang_tag=nl-NL" class="ui-btn ui-shadow ui-corner-all ui-btn-a"><img src="style/image/flag/nl.png" /></a>';
+            else
+                echo '<a href="language.php?lang_tag=en-US" class="ui-btn ui-corner-all ui-shadow"><img src="style/image/flag/gb.png" /></a>';
+            ?>
+        </div>
     </div>
 
 <?php else: ?>

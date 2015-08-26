@@ -871,6 +871,14 @@ $(document).on('pageshow', function(event, ui) {
     startRefreshTimer();
 });
 
+$(document).on("pagecreate", "#page-login", function() {
+    $(document).on("swiperight", "#page-login", function(e) {
+        if(e.type === "swiperight") {
+            $("#main-panel").panel("open");
+        }
+    });
+});
+
 $(document).on( "click", ".show-page-loading-msg", function() {
     var $this = $( this ),
         msgText = $this.jqmData("msgtext") || $.mobile.loader.prototype.options.text;

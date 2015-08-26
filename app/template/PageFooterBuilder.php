@@ -61,5 +61,8 @@ class PageFooterBuilder {
 
         // Print div closing tag
         echo '</div>';
+
+        // TODO: Implement this!
+        //echo '<center><p style="font-size: 80%; color: darkgray; padding: 16px 0;">KvK: 123.45.678</p></center>';
     }
 }

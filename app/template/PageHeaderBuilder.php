@@ -125,12 +125,6 @@ class PageHeaderBuilder {
         return $this;
     }
 
-
-
-
-
-
-
     /**
      * Get the current prefix.
      *
