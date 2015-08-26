@@ -107,8 +107,19 @@ class Language {
         if(!array_key_exists($key, $this->content[$section]))
             return $default;
 
-        // Return the value
-        return $this->content[$section][$key];
+        // Get the value
+        $val = $this->content[$section][$key];
+
+        // Return the value if it's a string
+        if(is_string($val))
+            return $val;
+
+        // Return a random value if it's an array
+        if(is_array($val))
+            return $val[mt_rand(0, sizeof($val) - 1)];
+
+        // Return the raw value
+        return $val;
     }
 
     /**
