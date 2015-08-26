@@ -93,6 +93,22 @@ class User {
     }
 
     /**
+     * Generate a password hash for a user.
+     *
+     * @param string $password The password to hash.
+     * @param string $userSalt The salt for this user.
+     *
+     * @return string The hashed password.
+     */
+    public static function generatePasswordHash($password, $userSalt) {
+        // Build the password salt
+        $salt = Config::getValue('hash', 'salt') . $userSalt;
+
+        // Hash and return the password
+        return Hash::hash($password, null, $salt);
+    }
+
+    /**
      * Check whether this user has a specific password.
      *
      * @param string $password The password to compare the users password to, in plain text.
@@ -102,11 +118,8 @@ class User {
      * @throws Exception Throws if an error occurred.
      */
     public function isPassword($password) {
-        // Build the password salt
-        $salt = Config::getValue('hash', 'salt') . $this->getHashSalt();
-
         // Hash the password
-        $passwordHash = Hash::hash($password, null, $salt);
+        $passwordHash = static::generatePasswordHash($password, $this->getHashSalt());
 
         // Compare the hashes, return the result
         return StringUtils::equals($passwordHash, $this->getPasswordHash(), false, true);

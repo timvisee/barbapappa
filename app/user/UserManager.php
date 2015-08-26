@@ -4,6 +4,9 @@ namespace app\user;
 
 use app\config\Config;
 use app\database\Database;
+use carbon\core\datetime\DateTime;
+use carbon\core\hash\Hash;
+use carbon\core\util\IpUtils;
 use Exception;
 use PDO;
 
@@ -116,5 +119,57 @@ class UserManager {
             if(!static::isUserWithId($userId))
                 return $userId;
         }
+        return null;
+    }
+
+    /**
+     * Create a new user.
+     *
+     * @param string $username The username.
+     * @param string $password The password.
+     * @param string $mail The mail.
+     * @param string $nameFull The full name.
+     *
+     * @return User The created user as object.
+     *
+     * @throws Exception throws if an error occurred.
+     */
+    // TODO: Add the user mail, and send an approval message!
+    // TODO: Validate the username, password, mail and name!
+    public static function createUser($username, $password, $mail, $nameFull) {
+        // Generate a random user ID
+        $userId = UserManager::generateNewUserId();
+
+        // Generate a user salt
+        $userSalt = Hash::generateSalt();
+
+        // Get the password hash
+        $passwordHash = User::generatePasswordHash($password, $userSalt);
+
+        // Determine the creation date time
+        $createDateTime = DateTime::now();
+
+        // Get the user IP
+        $ip = IpUtils::getClientIp();
+
+        // Prepare a query for the picture being added
+        $statement = Database::getPDO()->prepare('INSERT INTO ' . static::getDatabaseTableName() .
+            ' (user_id, user_username, user_pass_hash, user_hash_salt, user_create_datetime, user_create_ip, user_name_full) ' .
+            'VALUES (:user_id, :user_username, :user_pass_hash, :user_hash_salt, :user_create_datetime, :user_create_ip, :user_name_full');
+        $statement->bindValue(':user_id', $userId, PDO::PARAM_INT);
+        $statement->bindValue(':user_username', $username, PDO::PARAM_STR);
+        $statement->bindValue(':user_pass_hash', $passwordHash, PDO::PARAM_STR);
+        $statement->bindValue(':user_hash_salt', $userSalt, PDO::PARAM_STR);
+        // TODO: Use the UTC/GMT timezone!
+        $statement->bindValue(':user_create_datetime', $createDateTime, PDO::PARAM_STR);
+        $statement->bindValue(':user_create_ip', $ip, PDO::PARAM_STR);
+        $statement->bindValue(':user_name_full_hash', $nameFull, PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        // Return the created user as object
+        return new User($userId);
     }
 }
