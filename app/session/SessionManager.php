@@ -7,6 +7,7 @@ use app\database\Database;
 use app\team\Team;
 use carbon\core\datetime\DateTime;
 use carbon\core\util\IpUtils;
+use Exception;
 use PDO;
 
 // Prevent direct requests to this file due to security reasons
@@ -43,7 +44,7 @@ class SessionManager {
      *
      * @return array An array of sessions.
      *
-     * @throws \Exception Throws an exception on failure.
+     * @throws Exception Throws an exception on failure.
      */
     public static function getSessions() {
         // Create a row count query on the database instance
@@ -51,7 +52,7 @@ class SessionManager {
 
         // Make sure the query succeed
         if($statement === false)
-            throw new \Exception('Failed to query the database.');
+            throw new Exception('Failed to query the database.');
 
         // The list of sessions
         $sessions = Array();
@@ -69,7 +70,7 @@ class SessionManager {
      *
      * @return int Number of active sessions.
      *
-     * @throws \Exception Throws if an error occurred.
+     * @throws Exception Throws if an error occurred.
      */
     public static function getSessionCount() {
         // Create a row count query on the database instance
@@ -77,7 +78,7 @@ class SessionManager {
 
         // Make sure the query succeed
         if($statement === false)
-            throw new \Exception('Failed to query the database.');
+            throw new Exception('Failed to query the database.');
 
         // Return the number of rows
         return $statement->rowCount();
@@ -90,12 +91,12 @@ class SessionManager {
      *
      * @return bool True if any session exists with this ID.
      *
-     * @throws \Exception Throws if an error occurred.
+     * @throws Exception Throws if an error occurred.
      */
     public static function isSessionWithId($id) {
         // Make sure the ID isn't null
         if($id === null)
-            throw new \Exception('Invalid session ID.');
+            throw new Exception('Invalid session ID.');
 
         // Prepare a query for the database to list sessions with this ID
         $statement = Database::getPDO()->prepare('SELECT session_id FROM ' . static::getDatabaseTableName() . ' WHERE session_id=:id');
@@ -103,7 +104,7 @@ class SessionManager {
 
         // Execute the prepared query
         if(!$statement->execute())
-            throw new \Exception('Failed to query the database.');
+            throw new Exception('Failed to query the database.');
 
         // Return true if there's any session found with this ID
         return $statement->rowCount() > 0;
@@ -116,12 +117,12 @@ class SessionManager {
      *
      * @return Session|null The session, or null if there's no session with this key.
      *
-     * @throws \Exception Throws if an error occurred.
+     * @throws Exception Throws if an error occurred.
      */
     public static function getSessionWithKey($key) {
         // Make sure the key isn't null
         if($key === null)
-            throw new \Exception('Invalid session key.');
+            throw new Exception('Invalid session key.');
 
         // Prepare a query for the database to list sessions with this key
         $statement = Database::getPDO()->prepare('SELECT session_id FROM ' . static::getDatabaseTableName() . ' WHERE session_key=:session_key');
@@ -129,7 +130,7 @@ class SessionManager {
 
         // Execute the prepared query
         if(!$statement->execute())
-            throw new \Exception('Failed to query the database.');
+            throw new Exception('Failed to query the database.');
 
         // Return the first session with this key
         foreach($statement->fetchAll(PDO::FETCH_ASSOC) as $data)
@@ -159,7 +160,7 @@ class SessionManager {
      *
      * @return bool True if succeed, false otherwise.
      *
-     * @throws \Exception Throws if an error occurred.
+     * @throws Exception Throws if an error occurred.
      */
     public static function createSession($team) {
         // Make sure the team isn't null
@@ -202,7 +203,7 @@ class SessionManager {
     /**
      * Validate the session of the current user.
      *
-     * @throws \Exception Throws if an error occurred.
+     * @throws Exception Throws if an error occurred.
      */
     public static function validateSession() {
         // Make sure the proper cookie is set
@@ -242,7 +243,7 @@ class SessionManager {
      * @param Session|null $session Session to remove, or null to don't remove any sessions.
      * @param bool $removeCookie [optional] True to remove the current session key from the user cookies.
      *
-     * @throws \Exception Throws if an error occurred.
+     * @throws Exception Throws if an error occurred.
      */
     private static function removeSession($session, $removeCookie = true) {
         // Remove the session from the database
@@ -253,7 +254,7 @@ class SessionManager {
 
             // Execute the prepared query
             if(!$statement->execute())
-                throw new \Exception('Failed to query the database.');
+                throw new Exception('Failed to query the database.');
         }
 
         // Reset the session key cookie
@@ -320,7 +321,7 @@ class SessionManager {
         // Generate a random session key, make sure it doesn't exist
         do {
             $randomKey = '';
-            for ($i = 0; $i < static::SESSION_KEY_LENGTH; $i++)
+            for($i = 0; $i < static::SESSION_KEY_LENGTH; $i++)
                 $randomKey .= $chars[rand(0, strlen($chars) - 1)];
 
             // Check whether this session key exists already

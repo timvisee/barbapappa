@@ -110,7 +110,7 @@ class Mail {
      */
     public function getVerificationDateTime() {
         // TODO: Use the proper timezone!
-        return new DateTime($this->getDatabaseValue('mail_verify_datetime'));
+        return new DateTime($this->getDatabaseValue('mail_verified_datetime'));
     }
 
     /**
@@ -121,6 +121,6 @@ class Mail {
      * @throws Exception Throws an exception if an error occurred.
      */
     public function getVerificationIp() {
-        return $this->getDatabaseValue('mail_verify_ip');
+        return $this->getDatabaseValue('mail_verified_ip');
     }
 }

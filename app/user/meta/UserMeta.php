@@ -132,6 +132,6 @@ class UserMeta {
 
         // Execute the prepared query
         if(!$statement->execute())
-            throw new \Exception('Failed to query the database.');
+            throw new Exception('Failed to query the database.');
     }
 }
