@@ -15,7 +15,7 @@ define('APP_PHP_VERSION_REQUIRED', '5.3.1');
 /** The root directory of the app. */
 define('APP_ROOT', __DIR__);
 /** The application name. */
-define('APP_NAME', 'BarApp');
+define('APP_NAME', 'BARbapAPPa');
 /** The version name of the currently installed app instance. */
 define('APP_VERSION_NAME', '0.1');
 /** The version code of the currently installed app instance. */
