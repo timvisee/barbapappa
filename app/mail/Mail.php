@@ -91,17 +91,6 @@ class Mail {
     }
 
     /**
-     * Check whether the mail is verified.
-     *
-     * @return bool True if the mail is verified, false if not.
-     *
-     * @throws Exception Throws if an error occurred.
-     */
-    public function isVerified() {
-        return $this->getDatabaseValue('mail_verified') > 0;
-    }
-
-    /**
      * Get the mail verification date time.
      *
      * @return DateTime Mail verification date time.

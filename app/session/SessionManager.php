@@ -22,7 +22,8 @@ class SessionManager {
     /** The characters a session key can consist of. */
     const SESSION_KEY_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_-+=[]{}\\|/?<>,.`~';
     /** The time it takes for a session to expire. */
-    const SESSION_EXPIRE = '+1 day';
+    // TODO: Move this value to the registry database to make it configurable
+    const SESSION_EXPIRE = '+1 year';
     /** The name of the session cookie. */
     const SESSION_COOKIE_NAME = 'session_key';
 

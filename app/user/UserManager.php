@@ -5,6 +5,7 @@ namespace app\user;
 use app\config\Config;
 use app\database\Database;
 use app\mail\MailManager;
+use app\mail\verification\MailVerificationManager;
 use app\util\AccountUtils;
 use carbon\core\datetime\DateTime;
 use carbon\core\hash\Hash;
@@ -194,6 +195,7 @@ class UserManager {
             throw new Exception('The mail is invalid.');
 
         // Make sure the mail is unique
+        // TODO: Also check in the mail verification table!
         if(MailManager::isMailWithMail($mail))
             throw new Exception('The mail already exists.');
 
@@ -236,8 +238,10 @@ class UserManager {
         // Get the user instance
         $user = new User($userId);
 
-        // Add the user's mail
-        MailManager::createMail($user, $mail);
+        // Start the verification process for the mail for this user
+        MailVerificationManager::createMailVerification($user, $mail, null);
+
+        // TODO: Send a mail verification? Possibly done though the method above.
 
         // Return the created user as object
         return $user;

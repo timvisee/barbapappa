@@ -192,7 +192,6 @@ class MailManager {
      *
      * @throws Exception throws if an error occurred.
      */
-    // TODO: Send a validation mail!
     public static function createMail($user, $mail) {
         // Validate the user instance
         if(!($user instanceof User))

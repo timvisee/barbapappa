@@ -4,7 +4,6 @@ namespace app\mail\verification;
 
 use app\database\Database;
 use app\mail\Mail;
-use app\mailverification\MailVerificationManager;
 use app\user\User;
 use carbon\core\datetime\DateTime;
 use carbon\core\util\StringUtils;
