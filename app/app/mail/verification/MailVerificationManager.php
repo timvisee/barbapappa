@@ -78,7 +78,45 @@ class MailVerificationManager {
             throw new Exception('Invalid user.');
 
         // Build a query to select the mail verifications
+        // TODO: Properly bind the user ID to prevent SQL injections
         $query = 'SELECT mail_ver_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_user_id=' . $user->getId();
+
+        // Execute the query
+        $statement = Database::getPDO()->query($query);
+
+        // Make sure the query succeed
+        if($statement === false)
+            throw new Exception('Failed to query the database.');
+
+        // The list of mail verifications
+        $verifications = Array();
+
+        // Return the number of rows
+        foreach($statement->fetchAll(PDO::FETCH_ASSOC) as $data)
+            $verifications[] = new MailVerification($data['mail_ver_id']);
+
+        // Return the list of mail verifications
+        return $verifications;
+    }
+
+    /**
+     * Get a list of all mail verifications with a specific mail address.
+     * Note: This method is very resource intensive and expensive to execute.
+     *
+     * @param string $mail The mail address.
+     *
+     * @return array All mail verifications.
+     *
+     * @throws Exception Throws an exception on failure.
+     */
+    public static function getMailVerificationsWithMail($mail) {
+        // Validate the mail
+        if(!AccountUtils::isValidMail($mail))
+            throw new Exception('Invalid mail.');
+
+        // Build a query to select the mail verifications
+        // TODO: Properly bind the mail param, to pevent SQL injection
+        $query = 'SELECT mail_ver_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_mail LIKE ' . $mail;
 
         // Execute the query
         $statement = Database::getPDO()->query($query);
