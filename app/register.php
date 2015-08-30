@@ -206,11 +206,13 @@ elseif($registerStep == 5):
     if(MailManager::isMailWithMail($mail))
         showErrorPage();
 
+    // Make sure the password is valid
+    if(!AccountUtils::isValidPassword($mail))
+        showErrorPage(__('register', 'invalidPassword'));
+
     // Make sure the passwords are equal
     if(!StringUtils::equals($password, $passwordVerification, true, false))
         showErrorPage(__('register', 'passwordsNotEqual'));
-
-    // TODO: Make sure the password is valid
 
     ?>
     <div data-role="page" id="page-register" data-unload="false">
