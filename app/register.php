@@ -51,14 +51,15 @@ if($registerStep == 1):
 elseif($registerStep == 2):
 
     // Get the name
-    $fullName = trim($_GET['reg_full_name']);
+    // TODO: Should we convert the entities here?
+    $fullName = htmlentities(trim($_GET['reg_full_name']));
 
     // Make sure the full name is valid
     if(!AccountUtils::isValidFullName($fullName))
         showErrorPage(__('register', 'invalidFullName'));
 
     // Get a username suggestion
-    $usernameSuggestion = UserManager::getUsernameSuggestionByName($fullName);
+    $usernameSuggestion = UserManager::getUsernameSuggestionByName(html_entity_decode($fullName));
 
     ?>
     <div data-role="page" id="page-register" data-unload="false">
@@ -212,6 +213,8 @@ elseif($registerStep == 5):
 
     // Create the user
     UserManager::createUser($username, $password, $mail, $fullName);
+
+    // TODO: Log in the user as soon as it's created!
 
     ?>
     <div data-role="page" id="page-register" data-unload="false">
