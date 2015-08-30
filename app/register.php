@@ -186,6 +186,26 @@ elseif($registerStep == 5):
     $password = $_GET['reg_password'];
     $passwordVerification = $_GET['reg_password_verification'];
 
+    // Make sure the full name is valid
+    if(!AccountUtils::isValidFullName($fullName))
+        showErrorPage();
+
+    // Make sure the username is valid
+    if(!AccountUtils::isValidUsername($username))
+        showErrorPage();
+
+    // Make sure the username is available
+    if(UserManager::isUserWithUsername($username))
+        showErrorPage();
+
+    // Make sure the mail is valid
+    if(!AccountUtils::isValidMail($mail))
+        showErrorPage();
+
+    // Make sure the mail isn't in use already
+    if(MailManager::isMailWithMail($mail))
+        showErrorPage();
+
     // Make sure the passwords are equal
     if(!StringUtils::equals($password, $passwordVerification, true, false))
         showErrorPage(__('register', 'passwordsNotEqual'));
