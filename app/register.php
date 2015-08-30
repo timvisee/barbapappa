@@ -82,11 +82,9 @@ elseif($registerStep == 2):
 
 elseif($registerStep == 3):
 
-    // TODO: Parse the username
-
     // Get the name and username
     $fullName = $_GET['reg_full_name'];
-    $username = $_GET['reg_username'];
+    $username = trim($_GET['reg_username']);
 
     // Make sure the username is valid
     if(!AccountUtils::isValidUsername($username))
@@ -119,12 +117,10 @@ elseif($registerStep == 3):
 
 elseif($registerStep == 4):
 
-    // TODO: Parse the mail
-
     // Get the name and username
     $fullName = $_GET['reg_full_name'];
     $username = $_GET['reg_username'];
-    $mail = $_GET['reg_mail'];
+    $mail = trim($_GET['reg_mail']);
 
     // Make sure the mail is valid
     if(!AccountUtils::isValidMail($mail))
