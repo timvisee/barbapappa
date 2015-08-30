@@ -255,7 +255,6 @@ class UserManager {
      *
      * @return string The suggested username.
      */
-    // TODO: Make sure the username doesn't always get longer than the maximum, which would start an infinite loop
     public static function getUsernameSuggestionByName($name) {
         // Trim the name
         $name = trim($name);
@@ -277,13 +276,19 @@ class UserManager {
             return $name;
 
         // Put numbers behind the username until we get one that is available
-        $i = 0;
-        while(true) {
-            // Increase $i
-            $i++;
-
+        for($i = 1; $i < 100; $i++) {
             // Generate the username
             $newName = $name . $i;
+
+            // Return the suggested name if it's available
+            if(!static::isUserWithUsername($newName))
+                return $newName;
+        }
+
+        // Generate random names until once is available
+        while(true) {
+            // Generate a random username
+            $newName = substr(md5(mt_rand(0, mt_getrandmax())), 0, AccountUtils::USERNAME_LENGTH_MAX);
 
             // Return the suggested name if it's available
             if(!static::isUserWithUsername($newName))
