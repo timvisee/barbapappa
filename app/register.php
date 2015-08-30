@@ -26,7 +26,7 @@ if(isset($_GET['reg_step'])) {
 
 if($registerStep == 1):
     ?>
-    <div data-role="page" id="page-login">
+    <div data-role="page" id="page-register" data-unload="false">
         <?php PageHeaderBuilder::create(__('account', 'register'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
@@ -48,16 +48,18 @@ if($registerStep == 1):
 
 elseif($registerStep == 2):
 
-    // TODO: Validate and parse the full name
-
     // Get the name
     $fullName = trim($_GET['reg_full_name']);
+
+    // Make sure the full name is valid
+    if(!AccountUtils::isValidFullName($fullName))
+        showErrorPage(__('register', 'invalidFullName'));
 
     // Get a username suggestion
     $usernameSuggestion = UserManager::getUsernameSuggestionByName($fullName);
 
     ?>
-    <div data-role="page" id="page-login">
+    <div data-role="page" id="page-register" data-unload="false">
         <?php PageHeaderBuilder::create(__('account', 'register'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
@@ -95,7 +97,7 @@ elseif($registerStep == 3):
         showErrorPage(__('register', 'usernameAlreadyInUseChooseDifferentOne'));
 
     ?>
-    <div data-role="page" id="page-login">
+    <div data-role="page" id="page-register" data-unload="false">
         <?php PageHeaderBuilder::create(__('account', 'register'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
@@ -133,7 +135,7 @@ elseif($registerStep == 4):
         showErrorPage(__('register', 'mailAlreadyInUse'));
 
     ?>
-    <div data-role="page" id="page-login">
+    <div data-role="page" id="page-register" data-unload="false">
         <?php PageHeaderBuilder::create(__('account', 'register'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
@@ -191,7 +193,7 @@ elseif($registerStep == 5):
     // TODO: Make sure the password is valid
 
     ?>
-    <div data-role="page" id="page-login">
+    <div data-role="page" id="page-register" data-unload="false">
         <?php PageHeaderBuilder::create(__('account', 'register'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">

@@ -72,6 +72,10 @@ class AccountUtils {
         // Trim the name
         $fullName = trim($fullName);
 
+        // Make sure the name doesn't contain any numbers
+        if(preg_match('/[0-9]+/', $fullName))
+            return false;
+
         // Make sure the name is at least 3 chars long
         return strlen($fullName) >= 3;
     }

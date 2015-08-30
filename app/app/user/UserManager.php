@@ -254,6 +254,7 @@ class UserManager {
      *
      * @return string The suggested username.
      */
+    // TODO: Make sure the username doesn't always get longer than the maximum, which would start an infinite loop
     public static function getUsernameSuggestionByName($name) {
         // Trim the name
         $name = trim($name);
