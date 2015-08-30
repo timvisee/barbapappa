@@ -32,7 +32,7 @@ require_once('top.php');
 
         <?php if(SessionManager::isLoggedIn()): ?>
         <fieldset data-role="controlgroup" data-type="vertical">
-            <a href="logout.php" class="ui-btn ui-icon-delete ui-btn-icon-left" data-direction="reverse">Logout</a>
+            <a href="logout.php" class="ui-btn ui-icon-delete ui-btn-icon-left" data-direction="reverse"><?=__('account', 'logout'); ?></a>
         </fieldset>
         <?php endif; ?>
     </div>
