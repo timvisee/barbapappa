@@ -166,7 +166,7 @@ class SessionManager {
     public static function createSession($user) {
         // Make sure the user isn't null
         if($user === null)
-            throw new \Exception('Couldn\'t create session, invalid user!');
+            throw new Exception('Couldn\'t create session, invalid user!');
 
         // Generate a random session key
         $sessionKey = static::generateRandomSessionKey();
@@ -180,17 +180,17 @@ class SessionManager {
 
         // Prepare a query for the session being created
         $statement = Database::getPDO()->prepare('INSERT INTO ' . static::getDatabaseTableName() .
-            ' (session_user_id, session_key, session_ip, session_date, session_date_expire) ' .
-            'VALUES (:session_user_id, :session_key, :session_ip, :session_date, :session_date_expire)');
+            ' (session_user_id, session_key, session_create_ip, session_create_datetime, session_expire_datetime) ' .
+            'VALUES (:session_user_id, :session_key, :session_create_ip, :session_create_datetime, :session_expire_datetime)');
         $statement->bindValue(':session_user_id', $user->getId(), PDO::PARAM_INT);
         $statement->bindValue(':session_key', $sessionKey, PDO::PARAM_STR);
-        $statement->bindValue(':session_ip', $sessionIp, PDO::PARAM_STR);
-        $statement->bindValue(':session_date', $sessionDate->toString(), PDO::PARAM_STR);
-        $statement->bindValue(':session_date_expire', $sessionDateExpire->toString(), PDO::PARAM_STR);
+        $statement->bindValue(':session_create_ip', $sessionIp, PDO::PARAM_STR);
+        $statement->bindValue(':session_create_datetime', $sessionDate->toString(), PDO::PARAM_STR);
+        $statement->bindValue(':session_expire_datetime', $sessionDateExpire->toString(), PDO::PARAM_STR);
 
         // Execute the prepared query
         if(!$statement->execute())
-            throw new \Exception('Failed to query the database.');
+            throw new Exception('Failed to query the database.');
 
         // Set a client cookie with the session key
         $cookieDomain = Config::getValue('cookie', 'domain', '');

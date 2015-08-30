@@ -17,6 +17,15 @@ if(!SessionManager::isLoggedIn()):
         <div data-role="main" class="ui-content">
             <p><?=__('general', 'welcomeByApp'); ?></p><br />
 
+            <p>
+                <?php
+                if(SessionManager::isLoggedIn())
+                    echo '<span style="color: green;">Logged in!</span>';
+                else
+                    echo '<span style="color: red;">Not logged in!</span>';
+                ?>
+            </p><br />
+
             <fieldset data-role="controlgroup" data-type="vertical">
                 <a href="login.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'login'); ?></a>
                 <a href="register.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'register'); ?></a>

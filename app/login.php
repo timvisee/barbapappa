@@ -24,11 +24,9 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
 
             <form method="POST" action="login.php?a=login">
                 <input type="text" name="login_user" value="" placeholder="<?= __('account', 'username'); ?>" />
-                <input type="password" name="login_password" value=""
-                       placeholder="<?= __('account', 'password'); ?>" /><br />
+                <input type="password" name="login_password" value="" placeholder="<?= __('account', 'password'); ?>" /><br />
 
-                <input type="submit" value="<?= __('account', 'login'); ?>"
-                       class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                <input type="submit" value="<?= __('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
             </form>
         </div>
 
@@ -78,7 +76,9 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
 
         <div data-role="main" class="ui-content">
             <p>
-                <?= __('general', 'welcome'); ?> <?=$user->getFullName(); ?>!<br /><?= __('login', 'loginSuccess'); ?>
+                <?= __('general', 'welcome'); ?> <?=$user->getFullName(); ?>!<br />
+                <br />
+                <?= __('login', 'loginSuccess'); ?>
             </p>
             <br />
 

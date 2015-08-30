@@ -79,36 +79,36 @@ class Session {
     }
 
     /**
-     * Get the IP of this session.
+     * Get the session creation client IP.
      *
-     * @return string Session IP.
-     *
-     * @throws Exception Throws an exception if an error occurred.
-     */
-    public function getIp() {
-        return $this->getDatabaseValue('session_ip');
-    }
-
-    /**
-     * Get the sign in date of the session.
-     *
-     * @return DateTime Sign in date of the session.
+     * @return string Creation client IP.
      *
      * @throws Exception Throws an exception if an error occurred.
      */
-    public function getSessionDate() {
-        return new DateTime($this->getDatabaseValue('session_date'));
+    public function getCreationIp() {
+        return $this->getDatabaseValue('session_create_ip');
     }
 
     /**
-     * Get the expire date of the session.
+     * Get the session creation date time.
      *
-     * @return DateTime Expire date of the session.
+     * @return DateTime Creation date time.
+     *
+     * @throws Exception Throws an exception if an error occurred.
+     */
+    public function getCreationDateTime() {
+        return new DateTime($this->getDatabaseValue('session_create_datetime'));
+    }
+
+    /**
+     * Get the session expiration date time.
+     *
+     * @return DateTime Expiration date time.
      *
      * @throws Exception Throws an exception if an error occurred.
      */
     public function getSessionDateExpire() {
-        return new DateTime($this->getDatabaseValue('session_date_expire'));
+        return new DateTime($this->getDatabaseValue('session_expire_datetime'));
     }
 
     /**
