@@ -246,4 +246,47 @@ class UserManager {
         // Return the created user as object
         return $user;
     }
+
+    /**
+     * Suggest a new username based on a full name, that has not been registered yet.
+     *
+     * @param string $name The full name.
+     *
+     * @return string The suggested username.
+     */
+    public static function getUsernameSuggestionByName($name) {
+        // Trim the name
+        $name = trim($name);
+
+        // Translate special characters
+        $name = iconv('utf-8','ASCII//IGNORE//TRANSLIT', $name);
+
+        // Remove whitespaces
+        $name = preg_replace('/\s+/', '', $name);
+
+        // Remove all non-allowed characters
+        $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
+
+        // Lowercase the string
+        $name = strtolower($name);
+
+        // Return the suggested name if it's available
+        if(!static::isUserWithUsername($name))
+            return $name;
+
+        // Put numbers behind the username until we get one that is available
+        $i = 0;
+        while(true) {
+            // Increase $i
+            $i++;
+
+            // Generate the username
+            $newName = $name . $i;
+
+            // Return the suggested name if it's available
+            if(!static::isUserWithUsername($newName))
+                return $newName;
+        }
+        return null;
+    }
 }

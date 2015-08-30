@@ -19,7 +19,7 @@ if(!SessionManager::isLoggedIn()):
 
             <fieldset data-role="controlgroup" data-type="vertical">
                 <a href="login.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'login'); ?></a>
-                <a href="#" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'register'); ?></a>
+                <a href="register.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'register'); ?></a>
             </fieldset>
         </div>
 
