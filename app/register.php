@@ -177,8 +177,6 @@ elseif($registerStep == 4):
 
 elseif($registerStep == 5):
 
-    // TODO: Parse the passwords
-
     // Get the name and username
     $fullName = $_GET['reg_full_name'];
     $username = $_GET['reg_username'];
@@ -207,19 +205,30 @@ elseif($registerStep == 5):
         showErrorPage();
 
     // Make sure the password is valid
-    if(!AccountUtils::isValidPassword($mail))
+    if(!AccountUtils::isValidPassword($password))
         showErrorPage(__('register', 'invalidPassword'));
 
     // Make sure the passwords are equal
     if(!StringUtils::equals($password, $passwordVerification, true, false))
         showErrorPage(__('register', 'passwordsNotEqual'));
 
+    // Create the user
+    UserManager::createUser($username, $password, $mail, $fullName);
+
     ?>
     <div data-role="page" id="page-register" data-unload="false">
         <?php PageHeaderBuilder::create(__('account', 'register'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
-            TODO: REGISTER ON THIS PAGE!
+            <p>
+                <?=__('general', 'welcome'); ?> <?=$fullName; ?>!<br />
+                <br />
+                <?=__('register', 'registeredSuccessfullyVerifyMail'); // TODO: Show a note, that the mail address must be activated within a specific period! ?>
+            </p><br />
+
+            <fieldset data-role="controlgroup" data-type="vertical">
+                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goToFrontPage'); ?></a>
+            </fieldset>
         </div>
 
         <?php PageFooterBuilder::create()->build(); ?>

@@ -181,6 +181,7 @@ class UserManager {
      *
      * @throws Exception throws if an error occurred.
      */
+    // TODO: Properly add full names with accents and such!
     public static function createUser($username, $password, $mail, $nameFull) {
         // Make sure the username is valid
         if(!AccountUtils::isValidUsername($username))
