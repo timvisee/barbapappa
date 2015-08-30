@@ -11,6 +11,8 @@ use app\util\AccountUtils;
 // Include the page top
 require_once('top.php');
 
+// TODO: Make sure the user isn't logged in already!
+
 // Check whether the user is trying to login, if not show the login form instead
 if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     ?>

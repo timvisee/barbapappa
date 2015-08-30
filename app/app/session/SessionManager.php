@@ -4,7 +4,7 @@ namespace app\session;
 
 use app\config\Config;
 use app\database\Database;
-use app\team\Team;
+use app\user\User;
 use carbon\core\datetime\DateTime;
 use carbon\core\util\IpUtils;
 use Exception;
@@ -155,18 +155,18 @@ class SessionManager {
     }
 
     /**
-     * Create a new session for the current user with the specified team.
+     * Create a new session for the current user with the specified user.
      *
-     * @param Team $team The team to create a session for.
+     * @param User $user The user to create a session for.
      *
      * @return bool True if succeed, false otherwise.
      *
      * @throws Exception Throws if an error occurred.
      */
-    public static function createSession($team) {
-        // Make sure the team isn't null
-        if($team === null)
-            throw new \Exception('Couldn\'t create session, invalid team!');
+    public static function createSession($user) {
+        // Make sure the user isn't null
+        if($user === null)
+            throw new \Exception('Couldn\'t create session, invalid user!');
 
         // Generate a random session key
         $sessionKey = static::generateRandomSessionKey();
@@ -180,9 +180,9 @@ class SessionManager {
 
         // Prepare a query for the session being created
         $statement = Database::getPDO()->prepare('INSERT INTO ' . static::getDatabaseTableName() .
-            ' (session_team_id, session_key, session_ip, session_date, session_date_expire) ' .
-            'VALUES (:session_team_id, :session_key, :session_ip, :session_date, :session_date_expire)');
-        $statement->bindValue(':session_team_id', $team->getId(), PDO::PARAM_INT);
+            ' (session_user_id, session_key, session_ip, session_date, session_date_expire) ' .
+            'VALUES (:session_user_id, :session_key, :session_ip, :session_date, :session_date_expire)');
+        $statement->bindValue(':session_user_id', $user->getId(), PDO::PARAM_INT);
         $statement->bindValue(':session_key', $sessionKey, PDO::PARAM_STR);
         $statement->bindValue(':session_ip', $sessionIp, PDO::PARAM_STR);
         $statement->bindValue(':session_date', $sessionDate->toString(), PDO::PARAM_STR);
@@ -277,16 +277,6 @@ class SessionManager {
     }
 
     /**
-     * Check if the current user is logged in and is admin.
-     * The validateSession() method must be run once before this method works.
-     *
-     * @return bool True if the user is logged in and is admin, false otherwise.
-     */
-    public static function isAdmin() {
-        return static::$currentSession instanceof Session && static::$currentSession->getTeam()->isAdmin();
-    }
-
-    /**
      * Get the session of the current logged in user.
      *
      * @return Session|null Session instance, or null if the user isn't logged in.
@@ -296,18 +286,18 @@ class SessionManager {
     }
 
     /**
-     * Get the team of the current logged in user.
+     * Get the user of the current logged in user.
      *
-     * @return Team Team of the current logged in user.
+     * @return User User of the current logged in user.
      */
-    public static function getLoggedInTeam() {
+    public static function getLoggedInUser() {
         // Get the session
         $session = static::getLoggedInSession();
         if($session === null)
             return null;
 
-        // Return the team
-        return $session->getTeam();
+        // Return the user
+        return $session->getUser();
     }
 
     /**

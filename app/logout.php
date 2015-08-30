@@ -25,7 +25,6 @@ if(!SessionManager::isLoggedIn()):
     <?php
 
 else:
-
     // Reset the current session
     SessionManager::logoutSession();
 
@@ -44,7 +43,6 @@ else:
         <?php PageFooterBuilder::create()->build(); ?>
     </div>
     <?php
-
 endif;
 
 // Include the page bottom

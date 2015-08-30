@@ -3,8 +3,9 @@
 namespace app\session;
 
 use app\database\Database;
-use app\team\Team;
+use app\user\User;
 use carbon\core\datetime\DateTime;
+use Exception;
 use PDO;
 
 // Prevent direct requests to this file due to security reasons
@@ -40,7 +41,7 @@ class Session {
      *
      * @return mixed The value.
      *
-     * @throws \Exception Throws if an error occurred.
+     * @throws Exception Throws if an error occurred.
      */
     private function getDatabaseValue($columnName) {
         // Prepare a query for the database to list sessions with this ID
@@ -49,21 +50,21 @@ class Session {
 
         // Execute the prepared query
         if(!$statement->execute())
-            throw new \Exception('Failed to query the database.');
+            throw new Exception('Failed to query the database.');
 
         // Return the result
         return $statement->fetch(PDO::FETCH_ASSOC)[$columnName];
     }
 
     /**
-     * Get the session team.
+     * Get the session user.
      *
-     * @return Team Session team.
+     * @return User Session user.
      *
-     * @throws \Exception Throws an exception if an error occurred.
+     * @throws Exception Throws an exception if an error occurred.
      */
-    public function getTeam() {
-        return new Team($this->getDatabaseValue('session_team_id'));
+    public function getUser() {
+        return new User($this->getDatabaseValue('session_user_id'));
     }
 
     /**
@@ -71,7 +72,7 @@ class Session {
      *
      * @return string Session key.
      *
-     * @throws \Exception Throws an exception if an error occurred.
+     * @throws Exception Throws an exception if an error occurred.
      */
     public function getKey() {
         return $this->getDatabaseValue('session_key');
@@ -82,7 +83,7 @@ class Session {
      *
      * @return string Session IP.
      *
-     * @throws \Exception Throws an exception if an error occurred.
+     * @throws Exception Throws an exception if an error occurred.
      */
     public function getIp() {
         return $this->getDatabaseValue('session_ip');
@@ -93,7 +94,7 @@ class Session {
      *
      * @return DateTime Sign in date of the session.
      *
-     * @throws \Exception Throws an exception if an error occurred.
+     * @throws Exception Throws an exception if an error occurred.
      */
     public function getSessionDate() {
         return new DateTime($this->getDatabaseValue('session_date'));
@@ -104,7 +105,7 @@ class Session {
      *
      * @return DateTime Expire date of the session.
      *
-     * @throws \Exception Throws an exception if an error occurred.
+     * @throws Exception Throws an exception if an error occurred.
      */
     public function getSessionDateExpire() {
         return new DateTime($this->getDatabaseValue('session_date_expire'));
