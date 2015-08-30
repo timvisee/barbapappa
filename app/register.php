@@ -10,6 +10,8 @@ use carbon\core\util\StringUtils;
 // Include the page top
 require_once('top.php');
 
+// TODO: Make sure this user isn't logged in already!
+
 // Get the register step
 $registerStep = 1;
 if(isset($_GET['reg_step'])) {

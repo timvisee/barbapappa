@@ -31,13 +31,15 @@ class PageFooterBuilder {
      * Build and print the header.
      */
     public function build() {
+        // TODO: Remove coloring from OVRally
+
         // Define the footer background
         $teamColor = null;
         $footerDivStyle = '';
-        if(SessionManager::isLoggedIn() && SessionManager::getLoggedInTeam()->hasColorHex()) {
+        /*if(SessionManager::isLoggedIn() && SessionManager::getLoggedInTeam()->hasColorHex()) {
             $teamColor = SessionManager::getLoggedInTeam()->getColorHex();
             $footerDivStyle .= 'background: #' . $teamColor . ';';
-        }
+        }*/
 
         // Determine the footer text color
         $footerColor = '333333';

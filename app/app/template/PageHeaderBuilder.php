@@ -194,10 +194,10 @@ class PageHeaderBuilder {
         // Define the header background
         $teamColor = null;
         $headerDivStyle = '';
-        if(SessionManager::isLoggedIn() && SessionManager::getLoggedInTeam()->hasColorHex()) {
+        /*if(SessionManager::isLoggedIn() && SessionManager::getLoggedInTeam()->hasColorHex()) {
             $teamColor = SessionManager::getLoggedInTeam()->getColorHex();
             $headerDivStyle .= 'background: #' . $teamColor . ';';
-        }
+        }*/
 
         // Determine the header text color
         $headerColor = '333333';
