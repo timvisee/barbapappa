@@ -286,10 +286,14 @@ class MailVerificationManager {
         if(!$statement->execute())
             throw new Exception('Failed to query the database.');
 
-        // TODO: Send a verification mail here!
+        // Get the mail verification object
+        $mailVerification = new MailVerification(Database::getPDO()->lastInsertId());
 
-        // Return the created mail verification object
-        return new MailVerification(Database::getPDO()->lastInsertId());
+        // Send the verification message
+        $mailVerification->sendVerificationMessage();
+
+        // Return the mail verification object
+        return $mailVerification;
     }
 
     /**

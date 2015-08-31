@@ -242,8 +242,6 @@ class UserManager {
         // Start the verification process for the mail for this user
         MailVerificationManager::createMailVerification($user, $mail, null);
 
-        // TODO: Send a mail verification? Possibly done though the method above.
-
         // Return the created user as object
         return $user;
     }

@@ -94,7 +94,7 @@ function requireLogin() {
 
         ?>
         <div data-role="page" id="page-main">
-            <?php PageHeaderBuilder::create()->build(); ?>
+            <?php PageHeaderBuilder::create()->setMenuButton(true)->build(); ?>
 
             <div data-role="main" class="ui-content">
                 <p>
@@ -110,9 +110,9 @@ function requireLogin() {
 
                 <fieldset data-role="controlgroup" data-type="vertical">
                     <?php if($hasMailsVerify): ?>
-                        <a href="#" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'resendVerification'); ?></a>
+                        <a href="mailverification.php?a=resend" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'resendVerification'); ?></a>
                     <?php endif; ?>
-                    <a href="#" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('mail', 'manageMail'); ?></a>
+                    <a href="mailmanage.php" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('mail', 'manageMail'); ?></a>
                 </fieldset>
 
                 <fieldset data-role="controlgroup" data-type="vertical">

@@ -183,4 +183,11 @@ class MailVerification {
         if(!$statement->execute())
             throw new Exception('Failed to query the database.');
     }
+
+    /**
+     * Send the verification message to the user.
+     */
+    public function sendVerificationMessage() {
+        // TODO: Send mail verification message here!
+    }
 }
