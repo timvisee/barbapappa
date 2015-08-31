@@ -4,6 +4,7 @@ namespace app\user;
 
 use app\config\Config;
 use app\database\Database;
+use app\mail\MailManager;
 use app\user\meta\UserMeta;
 use carbon\core\datetime\DateTime;
 use carbon\core\hash\Hash;
@@ -157,6 +158,21 @@ class User {
      */
     public function getFullName() {
         return $this->getDatabaseValue('user_name_full');
+    }
+
+    /**
+     * Check if this user has at least one verified mail address.
+     *
+     * @return bool True if the user has a verified mail address.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function isVerified() {
+        // Get the verified mails for this user
+        $mails = MailManager::getMailsFromUser($this);
+
+        // Return true if the user has at least one verified mail
+        return sizeof($mails) > 0;
     }
 
     /**

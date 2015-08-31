@@ -9,6 +9,9 @@ use carbon\core\util\StringUtils;
 // Include the page top
 require_once('top.php');
 
+if(SessionManager::isLoggedIn())
+    requireLogin();
+
 ?>
 <div data-role="page" id="page-login">
     <?php PageHeaderBuilder::create()->setMenuButton(true)->build(); ?>
