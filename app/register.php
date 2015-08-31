@@ -158,7 +158,7 @@ elseif($registerStep == 4):
 
             <p><?= __('register', 'enterPasswordIfCredentialsAreCorrect'); ?></p><br />
 
-            <form method="GET" action="register.php?reg_step=5">
+            <form method="POST" action="register.php?reg_step=5">
                 <input type="hidden" name="reg_full_name" value="<?=$fullName; ?>" />
                 <input type="hidden" name="reg_username" value="<?=$username; ?>" />
                 <input type="hidden" name="reg_mail" value="<?=$mail; ?>" />
@@ -177,11 +177,11 @@ elseif($registerStep == 4):
 elseif($registerStep == 5):
 
     // Get the name and username
-    $fullName = $_GET['reg_full_name'];
-    $username = $_GET['reg_username'];
-    $mail = $_GET['reg_mail'];
-    $password = $_GET['reg_password'];
-    $passwordVerification = $_GET['reg_password_verification'];
+    $fullName = $_POST['reg_full_name'];
+    $username = $_POST['reg_username'];
+    $mail = $_POST['reg_mail'];
+    $password = $_POST['reg_password'];
+    $passwordVerification = $_POST['reg_password_verification'];
 
     // Make sure the full name is valid
     if(!AccountUtils::isValidFullName($fullName))
@@ -213,8 +213,6 @@ elseif($registerStep == 5):
 
     // Create the user
     UserManager::createUser($username, $password, $mail, $fullName);
-
-    // TODO: Log in the user as soon as it's created!
 
     ?>
     <div data-role="page" id="page-register" data-unload="false">
