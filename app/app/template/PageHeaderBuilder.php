@@ -10,7 +10,7 @@ use carbon\core\util\StringUtils;
 class PageHeaderBuilder {
 
     /** The default header title. */
-    const HEADER_TITLE_DEFAULT = APP_NAME;
+    const HEADER_TITLE_DEFAULT = '<img src="style/image/logo/logo_header_big.png" style="height: 21px;" />';
 
     /** @var string|null The title of the header, or null to use the default title. */
     private $title = null;

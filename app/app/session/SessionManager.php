@@ -193,6 +193,7 @@ class SessionManager {
             throw new Exception('Failed to query the database.');
 
         // Set a client cookie with the session key
+        // TODO: Create these cookies through a cookie manager!
         $cookieDomain = Config::getValue('cookie', 'domain', '');
         $cookiePath = Config::getValue('cookie', 'path', '/');
         setcookie(static::SESSION_COOKIE_NAME, $sessionKey, $sessionDateExpire->getTimestamp(), $cookiePath, $cookieDomain);

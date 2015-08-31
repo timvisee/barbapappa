@@ -14,7 +14,7 @@ require_once('top.php');
     <?php PageHeaderBuilder::create()->setMenuButton(true)->build(); ?>
 
     <div data-role="main" class="ui-content">
-        <p><?=__('general', 'welcomeByApp'); ?></p><br />
+        <p><?=__('general', 'welcome'); ?>!</p><br />
 
         <p>
             <?php

@@ -17,7 +17,13 @@ require_once('top.php');
     <?php PageHeaderBuilder::create(__('general', 'about'))->setBackButton('index.php')->build(); ?>
 
     <div data-role="main" class="ui-content" align="center">
-        <p><b><?=APP_NAME; ?> v<?=APP_VERSION_NAME; ?> <sup>(<?=APP_VERSION_CODE; ?>)</sup></b></p>
+        <br />
+        <img src="style/image/logo/logo_big.png" style="height: 120px;" />
+        <br />
+        <br />
+
+        <p><b>Version <?=APP_VERSION_NAME; ?> <sup>(<?=APP_VERSION_CODE; ?>)</sup></b></p>
+        <br />
         <br />
         <p><?=__('pageAbout', 'developer'); ?></p>
         <br />
