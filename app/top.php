@@ -1,6 +1,7 @@
 <?php
 
 use app\config\Config;
+use app\mail\verification\MailVerificationManager;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
@@ -85,6 +86,12 @@ function requireLogin() {
 
     // Make sure the user's mail address is verified
     if(!$user->isVerified()) {
+        // Get all mails waiting for verification for this user
+        $mailsVerify = MailVerificationManager::getMailVerificationsFromUser($user);
+
+        // Check whether this user has any mails waiting for verification
+        $hasMailsVerify = sizeof($mailsVerify) > 0;
+
         ?>
         <div data-role="page" id="page-main">
             <?php PageHeaderBuilder::create()->build(); ?>
@@ -93,11 +100,18 @@ function requireLogin() {
                 <p>
                     <?=__('general', 'hello'); ?> <?=$user->getFullName(); ?>!<br />
                     <br />
-                    <?=__('mail', 'beforeCanUseServiceMustVerify'); ?>
+                    <?php
+                    if($hasMailsVerify)
+                        echo __('mail', 'beforeCanUseServiceMustVerify');
+                    else
+                        echo __('mail', 'beforeCanUseServiceMustAddMail');
+                    ?>
                 </p><br />
 
                 <fieldset data-role="controlgroup" data-type="vertical">
-                    <a href="#" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'resendVerification'); ?></a>
+                    <?php if($hasMailsVerify): ?>
+                        <a href="#" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'resendVerification'); ?></a>
+                    <?php endif; ?>
                     <a href="#" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('mail', 'manageMail'); ?></a>
                 </fieldset>
 
