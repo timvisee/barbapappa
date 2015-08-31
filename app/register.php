@@ -1,6 +1,7 @@
 <?php
 
 use app\mail\MailManager;
+use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
 use app\user\UserManager;
@@ -10,7 +11,11 @@ use carbon\core\util\StringUtils;
 // Include the page top
 require_once('top.php');
 
-// TODO: Make sure this user isn't logged in already!
+// Make sure the user isn't logged in
+if(SessionManager::isLoggedIn())
+    showErrorPage(__('login', 'alreadyLoggedIn'));
+
+// TODO: Use tokens?
 
 // Get the register step
 $registerStep = 1;

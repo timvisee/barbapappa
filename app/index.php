@@ -25,12 +25,12 @@ require_once('top.php');
             ?>
         </p><br />
 
+        <?php if(!SessionManager::isLoggedIn()): ?>
         <fieldset data-role="controlgroup" data-type="vertical">
             <a href="login.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'login'); ?></a>
             <a href="register.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'register'); ?></a>
         </fieldset>
-
-        <?php if(SessionManager::isLoggedIn()): ?>
+        <?php else: ?>
         <fieldset data-role="controlgroup" data-type="vertical">
             <a href="logout.php" class="ui-btn ui-icon-delete ui-btn-icon-left" data-direction="reverse"><?=__('account', 'logout'); ?></a>
         </fieldset>
