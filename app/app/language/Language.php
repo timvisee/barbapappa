@@ -68,7 +68,7 @@ class Language {
         $this->tag = $tag;
 
         // Load the language file, make sure it succeed
-        $langContent = parse_ini_file($file->getAbsolutePath(), true);
+        $langContent = parse_ini_file($file->getAbsolutePath(), true, INI_SCANNER_RAW);
         if($langContent === false)
             throw new Exception('An error occurred when loading a language file.');
 

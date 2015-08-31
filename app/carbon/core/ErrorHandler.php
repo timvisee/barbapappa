@@ -148,22 +148,7 @@ class ErrorHandler {
                 ?>
             </p>
         </div>
-        <?php if(!Database::isConnected()): ?>
-        <div id="page">
-            <h1>Automatic Debugger (Beta)</h1>
-            <p>
-                Carbon CMS detected there was an error with the database connection, please check the following information for more details:<br />
-                <br />
-
-                <table>
-                <tr><td>Database host:</td><td><span style="color: green;">MySQL database found</span> <span style="color: gray;">(Test took <1 ms)</span></td></tr>
-                <tr><td>Database credentials:</td><td><span style="color: green;">Correct</span> <span style="color: gray;">(Test took 2 ms)</span></td></tr>
-                <tr><td>Database status:</td><td><span style="color: red;">Database is busy!</span> <span style="color: gray;">(Test took 9 ms)</span></td></tr>
-                </table>
-            </p>
-        </div>
         <?php
-        endif;
 
         // Make sure it's allowed to show sensitive data
         if(self::getDebug()) {

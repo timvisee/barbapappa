@@ -111,8 +111,10 @@ function requireLogin() {
                 <fieldset data-role="controlgroup" data-type="vertical">
                     <?php if($hasMailsVerify): ?>
                         <a href="mailverification.php?a=resend" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'resendVerification'); ?></a>
+                        <a href="mailmanager.php" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('mail', 'manageMailAddresses'); ?></a>
+                    <?php else: ?>
+                        <a href="mailmanager.php?a=add" class="ui-btn ui-icon-plus ui-btn-icon-left"><?=__('mail', 'addMailAddress'); ?></a>
                     <?php endif; ?>
-                    <a href="mailmanage.php" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('mail', 'manageMail'); ?></a>
                 </fieldset>
 
                 <fieldset data-role="controlgroup" data-type="vertical">

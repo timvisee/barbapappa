@@ -143,8 +143,6 @@ elseif($registerStep == 4):
         <?php PageHeaderBuilder::create(__('account', 'register'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
-<!--            <p>--><?//= __('register', 'checkCredentialsBeforeContinue'); ?><!--</p><br />-->
-
             <table class="ui-responsive">
                 <tr>
                     <td><?=__('account', 'fullName'); ?></td>
