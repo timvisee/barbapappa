@@ -98,7 +98,7 @@ function requireLogin() {
 
             <div data-role="main" class="ui-content">
                 <p>
-                    <?=__('general', 'hello'); ?> <?=$user->getFullName(); ?>!<br />
+                    <?=__('general', 'hello'); ?> <?=$user->getFullName(); ?>.<br />
                     <br />
                     <?php
                     if($hasMailsVerify)

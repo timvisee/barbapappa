@@ -77,15 +77,12 @@ class MailVerificationManager {
         if(!($user instanceof User))
             throw new Exception('Invalid user.');
 
-        // Build a query to select the mail verifications
-        // TODO: Properly bind the user ID to prevent SQL injections
-        $query = 'SELECT mail_ver_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_user_id=' . $user->getId();
+        // Prepare a query to select the mail verifications
+        $statement = Database::getPDO()->prepare('SELECT mail_ver_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_user_id=:user_id');
+        $statement->bindValue(':user_id', $user->getId(), PDO::PARAM_INT);
 
-        // Execute the query
-        $statement = Database::getPDO()->query($query);
-
-        // Make sure the query succeed
-        if($statement === false)
+        // Execute the prepared query
+        if(!$statement->execute())
             throw new Exception('Failed to query the database.');
 
         // The list of mail verifications
@@ -114,15 +111,12 @@ class MailVerificationManager {
         if(!AccountUtils::isValidMail($mail))
             throw new Exception('Invalid mail.');
 
-        // Build a query to select the mail verifications
-        // TODO: Properly bind the mail param, to pevent SQL injection
-        $query = 'SELECT mail_ver_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_mail LIKE ' . $mail;
+        // Prepare a query to select the mail verifications
+        $statement = Database::getPDO()->prepare('SELECT mail_ver_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_mail LIKE :mail');
+        $statement->bindParam(':mail', $mail, PDO::PARAM_STR);
 
-        // Execute the query
-        $statement = Database::getPDO()->query($query);
-
-        // Make sure the query succeed
-        if($statement === false)
+        // Execute the prepared query
+        if(!$statement->execute())
             throw new Exception('Failed to query the database.');
 
         // The list of mail verifications

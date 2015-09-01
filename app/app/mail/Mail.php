@@ -112,4 +112,19 @@ class Mail {
     public function getVerificationIp() {
         return $this->getDatabaseValue('mail_verified_ip');
     }
+
+    /**
+     * Delete this mail.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function delete() {
+        // Prepare a query for the mail being deleted
+        $statement = Database::getPDO()->prepare('DELETE FROM ' . MailManager::getDatabaseTableName() . ' WHERE mail_id=:mail_id');
+        $statement->bindValue(':mail_id', $this->getId(), PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+    }
 }
