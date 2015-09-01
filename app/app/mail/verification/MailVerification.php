@@ -237,6 +237,19 @@ class MailVerification {
         if($mail === null)
             throw new Exception('Failed to verify email address.');
 
+        // Delete the previous mail if there is any
+        if($this->hasPreviousMail()) {
+            // Get the previous mail
+            $previous = $this->getPreviousMail();
+
+            // Delete the previous mail
+            $previous->delete();
+            $previous = null;
+        }
+
+        // Remove all mails waiting for verification with this mail address
+        MailVerificationManager::deleteWithMail($address);
+
         // Delete the verification
         $this->delete();
 

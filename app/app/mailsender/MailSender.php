@@ -37,7 +37,7 @@ class MailSender {
             $to = $to->getFullName() . ' <' . $to->getPrimaryMail()->getMail() . '>';
 
         // Determine the sender
-        $sender = Config::getValue('mail', 'sender', '');
+        $sender = APP_NAME . ' <' . Config::getValue('mail', 'sender', '') . '>';
 
         // Create the headers
         $headers = 'From: ' . $sender . "\r\n" .

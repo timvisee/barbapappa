@@ -313,4 +313,25 @@ class MailVerificationManager {
         }
         return null;
     }
+
+    /**
+     * Delete all mails waiting for validation with a specific mail address.
+     *
+     * @param string $mail The mail address.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function deleteWithMail($mail) {
+        // Validate the mail
+        if(!AccountUtils::isValidMail($mail))
+            throw new Exception('Invalid mail address.');
+
+        // Prepare a query for the mail verification being deleted
+        $statement = Database::getPDO()->prepare('DELETE FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_mail LIKE :mail');
+        $statement->bindValue(':mail', $mail, PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+    }
 }
