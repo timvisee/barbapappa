@@ -29,7 +29,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
     // TODO: Make sure this user can add another email address (and that he doesn't reach his maximum count)
 
-    if(!isset($_POST['mail'])):
+    if(!isset($_POST['mail'])) {
         ?>
         <div data-role="page" id="page-register" data-unload="false">
             <?php PageHeaderBuilder::create(__('mail', 'addMail'))->setBackButton('index.php')->build(); ?>
@@ -40,7 +40,8 @@ if(StringUtils::equals($a, 'add', false)) {
                 <form method="POST" action="mailmanager.php?a=add&step=2">
                     <input type="text" name="mail" value="" placeholder="<?= __('account', 'mail'); ?>" />
 
-                    <input type="submit" value="<?= __('mail', 'addMailAddress'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                    <input type="submit" value="<?= __('mail', 'addMailAddress'); ?>"
+                           class="ui-btn ui-icon-lock ui-btn-icon-right" />
                 </form>
             </div>
 
@@ -48,7 +49,7 @@ if(StringUtils::equals($a, 'add', false)) {
         </div>
         <?php
 
-    else:
+    } else {
         // Get the mail address
         $mailAddress = trim($_POST['mail']);
 
@@ -92,7 +93,7 @@ if(StringUtils::equals($a, 'add', false)) {
             <?php PageFooterBuilder::create()->build(); ?>
         </div>
         <?php
-    endif;
+    }
 
 } elseif(StringUtils::equals($a, 'change', false)) {
 
@@ -137,7 +138,7 @@ if(StringUtils::equals($a, 'add', false)) {
     } else
         showErrorPage();
 
-    if(!isset($_POST['mail'])):
+    if(!isset($_POST['mail'])) {
         ?>
         <div data-role="page" id="page-register" data-unload="false">
             <?php PageHeaderBuilder::create(__('mail', 'changeMail'))->setBackButton('index.php')->build(); ?>
@@ -148,16 +149,17 @@ if(StringUtils::equals($a, 'add', false)) {
                 <center>
                     <table class="ui-responsive">
                         <tr>
-                            <td><?=__('general', 'current'); ?></td>
-                            <td><?=$oldMailAddress; ?></td>
+                            <td><?= __('general', 'current'); ?></td>
+                            <td><?= $oldMailAddress; ?></td>
                         </tr>
                     </table>
                 </center>
 
-                <form method="POST" action="mailmanager.php?a=change&step=2&<?=$nextFormParams; ?>">
+                <form method="POST" action="mailmanager.php?a=change&step=2&<?= $nextFormParams; ?>">
                     <input type="text" name="mail" value="" placeholder="<?= __('account', 'mail'); ?>" />
 
-                    <input type="submit" value="<?= __('navigation', 'continue'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                    <input type="submit" value="<?= __('navigation', 'continue'); ?>"
+                           class="ui-btn ui-icon-lock ui-btn-icon-right" />
                 </form>
             </div>
 
@@ -165,7 +167,7 @@ if(StringUtils::equals($a, 'add', false)) {
         </div>
         <?php
 
-    elseif(!isset($_POST['agree'])):
+    } elseif(!isset($_POST['agree'])) {
         // Get the mail address
         $mailAddress = trim($_POST['mail']);
 
@@ -197,27 +199,28 @@ if(StringUtils::equals($a, 'add', false)) {
                 <center>
                     <table class="ui-responsive">
                         <tr>
-                            <td><?=__('general', 'current'); ?></td>
-                            <td><?=$oldMailAddress; ?></td>
+                            <td><?= __('general', 'current'); ?></td>
+                            <td><?= $oldMailAddress; ?></td>
                         </tr>
                         <tr>
-                            <td><?=__('general', 'new'); ?></td>
-                            <td><?=$mailAddress; ?></td>
+                            <td><?= __('general', 'new'); ?></td>
+                            <td><?= $mailAddress; ?></td>
                         </tr>
                     </table>
                 </center>
                 <br />
 
-                <form method="POST" action="mailmanager.php?a=change&step=3&<?=$nextFormParams; ?>">
-                    <input type="hidden" name="mail" value="<?=$mailAddress; ?>" />
+                <form method="POST" action="mailmanager.php?a=change&step=3&<?= $nextFormParams; ?>">
+                    <input type="hidden" name="mail" value="<?= $mailAddress; ?>" />
 
-                    <label for="agree"><?=__('mail', 'youSureRemoveOldMailReplaceWithNew'); ?></label>
+                    <label for="agree"><?= __('mail', 'youSureRemoveOldMailReplaceWithNew'); ?></label>
                     <select id="agree" name="agree" data-role="slider">
                         <option value="0"><?= __('general', 'acceptanceNo'); ?></option>
                         <option value="1"><?= __('general', 'acceptanceYes'); ?></option>
                     </select>
 
-                    <input type="submit" value="<?= __('mail', 'changeMailAddress'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                    <input type="submit" value="<?= __('mail', 'changeMailAddress'); ?>"
+                           class="ui-btn ui-icon-lock ui-btn-icon-right" />
                 </form>
             </div>
 
@@ -225,7 +228,7 @@ if(StringUtils::equals($a, 'add', false)) {
         </div>
         <?php
 
-    else:
+    } else {
         // Get the mail address
         $mailAddress = trim($_POST['mail']);
 
@@ -283,14 +286,15 @@ if(StringUtils::equals($a, 'add', false)) {
                 </p><br />
 
                 <fieldset data-role="controlgroup" data-type="vertical">
-                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goToFrontPage'); ?></a>
+                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left"
+                       data-direction="reverse"><?= __('navigation', 'goToFrontPage'); ?></a>
                 </fieldset>
             </div>
 
             <?php PageFooterBuilder::create()->build(); ?>
         </div>
         <?php
-    endif;
+    }
 
 } elseif(StringUtils::equals($a, 'delete', false)) {
     ?>
