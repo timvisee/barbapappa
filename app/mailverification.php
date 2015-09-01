@@ -183,6 +183,60 @@ if(StringUtils::equals($a, 'resend', false)) {
         }
     }
 
+} elseif(StringUtils::equals($a, 'verify', false)) {
+    // Make sure the verification key is set
+    if(!isset($_GET['key']))
+        showErrorPage();
+
+    // Get and trim the key
+    $key = trim($_GET['key']);
+
+    // Make sure the key is valid
+    if(!MailVerificationManager::isMailVerificationWithKey($key))
+        showErrorPage();
+
+    // Get the mail verification
+    $mailVerification = MailVerificationManager::getMailVerificationWithKey($key);
+    if($mailVerification == null)
+        showErrorPage();
+
+    // Get the mail verification user
+    $mailVerificationUser = $mailVerification->getUser();
+    $mailVerificationAddress = $mailVerification->getMail();
+
+    // Verify the mail address and clear the instance
+    $mailVerification->verify();
+    $mailVerification = null;
+
+    ?>
+    <div data-role="page" id="page-login">
+        <?php PageHeaderBuilder::create()->build(); ?>
+
+        <div data-role="main" class="ui-content">
+            <p><?=__('general', 'welcomeBack'); ?> <?=$mailVerificationUser->getFullName(); ?>!<br />
+            <br />
+            <?=__('mail', 'mailVerified'); ?></p><br />
+
+            <table class="ui-responsive">
+                <tr>
+                    <td><?=__('account', 'mail'); ?></td>
+                    <td><?=$mailVerificationAddress; ?></td>
+                </tr>
+            </table>
+            <br />
+
+            <fieldset data-role="controlgroup" data-type="vertical">
+                <?php if(!SessionManager::isLoggedIn()): ?>
+                    <a href="login.php?user=<?=$mailVerificationAddress; ?>&back=0" data-ajax="false" class="ui-btn ui-icon-user ui-btn-icon-left"><?=__('account', 'login'); ?></a>
+                <?php endif; ?>
+                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left"><?=__('navigation', 'goToFrontPage'); ?></a>
+            </fieldset>
+        </div>
+
+        <?php PageFooterBuilder::create()->build(); ?>
+    </div>
+    <?php
+
 } else
     showErrorPage();
 

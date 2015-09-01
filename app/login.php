@@ -17,15 +17,26 @@ if(SessionManager::isLoggedIn())
 
 // Check whether the user is trying to login, if not show the login form instead
 if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
+
+    // Get the default user
+    $userValue = '';
+    if(isset($_GET['user']))
+        $userValue = trim($_GET['user']);
+
+    // Determine whether to show a back button
+    $showBackButton = true;
+    if(isset($_GET['back']))
+        $showBackButton = $_GET['back'] == 1;
+
     ?>
     <div data-role="page" id="page-login">
-        <?php PageHeaderBuilder::create(__('account', 'login'))->setBackButton('index.php')->build(); ?>
+        <?php PageHeaderBuilder::create(__('account', 'login'))->setBackButton($showBackButton ? 'index.php' : null)->build(); ?>
 
         <div data-role="main" class="ui-content">
             <p><?= __('login', 'enterUsernamePasswordToLogin'); ?></p><br />
 
             <form method="POST" action="login.php?a=login">
-                <input type="text" name="login_user" value="" placeholder="<?= __('account', 'username'); ?>" />
+                <input type="text" name="login_user" value="<?=$userValue; ?>" placeholder="<?= __('account', 'username'); ?>" />
                 <input type="password" name="login_password" value="" placeholder="<?= __('account', 'password'); ?>" /><br />
 
                 <input type="submit" value="<?= __('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />

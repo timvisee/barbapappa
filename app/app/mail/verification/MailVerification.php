@@ -4,8 +4,10 @@ namespace app\mail\verification;
 
 use app\database\Database;
 use app\mail\Mail;
+use app\mail\MailManager;
 use app\user\User;
 use carbon\core\datetime\DateTime;
+use carbon\core\exception\datetime\zone\InvalidDateTimeZoneException;
 use carbon\core\util\StringUtils;
 use Exception;
 use PDO;
@@ -189,5 +191,30 @@ class MailVerification {
      */
     public function sendVerificationMessage() {
         // TODO: Send mail verification message here!
+    }
+
+    /**
+     * Verify the mail verification.
+     *
+     * @throws Exception|InvalidDateTimeZoneException Throws if an error occurred.
+     */
+    public function verify() {
+        // Get the user, mail address and creation date
+        $user = $this->getUser();
+        $address = $this->getMail();
+        $creationDateTime = $this->getCreationDateTime();
+
+        // Add the mail address
+        $mail = MailManager::createMail($user, $address, $creationDateTime, DateTime::now(), null);
+
+        // Make sure the mail is valid
+        if($mail === null)
+            throw new Exception('Failed to verify email address.');
+
+        // Delete the verification
+        $this->delete();
+
+        // Return the mail as object
+        return $mail;
     }
 }

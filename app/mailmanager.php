@@ -97,9 +97,12 @@ if(StringUtils::equals($a, 'add', false)) {
 
 } elseif(StringUtils::equals($a, 'change', false)) {
 
+    // TODO: Make sure the new mail is different!
+
     // Get the mail or mail verification
     $oldMail = null;
     $oldMailAddress = '';
+    $oldMailUser = null;
     $nextFormParams = '';
     if(isset($_GET['mail_id'])) {
         // Get the mail ID
@@ -114,6 +117,9 @@ if(StringUtils::equals($a, 'add', false)) {
 
         // Get the old mail address
         $oldMailAddress = $oldMail->getMail();
+
+        // Get the old mail user
+        $oldMailUser = $oldMail->getUser();
 
         // Set the next form params
         $nextFormParams = 'mail_id=' . $mailId;
@@ -131,6 +137,9 @@ if(StringUtils::equals($a, 'add', false)) {
 
         // Get the old mail address
         $oldMailAddress = $oldMail->getMail();
+
+        // Get the old mail user
+        $oldMailUser = $oldMail->getUser();
 
         // Set the next form params
         $nextFormParams = 'mail_verification_id=' . $mailVerificationId;
@@ -442,7 +451,7 @@ if(StringUtils::equals($a, 'add', false)) {
     $oldMail = new Mail($mailId);
 
     // Make sure the mail waiting for verification is from the current user
-    if($mailVerification->getUser()->getId() != $user->getId())
+    if($oldMail->getUser()->getId() != $user->getId())
         showErrorPage();
 
     ?>

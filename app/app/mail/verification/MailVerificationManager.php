@@ -219,8 +219,8 @@ class MailVerificationManager {
         $key = trim($key);
 
         // Prepare a query for the database to get the mailverification
-        $statement = Database::getPDO()->prepare('SELECT mail_ver FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_key LIKE :key');
-        $statement->bindValue(':key', $key, PDO::PARAM_STR);
+        $statement = Database::getPDO()->prepare('SELECT mail_ver_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_key LIKE :mail_ver_key');
+        $statement->bindValue(':mail_ver_key', $key, PDO::PARAM_STR);
 
         // Execute the prepared query
         if(!$statement->execute())
@@ -228,7 +228,7 @@ class MailVerificationManager {
 
         // Return the mail verification, or null if no mail verification was found
         if($statement->rowCount() > 0)
-            return new MailVerification($statement->fetch(PDO::FETCH_ASSOC)['mail_ver']);
+            return new MailVerification($statement->fetch(PDO::FETCH_ASSOC)['mail_ver_id']);
         return null;
     }
 

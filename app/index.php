@@ -35,6 +35,9 @@ if(SessionManager::isLoggedIn())
         </fieldset>
         <?php else: ?>
         <fieldset data-role="controlgroup" data-type="vertical">
+            <a href="mailmanager.php" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'manageMailAddresses'); ?></a>
+        </fieldset>
+        <fieldset data-role="controlgroup" data-type="vertical">
             <a href="logout.php" class="ui-btn ui-icon-delete ui-btn-icon-left" data-direction="reverse"><?=__('account', 'logout'); ?></a>
         </fieldset>
         <?php endif; ?>

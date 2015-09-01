@@ -7,6 +7,7 @@ use app\database\Database;
 use app\user\User;
 use app\util\AccountUtils;
 use carbon\core\datetime\DateTime;
+use carbon\core\util\IpUtils;
 use Exception;
 use PDO;
 
@@ -187,12 +188,15 @@ class MailManager {
      *
      * @param User $user The user.
      * @param string $mail The mail.
+     * @param DateTime|null $creationDateTime Creation date time or null.
+     * @param DateTime|null $verificationDateTime Verification date time or null.
+     * @param string|null $verificationIp Verification IP.
      *
      * @return Mail The created mail as object.
      *
      * @throws Exception throws if an error occurred.
      */
-    public static function createMail($user, $mail) {
+    public static function createMail($user, $mail, $creationDateTime = null, $verificationDateTime = null, $verificationIp = null) {
         // Validate the user instance
         if(!($user instanceof User))
             throw new Exception('The user is invalid.');
@@ -206,16 +210,28 @@ class MailManager {
             throw new Exception('This mail already exists.');
 
         // Determine the creation date time
-        $createDateTime = DateTime::now();
+        if($creationDateTime === null)
+            $creationDateTime = DateTime::now();
+
+        // Determine the verification date time
+        if($verificationDateTime === null)
+            $verificationDateTime = DateTime::now();
+
+        // Determine the IP
+        if($verificationIp === null)
+            $verificationIp = IpUtils::getClientIp();
 
         // Prepare a query for the picture being added
         $statement = Database::getPDO()->prepare('INSERT INTO ' . static::getDatabaseTableName() .
-            ' (mail_user_id, mail_mail, mail_create_datetime) ' .
-            'VALUES (:user_id, :mail_mail, :mail_create_datetime)');
+            ' (mail_user_id, mail_mail, mail_create_datetime, mail_verified_datetime, mail_verified_ip) ' .
+            'VALUES (:user_id, :mail_mail, :mail_create_datetime, :mail_verified_datetime, :mail_verified_ip)');
         $statement->bindValue(':user_id', $user->getId(), PDO::PARAM_INT);
         $statement->bindValue(':mail_mail', $mail, PDO::PARAM_STR);
         // TODO: Use the UTC/GMT timezone!
-        $statement->bindValue(':mail_create_datetime', $createDateTime->toString(), PDO::PARAM_STR);
+        $statement->bindValue(':mail_create_datetime', $creationDateTime->toString(), PDO::PARAM_STR);
+        // TODO: Use the UTC/GMT timezone!
+        $statement->bindValue(':mail_verified_datetime', $verificationDateTime->toString(), PDO::PARAM_STR);
+        $statement->bindValue(':mail_verified_ip', $verificationIp, PDO::PARAM_STR);
 
         // Execute the prepared query
         if(!$statement->execute())
