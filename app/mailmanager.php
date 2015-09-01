@@ -297,17 +297,123 @@ if(StringUtils::equals($a, 'add', false)) {
     }
 
 } elseif(StringUtils::equals($a, 'delete', false)) {
-    ?>
-    <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create(__('mail', 'deleteMail'))->setBackButton('index.php')->build(); ?>
 
-        <div data-role="main" class="ui-content">
-            <p>TODO: Delete mail here</p>
+    // Get the mail or mail verification
+    $oldMail = null;
+    $oldMailAddress = '';
+    $nextFormParams = '';
+    if(isset($_GET['mail_id'])) {
+        // Get the mail ID
+        $mailId = $_GET['mail_id'];
+
+        // Verify the mail ID
+        if(!MailManager::isMailWithId($mailId))
+            showErrorPage();
+
+        // Get the mail as an object
+        $oldMail = new Mail($mailId);
+
+        // Get the old mail address
+        $oldMailAddress = $oldMail->getMail();
+
+        // Set the next form params
+        $nextFormParams = 'mail_id=' . $mailId;
+
+    } else if(isset($_GET['mail_verification_id'])) {
+        // Get the mail verification ID
+        $mailVerificationId = $_GET['mail_verification_id'];
+
+        // Verify the mail verification ID
+        if(!MailVerificationManager::isMailVerificationWithId($mailVerificationId))
+            showErrorPage();
+
+        // Get the mail verification as an object
+        $oldMail = new MailVerification($mailVerificationId);
+
+        // Get the old mail address
+        $oldMailAddress = $oldMail->getMail();
+
+        // Set the next form params
+        $nextFormParams = 'mail_verification_id=' . $mailVerificationId;
+
+    } else
+        showErrorPage();
+
+    if(!isset($_POST['agree'])) {
+        ?>
+        <div data-role="page" id="page-register" data-unload="false">
+            <?php PageHeaderBuilder::create(__('mail', 'deleteMail'))->setBackButton('index.php')->build(); ?>
+
+            <div data-role="main" class="ui-content">
+                <p><?=__('mail', 'aboutToRemoveMailNotReversible'); ?></p><br />
+
+                <form method="POST" action="mailmanager.php?a=delete&step=2&<?= $nextFormParams; ?>">
+                    <center>
+                        <table class="ui-responsive">
+                            <tr>
+                                <td><?= __('account', 'mail'); ?></td>
+                                <td><?= $oldMailAddress; ?></td>
+                            </tr>
+                        </table>
+                    </center>
+                    <br />
+
+                    <label for="agree"><?= __('mail', 'youSureRemoveEmail'); ?></label>
+                    <select id="agree" name="agree" data-role="slider">
+                        <option value="0"><?= __('general', 'acceptanceNo'); ?></option>
+                        <option value="1"><?= __('general', 'acceptanceYes'); ?></option>
+                    </select>
+
+                    <input type="submit" value="<?= __('mail', 'deleteMailAddress'); ?>"
+                           class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                </form>
+            </div>
+
+            <?php PageFooterBuilder::create()->build(); ?>
         </div>
+        <?php
 
-        <?php PageFooterBuilder::create()->build(); ?>
-    </div>
-    <?php
+    } else {
+        // Make sure the user agree's to change the mail address
+        $agree = $_POST['agree'];
+        if($agree != 1)
+            showErrorPage(__('mail', 'mustAgreeToRemoveMail'));
+
+        // Determine whether to use a previous address when creating the new mail verification
+        $previousAddress = null;
+        if($oldMail instanceof Mail)
+            $previousAddress = $oldMail;
+
+        // Delete the old mail address
+        if($oldMail instanceof Mail) {
+            $oldMail->delete();
+        } elseif($oldMail instanceof MailVerification)
+            $oldMail->delete();
+        else
+            showErrorPage();
+
+        // Clear the mail instance
+        $oldMail = null;
+
+        ?>
+        <div data-role="page" id="page-register" data-unload="false">
+            <?php PageHeaderBuilder::create(__('mail', 'deleteMail'))->build(); ?>
+
+            <div data-role="main" class="ui-content">
+                <p>
+                    <?= __('mail', 'removedMailSuccessfully'); ?>
+                </p><br />
+
+                <fieldset data-role="controlgroup" data-type="vertical">
+                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left"
+                       data-direction="reverse"><?= __('navigation', 'goToFrontPage'); ?></a>
+                </fieldset>
+            </div>
+
+            <?php PageFooterBuilder::create()->build(); ?>
+        </div>
+        <?php
+    }
 
 } elseif(isset($_GET['mail_id'])) {
     // Get the mail ID
