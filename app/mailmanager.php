@@ -138,6 +138,10 @@ if(StringUtils::equals($a, 'add', false)) {
     } else
         showErrorPage();
 
+    // Make sure the old mail user is the same as the user of the current session
+    if($oldMailUser->getId() != $user->getId())
+        showErrorPage();
+
     if(!isset($_POST['mail'])) {
         ?>
         <div data-role="page" id="page-register" data-unload="false">
@@ -301,6 +305,7 @@ if(StringUtils::equals($a, 'add', false)) {
     // Get the mail or mail verification
     $oldMail = null;
     $oldMailAddress = '';
+    $oldMailUser = null;
     $nextFormParams = '';
     if(isset($_GET['mail_id'])) {
         // Get the mail ID
@@ -315,6 +320,9 @@ if(StringUtils::equals($a, 'add', false)) {
 
         // Get the old mail address
         $oldMailAddress = $oldMail->getMail();
+
+        // Get the old mail user
+        $oldMailUser = $oldMail->getUser();
 
         // Set the next form params
         $nextFormParams = 'mail_id=' . $mailId;
@@ -333,10 +341,17 @@ if(StringUtils::equals($a, 'add', false)) {
         // Get the old mail address
         $oldMailAddress = $oldMail->getMail();
 
+        // Get the old mail user
+        $oldMailUser = $oldMail->getUser();
+
         // Set the next form params
         $nextFormParams = 'mail_verification_id=' . $mailVerificationId;
 
     } else
+        showErrorPage();
+
+    // Make sure the old mail user is the same as the user of the current session
+    if($oldMailUser->getId() != $user->getId())
         showErrorPage();
 
     if(!isset($_POST['agree'])) {
