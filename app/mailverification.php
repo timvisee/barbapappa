@@ -217,12 +217,14 @@ if(StringUtils::equals($a, 'resend', false)) {
             <br />
             <?=__('mail', 'mailVerified'); ?></p><br />
 
-            <table class="ui-responsive">
-                <tr>
-                    <td><?=__('account', 'mail'); ?></td>
-                    <td><?=$mailVerificationAddress; ?></td>
-                </tr>
-            </table>
+            <center>
+                <table class="ui-responsive">
+                    <tr>
+                        <td><?=__('account', 'mail'); ?></td>
+                        <td><?=$mailVerificationAddress; ?></td>
+                    </tr>
+                </table>
+            </center>
             <br />
 
             <fieldset data-role="controlgroup" data-type="vertical">

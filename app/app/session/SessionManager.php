@@ -5,6 +5,7 @@ namespace app\session;
 use app\config\Config;
 use app\database\Database;
 use app\user\User;
+use app\user\UserManager;
 use carbon\core\datetime\DateTime;
 use carbon\core\util\IpUtils;
 use Exception;
@@ -227,6 +228,10 @@ class SessionManager {
             static::removeSession(null, true);
             return;
         }
+
+        // Make sure the user of this session still exists
+        if(!UserManager::isUserWithId($session->getUser()->getId()))
+            return;
 
         // Get and store the session
         static::$currentSession = $session;

@@ -4,6 +4,7 @@ namespace app\user;
 
 use app\config\Config;
 use app\database\Database;
+use app\mail\Mail;
 use app\mail\MailManager;
 use app\user\meta\UserMeta;
 use carbon\core\datetime\DateTime;
@@ -173,6 +174,21 @@ class User {
 
         // Return true if the user has at least one verified mail
         return sizeof($mails) > 0;
+    }
+
+    /**
+     * Get the primary mail address of the user.
+     *
+     * @return Mail Primary mail address.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function getPrimaryMail() {
+        // Get the verified mails for this user
+        $mails = MailManager::getMailsFromUser($this);
+
+        // Return the first mail address
+        return $mails[0];
     }
 
     /**

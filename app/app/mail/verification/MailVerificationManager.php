@@ -218,7 +218,7 @@ class MailVerificationManager {
         // Trim the key
         $key = trim($key);
 
-        // Prepare a query for the database to get the mailverification
+        // Prepare a query for the database to get the mail verification
         $statement = Database::getPDO()->prepare('SELECT mail_ver_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_ver_key LIKE :mail_ver_key');
         $statement->bindValue(':mail_ver_key', $key, PDO::PARAM_STR);
 
@@ -255,6 +255,10 @@ class MailVerificationManager {
         // Validate the previous
         if($previous !== null && !($previous instanceof Mail))
             throw new Exception('Invalid previous mail instance.');
+
+        // Parse the previous
+        if($previous instanceof Mail)
+            $previous = $previous->getId();
 
         // Generate a random mail key
         $key = static::generateNewKey();

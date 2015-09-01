@@ -99,7 +99,6 @@ class Mail {
      */
     public function getVerificationDateTime() {
         // TODO: Use the proper timezone!
-        // TODO: An invalid value is returned, fix this
         return new DateTime($this->getDatabaseValue('mail_verified_datetime'));
     }
 

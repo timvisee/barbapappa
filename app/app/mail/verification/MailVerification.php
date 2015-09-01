@@ -2,9 +2,12 @@
 
 namespace app\mail\verification;
 
+use app\config\Config;
 use app\database\Database;
+use app\language\LanguageManager;
 use app\mail\Mail;
 use app\mail\MailManager;
+use app\mailsender\MailSender;
 use app\user\User;
 use carbon\core\datetime\DateTime;
 use carbon\core\exception\datetime\zone\InvalidDateTimeZoneException;
@@ -190,7 +193,30 @@ class MailVerification {
      * Send the verification message to the user.
      */
     public function sendVerificationMessage() {
-        // TODO: Send mail verification message here!
+        // TODO: Determine the message language based on the preferred language of the user
+
+        // Language
+        $lang = null;
+
+        // Get the user
+        $user = $this->getUser();
+
+        // Determine the subject
+        $subject = html_entity_decode(LanguageManager::getValue('mail', 'mailVerification'));
+
+        // Construct the message
+        $message = html_entity_decode(LanguageManager::getValue('general', 'hello')) . ' ' . html_entity_decode($user->getFullName()) . ",\r\n";
+        $message .= "\r\n";
+        $message .= html_entity_decode(LanguageManager::getValue('mail', 'beforeYouCanUseYouMustVerify')) . "\r\n";
+        $message .= Config::getValue('general', 'site_url', '') . 'mailverification.php?a=verify&key=' . $this->getKey() . "\r\n";
+        $message .= "\r\n";
+        $message .= html_entity_decode(LanguageManager::getValue('mail', 'userCredentialsAreAsFollows')) . "\r\n";
+        $message .= html_entity_decode(LanguageManager::getValue('account', 'username')) . ': ' . $user->getUsername() . "\r\n";
+        $message .= "\r\n";
+        $message .= html_entity_decode(LanguageManager::getValue('app', 'theAppTeam'));
+
+        // Send the message
+        MailSender::sendMail($this->getMail(), $subject, $message);
     }
 
     /**
