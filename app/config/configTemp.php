@@ -6,8 +6,8 @@ defined('APP_INIT') or die('Access denied!');
 // Return the config array
 return Array(
     'general' => Array(
-        'site_url'          => '',
-        'site_path'         => '/app/barapp/app'
+        'site_url'          => 'http://local.timvisee.com/app/BARbapAPPa/app/',
+        'site_path'         => '/app/BARbapAPPa/app'
     ),
 
     'database' => Array(
@@ -34,5 +34,9 @@ return Array(
         'debug' => true,
         'language.default' => 'nl-NL',
         'language.directory' => '/language'
+    ),
+
+    'mail' => Array(
+        'sender' => 'noreply@local.timvisee.com'
     )
 );
