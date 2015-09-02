@@ -114,17 +114,39 @@ class Mail {
     }
 
     /**
+     * Check if this is the primary mail of the user.
+     *
+     * @return bool True if this is the primary mail, false otherwise.
+     */
+    public function isPrimaryMail() {
+        return $this->getUser()->getPrimaryMailId() == $this->getId();
+    }
+
+    /**
      * Delete this mail.
      *
      * @throws Exception Throws if an error occurred.
      */
     public function delete() {
+        // Get the mail ID and user
+        $mailId = $this->getId();
+        $user = $this->getUser();
+
         // Prepare a query for the mail being deleted
         $statement = Database::getPDO()->prepare('DELETE FROM ' . MailManager::getDatabaseTableName() . ' WHERE mail_id=:mail_id');
-        $statement->bindValue(':mail_id', $this->getId(), PDO::PARAM_INT);
+        $statement->bindValue(':mail_id', $mailId, PDO::PARAM_INT);
 
         // Execute the prepared query
         if(!$statement->execute())
             throw new Exception('Failed to query the database.');
+
+        // If this is the primary mail of the user, change it
+        if($user->getPrimaryMailId() == $mailId) {
+            // Get the other mails
+            $mails = MailManager::getMailsFromUser($user);
+
+            // Set or reset the new primary mail
+            $user->setPrimaryMail(sizeof($mails) > 0 ? $mails[0] : null);
+        }
     }
 }

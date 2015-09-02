@@ -179,18 +179,71 @@ class User {
     }
 
     /**
-     * Get the primary mail address of the user.
+     * Get the primary mail ID for a user if set.
      *
-     * @return Mail Primary mail address.
+     * @return int Primary mail ID if set.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function getPrimaryMailId() {
+        return $this->getDatabaseValue('user_primary_mail_id');
+    }
+
+    /**
+     * Get the primary mail address, or null if none is set.
+     *
+     * @return Mail|null Primary mail address or null.
      *
      * @throws Exception Throws if an error occurred.
      */
     public function getPrimaryMail() {
-        // Get the verified mails for this user
-        $mails = MailManager::getMailsFromUser($this);
+        // Get the mail ID
+        $mailId = $this->getPrimaryMailId();
 
-        // Return the first mail address
-        return $mails[0];
+        // Return the mail as object or null
+        if($mailId != null && $mailId != 0)
+            return new Mail($mailId);
+        return null;
+    }
+
+    /**
+     * Check if this user has a primary mail.
+     *
+     * @return bool True if this user has a primary mail, false if not.
+     */
+    public function hasPrimaryMail() {
+        return $this->getPrimaryMail() != null;
+    }
+
+    /**
+     * Set the users primary mail address.
+     *
+     * @param Mail|null $mail The mail instance, or null to reset the instance.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function setPrimaryMail($mail = null) {
+        // Make sure the mail is valid
+        if($mail == 0)
+            $mail = null;
+        if($mail != null && !($mail instanceof Mail))
+            throw new Exception('Invalid mail instance.');
+
+        // Get the mail ID
+        $mailId = null;
+        if($mail instanceof Mail)
+            $mailId = $mail->getId();
+
+        // Prepare a query to set the primary mail address
+        $statement = Database::getPDO()->prepare('UPDATE ' . UserManager::getDatabaseTableName() .
+            ' SET user_primary_mail_id=:mail_id' .
+            ' WHERE user_id=:user_id');
+        $statement->bindValue(':user_id', $this->getId(), PDO::PARAM_INT);
+        $statement->bindValue(':mail_id', $mailId, PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
     }
 
     /**

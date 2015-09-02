@@ -278,6 +278,10 @@ class MailVerification {
         if($mailsCount == 0)
             $user->sendWelcomeMessage($address);
 
+        // Set this as primary mail address if the user doesn't have a primary address yet
+        if(!$user->hasPrimaryMail())
+            $user->setPrimaryMail($mail);
+
         // Return the mail as object
         return $mail;
     }

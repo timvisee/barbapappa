@@ -575,7 +575,13 @@ if(StringUtils::equals($a, 'add', false)) {
                         if(!($mailVerification instanceof Mail))
                             continue;
 
-                        echo '<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="mailmanager.php?mail_id=' . $mailVerification->getId() . '">' . $mailVerification->getMail() . '<span class="ui-li-count">Primary</span></a></li>';
+                        // Generate the primary emblem
+                        $primaryEmblem = '';
+                        if($mailVerification->isPrimaryMail())
+                            $primaryEmblem = '<span class="ui-li-count">' . __('general', 'primary') . '</span>';
+
+                        // Print the item
+                        echo '<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="mailmanager.php?mail_id=' . $mailVerification->getId() . '">' . $mailVerification->getMail() . $primaryEmblem . '</a></li>';
                     }
                     ?>
                 </ul>
@@ -592,6 +598,7 @@ if(StringUtils::equals($a, 'add', false)) {
                         if(!($mailVerification instanceof MailVerification))
                             continue;
 
+                        // Print the item
                         echo '<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="mailmanager.php?mail_verification_id=' . $mailVerification->getId() . '">' . $mailVerification->getMail() . '</a></li>';
                     }
                     ?>

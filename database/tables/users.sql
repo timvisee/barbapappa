@@ -6,6 +6,7 @@ CREATE TABLE `bar_users` (
 	`user_create_datetime` DATETIME NOT NULL,
 	`user_create_ip` TEXT NOT NULL,
 	`user_name_full` VARCHAR(128) NOT NULL,
+	`user_primary_mail_id` INT(11) NULL DEFAULT NULL,
 	PRIMARY KEY (`user_id`)
 )
 COLLATE='latin1_swedish_ci'
