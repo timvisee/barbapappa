@@ -1,14 +1,5 @@
 <?php
 
-/**
- * MailSend.php
- *
- * Created by PhpStorm.
- *
- * Author: Tim
- * Date: 1-9-2015
- */
-
 namespace app\mailsender;
 
 use app\config\Config;
