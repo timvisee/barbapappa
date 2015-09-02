@@ -439,6 +439,56 @@ if(StringUtils::equals($a, 'add', false)) {
         <?php
     }
 
+} elseif(StringUtils::equals($a, 'setPrimary', false)) {
+
+    // Make sure the mail parameter is set
+    if(!isset($_GET['mail_id']))
+        showErrorPage();
+
+    // Get the mail ID
+    $mailId = $_GET['mail_id'];
+
+    // Make sure the mail ID is valid
+    if(!MailManager::isMailWithId($mailId))
+        showErrorPage();
+
+    // Get the mail object
+    $mail = new Mail($mailId);
+
+    // Make sure the current logged in user owns this mail
+    if($mail->getUser()->getId() != $user->getId())
+        showErrorPage();
+
+    // Set the primary mail address
+    $user->setPrimaryMail($mail);
+
+    ?>
+    <div data-role="page" id="page-register" data-unload="false">
+        <?php PageHeaderBuilder::create(__('mail', 'primaryMail'))->build(); ?>
+
+        <div data-role="main" class="ui-content">
+            <p>
+                <?= __('mail', 'youHaveSetPrimaryMailAddress'); ?>
+            </p><br />
+
+            <table class="ui-responsive">
+                <tr>
+                    <td><?=__('account', 'mail'); ?></td>
+                    <td><?=$mail->getMail(); ?></td>
+                </tr>
+            </table>
+            <br />
+
+            <fieldset data-role="controlgroup" data-type="vertical">
+                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left"
+                   data-direction="reverse"><?= __('navigation', 'goToFrontPage'); ?></a>
+            </fieldset>
+        </div>
+
+        <?php PageFooterBuilder::create()->build(); ?>
+    </div>
+    <?php
+
 } elseif(isset($_GET['mail_id'])) {
     // Get the mail ID
     $mailId = $_GET['mail_id'];
@@ -454,6 +504,9 @@ if(StringUtils::equals($a, 'add', false)) {
     if($oldMail->getUser()->getId() != $user->getId())
         showErrorPage();
 
+    // Check whether this mail address is the primary address
+    $isPrimary = $oldMail->isPrimaryMail();
+
     ?>
     <div data-role="page" id="page-main">
         <?php PageHeaderBuilder::create(__('mail', 'manageMail'))->setBackButton('mailmanager.php')->build(); ?>
@@ -465,8 +518,19 @@ if(StringUtils::equals($a, 'add', false)) {
                     <td><?=$oldMail->getMail(); ?></td>
                 </tr>
                 <tr>
+                    <td><?=__('general', 'primary'); ?></td>
+                    <td>
+                        <?php
+                        if($isPrimary)
+                            echo '<span style="color: green;">' . __('general', 'acceptanceYes') . '</span>';
+                        else
+                            echo '<span style="color: red;">' . __('general', 'acceptanceNo') . '</span>';
+                        ?>
+                    </td>
+                </tr>
+                <tr>
                     <td><?=__('account', 'verified'); ?></td>
-                    <td><span style="color: green;"><?=__('general', 'acceptanceYes'); ?>!</span></td>
+                    <td><span style="color: green;"><?=__('general', 'acceptanceYes'); ?></span></td>
                 </tr>
                 <tr>
                     <td><?=__('mail', 'verifiedAt'); ?></td>
@@ -478,6 +542,16 @@ if(StringUtils::equals($a, 'add', false)) {
             <p>
                 <?=__('mail', 'pressButtonToChangeOrDelete'); ?>
             </p><br />
+
+            <?php
+            if(!$isPrimary) {
+                ?>
+                <fieldset data-role="controlgroup" data-type="vertical">
+                    <a href="mailmanager.php?mail_id=<?=$mailId; ?>&a=setPrimary" class="ui-btn ui-icon-star ui-btn-icon-left"><?=__('mail', 'setAsPrimaryMailAddress'); ?></a>
+                </fieldset>
+                <?php
+            }
+            ?>
 
             <fieldset data-role="controlgroup" data-type="vertical">
                 <a href="mailmanager.php?mail_id=<?=$mailId; ?>&a=change" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('mail', 'changeMailAddress'); ?></a>
