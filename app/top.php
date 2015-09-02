@@ -1,6 +1,7 @@
 <?php
 
 use app\config\Config;
+use app\language\LanguageManager;
 use app\mail\verification\MailVerificationManager;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
@@ -186,6 +187,61 @@ function showErrorPage($errorMsg = null) {
         <?php endif;
 
         PageFooterBuilder::create()->build(); ?>
+    </div>
+    <?php
+
+    // Print the bottom of the page
+    require('bottom.php');
+    die();
+}
+
+// Set the language tag
+if(isset($_GET['set_lang_tag'])) {
+    // Get the user language
+    $lang = trim($_GET['set_lang_tag']);
+
+    // Make sure the user language is valid
+    if(!LanguageManager::hasWithTag($lang))
+        showErrorPage();
+
+    // Set the language cookie
+    LanguageManager::setUserLanguageTag($lang);
+    LanguageManager::setUserLanguageTagCookie($lang);
+
+    // TODO: Create a method for this!
+}
+
+// Make sure the language is set
+else if(LanguageManager::getUserLanguageTagCookie() === null) {
+    // TODO: Use the user's language if he's logged in.
+
+    // Get the query string, and append the language part
+    $query = $_SERVER['QUERY_STRING'];
+    $query .= (strlen($query) > 0 ? '&' : '') . 'set_lang_tag=';
+
+    ?>
+    <div data-role="page" id="page-main">
+        <?php PageHeaderBuilder::create()->build(); ?>
+
+        <div data-role="main" class="ui-content">
+            <ul class="ui-listview" data-role="listview" id="listview-stations-last-occupied" data-inset="true">
+                <li data-role="list-divider"><?=LanguageManager::getValue('language', 'chooseLanguage', null, 'nl-NL'); ?>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<?=LanguageManager::getValue('language', 'chooseLanguage', null, 'en-US'); ?></li>
+                <li>
+                    <a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="<?=$_SERVER['PHP_SELF']; ?>?<?=$query; ?>nl-NL">
+                        <img src="style/image/flag/nl.png" alt="<?=LanguageManager::getValue('language', 'thisLanguage', null, 'nl-NL'); ?>" class="ui-li-icon ui-corner-none" style="margin-top: 2px;">
+                        <?=LanguageManager::getValue('language', 'visitInThisLanguage', null, 'nl-NL'); ?>
+                    </a>
+                </li>
+                <li>
+                    <a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="<?=$_SERVER['PHP_SELF']; ?>?<?=$query; ?>en-US">
+                        <img src="style/image/flag/gb.png" alt="<?=LanguageManager::getValue('language', 'thisLanguage', null, 'en-US'); ?>" class="ui-li-icon ui-corner-none" style="margin-top: 2px;">
+                        <?=LanguageManager::getValue('language', 'visitInThisLanguage', null, 'en-US'); ?>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <?php PageFooterBuilder::create()->build(); ?>
     </div>
     <?php
 

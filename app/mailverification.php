@@ -230,8 +230,10 @@ if(StringUtils::equals($a, 'resend', false)) {
             <fieldset data-role="controlgroup" data-type="vertical">
                 <?php if(!SessionManager::isLoggedIn()): ?>
                     <a href="login.php?user=<?=$mailVerificationAddress; ?>&back=0" data-ajax="false" class="ui-btn ui-icon-user ui-btn-icon-left"><?=__('account', 'login'); ?></a>
+                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left"><?=__('navigation', 'goToFrontPage'); ?></a>
+                <?php else: ?>
+                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left"><?=__('navigation', 'goToMyAccount'); ?></a>
                 <?php endif; ?>
-                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left"><?=__('navigation', 'goToFrontPage'); ?></a>
             </fieldset>
         </div>
 

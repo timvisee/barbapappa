@@ -204,16 +204,33 @@ class MailVerification {
         // Determine the subject
         $subject = html_entity_decode(LanguageManager::getValue('mail', 'mailVerification'));
 
-        // Construct the message
-        $message = html_entity_decode(LanguageManager::getValue('general', 'hello')) . ' ' . html_entity_decode($user->getFullName()) . ",\r\n";
-        $message .= "\r\n";
-        $message .= html_entity_decode(LanguageManager::getValue('mail', 'beforeYouCanUseYouMustVerify')) . "\r\n";
-        $message .= Config::getValue('general', 'site_url', '') . 'mailverification.php?a=verify&key=' . $this->getKey() . "\r\n";
-        $message .= "\r\n";
-        $message .= html_entity_decode(LanguageManager::getValue('mail', 'userCredentialsAreAsFollows')) . "\r\n";
-        $message .= html_entity_decode(LanguageManager::getValue('account', 'username')) . ': ' . $user->getUsername() . "\r\n";
-        $message .= "\r\n";
-        $message .= html_entity_decode(LanguageManager::getValue('app', 'theAppTeam'));
+        // Set the preferred mail language
+        MailSender::setPreferredLanguageTag(LanguageManager::getPreferredLanguage());
+
+        $hello = LanguageManager::getValue('general', 'hello', '', $lang)  . ' ' . $user->getFullName();
+        $lead = LanguageManager::getValue('mail', 'youAreAboutToActivateMail', '', $lang);
+
+        $activationLink = Config::getValue('general', 'site_url', '') . 'mailverification.php?a=verify&key=' . $this->getKey();
+
+        $part2 = LanguageManager::getValue('mail', 'clickLinkBellowToActivate') . '<br />';
+        $part2 .= '<br />';
+        $part2 .= MailSender::getMessageTextLink($activationLink, LanguageManager::getValue('mail', 'activateMyMailAddress', '', $lang) . ' &raquo;');
+
+        $part3 = LanguageManager::getValue('mail', 'userCredentialsAreAsFollows', '', $lang) . '<br />';
+        $part3 .= LanguageManager::getValue('account', 'username', '', $lang) . ': <i>' . $user->getUsername() . '</i><br />';
+        $part3 .= '<br />';
+        $part3 .= LanguageManager::getValue('app', 'theAppTeam', '', $lang) . '<br />';
+
+        $message = MailSender::getTop();
+        $message .= MailSender::getHeader($subject);
+        $message .= MailSender::getMessageTop();
+        $message .= MailSender::getMessageHeader($hello, $lead);
+        $message .= MailSender::getMessageText(LanguageManager::getValue('mail', 'beforeYouCanUseYouMustVerify', '', $lang));
+        $message .= MailSender::getMessageNotice($part2);
+        $message .= MailSender::getMessageText($part3);
+        $message .= MailSender::getMessageBottom();
+        $message .= MailSender::getFooter();
+        $message .= MailSender::getBottom();
 
         // Send the message
         MailSender::sendMail($this->getMail(), $subject, $message);

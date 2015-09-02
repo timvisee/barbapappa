@@ -22,7 +22,7 @@ class LanguageManager {
     /** The name of the language tag cookie. */
     const LANGUAGE_COOKIE_NAME = 'carbon_lang_tag';
     /** The time it takes for the language tag cookie to expire. */
-    const LANGUAGE_COOKIE_EXPIRE = '+1 year';
+    const LANGUAGE_COOKIE_EXPIRE = '+1 week';
 
     /** @var array List of loaded languages. */
     private static $languages = Array();
