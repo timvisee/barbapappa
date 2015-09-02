@@ -12,12 +12,16 @@ use app\util\AccountUtils;
 require_once('top.php');
 
 // Make sure the user isn't logged in
-if(SessionManager::isLoggedIn())
-    showErrorPage(__('login', 'alreadyLoggedIn'));
+if(SessionManager::isLoggedIn()) {
+    //showErrorPage(__('login', 'alreadyLoggedIn'));
+
+    // Redirect the user to the front page
+    header('Location: index.php');
+    die();
+}
 
 // Check whether the user is trying to login, if not show the login form instead
 if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
-
     // Get the default user
     $userValue = '';
     if(isset($_GET['user']))
