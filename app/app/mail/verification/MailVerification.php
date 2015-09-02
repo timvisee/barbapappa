@@ -247,6 +247,10 @@ class MailVerification {
         $address = $this->getMail();
         $creationDateTime = $this->getCreationDateTime();
 
+        // Get the current mails for this user
+        $mails = MailManager::getMailsFromUser($user);
+        $mailsCount = sizeof($mails);
+
         // Add the mail address
         $mail = MailManager::createMail($user, $address, $creationDateTime, DateTime::now(), null);
 
@@ -269,6 +273,10 @@ class MailVerification {
 
         // Delete the verification
         $this->delete();
+
+        // Send a welcome message if this action activates the user's account
+        if($mailsCount == 0)
+            $user->sendWelcomeMessage($address);
 
         // Return the mail as object
         return $mail;

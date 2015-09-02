@@ -4,8 +4,10 @@ namespace app\user;
 
 use app\config\Config;
 use app\database\Database;
+use app\language\LanguageManager;
 use app\mail\Mail;
 use app\mail\MailManager;
+use app\mailsender\MailSender;
 use app\user\meta\UserMeta;
 use carbon\core\datetime\DateTime;
 use carbon\core\hash\Hash;
@@ -253,5 +255,64 @@ class User {
         // Delete the meta
         $meta->delete();
         return true;
+    }
+
+    /**
+     * Send a welcome message to the user.
+     *
+     * @param string|null $mail The mail address to send the message to, or null.
+     *
+     * @throws Exception Throws if an error ocucrred.
+     */
+    public function sendWelcomeMessage($mail = null) {
+        // Parse the mail
+        if($mail === null)
+            $mail = $this->getPrimaryMail()->getMail();
+
+        // TODO: Determine the message language based on the preferred language of the user
+
+        // Language
+        $lang = null;
+
+        // Set the preferred mail language
+        MailSender::setPreferredLanguageTag(LanguageManager::getPreferredLanguage());
+
+        // Determine the subject
+        $subject = html_entity_decode(LanguageManager::getValue('mail', 'welcomeToOurService'));
+
+        // Build the hello and lead sentences
+        $hello = LanguageManager::getValue('general', 'welcome', '', $lang)  . ' ' . $this->getFullName();
+        $lead = LanguageManager::getValue('mail', 'weWouldLikeToWelcomeYouAccountActivated', '', $lang);
+
+        // Get the login link
+        $loginLink = Config::getValue('general', 'site_url', '') . 'login.php?user=' . $mail;
+
+        // Build part 1
+        $part1 = LanguageManager::getValue('mail', 'justActivatedMailCanNowLogin', '', $lang);
+
+        // Build part 2
+        $part2 = LanguageManager::getValue('mail', 'clickLinkBellowToLogin') . '<br />';
+        $part2 .= '<br />';
+        $part2 .= MailSender::getMessageTextLink($loginLink, LanguageManager::getValue('account', 'loginOnAccount', '', $lang) . ' &raquo;');
+
+        // Build part 3
+        $part3 = LanguageManager::getValue('mail', 'thankYouJoiningService', '', $lang) . '<br />';
+        $part3 .= '<br />';
+        $part3 .= LanguageManager::getValue('app', 'theAppTeam', '', $lang) . '<br />';
+
+        // Build the actual message
+        $message = MailSender::getTop();
+        $message .= MailSender::getHeader($subject);
+        $message .= MailSender::getMessageTop();
+        $message .= MailSender::getMessageHeader($hello, $lead);
+        $message .= MailSender::getMessageText($part1);
+        $message .= MailSender::getMessageNotice($part2);
+        $message .= MailSender::getMessageText($part3);
+        $message .= MailSender::getMessageBottom();
+        $message .= MailSender::getFooter();
+        $message .= MailSender::getBottom();
+
+        // Send the message
+        MailSender::sendMail($mail, $subject, $message);
     }
 }
