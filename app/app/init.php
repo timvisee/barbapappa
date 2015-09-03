@@ -52,6 +52,12 @@ Config::load();
 use carbon\core\ErrorHandler;
 ErrorHandler::init(true, true, Config::getValue('app', 'debug'));
 
+// Set up the cookie manager
+use carbon\core\cookie\CookieManager;
+CookieManager::setCookieDomain(Config::getValue('cookie', 'domain', ''));
+CookieManager::setCookiePath(Config::getValue('cookie', 'path', '/'));
+CookieManager::setCookiePrefix(Config::getValue('cookie', 'prefix', ''));
+
 // Set up the language manager
 use app\language\LanguageManager;
 LanguageManager::init(true, Config::get('app', 'language.default'));

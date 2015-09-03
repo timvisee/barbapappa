@@ -3,7 +3,7 @@
 namespace app\language;
 
 use app\config\Config;
-use carbon\core\datetime\DateTime;
+use carbon\core\cookie\CookieManager;
 use carbon\core\io\filesystem\directory\Directory;
 use carbon\core\io\filesystem\directory\DirectoryScanner;
 use carbon\core\util\StringUtils;
@@ -20,7 +20,7 @@ defined('CARBON_CORE_INIT') or die('Access denied!');
 class LanguageManager {
 
     /** The name of the language tag cookie. */
-    const LANGUAGE_COOKIE_NAME = 'carbon_lang_tag';
+    const LANGUAGE_COOKIE_NAME = 'lang_tag';
     /** The time it takes for the language tag cookie to expire. */
     const LANGUAGE_COOKIE_EXPIRE = '+1 week';
 
@@ -220,10 +220,7 @@ class LanguageManager {
      * @return string|null The language tag, or null if not set.
      */
     public static function getUserLanguageTagCookie() {
-        // Return the cookie if it exists, return null otherwise
-        if(isset($_COOKIE[static::LANGUAGE_COOKIE_NAME]))
-            return $_COOKIE[static::LANGUAGE_COOKIE_NAME];
-        return null;
+        return CookieManager::getCookie(static::LANGUAGE_COOKIE_NAME);
     }
 
     /**
@@ -238,21 +235,11 @@ class LanguageManager {
         if($langTag !== null && !static::hasWithTag($langTag))
             throw new Exception('Invalid or unknown language tag.');
 
-        // Get the cookie path and domain
-        $cookieDomain = Config::getValue('cookie', 'domain', '');
-        $cookiePath = Config::getValue('cookie', 'path', '/');
-
         // Set or reset the cookie
-        if($langTag !== null) {
-            // Determine the expire date time
-            $cookieExpire = DateTime::parse(static::LANGUAGE_COOKIE_EXPIRE);
-
-            // Set a client cookie
-            setcookie(static::LANGUAGE_COOKIE_NAME, $langTag, $cookieExpire->getTimestamp(), $cookiePath, $cookieDomain);
-
-        } else
-            // Set a client cookie
-            setcookie(static::LANGUAGE_COOKIE_NAME, null, -1, $cookiePath, $cookieDomain);
+        if($langTag !== null)
+            CookieManager::setCookie(static::LANGUAGE_COOKIE_NAME, $langTag, static::LANGUAGE_COOKIE_EXPIRE);
+        else
+            CookieManager::deleteCookie(static::LANGUAGE_COOKIE_NAME);
     }
 
     /**

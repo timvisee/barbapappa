@@ -6,6 +6,7 @@ use app\config\Config;
 use app\database\Database;
 use app\user\User;
 use app\user\UserManager;
+use carbon\core\cookie\CookieManager;
 use carbon\core\datetime\DateTime;
 use carbon\core\util\IpUtils;
 use Exception;
@@ -194,10 +195,7 @@ class SessionManager {
             throw new Exception('Failed to query the database.');
 
         // Set a client cookie with the session key
-        // TODO: Create these cookies through a cookie manager!
-        $cookieDomain = Config::getValue('cookie', 'domain', '');
-        $cookiePath = Config::getValue('cookie', 'path', '/');
-        setcookie(static::SESSION_COOKIE_NAME, $sessionKey, $sessionDateExpire->getTimestamp(), $cookiePath, $cookieDomain);
+        CookieManager::setCookie(static::SESSION_COOKIE_NAME, $sessionKey, static::SESSION_EXPIRE);
 
         // Return the result
         return true;
@@ -265,11 +263,8 @@ class SessionManager {
         }
 
         // Reset the session key cookie
-        if($removeCookie) {
-            $cookieDomain = Config::getValue('cookie', 'domain', '');
-            $cookiePath = Config::getValue('cookie', 'path', '/');
-            setcookie(static::SESSION_COOKIE_NAME, null, -1, $cookiePath, $cookieDomain);
-        }
+        if($removeCookie)
+            CookieManager::deleteCookie(static::SESSION_COOKIE_NAME);
     }
 
     /**

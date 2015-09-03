@@ -21,7 +21,8 @@ return Array(
 
     'cookie' => Array(
         'domain' => '',
-        'path' => '/'
+        'path' => '/',
+        'prefix' => 'carbon_'
     ),
 
     'hash' => Array(
