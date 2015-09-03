@@ -440,15 +440,12 @@ if(StringUtils::equals($a, 'add', false)) {
     }
 
 } elseif(StringUtils::equals($a, 'setPrimary', false)) {
-
     // Make sure the mail parameter is set
     if(!isset($_GET['mail_id']))
         showErrorPage();
 
-    // Get the mail ID
+    // Get the mail ID and make sure it's valid
     $mailId = $_GET['mail_id'];
-
-    // Make sure the mail ID is valid
     if(!MailManager::isMailWithId($mailId))
         showErrorPage();
 
