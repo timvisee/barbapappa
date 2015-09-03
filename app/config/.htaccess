@@ -1,0 +1,12 @@
+##########################################################################
+#                                                                        #
+#   .htaccess                                                            #
+#   Default .htaccess file for Carbon CMS.                               #
+#   @author Tim Visee                                                    #
+#   @website http://timvisee.com/                                        #
+#   @copyright Copyright (c) Tim Visee 2012-2014, All rights reserved.   #
+#                                                                        #
+##########################################################################
+
+# Deny all direct requests to this directory
+Deny From All
