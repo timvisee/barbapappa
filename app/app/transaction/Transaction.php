@@ -4,6 +4,8 @@ namespace app\transaction;
 
 use app\database\Database;
 use app\money\MoneyAmount;
+use app\transaction\meta\TransactionMeta;
+use app\transaction\meta\TransactionMetaManager;
 use app\user\User;
 use carbon\core\datetime\DateTime;
 use Exception;
@@ -111,5 +113,69 @@ class Transaction {
     public function getTime() {
         // TODO: Use the proper timezone!
         return new DateTime($this->getDatabaseValue('transaction_datetime'));
+    }
+
+    /**
+     * Get a transaction meta value if it exists.
+     *
+     * @param string $key The meta key.
+     *
+     * @return string|null The meta value, or null if it doesn't exist.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function getMeta($key) {
+        // Get the transaction meta with this key, and make sure it's valid
+        if(($meta = TransactionMetaManager::getTransactionMeta($this, $key)) === null)
+            return null;
+
+        // Return the meta value
+        return $meta->getValue();
+    }
+
+    /**
+     * Set transaction meta. If the meta doesn't exist it is created.
+     *
+     * @param string $key The meta key.
+     * @param string $value The meta value.
+     *
+     * @return TransactionMeta The transaction meta as object.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function setMeta($key, $value) {
+        return TransactionMetaManager::setTransactionMeta($this, $key, $value);
+    }
+
+    /**
+     * Check whether the transaction has meta with a specific key.
+     *
+     * @param string $key The meta key.
+     *
+     * @return bool True if this meta exists, false if not.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function hasMeta($key) {
+        return TransactionMetaManager::isTransactionMetaWithKey($this, $key);
+    }
+
+    /**
+     * Delete meta if it exists.
+     *
+     * @param string $key The meta key.
+     *
+     * @return bool True if any meta was deleted, false otherwise.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function deleteMeta($key) {
+        // Get the transaction meta with this key, and make sure it's valid
+        if(($meta = TransactionMetaManager::getTransactionMeta($this, $key)) === null)
+            return false;
+
+        // Delete the meta
+        $meta->delete();
+        return true;
     }
 }
