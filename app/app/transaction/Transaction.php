@@ -64,7 +64,7 @@ class Transaction {
      *
      * @throws Exception Throws an exception if an error occurred.
      */
-    public function getTransactionUserId() {
+    public function getUserId() {
         return $this->getDatabaseValue('transaction_user_id');
     }
 
@@ -75,8 +75,8 @@ class Transaction {
      *
      * @throws Exception Throws an exception if an error occurred.
      */
-    public function getTransactionUser() {
-        return new User($this->getTransactionUserId());
+    public function getUser() {
+        return new User($this->getUserId());
     }
 
     /**
