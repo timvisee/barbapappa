@@ -59,7 +59,7 @@ class MailManager {
     }
 
     /**
-     * Get a list of all mails.
+     * Get a list of all mails for a specific user.
      * Note: This method is very resource intensive and expensive to execute.
      *
      * @param User $user The user.
@@ -73,14 +73,12 @@ class MailManager {
         if(!($user instanceof User))
             throw new Exception('Invalid user.');
 
-        // Build a query to select the mails
-        $query = 'SELECT mail_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_user_id=' . $user->getId();
+        // Prepare a query to list all balances for this user
+        $statement = Database::getPDO()->prepare('SELECT mail_id FROM ' . static::getDatabaseTableName() . ' WHERE mail_user_id=:user_id');
+        $statement->bindValue(':user_id', $user->getId(), PDO::PARAM_INT);
 
-        // Execute the query
-        $statement = Database::getPDO()->query($query);
-
-        // Make sure the query succeed
-        if($statement === false)
+        // Execute the prepared query
+        if(!$statement->execute())
             throw new Exception('Failed to query the database.');
 
         // The list of mails
