@@ -1,4 +1,4 @@
-CREATE TABLE `bar_transactions` (
+CREATE TABLE `bar_transaction` (
 	`transaction_id` INT(11) NOT NULL AUTO_INCREMENT,
 	`transaction_user_id` INT(11) NOT NULL,
 	`transaction_amount` INT(11) NOT NULL,

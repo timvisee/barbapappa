@@ -1,4 +1,4 @@
-CREATE TABLE `bar_sessions` (
+CREATE TABLE `bar_session` (
 	`session_id` INT(11) NOT NULL AUTO_INCREMENT,
 	`session_user_id` INT(11) NOT NULL,
 	`session_key` VARCHAR(64) NOT NULL,

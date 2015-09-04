@@ -16,7 +16,7 @@ defined('APP_INIT') or die('Access denied!');
 class TransactionManager {
 
     /** The database table name. */
-    const DB_TABLE_NAME = 'transactions';
+    const DB_TABLE_NAME = 'transaction';
 
     /**
      * Get the database table name of the transactions.

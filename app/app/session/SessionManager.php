@@ -18,7 +18,7 @@ defined('APP_INIT') or die('Access denied!');
 class SessionManager {
 
     /** The database table name. */
-    const DB_TABLE_NAME = 'sessions';
+    const DB_TABLE_NAME = 'session';
     /** The length of a session key. */
     const SESSION_KEY_LENGTH = 64;
     /** The characters a session key can consist of. */

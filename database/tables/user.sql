@@ -1,4 +1,4 @@
-CREATE TABLE `bar_users` (
+CREATE TABLE `bar_user` (
 	`user_id` INT(11) NOT NULL AUTO_INCREMENT,
 	`user_username` VARCHAR(64) NOT NULL,
 	`user_pass_hash` VARCHAR(64) NOT NULL,

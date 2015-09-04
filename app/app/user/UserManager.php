@@ -19,7 +19,7 @@ defined('APP_INIT') or die('Access denied!');
 class UserManager {
 
     /** The database table name. */
-    const DB_TABLE_NAME = 'users';
+    const DB_TABLE_NAME = 'user';
 
     /**
      * Get the database table name of the users.

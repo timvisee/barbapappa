@@ -14,7 +14,7 @@ defined('APP_INIT') or die('Access denied!');
 class UserMetaManager {
 
     /** The database table name. */
-    const DB_TABLE_NAME = 'users_meta';
+    const DB_TABLE_NAME = 'user_meta';
 
     /**
      * Get the database table name of the user meta.
