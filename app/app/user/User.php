@@ -2,12 +2,14 @@
 
 namespace app\user;
 
+use app\balance\BalanceManager;
 use app\config\Config;
 use app\database\Database;
 use app\language\LanguageManager;
 use app\mail\Mail;
 use app\mail\MailManager;
 use app\mailsender\MailSender;
+use app\money\MoneyAmount;
 use app\user\meta\UserMeta;
 use app\user\meta\UserMetaManager;
 use carbon\core\datetime\DateTime;
@@ -309,6 +311,17 @@ class User {
         // Delete the meta
         $meta->delete();
         return true;
+    }
+
+    /**
+     * Get the total balance of this user.
+     *
+     * @return MoneyAmount The total balance as money amount instance.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function getBalanceTotal() {
+        return BalanceManager::getUserBalanceTotal($this);
     }
 
     /**

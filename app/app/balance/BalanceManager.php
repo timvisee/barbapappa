@@ -5,6 +5,7 @@ namespace app\balance;
 use app\config\Config;
 use app\database\Database;
 use app\money\MoneyAmount;
+use app\session\SessionManager;
 use app\user\User;
 use carbon\core\datetime\DateTime;
 use Exception;
@@ -180,5 +181,46 @@ class BalanceManager {
 
         // Get and return the balance instance
         return new Balance(Database::getPDO()->lastInsertId());
+    }
+
+    /**
+     * Get the total balance for a user. Zero will be returned if this user doesn't have any balances.
+     *
+     * @param User|null $user The user or null to use the current logged in user.
+     *
+     * @return MoneyAmount|null The total balance as money amount, or null on failure.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function getUserBalanceTotal($user = null) {
+        // Parse the user
+        if($user === null) {
+            // Get and validate the logged in user
+            if(($user = SessionManager::getLoggedInUser()) === null)
+                return null;
+        }
+
+        // Validate the user
+        if(!($user instanceof User))
+            throw new Exception('Invalid user.');
+
+        // Define a variable for the total balance
+        $total = new MoneyAmount();
+
+        // Get all balances for this user
+        $balances = static::getBalancesFromUser($user);
+
+        // Add each balance to the total
+        foreach($balances as $balance) {
+            // Validate the instance
+            if(!($balance instanceof Balance))
+                continue;
+
+            // Add the balance
+            $total->addAmount($balance->getMoneyAmount());
+        }
+
+        // Return the total balance
+        return $total;
     }
 }
