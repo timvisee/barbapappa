@@ -635,9 +635,11 @@ if(StringUtils::equals($a, 'add', false)) {
             $mailsVerification = MailVerificationManager::getMailVerificationsFromUser($user);
 
             // Show the mail addresses if the user has any
-            if(sizeof($mails) > 0):
-                ?>
-                <ul class="ui-listview" data-role="listview" id="listview-stations-last-occupied" data-inset="true">
+            if(sizeof($mails) > 0 || sizeof($mailsVerification) > 0):
+                echo '<ul class="ui-listview" data-role="listview" id="listview-stations-last-occupied" data-inset="true">';
+
+                if(sizeof($mails) > 0):
+                    ?>
                     <li data-role="list-divider"><?=__('mail', 'mails'); ?></li>
                     <?php
                     // Put all mail addresses in the list
@@ -654,13 +656,9 @@ if(StringUtils::equals($a, 'add', false)) {
                         // Print the item
                         echo '<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="mailmanager.php?mail_id=' . $mailVerification->getId() . '">' . $mailVerification->getMail() . $primaryEmblem . '</a></li>';
                     }
+                endif;
+                if(sizeof($mailsVerification) > 0):
                     ?>
-                </ul>
-                <?php
-            endif;
-            if(sizeof($mailsVerification) > 0):
-                ?>
-                <ul class="ui-listview" data-role="listview" id="listview-stations-last-occupied" data-inset="true">
                     <li data-role="list-divider"><?=__('mail', 'unverifiedMailAddresses'); ?></li>
                     <?php
                     // Put all mail addresses in the list
@@ -672,9 +670,9 @@ if(StringUtils::equals($a, 'add', false)) {
                         // Print the item
                         echo '<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="mailmanager.php?mail_verification_id=' . $mailVerification->getId() . '">' . $mailVerification->getMail() . '</a></li>';
                     }
-                    ?>
-                </ul>
-            <?php endif; ?>
+                endif;
+                echo '</ul>';
+            endif; ?>
 
             <fieldset data-role="controlgroup" data-type="vertical">
                 <a href="mailmanager.php?a=add" class="ui-btn ui-icon-plus ui-btn-icon-left"><?=__('mail', 'addMailAddress'); ?></a>

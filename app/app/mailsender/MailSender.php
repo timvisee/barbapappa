@@ -4,6 +4,7 @@ namespace app\mailsender;
 
 use app\config\Config;
 use app\language\LanguageManager;
+use app\session\SessionManager;
 use app\user\User;
 use carbon\core\io\filesystem\file\File;
 use carbon\core\io\filesystem\file\FileReader;
@@ -294,6 +295,8 @@ EOT;
      * @throws Exception Throws if an error occurred.
      */
     public static function getMessageBottom() {
+        // TODO: Make sure the proper user is used for the balance
+
         // Get the front page and my account
         $baseLink = Config::getValue('general', 'site_url', '');
         $linkFrontPage = $baseLink;
@@ -302,8 +305,8 @@ EOT;
         $textMyAccount = LanguageManager::getValue('general', 'myAccount', '', static::$prefLangTag);
 
         $balance = LanguageManager::getValue('general', 'balance', '', static::$prefLangTag);
+        $textBalance = LanguageManager::getValue('general', 'myBalance', '', static::$prefLangTag) . ': <span style="font-size: 125%;">' . SessionManager::getLoggedInUser()->getBalanceTotal()->getFormatted() . '</span>';
         $service = LanguageManager::getValue('general', 'service', '', static::$prefLangTag);
-        $featureNotYetAvailable = LanguageManager::getValue('general', 'featureNotYetAvailable', '', static::$prefLangTag);
 
         return <<<EOT
             <table class="row footer"
@@ -324,7 +327,7 @@ EOT;
                                         align="left">$balance</h5>
 
                                     <p style="color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;"
-                                       align="left"><i>$featureNotYetAvailable</i></p>
+                                       align="left">$textBalance</p>
                                     </p>
                                 </td>
                                 <td class="expander"

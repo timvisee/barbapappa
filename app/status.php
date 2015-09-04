@@ -47,14 +47,17 @@ require_once('top.php');
                 <tr>
                     <td><?=__('pageStatus', 'uptime'); ?></td>
                     <td><?php
-                        try {
-                            $display = '';
-                            system("uptime", $display);
-                            preg_match('/[^,]+,[^,]+/i', $display, $matches);
-                            echo $matches[0];
-                        } catch(Exception $e) {
+                        if(function_exists('sys_getloadavg')) {
+                            try {
+                                $display = '';
+                                system("uptime", $display);
+                                preg_match('/[^,]+,[^,]+/i', $display, $matches);
+                                echo $matches[0];
+                            } catch(Exception $e) {
+                                echo '<i>Unknown</i>';
+                            }
+                        } else
                             echo '<i>Unknown</i>';
-                        }
                         ?></td>
                 </tr>
                 <tr>
@@ -67,8 +70,7 @@ require_once('top.php');
                             echo $cpu[0] . ' (1 min avg)<br />';
                             echo $cpu[1] . ' (5 min avg)<br />';
                             echo $cpu[2] . ' (15 min avg)<br />';
-                        }
-                        else
+                        } else
                             echo '<i>Unknown</i>';
                         ?></td>
                 </tr>

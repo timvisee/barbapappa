@@ -17,17 +17,23 @@ if(SessionManager::isLoggedIn())
     <?php PageHeaderBuilder::create()->setMenuButton(true)->build(); ?>
 
     <div data-role="main" class="ui-content">
-        <p><?=__('general', 'welcome'); ?>!</p><br />
 
-        <p>
-            <?php
-            if(SessionManager::isLoggedIn()) {
-                echo '<span style="color: green;">Logged in!</span><br />';
-                echo '<span style="color: green;">' . __('general', 'balance') . ': ' . SessionManager::getLoggedInUser()->getBalanceTotal()->getFormatted() . '</span>';
-            } else
-                echo '<span style="color: red;">Not logged in!</span><br />';
-            ?>
-        </p><br />
+        <?php if(SessionManager::isLoggedIn()): ?>
+            <center>
+                <table class="ui-responsive">
+                    <tr>
+                        <td><?=__('general', 'myBalance'); ?></td>
+                        <td><span style="font-size: 130%;"><?=SessionManager::getLoggedInUser()->getBalanceTotal()->getFormatted(); ?></span></td>
+                    </tr>
+                </table>
+            </center>
+            <br />
+        <?php endif; ?>
+
+        <p><?=__('general', 'welcome'); ?><?php
+            if(SessionManager::isLoggedIn())
+                echo ' ' . SessionManager::getLoggedInUser()->getFullName();
+            ?>!</p><br />
 
         <?php if(!SessionManager::isLoggedIn()): ?>
         <fieldset data-role="controlgroup" data-type="vertical">

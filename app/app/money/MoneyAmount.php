@@ -107,12 +107,30 @@ class MoneyAmount {
      * Get the formatted money amount string.
      *
      * @param bool $currencySign [optional] True to include the currency sign, false if not.
+     * @param bool $currencyColor [optional] True to color the formatted string, false if not.
      *
      * @return string The formatted money amount string.
      */
-    public function getFormatted($currencySign = true) {
+    public function getFormatted($currencySign = true, $currencyColor = true) {
         // TODO: Use the preferred separator of the language used.
-        return ($currencySign ? '&euro;' : '') . number_format($this->getAmount() / 100, 2, ',', ' ');
+        // TODO: Set the colors and color triggers using constants.
+
+        // Get the amount
+        $amount = $this->getAmount();
+
+        // Generate the formatted base string
+        $formatted = ($currencySign ? '&euro;' : '') . number_format($amount / 100, 2, ',', ' ');
+
+        // Add color
+        if($currencyColor) {
+            if($amount < 0)
+                $formatted = '<span style="color: red;">' . $formatted . '</span>';
+            elseif($amount > 500)
+                $formatted = '<span style="color: green;">' . $formatted . '</span>';
+        }
+
+        // Return the formatted string
+        return $formatted;
     }
 
     /**
