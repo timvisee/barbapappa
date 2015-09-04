@@ -210,39 +210,53 @@ if(isset($_GET['set_lang_tag'])) {
 
 // Make sure the language is set
 else if(LanguageManager::getCookieLanguageTag() === null) {
-    // TODO: Use the user's language if he's logged in.
+    // Define a language tag variable
+    $langTag = null;
 
-    // Get the query string, and append the language part
-    $query = $_SERVER['QUERY_STRING'];
-    $query .= (strlen($query) > 0 ? '&' : '') . 'set_lang_tag=';
+    // Use the user's preferred language if set and logged in
+    if(SessionManager::isLoggedIn()) {
+        // Check whether the logged in user has any preferred language
+        $langTag = LanguageManager::getUserLanguageTag();
 
-    ?>
-    <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create()->build(); ?>
+        // Use this language tag if it's valid
+        if($langTag !== null)
+            LanguageManager::setLanguageTag($langTag, true, true, false);
+    }
 
-        <div data-role="main" class="ui-content">
-            <ul class="ui-listview" data-role="listview" id="listview-stations-last-occupied" data-inset="true">
-                <li data-role="list-divider"><?=LanguageManager::getValue('language', 'chooseLanguage', null, 'nl-NL'); ?>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<?=LanguageManager::getValue('language', 'chooseLanguage', null, 'en-US'); ?></li>
-                <li>
-                    <a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="<?=$_SERVER['PHP_SELF']; ?>?<?=$query; ?>nl-NL">
-                        <img src="style/image/flag/nl.png" alt="<?=LanguageManager::getValue('language', 'thisLanguage', null, 'nl-NL'); ?>" class="ui-li-icon ui-corner-none" style="margin-top: 2px;">
-                        <?=LanguageManager::getValue('language', 'visitInThisLanguage', null, 'nl-NL'); ?>
-                    </a>
-                </li>
-                <li>
-                    <a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="<?=$_SERVER['PHP_SELF']; ?>?<?=$query; ?>en-US">
-                        <img src="style/image/flag/gb.png" alt="<?=LanguageManager::getValue('language', 'thisLanguage', null, 'en-US'); ?>" class="ui-li-icon ui-corner-none" style="margin-top: 2px;">
-                        <?=LanguageManager::getValue('language', 'visitInThisLanguage', null, 'en-US'); ?>
-                    </a>
-                </li>
-            </ul>
+    // Show the language chooser if the language is not yet determined
+    if($langTag === null) {
+        // Get the query string, and append the language part
+        $query = $_SERVER['QUERY_STRING'];
+        $query .= (strlen($query) > 0 ? '&' : '') . 'set_lang_tag=';
+
+        ?>
+        <div data-role="page" id="page-main">
+            <?php PageHeaderBuilder::create()->build(); ?>
+
+            <div data-role="main" class="ui-content">
+                <ul class="ui-listview" data-role="listview" id="listview-stations-last-occupied" data-inset="true">
+                    <li data-role="list-divider"><?=LanguageManager::getValue('language', 'chooseLanguage', null, 'nl-NL'); ?>&nbsp;&nbsp;&middot;&nbsp;&nbsp;<?=LanguageManager::getValue('language', 'chooseLanguage', null, 'en-US'); ?></li>
+                    <li>
+                        <a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="<?=$_SERVER['PHP_SELF']; ?>?<?=$query; ?>nl-NL">
+                            <img src="style/image/flag/nl.png" alt="<?=LanguageManager::getValue('language', 'thisLanguage', null, 'nl-NL'); ?>" class="ui-li-icon ui-corner-none" style="margin-top: 2px;">
+                            <?=LanguageManager::getValue('language', 'visitInThisLanguage', null, 'nl-NL'); ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="<?=$_SERVER['PHP_SELF']; ?>?<?=$query; ?>en-US">
+                            <img src="style/image/flag/gb.png" alt="<?=LanguageManager::getValue('language', 'thisLanguage', null, 'en-US'); ?>" class="ui-li-icon ui-corner-none" style="margin-top: 2px;">
+                            <?=LanguageManager::getValue('language', 'visitInThisLanguage', null, 'en-US'); ?>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <?php PageFooterBuilder::create()->build(); ?>
         </div>
+        <?php
 
-        <?php PageFooterBuilder::create()->build(); ?>
-    </div>
-    <?php
-
-    // Print the bottom of the page
-    require('bottom.php');
-    die();
+        // Print the bottom of the page
+        require('bottom.php');
+        die();
+    }
 }
