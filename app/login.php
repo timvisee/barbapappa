@@ -63,7 +63,7 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     if(UserManager::isUserWithUsername($loginUser))
         $user = UserManager::getUserWithUsername($loginUser);
 
-    elseif(AccountUtils::isValidMail($loginUser) && \app\mail\MailManager::isMailWithMail($loginUser)) {
+    elseif(AccountUtils::isValidMail($loginUser) && MailManager::isMailWithMail($loginUser)) {
         // Get the mail of the user
         $mail = MailManager::getMailWithMail($loginUser);
 

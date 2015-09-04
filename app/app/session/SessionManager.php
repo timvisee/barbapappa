@@ -208,14 +208,14 @@ class SessionManager {
      */
     public static function validateSession() {
         // Make sure the proper cookie is set
-        if(!isset($_COOKIE[static::SESSION_COOKIE_NAME])) {
+        if(!CookieManager::hasCookie(static::SESSION_COOKIE_NAME)) {
             static::$currentSession = null;
             static::removeSession(null, true);
             return;
         }
 
         // Get the session key
-        $sessionKey = $_COOKIE[static::SESSION_COOKIE_NAME];
+        $sessionKey = CookieManager::getCookie(static::SESSION_COOKIE_NAME);
 
         // Get a session instance by this session key
         $session = static::getSessionWithKey($sessionKey);
