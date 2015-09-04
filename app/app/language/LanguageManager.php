@@ -198,6 +198,10 @@ class LanguageManager {
         if(($lang = static::getCookieLanguage()) !== null)
             return $lang;
 
+        // Return the user language if set
+        if(($lang = static::getUserLanguage()) !== null)
+            return $lang;
+
         // Return the default language if valid
         if(($defLang = static::getDefaultLanguage()) !== null)
             return $defLang;
@@ -279,6 +283,15 @@ class LanguageManager {
             CookieManager::setCookie(static::LANGUAGE_COOKIE_NAME, $langTag, static::LANGUAGE_COOKIE_EXPIRE);
         else
             CookieManager::deleteCookie(static::LANGUAGE_COOKIE_NAME);
+    }
+
+    /**
+     * Get the user language if specified and loaded.
+     *
+     * @return Language|null The user language, or null if not loaded or not specified.
+     */
+    public static function getUserLanguage() {
+        return static::getByTag(static::getCookieLanguageTag());
     }
 
     /**
