@@ -21,13 +21,11 @@ if(SessionManager::isLoggedIn())
 
         <p>
             <?php
-            if(SessionManager::isLoggedIn())
+            if(SessionManager::isLoggedIn()) {
                 echo '<span style="color: green;">Logged in!</span><br />';
-            else
-                echo '<span style="color: red;">Not logged in!</span><br />';
-
-            if(SessionManager::isLoggedIn())
                 echo '<span style="color: green;">' . __('general', 'balance') . ': ' . SessionManager::getLoggedInUser()->getBalanceTotal()->getFormatted() . '</span>';
+            } else
+                echo '<span style="color: red;">Not logged in!</span><br />';
             ?>
         </p><br />
 

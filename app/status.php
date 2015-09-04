@@ -1,12 +1,12 @@
 <?php
 
-use app\occupation\OccupationManager;
-use app\picture\PictureManager;
+use app\balance\BalanceManager;
+use app\mail\MailManager;
 use app\session\SessionManager;
-use app\station\StationManager;
-use app\team\TeamManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
+use app\transaction\TransactionManager;
+use app\user\UserManager;
 
 // Include the page top
 require_once('top.php');
@@ -14,38 +14,38 @@ require_once('top.php');
 ?>
 
     <div data-role="page" id="page-status">
-        <?php PageHeaderBuilder::create('Application Status')->setBackButton('index.php')->build(); ?>
+        <?php PageHeaderBuilder::create(__('pageAbout', 'applicationStatus'))->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content" align="center">
-            <p>The current application status is shown below.</p><br />
+            <p><?=__('pageStatus', 'currentStatusShownBelow'); ?></p><br />
 
             <table class="ui-responsive">
                 <tr>
-                    <td>Database</td>
+                    <td><?=__('general', 'database'); ?></td>
                     <td><span style="color: green;">Connected!</span></td>
                 </tr>
                 <tr>
-                    <td>Sessions</td>
+                    <td><?=__('general', 'users'); ?></td>
+                    <td><?=UserManager::getUserCount(); ?></td>
+                </tr>
+                <tr>
+                    <td><?=__('general', 'sessions'); ?></td>
                     <td><?=SessionManager::getSessionCount(); ?></td>
                 </tr>
                 <tr>
-                    <td>Stations</td>
-                    <td><?=StationManager::getStationCount(); ?></td>
+                    <td><?=__('mail', 'verifiedMails'); ?></td>
+                    <td><?=MailManager::getMailCount(); ?></td>
                 </tr>
                 <tr>
-                    <td>Teams</td>
-                    <td><?=TeamManager::getTeamCount(); ?></td>
+                    <td><?=__('general', 'balances'); ?></td>
+                    <td><?=BalanceManager::getBalanceCount(); ?></td>
                 </tr>
                 <tr>
-                    <td>Pictures</td>
-                    <td><?=PictureManager::getPictureCount(); ?></td>
+                    <td><?=__('general', 'transactions'); ?></td>
+                    <td><?=TransactionManager::getTransactionCount(); ?></td>
                 </tr>
                 <tr>
-                    <td>Occupations</td>
-                    <td><?=OccupationManager::getOccupationCount(); ?></td>
-                </tr>
-                <tr>
-                    <td>Uptime</td>
+                    <td><?=__('pageStatus', 'uptime'); ?></td>
                     <td><?php
                         try {
                             $display = '';
@@ -58,7 +58,7 @@ require_once('top.php');
                         ?></td>
                 </tr>
                 <tr>
-                    <td>CPU usage</td>
+                    <td><?=__('pageStatus', 'cpuUsage'); ?></td>
                     <td><?php
                         if(function_exists('sys_getloadavg')) {
                             // Get the CPU status
@@ -75,7 +75,7 @@ require_once('top.php');
             </table>
             <br />
 
-            <p><i>This page refreshes automatically every 10 seconds...</i></p>
+            <p><i><?=__('pageStatus', 'pageRefreshesEveryTenSec'); ?>..</i></p>
 
             <script>
                 var staticsRefreshTimer;

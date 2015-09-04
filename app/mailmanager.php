@@ -661,7 +661,7 @@ if(StringUtils::equals($a, 'add', false)) {
             if(sizeof($mailsVerification) > 0):
                 ?>
                 <ul class="ui-listview" data-role="listview" id="listview-stations-last-occupied" data-inset="true">
-                    <li data-role="list-divider"><?=__('mail', 'unverifiedMails'); ?></li>
+                    <li data-role="list-divider"><?=__('mail', 'unverifiedMailAddresses'); ?></li>
                     <?php
                     // Put all mail addresses in the list
                     foreach($mailsVerification as $mailVerification) {
