@@ -3,6 +3,8 @@
 namespace app\language;
 
 use app\config\Config;
+use app\session\SessionManager;
+use app\user\User;
 use carbon\core\cookie\CookieManager;
 use carbon\core\io\filesystem\directory\Directory;
 use carbon\core\io\filesystem\directory\DirectoryScanner;
@@ -23,13 +25,15 @@ class LanguageManager {
     const LANGUAGE_COOKIE_NAME = 'lang_tag';
     /** The time it takes for the language tag cookie to expire. */
     const LANGUAGE_COOKIE_EXPIRE = '+1 week';
+    /** The user meta key for the preferred language. */
+    const LANGUAGE_USER_META_KEY = 'language.tag';
 
     /** @var array List of loaded languages. */
     private static $languages = Array();
     /** @var string The default language tag used when not specified. */
     private static $defaultTag = 'en-US';
-    /** @var string|null The language tag to use specified by the user, or null if not specified. */
-    private static $userTag = null;
+    /** @var string|null The preferred language that should currently be used, or null if undefined. */
+    private static $currentTag = null;
 
     /**
      * Initialize.
@@ -62,7 +66,7 @@ class LanguageManager {
             throw new Exception('Unable to add language, invalid instance.');
 
         // Make sure the language tag is unique
-        if(static::hasWithTag($language->getTag()))
+        if(static::isWithTag($language->getTag()))
             return false;
 
         // Add the language, return the result
@@ -77,7 +81,7 @@ class LanguageManager {
      *
      * @return bool True if a language exists with this tag, false if not.
      */
-    public static function hasWithTag($tag) {
+    public static function isWithTag($tag) {
         return static::getByTag($tag) !== null;
     }
 
@@ -181,76 +185,18 @@ class LanguageManager {
     }
 
     /**
-     * Get the user language if specified and loaded.
-     *
-     * @return Language|null The user language, or null if not loaded or not specified.
-     */
-    public static function getUserLanguage() {
-        return static::getByTag(static::getUserLanguageTag());
-    }
-
-    /**
-     * Get the language tag specified by the user.
-     *
-     * @return string|null User language tag, or null if not specified.
-     */
-    public static function getUserLanguageTag() {
-        return static::$userTag;
-    }
-
-    /**
-     * Set the language tag for the user.
-     *
-     * @param string|null $langTag The language tag of the user, or null.
-     *
-     * @throws Exception Throws if the language tag is unknown or invalid.
-     */
-    public static function setUserLanguageTag($langTag) {
-        // Make sure the tag is valid or null
-        if($langTag !== null && !static::hasWithTag($langTag))
-            throw new Exception('Invalid or unknown language tag.');
-
-        // Set the user tag
-        static::$userTag = $langTag;
-    }
-
-    /**
-     * Return the language tag for this user from a cookie if set.
-     *
-     * @return string|null The language tag, or null if not set.
-     */
-    public static function getUserLanguageTagCookie() {
-        return CookieManager::getCookie(static::LANGUAGE_COOKIE_NAME);
-    }
-
-    /**
-     * Set the language tag for this user in a cookie.
-     *
-     * @param string|null $langTag The language tag of the user, or null to reset.
-     *
-     * @throws Exception Throws if the language tag is unknown or invalid.
-     */
-    public static function setUserLanguageTagCookie($langTag) {
-        // Make sure the tag is valid or null
-        if($langTag !== null && !static::hasWithTag($langTag))
-            throw new Exception('Invalid or unknown language tag.');
-
-        // Set or reset the cookie
-        if($langTag !== null)
-            CookieManager::setCookie(static::LANGUAGE_COOKIE_NAME, $langTag, static::LANGUAGE_COOKIE_EXPIRE);
-        else
-            CookieManager::deleteCookie(static::LANGUAGE_COOKIE_NAME);
-    }
-
-    /**
      * Get the preferred language to use. This is based on the user language tag, the default language tag and the loaded languages.
      *
      * @return Language|null The preferred language to use, or null if not language is loaded.
      */
     public static function getPreferredLanguage() {
-        // Return the user language if valid
-        if(($userLang = static::getUserLanguage()) !== null)
-            return $userLang;
+        // Return the current language if set
+        if(($lang = static::getCurrentLanguage()) !== null)
+            return $lang;
+
+        // Return the cookie language if set
+        if(($lang = static::getCookieLanguage()) !== null)
+            return $lang;
 
         // Return the default language if valid
         if(($defLang = static::getDefaultLanguage()) !== null)
@@ -262,6 +208,140 @@ class LanguageManager {
 
         // No language preferred, return null
         return null;
+    }
+
+    /**
+     * Get the current language if specified and loaded.
+     *
+     * @return Language|null The current language, or null if not loaded or not specified.
+     */
+    public static function getCurrentLanguage() {
+        return static::getByTag(static::getCurrentLanguageTag());
+    }
+
+    /**
+     * Get the current language tag.
+     *
+     * @return string|null Current language tag, or null if not specified.
+     */
+    public static function getCurrentLanguageTag() {
+        return static::$currentTag;
+    }
+
+    /**
+     * Set the current preferred language tag.
+     *
+     * @param string|null $langTag The current preferred language tag, or null.
+     *
+     * @throws Exception Throws if the language tag is unknown or invalid.
+     */
+    public static function setCurrentLanguageTag($langTag) {
+        // Make sure the tag is valid or null
+        if($langTag !== null && !static::isWithTag($langTag))
+            throw new Exception('Invalid or unknown language tag.');
+
+        // Set the user tag
+        static::$currentTag = $langTag;
+    }
+
+    /**
+     * Get the cookie language if specified and loaded.
+     *
+     * @return Language|null The cookie language, or null if not loaded or not specified.
+     */
+    public static function getCookieLanguage() {
+        return static::getByTag(static::getCookieLanguageTag());
+    }
+
+    /**
+     * Get the language tag from the user's cookie if specified.
+     *
+     * @return string|null The language tag, or null if not set.
+     */
+    public static function getCookieLanguageTag() {
+        return CookieManager::getCookie(static::LANGUAGE_COOKIE_NAME);
+    }
+
+    /**
+     * Set the language tag cookie.
+     *
+     * @param string|null $langTag The language tag, or null to reset.
+     *
+     * @throws Exception Throws if the language tag is unknown or invalid.
+     */
+    public static function setCookieLanguageTag($langTag) {
+        // Make sure the tag is valid or null
+        if($langTag !== null && !static::isWithTag($langTag))
+            throw new Exception('Invalid or unknown language tag.');
+
+        // Set or reset the cookie
+        if($langTag !== null)
+            CookieManager::setCookie(static::LANGUAGE_COOKIE_NAME, $langTag, static::LANGUAGE_COOKIE_EXPIRE);
+        else
+            CookieManager::deleteCookie(static::LANGUAGE_COOKIE_NAME);
+    }
+
+    /**
+     * Get the preferred language tag for the specified user if set.
+     *
+     * @param User|null $user [optional] The user, or null to use the current logged in user.
+     *
+     * @return string|null Preferred user language tag, or null if not set.
+     */
+    public static function getUserLanguageTag($user = null) {
+        // Parse the user
+        if($user === null) {
+            // Make sure the user is logged in
+            if(!SessionManager::isLoggedIn())
+                return null;
+
+            // Get the logged in user
+            $user = SessionManager::getLoggedInUser();
+        }
+
+        // Make sure the user instance is valid
+        if(!($user instanceof User))
+            return null;
+
+        // Get the user and return the preferred language for the user if set
+        return $user->getMeta(static::LANGUAGE_USER_META_KEY);
+    }
+
+    /**
+     * Get the preferred language tag for the specified user if set.
+     *
+     * @param string|null $langTag The preferred language tag or null to reset the preferred language tag.
+     * @param User|null $user [optional] The user, or null to use the current logged in user.
+     *
+     * @return bool True if succeed, false if not.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function setUserLanguageTag($langTag, $user = null) {
+        // Validate the language tag
+        if($langTag !== null && !static::isWithTag($langTag))
+            throw new Exception('Invalid language tag.');
+
+        // Parse the user
+        if($user === null) {
+            // Make sure the user is logged in
+            if(!SessionManager::isLoggedIn())
+                return false;
+
+            // Get the logged in user
+            $user = SessionManager::getLoggedInUser();
+        }
+
+        // Make sure the user instance is valid
+        if(!($user instanceof User))
+            return false;
+
+        // Set or reset the language tag, return the result
+        if($langTag != null)
+            $user->setMeta(static::LANGUAGE_USER_META_KEY, $langTag);
+        else
+            $user->deleteMeta(static::LANGUAGE_USER_META_KEY);
+        return true;
     }
 
     /**
@@ -292,5 +372,33 @@ class LanguageManager {
 
         // Get the value of this language
         return $language->get($section, $key, $default);
+    }
+
+    /**
+     * Set the language tag for various aspects.
+     *
+     * @param string|null $langTag The language tag, or null to reset.
+     * @param bool $setCurrent [optional] True to set the currently used language tag, false if not.
+     * @param bool $setCookie [optional] True to set the cookie language tag, false if not.
+     * @param bool $setUser [optional] True to set the user's language tag, false if not.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function setLanguageTag($langTag, $setCurrent = true, $setCookie = true, $setUser = true) {
+        // Validate the language
+        if(!static::isWithTag($langTag))
+            throw new Exception('Invalid language tag.');
+
+        // Set the current language
+        if($setCurrent)
+            static::setCurrentLanguageTag($langTag);
+
+        // Set the language cookie
+        if($setCookie)
+            static::setCookieLanguageTag($langTag);
+
+        // Make sure the user is logged in
+        if($setUser)
+            static::setUserLanguageTag($langTag);
     }
 }

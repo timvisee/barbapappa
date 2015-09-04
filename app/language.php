@@ -1,12 +1,8 @@
 <?php
 
 use app\language\LanguageManager;
-use app\session\SessionManager;
-use app\team\Team;
-use app\team\TeamManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
-use carbon\core\util\StringUtils;
 
 // Include the page top
 require_once('top.php');
@@ -17,14 +13,13 @@ if(!isset($_GET['lang_tag']))
 
 // Get the language tag, and make sure it's valid
 $langTag = trim($_GET['lang_tag']);
-if(!LanguageManager::hasWithTag($langTag))
+if(!LanguageManager::isWithTag($langTag))
     showErrorPage();
 
-// Set the user language
-LanguageManager::setUserLanguageTag($langTag);
-LanguageManager::setUserLanguageTagCookie($langTag);
+// Set the preferred language
+LanguageManager::setLanguageTag($langTag);
 
-// Redirect the user
+// TODO:Redirect the user?
 //header('Location: index.php');
 
 ?>

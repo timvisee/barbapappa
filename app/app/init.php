@@ -61,9 +61,9 @@ CookieManager::setCookiePrefix(Config::getValue('cookie', 'prefix', ''));
 // Set up the language manager
 use app\language\LanguageManager;
 LanguageManager::init(true, Config::get('app', 'language.default'));
-$languageTag = LanguageManager::getUserLanguageTagCookie();
+$languageTag = LanguageManager::getCookieLanguageTag();
 if($languageTag !== null)
-    LanguageManager::setUserLanguageTag($languageTag);
+    LanguageManager::setCurrentLanguageTag($languageTag);
 
 // Setup a simplified language function
 /**

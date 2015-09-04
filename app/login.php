@@ -1,5 +1,6 @@
 <?php
 
+use app\language\LanguageManager;
 use app\mail\MailManager;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
@@ -81,6 +82,10 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     // Validate the password
     if(!$user->isPassword($loginPassword))
         showErrorPage(__('login', 'usernameOrPasswordIncorrect'));
+
+    // Get and use the user's language if set
+    if(($userLang = LanguageManager::getUserLanguageTag($user)) !== null)
+        LanguageManager::setLanguageTag($userLang, true, true, false);
 
     // Create a session for the user
     if(!SessionManager::createSession($user))

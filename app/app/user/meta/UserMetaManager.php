@@ -1,10 +1,10 @@
 <?php
 
-namespace app\user;
+namespace app\user\meta;
 
 use app\config\Config;
 use app\database\Database;
-use app\user\meta\UserMeta;
+use app\user\User;
 use Exception;
 use PDO;
 
@@ -119,7 +119,7 @@ class UserMetaManager {
             return null;
 
         // Prepare a query for the database to list users with this ID
-        $statement = Database::getPDO()->prepare('SELECT user_meta_id FROM ' . UserManager::getDatabaseTableName() .
+        $statement = Database::getPDO()->prepare('SELECT user_meta_id FROM ' . UserMetaManager::getDatabaseTableName() .
             ' WHERE user_meta_user_id=:user_id AND user_meta_key=:meta_key');
         $statement->bindValue(':user_id', $user->getId(), PDO::PARAM_INT);
         $statement->bindValue(':meta_key', $key, PDO::PARAM_STR);
@@ -198,8 +198,8 @@ class UserMetaManager {
 
         // Prepare a query for the database to list users with this ID
         $statement = Database::getPDO()->prepare('SELECT user_meta_id FROM ' . static::getDatabaseTableName() . ' WHERE user_meta_user_id=:user_id AND user_meta_key=:meta_key');
-        $statement->bindParam(':user_id', $user->getId(), PDO::PARAM_INT);
-        $statement->bindParam(':meta_key', $key, PDO::PARAM_STR);
+        $statement->bindValue(':user_id', $user->getId(), PDO::PARAM_INT);
+        $statement->bindValue(':meta_key', $key, PDO::PARAM_STR);
 
         // Execute the prepared query
         if(!$statement->execute())

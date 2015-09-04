@@ -201,18 +201,15 @@ if(isset($_GET['set_lang_tag'])) {
     $lang = trim($_GET['set_lang_tag']);
 
     // Make sure the user language is valid
-    if(!LanguageManager::hasWithTag($lang))
+    if(!LanguageManager::isWithTag($lang))
         showErrorPage();
 
-    // Set the language cookie
-    LanguageManager::setUserLanguageTag($lang);
-    LanguageManager::setUserLanguageTagCookie($lang);
-
-    // TODO: Create a method for this!
+    // Set the language tag
+    LanguageManager::setLanguageTag($lang);
 }
 
 // Make sure the language is set
-else if(LanguageManager::getUserLanguageTagCookie() === null) {
+else if(LanguageManager::getCookieLanguageTag() === null) {
     // TODO: Use the user's language if he's logged in.
 
     // Get the query string, and append the language part

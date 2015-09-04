@@ -4,7 +4,6 @@ namespace app\user\meta;
 
 use app\database\Database;
 use app\user\User;
-use app\user\UserMetaManager;
 use Exception;
 use PDO;
 

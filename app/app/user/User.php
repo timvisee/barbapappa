@@ -9,6 +9,7 @@ use app\mail\Mail;
 use app\mail\MailManager;
 use app\mailsender\MailSender;
 use app\user\meta\UserMeta;
+use app\user\meta\UserMetaManager;
 use carbon\core\datetime\DateTime;
 use carbon\core\hash\Hash;
 use carbon\core\util\StringUtils;
