@@ -204,8 +204,9 @@ class MailVerification {
         // Determine the subject
         $subject = html_entity_decode(LanguageManager::getValue('mail', 'mailVerification'));
 
-        // Set the preferred mail language
+        // Set the preferred mail language and user
         MailSender::setPreferredLanguageTag(LanguageManager::getPreferredLanguage());
+        MailSender::setUser($this->getUser());
 
         $hello = LanguageManager::getValue('general', 'hello', '', $lang)  . ' ' . $user->getFullName();
         $lead = LanguageManager::getValue('mail', 'youAreAboutToActivateMail', '', $lang);

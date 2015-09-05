@@ -341,8 +341,9 @@ class User {
         // Language
         $lang = null;
 
-        // Set the preferred mail language
+        // Set the preferred mail language and user
         MailSender::setPreferredLanguageTag(LanguageManager::getPreferredLanguage());
+        MailSender::setUser($this);
 
         // Determine the subject
         $subject = html_entity_decode(LanguageManager::getValue('mail', 'welcomeToOurService'));

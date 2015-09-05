@@ -4,7 +4,6 @@ namespace app\mailsender;
 
 use app\config\Config;
 use app\language\LanguageManager;
-use app\session\SessionManager;
 use app\user\User;
 use carbon\core\io\filesystem\file\File;
 use carbon\core\io\filesystem\file\FileReader;
@@ -18,6 +17,9 @@ class MailSender {
     /** @var string|null Preferred language tag. */
     private static $prefLangTag = null;
 
+    /** @var User|null Define the user the mail is send to. */
+    private static $user = null;
+
     /**
      * Set the preferred language tag.
      *
@@ -25,6 +27,15 @@ class MailSender {
      */
     public static function setPreferredLanguageTag($langTag) {
         static::$prefLangTag = $langTag;
+    }
+
+    /**
+     * Set the mail user.
+     *
+     * @param User|null $user [optional] The mail user, or null.
+     */
+    public static function setUser($user = null) {
+        static::$user = $user;
     }
 
     /**
@@ -295,8 +306,6 @@ EOT;
      * @throws Exception Throws if an error occurred.
      */
     public static function getMessageBottom() {
-        // TODO: Make sure the proper user is used for the balance
-
         // Get the front page and my account
         $baseLink = Config::getValue('general', 'site_url', '');
         $linkFrontPage = $baseLink;
@@ -305,7 +314,10 @@ EOT;
         $textMyAccount = LanguageManager::getValue('general', 'myAccount', '', static::$prefLangTag);
 
         $balance = LanguageManager::getValue('general', 'balance', '', static::$prefLangTag);
-        $textBalance = LanguageManager::getValue('general', 'myBalance', '', static::$prefLangTag) . ': <span style="font-size: 125%;">' . SessionManager::getLoggedInUser()->getBalanceTotal()->getFormatted() . '</span>';
+        if(static::$user !== null)
+            $textBalance = LanguageManager::getValue('general', 'myBalance', '', static::$prefLangTag) . ': <span style="font-size: 125%;">' . static::$user->getBalanceTotal()->getFormatted() . '</span>';
+        else
+            $textBalance = LanguageManager::getValue('general', 'myBalance', '', static::$prefLangTag) . ': <span style="font-size: 125%;"><i>?</i></span>';
         $service = LanguageManager::getValue('general', 'service', '', static::$prefLangTag);
 
         return <<<EOT
