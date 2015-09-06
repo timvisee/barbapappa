@@ -33,7 +33,6 @@ return Array(
     'app' => Array(
         // TODO: Disable debug mode on release!
         'debug' => true,
-        'language.default' => 'nl-NL',
         'language.directory' => '/language'
     ),
 

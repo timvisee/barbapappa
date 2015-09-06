@@ -2,6 +2,7 @@
 
 use app\language\LanguageManager;
 use app\mail\MailManager;
+use app\registry\Registry;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
@@ -12,10 +13,13 @@ use app\util\AccountUtils;
 // Include the page top
 require_once('top.php');
 
+/** Registry key to define if users are allowed to login with their username. */
+const REG_ACCOUNT_LOGIN_ALLOW_USERNAME = 'account.login.allowUsername';
+/** Registry key to define if users are allowed to login with their mail address. */
+const REG_ACCOUNT_LOGIN_ALLOW_MAIL = 'account.login.allowMail';
+
 // Make sure the user isn't logged in
 if(SessionManager::isLoggedIn()) {
-    //showErrorPage(__('login', 'alreadyLoggedIn'));
-
     // Redirect the user to the front page
     header('Location: index.php');
     die();
@@ -61,10 +65,10 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     $user = null;
 
     // Check whether a user exists with this username
-    if(UserManager::isUserWithUsername($loginUser))
+    if(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_USERNAME)->getBoolValue() && UserManager::isUserWithUsername($loginUser))
         $user = UserManager::getUserWithUsername($loginUser);
 
-    elseif(AccountUtils::isValidMail($loginUser) && MailManager::isMailWithMail($loginUser)) {
+    elseif(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_MAIL)->getBoolValue() && AccountUtils::isValidMail($loginUser) && MailManager::isMailWithMail($loginUser)) {
         // Get the mail of the user
         $mail = MailManager::getMailWithMail($loginUser);
 

@@ -9,6 +9,7 @@ use carbon\core\util\StringUtils;
 // Include the page top
 require_once('top.php');
 
+// Make sure the user is logged in
 if(SessionManager::isLoggedIn())
     requireLogin();
 

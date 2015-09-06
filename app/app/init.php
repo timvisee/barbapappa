@@ -41,6 +41,7 @@ if(!defined('CARBON_CORE_INIT_DONE') || CARBON_CORE_INIT_DONE != true)
 // Include the loader for the app and set it up
 require_once(APP_ROOT . '/autoloader/loader/AppLoader.php');
 use app\autoloader\loader\AppLoader;
+use app\registry\Registry;
 use carbon\core\autoloader\Autoloader;
 Autoloader::addLoader(new AppLoader());
 
@@ -60,7 +61,7 @@ CookieManager::setCookiePrefix(Config::getValue('cookie', 'prefix', ''));
 
 // Set up the language manager
 use app\language\LanguageManager;
-LanguageManager::init(true, Config::get('app', 'language.default'));
+LanguageManager::init(true, Registry::getValue('language.default.tag')->getValue());
 $languageTag = LanguageManager::getCookieLanguageTag();
 if($languageTag !== null)
     LanguageManager::setCurrentLanguageTag($languageTag);
