@@ -215,6 +215,47 @@ class LanguageManager {
     }
 
     /**
+     * Get the preferred language to use for the specified user.
+     * The possible best language will be returned if the user doesn't have a preferred language set.
+     *
+     * @param User|null $user [optional] The user to get the preferred language for, or null to get the language for the
+     * currently logged in user.
+     *
+     * @return Language|null The preferred language to use, or null if no language could be selected or if the language
+     * isn't loaded.
+     */
+    public static function getPreferredLanguageFromUser($user = null) {
+        // Parse the user, and make sure it's valid
+        if($user === null)
+            $user = SessionManager::getLoggedInUser();
+        if(!($user instanceof User))
+            return null;
+
+        // Return the user language if set
+        if(($lang = static::getUserLanguage($user)) !== null)
+            return $lang;
+
+        // Return the current language if set
+        if(($lang = static::getCurrentLanguage()) !== null)
+            return $lang;
+
+        // Return the cookie language if set
+        if(($lang = static::getCookieLanguage()) !== null)
+            return $lang;
+
+        // Return the default language if valid
+        if(($defLang = static::getDefaultLanguage()) !== null)
+            return $defLang;
+
+        // If any language is loaded, return the first
+        if(sizeof(static::$languages) > 0)
+            return static::$languages[0];
+
+        // No language preferred, return null
+        return null;
+    }
+
+    /**
      * Get the current language if specified and loaded.
      *
      * @return Language|null The current language, or null if not loaded or not specified.
@@ -288,10 +329,12 @@ class LanguageManager {
     /**
      * Get the user language if specified and loaded.
      *
+     * @param User|null $user [optional] The user to get the language tag from, or null to use the current logged in user.
+     *
      * @return Language|null The user language, or null if not loaded or not specified.
      */
-    public static function getUserLanguage() {
-        return static::getByTag(static::getCookieLanguageTag());
+    public static function getUserLanguage($user = null) {
+        return static::getByTag(static::getUserLanguageTag($user));
     }
 
     /**

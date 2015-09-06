@@ -193,13 +193,11 @@ class MailVerification {
      * Send the verification message to the user.
      */
     public function sendVerificationMessage() {
-        // TODO: Determine the message language based on the preferred language of the user
-
-        // Language
-        $lang = null;
-
         // Get the user
         $user = $this->getUser();
+
+        // Get the language to use for this mail
+        $lang = LanguageManager::getPreferredLanguageFromUser($user);
 
         // Determine the subject
         $subject = html_entity_decode(LanguageManager::getValue('mail', 'mailVerification'));

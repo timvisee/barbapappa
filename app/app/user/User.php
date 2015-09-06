@@ -329,17 +329,15 @@ class User {
      *
      * @param string|null $mail The mail address to send the message to, or null.
      *
-     * @throws Exception Throws if an error ocucrred.
+     * @throws Exception Throws if an error occurred.
      */
     public function sendWelcomeMessage($mail = null) {
         // Parse the mail
         if($mail === null)
             $mail = $this->getPrimaryMail()->getMail();
 
-        // TODO: Determine the message language based on the preferred language of the user
-
-        // Language
-        $lang = null;
+        // Get the language to use for this mail
+        $lang = LanguageManager::getPreferredLanguageFromUser($this);
 
         // Set the preferred mail language and user
         MailSender::setPreferredLanguageTag(LanguageManager::getPreferredLanguage());
