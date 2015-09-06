@@ -2,6 +2,8 @@
 
 use app\language\LanguageManager;
 use app\mail\MailManager;
+use app\mail\verification\MailVerification;
+use app\mail\verification\MailVerificationManager;
 use app\registry\Registry;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
@@ -68,16 +70,31 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     if(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_USERNAME)->getBoolValue() && UserManager::isUserWithUsername($loginUser))
         $user = UserManager::getUserWithUsername($loginUser);
 
-    elseif(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_MAIL)->getBoolValue() && AccountUtils::isValidMail($loginUser) && MailManager::isMailWithMail($loginUser)) {
-        // Get the mail of the user
-        $mail = MailManager::getMailWithMail($loginUser);
+    elseif(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_MAIL)->getBoolValue() && AccountUtils::isValidMail($loginUser)) {
+        // Check whether this mail is registered and verified
+        if(MailManager::isMailWithMail($loginUser)) {
+            // Get the mail of the user
+            $mail = MailManager::getMailWithMail($loginUser);
 
-        // Get the corresponding user if valid
-        if($mail !== null)
-            $user = $mail->getUser();
+            // Get the corresponding user if valid
+            if($mail !== null)
+                $user = $mail->getUser();
+
+        } else {
+            // Get all mails waiting for verification for this user
+            $mails = MailVerificationManager::getMailVerificationsWithMail($loginUser);
+
+            // Get the user of the unverified mail if one address is returned
+            if(sizeof($mails) == 1) {
+                // Get the mail verification
+                $mailVerification = $mails[0];
+
+                // Validate the instance and get the user
+                if($mailVerification instanceof MailVerification)
+                    $user = $mailVerification->getUser();
+            }
+        }
     }
-
-    // TODO: Select users with mails still needing to be verified (only if once user is returned)
 
     // Make sure a user is found
     if(!($user instanceof User))
