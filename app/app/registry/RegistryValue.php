@@ -3,6 +3,7 @@
 namespace app\registry;
 
 use app\database\Database;
+use carbon\core\util\StringUtils;
 use Exception;
 use PDO;
 
@@ -43,7 +44,7 @@ class RegistryValue{
      */
     private function getDatabaseValue($columnName) {
         // Prepare a query for the database to list registry value with this ID
-        $statement = Database::getPDO()->prepare('SELECT ' . $columnName . ' FROM ' . RegistryManager::getDatabaseTableName() . ' WHERE registry_id=:id');
+        $statement = Database::getPDO()->prepare('SELECT ' . $columnName . ' FROM ' . Registry::getDatabaseTableName() . ' WHERE registry_id=:id');
         $statement->bindParam(':id', $this->id, PDO::PARAM_INT);
 
         // Execute the prepared query
@@ -77,15 +78,40 @@ class RegistryValue{
     }
 
     /**
+     * Get the value as a boolean.
+     *
+     * @return bool Registry value.
+     *
+     * @throws Exception Throws an exception if an error occurred.
+     */
+    public function getBoolValue() {
+        // Get the value as a string
+        $value = $this->getValue();
+
+        // Parse and return the value
+        if(StringUtils::equals($value, Array('true', 't', 'yes', 'y'), false, true))
+            return true;
+        if(StringUtils::equals($value, Array('false', 'f', 'no', 'n'), false, true))
+            return false;
+
+        // Try to cast the value to a boolean, return the result
+        return (bool) $value;
+    }
+
+    /**
      * Set the value of this registry value.
      *
-     * @param string $value The new value.
+     * @param string|bool $value The new value.
      *
      * @throws Exception Throws an exception if an error occurred.
      */
     public function setValue($value) {
+        // Parse boolean values
+        if(is_bool($value))
+            $value = $value ? 1 : 0;
+
         // Prepare a query to update the registry value
-        $statement = Database::getPDO()->prepare('UPDATE ' . RegistryManager::getDatabaseTableName() .
+        $statement = Database::getPDO()->prepare('UPDATE ' . Registry::getDatabaseTableName() .
             ' SET registry_value=:value' .
             ' WHERE registry_id=:id');
         $statement->bindValue(':id', $this->getId(), PDO::PARAM_INT);
@@ -103,7 +129,7 @@ class RegistryValue{
      */
     public function delete() {
         // Prepare a query for the being deleted
-        $statement = Database::getPDO()->prepare('DELETE FROM ' . RegistryManager::getDatabaseTableName() . ' WHERE registry_id=:id');
+        $statement = Database::getPDO()->prepare('DELETE FROM ' . Registry::getDatabaseTableName() . ' WHERE registry_id=:id');
         $statement->bindValue(':id', $this->getId(), PDO::PARAM_INT);
 
         // Execute the prepared query

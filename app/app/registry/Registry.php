@@ -11,7 +11,7 @@ use PDO;
 // Prevent direct requests to this file due to security reasons
 defined('APP_INIT') or die('Access denied!');
 
-class RegistryManager {
+class Registry {
 
     /** The database table name. */
     const DB_TABLE_NAME = 'registry';
@@ -119,7 +119,7 @@ class RegistryManager {
             return null;
 
         // Prepare a query for the database to list registrys with this ID
-        $statement = Database::getPDO()->prepare('SELECT registry_id FROM ' . RegistryManager::getDatabaseTableName() .
+        $statement = Database::getPDO()->prepare('SELECT registry_id FROM ' . Registry::getDatabaseTableName() .
             ' WHERE registry_key=:registry_key');
         $statement->bindValue(':registry_key', $key, PDO::PARAM_STR);
 
@@ -141,7 +141,7 @@ class RegistryManager {
      *
      * @throws Exception Throws if an error occurred.
      */
-    public static function setRegistry($key, $value) {
+    public static function setValue($key, $value) {
         // Trim the key
         // TODO: Parse the registry key
         $key = trim($key);
@@ -165,13 +165,13 @@ class RegistryManager {
         }
 
         // Get the object
-        $value = static::getValue($key);
+        $registryValue = static::getValue($key);
 
         // Set the registry value
-        $value->setValue($value);
+        $registryValue->setValue($value);
 
         // Return the object
-        return $value;
+        return $registryValue;
     }
 
     /**
