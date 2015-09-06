@@ -4,6 +4,7 @@ namespace app\user;
 
 use app\config\Config;
 use app\database\Database;
+use app\language\LanguageManager;
 use app\mail\MailManager;
 use app\mail\verification\MailVerificationManager;
 use app\util\AccountUtils;
@@ -241,6 +242,9 @@ class UserManager {
 
         // Start the verification process for the mail for this user
         MailVerificationManager::createMailVerification($user, $mail, null);
+
+        // Set the preferred language of the user to the currently selected language
+        LanguageManager::setUserLanguageTag(LanguageManager::getPreferredLanguage(), $user);
 
         // Return the created user as object
         return $user;

@@ -331,6 +331,10 @@ class LanguageManager {
      * @throws Exception Throws if an error occurred.
      */
     public static function setUserLanguageTag($langTag, $user = null) {
+        // Parse the language tag
+        if($langTag instanceof Language)
+            $langTag = $langTag->getTag();
+
         // Validate the language tag
         if($langTag !== null && !static::isWithTag($langTag))
             throw new Exception('Invalid language tag.');
