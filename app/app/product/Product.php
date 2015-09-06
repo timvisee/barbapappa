@@ -2,14 +2,9 @@
 
 namespace app\product;
 
-use app\config\Config;
 use app\database\Database;
-use app\mail\Mail;
-use app\mail\MailManager;
 use app\money\MoneyAmount;
 use carbon\core\datetime\DateTime;
-use carbon\core\hash\Hash;
-use carbon\core\util\StringUtils;
 use Exception;
 use PDO;
 

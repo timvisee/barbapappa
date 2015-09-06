@@ -4,7 +4,6 @@ namespace app\product\category;
 
 use app\config\Config;
 use app\database\Database;
-use app\money\MoneyAmount;
 use app\product\ProductCategory;
 use carbon\core\datetime\DateTime;
 use Exception;
@@ -105,25 +104,25 @@ class ProductCategoryManager {
     /**
      * Create a new product category.
      *
-     * @param ProductCategory|int|null $productCategory Parent product category, parent product category ID, null for no parent category.
+     * @param ProductCategory|int|null $parentCategory Parent product category, parent product category ID, null for no parent category.
      * @param string $name Product category name.
      *
-     * @return ProductCategory The created productcategory as object.
+     * @return ProductCategory The created product category as object.
      *
      * @throws Exception throws if an error occurred.
      */
-    public static function createProductCategory($productCategory, $name) {
+    public static function createProductCategory($parentCategory, $name) {
         // Determine the parent product category ID
         $parentCategoryId = null;
 
         // Make sure the parent product category is valid
-        if($productCategory !== null) {
-            // Get the product category category ID from a product category category instance
-            if($productCategory instanceof ProductCategory)
-                $parentCategoryId = $productCategory->getId();
+        if($parentCategory !== null) {
+            // Make sure the parent product category instance is valid
+            if(!($parentCategory instanceof ProductCategory))
+                throw new Exception('Invalid product category.');
 
-            // The product category category seems to be invalid
-            throw new Exception('Invalid product category.');
+            // Get the product category ID
+            $parentCategoryId = $parentCategory->getId();
         }
 
         // Trim the product category name

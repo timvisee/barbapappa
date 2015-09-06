@@ -118,12 +118,12 @@ class ProductManager {
 
         // Make sure the product category is valid
         if($productCategory !== null) {
-            // Get the product category ID from a product category instance
-            if($productCategory instanceof ProductCategory)
-                $productCategoryId = $productCategory->getId();
+            // Make sure the product category instance is valid
+            if(!($productCategory instanceof ProductCategory))
+                throw new Exception('Invalid product category.');
 
-            // The product category seems to be invalid
-            throw new Exception('Invalid product category.');
+            // Get the product category ID
+            $productCategoryId = $productCategory->getId();
         }
 
         // Trim the product name
@@ -141,6 +141,7 @@ class ProductManager {
             'VALUES (:category_id, :product_name, :price, :creation_datetime)');
         $statement->bindValue(':category_id', $productCategoryId, PDO::PARAM_INT);
         $statement->bindValue(':product_name', $name, PDO::PARAM_STR);
+        $statement->bindValue(':price', $price, PDO::PARAM_INT);
         // TODO: Use the UTC/GMT timezone!
         $statement->bindValue(':creation_datetime', $createDateTime->toString(), PDO::PARAM_STR);
 

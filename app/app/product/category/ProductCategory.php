@@ -3,6 +3,7 @@
 namespace app\product;
 
 use app\database\Database;
+use app\product\category\ProductCategoryManager;
 use carbon\core\datetime\DateTime;
 use Exception;
 use PDO;
