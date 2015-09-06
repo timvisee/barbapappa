@@ -53,6 +53,10 @@ Config::load();
 use carbon\core\ErrorHandler;
 ErrorHandler::init(true, true, Config::getValue('app', 'debug'));
 
+// Connect to the database
+use app\database\Database;
+Database::connect();
+
 // Set up the cookie manager
 use carbon\core\cookie\CookieManager;
 CookieManager::setCookieDomain(Config::getValue('cookie', 'domain', ''));
@@ -81,10 +85,6 @@ if($languageTag !== null)
 function __($section, $key, $default = null) {
     return LanguageManager::getValue($section, $key, $default);
 }
-
-// Connect to the database
-use app\database\Database;
-Database::connect();
 
 // Validate the user session
 use app\session\SessionManager;
