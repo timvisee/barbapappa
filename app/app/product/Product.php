@@ -200,7 +200,7 @@ class Product {
     public function setTranslations($translations, $updateModificationDateTime = true) {
         // Make sure the translations object is valid
         if($translations !== null && !($translations instanceof DatabaseValueTranslations))
-            throw new Exception('Invalid database value translations isntance.');
+            throw new Exception('Invalid database value translations instance.');
 
         // Cast the database value translations instance to a string by encoding the values to a JSON array
         $translations = $translations->getValuesEncoded();

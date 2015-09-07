@@ -3,6 +3,7 @@
 namespace app\product;
 
 use app\database\Database;
+use app\database\DatabaseValueTranslations;
 use app\product\category\ProductCategoryManager;
 use carbon\core\datetime\DateTime;
 use Exception;
@@ -159,7 +160,51 @@ class ProductCategory {
             throw new Exception('Failed to query the database.');
     }
 
-    // TODO: Methods to get and set the translations
+    /**
+     * Get the product category translations, with the product name as default.
+     *
+     * @return DatabaseValueTranslations The translations.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function getTranslations() {
+        // Get the translation values from the database
+        $values = $this->getDatabaseValue('product_category_name_translations');
+
+        // Get the default value
+        $default = $this->getName();
+
+        // Construct and return the database value translation object with the name as default
+        return new DatabaseValueTranslations($values, $default);
+    }
+
+    /**
+     * Set the product category name translations.
+     *
+     * @param DatabaseValueTranslations|null $translations The product category name translations as database value
+     * translations instance, or null to clear the product name translations.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function setTranslations($translations) {
+        // Make sure the translations object is valid
+        if($translations !== null && !($translations instanceof DatabaseValueTranslations))
+            throw new Exception('Invalid database value translations instance.');
+
+        // Cast the database value translations instance to a string by encoding the values to a JSON array
+        $translations = $translations->getValuesEncoded();
+
+        // Prepare a query to set the product translations
+        $statement = Database::getPDO()->prepare('UPDATE ' . ProductManager::getDatabaseTableName() .
+            ' SET product_category_name_translations=:name_translations' .
+            ' WHERE product_category_id=:product_id');
+        $statement->bindValue(':product_category__id', $this->getId(), PDO::PARAM_INT);
+        $statement->bindValue(':name_translations', $translations, PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+    }
 
     /**
      * Get the product's creation date time.
