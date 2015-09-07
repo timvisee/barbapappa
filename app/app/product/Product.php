@@ -5,6 +5,7 @@ namespace app\product;
 use app\database\Database;
 use app\database\DatabaseValueTranslations;
 use app\money\MoneyAmount;
+use app\product\category\ProductCategory;
 use carbon\core\datetime\DateTime;
 use Exception;
 use PDO;
@@ -171,6 +172,17 @@ class Product {
     }
 
     /**
+     * Get the product name, properly translated.
+     *
+     * @return string The product name with proper translation.
+     *
+     * @throws Exception Throws if an error occurred
+     */
+    public function getNameTranslated() {
+        return $this->getTranslations()->getValue(null);
+    }
+
+    /**
      * Get the product translations, with the product name as default.
      *
      * @return DatabaseValueTranslations The translations.
@@ -280,13 +292,20 @@ class Product {
     /**
      * Get the product's modified date time.
      *
-     * @return DateTime Product's modified date time.
+     * @return DateTime|null Product's modified date time, or null if the modification date time isn't set.
      *
      * @throws Exception Throws an exception if an error occurred.
      */
     public function getModifiedDateTime() {
+        // Get the modification date time
+        $value = $this->getDatabaseValue('product_modified_datetime');
+
+        // Return null if the value is null
+        if($value === null)
+            return null;
+
         // TODO: Use the proper timezone!
-        return new DateTime($this->getDatabaseValue('product_modified_datetime'));
+        return new DateTime($value);
     }
 
     /**

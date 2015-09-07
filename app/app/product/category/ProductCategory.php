@@ -1,10 +1,10 @@
 <?php
 
-namespace app\product;
+namespace app\product\category;
 
 use app\database\Database;
 use app\database\DatabaseValueTranslations;
-use app\product\category\ProductCategoryManager;
+use app\product\ProductManager;
 use carbon\core\datetime\DateTime;
 use Exception;
 use PDO;
@@ -158,6 +158,17 @@ class ProductCategory {
         // Execute the prepared query
         if(!$statement->execute())
             throw new Exception('Failed to query the database.');
+    }
+
+    /**
+     * Get the name of the product category with the proper translation.
+     *
+     * @return string The name of the product category with the proper translation.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function getNameTranslated() {
+        return $this->getTranslations()->getValue(null);
     }
 
     /**

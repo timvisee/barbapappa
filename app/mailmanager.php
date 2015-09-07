@@ -683,19 +683,6 @@ if(StringUtils::equals($a, 'add', false)) {
     </div>
     <?php
 
-} elseif(StringUtils::equals($a, 'add', false)) {
-    ?>
-    <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create(__('mail', 'addMail'))->setBackButton('index.php')->build(); ?>
-
-        <div data-role="main" class="ui-content">
-            <p>TODO: Add mail here</p>
-        </div>
-
-        <?php PageFooterBuilder::create()->build(); ?>
-    </div>
-    <?php
-
 } else
     showErrorPage();
 

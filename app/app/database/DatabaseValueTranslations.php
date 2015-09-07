@@ -182,4 +182,33 @@ class DatabaseValueTranslations {
     public function deleteTranslation($language) {
         $this->setTranslation($language, null);
     }
+
+    /**
+     * Get all language tags a translation is set for.
+     *
+     * @return array Language tags.
+     */
+    public function getLanguageTags() {
+        return array_keys($this->values);
+    }
+
+    /**
+     * Get all languages a translation is set for.
+     *
+     * @return array Languages.
+     */
+    public function getLanguages() {
+        // Get the list of language tags
+        $tags = $this->getLanguageTags();
+
+        // Create a list with languages
+        $languages = Array();
+
+        // Convert each tag into a language
+        foreach($tags as $tag)
+            $languages[] = LanguageManager::getByTag($tag);
+
+        // Return the list of languages
+        return $languages;
+    }
 }

@@ -114,6 +114,7 @@ class MoneyAmount {
     public function getFormatted($currencySign = true, $currencyColor = true) {
         // TODO: Use the preferred separator of the language used.
         // TODO: Set the colors and color triggers using constants.
+        // TODO: Only show colors for balances?
 
         // Get the amount
         $amount = $this->getAmount();

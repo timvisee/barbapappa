@@ -103,6 +103,15 @@ class LanguageManager {
     }
 
     /**
+     * Get all loaded languages.
+     *
+     * @return array Loaded languages.
+     */
+    public static function getLanguages() {
+        return static::$languages;
+    }
+
+    /**
      * Load all languages from the language directory.
      */
     public static function load() {

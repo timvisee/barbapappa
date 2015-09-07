@@ -4,7 +4,6 @@ namespace app\product\category;
 
 use app\config\Config;
 use app\database\Database;
-use app\product\ProductCategory;
 use carbon\core\datetime\DateTime;
 use Exception;
 use PDO;

@@ -5,6 +5,7 @@ namespace app\product;
 use app\config\Config;
 use app\database\Database;
 use app\money\MoneyAmount;
+use app\product\category\ProductCategory;
 use carbon\core\datetime\DateTime;
 use Exception;
 use PDO;
