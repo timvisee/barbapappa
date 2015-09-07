@@ -461,4 +461,28 @@ class LanguageManager {
         if($setUser)
             static::setUserLanguageTag($langTag);
     }
+
+    /**
+     * Try to parse a language tag.
+     *
+     * @param Language|string|null|mixed $language [optional] A language instance, a language tag, null to return the preferred language tag or any other value.
+     *
+     * @return string|null The language tag to parse, or null to return the preferred language tag.
+     */
+    public static function parseLanguageTag($language = null) {
+        // Return the default language if the parameter is null
+        if($language === null)
+            return static::getPreferredLanguage()->getTag();
+
+        // Parse languages instances
+        if($language instanceof Language)
+            return $language->getTag();
+
+        // Return a language tag if it's valid
+        if(is_string($language) && LanguageManager::isWithTag($language))
+            return $language;
+
+        // Unable to parse the language tag
+        return null;
+    }
 }

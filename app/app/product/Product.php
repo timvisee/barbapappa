@@ -3,6 +3,7 @@
 namespace app\product;
 
 use app\database\Database;
+use app\database\DatabaseValueTranslations;
 use app\money\MoneyAmount;
 use carbon\core\datetime\DateTime;
 use Exception;
@@ -169,7 +170,56 @@ class Product {
             $this->setModifiedDateTime();
     }
 
-    // TODO: Methods to get and set the translations
+    /**
+     * Get the product translations, with the product name as default.
+     *
+     * @return DatabaseValueTranslations The translations.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function getTranslations() {
+        // Get the translation values from the database
+        $values = $this->getDatabaseValue('product_name_translations');
+
+        // Get the default value
+        $default = $this->getName();
+
+        // Construct and return the database value translation object with the name as default
+        return new DatabaseValueTranslations($values, $default);
+    }
+
+    /**
+     * Set the product name translations.
+     *
+     * @param DatabaseValueTranslations|null $translations The product name translations as database value translations
+     * instance, or null to clear the product name translations.
+     * @param bool $updateModificationDateTime [optional] True to update the product modification date time, false if not.
+     *
+     * @throws Exception
+     */
+    public function setTranslations($translations, $updateModificationDateTime = true) {
+        // Make sure the translations object is valid
+        if($translations !== null && !($translations instanceof DatabaseValueTranslations))
+            throw new Exception('Invalid database value translations isntance.');
+
+        // Cast the database value translations instance to a string by encoding the values to a JSON array
+        $translations = $translations->getValuesEncoded();
+
+        // Prepare a query to set the product translations
+        $statement = Database::getPDO()->prepare('UPDATE ' . ProductManager::getDatabaseTableName() .
+            ' SET product_name_translations=:name_translations' .
+            ' WHERE product_id=:product_id');
+        $statement->bindValue(':product_id', $this->getId(), PDO::PARAM_INT);
+        $statement->bindValue(':name_translations', $translations, PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        // Update the modification date time
+        if($updateModificationDateTime)
+            $this->setModifiedDateTime();
+    }
 
     /**
      * Get the product price.
@@ -248,7 +298,7 @@ class Product {
      */
     public function setModifiedDateTime($dateTime = null) {
         // Parse the date time and make sure it's valid
-        if(($dateTime = DateTime::parse($dateTime)))
+        if(($dateTime = DateTime::parse($dateTime)) === null)
             throw new Exception('Invalid date time.');
 
         // Prepare a query to set the product price
