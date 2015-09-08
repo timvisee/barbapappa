@@ -134,7 +134,7 @@ class ProductCategoryManager {
         $statement = Database::getPDO()->prepare('INSERT INTO ' . static::getDatabaseTableName() .
             ' (product_category_parent_id, product_category_name, product_category_creation_datetime) ' .
             'VALUES (:parent_id, :category_name, :creation_datetime)');
-        $statement->bindValue(':category_id', $parentCategoryId, PDO::PARAM_INT);
+        $statement->bindValue(':parent_id', $parentCategoryId, PDO::PARAM_INT);
         $statement->bindValue(':category_name', $name, PDO::PARAM_STR);
         // TODO: Use the UTC/GMT timezone!
         $statement->bindValue(':creation_datetime', $createDateTime->toString(), PDO::PARAM_STR);

@@ -30,15 +30,8 @@ if(SessionManager::isLoggedIn())
                     </tr>
                 </table>
             </center>
-            <br />
-        <?php endif; ?>
-
-        <p><?=__('general', 'welcome'); ?><?php
-            if(SessionManager::isLoggedIn())
-                echo ' ' . SessionManager::getLoggedInUser()->getFullName();
-            ?>!</p><br />
-
         <?php
+        endif;
 
         // Get all products
         $products = ProductManager::getProducts();
@@ -49,7 +42,7 @@ if(SessionManager::isLoggedIn())
         // Print the actual list of products
         if(sizeof($products) > 0):
             ?>
-            <li data-role="list-divider"><span style="float: left;">Quick Buy</span><span style="color: gray; float: right;">Advanced &#8628;</span></li>
+            <li data-role="list-divider"><span style="float: left;"><?=__('quickBuy', 'quickBuy'); ?></span><span style="color: gray; float: right;"><?=__('quickBuy', 'advanced'); ?> &#8628;</span></li>
             <?php
             // Put all products in the list
             foreach($products as $product) {
@@ -59,8 +52,8 @@ if(SessionManager::isLoggedIn())
 
                 // Print the item
                 echo '<li>';
-                echo '<a href="#">' . $product->getNameTranslated() . '<span class="ui-li-count">' . $product->getPrice()->getFormatted() . '</span></a>';
-                echo '<a href="" data-position-to="window" data-transition="pop">Buy options...</a>';
+                echo '<a href="productmanager.php?product_id=' . $product->getId() . '">' . $product->getNameTranslated() . '<span class="ui-li-count">' . $product->getPrice()->getFormatted() . '</span></a>';
+                echo '<a href="productmanager.php?a=change&product_id=' . $product->getId() . '" data-position-to="window" data-transition="pop">' . __('quickBuy', 'advanced') . '...</a>';
                 echo '</li>';
             }
         endif;
@@ -76,6 +69,7 @@ if(SessionManager::isLoggedIn())
         <?php else: ?>
         <fieldset data-role="controlgroup" data-type="vertical">
             <a href="productmanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left">[ALPHA] <?=__('product', 'manageProducts'); ?></a>
+            <a href="productcategorymanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left">[ALPHA] <?=__('productCategory', 'manageProductCategories'); ?></a>
             <a href="mailmanager.php" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'manageMailAddresses'); ?></a>
         </fieldset>
         <fieldset data-role="controlgroup" data-type="vertical">
@@ -87,7 +81,15 @@ if(SessionManager::isLoggedIn())
     <?php PageFooterBuilder::create()->build(); ?>
 
     <div data-role="panel" id="main-panel" data-position="left" data-display="reveal" data-theme="a">
-        <h3>Sidebar menu</h3>
+        <h3>
+        <?php
+        if(SessionManager::isLoggedIn())
+            echo __('general', 'welcome') . ' ' . SessionManager::getLoggedInUser()->getFullName();
+        else
+            echo __('general', 'welcome');
+        ?>
+        </h3>
+
         <p>This is the sidebar menu panel.</p><br />
         <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
         <?php

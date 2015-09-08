@@ -206,10 +206,10 @@ class ProductCategory {
         $translations = $translations->getValuesEncoded();
 
         // Prepare a query to set the product translations
-        $statement = Database::getPDO()->prepare('UPDATE ' . ProductManager::getDatabaseTableName() .
+        $statement = Database::getPDO()->prepare('UPDATE ' . ProductCategoryManager::getDatabaseTableName() .
             ' SET product_category_name_translations=:name_translations' .
-            ' WHERE product_category_id=:product_id');
-        $statement->bindValue(':product_category__id', $this->getId(), PDO::PARAM_INT);
+            ' WHERE product_category_id=:category_id');
+        $statement->bindValue(':category_id', $this->getId(), PDO::PARAM_INT);
         $statement->bindValue(':name_translations', $translations, PDO::PARAM_STR);
 
         // Execute the prepared query

@@ -46,7 +46,8 @@ if(StringUtils::equals($a, 'add', false)) {
                             <label for="product-name"><?=__('product', 'productName'); ?>:</label>
                             <input name="product-name" id="product-name" value="" type="text">
 
-                            <div data-role="collapsible">
+                            <label for="product-name-translations"></label>
+                            <div id="product-name-translations" data-role="collapsible">
                                 <h4><?=__('product', 'nameTranslations'); ?></h4>
                                 <?php
                                 // Get all languages
@@ -220,7 +221,8 @@ if(StringUtils::equals($a, 'add', false)) {
                             <label for="product-name"><?=__('product', 'productName'); ?>:</label>
                             <input name="product-name" id="product-name" value="<?=$product->getName(); ?>" type="text">
 
-                            <div data-role="collapsible">
+                            <label for="product-name-translations"></label>
+                            <div id="product-name-translations" data-role="collapsible">
                                 <h4><?=__('product', 'nameTranslations'); ?></h4>
                                 <?php
                                 // Create a field for all languages
@@ -549,7 +551,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
             <?php if($category !== null): ?>
                 <fieldset data-role="controlgroup" data-type="vertical">
-                    <a href="productmanager.php?product_id=<?=$productId; ?>&a=change" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('productCategory', 'viewProductCategory'); ?></a>
+                    <a href="productcategorymanager.php?category_id=<?=$category->getId(); ?>" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('productCategory', 'viewProductCategory'); ?></a>
                 </fieldset>
             <?php endif; ?>
 
