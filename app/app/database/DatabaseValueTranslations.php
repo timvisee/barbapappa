@@ -19,7 +19,7 @@ class DatabaseValueTranslations {
     /**
      * Constructor.
      *
-     * @param Array $values The raw database value with the translations.
+     * @param Array|null $values The raw database value with the translations.
      * @param string|null $default The default value returned on failure.
      */
     public function __construct($values, $default = null) {
@@ -54,7 +54,7 @@ class DatabaseValueTranslations {
     /**
      * Set the translation values.
      *
-     * @param Array $values The translation values.
+     * @param Array|null $values The translation values.
      *
      * @throws Exception Throws if an error occurred.
      */

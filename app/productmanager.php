@@ -1,5 +1,6 @@
 <?php
 
+use app\database\DatabaseValueTranslations;
 use app\language\Language;
 use app\language\LanguageManager;
 use app\money\MoneyAmount;
@@ -25,6 +26,9 @@ if(isset($_GET['a']))
     $a = trim($_GET['a']);
 
 // TODO: Make sure the user has permission to do certain things!
+
+// Get all language manager languages
+$languages = LanguageManager::getLanguages();
 
 if(StringUtils::equals($a, 'add', false)) {
     if(!isset($_POST['product-name'])) {
@@ -106,6 +110,27 @@ if(StringUtils::equals($a, 'add', false)) {
         if(strlen($productName) == 0)
             showErrorPage();
 
+        // Create a database value translations object to store translations in
+        $nameTranslations = new DatabaseValueTranslations(null, $productName);
+
+        // Create a field for all languages
+        foreach($languages as $language) {
+            // Validate the instance
+            if(!($language instanceof Language))
+                continue;
+
+            // Get the language tag and POST name
+            $tag = $language->getTag();
+            $name = 'product-name-' . $tag;
+
+            // Make sure a name is set for this language
+            if(!isset($_POST[$name]) || strlen(trim($_POST[$name])) <= 0)
+                continue;
+
+            // Get and set the translation
+            $nameTranslations->setTranslation($tag, trim($_POST[$name]));
+        }
+
         // Get the product category instance
         $productCategory = null;
 
@@ -124,6 +149,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
         // Make sure the price is numeric
         if(!is_numeric($productPrice))
+            // TODO: Show a proper error message!
             showErrorPage();
 
         // Parse the price as float value
@@ -131,13 +157,15 @@ if(StringUtils::equals($a, 'add', false)) {
 
         // Make sure the number is zero or positive
         if($productPrice < 0)
+            // TODO: Show a proper error message!
             showErrorPage();
 
         // Get the product price as money amount instance
         $productPrice = new MoneyAmount($productPrice);
 
-        // Add the product
-        ProductManager::createProduct($productCategory, $productName, $productPrice);
+        // Add the product and set the translations
+        $product = ProductManager::createProduct($productCategory, $productName, $productPrice);
+        $product->setTranslations($nameTranslations, false);
 
         ?>
         <div data-role="page" id="page-register" data-unload="false">
@@ -171,6 +199,9 @@ if(StringUtils::equals($a, 'add', false)) {
     // Get the product instance
     $product = new Product($productId);
 
+    // Get all translations
+    $translations = $product->getTranslations();
+
     if(!isset($_POST['product-name'])) {
         ?>
         <div data-role="page" id="page-main">
@@ -186,10 +217,6 @@ if(StringUtils::equals($a, 'add', false)) {
                     <div data-role="collapsible">
                         <h4><?=__('product', 'nameTranslations'); ?></h4>
                         <?php
-                        // Get all languages and translations
-                        $languages = LanguageManager::getLanguages();
-                        $translations = $product->getTranslations();
-
                         // Create a field for all languages
                         foreach($languages as $language) {
                             // Validate the instance
@@ -261,6 +288,27 @@ if(StringUtils::equals($a, 'add', false)) {
         if(strlen($productName) == 0)
             showErrorPage();
 
+        // Create a database value translations object to store translations in
+        $nameTranslations = new DatabaseValueTranslations(null, $productName);
+
+        // Create a field for all languages
+        foreach($languages as $language) {
+            // Validate the instance
+            if(!($language instanceof Language))
+                continue;
+
+            // Get the language tag and POST name
+            $tag = $language->getTag();
+            $name = 'product-name-' . $tag;
+
+            // Make sure a name is set for this language
+            if(!isset($_POST[$name]) || strlen(trim($_POST[$name])) <= 0)
+                continue;
+
+            // Get and set the translation
+            $nameTranslations->setTranslation($tag, trim($_POST[$name]));
+        }
+
         // Get the product category instance
         $productCategory = null;
 
@@ -279,6 +327,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
         // Make sure the price is numeric
         if(!is_numeric($productPrice))
+            // TODO: Show a proper error message!
             showErrorPage();
 
         // Parse the price as float value
@@ -286,6 +335,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
         // Make sure the number is zero or positive
         if($productPrice < 0)
+            // TODO: Show a proper error message!
             showErrorPage();
 
         // Get the product price as money amount instance
@@ -294,6 +344,10 @@ if(StringUtils::equals($a, 'add', false)) {
         // Set the name if it's different
         if(!StringUtils::equals($product->getName(), $productName, true))
             $product->setName($productName);
+
+        // Set the translations if they're different
+        if(!StringUtils::equals($product->getTranslations()->getValuesEncoded(), $nameTranslations->getValuesEncoded(), true))
+            $product->setTranslations($nameTranslations);
 
         // Set the product category if it's different
         if($product->getProductCategoryId() != $productCategoryId)

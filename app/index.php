@@ -1,6 +1,8 @@
 <?php
 
 use app\language\LanguageManager;
+use app\product\Product;
+use app\product\ProductManager;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
@@ -36,14 +38,44 @@ if(SessionManager::isLoggedIn())
                 echo ' ' . SessionManager::getLoggedInUser()->getFullName();
             ?>!</p><br />
 
-        <?php if(!SessionManager::isLoggedIn()): ?>
+        <?php
+
+        // Get all products
+        $products = ProductManager::getProducts();
+
+        // Print the list top
+        echo '<ul data-role="listview" data-split-icon="bars"  data-inset="true">';
+
+        // Print the actual list of products
+        if(sizeof($products) > 0):
+            ?>
+            <li data-role="list-divider"><span style="float: left;">Quick Buy</span><span style="color: gray; float: right;">Advanced &#8628;</span></li>
+            <?php
+            // Put all products in the list
+            foreach($products as $product) {
+                // Validate the instance
+                if(!($product instanceof Product))
+                    continue;
+
+                // Print the item
+                echo '<li>';
+                echo '<a href="#">' . $product->getNameTranslated() . '<span class="ui-li-count">' . $product->getPrice()->getFormatted() . '</span></a>';
+                echo '<a href="" data-position-to="window" data-transition="pop">Buy options...</a>';
+                echo '</li>';
+            }
+        endif;
+
+        // Print the list bottom
+        echo '</ul><br />';
+
+        if(!SessionManager::isLoggedIn()): ?>
         <fieldset data-role="controlgroup" data-type="vertical">
             <a href="login.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'login'); ?></a>
             <a href="register.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'register'); ?></a>
         </fieldset>
         <?php else: ?>
         <fieldset data-role="controlgroup" data-type="vertical">
-            <a href="productmanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left"><?=__('product', 'manageProducts'); ?></a>
+            <a href="productmanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left">[ALPHA] <?=__('product', 'manageProducts'); ?></a>
             <a href="mailmanager.php" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'manageMailAddresses'); ?></a>
         </fieldset>
         <fieldset data-role="controlgroup" data-type="vertical">
