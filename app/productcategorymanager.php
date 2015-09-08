@@ -100,7 +100,7 @@ if(StringUtils::equals($a, 'add', false)) {
     } else {
         // Get the values
         $categoryName = trim($_POST['category-name']);
-        $parentCategoryId = trim($_POST['parent-category-id']);
+        $parentCategoryId = trim($_POST['category-parent-id']);
 
         // Validate the product category name
         if(strlen($categoryName) == 0)
@@ -508,42 +508,47 @@ if(StringUtils::equals($a, 'add', false)) {
                 <?= __('productCategory', 'clickOnProductCategoryToManageOrAdd'); ?>
             </p><br />
 
-            <?php
-
-            // Get all product categories
-            $productCategories = ProductCategoryManager::getProductCategories();
-
-            // Print the list top
-            echo '<ul class="ui-listview" data-role="listview" id="listview-stations-last-occupied" data-inset="true">';
-
-            // Print the actual list of products
-            if(sizeof($productCategories) > 0):
-                ?>
+            <ul data-role="listview" data-split-icon="bars" class="ui-listview-outer" data-inset="true">
                 <li data-role="list-divider"><?= __('productCategory', 'productCategories'); ?></li>
                 <?php
-                // Put all products categories in the list
-                foreach($productCategories as $productCategory) {
-                    // Validate the instance
-                    if(!($productCategory instanceof ProductCategory))
-                        continue;
+                function printCategoryTree($productCategory) {
+                    // Get the children
+                    $children = ProductCategoryManager::getProductCategoryChildren($productCategory);
 
-                    // Print the item
-                    echo '<li><a class="ui-btn ui-btn-icon-right ui-icon-carat-r" href="productcategorymanager.php?category_id=' .
-                        $productCategory->getId() . '">' . $productCategory->getNameTranslated() . '</a></li>';
+                    if($productCategory !== null) {
+                        // Get the name
+                        $name = $productCategory->getNameTranslated();
+
+                        echo '<li data-role="collapsible" data-iconpos="right" data-shadow="false" data-corners="false">';
+                        echo '<h2>' . $name . '</h2>';
+                        echo '<ul data-role="listview" data-shadow="false" data-inset="true" data-corners="false">';
+                        echo '<li><a href="productcategorymanager.php?category_id=' . $productCategory->getId() . '"><i>' . __('general', 'change') . ' ' . $name . '</i><span class="ui-li-count">?</span></a></li>';
+                    }
+
+                    if($productCategory !== null && sizeof($children) > 0)
+                        echo '<li data-role="list-divider">' . __('productCategory', 'subCategories') . '</li>';
+
+                    foreach($children as $child) {
+                        // Validate the instance
+                        if(!($child instanceof ProductCategory))
+                            continue;
+
+                        printCategoryTree($child);
+                    }
+
+                    if($productCategory !== null)
+                        echo '</ul></li>';
                 }
-            else:
-                // There are no product categories yet, show a status message
-                echo '<li><i>' . __('productCategory', 'thereAreNoProductCategories') . '..</i></li>';
-            endif;
 
-            // Print the list bottom
-            echo '</ul>';
-
-            ?>
+                // Print the root categories
+                printCategoryTree(null);
+                ?>
+            </ul>
 
             <fieldset data-role="controlgroup" data-type="vertical">
                 <a href="productcategorymanager.php?a=add" class="ui-btn ui-icon-plus ui-btn-icon-left"><?= __('productCategory',
                         'addProductCategory'); ?></a>
+                <a href="productmanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left"><?=__('product', 'manageProducts'); ?></a>
             </fieldset>
         </div>
 

@@ -56,6 +56,43 @@ class ProductCategoryManager {
     }
 
     /**
+     * Get a list of all product categories for a specific parent.
+     * Note: This method is very resource intensive and expensive to execute.
+     *
+     * @param ProductCategory|null $parent The parent category or null to get the root categories.
+     *
+     * @return array All product categories for this parent.
+     *
+     * @throws Exception Throws an exception on failure.
+     */
+    public static function getProductCategoryChildren($parent = null) {
+        // Make sure the product category is valid
+        if($parent !== null && !($parent instanceof ProductCategory))
+            throw new Exception('Invalid parent product category.');
+
+        // Prepare a query to list the product categories
+        if($parent instanceof ProductCategory) {
+            $statement = Database::getPDO()->prepare('SELECT product_category_id FROM ' . static::getDatabaseTableName() . ' WHERE product_category_parent_id=:parent_id');
+            $statement->bindValue(':parent_id', $parent->getId(), PDO::PARAM_INT);
+        } else
+            $statement = Database::getPDO()->prepare('SELECT product_category_id FROM ' . static::getDatabaseTableName() . ' WHERE product_category_parent_id IS NULL');
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        // The list of product categories
+        $productCategories = Array();
+
+        // Return the number of rows
+        foreach($statement->fetchAll(PDO::FETCH_ASSOC) as $data)
+            $productCategories[] = new ProductCategory($data['product_category_id']);
+
+        // Return the list of product categories
+        return $productCategories;
+    }
+
+    /**
      * Get the number of product categories.
      *
      * @return int Number of product categories.

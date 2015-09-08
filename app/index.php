@@ -37,7 +37,7 @@ if(SessionManager::isLoggedIn())
         $products = ProductManager::getProducts();
 
         // Print the list top
-        echo '<ul data-role="listview" data-split-icon="bars"  data-inset="true">';
+        echo '<ul data-role="listview" data-split-icon="bars" data-inset="true">';
 
         // Print the actual list of products
         if(sizeof($products) > 0):
@@ -68,8 +68,8 @@ if(SessionManager::isLoggedIn())
         </fieldset>
         <?php else: ?>
         <fieldset data-role="controlgroup" data-type="vertical">
-            <a href="productmanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left">[ALPHA] <?=__('product', 'manageProducts'); ?></a>
-            <a href="productcategorymanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left">[ALPHA] <?=__('productCategory', 'manageProductCategories'); ?></a>
+            <a href="productmanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left"><?=__('product', 'manageProducts'); ?></a>
+            <a href="productcategorymanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left"><?=__('productCategory', 'manageProductCategories'); ?></a>
             <a href="mailmanager.php" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'manageMailAddresses'); ?></a>
         </fieldset>
         <fieldset data-role="controlgroup" data-type="vertical">

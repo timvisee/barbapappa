@@ -551,7 +551,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
             <?php if($category !== null): ?>
                 <fieldset data-role="controlgroup" data-type="vertical">
-                    <a href="productcategorymanager.php?category_id=<?=$category->getId(); ?>" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('productCategory', 'viewProductCategory'); ?></a>
+                    <a href="productcategorymanager.php?category_id=<?=$category->getId(); ?>" class="ui-btn ui-icon-shop ui-btn-icon-left"><?=__('productCategory', 'viewProductCategory'); ?></a>
                 </fieldset>
             <?php endif; ?>
 
@@ -609,8 +609,8 @@ if(StringUtils::equals($a, 'add', false)) {
             ?>
 
             <fieldset data-role="controlgroup" data-type="vertical">
-                <a href="productmanager.php?a=add" class="ui-btn ui-icon-plus ui-btn-icon-left"><?= __('product',
-                        'addProduct'); ?></a>
+                <a href="productmanager.php?a=add" class="ui-btn ui-icon-plus ui-btn-icon-left"><?= __('product', 'addProduct'); ?></a>
+                <a href="productcategorymanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left"><?=__('productCategory', 'manageProductCategories'); ?></a>
             </fieldset>
         </div>
 
