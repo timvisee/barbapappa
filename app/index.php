@@ -52,7 +52,7 @@ if(SessionManager::isLoggedIn())
 
                 // Print the item
                 echo '<li>';
-                echo '<a href="productmanager.php?product_id=' . $product->getId() . '">' . $product->getNameTranslated() . '<span class="ui-li-count">' . $product->getPrice()->getFormatted() . '</span></a>';
+                echo '<a href="quickbuy.php?product_id=' . $product->getId() . '" data-transition="slidedown">' . $product->getNameTranslated() . '<span class="ui-li-count">' . $product->getPrice()->getFormatted() . '</span></a>';
                 echo '<a href="productmanager.php?a=change&product_id=' . $product->getId() . '" data-position-to="window" data-transition="pop">' . __('quickBuy', 'advanced') . '...</a>';
                 echo '</li>';
             }

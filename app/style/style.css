@@ -200,4 +200,8 @@ hr {
 .ui-li-static.ui-collapsible > .ui-collapsible-content {
   border-left-width: 0; }
 
+.ui-dialog.dialog-slide-top .ui-dialog-contain {
+  margin-top: 0;
+  padding-top: 16px; }
+
 /*# sourceMappingURL=style.css.map */

@@ -16,8 +16,10 @@ class PageHeaderBuilder {
     private $title = null;
     /** @var string|null The URL of the back button, null otherwise. */
     private $backButtonUrl = null;
-    /** @var bool True to show the language button, false otherwise. */
-    private $languageBtn = false;
+    /** @var bool True to show the menu button, false otherwise. */
+    private $menuBtn = false;
+    /** @var bool True to show the close button, false otherwise. */
+    private $closeBtn = false;
     /** @var string|null An optional header prefix, null to ignore this option. */
     private $prefix = null;
     /** @var string|null An optional header suffix, null to ignore this option. */
@@ -110,7 +112,7 @@ class PageHeaderBuilder {
      * @return bool True if the menu button should be shown, false if not.
      */
     public function hasMenuButton() {
-        return $this->languageBtn;
+        return $this->menuBtn;
     }
 
     /**
@@ -121,7 +123,28 @@ class PageHeaderBuilder {
      * @return self Return the current instance to allow method chaining.
      */
     public function setMenuButton($visible) {
-        $this->languageBtn = $visible;
+        $this->menuBtn = $visible;
+        return $this;
+    }
+
+    /**
+     * Check whether the close button should be shown.
+     *
+     * @return bool True if the close button should be shown, false if not.
+     */
+    public function hasCloseButton() {
+        return $this->closeBtn;
+    }
+
+    /**
+     * Set whether the close button should be shown.
+     *
+     * @param bool $visible True to show the close button, false otherwise.
+     *
+     * @return self Return the current instance to allow method chaining.
+     */
+    public function setCloseButton($visible) {
+        $this->closeBtn = $visible;
         return $this;
     }
 
@@ -224,6 +247,10 @@ class PageHeaderBuilder {
         // Show the menu button if set
         if($this->hasMenuButton())
             echo '<a href="#main-panel" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-bars">' . __('general', 'menu') . '</a>';
+
+        // Show the menu button if set
+        if($this->hasCloseButton())
+            echo '<a href="" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-delete" data-rel="back">' . __('general', 'menu') . '</a>';
 
         // Print the prefix
         if($this->hasPrefix())
