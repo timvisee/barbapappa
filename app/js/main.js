@@ -898,3 +898,12 @@ function showLoader(msgText) {
 function hideLoader() {
     $.mobile.loading("hide");
 }
+
+/*$(document).bind( "mobileinit", function () {
+    $.mobile.page.prototype.options.backBtnTheme = 'b';
+    $.mobile.page.prototype.options.headerTheme = 'b';
+    $.mobile.page.prototype.options.footerTheme = 'b';
+    $.mobile.page.prototype.options.contentTheme = 'b';
+    $.mobile.page.prototype.options.theme = 'b';
+    $.mobile.listview.prototype.options.filterTheme = 'b';
+});*/

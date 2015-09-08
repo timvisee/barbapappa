@@ -228,4 +228,22 @@ class ProductCategory {
         // TODO: Use the proper timezone!
         return new DateTime($this->getDatabaseValue('product_category_creation_datetime'));
     }
+
+    /**
+     * Delete this product category.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function delete() {
+        // Get the product category ID
+        $categoryId = $this->getId();
+
+        // Prepare a query for the mail being deleted
+        $statement = Database::getPDO()->prepare('DELETE FROM ' . ProductCategoryManager::getDatabaseTableName() . ' WHERE product_category_id=:category_id');
+        $statement->bindValue(':category_id', $categoryId, PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+    }
 }

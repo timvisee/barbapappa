@@ -40,54 +40,59 @@ if(StringUtils::equals($a, 'add', false)) {
                 <p><?=__('product', 'fillInFieldsToAddProduct'); ?></p><br />
 
                 <form method="POST" action="productmanager.php?a=add&step=2">
-                    <label for="product-name"><?=__('product', 'productName'); ?>:</label>
-                    <input name="product-name" id="product-name" value="" type="text">
+                    <ul data-role="listview" data-inset="true">
+                        <li data-role="list-divider"><?=__('product', 'productSpecifications'); ?></li>
+                        <li class="ui-field-contain">
+                            <label for="product-name"><?=__('product', 'productName'); ?>:</label>
+                            <input name="product-name" id="product-name" value="" type="text">
 
-                    <div data-role="collapsible">
-                        <h4><?=__('product', 'nameTranslations'); ?></h4>
-                        <?php
-                        // Get all languages
-                        $languages = LanguageManager::getLanguages();
+                            <div data-role="collapsible">
+                                <h4><?=__('product', 'nameTranslations'); ?></h4>
+                                <?php
+                                // Get all languages
+                                $languages = LanguageManager::getLanguages();
 
-                        // Create a field for all languages
-                        foreach($languages as $language) {
-                            // Validate the instance
-                            if(!($language instanceof Language))
-                                continue;
+                                // Create a field for all languages
+                                foreach($languages as $language) {
+                                    // Validate the instance
+                                    if(!($language instanceof Language))
+                                        continue;
 
-                            // Get the language tag
-                            $tag = $language->getTag();
+                                    // Get the language tag
+                                    $tag = $language->getTag();
 
-                            // Print the input field
-                            echo '<label for="product-name-' . $tag . '">' . $language->get('language', 'thisLanguage') . ':</label>';
-                            echo '<input name="product-name-' . $tag . '" id="product-name-' . $tag . '" value="" type="text" placeholder="' . __('general', 'optional') . '" data-clear-btn="true">';
-                        }
-                        ?>
-                    </div>
-                    <br />
+                                    // Print the input field
+                                    echo '<label for="product-name-' . $tag . '">' . $language->get('language', 'thisLanguage') . ':</label>';
+                                    echo '<input name="product-name-' . $tag . '" id="product-name-' . $tag . '" value="" type="text" placeholder="' . __('general', 'optional') . '" data-clear-btn="true">';
+                                }
+                                ?>
+                            </div>
+                        </li>
+                        <li class="ui-field-contain">
+                            <label for="product-category-id"><?=__('productCategory', 'category'); ?>:</label>
+                            <select name="product-category-id" id="product-category-id">
+                                <option value="" selected="selected"><?=__('productCategory', 'noCategory'); ?></option>
+                                <?php
+                                // Get the categories
+                                $categories = ProductCategoryManager::getProductCategories();
 
-                    <label for="product-category-id"><?=__('productCategory', 'category'); ?>:</label>
-                    <select name="product-category-id" id="product-category-id">
-                        <option value="" selected="selected"><?=__('productCategory', 'noCategory'); ?></option>
-                        <?php
-                        // Get the categories
-                        $categories = ProductCategoryManager::getProductCategories();
+                                // Print the items
+                                foreach($categories as $category) {
+                                    // Make sure the instance is valid
+                                    if(!($category instanceof ProductCategory))
+                                        continue;
 
-                        // Print the items
-                        foreach($categories as $category) {
-                            // Make sure the instance is valid
-                            if(!($category instanceof ProductCategory))
-                                continue;
-
-                            // Print the item
-                            echo '<option value="' . $category->getId() . '">' . $category->getNameTranslated() . '</option>';
-                        }
-                        ?>
-                    </select>
-                    <br />
-
-                    <label for="product-price"><?=__('product', 'price'); ?> &euro;:</label>
-                    <input name="product-price" id="product-price" pattern="^\d+(\.|\,)\d{2}$" value="0.00" step="0.01" min="0" type="number">
+                                    // Print the item
+                                    echo '<option value="' . $category->getId() . '">' . $category->getNameTranslated() . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </li>
+                        <li class="ui-field-contain">
+                            <label for="product-price"><?=__('product', 'price'); ?> &euro;:</label>
+                            <input name="product-price" id="product-price" pattern="^\d+(\.|\,)\d{2}$" value="0.00" step="0.01" min="0" type="number">
+                        </li>
+                    </ul>
                     <br />
 
                     <input type="submit" value="<?= __('product', 'addProduct'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
@@ -99,8 +104,6 @@ if(StringUtils::equals($a, 'add', false)) {
         <?php
 
     } else {
-        // TODO: Get the translations
-
         // Get the values
         $productName = trim($_POST['product-name']);
         $productCategoryId = trim($_POST['product-category-id']);
@@ -211,61 +214,66 @@ if(StringUtils::equals($a, 'add', false)) {
                 <p><?=__('product', 'fillInFieldsToChangeProduct'); ?></p><br />
 
                 <form method="POST" action="productmanager.php?a=change&product_id=<?=$productId; ?>&step=2">
-                    <label for="product-name"><?=__('product', 'productName'); ?>:</label>
-                    <input name="product-name" id="product-name" value="<?=$product->getName(); ?>" type="text">
+                    <ul data-role="listview" data-inset="true">
+                        <li data-role="list-divider"><?=__('product', 'productSpecifications'); ?></li>
+                        <li class="ui-field-contain">
+                            <label for="product-name"><?=__('product', 'productName'); ?>:</label>
+                            <input name="product-name" id="product-name" value="<?=$product->getName(); ?>" type="text">
 
-                    <div data-role="collapsible">
-                        <h4><?=__('product', 'nameTranslations'); ?></h4>
-                        <?php
-                        // Create a field for all languages
-                        foreach($languages as $language) {
-                            // Validate the instance
-                            if(!($language instanceof Language))
-                                continue;
+                            <div data-role="collapsible">
+                                <h4><?=__('product', 'nameTranslations'); ?></h4>
+                                <?php
+                                // Create a field for all languages
+                                foreach($languages as $language) {
+                                    // Validate the instance
+                                    if(!($language instanceof Language))
+                                        continue;
 
-                            // Get the language tag
-                            $tag = $language->getTag();
+                                    // Get the language tag
+                                    $tag = $language->getTag();
 
-                            // Determine the value
-                            $value = '';
-                            if($translations->hasTranslation($tag))
-                                $value = $translations->getValue($tag);
-                            // Print the input field
-                            echo '<label for="product-name-' . $tag . '">' . $language->get('language', 'thisLanguage') . ':</label>';
-                            echo '<input name="product-name-' . $tag . '" id="product-name-' . $tag . '" value="' . $value . '" type="text" placeholder="' . __('general', 'optional') . '" data-clear-btn="true">';
-                        }
-                        ?>
-                    </div>
-                    <br />
+                                    // Determine the value
+                                    $value = '';
+                                    if($translations->hasTranslation($tag))
+                                        $value = $translations->getValue($tag);
+                                    // Print the input field
+                                    echo '<label for="product-name-' . $tag . '">' . $language->get('language', 'thisLanguage') . ':</label>';
+                                    echo '<input name="product-name-' . $tag . '" id="product-name-' . $tag . '" value="' . $value . '" type="text" placeholder="' . __('general', 'optional') . '" data-clear-btn="true">';
+                                }
+                                ?>
+                            </div>
+                        </li>
+                        <li class="ui-field-contain">
+                            <label for="product-category-id"><?=__('productCategory', 'category'); ?>:</label>
+                            <select name="product-category-id" id="product-category-id">
+                                <option value=""><?=__('productCategory', 'noCategory'); ?></option>
+                                <?php
+                                // Get the categories
+                                $categories = ProductCategoryManager::getProductCategories();
+                                $currentCategory = $product->getProductCategory();
 
-                    <label for="product-category-id"><?=__('productCategory', 'category'); ?>:</label>
-                    <select name="product-category-id" id="product-category-id">
-                        <option value=""><?=__('productCategory', 'noCategory'); ?></option>
-                        <?php
-                        // Get the categories
-                        $categories = ProductCategoryManager::getProductCategories();
-                        $currentCategory = $product->getProductCategory();
+                                // Print the items
+                                foreach($categories as $category) {
+                                    // Make sure the instance is valid
+                                    if(!($category instanceof ProductCategory))
+                                        continue;
 
-                        // Print the items
-                        foreach($categories as $category) {
-                            // Make sure the instance is valid
-                            if(!($category instanceof ProductCategory))
-                                continue;
+                                    // Determine whether to add a selected tag
+                                    $selected = '';
+                                    if($currentCategory !== null && $currentCategory->getId() == $category->getId())
+                                        $selected = 'selected="selected" ';
 
-                            // Determine whether to add a selected tag
-                            $selected = '';
-                            if($currentCategory !== null && $currentCategory->getId() == $category->getId())
-                                $selected = 'selected="selected" ';
-
-                            // Print the item
-                            echo '<option value="' . $category->getId() . '" ' . $selected . '>' . $category->getNameTranslated() . '</option>';
-                        }
-                        ?>
-                    </select>
-                    <br />
-
-                    <label for="product-price"><?=__('product', 'price'); ?> &euro;:</label>
-                    <input name="product-price" id="product-price" pattern="^\d+(\.|\,)\d{2}$" value="<?=$product->getPrice()->getAmount() / 100; ?>" step="0.01" min="0" type="number">
+                                    // Print the item
+                                    echo '<option value="' . $category->getId() . '" ' . $selected . '>' . $category->getNameTranslated() . '</option>';
+                                }
+                                ?>
+                            </select>
+                        </li>
+                        <li class="ui-field-contain">
+                            <label for="product-price"><?=__('product', 'price'); ?> &euro;:</label>
+                            <input name="product-price" id="product-price" pattern="^\d+(\.|\,)\d{2}$" value="<?=$product->getPrice()->getAmount() / 100; ?>" step="0.01" min="0" type="number">
+                        </li>
+                    </ul>
                     <br />
 
                     <input type="submit" value="<?= __('product', 'changeProduct'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
@@ -277,8 +285,6 @@ if(StringUtils::equals($a, 'add', false)) {
         <?php
 
     } else {
-        // TODO: Get the translations
-
         // Get the values
         $productName = trim($_POST['product-name']);
         $productCategoryId = trim($_POST['product-category-id']);
@@ -364,6 +370,86 @@ if(StringUtils::equals($a, 'add', false)) {
             <div data-role="main" class="ui-content">
                 <p>
                     <?= __('product', 'changedProductSuccessfully'); ?>
+                </p><br />
+
+                <fieldset data-role="controlgroup" data-type="vertical">
+                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goToFrontPage'); ?></a>
+                </fieldset>
+            </div>
+
+            <?php PageFooterBuilder::create()->build(); ?>
+        </div>
+        <?php
+    }
+
+} else if(StringUtils::equals($a, 'delete', false)) {
+    // Make sure the product ID is set
+    if(!isset($_GET['product_id']))
+        showErrorPage();
+
+    // Get the product ID and make sure it's valid
+    $productId = $_GET['product_id'];
+    if(!ProductManager::isProductWithId($productId))
+        showErrorPage();
+
+    // Get the product instance
+    $product = new Product($productId);
+
+    if(!isset($_POST['agree'])) {
+        ?>
+        <div data-role="page" id="page-register" data-unload="false">
+            <?php PageHeaderBuilder::create(__('product', 'deleteProduct'))->setBackButton('index.php')->build(); ?>
+
+            <div data-role="main" class="ui-content">
+                <p><?=__('product', 'aboutToRemoveProductNotReversible'); ?></p><br />
+
+                <form method="POST" action="productmanager.php?a=delete&product_id=<?=$productId; ?>&step=2">
+                    <center>
+                        <table class="ui-responsive">
+                            <tr>
+                                <td><?=__('product', 'productName'); ?></td>
+                                <td><?=$product->getName(); ?></td>
+                            </tr>
+                            <tr>
+                                <td><?=__('product', 'price'); ?></td>
+                                <td><?=$product->getPrice()->getFormatted(); ?></td>
+                            </tr>
+                        </table>
+                    </center>
+                    <br />
+
+                    <label for="agree"><?= __('product', 'youSureRemoveProduct'); ?></label>
+                    <select id="agree" name="agree" data-role="slider">
+                        <option value="0"><?= __('general', 'acceptanceNo'); ?></option>
+                        <option value="1"><?= __('general', 'acceptanceYes'); ?></option>
+                    </select>
+
+                    <input type="submit" value="<?= __('product', 'deleteProduct'); ?>"
+                           class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                </form>
+            </div>
+
+            <?php PageFooterBuilder::create()->build(); ?>
+        </div>
+        <?php
+
+    } else {
+        // Make sure the user agree's to change the mail address
+        $agree = $_POST['agree'];
+        if($agree != 1)
+            showErrorPage(__('product', 'mustAgreeToRemoveProduct'));
+
+        // Delete the product
+        $product->delete();
+        $product = null;
+
+        ?>
+        <div data-role="page" id="page-register" data-unload="false">
+            <?php PageHeaderBuilder::create(__('product', 'deleteProduct'))->build(); ?>
+
+            <div data-role="main" class="ui-content">
+                <p>
+                    <?= __('product', 'removedProductSuccessfully'); ?>
                 </p><br />
 
                 <fieldset data-role="controlgroup" data-type="vertical">
@@ -469,7 +555,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
             <fieldset data-role="controlgroup" data-type="vertical">
                 <a href="productmanager.php?product_id=<?=$productId; ?>&a=change" class="ui-btn ui-icon-edit ui-btn-icon-left"><?=__('product', 'changeProduct'); ?></a>
-                <a href="productmanager.php?v=<?=$productId; ?>&a=delete" class="ui-btn ui-icon-delete ui-btn-icon-left"><?=__('product', 'deleteProduct'); ?></a>
+                <a href="productmanager.php?product_id=<?=$productId; ?>&a=delete" class="ui-btn ui-icon-delete ui-btn-icon-left"><?=__('product', 'deleteProduct'); ?></a>
             </fieldset>
         </div>
 

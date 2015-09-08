@@ -332,4 +332,22 @@ class Product {
         if(!$statement->execute())
             throw new Exception('Failed to query the database.');
     }
+
+    /**
+     * Delete this product.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function delete() {
+        // Get the product ID
+        $productId = $this->getId();
+
+        // Prepare a query for the mail being deleted
+        $statement = Database::getPDO()->prepare('DELETE FROM ' . ProductManager::getDatabaseTableName() . ' WHERE product_id=:product_id');
+        $statement->bindValue(':product_id', $productId, PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+    }
 }
