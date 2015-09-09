@@ -871,6 +871,7 @@ $(document).on('pageshow', function(event, ui) {
     startRefreshTimer();
 });
 
+// TODO: Make sure this code only works on pages the sidebar is available on
 $(document).on("pagecreate", function() {
     $(document).on("swiperight", function(e) {
         if(e.type === "swiperight") {

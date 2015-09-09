@@ -294,9 +294,17 @@ class SessionManager {
      * @param Session $session Current session.
      */
     private static function setCurrentSession($session) {
+        // Set the current session
         static::$currentSession = $session;
-        static::$currentUser = $session->getUser();
-        static::$activeUser = null;
+
+        // Get and set the user and active user instance if the session isn't null
+        if(static::$currentSession !== null) {
+            static::$currentUser = $session->getUser();
+            static::$activeUser = null;
+        } else {
+            static::$currentUser = null;
+            static::$activeUser = null;
+        }
 
         // TODO: Get the active user!
     }
