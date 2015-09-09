@@ -29,36 +29,36 @@ if(SessionManager::isLoggedIn())
                     </tr>
                 </table>
             </center>
-        <?php
-        endif;
-
-        // Get all products
-        $products = ProductManager::getProducts();
-
-        // Print the list top
-        echo '<ul data-role="listview" data-split-icon="bars" data-inset="true">';
-
-        // Print the actual list of products
-        if(sizeof($products) > 0):
-            ?>
-            <li data-role="list-divider"><span style="float: left;"><?=__('quickBuy', 'quickBuy'); ?></span><span style="color: gray; float: right;"><?=__('quickBuy', 'advanced'); ?> &#8628;</span></li>
             <?php
-            // Put all products in the list
-            foreach($products as $product) {
-                // Validate the instance
-                if(!($product instanceof Product))
-                    continue;
 
-                // Print the item
-                echo '<li>';
-                echo '<a href="quickbuy.php?product_id=' . $product->getId() . '" data-transition="slidedown">' . $product->getNameTranslated() . '<span class="ui-li-count">' . $product->getPrice()->getFormatted() . '</span></a>';
-                echo '<a href="productmanager.php?a=change&product_id=' . $product->getId() . '" data-position-to="window" data-transition="pop">' . __('quickBuy', 'advanced') . '...</a>';
-                echo '</li>';
-            }
+            // Get all products
+            $products = ProductManager::getProducts();
+
+            // Print the list top
+            echo '<ul data-role="listview" data-split-icon="bars" data-inset="true">';
+
+            // Print the actual list of products
+            if(sizeof($products) > 0):
+                ?>
+                <li data-role="list-divider"><span style="float: left;"><?=__('quickBuy', 'quickBuy'); ?></span><span style="color: gray; float: right;"><?=__('quickBuy', 'advanced'); ?> &#8628;</span></li>
+                <?php
+                // Put all products in the list
+                foreach($products as $product) {
+                    // Validate the instance
+                    if(!($product instanceof Product))
+                        continue;
+
+                    // Print the item
+                    echo '<li>';
+                    echo '<a href="quickbuy.php?product_id=' . $product->getId() . '" data-transition="slidedown">' . $product->getNameTranslated() . '<span class="ui-li-count">' . $product->getPrice()->getFormatted() . '</span></a>';
+                    echo '<a href="productmanager.php?a=change&product_id=' . $product->getId() . '" data-position-to="window" data-transition="pop">' . __('quickBuy', 'advanced') . '...</a>';
+                    echo '</li>';
+                }
+            endif;
+
+            // Print the list bottom
+            echo '</ul><br />';
         endif;
-
-        // Print the list bottom
-        echo '</ul><br />';
 
         if(!SessionManager::isLoggedIn()): ?>
         <fieldset data-role="controlgroup" data-type="vertical">
