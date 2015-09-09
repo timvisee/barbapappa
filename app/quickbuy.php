@@ -23,10 +23,10 @@ $product = new Product($productId);
 ?>
 
 <div data-role="page" class="dialog-slide-top" data-dialog="true">
-    <?php PageHeaderBuilder::create(__('quickBuy', 'quickBuy'))->setCloseButton(true)->build(); ?>
+    <?php PageHeaderBuilder::create(__('quickBuy', 'quickBuy'))->setCloseButton(true)->setFixed(false)->build(); ?>
 
     <div role="main" class="ui-content">
-        <p><?=__('quickBuy', 'youSureYouWantToBuyThisProduct'); ?></p><br />
+        <center><p><?=__('quickBuy', 'youSureYouWantToBuyThisProduct'); ?></p></center><br />
 
         <center>
             <table class="ui-responsive">

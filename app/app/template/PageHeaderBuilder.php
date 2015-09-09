@@ -4,6 +4,7 @@ namespace app\template;
 
 use app\language\LanguageManager;
 use app\session\SessionManager;
+use app\user\User;
 use app\util\ColorUtils;
 use carbon\core\util\StringUtils;
 
@@ -20,6 +21,8 @@ class PageHeaderBuilder {
     private $menuBtn = false;
     /** @var bool True to show the close button, false otherwise. */
     private $closeBtn = false;
+    /** @var bool True if the header is fixed, false if not. */
+    private $fixed = true;
     /** @var string|null An optional header prefix, null to ignore this option. */
     private $prefix = null;
     /** @var string|null An optional header suffix, null to ignore this option. */
@@ -149,6 +152,28 @@ class PageHeaderBuilder {
     }
 
     /**
+     * Check whether the header is fixed.
+     *
+     * @return bool True if the header is fixed, false if not.
+     */
+    public function isFixed() {
+        // TODO: Properly render fixed headers, before reverting the code bellow
+        return false; // $this->fixed
+    }
+
+    /**
+     * Set whether the header is fixed
+     *
+     * @param bool $fixed True if the header is fixed, false if not.
+     *
+     * @return self Return the current instance to allow method chaining.
+     */
+    public function setFixed($fixed) {
+        $this->fixed = $fixed;
+        return $this;
+    }
+
+    /**
      * Get the current prefix.
      *
      * @return string|null The prefix, or null if not prefix has been set.
@@ -238,7 +263,7 @@ class PageHeaderBuilder {
         $headerDivStyle .= 'border-bottom: 1px solid #' . $headerShadow . ';';
 
         // Print div opening tag, of the header
-        echo '<div data-role="header" style="' . $headerDivStyle . '">';
+        echo '<div data-role="header" style="' . $headerDivStyle . '"' . ($this->isFixed() ? ' data-position="fixed"' : '') . '>';
 
         // Show a back button if set
         if($this->hasBackButton())
@@ -268,5 +293,15 @@ class PageHeaderBuilder {
 
         // Print div closing tag
         echo '</div>';
+
+        // Print the account-used-as header
+        if(SessionManager::isLoggedIn() && SessionManager::getLoggedInUser()->getId() != SessionManager::getActiveUser()->getId()) {
+            // Ge the user
+            $user = new User(536703709);
+
+            echo '<div data-role="header" style="' . $headerDivStyle . '">';
+            echo '<p class="header-message">' .  __('account', 'ussingAccountAs') . ' ' . $user->getFullName() . '</p>';
+            echo '</div>';
+        }
     }
 }

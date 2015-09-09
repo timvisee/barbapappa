@@ -204,4 +204,14 @@ hr {
   margin-top: 0;
   padding-top: 16px; }
 
+.ui-header .header-message {
+  background: #DDD;
+  padding: 6px;
+  font-size: 80%;
+  text-align: center;
+  font-style: italic; }
+
+.ui-header p.header-message {
+  line-height: normal; }
+
 /*# sourceMappingURL=style.css.map */

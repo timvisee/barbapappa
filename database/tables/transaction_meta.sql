@@ -7,5 +7,4 @@ CREATE TABLE `bar_transaction_meta` (
 )
 COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
-AUTO_INCREMENT=3
 ;

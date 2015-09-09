@@ -31,6 +31,8 @@ class SessionManager {
 
     /** @var Session|null The current session if the user is logged in, null otherwise. */
     private static $currentSession = null;
+    private static $currentUser = null;
+    private static $activeUser = null;
 
     /**
      * Get the database table name of the sessions.
@@ -209,7 +211,7 @@ class SessionManager {
     public static function validateSession() {
         // Make sure the proper cookie is set
         if(!CookieManager::hasCookie(static::SESSION_COOKIE_NAME)) {
-            static::$currentSession = null;
+            static::setCurrentSession(null);
             static::removeSession(null, true);
             return;
         }
@@ -222,7 +224,7 @@ class SessionManager {
 
         // Make sure the session is valid and isn't expired
         if($session === null || $session->isExpired()) {
-            static::$currentSession = null;
+            static::setCurrentSession(null);
             static::removeSession(null, true);
             return;
         }
@@ -232,7 +234,7 @@ class SessionManager {
             return;
 
         // Get and store the session
-        static::$currentSession = $session;
+        static::setCurrentSession($session);
     }
 
     /**
@@ -287,6 +289,19 @@ class SessionManager {
     }
 
     /**
+     * Set the current session.
+     *
+     * @param Session $session Current session.
+     */
+    private static function setCurrentSession($session) {
+        static::$currentSession = $session;
+        static::$currentUser = $session->getUser();
+        static::$activeUser = null;
+
+        // TODO: Get the active user!
+    }
+
+    /**
      * Get the user of the current logged in user.
      *
      * @return User User of the current logged in user.
@@ -299,6 +314,16 @@ class SessionManager {
 
         // Return the user
         return $session->getUser();
+    }
+
+    /**
+     * Get the user that is currently active.
+     *
+     * @return User User that is currently active.
+     */
+    public static function getActiveUser() {
+        // TODO: Return the active user!
+        return new User(536703709);
     }
 
     /**
