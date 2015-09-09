@@ -5,6 +5,7 @@ use app\mail\verification\MailVerificationManager;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
+use app\template\PageSidebarBuilder;
 use carbon\core\util\StringUtils;
 
 // Include the page top
@@ -63,7 +64,11 @@ if(StringUtils::equals($a, 'resend', false)) {
                 </fieldset>
             </div>
 
-            <?php PageFooterBuilder::create()->build(); ?>
+            <?php
+            // Build the footer and sidebar
+            PageFooterBuilder::create()->build();
+            PageSidebarBuilder::create()->build();
+            ?>
         </div>
         <?php
 
@@ -157,7 +162,11 @@ if(StringUtils::equals($a, 'resend', false)) {
                     </form>
                 </div>
 
-                <?php PageFooterBuilder::create()->build(); ?>
+                <?php
+                // Build the footer and sidebar
+                PageFooterBuilder::create()->build();
+                PageSidebarBuilder::create()->build();
+                ?>
             </div>
             <?php
 
@@ -177,7 +186,11 @@ if(StringUtils::equals($a, 'resend', false)) {
                     </fieldset>
                 </div>
 
-                <?php PageFooterBuilder::create()->build(); ?>
+                <?php
+                // Build the footer and sidebar
+                PageFooterBuilder::create()->build();
+                PageSidebarBuilder::create()->build();
+                ?>
             </div>
             <?php
         }
@@ -237,7 +250,11 @@ if(StringUtils::equals($a, 'resend', false)) {
             </fieldset>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 

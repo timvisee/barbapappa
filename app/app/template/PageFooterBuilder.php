@@ -2,8 +2,10 @@
 
 namespace app\template;
 
-use app\session\SessionManager;
 use app\util\ColorUtils;
+
+// Prevent direct requests to this file due to security reasons
+defined('APP_INIT') or die('Access denied!');
 
 class PageFooterBuilder {
 

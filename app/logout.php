@@ -3,6 +3,7 @@
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
+use app\template\PageSidebarBuilder;
 
 // Include the page top
 require_once('top.php');
@@ -20,7 +21,11 @@ if(!SessionManager::isLoggedIn()):
             </fieldset>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 
@@ -40,7 +45,11 @@ else:
             </fieldset>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 endif;

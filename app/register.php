@@ -4,6 +4,7 @@ use app\mail\MailManager;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
+use app\template\PageSidebarBuilder;
 use app\user\UserManager;
 use app\util\AccountUtils;
 use carbon\core\util\StringUtils;
@@ -49,7 +50,11 @@ if($registerStep == 1):
             </form>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 
@@ -84,7 +89,11 @@ elseif($registerStep == 2):
             </form>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 
@@ -119,7 +128,11 @@ elseif($registerStep == 3):
             </form>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 
@@ -175,7 +188,11 @@ elseif($registerStep == 4):
             </form>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 
@@ -235,7 +252,11 @@ elseif($registerStep == 5):
             </fieldset>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 

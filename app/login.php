@@ -8,6 +8,7 @@ use app\registry\Registry;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
+use app\template\PageSidebarBuilder;
 use app\user\User;
 use app\user\UserManager;
 use app\util\AccountUtils;
@@ -54,7 +55,11 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
             </form>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 
@@ -130,7 +135,11 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
             </fieldset>
         </div>
 
-        <?php PageFooterBuilder::create()->build(); ?>
+        <?php
+        // Build the footer and sidebar
+        PageFooterBuilder::create()->build();
+        PageSidebarBuilder::create()->build();
+        ?>
     </div>
     <?php
 }

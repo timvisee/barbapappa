@@ -7,6 +7,7 @@ use app\station\StationManager;
 use app\team\TeamManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
+use app\template\PageSidebarBuilder;
 
 // Include the page top
 require_once('top.php');
@@ -41,7 +42,11 @@ require_once('top.php');
         <p>Copyright &copy; Tim Vis&eacute;e <?=date('Y'); ?>.<br />All rights reserved.</p>
     </div>
 
-    <?php PageFooterBuilder::create()->build(); ?>
+    <?php
+    // Build the footer and sidebar
+    PageFooterBuilder::create()->build();
+    PageSidebarBuilder::create()->build();
+    ?>
 </div>
 
 <?php
