@@ -35,7 +35,7 @@ if(SessionManager::isLoggedIn())
             $products = ProductManager::getProducts();
 
             // Print the list top
-            echo '<ul data-role="listview" data-split-icon="bars" data-inset="true">';
+            echo '<ul id="list-quick-buy" data-role="listview" data-split-icon="bars" data-inset="true">';
 
             // Print the actual list of products
             if(sizeof($products) > 0):

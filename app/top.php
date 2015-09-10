@@ -61,8 +61,14 @@ $site_root = '';
     <meta name="apple-mobile-web-app-title" content="BARbapAPPa">
     <meta name="msapplication-TileImage" content="<?=$site_root; ?>style/image/favicon/mstile-144x144.png">
 
-    <!-- Script -->
+    <!-- Library: jQuery -->
     <script src="<?=$site_root; ?>lib/jquery/jquery-1.11.3.min.js"></script>
+
+    <!-- Library: bootstrap-tour -->
+    <link rel="stylesheet" href="<?=$site_root; ?>lib/bootstrap-tour/css/bootstrap-tour-standalone.min.css" />
+    <script src="<?=$site_root; ?>lib/bootstrap-tour/js/bootstrap-tour-standalone.min.js"></script>
+
+    <!-- Script -->
     <script src="<?=$site_root; ?>js/jquery.mobile.settings.js"></script>
     <script src="<?=$site_root; ?>js/main.js"></script>
 

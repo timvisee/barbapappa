@@ -266,15 +266,19 @@ class PageHeaderBuilder {
         $headerDivStyle .= 'border-bottom: 1px solid #' . $headerShadow . ';';
 
         // Print div opening tag, of the header
-        echo '<div data-role="header" style="' . $headerDivStyle . '"' . ($this->isFixed() ? ' data-position="fixed"' : '') . '>';
+        echo '<div id="header" data-role="header" style="' . $headerDivStyle . '"' . ($this->isFixed() ? ' data-position="fixed"' : '') . '>';
 
         // Show a back button if set
         if($this->hasBackButton())
             echo '<a href="' . $this->getBackButton() . '" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left" data-direction="reverse">' . __('navigation', 'back') . '</a>';
 
         // Show the menu button if set
-        if($this->hasMenuButton())
-            echo '<a href="#main-panel" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-bars">' . __('general', 'menu') . '</a>';
+        if($this->hasMenuButton()) {
+            echo '<a id="menu-button" href="#main-panel" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-bars">' . __('general', 'menu') . '</a>';
+
+            // TODO: This is temporary
+            echo '<a id="start-tutorial" href="#" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-info">Start test tutorial</a>';
+        }
 
         // Show the menu button if set
         if($this->hasCloseButton())

@@ -900,11 +900,69 @@ function hideLoader() {
     $.mobile.loading("hide");
 }
 
-/*$(document).bind( "mobileinit", function () {
-    $.mobile.page.prototype.options.backBtnTheme = 'b';
-    $.mobile.page.prototype.options.headerTheme = 'b';
-    $.mobile.page.prototype.options.footerTheme = 'b';
-    $.mobile.page.prototype.options.contentTheme = 'b';
-    $.mobile.page.prototype.options.theme = 'b';
-    $.mobile.listview.prototype.options.filterTheme = 'b';
-});*/
+var tour = null;
+$(document).on("pageshow", function() {
+    // Make sure a tour isn't started already
+    if(tour != null)
+        tour.stop();
+
+    tour = new Tour({
+        name: "test1",
+        storage: window.localStorage,
+        template: "<div class='popover tour'>" +
+                "<div class='arrow'></div>" +
+                "<h3 class='popover-title'></h3>" +
+                "<div class='popover-content'></div>" +
+                "<div class='popover-navigation'>" +
+                '<button class="btn btn-sm btn-default" data-role="prev">&laquo;</button> <button class="btn btn-sm btn-default" data-role="next">&raquo;</button>' +
+                '<button class="btn btn-sm btn-default" data-role="pause-resume" data-pause-text="Pause" data-resume-text="Resume">Pause</button> <button class="btn btn-sm btn-default" data-role="end">End tour</button>' +
+                "</div>" +
+                "</div>",
+        steps: [
+            {
+                element: "#header",
+                title: "The header",
+                content: "Click the header to reload the app.",
+                placement: "bottom",
+                backdrop: true,
+                prev: -1
+            }, {
+                element: "#list-quick-buy",
+                title: "Quick buy",
+                content: "Click on one of the products above to quickly buy it.",
+                placement: "bottom",
+                backdrop: true,
+                reflex: true
+            }, {
+                element: "#menu-button",
+                title: "Sidebar",
+                content: "The sidebar description",
+                placement: "right",
+                backdrop: true,
+                reflex: true,
+                next: -1
+            }
+        ],
+        debug: true,
+        onShown: function(tour) {
+            var stepElement = getTourElement(tour);
+            $(stepElement).after($('.tour-step-background'));
+            $(stepElement).after($('.tour-backdrop'));
+        }
+    });
+
+    function getTourElement(tour){
+        return tour._options.steps[tour._current].element
+    }
+
+    // Initialize the tour
+    tour.init();
+
+    // Start the tour when the demo button is pressed
+    $('#start-tutorial').click(function() {
+        // Start the tour
+        tour.restart();
+
+        return false;
+    });
+});

@@ -275,3 +275,16 @@ hr {
 .ui-header p.header-message {
   line-height: normal;
 }
+
+
+
+
+
+
+.tour-step-background,
+.tour-backdrop {
+  position: fixed !important;
+}
+.tour-step-background {
+  background: inherit;
+}
