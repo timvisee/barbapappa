@@ -4,287 +4,355 @@ $team-none-color-accent: #222;
 $team-none-color-text: #BBB;
 
 * {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
 body {
-  background: #EEE;
+    background: #EEE;
 }
 
 #topbar {
-  width: auto;
-  height: 40px;
-  margin: 0;
-  padding: 0 12px;
-  line-height: 40px;
+    width: auto;
+    height: 40px;
+    margin: 0;
+    padding: 0 12px;
+    line-height: 40px;
 
-  /* Test */
-  color: $team-none-color-text;
-  border-bottom: 1px solid;
-  border-color: $team-none-color-accent;
+    /* Test */
+    color: $team-none-color-text;
+    border-bottom: 1px solid;
+    border-color: $team-none-color-accent;
 }
 
 #topbar .container {
-  height: inherit;
-  padding: 0 12px 0 0;
-  float: left;
-  display: block;
-  border-color: inherit;
+    height: inherit;
+    padding: 0 12px 0 0;
+    float: left;
+    display: block;
+    border-color: inherit;
 }
 
 #topbar .container.right {
-  padding: 0 0 0 12px;
-  float: right;
+    padding: 0 0 0 12px;
+    float: right;
 }
 
 #topbar .container .text,
 #topbar .container a {
-  padding: 0 12px;
-  line-height: inherit;
-  display: inline-block;
-  border-right: 1px solid;
-  border-color: inherit;
+    padding: 0 12px;
+    line-height: inherit;
+    display: inline-block;
+    border-right: 1px solid;
+    border-color: inherit;
 
-  color: inherit;
+    color: inherit;
 }
 
 #topbar .container .text:first-child,
 #topbar .container a:first-child {
-  border-left: 1px solid;
-  border-color: inherit;
+    border-left: 1px solid;
+    border-color: inherit;
 }
 
 #topbar .container.right .text,
 #topbar .container.right a {
-  border-right: none;
-  border-left: 1px solid;
-  border-color: inherit;
+    border-right: none;
+    border-left: 1px solid;
+    border-color: inherit;
 }
 
 #topbar .container.right .text:last-child,
 #topbar .container.right a:last-child {
-  border-right: 1px solid;
-  border-color: inherit;
+    border-right: 1px solid;
+    border-color: inherit;
 }
 
 #page {
-  width: auto;
-  height: auto;
-  margin: 0;
-  paddinG: 12px;
+    width: auto;
+    height: auto;
+    margin: 0;
+    paddinG: 12px;
 }
 
 #footer {
-  width: auto;
-  margin: 0;
-  padding: 12px 12px;
-  color: #444;
-  font-size: 12px;
-  text-shadow: 0 1px #AAA;
-  text-align: center;
+    width: auto;
+    margin: 0;
+    padding: 12px 12px;
+    color: #444;
+    font-size: 12px;
+    text-shadow: 0 1px #AAA;
+    text-align: center;
 
-  /* Test */
-  /*border-top: 1px solid #666;*/
-  display: block;
+    /* Test */
+    /*border-top: 1px solid #666;*/
+    display: block;
 }
 
 #footer a {
-  color: inherit;
+    color: inherit;
 }
 
-
-
-
-
-
-
 .group-icon-list {
-  width: 16px;
-  height: 16px;
-  box-sizing: border-box;
-  /*border: 1px solid #AAA;*/
-  border-radius: 16px;
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
+    /*border: 1px solid #AAA;*/
+    border-radius: 16px;
 }
 
 .group-icon-list-small {
-  width: 10px;
-  height: 10px;
-  margin: 0 4px 0 0;
-  box-sizing: border-box;
-  /*border: 1px solid #AAA;*/
-  border-radius: 10px;
+    width: 10px;
+    height: 10px;
+    margin: 0 4px 0 0;
+    box-sizing: border-box;
+    /*border: 1px solid #AAA;*/
+    border-radius: 10px;
 }
 
 .group-icon-radio {
-  width: 16px;
-  height: 16px;
-  box-sizing: border-box;
-  margin: 0 10px 0 4px;
-  position: relative;
-  top: 3px;
-  border-radius: 16px;
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
+    margin: 0 10px 0 4px;
+    position: relative;
+    top: 3px;
+    border-radius: 16px;
 }
 
 .group-icon-text {
-  width: 16px;
-  height: 16px;
-  margin-right: 8px;
-  position: relative;
-  top: 2px;
-  box-sizing: border-box;
-  /*border: 1px solid #AAA;*/
-  border-radius: 16px;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    position: relative;
+    top: 2px;
+    box-sizing: border-box;
+    /*border: 1px solid #AAA;*/
+    border-radius: 16px;
 }
 
 .group-icon-text-small {
-  width: 10px;
-  height: 10px;
-  margin-right: 4px;
-  position: relative;
-  top: 0px;
-  box-sizing: border-box;
-  /*border: 1px solid #AAA;*/
-  border-radius: 8px;
+    width: 10px;
+    height: 10px;
+    margin-right: 4px;
+    position: relative;
+    top: 0px;
+    box-sizing: border-box;
+    /*border: 1px solid #AAA;*/
+    border-radius: 8px;
 }
 
 table tr td {
-  text-align: left;
-  line-height: 1.8em;
+    text-align: left;
+    line-height: 1.8em;
 }
 
 table tr td:first-child {
-  padding-right: 16px;
-  font-weight: bold;
-  text-align: right;
+    padding-right: 16px;
+    font-weight: bold;
+    text-align: right;
 }
 
 img.static-map {
-  width: 100%;
-  max-width: 350px;
-  box-sizing: border-box;
-  background: white;
-  border: 1px solid #AAA;
+    width: 100%;
+    max-width: 350px;
+    box-sizing: border-box;
+    background: white;
+    border: 1px solid #AAA;
 }
 
 .ui-header .ui-link,
-.ui-footer .ui-link{
-  /*color: #333 !important;*/
-  color: inherit !important;
-  text-shadow: inherit;
-  text-decoration: none;
+.ui-footer .ui-link {
+    /*color: #333 !important;*/
+    color: inherit !important;
+    text-shadow: inherit;
+    text-decoration: none;
 }
 
 .ui-header .ui-link:hover,
-.ui-footer .ui-link:hover{
-  text-decoration: underline;
+.ui-footer .ui-link:hover {
+    text-decoration: underline;
 }
 
 hr {
-  height: 1px;
-  box-sizing: border-box;
-  border: none;
-  border-top: 1px solid #d2d2d2;
+    height: 1px;
+    box-sizing: border-box;
+    border: none;
+    border-top: 1px solid #D2D2D2;
 }
 
 .app-picture {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
-  max-height: 800px;
-  margin: 0;
-  padding: 0;
-  background: #FFF;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    max-height: 800px;
+    margin: 0;
+    padding: 0;
+    background: #FFF;
 
-  box-shadow: 0 0 10px rgba(0, 0, 0, .35);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .35);
 }
-
-
-
-
-
-
-
-
-
-
-
 
 /* Basic settings */
 .ui-li-static.ui-collapsible {
-  padding: 0;
+    padding: 0;
 }
+
 .ui-li-static.ui-collapsible > .ui-collapsible-content > .ui-listview,
 .ui-li-static.ui-collapsible > .ui-collapsible-heading {
-  margin: 0;
+    margin: 0;
 }
+
 .ui-li-static.ui-collapsible > .ui-collapsible-content {
-  padding-top: 0;
-  padding-bottom: 0;
-  padding-right: 0;
-  border-bottom-width: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 0;
+    border-bottom-width: 0;
 }
+
 /* collapse vertical borders */
 .ui-li-static.ui-collapsible > .ui-collapsible-content > .ui-listview > li.ui-last-child,
 .ui-li-static.ui-collapsible.ui-collapsible-collapsed > .ui-collapsible-heading > a.ui-btn {
-  border-bottom-width: 0;
+    border-bottom-width: 0;
 }
+
 .ui-li-static.ui-collapsible > .ui-collapsible-content > .ui-listview > li.ui-first-child,
 .ui-li-static.ui-collapsible > .ui-collapsible-content > .ui-listview > li.ui-first-child > a.ui-btn,
 .ui-li-static.ui-collapsible > .ui-collapsible-heading > a.ui-btn {
-  border-top-width: 0;
+    border-top-width: 0;
 }
+
 /* Remove right borders */
 .ui-li-static.ui-collapsible > .ui-collapsible-heading > a.ui-btn,
 .ui-li-static.ui-collapsible > .ui-collapsible-content > .ui-listview > .ui-li-static,
 .ui-li-static.ui-collapsible > .ui-collapsible-content > .ui-listview > li > a.ui-btn,
 .ui-li-static.ui-collapsible > .ui-collapsible-content {
-  border-right-width: 0;
+    border-right-width: 0;
 }
+
 /* Remove left borders */
 /* Here, we need class ui-listview-outer to identify the outermost listview */
 .ui-listview-outer > .ui-li-static.ui-collapsible .ui-li-static.ui-collapsible.ui-collapsible,
 .ui-listview-outer > .ui-li-static.ui-collapsible > .ui-collapsible-heading > a.ui-btn,
 .ui-li-static.ui-collapsible > .ui-collapsible-content {
-  border-left-width: 0;
+    border-left-width: 0;
 }
-
-
-
-
 
 .ui-dialog.dialog-slide-top .ui-dialog-contain {
-  margin-top: 0;
-  padding-top: 16px;
+    margin-top: 0;
+    padding-top: 16px;
 }
 
-
-
-
-
-
 .ui-header .header-message {
-  background: #DDD;
-  padding: 6px;
-  font-size: 80%;
-  text-align: center;
-  font-style: italic;
+    background: #DDD;
+    padding: 6px;
+    font-size: 80%;
+    text-align: center;
+    font-style: italic;
 }
 
 .ui-header p.header-message {
-  line-height: normal;
+    line-height: normal;
 }
-
-
-
-
-
 
 .tour-step-background,
 .tour-backdrop {
-  position: fixed !important;
+    position: fixed !important;
 }
+
 .tour-step-background {
-  background: inherit;
+    background: inherit;
+}
+
+
+
+
+
+
+
+
+
+
+
+#header-account {
+    margin: -16px -16px 16px -16px !important;
+    padding: 8px;
+
+    height: 38px;
+
+    border-right: 1px solid #CCC;
+    border-bottom: none;
+}
+
+#header-account .ui-title {
+    // background: inherit;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+#header-account .ui-title,
+#header-account p {
+    background: inherit;
+    width: auto;
+
+    line-height: 38px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+#header-account .account-img {
+    width: 42px;
+    height: 42px;
+    float: left;
+    border-radius: 5px;
+    background: white;
+    margin: -4px 8px  0 -4px;
+    padding: 1px;
+    border: 1px #BBB solid;
+    box-shadow: 0 0 4px rgba(0, 0, 0, .2);
+}
+
+#account-selector {
+    margin: -16px -16px 16px -16px;
+    border-radius: 0;
+}
+
+#account-selector h4 a,
+#account-selector ul li a.ui-btn {
+    text-align: center !important;
+    padding-left: 58px;
+    padding-right: 8px;
+    border-left: 0;
+    font-size: 90%;
+    font-weight: normal;
+    border-color: #CCC !important;
+}
+
+#account-selector h4 a {
+    background: #DDD !important;
+}
+
+#account-selector h4 a:focus {
+    color: #333;
+    box-shadow: none !important;
+}
+
+#account-selector h4 a:after,
+#account-selector ul li a.ui-btn:after {
+    margin-left: 8px;
+}
+
+#account-selector {
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15);
 }

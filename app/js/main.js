@@ -834,43 +834,6 @@ jQuery.fn.hasAttr = function(attrName) {
     return (typeof attr !== typeof undefined && attr !== false);
 };
 
-// Initialize the map on page load
-$(document).on('pageshow', function(event, ui) {
-    // Check if the map page is unloaded
-    if($(ui.prevPage).hasAttr('id')) {
-        // Get the element ID
-        var attrId = $(ui.prevPage).attr('id').toLowerCase();
-
-        // Check whether the map page is unloaded
-        if(attrId == 'page-map') {
-            // Unload the map
-            if(map !== null) {
-                map.remove();
-                map = null;
-            }
-        }
-    }
-
-    // Determine whether to unload the previous page
-    var unload = true;
-
-    if($(ui.prevPage).hasAttr('data-unload')) {
-        // Get the element attribute
-        var attrUnload = $(ui.prevPage).attr('data-unload').toLowerCase();
-
-        // Check whether to unload
-        if(attrUnload == "false")
-            unload = false;
-    }
-
-    // Unload the page
-    if(unload)
-        $(ui.prevPage).remove();
-
-    // Restart the refresh timer
-    startRefreshTimer();
-});
-
 // TODO: Make sure this code only works on pages the sidebar is available on
 $(document).on("pagecreate", function() {
     $(document).on("swiperight", function(e) {
@@ -880,7 +843,7 @@ $(document).on("pagecreate", function() {
     });
 });
 
-$(document).on( "click", ".show-page-loading-msg", function() {
+$(document).on("click", ".show-page-loading-msg", function() {
     var $this = $( this ),
         msgText = $this.jqmData("msgtext") || $.mobile.loader.prototype.options.text;
     showLoader(msgText);
@@ -900,7 +863,7 @@ function hideLoader() {
     $.mobile.loading("hide");
 }
 
-var tour = null;
+/*var tour = null;
 $(document).on("pageshow", function() {
     // Make sure a tour isn't started already
     if(tour != null)
@@ -964,5 +927,19 @@ $(document).on("pageshow", function() {
         tour.restart();
 
         return false;
+    });
+});*/
+
+// Initialize the map on page load
+$(document).on('pagecreate', function(event, ui) {
+    $(".ui-collapsible-heading-toggle").on("click", function(e) {
+        var current = $(this).closest(".ui-collapsible");
+        if (current.hasClass("ui-collapsible-collapsed")) {
+            //collapse all others and then expand this one
+            $(".ui-collapsible").not(".ui-collapsible-collapsed").find(".ui-collapsible-heading-toggle").click();
+            $(".ui-collapsible-content", current).slideDown(300);
+        } else {
+            $(".ui-collapsible-content", current).slideUp(300);
+        }
     });
 });

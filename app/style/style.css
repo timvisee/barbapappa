@@ -150,7 +150,7 @@ hr {
   height: 1px;
   box-sizing: border-box;
   border: none;
-  border-top: 1px solid #d2d2d2; }
+  border-top: 1px solid #D2D2D2; }
 
 .app-picture {
   width: 100%;
@@ -220,5 +220,71 @@ hr {
 
 .tour-step-background {
   background: inherit; }
+
+#header-account {
+  margin: -16px -16px 16px -16px !important;
+  padding: 8px;
+  height: 38px;
+  border-right: 1px solid #CCC;
+  border-bottom: none; }
+
+#header-account .ui-title {
+  width: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block; }
+
+#header-account .ui-title,
+#header-account p {
+  background: inherit;
+  width: auto;
+  line-height: 38px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block; }
+
+#header-account .account-img {
+  width: 42px;
+  height: 42px;
+  float: left;
+  border-radius: 5px;
+  background: white;
+  margin: -4px 8px  0 -4px;
+  padding: 1px;
+  border: 1px #BBB solid;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); }
+
+#account-selector {
+  margin: -16px -16px 16px -16px;
+  border-radius: 0; }
+
+#account-selector h4 a,
+#account-selector ul li a.ui-btn {
+  text-align: center !important;
+  padding-left: 58px;
+  padding-right: 8px;
+  border-left: 0;
+  font-size: 90%;
+  font-weight: normal;
+  border-color: #CCC !important; }
+
+#account-selector h4 a {
+  background: #DDD !important; }
+
+#account-selector h4 a:focus {
+  color: #333;
+  box-shadow: none !important; }
+
+#account-selector h4 a:after,
+#account-selector ul li a.ui-btn:after {
+  margin-left: 8px; }
+
+#account-selector {
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.15); }
 
 /*# sourceMappingURL=style.css.map */
