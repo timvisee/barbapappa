@@ -31,7 +31,7 @@ class PageSidebarBuilder {
     /**
      * Build and print the sidebar.
      */
-    public function build()
+    public function build() {
         ?>
         <div data-role="panel" id="main-panel" data-position="left" data-display="reveal" data-theme="a">
             <?php
