@@ -35,25 +35,29 @@ class PageSidebarBuilder {
         ?>
         <div data-role="panel" id="main-panel" data-position="left" data-display="reveal" data-theme="a">
             <?php
+            // Make sure the user is logged in
+            if(SessionManager::isLoggedIn()):
+                $user = SessionManager::getLoggedInUser();
+                $fullName = $user->getFullName();
+                $mail = $user->getPrimaryMail()->getMail();
+                $mailHash = md5(strtolower($mail));
 
-            $user = SessionManager::getLoggedInUser();
-            $fullName = $user->getFullName();
-            $mail = $user->getPrimaryMail()->getMail();
-            $mailHash = md5(strtolower($mail));
-
+                ?>
+                <div id="header-account" data-role="header">
+                    <img class="account-img" src="http://gravatar.com/avatar/<?=$mailHash; ?>" />
+                    <h1><?=$fullName; ?></h1>
+                </div>
+                <div id="account-selector" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+                    <h4><?=$mail; ?></h4>
+                    <ul data-role="listview">
+                        <li><a href="" class="ui-btn ui-icon-user ui-btn-icon-left">Use as Bestuur</a></li>
+                        <li><a href="" class="ui-btn ui-icon-user ui-btn-icon-left">Use as Administrator</a></li>
+                        <li><a href="" class="ui-btn ui-icon-edit ui-btn-icon-left">Manage linked accounts</a></li>
+                    </ul>
+                </div>
+                <?php
+            endif;
             ?>
-            <div id="header-account" data-role="header">
-                <img class="account-img" src="http://gravatar.com/avatar/<?=$mailHash; ?>" />
-                <h1><?=$fullName; ?></h1>
-            </div>
-            <div id="account-selector" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-                <h4><?=$mail; ?></h4>
-                <ul data-role="listview">
-                    <li><a href="" class="ui-btn ui-icon-user ui-btn-icon-left">Use as Bestuur</a></li>
-                    <li><a href="" class="ui-btn ui-icon-user ui-btn-icon-left">Use as Administrator</a></li>
-                    <li><a href="" class="ui-btn ui-icon-edit ui-btn-icon-left">Manage linked accounts</a></li>
-                </ul>
-            </div>
 
             <p>This is the sidebar menu panel.</p><br />
             <a href="#" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>
