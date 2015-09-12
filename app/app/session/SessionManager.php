@@ -241,7 +241,11 @@ class SessionManager {
      * Logout from the current user session.
      */
     public static function logoutSession() {
+        // Remove the current session
         static::removeSession(static::getLoggedInSession(), true);
+
+        // Set the current session
+        static::setCurrentSession(null);
     }
 
     /**
