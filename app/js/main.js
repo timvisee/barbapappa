@@ -930,7 +930,7 @@ $(document).on("pageshow", function() {
     });
 });*/
 
-// Initialize the map on page load
+/*
 $(document).on('pagecreate', function(event, ui) {
     $(".ui-collapsible-heading-toggle").on("click", function(e) {
         var current = $(this).closest(".ui-collapsible");
@@ -942,4 +942,4 @@ $(document).on('pagecreate', function(event, ui) {
             $(".ui-collapsible-content", current).slideUp(300);
         }
     });
-});
+});*/
