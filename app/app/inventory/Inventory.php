@@ -70,10 +70,11 @@ class Inventory {
      * Set the inventory name.
      *
      * @param string $name Inventory name.
+     * @param bool $updateModificationDateTime [optional] True to update the modification date time, false if not.
      *
      * @throws Exception Throws an exception if an error occurred.
      */
-    public function setName($name) {
+    public function setName($name, $updateModificationDateTime = true) {
         // Prepare a query for the meta being updated
         $statement = Database::getPDO()->prepare('UPDATE ' . InventoryManager::getDatabaseTableName() .
             ' SET inventory_name=:inventory_name' .
@@ -84,6 +85,10 @@ class Inventory {
         // Execute the prepared query
         if(!$statement->execute())
             throw new Exception('Failed to query the database.');
+
+        // Update the modification date time
+        if($updateModificationDateTime)
+            $this->setModifiedDateTime();
     }
 
     /**
@@ -117,7 +122,7 @@ class Inventory {
      * @throws Exception Throws an exception if an error occurred.
      */
     public function getModificationDateTimeRaw() {
-        return $this->getDatabaseValue('inventory_modified_datetime');
+        return $this->getDatabaseValue('inventory_modification_datetime');
     }
 
     /**
@@ -130,6 +135,31 @@ class Inventory {
     public function getModificationDateTime() {
         // TODO: Use the proper timezone!
         return new DateTime($this->getModificationDateTimeRaw());
+    }
+
+    /**
+     * Set the inventories modification date time.
+     *
+     * @param DateTime|null $dateTime [optional] The modification date time, or null to use the current.
+     *
+     * @throws Exception Throws an exception if an error occurred.
+     */
+    public function setModifiedDateTime($dateTime = null) {
+        // Parse the date time and make sure it's valid
+        if(($dateTime = DateTime::parse($dateTime)) === null)
+            throw new Exception('Invalid date time.');
+
+        // Prepare a query to set the inventory modification date time
+        $statement = Database::getPDO()->prepare('UPDATE ' . InventoryManager::getDatabaseTableName() .
+            ' SET inventory_modification_datetime=:modification_datetime' .
+            ' WHERE inventory_id=:inventory_id');
+        $statement->bindValue(':inventory_id', $this->getId(), PDO::PARAM_INT);
+        // TODO: Use the UTC/GMT timezone!
+        $statement->bindValue(':modification_datetime', $dateTime->toString(), PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
     }
 
     /**
