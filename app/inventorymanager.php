@@ -1,9 +1,6 @@
 <?php
 
-use app\database\DatabaseValueTranslations;
-use app\language\Language;
 use app\language\LanguageManager;
-use app\money\MoneyAmount;
 use app\inventory\Inventory;
 use app\inventory\InventoryManager;
 use app\session\SessionManager;
@@ -283,14 +280,11 @@ if(StringUtils::equals($a, 'add', false)) {
                         <td><?=$inventory->getCreationDateTime()->toString(); ?></td>
                     </tr>
                     <?php
-                    // Get the modification date time
-                    $modificationDateTime = $inventory->getModificationDateTime();
-
                     // Print the modification date time if set
-                    if($modificationDateTime !== null) {
+                    if($inventory->getModificationDateTimeRaw() !== null) {
                         echo '<tr>';
                         echo '<td>' . __('dateTime', 'modificationDate') . '</td>';
-                        echo '<td>' . $modificationDateTime->toString() . '</td>';
+                        echo '<td>' . $inventory->getModificationDateTime()->toString() . '</td>';
                         echo '</tr>';
                     }
                     ?>

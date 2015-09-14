@@ -87,6 +87,17 @@ class Inventory {
     }
 
     /**
+     * Get the raw inventories creation date.
+     *
+     * @return string Raw inventories creation date.
+     *
+     * @throws Exception Throws an exception if an error occurred.
+     */
+    public function getCreationDateTimeRaw() {
+        return $this->getDatabaseValue('inventory_creation_datetime');
+    }
+
+    /**
      * Get the inventories creation date.
      *
      * @return DateTime Inventories creation date.
@@ -95,7 +106,18 @@ class Inventory {
      */
     public function getCreationDateTime() {
         // TODO: Use the proper timezone!
-        return new DateTime($this->getDatabaseValue('inventory_creation_datetime'));
+        return new DateTime($this->getCreationDateTimeRaw());
+    }
+
+    /**
+     * Get the raw inventories modification date.
+     *
+     * @return DateTime Raw inventories modification date.
+     *
+     * @throws Exception Throws an exception if an error occurred.
+     */
+    public function getModificationDateTimeRaw() {
+        return $this->getDatabaseValue('inventory_modified_datetime');
     }
 
     /**
@@ -107,7 +129,7 @@ class Inventory {
      */
     public function getModificationDateTime() {
         // TODO: Use the proper timezone!
-        return new DateTime($this->getDatabaseValue('inventory_modified_datetime'));
+        return new DateTime($this->getModificationDateTimeRaw());
     }
 
     /**
