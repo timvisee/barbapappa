@@ -1,17 +1,11 @@
 <?php
 
 use app\language\LanguageManager;
-use app\mail\MailManager;
-use app\mail\verification\MailVerification;
-use app\mail\verification\MailVerificationManager;
-use app\registry\Registry;
 use app\session\SessionManager;
 use app\template\PageFooterBuilder;
 use app\template\PageHeaderBuilder;
 use app\template\PageSidebarBuilder;
-use app\user\User;
 use app\user\UserManager;
-use app\util\AccountUtils;
 
 // Include the page top
 require_once('top.php');
