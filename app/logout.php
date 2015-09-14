@@ -33,6 +33,9 @@ else:
     // Reset the current session
     SessionManager::logoutSession();
 
+    // Redirect to the front page
+    header('Location: index.php');
+
     ?>
     <div data-role="page" id="page-main">
         <?php PageHeaderBuilder::create()->build(); ?>
