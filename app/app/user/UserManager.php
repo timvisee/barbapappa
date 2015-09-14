@@ -24,6 +24,11 @@ class UserManager {
     /** The database table name. */
     const DB_TABLE_NAME = 'user';
 
+    /** Registry key to define if users are allowed to login with their username. */
+    const REG_ACCOUNT_LOGIN_ALLOW_USERNAME = 'account.login.allowUsername';
+    /** Registry key to define if users are allowed to login with their mail address. */
+    const REG_ACCOUNT_LOGIN_ALLOW_MAIL = 'account.login.allowMail';
+
     /**
      * Get the database table name of the users.
      *
@@ -316,10 +321,10 @@ class UserManager {
         $user = null;
 
         // Check whether a user exists with this username
-        if(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_USERNAME)->getBoolValue() && UserManager::isUserWithUsername($loginUser))
+        if(Registry::getValue(static::REG_ACCOUNT_LOGIN_ALLOW_USERNAME)->getBoolValue() && UserManager::isUserWithUsername($loginUser))
             $user = UserManager::getUserWithUsername($loginUser);
 
-        elseif(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_MAIL)->getBoolValue() && AccountUtils::isValidMail($loginUser)) {
+        elseif(Registry::getValue(static::REG_ACCOUNT_LOGIN_ALLOW_MAIL)->getBoolValue() && AccountUtils::isValidMail($loginUser)) {
             // Check whether this mail is registered and verified
             if(MailManager::isMailWithMail($loginUser)) {
                 // Get the mail of the user

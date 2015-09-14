@@ -10,11 +10,6 @@ use app\user\UserManager;
 // Include the page top
 require_once('top.php');
 
-/** Registry key to define if users are allowed to login with their username. */
-const REG_ACCOUNT_LOGIN_ALLOW_USERNAME = 'account.login.allowUsername';
-/** Registry key to define if users are allowed to login with their mail address. */
-const REG_ACCOUNT_LOGIN_ALLOW_MAIL = 'account.login.allowMail';
-
 // Make sure the user isn't logged in
 if(SessionManager::isLoggedIn()) {
     // Redirect the user to the front page
@@ -73,6 +68,9 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     // Get and apply the user's language if set
     if(($userLang = LanguageManager::getUserLanguageTag($user)) !== null)
         LanguageManager::setLanguageTag($userLang, true, true, false);
+
+    // Redirect to the front page
+    header('Location: index.php');
 
     ?>
     <div data-role="page" id="page-main">
