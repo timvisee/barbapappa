@@ -101,7 +101,7 @@ class InventoryContentManager {
                     $query .= ' AND';
 
                 // Add the product ID
-                $query = 'content_product_id=:product_id';
+                $query .= 'content_product_id=:product_id';
             }
         }
 
