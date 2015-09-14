@@ -43,7 +43,7 @@ class Inventory {
      * @throws Exception Throws if an error occurred.
      */
     private function getDatabaseValue($columnName) {
-        // Prepare a query for the database to list inventorys with this ID
+        // Prepare a query for the database to list inventories with this ID
         $statement = Database::getPDO()->prepare('SELECT ' . $columnName . ' FROM ' . InventoryManager::getDatabaseTableName() . ' WHERE inventory_id=:id');
         $statement->bindParam(':id', $this->id, PDO::PARAM_INT);
 

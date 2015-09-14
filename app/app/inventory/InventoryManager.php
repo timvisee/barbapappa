@@ -4,8 +4,6 @@ namespace app\inventory;
 
 use app\config\Config;
 use app\database\Database;
-use app\money\MoneyAmount;
-use app\user\User;
 use carbon\core\datetime\DateTime;
 use Exception;
 use PDO;
