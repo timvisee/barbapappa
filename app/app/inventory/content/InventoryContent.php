@@ -5,7 +5,6 @@ namespace app\inventory\content;
 use app\database\Database;
 use app\inventory\Inventory;
 use app\product\Product;
-use app\user\User;
 use carbon\core\datetime\DateTime;
 use Exception;
 use PDO;

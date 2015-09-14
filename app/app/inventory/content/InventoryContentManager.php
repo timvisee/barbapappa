@@ -4,7 +4,6 @@ namespace app\inventory\content;
 
 use app\config\Config;
 use app\database\Database;
-use app\inventory\Inventory;
 use Exception;
 use PDO;
 
