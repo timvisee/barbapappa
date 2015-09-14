@@ -114,7 +114,7 @@ class InventoryManager {
         $name = trim($name);
 
         // Make sure the name is valid
-        if(strlen($name) > 0)
+        if(strlen($name) == 0)
             throw new Exception('Invalid inventory name.');
 
         // Determine the creation date and time

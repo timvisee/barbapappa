@@ -551,7 +551,7 @@ if(StringUtils::equals($a, 'add', false)) {
                         <td><?=$product->getPrice()->getFormatted(); ?></td>
                     </tr>
                     <tr>
-                        <td><?=__('product', 'creationDate'); ?></td>
+                        <td><?=__('dateTime', 'creationDate'); ?></td>
                         <td><?=$product->getCreationDateTime()->toString(); ?></td>
                     </tr>
                     <?php
@@ -561,7 +561,7 @@ if(StringUtils::equals($a, 'add', false)) {
                     // Print the modification date time if set
                     if($modificationDateTime !== null) {
                         echo '<tr>';
-                        echo '<td>' . __('product', 'modificationDate') . '</td>';
+                        echo '<td>' . __('dateTime', 'modificationDate') . '</td>';
                         echo '<td>' . $modificationDateTime->toString() . '</td>';
                         echo '</tr>';
                     }

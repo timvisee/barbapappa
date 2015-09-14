@@ -501,7 +501,7 @@ if(StringUtils::equals($a, 'add', false)) {
                         </td>
                     </tr>
                     <tr>
-                        <td><?=__('productCategory', 'creationDate'); ?></td>
+                        <td><?=__('dateTime', 'creationDate'); ?></td>
                         <td><?=$productCategory->getCreationDateTime()->toString(); ?></td>
                     </tr>
                     <!-- TODO: Make sure all variables are shown! -->

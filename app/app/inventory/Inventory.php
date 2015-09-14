@@ -44,8 +44,8 @@ class Inventory {
      */
     private function getDatabaseValue($columnName) {
         // Prepare a query for the database to list inventories with this ID
-        $statement = Database::getPDO()->prepare('SELECT ' . $columnName . ' FROM ' . InventoryManager::getDatabaseTableName() . ' WHERE inventory_id=:id');
-        $statement->bindParam(':id', $this->id, PDO::PARAM_INT);
+        $statement = Database::getPDO()->prepare('SELECT ' . $columnName . ' FROM ' . InventoryManager::getDatabaseTableName() . ' WHERE inventory_id=:inventory_id');
+        $statement->bindValue(':inventory_id', $this->getId(), PDO::PARAM_INT);
 
         // Execute the prepared query
         if(!$statement->execute())
@@ -64,6 +64,26 @@ class Inventory {
      */
     public function getName() {
         return $this->getDatabaseValue('inventory_name');
+    }
+
+    /**
+     * Set the inventory name.
+     *
+     * @param string $name Inventory name.
+     *
+     * @throws Exception Throws an exception if an error occurred.
+     */
+    public function setName($name) {
+        // Prepare a query for the meta being updated
+        $statement = Database::getPDO()->prepare('UPDATE ' . InventoryManager::getDatabaseTableName() .
+            ' SET inventory_name=:inventory_name' .
+            ' WHERE inventory_id=:inventory');
+        $statement->bindValue(':inventory', $this->getId(), PDO::PARAM_INT);
+        $statement->bindParam(':inventory_name', $name, PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
     }
 
     /**
@@ -87,6 +107,21 @@ class Inventory {
      */
     public function getModificationDateTime() {
         // TODO: Use the proper timezone!
-        return new DateTime($this->getDatabaseValue('inventory_modification_datetime'));
+        return new DateTime($this->getDatabaseValue('inventory_modified_datetime'));
+    }
+
+    /**
+     * Delete this inventory.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public function delete() {
+        // Prepare a query for the inventory being deleted
+        $statement = Database::getPDO()->prepare('DELETE FROM ' . InventoryManager::getDatabaseTableName() . ' WHERE inventory_id=:inventory_id');
+        $statement->bindValue(':inventory_id', $this->getId(), PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
     }
 }
