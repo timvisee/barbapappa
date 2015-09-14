@@ -6,7 +6,9 @@ use app\config\Config;
 use app\database\Database;
 use app\language\LanguageManager;
 use app\mail\MailManager;
+use app\mail\verification\MailVerification;
 use app\mail\verification\MailVerificationManager;
+use app\registry\Registry;
 use app\util\AccountUtils;
 use carbon\core\datetime\DateTime;
 use carbon\core\hash\Hash;
@@ -297,5 +299,57 @@ class UserManager {
                 return $newName;
         }
         return null;
+    }
+
+    /**
+     * Validate the login credentials for a user.
+     *
+     * @param string $loginUser The login user.
+     * @param string $loginPassword The login password.
+     *
+     * @return User|null The user that logged in, or null if the user credentials were invalid.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function validateLogin($loginUser, $loginPassword) {
+        // Define a variable to get the user
+        $user = null;
+
+        // Check whether a user exists with this username
+        if(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_USERNAME)->getBoolValue() && UserManager::isUserWithUsername($loginUser))
+            $user = UserManager::getUserWithUsername($loginUser);
+
+        elseif(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_MAIL)->getBoolValue() && AccountUtils::isValidMail($loginUser)) {
+            // Check whether this mail is registered and verified
+            if(MailManager::isMailWithMail($loginUser)) {
+                // Get the mail of the user
+                $mail = MailManager::getMailWithMail($loginUser);
+
+                // Get the corresponding user if valid
+                if($mail !== null)
+                    $user = $mail->getUser();
+
+            } else {
+                // Get all mails waiting for verification for this user
+                $mails = MailVerificationManager::getMailVerificationsWithMail($loginUser);
+
+                // Get the user of the unverified mail if one address is returned
+                if(sizeof($mails) == 1) {
+                    // Get the mail verification
+                    $mailVerification = $mails[0];
+
+                    // Validate the instance and get the user
+                    if($mailVerification instanceof MailVerification)
+                        $user = $mailVerification->getUser();
+                }
+            }
+        }
+
+        // Make sure a user is found and validate the password
+        if(!($user instanceof User) || !$user->isPassword($loginPassword))
+            return null;
+
+        // Return the user
+        return $user;
     }
 }

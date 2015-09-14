@@ -68,54 +68,17 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     $loginUser = trim($_POST['login_user']);
     $loginPassword = $_POST['login_password'];
 
-    // Define a variable to get the user
-    $user = null;
-
-    // Check whether a user exists with this username
-    if(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_USERNAME)->getBoolValue() && UserManager::isUserWithUsername($loginUser))
-        $user = UserManager::getUserWithUsername($loginUser);
-
-    elseif(Registry::getValue(REG_ACCOUNT_LOGIN_ALLOW_MAIL)->getBoolValue() && AccountUtils::isValidMail($loginUser)) {
-        // Check whether this mail is registered and verified
-        if(MailManager::isMailWithMail($loginUser)) {
-            // Get the mail of the user
-            $mail = MailManager::getMailWithMail($loginUser);
-
-            // Get the corresponding user if valid
-            if($mail !== null)
-                $user = $mail->getUser();
-
-        } else {
-            // Get all mails waiting for verification for this user
-            $mails = MailVerificationManager::getMailVerificationsWithMail($loginUser);
-
-            // Get the user of the unverified mail if one address is returned
-            if(sizeof($mails) == 1) {
-                // Get the mail verification
-                $mailVerification = $mails[0];
-
-                // Validate the instance and get the user
-                if($mailVerification instanceof MailVerification)
-                    $user = $mailVerification->getUser();
-            }
-        }
-    }
-
-    // Make sure a user is found
-    if(!($user instanceof User))
+    // Validate the user credentials, and show an error message if the credentials are invalid
+    if(($user = UserManager::validateLogin($loginUser, $loginPassword)) === null)
         showErrorPage(__('login', 'usernameOrPasswordIncorrect'));
-
-    // Validate the password
-    if(!$user->isPassword($loginPassword))
-        showErrorPage(__('login', 'usernameOrPasswordIncorrect'));
-
-    // Get and use the user's language if set
-    if(($userLang = LanguageManager::getUserLanguageTag($user)) !== null)
-        LanguageManager::setLanguageTag($userLang, true, true, false);
 
     // Create a session for the user
     if(!SessionManager::createSession($user))
         showErrorPage();
+
+    // Get and apply the user's language if set
+    if(($userLang = LanguageManager::getUserLanguageTag($user)) !== null)
+        LanguageManager::setLanguageTag($userLang, true, true, false);
 
     ?>
     <div data-role="page" id="page-main">
