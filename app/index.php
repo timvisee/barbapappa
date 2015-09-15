@@ -24,7 +24,14 @@ if(SessionManager::isLoggedIn())
             <center>
                 <table class="ui-responsive">
                     <tr>
-                        <td><?=__('general', 'myBalance'); ?></td>
+                        <td>
+                            <?php
+                            if(SessionManager::getLoggedInUser()->getId() === SessionManager::getActiveUser()->getId())
+                                echo __('general', 'myBalance');
+                            else
+                                echo SessionManager::getActiveUser()->getFullName() . '\'s ' . strtolower(__('general', 'balance'));
+                            ?>
+                        </td>
                         <td><span style="font-size: 130%;"><?=SessionManager::getActiveUser()->getBalanceTotal()->getFormatted(); ?></span></td>
                     </tr>
                 </table>
