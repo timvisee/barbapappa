@@ -1,6 +1,5 @@
 <?php
 
-use app\language\LanguageManager;
 use app\inventory\Inventory;
 use app\inventory\InventoryManager;
 use app\session\SessionManager;
@@ -22,9 +21,6 @@ if(isset($_GET['a']))
     $a = trim($_GET['a']);
 
 // TODO: Make sure the user has permission to do certain things!
-
-// Get all language manager languages
-$languages = LanguageManager::getLanguages();
 
 if(StringUtils::equals($a, 'add', false)) {
     if(!isset($_POST['inventory-name'])) {
