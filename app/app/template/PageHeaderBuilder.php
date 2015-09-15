@@ -25,7 +25,9 @@ class PageHeaderBuilder {
     /** @var bool True to show the close button, false otherwise. */
     private $closeBtn = false;
     /** @var bool True if the header is fixed, false if not. */
-    private $fixed = true;
+    private $fixed = false;
+    /** @var bool True to show the active user if set. */
+    private $showActiveUser = true;
     /** @var string|null An optional header prefix, null to ignore this option. */
     private $prefix = null;
     /** @var string|null An optional header suffix, null to ignore this option. */
@@ -177,6 +179,27 @@ class PageHeaderBuilder {
     }
 
     /**
+     * Check whether to show the active user if set.
+     *
+     * @return bool True if the active user should be shown, false otherwise.
+     */
+    public function getShowActiveUser() {
+        return $this->showActiveUser;
+    }
+
+    /**
+     * Set whether to show the active user if set.
+     *
+     * @param bool $showActiveUser True to show the active user, false if not.
+     *
+     * @return self Return the current instance to allow method chaining.
+     */
+    public function setShowActiveUser($showActiveUser) {
+        $this->showActiveUser = $showActiveUser;
+        return $this;
+    }
+
+    /**
      * Get the current prefix.
      *
      * @return string|null The prefix, or null if not prefix has been set.
@@ -301,8 +324,8 @@ class PageHeaderBuilder {
         // Print div closing tag
         echo '</div>';
 
-        // Print the account-used-as header
-        if(SessionManager::isLoggedIn() && SessionManager::getLoggedInUser()->getId() != SessionManager::getActiveUser()->getId()) {
+        // Print the active user if set
+        if($this->getShowActiveUser() && SessionManager::isLoggedIn() && SessionManager::getLoggedInUser()->getId() != SessionManager::getActiveUser()->getId()) {
             // Ge the user
             $activeUser = SessionManager::getActiveUser();
 
