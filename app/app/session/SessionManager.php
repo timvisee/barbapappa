@@ -28,6 +28,10 @@ class SessionManager {
     const SESSION_EXPIRE = '+1 year';
     /** The name of the session cookie. */
     const SESSION_COOKIE_NAME = 'session_key';
+    // TODO: Move this value to the registry database to make it configurable
+    const ACTIVE_USER_EXPIRE = '+1 week';
+    /** The name of the active user cookie. */
+    const ACTIVE_USER_COOKIE_NAME = 'active_user';
 
     /** @var Session|null The current session if the user is logged in, null otherwise. */
     private static $currentSession = null;
@@ -235,6 +239,25 @@ class SessionManager {
 
         // Get and store the session
         static::setCurrentSession($session);
+
+        // Check weather an active user is set
+        if(!CookieManager::hasCookie(static::ACTIVE_USER_COOKIE_NAME))
+            return;
+
+        // Get the active user ID
+        $activeUserId = CookieManager::getCookie(static::ACTIVE_USER_COOKIE_NAME);
+
+        // Make sure the active user ID is valid
+        if(!is_numeric($activeUserId) || !UserManager::isUserWithId($activeUserId)) {
+            // Reset the active user
+            static::setActiveUser(null, true);
+            return;
+        }
+
+        // TODO: Make sure the user has permission to use this active user, or is this already done in the set active user method?
+
+        // Set the active user
+        static::setActiveUser($activeUserId, false);
     }
 
     /**
@@ -293,7 +316,7 @@ class SessionManager {
     }
 
     /**
-     * Set the current session.
+     * Set the current session. This will reset the current active user.
      *
      * @param Session $session Current session.
      */
@@ -302,13 +325,12 @@ class SessionManager {
         static::$currentSession = $session;
 
         // Get and set the user and active user instance if the session isn't null
-        if(static::$currentSession !== null) {
+        if(static::$currentSession !== null)
             static::$currentUser = $session->getUser();
-            static::$activeUser = null;
-        } else {
+        else
             static::$currentUser = null;
-            static::$activeUser = null;
-        }
+
+        static::setActiveUser(null);
 
         // TODO: Get the active user!
     }
@@ -334,8 +356,55 @@ class SessionManager {
      * @return User User that is currently active.
      */
     public static function getActiveUser() {
-        // TODO: Return the active user!
-        return new User(536703709);
+        return static::$activeUser;
+    }
+
+    /**
+     * Set the active user. The current user must have permission to use the specified active user, or an exception will
+     * be thrown. This method also set's a cookie to remember the selected active user.
+     *
+     * @param User|int|null $activeUser [optional] The user to set as active, the user ID or null to reset the active user.
+     * @param bool $setCookie [optional] True to set a corresponding cookie, false if not.
+     *
+     * @return bool True if succeed, false if failed because the user doesn't have permission to use the specified active user.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function setActiveUser($activeUser = null, $setCookie = true) {
+        // Get the active user ID
+        if(is_numeric($activeUser)) {
+            // Make sure the user ID is valid
+            if(!UserManager::isUserWithId($activeUser))
+                throw new Exception('Unknown user ID.');
+
+            // Get the user from the user ID
+            $activeUser = new User($activeUser);
+
+        } else if($activeUser !== null && !($activeUser instanceof User))
+            throw new Exception('Invalid user instance.');
+
+        // Set the active user
+        if($activeUser !== null) {
+            // TODO: Make sure the user has access to use this active user
+
+            // Set the active user
+            static::$activeUser = $activeUser;
+
+            // Set the active user cookie
+            if($setCookie)
+                CookieManager::setCookie(static::ACTIVE_USER_COOKIE_NAME, $activeUser->getId(), static::ACTIVE_USER_EXPIRE);
+
+        } else {
+            // Reset the active user
+            static::$activeUser = null;
+
+            // Reset the active user cookie
+            if($setCookie)
+                CookieManager::deleteCookie(static::ACTIVE_USER_COOKIE_NAME);
+        }
+
+        // Return the result
+        return true;
     }
 
     /**
@@ -344,7 +413,7 @@ class SessionManager {
      * @return string Random session key.
      */
     private static function generateRandomSessionKey() {
-        // Get the characters a sessoin key can consist of
+        // Get the characters a session key can consist of
         $chars = static::SESSION_KEY_CHARS;
 
         // Generate a random session key, make sure it doesn't exist
