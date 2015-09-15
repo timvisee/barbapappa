@@ -4,6 +4,7 @@ namespace app\user\linked;
 
 use app\config\Config;
 use app\database\Database;
+use app\session\SessionManager;
 use app\user\User;
 use app\user\UserManager;
 use Exception;
@@ -104,13 +105,13 @@ class LinkedUserManager {
     /**
      * Get all linked users for a specific owner.
      *
-     * @param User $owner The owner user instance, or the user ID of the owner.
+     * @param User $owner [optional] The owner user instance, or the user ID of the owner. Null to use the current logged in user.
      *
      * @return Array All linked users for this owner.
      *
      * @throws Exception Throws if an error occurred.
      */
-    public static function getLinkedUsersForOwner($owner) {
+    public static function getLinkedUsersForOwner($owner = null) {
         // Parse the owner ID
         if($owner instanceof User)
             $userId = $owner->getId();
@@ -123,7 +124,10 @@ class LinkedUserManager {
             if(!UserManager::isUserWithId($userId))
                 throw new Exception('Unknown user ID.');
 
-        } else
+        } else if($owner === null && SessionManager::isLoggedIn())
+            $userId = SessionManager::getLoggedInUser()->getId();
+
+        else
             throw new Exception('Invalid user instance.');
 
         // Prepare a query for the database to list the linked users
@@ -149,13 +153,13 @@ class LinkedUserManager {
     /**
      * Get the number of linked users for this specific owner.
      *
-     * @param User $owner The owner user instance, or the user ID of the owner.
+     * @param User $owner [optional] The owner user instance, or the user ID of the owner. Null to use the current logged in user.
      *
      * @return int Number of linked users.
      *
      * @throws Exception Throws if an error occurred.
      */
-    public static function getLinkedUsersForOwnerCount($owner) {
+    public static function getLinkedUsersForOwnerCount($owner = null) {
         // Parse the owner ID
         if($owner instanceof User)
             $userId = $owner->getId();
@@ -168,7 +172,10 @@ class LinkedUserManager {
             if(!UserManager::isUserWithId($userId))
                 throw new Exception('Unknown user ID.');
 
-        } else
+        } else if($owner === null && SessionManager::isLoggedIn())
+            $userId = SessionManager::getLoggedInUser()->getId();
+
+        else
             throw new Exception('Invalid user instance.');
 
         // Prepare a query for the database to list the linked users
@@ -187,13 +194,13 @@ class LinkedUserManager {
     /**
      * Get all linked users for a specific user.
      *
-     * @param User $user The user to get the linked users for.
+     * @param User $user [optional] The user to get the linked users for. Null to use the current logged in user.
      *
      * @return Array All linked users for this user.
      *
      * @throws Exception Throws if an error occurred.
      */
-    public static function getLinkedUsersForUser($user) {
+    public static function getLinkedUsersForUser($user = null) {
         // Parse the owner ID
         if($user instanceof User)
             $userId = $user->getId();
@@ -206,7 +213,10 @@ class LinkedUserManager {
             if(!UserManager::isUserWithId($userId))
                 throw new Exception('Unknown user ID.');
 
-        } else
+        } else if($user === null && SessionManager::isLoggedIn())
+            $userId = SessionManager::getLoggedInUser()->getId();
+
+        else
             throw new Exception('Invalid user instance.');
 
         // Prepare a query for the database to list the linked users
@@ -232,13 +242,13 @@ class LinkedUserManager {
     /**
      * Get the number of linked users for a specific user.
      *
-     * @param User $user The user to get the linked users for.
+     * @param User $user [optional] The user to get the linked users for. Null to use the current logged in user.
      *
      * @return int Number of linked users.
      *
      * @throws Exception Throws if an error occurred.
      */
-    public static function getLinkedUsersForUserCount($user) {
+    public static function getLinkedUsersForUserCount($user = null) {
         // Parse the owner ID
         if($user instanceof User)
             $userId = $user->getId();
@@ -251,7 +261,10 @@ class LinkedUserManager {
             if(!UserManager::isUserWithId($userId))
                 throw new Exception('Unknown user ID.');
 
-        } else
+        } else if($user === null && SessionManager::isLoggedIn())
+            $userId = SessionManager::getLoggedInUser()->getId();
+
+        else
             throw new Exception('Invalid user instance.');
 
         // Prepare a query for the database to list the linked users
