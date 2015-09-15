@@ -293,7 +293,7 @@ class PageHeaderBuilder {
 
         // Show a back button if set
         if($this->hasBackButton())
-            echo '<a href="' . $this->getBackButton() . '" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-icon-back ui-btn-icon-left" data-direction="reverse">' . __('navigation', 'back') . '</a>';
+            echo '<a href="' . $this->getBackButton() . '" data-rel="back" class="ui-btn ui-corner-all ui-icon-back ui-btn-icon-left" data-direction="reverse">' . __('navigation', 'back') . '</a>';
 
         // Show the menu button if set
         if($this->hasMenuButton()) {
@@ -330,7 +330,7 @@ class PageHeaderBuilder {
             $activeUser = SessionManager::getActiveUser();
 
             echo '<div data-role="header" style="' . $headerDivStyle . '">';
-            echo '<p class="header-message"><a href="linkedusermanager.php">' .  __('account', 'ussingAccountAs') . ' ' . $activeUser->getFullName() . '</a></p>';
+            echo '<p class="header-message"><a href="linkedusermanager.php">' .  __('account', 'usingAccountAs') . ' ' . $activeUser->getFullName() . '</a></p>';
             echo '</div>';
         }
     }
