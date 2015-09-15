@@ -44,13 +44,21 @@ class PageSidebarBuilder {
                 $mail = $user->getPrimaryMail()->getMail();
                 $mailHash = md5(strtolower($mail));
 
+                // Determine whether the user has a different active user
+                $differentActiveUser = SessionManager::getLoggedInUser()->getId() !== SessionManager::getActiveUser()->getId();
+
+                // Determine the user selector header text
+                $userSelectorText = $mail;
+                if($differentActiveUser)
+                    $userSelectorText = SessionManager::getActiveUser()->getFullName();
+
                 ?>
                 <div id="header-account" data-role="header">
                     <img class="account-img" src="http://gravatar.com/avatar/<?=$mailHash; ?>" />
                     <h1><?=$fullName; ?></h1>
                 </div>
-                <div id="account-selector" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
-                    <h4><?=$mail; ?></h4>
+                <div id="account-selector" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u"<?=$differentActiveUser ? ' data-collapsed="false"' : ''; ?>>
+                    <h4><?=$userSelectorText; ?></h4>
                     <ul data-role="listview">
                         <?php
                         // Get all linked users for the current user
