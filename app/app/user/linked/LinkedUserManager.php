@@ -282,6 +282,69 @@ class LinkedUserManager {
     }
 
     /**
+     * Check whether there is a linked user for a specific owner and user.
+     *
+     * @param User $owner [optional] The owner, owner ID or null to use the current logged in user.
+     * @param User $user [optional] The user, user ID or null to use the current logged in user.
+     *
+     * @return int Number of linked users.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function hasLinkedUser($owner = null, $user = null) {
+        // Parse the owner ID
+        if($owner instanceof User)
+            $ownerId = $owner->getId();
+
+        else if(is_numeric($owner)) {
+            // Get the user ID
+            $ownerId = $owner;
+
+            // Make sure the user ID is valid
+            if(!UserManager::isUserWithId($ownerId))
+                throw new Exception('Unknown user ID.');
+
+        } else if($owner === null && SessionManager::isLoggedIn())
+            $ownerId = SessionManager::getLoggedInUser()->getId();
+
+        else
+            throw new Exception('Invalid user instance.');
+
+        // Parse the owner ID
+        if($user instanceof User)
+            $userId = $user->getId();
+
+        else if(is_numeric($user)) {
+            // Get the user ID
+            $userId = $user;
+
+            // Make sure the user ID is valid
+            if(!UserManager::isUserWithId($userId))
+                throw new Exception('Unknown user ID.');
+
+        } else if($user === null && SessionManager::isLoggedIn())
+            $userId = SessionManager::getLoggedInUser()->getId();
+
+        else
+            throw new Exception('Invalid user instance.');
+
+        // Prepare a query for the database to list the linked users
+        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . static::getDatabaseTableName() .
+            ' WHERE linked_owner_user_id=:linked_owner_user_id AND linked_user_id=:linked_user_id');
+        $statement->bindValue(':linked_owner_user_id', $ownerId, PDO::PARAM_INT);
+        $statement->bindValue(':linked_user_id', $userId, PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        die($statement->rowCount());
+
+        // Return the result
+        return $statement->rowCount() > 0;
+    }
+
+    /**
      * Create a new linked user.
      *
      * @param User $owner The owner.
