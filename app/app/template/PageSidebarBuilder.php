@@ -63,7 +63,7 @@ class PageSidebarBuilder {
                         <?php
                         // Show option to switch back to the default user
                         if($differentActiveUser)
-                            echo '<li><a href="linkedusermanager.php?a=set&linked_user_id=null" class="ui-btn ui-icon-back ui-btn-icon-left">Use my own account</a></li>';
+                            echo '<li><a href="linkedusermanager.php?a=set&linked_user_id=null" class="ui-btn ui-icon-back ui-btn-icon-left">' . __('account', 'useMyOwnAccount') . '</a></li>';
 
                         // Get all linked users for the current user
                         $linkedUsers = LinkedUserManager::getLinkedUsersForOwner();
