@@ -25,7 +25,7 @@ if(SessionManager::isLoggedIn())
                 <table class="ui-responsive">
                     <tr>
                         <td><?=__('general', 'myBalance'); ?></td>
-                        <td><span style="font-size: 130%;"><?=SessionManager::getLoggedInUser()->getBalanceTotal()->getFormatted(); ?></span></td>
+                        <td><span style="font-size: 130%;"><?=SessionManager::getActiveUser()->getBalanceTotal()->getFormatted(); ?></span></td>
                     </tr>
                 </table>
             </center>
