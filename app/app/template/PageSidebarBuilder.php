@@ -61,6 +61,10 @@ class PageSidebarBuilder {
                     <h4><?=$userSelectorText; ?></h4>
                     <ul data-role="listview">
                         <?php
+                        // Show option to switch back to the default user
+                        if($differentActiveUser)
+                            echo '<li><a href="linkedusermanager.php?a=set&linked_user_id=null" class="ui-btn ui-icon-back ui-btn-icon-left">Use my own account</a></li>';
+
                         // Get all linked users for the current user
                         $linkedUsers = LinkedUserManager::getLinkedUsersForOwner();
 
@@ -68,6 +72,10 @@ class PageSidebarBuilder {
                         foreach($linkedUsers as $linkedUser) {
                             // Validate the instance
                             if(!($linkedUser instanceof LinkedUser))
+                                continue;
+
+                            // Hide the current active user in the list
+                            if($linkedUser->getUser()->getId() === SessionManager::getActiveUser()->getId())
                                 continue;
 
                             // Print the linked user

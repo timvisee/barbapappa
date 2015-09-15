@@ -258,43 +258,74 @@ if(StringUtils::equals($a, 'add', false)) {
     if(!isset($_GET['linked_user_id']))
         showErrorPage();
 
-    // Get the linked user ID and make sure it's valid
+    // Get the linked user ID
     $linkedUserId = $_GET['linked_user_id'];
-    if(!LinkedUserManager::isLinkeduserWithId($linkedUserId))
-        showErrorPage();
 
-    // Get the linked user instance
-    $linkedUser = new Linkeduser($linkedUserId);
+    // Check whether or not to set or reset the active user
+    if(!StringUtils::equals($linkedUserId, 'null', false)) {
+        // Make sure the linked user is valid
+        if(!LinkedUserManager::isLinkeduserWithId($linkedUserId))
+            showErrorPage();
 
-    // Make sure the current logged in user is the same as the owner of the linked user
-    if($linkedUser->getOwnerId() !== SessionManager::getLoggedInUser()->getId())
-        showErrorPage();
+        // Get the linked user instance
+        $linkedUser = new Linkeduser($linkedUserId);
 
-    // TODO: Make sure the user is allowed to use his account as the specified user
+        // Make sure the current logged in user is the same as the owner of the linked user
+        if($linkedUser->getOwnerId() !== SessionManager::getLoggedInUser()->getId())
+            showErrorPage();
 
-    SessionManager::setActiveUser($linkedUser->getUser());
+        // TODO: Make sure the user is allowed to use his account as the specified user
 
-    ?>
-    <div data-role="page" id="page-register" data-unload="false">
-        <?php PageHeaderBuilder::create(__('linkedUser', 'deleteLinkedUser'))->build(); ?>
+        SessionManager::setActiveUser($linkedUser->getUser(), true);
 
-        <div data-role="main" class="ui-content">
-            <p>
-                <?= __('linkedUser', 'removedLinkeduserSuccessfully'); ?>
-            </p><br />
-
-            <fieldset data-role="controlgroup" data-type="vertical">
-                <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goToFrontPage'); ?></a>
-            </fieldset>
-        </div>
-
-        <?php
-        // Build the footer and sidebar
-        PageFooterBuilder::create()->build();
-        PageSidebarBuilder::create()->build();
         ?>
-    </div>
-    <?php
+        <div data-role="page" id="page-register" data-unload="false">
+            <?php PageHeaderBuilder::create(__('linkedUser', 'deleteLinkedUser'))->build(); ?>
+
+            <div data-role="main" class="ui-content">
+                <p>
+                    <?= __('linkedUser', 'removedLinkeduserSuccessfully'); ?>
+                </p><br />
+
+                <fieldset data-role="controlgroup" data-type="vertical">
+                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goToFrontPage'); ?></a>
+                </fieldset>
+            </div>
+
+            <?php
+            // Build the footer and sidebar
+            PageFooterBuilder::create()->build();
+            PageSidebarBuilder::create()->build();
+            ?>
+        </div>
+        <?php
+
+    } else {
+        // Reset the active user
+        SessionManager::setActiveUser(null, true);
+
+        ?>
+        <div data-role="page" id="page-register" data-unload="false">
+            <?php PageHeaderBuilder::create(__('linkedUser', 'deleteLinkedUser'))->build(); ?>
+
+            <div data-role="main" class="ui-content">
+                <p>
+                    <?= __('linkedUser', 'removedLinkeduserSuccessfully'); ?>
+                </p><br />
+
+                <fieldset data-role="controlgroup" data-type="vertical">
+                    <a href="index.php" data-ajax="false" class="ui-btn ui-icon-home ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goToFrontPage'); ?></a>
+                </fieldset>
+            </div>
+
+            <?php
+            // Build the footer and sidebar
+            PageFooterBuilder::create()->build();
+            PageSidebarBuilder::create()->build();
+            ?>
+        </div>
+        <?php
+    }
 
 } else if(isset($_GET['linked_user_id'])) {
     // Get the linked user ID
