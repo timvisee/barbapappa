@@ -86,7 +86,7 @@ class LinkedUser {
      * @throws Exception Throws an exception if an error occurred.
      */
     public function getUserId() {
-        return $this->getDatabaseValue('linked_owner_user_id');
+        return $this->getDatabaseValue('linked_user_id');
     }
 
     /**
