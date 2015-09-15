@@ -127,7 +127,7 @@ class LinkedUserManager {
             throw new Exception('Invalid user instance.');
 
         // Prepare a query for the database to list the linked users
-        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . UserMetaManager::getDatabaseTableName() .
+        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . static::getDatabaseTableName() .
             ' WHERE linked_owner_user_id=:owner_user_id');
         $statement->bindValue(':owner_user_id', $userId, PDO::PARAM_INT);
 
@@ -172,7 +172,7 @@ class LinkedUserManager {
             throw new Exception('Invalid user instance.');
 
         // Prepare a query for the database to list the linked users
-        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . UserMetaManager::getDatabaseTableName() .
+        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . static::getDatabaseTableName() .
             ' WHERE linked_owner_user_id=:owner_user_id');
         $statement->bindValue(':owner_user_id', $userId, PDO::PARAM_INT);
 
@@ -210,7 +210,7 @@ class LinkedUserManager {
             throw new Exception('Invalid user instance.');
 
         // Prepare a query for the database to list the linked users
-        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . UserMetaManager::getDatabaseTableName() .
+        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . static::getDatabaseTableName() .
             ' WHERE linked_user_id=:linked_user_id');
         $statement->bindValue(':linked_user_id', $userId, PDO::PARAM_INT);
 
@@ -255,7 +255,7 @@ class LinkedUserManager {
             throw new Exception('Invalid user instance.');
 
         // Prepare a query for the database to list the linked users
-        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . UserMetaManager::getDatabaseTableName() .
+        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . static::getDatabaseTableName() .
             ' WHERE linked_user_id=:linked_user_id');
         $statement->bindValue(':linked_user_id', $userId, PDO::PARAM_INT);
 
