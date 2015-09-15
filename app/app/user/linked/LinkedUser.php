@@ -79,6 +79,23 @@ class LinkedUser {
     }
 
     /**
+     * Check whether a specific user is the owner.
+     *
+     * @param user $owner The user to check for.
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function isOwner($owner) {
+        // Make sure the owner is valid
+        if(!($owner instanceof User))
+            throw new Exception('Invalid user instance.');
+
+        // Check whether this is the owner, return the result
+        return $this->getOwnerId() === $owner->getId();
+    }
+
+    /**
      * Get the user ID of the linked user.
      *
      * @return int User ID of the linked user.
@@ -98,6 +115,23 @@ class LinkedUser {
      */
     public function getUser() {
         return new User($this->getUserId());
+    }
+
+    /**
+     * Check whether a specific user is the user.
+     *
+     * @param user $user The user to check for.
+     *
+     * @return bool
+     * @throws Exception
+     */
+    public function isUser($user) {
+        // Make sure the user is valid
+        if(!($user instanceof User))
+            throw new Exception('Invalid user instance.');
+
+        // Check whether this is the user, return the result
+        return $this->getUserId() === $user->getId();
     }
 
     /**
