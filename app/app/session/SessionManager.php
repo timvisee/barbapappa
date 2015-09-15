@@ -330,9 +330,8 @@ class SessionManager {
         else
             static::$currentUser = null;
 
-        static::setActiveUser(null);
-
-        // TODO: Get the active user!
+        // Reset the active cookie, but not it's cookie
+        static::setActiveUser(null, false);
     }
 
     /**
@@ -351,12 +350,17 @@ class SessionManager {
     }
 
     /**
-     * Get the user that is currently active.
+     * Get the user that is currently active. If no active user is specified the logged in user is returned.
      *
      * @return User User that is currently active.
      */
     public static function getActiveUser() {
-        return static::$activeUser;
+        // Return the active user if set
+        if(static::$activeUser !== null)
+            return static::$activeUser;
+
+        // Return the logged in user
+        return static::$currentUser;
     }
 
     /**

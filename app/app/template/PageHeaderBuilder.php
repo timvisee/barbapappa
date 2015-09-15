@@ -304,10 +304,10 @@ class PageHeaderBuilder {
         // Print the account-used-as header
         if(SessionManager::isLoggedIn() && SessionManager::getLoggedInUser()->getId() != SessionManager::getActiveUser()->getId()) {
             // Ge the user
-            $user = new User(536703709);
+            $activeUser = SessionManager::getActiveUser();
 
             echo '<div data-role="header" style="' . $headerDivStyle . '">';
-            echo '<p class="header-message">' .  __('account', 'ussingAccountAs') . ' ' . $user->getFullName() . '</p>';
+            echo '<p class="header-message"><a href="linkedusermanager.php">' .  __('account', 'ussingAccountAs') . ' ' . $activeUser->getFullName() . '</a></p>';
             echo '</div>';
         }
     }

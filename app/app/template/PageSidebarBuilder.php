@@ -63,10 +63,10 @@ class PageSidebarBuilder {
                                 continue;
 
                             // Print the linked user
-                            echo '<li><a href="" class="ui-btn ui-icon-user ui-btn-icon-left">' . __('account', 'useAs') . ' ' . $linkedUser->getUser()->getFullName() . '</a></li>';
+                            echo '<li><a href="linkedusermanager.php?a=set&linked_user_id=' . $linkedUser->getId() . '" class="ui-btn ui-icon-user ui-btn-icon-left">' . __('account', 'useAs') . ' ' . $linkedUser->getUser()->getFullName() . '</a></li>';
                         }
                         ?>
-                        <li><a href="" class="ui-btn ui-icon-edit ui-btn-icon-left">Manage linked accounts</a></li>
+                        <li><a href="linkedusermanager.php" class="ui-btn ui-icon-edit ui-btn-icon-left">Manage linked accounts</a></li>
                     </ul>
                 </div>
                 <?php
