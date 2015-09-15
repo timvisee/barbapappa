@@ -147,6 +147,44 @@ class LinkedUserManager {
     }
 
     /**
+     * Get the number of linked users for this specific owner.
+     *
+     * @param User $owner The owner user instance, or the user ID of the owner.
+     *
+     * @return int Number of linked users.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function getLinkedUsersForOwnerCount($owner) {
+        // Parse the owner ID
+        if($owner instanceof User)
+            $userId = $owner->getId();
+
+        else if(is_numeric($owner)) {
+            // Get the user ID
+            $userId = $owner;
+
+            // Make sure the user ID is valid
+            if(!UserManager::isUserWithId($userId))
+                throw new Exception('Unknown user ID.');
+
+        } else
+            throw new Exception('Invalid user instance.');
+
+        // Prepare a query for the database to list the linked users
+        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . UserMetaManager::getDatabaseTableName() .
+            ' WHERE linked_owner_user_id=:owner_user_id');
+        $statement->bindValue(':owner_user_id', $userId, PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        // Return the number of linked users
+        return $statement->rowCount();
+    }
+
+    /**
      * Get all linked users for a specific user.
      *
      * @param User $user The user to get the linked users for.
@@ -189,5 +227,43 @@ class LinkedUserManager {
 
         // Return the list of linked users
         return $linkedUsers;
+    }
+
+    /**
+     * Get the number of linked users for a specific user.
+     *
+     * @param User $user The user to get the linked users for.
+     *
+     * @return int Number of linked users.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function getLinkedUsersForUserCount($user) {
+        // Parse the owner ID
+        if($user instanceof User)
+            $userId = $user->getId();
+
+        else if(is_numeric($user)) {
+            // Get the user ID
+            $userId = $user;
+
+            // Make sure the user ID is valid
+            if(!UserManager::isUserWithId($userId))
+                throw new Exception('Unknown user ID.');
+
+        } else
+            throw new Exception('Invalid user instance.');
+
+        // Prepare a query for the database to list the linked users
+        $statement = Database::getPDO()->prepare('SELECT linked_id FROM ' . UserMetaManager::getDatabaseTableName() .
+            ' WHERE linked_user_id=:linked_user_id');
+        $statement->bindValue(':linked_user_id', $userId, PDO::PARAM_INT);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        // Return the number of linked users
+        return $statement->rowCount();
     }
 }
