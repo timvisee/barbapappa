@@ -7,6 +7,7 @@ use app\database\Database;
 use app\session\SessionManager;
 use app\user\User;
 use app\user\UserManager;
+use carbon\core\datetime\DateTime;
 use Exception;
 use PDO;
 
@@ -278,5 +279,40 @@ class LinkedUserManager {
 
         // Return the number of linked users
         return $statement->rowCount();
+    }
+
+    /**
+     * Create a new linked user.
+     *
+     * @param User $owner The owner.
+     * @param User $user The user.
+     *
+     * @return LinkedUser The created user as object.
+     *
+     * @throws Exception throws if an error occurred.
+     */
+    public static function createLinkedUser($owner, $user) {
+        // Make sure the owner and user are valid
+        if(!($owner instanceof User) || !($user instanceof User))
+            throw new Exception('Invalid user instance.');
+
+        // Determine the creation date and time
+        $dateTime = DateTime::now();
+
+        // Prepare a query for for the inventory being added
+        $statement = Database::getPDO()->prepare('INSERT INTO ' . static::getDatabaseTableName() .
+            ' (linked_owner_user_id, linked_user_id, linked_creation_datetime) ' .
+            'VALUES (:linked_owner_user_id, :linked_user_id, :linked_creation_datetime)');
+        $statement->bindValue(':linked_owner_user_id', $owner->getId(), PDO::PARAM_INT);
+        $statement->bindValue(':linked_user_id', $user->getId(), PDO::PARAM_INT);
+        // TODO: Use the UTC/GMT timezone!
+        $statement->bindValue(':linked_creation_datetime', $dateTime->toString(), PDO::PARAM_STR);
+
+        // Execute the prepared query
+        if(!$statement->execute())
+            throw new Exception('Failed to query the database.');
+
+        // Get and return the linked user instance
+        return new LinkedUser(Database::getPDO()->lastInsertId());
     }
 }
