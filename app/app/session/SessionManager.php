@@ -375,6 +375,8 @@ class SessionManager {
      * @throws Exception Throws if an error occurred.
      */
     public static function setActiveUser($activeUser = null, $setCookie = true) {
+        // TODO: Set the last used dat time for the linked user in the database
+
         // Get the active user ID
         if(is_numeric($activeUser)) {
             // Make sure the user ID is valid
