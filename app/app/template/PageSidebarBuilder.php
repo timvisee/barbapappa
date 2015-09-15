@@ -4,6 +4,9 @@ namespace app\template;
 
 use app\language\LanguageManager;
 use app\session\SessionManager;
+use app\user\linked\LinkedUser;
+use app\user\linked\LinkedUserManager;
+use app\user\User;
 use carbon\core\util\StringUtils;
 
 // Prevent direct requests to this file due to security reasons
@@ -50,8 +53,20 @@ class PageSidebarBuilder {
                 <div id="account-selector" data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
                     <h4><?=$mail; ?></h4>
                     <ul data-role="listview">
-                        <li><a href="" class="ui-btn ui-icon-user ui-btn-icon-left">Use as Bestuur</a></li>
-                        <li><a href="" class="ui-btn ui-icon-user ui-btn-icon-left">Use as Administrator</a></li>
+                        <?php
+                        // Get all linked users for the current user
+                        $linkedUsers = LinkedUserManager::getLinkedUsersForOwner();
+
+                        // Print all the linked users
+                        foreach($linkedUsers as $linkedUser) {
+                            // Validate the instance
+                            if(!($linkedUser instanceof LinkedUser))
+                                continue;
+
+                            // Print the linked user
+                            echo '<li><a href="" class="ui-btn ui-icon-user ui-btn-icon-left">' . __('account', 'useAs') . ' ' . $linkedUser->getUser()->getFullName() . '</a></li>';
+                        }
+                        ?>
                         <li><a href="" class="ui-btn ui-icon-edit ui-btn-icon-left">Manage linked accounts</a></li>
                     </ul>
                 </div>
