@@ -6,7 +6,6 @@ use app\language\LanguageManager;
 use app\session\SessionManager;
 use app\user\linked\LinkedUser;
 use app\user\linked\LinkedUserManager;
-use app\user\User;
 use carbon\core\util\StringUtils;
 
 // Prevent direct requests to this file due to security reasons
