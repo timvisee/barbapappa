@@ -1,6 +1,6 @@
 <?php
 
-namespace app\user\meta;
+namespace app\user\linked;
 
 use app\database\Database;
 use app\user\User;
