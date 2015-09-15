@@ -338,8 +338,6 @@ class LinkedUserManager {
         if(!$statement->execute())
             throw new Exception('Failed to query the database.');
 
-        die($statement->rowCount());
-
         // Return the result
         return $statement->rowCount() > 0;
     }
