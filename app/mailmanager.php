@@ -33,7 +33,7 @@ if(StringUtils::equals($a, 'add', false)) {
     if(!isset($_POST['mail'])) {
         ?>
         <div data-role="page" id="page-register" data-unload="false">
-            <?php PageHeaderBuilder::create(__('mail', 'addMail'))->setBackButton('index.php')->build(); ?>
+            <?php PageHeaderBuilder::create(__('mail', 'addMail'))->setShowActiveUser(false)->setBackButton('index.php')->build(); ?>
 
             <div data-role="main" class="ui-content">
                 <p><?= __('mail', 'fillInMailBellowWillSendVerification'); ?></p><br />
@@ -79,7 +79,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
         ?>
         <div data-role="page" id="page-register" data-unload="false">
-            <?php PageHeaderBuilder::create(__('mail', 'addMail'))->build(); ?>
+            <?php PageHeaderBuilder::create(__('mail', 'addMail'))->setShowActiveUser(false)->build(); ?>
 
             <div data-role="main" class="ui-content">
                 <p>
@@ -155,7 +155,7 @@ if(StringUtils::equals($a, 'add', false)) {
     if(!isset($_POST['mail'])) {
         ?>
         <div data-role="page" id="page-register" data-unload="false">
-            <?php PageHeaderBuilder::create(__('mail', 'changeMail'))->setBackButton('index.php')->build(); ?>
+            <?php PageHeaderBuilder::create(__('mail', 'changeMail'))->setShowActiveUser(false)->setBackButton('index.php')->build(); ?>
 
             <div data-role="main" class="ui-content">
                 <p><?= __('mail', 'fillInMailBellowToChange'); ?></p><br />
@@ -207,7 +207,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
         ?>
         <div data-role="page" id="page-register" data-unload="false">
-            <?php PageHeaderBuilder::create(__('mail', 'changeMail'))->setBackButton('index.php')->build(); ?>
+            <?php PageHeaderBuilder::create(__('mail', 'changeMail'))->setShowActiveUser(false)->setBackButton('index.php')->build(); ?>
 
             <div data-role="main" class="ui-content">
                 <center>
@@ -292,7 +292,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
         ?>
         <div data-role="page" id="page-register" data-unload="false">
-            <?php PageHeaderBuilder::create(__('mail', 'changeMail'))->build(); ?>
+            <?php PageHeaderBuilder::create(__('mail', 'changeMail'))->setShowActiveUser(false)->build(); ?>
 
             <div data-role="main" class="ui-content">
                 <p>
@@ -367,7 +367,7 @@ if(StringUtils::equals($a, 'add', false)) {
     if(!isset($_POST['agree'])) {
         ?>
         <div data-role="page" id="page-register" data-unload="false">
-            <?php PageHeaderBuilder::create(__('mail', 'deleteMail'))->setBackButton('index.php')->build(); ?>
+            <?php PageHeaderBuilder::create(__('mail', 'deleteMail'))->setShowActiveUser(false)->setBackButton('index.php')->build(); ?>
 
             <div data-role="main" class="ui-content">
                 <p><?=__('mail', 'aboutToRemoveMailNotReversible'); ?></p><br />
@@ -426,7 +426,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
         ?>
         <div data-role="page" id="page-register" data-unload="false">
-            <?php PageHeaderBuilder::create(__('mail', 'deleteMail'))->build(); ?>
+            <?php PageHeaderBuilder::create(__('mail', 'deleteMail'))->setShowActiveUser(false)->build(); ?>
 
             <div data-role="main" class="ui-content">
                 <p>
@@ -519,7 +519,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
     ?>
     <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create(__('mail', 'manageMail'))->setBackButton('mailmanager.php')->build(); ?>
+        <?php PageHeaderBuilder::create(__('mail', 'manageMail'))->setShowActiveUser(false)->setBackButton('mailmanager.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
             <table class="ui-responsive">
@@ -594,7 +594,7 @@ if(StringUtils::equals($a, 'add', false)) {
 
     ?>
     <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create(__('mail', 'manageMail'))->setBackButton('mailmanager.php')->build(); ?>
+        <?php PageHeaderBuilder::create(__('mail', 'manageMail'))->setShowActiveUser(false)->setBackButton('mailmanager.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
             <table class="ui-responsive">
@@ -642,7 +642,7 @@ if(StringUtils::equals($a, 'add', false)) {
 } elseif($a === null) {
     ?>
     <div data-role="page" id="page-main">
-        <?php PageHeaderBuilder::create(__('mail', 'manageMail'))->setBackButton('index.php')->build(); ?>
+        <?php PageHeaderBuilder::create(__('mail', 'manageMail'))->setShowActiveUser(false)->setBackButton('index.php')->build(); ?>
 
         <div data-role="main" class="ui-content">
             <p>
