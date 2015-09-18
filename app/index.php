@@ -17,9 +17,7 @@ if(SessionManager::isLoggedIn())
 ?>
 <div data-role="page" id="page-login">
     <?php PageHeaderBuilder::create()->setMenuButton(true)->build(); ?>
-
     <div data-role="main" class="ui-content">
-
         <?php if(SessionManager::isLoggedIn()): ?>
             <center>
                 <table class="ui-responsive">
@@ -36,6 +34,11 @@ if(SessionManager::isLoggedIn())
                     </tr>
                 </table>
             </center>
+            <br />
+
+            <fieldset data-role="controlgroup" data-type="vertical">
+                <a href="#" class="ui-btn ui-icon-shop ui-btn-icon-left"><?= __('buy', 'buyProduct'); ?></a>
+            </fieldset>
             <?php
 
             // Get all products
@@ -85,14 +88,13 @@ if(SessionManager::isLoggedIn())
         </fieldset>
         <?php endif; ?>
     </div>
-
     <?php
+
     // Build the footer and sidebar
     PageFooterBuilder::create()->build();
     PageSidebarBuilder::create()->build();
     ?>
 </div>
-
 <?php
 
 // Include the page bottom
