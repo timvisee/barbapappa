@@ -12,7 +12,6 @@ require_once('top.php');
 
 // Make sure the user isn't logged in
 if(SessionManager::isLoggedIn()) {
-    // Redirect the user to the front page
     header('Location: index.php');
     die();
 }
@@ -32,10 +31,8 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     ?>
     <div data-role="page" id="page-login">
         <?php PageHeaderBuilder::create(__('account', 'login'))->setBackButton($showBackButton ? 'index.php' : null)->build(); ?>
-
         <div data-role="main" class="ui-content">
             <p><?= __('login', 'enterUsernamePasswordToLogin'); ?></p><br />
-
             <form method="POST" action="login.php?a=login">
                 <input type="text" name="login_user" value="<?=$userValue; ?>" placeholder="<?= __('account', 'username'); ?>" />
                 <input type="password" name="login_password" value="" placeholder="<?= __('account', 'password'); ?>" />
@@ -44,11 +41,12 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
                 <input type="submit" value="<?= __('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
             </form>
         </div>
-
         <?php
+
         // Build the footer and sidebar
         PageFooterBuilder::create()->build();
         PageSidebarBuilder::create()->build();
+
         ?>
     </div>
     <?php
@@ -76,7 +74,6 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
     ?>
     <div data-role="page" id="page-main">
         <?php PageHeaderBuilder::create()->build(); ?>
-
         <div data-role="main" class="ui-content">
             <p>
                 <?= __('general', 'welcome'); ?> <?=$user->getFullName(); ?>!<br />
@@ -90,8 +87,8 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
                    class="ui-btn ui-icon-carat-r ui-btn-icon-left"><?= __('navigation', 'continue'); ?></a>
             </fieldset>
         </div>
-
         <?php
+
         // Build the footer and sidebar
         PageFooterBuilder::create()->build();
         PageSidebarBuilder::create()->build();
