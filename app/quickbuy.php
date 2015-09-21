@@ -39,7 +39,14 @@ $product = new Product($productId);
                     <td><?=$product->getPrice()->getFormatted(); ?></td>
                 </tr>
                 <tr>
-                    <td><?=__('general', 'myBalance'); ?></td>
+                    <td>
+                        <?php
+                        if(SessionManager::getLoggedInUser()->getId() === SessionManager::getActiveUser()->getId())
+                            echo __('general', 'myBalance');
+                        else
+                            echo SessionManager::getActiveUser()->getFullName() . '\'s ' . strtolower(__('general', 'balance'));
+                        ?>
+                    </td>
                     <td><?=SessionManager::getLoggedInUser()->getBalanceTotal()->getFormatted(true, true); ?></td>
                 </tr>
             </table>
