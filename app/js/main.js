@@ -886,8 +886,8 @@ $(document).on("pageshow", function() {
             steps: [
                 {
                     element: "#header",
-                    title: "The header",
-                    content: "Click the header to reload the app.",
+                    title: "Welcome",
+                    content: "Welcome to our service. Click the header to reload the app..",
                     placement: "bottom",
                     backdrop: true,
                     prev: -1
@@ -897,7 +897,10 @@ $(document).on("pageshow", function() {
                     content: "Click on one of the products above to quickly buy it.",
                     placement: "bottom",
                     backdrop: true,
-                    reflex: true
+                    onShow: function() {
+                        // Make sure the sidebar is closed
+                        closeSidebar();
+                    }
                 }, {
                     element: "#menu-button",
                     title: "Sidebar",
@@ -905,7 +908,15 @@ $(document).on("pageshow", function() {
                     placement: "right",
                     backdrop: true,
                     reflex: true,
-                    next: -1
+                    next: -1,
+                    onShow: function() {
+                        // Open the sidebar
+                        openSidebar();
+                    },
+                    onHide: function() {
+                        // Make sure the sidebar is closed afterwards
+                        closeSidebar();
+                    }
                 }
             ],
             debug: true,
@@ -928,6 +939,21 @@ $(document).on("pageshow", function() {
 
         return false;
     });
+
+    // Cancel quick buy clicks when following tutoriale
+    $('#list-quick-buy').find('li a').click(function() {
+        // Check whether the quick buy tutorial step is shown
+        if(tour.getCurrentStep() != 1)
+            return true;
+
+        // Open/show the sidebar
+        // TODO: Make sure the sidebar isn't shown already.
+        openSidebar();
+
+        // Continue to the next step, cancel the click
+        tour.next();
+        return false;
+    });
 });
 
 /*
@@ -943,3 +969,26 @@ $(document).on('pagecreate', function(event, ui) {
         }
     });
 });*/
+
+/**
+ * Get the sidebar panel, if exists.
+ *
+ * @returns {*|jQuery|HTMLElement} Sidebar panel.
+ */
+function getSidebarPanel() {
+    return $('#main-panel');
+}
+
+/**
+ * Open the sidebar if it's closed.
+ */
+function openSidebar() {
+    getSidebarPanel().panel('open');
+}
+
+/**
+ * Close the sidebar if it's open.
+ */
+function closeSidebar() {
+    getSidebarPanel().panel('close');
+}

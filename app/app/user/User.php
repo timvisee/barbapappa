@@ -36,6 +36,40 @@ class User {
     }
 
     /**
+     * Parse a user instance.
+     *
+     * Valid instances:
+     * - User instance.
+     * - User ID as int.
+     *
+     * @param User|int $user The user instance, or the user ID as int.
+     * @param mixed|null $default [optional] The default value returned if the user instance is invalid
+     *
+     * @return User|mixed The user instance or the default value if the user instance isn't valid.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function parse($user, $default = null) {
+        // Return the instance if it's already a User instance
+        if($user instanceof User)
+            return $user;
+
+        // Make sure the instance is an integer, return the default value if not
+        if(!is_int($user) && !is_numeric($user))
+            return $default;
+
+        // Parse the user instance as int
+        $userId = (int) $user;
+
+        // Make sure an user exists with this ID
+        if(!UserManager::isUserWithId($userId))
+            throw new Exception('Unknown user ID');
+
+        // Construct and return the user instance
+        return new User($userId);
+    }
+
+    /**
      * Get the user ID.
      *
      * @return int The user ID.
