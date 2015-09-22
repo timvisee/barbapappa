@@ -39,6 +39,25 @@ class UserManager {
     }
 
     /**
+     * Parse a user instance.
+     * Alias of User::parse();
+     *
+     * Valid instances:
+     * - User instance.
+     * - User ID as int.
+     *
+     * @param User|int $user The user instance, or the user ID as int.
+     * @param mixed|null $default [optional] The default value returned if the user instance is invalid
+     *
+     * @return User|mixed The user instance or the default value if the user instance isn't valid.
+     *
+     * @throws Exception Throws if an error occurred.
+     */
+    public static function parse($user, $default = null) {
+        return User::parse($user, $default);
+    }
+
+    /**
      * Get a list of all users.
      * Note: This method is very resource intensive and expensive to execute.
      *
