@@ -3,6 +3,7 @@
 namespace app\user\linked;
 
 use app\database\Database;
+use app\session\SessionManager;
 use app\user\User;
 use carbon\core\datetime\DateTime;
 use Exception;
@@ -186,6 +187,10 @@ class LinkedUser {
      * @throws Exception Throws if an error occurred.
      */
     public function delete() {
+        // Check whether this user has this linked user selected as active, reset the active user if that's the case
+        if(SessionManager::getActiveUser()->getId() === $this->getUserId())
+            SessionManager::setActiveUser(null, true);
+
         // Prepare a query for the linked user being deleted
         $statement = Database::getPDO()->prepare('DELETE FROM ' . LinkedUserManager::getDatabaseTableName() . ' WHERE linked_id=:linked_id');
         $statement->bindValue(':linked_id', $this->getId(), PDO::PARAM_INT);
