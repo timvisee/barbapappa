@@ -1,6 +1,3 @@
-// Store the map instance
-var map = null;
-
 // The page refresh timer instance
 var pageRefreshTimer = null;
 
@@ -87,36 +84,6 @@ function stopRefreshTimer() {
     pageRefreshTimer = null;
 }
 
-
-
-/**
- * Initialize the map.
- */
-function initMap(lat, long) {
-    // Unload the map if it is loaded
-    if(map !== null) {
-        map.remove();
-        map = null;
-    }
-
-    // Parameter defaults
-    lat = typeof lat !== 'undefined' ? lat : 52.0802764893;
-    long = typeof long !== 'undefined' ? long : 4.3249998093;
-
-    // Initialize the map and set the map instance
-    map = L.map('map').setView([lat, long], 15);
-
-    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoidGltdmlzZWUiLCJhIjoiNzExOWJhZjExNzZlNmU1M2Y1NzFmNzU4NmUzMmIyNTYifQ.SiLLZI5JSqtBvEk_XOrPVg', {
-        maxZoom: 18,
-        attribution: 'Hosted by <a href="http://timvisee.com/">timvisee.com</a>',
-        id: 'timvisee.dd6f3e4f',
-        detectRetina: true
-    }).addTo(map);
-
-    // Load the station icons
-    loadMapStationIcons();
-}
-
 /**
  * Get a marker icon with a specific color.
  *
@@ -129,75 +96,6 @@ function getMarkerIcon(color) {
         iconSize: [20, 50],
         iconAnchor: [10, 25],
         popupAnchor: [0, -30]
-    });
-}
-
-function loadMapStationIcons() {
-    // Show the loader
-    showLoader('Loading stations...');
-
-    // Make an AJAX request to load the station results
-    $.ajax({
-        type: "GET",
-        url: "ajax/stations.php",
-        data: {filter: "", columns: 'station_lat|station_long|station_group', claimed_only: 1},
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            // Show the error message if returned
-            if (data.hasOwnProperty('error_msg')) {
-                alert('Error: ' + data.error_msg);
-                return;
-            }
-
-            // Count the number of results returned
-            var resultCount = data.length;
-
-            // Define a variable to store error messages in, to show instead of the search results
-            var errorMsg = null;
-
-            // Parse each result, to build the list view
-            $.each(data, function (index, item) {
-                // Make sure the current object contains the correct properties
-                if (!item.hasOwnProperty('station_id')) {
-                    errorMsg = 'Failed to load search results';
-                    return;
-                }
-
-                // Determine the icon color
-                var iconColor = '333333';
-                if (item.hasOwnProperty('station_color'))
-                    iconColor = item.station_color;
-
-                // Determine the group name
-                var groupName = '<i>Nobody</i>';
-                if (item.hasOwnProperty('station_group'))
-                    groupName = item.station_group;
-
-                // Create the marker
-                var marker = L.marker([item.station_lat, item.station_long], {
-                    icon: getMarkerIcon(iconColor),
-                    title: item.station_name,
-                    riseOnHover: true
-                }).addTo(map);
-
-                // Create the marker popup
-                marker.bindPopup('<a href="stations.php?station_id=' + item.station_id + '">' + item.station_name + '</a><br /><br />Points: ' + item.station_points + '<br />Claimed by:<br />' + groupName);
-            });
-
-            // Show the results or the error message
-            if (errorMsg != null)
-                alert(errorMsg);
-        },
-        error: function (msg) {
-            // Get the status
-            var status = msg.statusText;
-
-            alert('Error: ' + status);
-        },
-        complete: function () {
-            hideLoader();
-        }
     });
 }
 
