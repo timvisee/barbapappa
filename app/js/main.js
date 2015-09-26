@@ -1,60 +1,6 @@
 // The page refresh timer instance
 var pageRefreshTimer = null;
 
-// Set whether the window is focused
-var windowFocussed = true;
-
-/*$(document).ready(function() {
-    var notIE = (document.documentMode === undefined), isChromium = window.chrome;
-
-    // The focus in function
-    var onFocusIn = function() {
-        // Make sure the window is blurred
-        if(windowFocussed)
-            return;
-
-        // Set the focused flag
-        windowFocussed = true;
-
-        // Start the refresh timer again
-        startRefreshTimer();
-
-        // Refresh and update the page
-        showLoader('Refreshing page...');
-        setTimeout(function() {
-            refreshPage();
-            hideLoader();
-        }, 1000);
-    };
-
-    // The focus out function
-    var onFocusOut = function() {
-        // Make sure the window is focused
-        if(!windowFocussed)
-            return;
-
-        // Set the focused flag
-        windowFocussed = false;
-
-        // Stop the refresh timer
-        stopRefreshTimer();
-    };
-
-    // Register the event handlers for the window focus
-    if(notIE && !isChromium) {
-        $(window).on("focusin", function() { onFocusIn(); });
-        $(window).on("focusout", function() { onFocusOut(); });
-    } else {
-        if(window.addEventListener) {
-            window.addEventListener("focus", function(event) { onFocusIn(); }, false);
-            window.addEventListener("blur", function(event) { onFocusOut(); }, false);
-        } else {
-            window.attachEvent("focus", function(event) { onFocusIn(); });
-            window.attachEvent("blur", function(event) { onFocusOut(); });
-        }
-    }
-});*/
-
 /**
  * Start or restart the refresh timer.
  */
