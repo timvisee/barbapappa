@@ -31,21 +31,6 @@ function stopRefreshTimer() {
 }
 
 /**
- * Get a marker icon with a specific color.
- *
- * @param color The HEX color of the marker icon.
- */
-function getMarkerIcon(color) {
-    return L.icon({
-        iconUrl: 'https://api.mapbox.com/v4/marker/pin-m-rail+' + color + '.png?access_token=pk.eyJ1IjoidGltdmlzZWUiLCJhIjoiNzExOWJhZjExNzZlNmU1M2Y1NzFmNzU4NmUzMmIyNTYifQ.SiLLZI5JSqtBvEk_XOrPVg',
-        iconRetinaUrl: 'https://api.mapbox.com/v4/marker/pin-m-rail+' + color + '@2x.png?access_token=pk.eyJ1IjoidGltdmlzZWUiLCJhIjoiNzExOWJhZjExNzZlNmU1M2Y1NzFmNzU4NmUzMmIyNTYifQ.SiLLZI5JSqtBvEk_XOrPVg',
-        iconSize: [20, 50],
-        iconAnchor: [10, 25],
-        popupAnchor: [0, -30]
-    });
-}
-
-/**
  * Get the ID of the current active page.
  *
  * @returns string ID of active page.
@@ -282,56 +267,6 @@ function createStationSearch(listView, searchField) {
         setListViewContent('');
     }
 }
-
-/**
- * Initialize the login panel.
- */
-function initLoginPanel() {
-    // Get the input fields
-    var selectTeam = $('#team-id');
-    var textfieldPass = $('#team-pass');
-    var buttonLogin = $('#team-submit');
-    var inputContainer = $('#login-input-container');
-
-    // Hide the input container if no item has been selected
-    if(selectTeam.val() == '')
-        inputContainer.hide();
-
-    // Create an event handler for when the selected team changes
-    selectTeam.change(function() {
-        // Get the selector value
-        var value = selectTeam.val();
-
-        // Check whether a team is selected
-        var disabled = (value == '');
-
-        // Show or hide the password box and login button based on the selected team
-        if(disabled) {
-            // Hide the input box
-            inputContainer.stop().slideUp();
-
-            // Disable the input boxes
-            buttonLogin.addClass('ui-state-disabled');
-            textfieldPass.attr('disabled', 'disabled');
-        } else {
-            // Show the input box
-            inputContainer.stop().slideDown();
-
-            // Enable the input boxes
-            buttonLogin.removeClass('ui-state-disabled');
-            textfieldPass.removeAttr('disabled');
-
-            // Select the password box
-            textfieldPass.select();
-        }
-    });
-}
-
-// Initialize the login panel when it's loaded
-$(document).on('pageshow', function() {
-    if(getActivePageId() == 'page-login')
-        initLoginPanel();
-});
 
 /**
  * Refresh the current jQuery mobile page.
