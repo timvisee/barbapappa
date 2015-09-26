@@ -281,88 +281,6 @@ function refreshPage() {
     });
 }
 
-function setPictureApprovalStatusOnPage(pictureId, approvalStatus) {
-    setPictureApprovalStatus(pictureId, approvalStatus, function() {
-        // Refresh the next page once it's loaded
-        $(document).one('pageshow', function() { refreshPage(); });
-
-        // Go one page back
-        $.mobile.back();
-
-    }, function(msg) {
-        alert('Failed to set the approval status of the picture.\n\nError: ' + msg);
-    });
-}
-
-function setPictureApprovalStatusOnWizard(pictureId, approvalStatus) {
-    setPictureApprovalStatus(pictureId, approvalStatus, function() {
-        // Refresh the page
-        refreshPage();
-
-    }, function(msg) {
-        alert('Failed to set the approval status of the picture.\n\nError: ' + msg);
-    });
-}
-
-function deletePicture(pictureId) {
-    setPictureApprovalStatus(pictureId, -1, function() {
-        // Go two pages back
-        $.mobile.back();
-
-        // Refresh the next page once it's loaded
-        $(document).one('pageshow', function() { refreshPage(); });
-
-        // Go two pages back
-        $.mobile.back();
-
-    }, function(msg) {
-        alert('Failed to delete the picture.\n\nError: ' + msg);
-    });
-}
-
-function setPictureApprovalStatus(pictureId, approvalStatus, successCallback, errorCallback) {
-    // Show the loader
-    showLoader('Approving picture...');
-
-    // Make an AJAX request to load the station results
-    $.ajax({
-        type: "GET",
-        url: "ajax/approval.php",
-        data: { picture_id: pictureId, set_approval: approvalStatus},
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success:function(data) {
-            // Show the error message if returned
-            if(data.hasOwnProperty('error_msg')) {
-                errorCallback(data.error_msg);
-                return;
-            }
-
-            successCallback();
-        },
-        error: function(msg) {
-            errorCallback(msg.statusText);
-        },
-        complete: function () {
-            hideLoader();
-        }
-    });
-}
-
-/*$(document).ready(function() { onStart(); });
-
-function onStart() {
-    // Request permission to show notifications
-    Notification.requestPermission();
-
-    setTimeout(function() {
-        var notification = new Notification("OV Rally", {
-            body: "A new picture is available to approve!",
-            icon: "http://local.timvisee.com/app/ovrally/thumbnail.php?picture_id=1&size=120x120&shape=fixed"
-        });
-    }, 1000);
-}*/
-
 /**
  * Create a station search widget with a list view and search field.
  *
@@ -736,6 +654,7 @@ $(document).on("pageshow", function() {
 });
 
 /*
+// Code for smooth collapsibles
 $(document).on('pagecreate', function(event, ui) {
     $(".ui-collapsible-heading-toggle").on("click", function(e) {
         var current = $(this).closest(".ui-collapsible");
