@@ -38,7 +38,14 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
                 <input type="password" name="login_password" value="" placeholder="<?= __('account', 'password'); ?>" />
                 <br />
 
-                <input type="submit" value="<?= __('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all">
+                    <input type="submit" value="<?= __('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
+                </fieldset>
+
+                <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow">
+                    <a href="register.php" class="ui-btn ui-shadow"><?= __('account', 'register'); ?></a>
+                    <a href="#" class="ui-btn ui-shadow"><?= __('account', 'forgotPassword'); ?></a>
+                </fieldset>
             </form>
         </div>
         <?php
