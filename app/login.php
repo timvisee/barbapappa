@@ -42,7 +42,7 @@ if(!isset($_POST['login_user']) || !isset($_POST['login_password'])) {
                     <input type="submit" value="<?= __('account', 'login'); ?>" class="ui-btn ui-icon-lock ui-btn-icon-right" />
                 </fieldset>
 
-                <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow">
+                <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all"">
                     <a href="register.php" class="ui-btn ui-shadow"><?= __('account', 'register'); ?></a>
                     <a href="#" class="ui-btn ui-shadow"><?= __('account', 'forgotPassword'); ?></a>
                 </fieldset>

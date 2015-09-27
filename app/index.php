@@ -36,7 +36,7 @@ if(SessionManager::isLoggedIn())
             </center>
             <br />
 
-            <fieldset data-role="controlgroup" data-type="vertical">
+            <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all">
                 <a href="#" class="ui-btn ui-icon-shop ui-btn-icon-left"><?= __('buy', 'buyProduct'); ?></a>
             </fieldset>
             <?php
@@ -71,19 +71,19 @@ if(SessionManager::isLoggedIn())
         endif;
 
         if(!SessionManager::isLoggedIn()): ?>
-        <fieldset data-role="controlgroup" data-type="vertical">
+        <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all">
             <a href="login.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'login'); ?></a>
             <a href="register.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?= __('account', 'register'); ?></a>
         </fieldset>
         <?php else: ?>
-        <fieldset data-role="controlgroup" data-type="vertical">
+        <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all">
             <a href="productmanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left"><?=__('product', 'manageProducts'); ?></a>
             <a href="productcategorymanager.php" class="ui-btn ui-icon-shop ui-btn-icon-left"><?=__('productCategory', 'manageProductCategories'); ?></a>
             <a href="inventorymanager.php" class="ui-btn ui-icon-grid ui-btn-icon-left"><?=__('inventory', 'manageInventories'); ?></a>
             <a href="linkedusermanager.php" class="ui-btn ui-icon-user ui-btn-icon-left"><?=__('linkedUser', 'manageLinkedUsers'); ?></a>
             <a href="mailmanager.php" class="ui-btn ui-icon-mail ui-btn-icon-left"><?=__('mail', 'manageMailAddresses'); ?></a>
         </fieldset>
-        <fieldset data-role="controlgroup" data-type="vertical">
+        <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all">
             <a href="logout.php" class="ui-btn ui-icon-delete ui-btn-icon-left" data-direction="reverse"><?=__('account', 'logout'); ?></a>
         </fieldset>
         <?php endif; ?>
