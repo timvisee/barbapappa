@@ -174,25 +174,19 @@ function showErrorPage($errorMsg = null) {
     <div data-role="page" id="page-main">
         <?php PageHeaderBuilder::create(__('error', 'oops'))->setBackButton('index.php')->build();
 
-        if($errorMsg === null): ?>
-            <div data-role="main" class="ui-content">
-                <p><?=__('error', 'errorOccurred'); ?><br /><?=__('error', 'goBackTryAgain'); ?></p><br />
+        // Parse the error message
+        if($errorMsg === null)
+            $errorMsg = __('error', 'errorOccurred') . '<br />' . __('error', 'goBackTryAgain');
 
-                <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all">
-                    <a href="index.php" data-ajax="false" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goBack'); ?></a>
-                </fieldset>
-            </div>
-        <?php else: ?>
-            <div data-role="main" class="ui-content">
-                <p><?=$errorMsg; ?></p><br />
+        ?>
+        <div data-role="main" class="ui-content">
+            <p><?=$errorMsg; ?></p><br />
 
-                <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all">
-                    <a href="index.php" data-ajax="false" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goBack'); ?></a>
-                </fieldset>
-            </div>
-        <?php endif;
-
-        PageFooterBuilder::create()->build(); ?>
+            <fieldset data-role="controlgroup" data-type="vertical" class="ui-shadow ui-corner-all">
+                <a href="index.php" data-ajax="false" data-rel="back" class="ui-btn ui-icon-back ui-btn-icon-left" data-direction="reverse"><?=__('navigation', 'goBack'); ?></a>
+            </fieldset>
+        </div>
+        <?php PageFooterBuilder::create()->build(); ?>
     </div>
     <?php
 
