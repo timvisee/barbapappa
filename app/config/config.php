@@ -6,15 +6,15 @@ defined('APP_INIT') or die('Access denied!');
 // Return the config array
 return Array(
     'general' => Array(
-        'site_url'          => 'http://local.timvisee.com/app/BARbapAPPa/app/',
-        'site_path'         => '/app/BARbapAPPa/app'
+        'site_url'          => 'http://localhost/',
+        'site_path'         => ''
     ),
 
     'database' => Array(
-        'host' => '127.0.0.1',
+        'host' => 'localhost',
         'port' => 3306,
         'database' => 'barapp',
-        'user' => 'root',
+        'user' => 'barapp',
         'password' => 'hoihoi',
         'table_prefix' => 'bar_'
     ),
