@@ -21,7 +21,7 @@ class Database {
         $host = Config::getValue('database', 'host', 'localhost');
         $port = Config::getValue('database', 'port', 3306);
         $dbname = Config::getValue('database', 'database', '');
-        $user = Config::getValue('database', 'username', 'root');
+        $user = Config::getValue('database', 'user', 'root');
         $password = Config::getValue('database', 'password', '');
 
         // Connect to the database using PDO, store the instance globally
