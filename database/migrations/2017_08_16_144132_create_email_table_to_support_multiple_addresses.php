@@ -17,7 +17,7 @@ class CreateEmailTableToSupportMultipleAddresses extends Migration
         Schema::create('emails', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamp('verified_at')->nullable();
             $table->ipAddress('verified_ip')->nullable();
             $table->timestamps();

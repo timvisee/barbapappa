@@ -4,7 +4,7 @@
 
     <h1>Change password</h1>
 
-    {!! Form::open(['action' => ['PasswordController@doRequest'], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['PasswordResetController@doReset'], 'method' => 'POST']) !!}
 
         {{ Form::label('token', 'Token') }}
         {{ Form::text('token', $token) }}

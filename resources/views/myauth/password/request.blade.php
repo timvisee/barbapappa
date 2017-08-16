@@ -4,7 +4,7 @@
 
     <h1>Request password reset</h1>
 
-    {!! Form::open(['action' => ['PasswordController@doRequest'], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['PasswordForgetController@doRequest'], 'method' => 'POST']) !!}
 
         {{ Form::label('email', 'Email') }}
         {{ Form::text('email', '', ['placeholder' => 'me@domain.com']) }}
