@@ -4,8 +4,14 @@ namespace App\Services;
 
 use App\Session;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Cookie;
 
 class BarAuth {
+
+    /**
+     * The name of the authentication token cookie.
+     */
+    const AUTH_COOKIE = 'session_token';
 
     /**
      * Application instance.
@@ -31,18 +37,53 @@ class BarAuth {
      */
     public function __construct(Application $app) {
         $this->app = $app;
+
+        // Authenticate the session
+        $this->authenticate();
     }
 
     /**
-     * Update the authentication state.
-     * If a session is given, the user is successfully authenticated.
-     *
-     * @param Session|null $session
-     * @param bool $mailVerified True if any of the mail addresses of the user is verified, false if not.
+     * Authenticate.
      */
-    public function updateState(Session $session, $mailVerified) {
-        $this->session = $session;
-        $this->mailVerified = $mailVerified;
+    private function authenticate() {
+        // Reset the current state
+        $this->session = null;
+        $this->mailVerified = false;
+
+        // Define whether to forget the authentication cookie
+        $forget = false;
+
+        // The session token cookie must exist
+        if(!Cookie::has(self::AUTH_COOKIE))
+            return;
+
+        // Get the session token, it must be valid
+        $sessionToken = Cookie::get(self::AUTH_COOKIE);
+        if($sessionToken == null)
+            $forget = true;
+
+        else {
+            // Find the user session, it must be valid and may not be expired
+            $session = Session::where('token', '=', $sessionToken)
+                ->first();
+            if ($session == null || $session->isExpired())
+                $forget = true;
+
+            else {
+                // Count the number of verified email accounts
+                $verifiedMailCount = $session->user()->first()
+                    ->emails()->where('verified_at', '!=', null)
+                    ->count();
+
+                // Set the session and mail verification state
+                $this->session = $session;
+                $this->mailVerified = $verifiedMailCount > 0;
+            }
+        }
+
+        // Forget the authentication cookie
+        if($forget)
+            Cookie::forget(self::AUTH_COOKIE);
     }
 
     /**
@@ -52,6 +93,25 @@ class BarAuth {
      */
     public function getSession() {
         return $this->session;
+    }
+
+    /**
+     * Get the current user.
+     * This returns the current user.
+     * If a linked user account is currently selected a different user than the session owner might be returned.
+     *
+     * If the user isn't authenticated, null is returned.
+     *
+     * @return User|null
+     */
+    public function getUser() {
+        // The session must not be null
+        if($this->session == null)
+            return null;
+
+        // Get the current user
+        // TODO: Maybe this must be user_id
+        return $this->session->user;
     }
 
     /**

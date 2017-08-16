@@ -2,5 +2,18 @@
 
 @section('content')
     <h1>{{ $title }}</h1>
-    Index page
+    <p>Index page.</p>
+
+    <hr />
+
+    <table>
+        <tr>
+            <td>Auth:</td>
+            <td>{{ $auth }}</td>
+        </tr>
+        <tr>
+            <td>Verified:</td>
+            <td>{{ $verified }}</td>
+        </tr>
+    </table>
 @endsection
