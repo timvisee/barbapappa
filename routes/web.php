@@ -12,17 +12,22 @@
 */
 
 Route::get('/', 'PagesController@index');
-
-// Other paths
 Route::get('/about', 'PagesController@about');
 
-// Dynamic paths
-Route::get('/users/{id}', function ($id) {
-    return 'User ID: ' . $id;
-});
-
+// Posts
 Route::resource('posts', 'PostsController');
 
-Auth::routes();
+//Auth::routes();
 
+// Authentication
+Route::get('/login', 'LoginController@login')->name('login');
+Route::post('/login', 'LoginController@doLogin');
+Route::get('/register', 'RegisterController@register')->name('register');
+Route::post('/register', 'RegisterController@doRegister');
+Route::get('/password/request', 'PasswordController@request')->name('password.request');
+Route::post('/password/request', 'PasswordController@doRequest');
+Route::get('/password/reset/{token?}', 'PasswordController@reset')->name('password.reset');
+Route::post('/password/reset', 'PasswordController@doReset');
+
+// Dashboard
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
