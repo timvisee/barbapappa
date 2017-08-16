@@ -18,8 +18,8 @@
         {{ Form::label('password', 'Password') }}
         {{ Form::password('password') }}
 
-        {{ Form::label('password_verify', 'Password verification') }}
-        {{ Form::password('password_verify') }}
+        {{ Form::label('password_confirmation', 'Confirm password') }}
+        {{ Form::password('password_confirmation') }}
 
         {{ Form::submit('Register') }}
 

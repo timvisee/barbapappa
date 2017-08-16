@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>Reset password</h1>
+    <h1>Change password</h1>
 
     {!! Form::open(['action' => ['PasswordController@doRequest'], 'method' => 'POST']) !!}
 
@@ -12,10 +12,10 @@
         {{ Form::label('password', 'Password') }}
         {{ Form::password('password') }}
 
-        {{ Form::label('password_verify', 'Password verification') }}
-        {{ Form::password('password_verify') }}
+        {{ Form::label('password_confirmation', 'Confirm password') }}
+        {{ Form::password('password_confirmation') }}
 
-        {{ Form::submit('Reset password') }}
+        {{ Form::submit('Change password') }}
 
     {!! Form::close() !!}
 

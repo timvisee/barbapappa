@@ -72,7 +72,7 @@ class PostsController extends Controller
         // Redirect to the post index
         // TODO: Dynamically link to /posts
         // TODO: Use dynamic language here
-        return redirect('/posts')->with('success', 'Post created');
+        return redirect()->route('posts.index')->with('success', 'Post created');
     }
 
     /**
@@ -100,7 +100,7 @@ class PostsController extends Controller
 
         // Check for correct user
         if(auth()->user()->id != $post->user_id)
-            return redirect('/posts')->with('error', 'Unauthorized page');
+            return redirect()->route('posts.index')->with('error', 'Unauthorized page');
 
         return view('model.post.edit')->with('post', $post);
     }
@@ -125,7 +125,7 @@ class PostsController extends Controller
 
         // Check for correct user
         if(auth()->user()->id != $post->user_id)
-            return redirect('/posts')->with('error', 'Unauthorized page');
+            return redirect()->route('posts.index')->with('error', 'Unauthorized page');
 
         // Update the properties
         $post->title = $request->input('title');
@@ -135,7 +135,7 @@ class PostsController extends Controller
         // Redirect to the post index
         // TODO: Dynamically link to /posts
         // TODO: Use dynamic language here
-        return redirect('/posts')->with('success', 'Post updated');
+        return redirect()->route('posts.index')->with('success', 'Post updated');
     }
 
     /**
@@ -153,6 +153,6 @@ class PostsController extends Controller
         // Redirect to the post index
         // TODO: Dynamically link to /posts
         // TODO: Use dynamic language here
-        return redirect('/posts')->with('success', 'Post removed');
+        return redirect()->route('posts.index')->with('success', 'Post removed');
     }
 }

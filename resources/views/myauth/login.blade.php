@@ -9,14 +9,14 @@
         {{ Form::label('email', 'Email') }}
         {{ Form::text('email', '', ['placeholder' => 'me@domain.com']) }}
 
+        {{ Form::label('password', 'Password') }}
+        {{ Form::password('password') }}
+
         @if ($errors->has('password'))
             <span class="help-block">
                 <strong>{{ $errors->first('password') }}</strong>
             </span>
         @endif
-
-        {{ Form::label('password', 'Password') }}
-        {{ Form::password('password') }}
 
         {{ Form::submit('Login') }}
 
