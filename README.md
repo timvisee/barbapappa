@@ -19,6 +19,11 @@ To recompile resources, run the following command: `npm run dev`
 
 To watch the resources and automatically recompile on change, use: `npm run watch`
 
+#### Database
+To set up and update the database, migrations are used.
+
+To migrate, use: `php artisan migrate`
+
 ## About
 This project is currently developed and maintained by [Tim Visée](https://github.com/timvisee), [www.timvisee.com](https://timvisee.com/).
 

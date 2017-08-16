@@ -11,6 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'PagesController@index');
+
+// Other paths
+Route::get('/about', 'PagesController@about');
+
+// Dynamic paths
+Route::get('/users/{id}', function ($id) {
+    return 'User ID: ' . $id;
 });
+
+Route::resource('posts', 'PostsController');
+
+Auth::routes();
+
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
