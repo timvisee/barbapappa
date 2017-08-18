@@ -3,6 +3,7 @@
 namespace App\Services\Auth;
 
 use App\Session;
+use App\User;
 
 class AuthState {
 

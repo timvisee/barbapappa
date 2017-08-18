@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Services\Auth\Authenticator;
 use App\Services\Auth\AuthState;
+use App\User;
 use Illuminate\Foundation\Application;
 
 class BarAuthManager {
@@ -51,6 +52,19 @@ class BarAuthManager {
      */
     public function isAuth() {
         return $this->authState->isAuth();
+    }
+
+    /**
+     * Get the current user.
+     * This returns the current user.
+     * If a linked user account is currently selected a different user than the session owner might be returned.
+     *
+     * If the user isn't authenticated, null is returned.
+     *
+     * @return User|null
+     */
+    public function getUser() {
+        return $this->authState->getUser();
     }
 
     /**
