@@ -96,16 +96,10 @@ class Authenticator {
         if($session->isExpired())
             return $this->finalizeResult(AuthResult::ERR_EXPIRED);
 
-        // TODO: Check whether the user has any valid email addresses!
-        $emailVerified = false;
-
         // Return the result
         return $this->finalizeResult(
             AuthResult::OK,
-            new AuthState(
-                $session,
-                $emailVerified
-            )
+            new AuthState($session)
         );
     }
 
@@ -189,16 +183,10 @@ class Authenticator {
         $session->expire_at = $expire;
         $session->save();
 
-        // TODO: Check whether this user has any verified email address
-        $emailVerified = false;
-
         // We're authenticated now, return the state
         return $this->finalizeResult(
             AuthResult::OK,
-            new AuthState(
-                $session,
-                $emailVerified
-            )
+            new AuthState($session)
         );
     }
 

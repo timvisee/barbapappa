@@ -22,9 +22,18 @@ class AuthState {
      * AuthState constructor.
      *
      * @param Session|null $session=null The user session, or null.
-     * @param bool $emailVerified=false True if the user has any verified email address, false if not.
+     * @param bool|null $emailVerified=null True if the user has any verified email address, false if not. If null is given, the verified state is checked automatically.
      */
-    public function __construct(Session $session = null, $emailVerified = false) {
+    public function __construct(Session $session = null, $emailVerified = null) {
+        // Automatically find the email verified state if null is given
+        if($emailVerified == null) {
+            if($session != null)
+                $emailVerified = $session->user()->firstOrFail()->hasVerifiedEmail();
+            else
+                $emailVerified = false;
+        }
+
+        // Set the properties
         $this->session = $session;
         $this->emailVerified = $emailVerified;
     }
