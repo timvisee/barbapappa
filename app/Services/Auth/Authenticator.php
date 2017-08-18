@@ -8,6 +8,7 @@ use App\Session;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Request;
 
 /**
@@ -140,7 +141,15 @@ class Authenticator {
             // Get the password hash
             $hash = $user->password;
 
-            // TODO: Validate the password here!
+            // The password must be valid
+            if(!Hash::check($password, $hash))
+                continue;
+
+            // Rehash the password if needed
+            if(Hash::needsRehash($hash)) {
+                $user->password = Hash::make($password);
+                $user->save();
+            }
 
             // Generate an unique token and get the IP address
             $token = $this->generateUniqueToken();
