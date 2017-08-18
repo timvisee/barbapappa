@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\BarAuth;
+use App\Services\BarAuthManager;
 use \Illuminate\Support\ServiceProvider;
 
 class BarAuthServiceProvider extends ServiceProvider {
@@ -12,7 +12,7 @@ class BarAuthServiceProvider extends ServiceProvider {
      */
     public function register() {
         $this->app->singleton('barauth', function($app) {
-            return new BarAuth($app);
+            return new BarAuthManager($app);
         });
     }
 }
