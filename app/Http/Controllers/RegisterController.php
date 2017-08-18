@@ -4,8 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RegisterController extends Controller
-{
+class RegisterController extends Controller {
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct() {
+        // The user must not be authenticated
+        $this->middleware('guest');
+    }
+
     public function register() {
         return view('myauth.register');
     }

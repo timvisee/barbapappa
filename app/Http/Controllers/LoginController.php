@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\Auth\AuthResult;
 use Illuminate\Http\Request;
 
-class LoginController extends Controller
-{
+class LoginController extends Controller {
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct() {
+        // The user must not be authenticated
+        $this->middleware('guest');
+    }
+
     public function login() {
         return view('myauth.login');
     }
@@ -17,7 +26,23 @@ class LoginController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        // TODO: Login here!
+        // Authenticate
+        $result = barauth()->getAuthenticator()->authCredentials(
+            $request->input('email'),
+            $request->input('password')
+        );
+
+        // Show an error if the user is not authenticated
+        if($result->getResult() == AuthResult::ERR_INVALID_CREDENTIALS) {
+            die('invalid credentials!');
+        }
+
+        // Show an error if the user is not authenticated
+        if($result->isErr()) {
+            die('Other error occurred');
+        }
+
+        // The user is now authenticated!
 
         // Redirect the user to the dashboard
         return redirect()->route('dashboard');

@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Auth;
 /**
  * Class RequireAuth.
  *
- * Middleware that requires the user to be authenticated.
+ * Middleware that requires the user NOT to be authenticated.
  *
  * @package App\Http\Middleware
  */
-class RequireAuth {
+class RequireGuest {
 
     /**
      * Handle an incoming request.
@@ -25,10 +25,9 @@ class RequireAuth {
      * @return Response Response.
      */
     public function handle($request, Closure $next) {
-        // Redirect to the login page if not authenticated
-        // TODO: Add the current URL as redirect URL
-        if(!barauth()->isAuth())
-            return redirect()->route('login');
+        // Redirect to the dashboard if the user is authenticated
+        if(barauth()->isAuth())
+            return redirect()->route('dashboard');
 
         return $next($request);
     }

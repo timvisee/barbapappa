@@ -2,31 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-use App\User;
+class DashboardController extends Controller {
 
-class DashboardController extends Controller
-{
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
+        // The user must be authenticated
         $this->middleware('auth');
     }
 
     /**
-     * Show the application dashboard.
+     * Show the dashboard.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response Response.
      */
-    public function index()
-    {
-        $user_id = auth()->user()->id;
-        $user = User::find($user_id);
+    public function index() {
+        $user = barauth()->getUser();
 
         return view('dashboard')->with('posts', $user->posts);
     }
