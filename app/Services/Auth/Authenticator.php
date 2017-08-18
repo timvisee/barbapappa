@@ -26,6 +26,11 @@ use Illuminate\Support\Facades\Request;
 class Authenticator {
 
     /**
+     * The name of the authentication token cookie.
+     */
+    const AUTH_COOKIE = 'session_token';
+
+    /**
      * Session expiration time in seconds.
      */
     const SESSION_EXPIRE = 356 * 24 * 60 * 60;
@@ -42,16 +47,13 @@ class Authenticator {
      */
     public function authRequest() {
         // Make sure a session token cookie is set
-        if(!Cookie::has(BarAuthManager::AUTH_COOKIE))
-            return new AuthResult(AuthResult::ERR_NO_SESSION);
+        if(!Cookie::has(self::AUTH_COOKIE))
+            return $this->finalizeResult(AuthResult::ERR_NO_SESSION);
 
-        // Get the session token and make sure it's valid
-        $token = Cookie::get(BarAuthManager::AUTH_COOKIE);
-        if($token == null)
-            return new AuthResult(AuthResult::ERR_INVALID_TOKEN);
-
-        // Authenticate the token and return the result
-        return $this->authToken($token);
+        // Get the token and authenticate it
+        return $this->authToken(
+            Cookie::get(self::AUTH_COOKIE)
+        );
     }
 
     /**
@@ -64,13 +66,13 @@ class Authenticator {
     public function authToken($token) {
         // The token may not be null
         if($token == null)
-            return new AuthResult(AuthResult::ERR_INVALID_TOKEN);
+            return $this->finalizeResult(AuthResult::ERR_INVALID_TOKEN);
 
-        // There must be a session with this token
+        // Get the corresponding session and make sure it's valid
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         $session = Session::where('token', '=', $token)->first();
         if($session == null)
-            return new AuthResult(AuthResult::ERR_INVALID_TOKEN);
+            return $this->finalizeResult(AuthResult::ERR_INVALID_TOKEN);
 
         // Authenticate the session and return the result
         return $this->authSession($session);
@@ -86,17 +88,17 @@ class Authenticator {
     public function authSession(Session $session) {
         // Make sure a session is given
         if($session == null)
-            return new AuthResult(AuthResult::ERR_NO_SESSION);
+            return $this->finalizeResult(AuthResult::ERR_NO_SESSION);
 
         // The session must not be expired
         if($session->isExpired())
-            return new AuthResult(AuthResult::ERR_EXPIRED);
+            return $this->finalizeResult(AuthResult::ERR_EXPIRED);
 
         // TODO: Check whether the user has any valid email addresses!
         $emailVerified = false;
 
         // Return the result
-        return new AuthResult(
+        return $this->finalizeResult(
             AuthResult::OK,
             new AuthState(
                 $session,
@@ -117,7 +119,7 @@ class Authenticator {
     public function authCredentials($email, $password) {
         // The parameters must be set
         if($email == null || empty(trim($email)) || $password == null)
-            return new AuthResult(AuthResult::ERR_INVALID_CREDENTIALS);
+            return $this->finalizeResult(AuthResult::ERR_INVALID_CREDENTIALS);
 
         // Trim the email address
         // TODO: Format the email address here, lowercase and strip it from dots?
@@ -153,14 +155,11 @@ class Authenticator {
             $session->expire_at = $expire;
             $session->save();
 
-            // Set the session token cookie
-            Cookie::queue('session_token', $token, self::SESSION_EXPIRE / 60);
-
             // TODO: Check whether this user has any verified email address
             $emailVerified = false;
 
             // We're authenticated now, return the state
-            return new AuthResult(
+            return $this->finalizeResult(
                 AuthResult::OK,
                 new AuthState(
                     $session,
@@ -170,7 +169,7 @@ class Authenticator {
         }
 
         // The user wasn't found, return the result
-        return new AuthResult(AuthResult::ERR_INVALID_CREDENTIALS);
+        return $this->finalizeResult(AuthResult::ERR_INVALID_CREDENTIALS);
     }
 
     /**
@@ -193,5 +192,33 @@ class Authenticator {
 
         // Return the generated token
         return $token;
+    }
+
+    /**
+     * A helper function used to finalize authentication and create a result object.
+     * This helper function also creates or forgets session cookies when required.
+     *
+     * @param int $result The result code to return with, any result constant of {@see AuthResult}.
+     * @param AuthState|null $authState=null Authentication state on success.
+     *
+     * @return AuthResult Authentication result object.
+     */
+    private function finalizeResult($result, AuthState $authState = null) {
+        // Define the authentication result
+        $authResult = new AuthResult($result, $authState);
+
+        // Set a cookie if this is a new session
+        if($authResult->isOk() && $authState != null && !Cookie::has(self::AUTH_COOKIE))
+            Cookie::queue(
+                self::AUTH_COOKIE,
+                $authState->getSession()->token,
+                self::SESSION_EXPIRE / 60
+            );
+
+        // Forget the session cookie if the session became invalid
+        else if($authResult->isErr() && $authResult->getResult() != AuthResult::ERR_NO_SESSION)
+            Cookie::forget(self::AUTH_COOKIE);
+
+        return $authResult;
     }
 }

@@ -9,11 +9,6 @@ use Illuminate\Foundation\Application;
 class BarAuthManager {
 
     /**
-     * The name of the authentication token cookie.
-     */
-    const AUTH_COOKIE = 'session_token';
-
-    /**
      * Application instance.
      * @var Application
      */
