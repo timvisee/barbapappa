@@ -34,15 +34,13 @@ class LoginController extends Controller {
 
         // Show an error if the user is not authenticated
         if($result->getResult() == AuthResult::ERR_INVALID_CREDENTIALS) {
-            die('invalid credentials!');
+            die('Invalid credentials!');
         }
 
         // Show an error if the user is not authenticated
         if($result->isErr()) {
-            die('Other error occurred');
+            die('Other error occurred!');
         }
-
-        // The user is now authenticated!
 
         // Redirect the user to the dashboard
         return redirect()->route('dashboard');

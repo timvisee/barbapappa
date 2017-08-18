@@ -46,6 +46,33 @@ class BarAuthManager {
     }
 
     /**
+     * Get the authentication state.
+     *
+     * @return AuthState Authentication state.
+     */
+    public function getAuthState() {
+        return $this->authState;
+    }
+
+    /**
+     * Set the authentication state.
+     *
+     * @param AuthState $authState Authentication state.
+     */
+    public function setAuthState(AuthState $authState) {
+        $this->authState = $authState;
+    }
+
+    /**
+     * Get the authenticator instance.
+     *
+     * @return Authenticator Authenticator instance.
+     */
+    public function getAuthenticator() {
+        return $this->authenticator;
+    }
+
+    /**
      * Check whether the user is authenticated.
      *
      * @return bool True if the user is authenticated, false if not.
@@ -74,14 +101,5 @@ class BarAuthManager {
      */
     public function isVerified() {
         return $this->authState->isVerified();
-    }
-
-    /**
-     * Get the authenticator instance.
-     *
-     * @return Authenticator Authenticator instance.
-     */
-    public function getAuthenticator() {
-        return $this->authenticator;
     }
 }

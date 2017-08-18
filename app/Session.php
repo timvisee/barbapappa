@@ -5,6 +5,17 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Session model.
+ *
+ * @property int id
+ * @property int user_id
+ * @property string token
+ * @property string created_ip
+ * @property Carbon expire_at
+ * @property Carbon created_at
+ * @property Carbon updated_at
+ */
 class Session extends Model {
 
     public function user() {

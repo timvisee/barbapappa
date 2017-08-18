@@ -5,6 +5,7 @@ namespace App\Services\Auth;
 use App\Email;
 use App\Services\BarAuthManager;
 use App\Session;
+use App\User;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
@@ -147,38 +148,58 @@ class Authenticator {
 
             // Rehash the password if needed
             if(Hash::needsRehash($hash)) {
+                // Log a message
+                Log::info('Rehashing password for user with ID ' . $user->id);
+
+                // Rehash and save the password
                 $user->password = Hash::make($password);
                 $user->save();
             }
 
-            // Generate an unique token and get the IP address
-            $token = $this->generateUniqueToken();
-            $ip = Request::ip();
-            $expire = Carbon::now()->addSecond(self::SESSION_EXPIRE);
-
-            // Create the new session object and save it
-            $session = new Session();
-            $session->user_id = $user->id;
-            $session->token = $token;
-            $session->created_ip = $ip;
-            $session->expire_at = $expire;
-            $session->save();
-
-            // TODO: Check whether this user has any verified email address
-            $emailVerified = false;
-
-            // We're authenticated now, return the state
-            return $this->finalizeResult(
-                AuthResult::OK,
-                new AuthState(
-                    $session,
-                    $emailVerified
-                )
-            );
+            // Create a session for this user, return the result
+            return $this->createSession($user);
         }
 
         // The user wasn't found, return the result
         return $this->finalizeResult(AuthResult::ERR_INVALID_CREDENTIALS);
+    }
+
+    /**
+     * Create a session for the given user.
+     *
+     * @param User $user User to create the session for.
+     *
+     * @return AuthResult Authentication result.
+     */
+    public function createSession(User $user) {
+        // Make sure the user is valid
+        if($user == null)
+            return $this->finalizeResult(AuthResult::ERR_NO_SESSION);
+
+        // Generate an unique token and get the IP address
+        $token = $this->generateUniqueToken();
+        $ip = Request::ip();
+        $expire = Carbon::now()->addSecond(self::SESSION_EXPIRE);
+
+        // Create the new session object and save it
+        $session = new Session();
+        $session->user_id = $user->id;
+        $session->token = $token;
+        $session->created_ip = $ip;
+        $session->expire_at = $expire;
+        $session->save();
+
+        // TODO: Check whether this user has any verified email address
+        $emailVerified = false;
+
+        // We're authenticated now, return the state
+        return $this->finalizeResult(
+            AuthResult::OK,
+            new AuthState(
+                $session,
+                $emailVerified
+            )
+        );
     }
 
     /**
