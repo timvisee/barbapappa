@@ -40,8 +40,13 @@ class Verify extends Mailable {
      * @return $this
      */
     public function build() {
+        // Determine the subject to use
+        $subject = $this->registered ? 'Registration & email verification' : 'Email verification';
+
+        // Build the view and return
         return $this
             ->markdown($this->registered ? 'email.email.registerAndVerify' : 'email.email.verify')
-            ->with('subject', $this->registered ? 'Registration & email verification' : 'Email verification');
+            ->subject($subject)
+            ->with('subject', $subject);
     }
 }
