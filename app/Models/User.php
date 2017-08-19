@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Email;
 use Carbon\Carbon;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -43,7 +44,7 @@ class User extends Authenticatable
     }
 
     public function emails() {
-        return $this->hasMany('App\Email');
+        return $this->hasMany('App\Models\Email');
     }
 
     /**

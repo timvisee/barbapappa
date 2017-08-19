@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -16,10 +16,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class Email extends Model
-{
+class Email extends Model {
+
     public function user() {
         return $this->belongsTo('App\User');
+    }
+
+    public function emailVerifications() {
+        return $this->hasMany('App\EmailVerification');
     }
 
     /**
@@ -28,6 +32,6 @@ class Email extends Model
      * @return bool True if verified, false if not.
      */
     public function isVerified() {
-        return $this->attributes['verified_at'] != null;
+        return $this->verified_at != null;
     }
 }

@@ -29,5 +29,8 @@ Route::post('/password/request', 'PasswordForgetController@doRequest');
 Route::get('/password/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
 Route::post('/password/reset', 'PasswordResetController@doReset');
 
+// TODO: Create a proper controller for this mail verification route
+Route::get('/email/verify/{token?}', 'PasswordResetController@reset')->name('email.verify');
+
 // Dashboard
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
