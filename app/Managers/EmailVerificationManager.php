@@ -3,7 +3,7 @@
 namespace App\Managers;
 
 use App\EmailVerification;
-use App\Mail\RegisterAndVerify;
+use App\Mail\Verify;
 use App\Models\Email;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
@@ -62,7 +62,7 @@ class EmailVerificationManager {
         $verification = self::createEntry($email);
 
         // Create the mailable for the verification
-        $mailable = new RegisterAndVerify($verification);
+        $mailable = new Verify($verification, true);
 
         // Send the email
         Mail::to($email->email)->send($mailable);
