@@ -12,13 +12,31 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+
+use App\Models\Email;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+/**
+ * User factory.
+ */
+$factory->define(User::class, function(Faker\Generator $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'password' => Hash::make('secret'),
+    ];
+});
+
+/**
+ * Email factory.
+ */
+$factory->define(Email::class, function(Faker\Generator $faker) {
+    return [
         'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'verified_at' => $faker->dateTime(),
+        'verified_ip' => $faker->ipv4
     ];
 });
