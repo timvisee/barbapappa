@@ -11,13 +11,13 @@
 |
 */
 
+// Regular page routes
 Route::get('/', 'PagesController@index')->name('index');
 Route::get('/about', 'PagesController@about')->name('about');
+Route::get('/terms', 'PagesController@terms')->name('terms');
+Route::get('/privacy', 'PagesController@privacy')->name('privacy');
 
-// Posts
-Route::resource('posts', 'PostsController');
-
-// Dashboard
+// Dashboard route
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 // Authentication routes
@@ -36,3 +36,6 @@ Route::post('/email/verify', 'EmailVerifyController@doVerify');
 
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
+
+// Posts
+Route::resource('posts', 'PostsController');

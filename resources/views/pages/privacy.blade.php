@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    About page placeholder
+    Privacy page placeholder.
 @endsection
