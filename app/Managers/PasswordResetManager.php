@@ -116,17 +116,10 @@ class PasswordResetManager {
         $reset->save();
 
         // Invalidate sessions
-        if($invalidateSessions) {
+        if($invalidateSessions)
             $user->sessions()->get()->each(function($session) {
-                // Return if the session has already expired
-                if($session->isExpired())
-                    return;
-
-                // Invalidate the session now
-                $session->expire_at = Carbon::now();
-                $session->save();
+                $session->invalidate();
             });
-        }
 
         // Get the primary email address for the user
         $email = $user->getPrimaryEmail();

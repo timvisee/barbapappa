@@ -26,6 +26,7 @@ Route::get('/login', 'LoginController@login')->name('login');
 Route::post('/login', 'LoginController@doLogin');
 Route::get('/register', 'RegisterController@register')->name('register');
 Route::post('/register', 'RegisterController@doRegister');
+Route::get('/logout', 'LogoutController@logout')->name('logout');
 Route::get('/password/request', 'PasswordForgetController@request')->name('password.request');
 Route::post('/password/request', 'PasswordForgetController@doRequest');
 Route::get('/password/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');

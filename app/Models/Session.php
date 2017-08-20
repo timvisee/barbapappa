@@ -36,4 +36,19 @@ class Session extends Model {
         // Check whether the time is expired
         return Carbon::parse($expireAt)->isPast();
     }
+
+    /**
+     * Invalidate this session.
+     * This makes the session expire from this moment, so it can't be used anymore for authentication.
+     * If the session has already expired, nothing is changed.
+     */
+    public function invalidate() {
+        // Return if the session has already expired
+        if($this->isExpired())
+            return;
+
+        // Invalidate the session now
+        $this->expire_at = Carbon::now();
+        $this->save();
+    }
 }
