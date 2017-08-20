@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
@@ -66,7 +65,7 @@ class PostsController extends Controller
         $post = new Post();
         $post->title = $request->input('title');
         $post->body = $request->input('body');
-        $post->user_id = auth()->user()->id;
+        $post->user_id = barauth()->getUser()->id;
         $post->save();
 
         // Redirect to the post index
@@ -99,7 +98,7 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         // Check for correct user
-        if(auth()->user()->id != $post->user_id)
+        if(barauth()->getUser()->id != $post->user_id)
             return redirect()->route('posts.index')->with('error', 'Unauthorized page');
 
         return view('model.post.edit')->with('post', $post);

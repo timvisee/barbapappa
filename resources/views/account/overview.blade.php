@@ -15,7 +15,7 @@
             <td>{{ $userData['last_name'] }}</td>
         </tr>
     </table>
-    <a href="{{ route('account') }}">Edit profile</a><br />
+    <a href="{{ route('profile.edit') }}">Edit profile</a><br />
     <a href="{{ route('password.change') }}">Change password</a>
 
     <h3>Email</h3>

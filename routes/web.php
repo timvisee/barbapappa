@@ -38,8 +38,14 @@ Route::post('/password/reset', 'PasswordResetController@doReset');
 Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('email.verify');
 Route::post('/email/verify', 'EmailVerifyController@doVerify');
 
-// TODO: Routes to implement
+// Account routes
 Route::get('/account', 'AccountController@overview')->name('account');
+
+// Profile routes
+Route::get('/profile/edit', 'ProfileController@edit')->name('profile.edit');
+Route::put('/profile', 'ProfileController@update')->name('profile.update');
+
+// TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
 
 // Posts
