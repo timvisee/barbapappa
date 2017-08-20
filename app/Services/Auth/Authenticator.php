@@ -227,14 +227,18 @@ class Authenticator {
         // Set a cookie if this is a new session
         if($authResult->isOk() && $authState != null && !Cookie::has(self::AUTH_COOKIE))
             Cookie::queue(
-                self::AUTH_COOKIE,
-                $authState->getSession()->token,
-                self::SESSION_EXPIRE / 60
+                Cookie::make(
+                    self::AUTH_COOKIE,
+                    $authState->getSession()->token,
+                    self::SESSION_EXPIRE / 60
+                )
             );
 
         // Forget the session cookie if the session became invalid
         else if($authResult->isErr() && $authResult->getResult() != AuthResult::ERR_NO_SESSION)
-            Cookie::forget(self::AUTH_COOKIE);
+            Cookie::queue(
+                Cookie::forget(self::AUTH_COOKIE)
+            );
 
         return $authResult;
     }

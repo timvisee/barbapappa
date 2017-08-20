@@ -1,7 +1,7 @@
 @component('mail::message', [
     'recipient' => $recipient,
     'subject' => $subject,
-    'subtitle' => 'Your password has just been changed.',
+    'subtitle' => 'Your password has been changed.',
 ])
 
 @component('mail::text')
@@ -18,7 +18,7 @@ Your personal dashboard
 
 @component('mail::notice')
 @if(isset($token))
-If you didn't change your password yourself, please reset it as soon as possible using the following link and token.
+If you didn't change your password yourself, please change it as soon as possible using the following link and token.
 
 **Link:** [{{ route('password.reset') }}]({{ route('password.reset', ['token' => $token]) }})<br>
 **Token:** _{{ $token }}_
