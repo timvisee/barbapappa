@@ -461,7 +461,7 @@
                 <center style="width: 100%; min-width: 580px;">
 
                     <!-- Email Header -->
-                    @include('vendor.mail.html.header', ['subject' => $subject])
+                    @include('mail.template.html.header', ['subject' => $subject])
 
                     <!-- Email Body -->
                     <table class="container"
@@ -474,7 +474,7 @@
                                 {!! $slot !!}
 
                                 <!-- Email Footer -->
-                                @include('vendor.mail.html.footer')
+                                @include('mail.template.html.footer')
 
                             </td>
                         </tr>

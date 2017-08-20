@@ -5,7 +5,7 @@
 ])
 
 @component('mail::text')
-Your email address has just been verified and your account is now ready to be used.
+Your email address has just been verified and your account is now ready.
 
 To start using {{ config('app.name') }}, take a look at your personalized dashboard.
 @endcomponent
