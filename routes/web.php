@@ -39,11 +39,12 @@ Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('emai
 Route::post('/email/verify', 'EmailVerifyController@doVerify');
 
 // Account routes
-Route::get('/account', 'AccountController@overview')->name('account');
+Route::get('/account', 'AccountController@my')->name('account');
+Route::get('/account/{userId}', 'AccountController@show')->name('account.show');
 
 // Profile routes
-Route::get('/profile/edit', 'ProfileController@edit')->name('profile.edit');
-Route::put('/profile', 'ProfileController@update')->name('profile.update');
+Route::get('/profile/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
+Route::put('/profile/{userId}', 'ProfileController@update')->name('profile.update');
 
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');

@@ -8,14 +8,14 @@
     <table>
         <tr>
             <td>First name:</td>
-            <td>{{ $userData['first_name'] }}</td>
+            <td>{{ $user->first_name }}</td>
         </tr>
         <tr>
             <td>Last name:</td>
-            <td>{{ $userData['last_name'] }}</td>
+            <td>{{ $user->last_name }}</td>
         </tr>
     </table>
-    <a href="{{ route('profile.edit') }}">Edit profile</a><br />
+    <a href="{{ route('profile.edit', ['userId' => $user->id]) }}">Edit profile</a><br />
     <a href="{{ route('password.change') }}">Change password</a>
 
     <h3>Email</h3>

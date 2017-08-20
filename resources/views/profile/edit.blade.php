@@ -3,14 +3,14 @@
 @section('content')
     <h1>Edit profile</h1>
 
-    {!! Form::open(['action' => ['ProfileController@update'], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'POST']) !!}
 
         {{ Form::label('first_name', 'First name') }}
-        {{ Form::text('first_name', $userData['first_name']) }}
+        {{ Form::text('first_name', $user->first_name) }}
         <br />
 
         {{ Form::label('last_name', 'Last name') }}
-        {{ Form::text('last_name', $userData['last_name']) }}
+        {{ Form::text('last_name', $user->last_name) }}
         <br />
 
         {{ Form::hidden('_method', 'PUT') }}
