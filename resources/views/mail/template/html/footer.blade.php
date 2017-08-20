@@ -80,7 +80,7 @@ $message = Array(
                                 align="left">
                                 <td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: center; color: #FFF; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; display: block; width: auto !important; background: #3B5998; margin: 0; padding: 5px 0 4px; border: 1px solid #2D4473;"
                                     align="center" bgcolor="#3b5998" valign="top">
-                                    <a href="{{ $message['bottom']['linkMyAccount'] }}"
+                                    <a href="{{ route('account') }}"
                                        style="color: #FFF; text-decoration: none; font-weight: normal; font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
                                         {{ $message['bottom']['textMyAccount'] }}
                                     </a>

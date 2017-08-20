@@ -73,12 +73,20 @@ class User extends Model {
         }
     }
 
+    public function sessions() {
+        return $this->hasMany('App\Models\Session');
+    }
+
     public function posts() {
         return $this->hasMany('App\Models\Post');
     }
 
     public function emails() {
         return $this->hasMany('App\Models\Email');
+    }
+
+    public function passwordResets() {
+        return $this->hasMany('App\Models\PasswordReset');
     }
 
     /**

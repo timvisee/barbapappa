@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use PhpParser\Node\Expr\Array_;
 
-class PagesController extends Controller
-{
-    //
+class PagesController extends Controller {
 
+    /**
+     * Index page.
+     *
+     * @return $this
+     */
     public function index() {
         // TODO: Build a page render wrapper
         // TODO: This wrapper should include default variables, such as the page title
@@ -22,14 +25,38 @@ class PagesController extends Controller
         return view('pages.index')->with($data);
     }
 
+    /**
+     * About page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function about() {
         return view('pages.about');
     }
 
+    /**
+     * Contact page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function contact() {
+        return view('pages.contact');
+    }
+
+    /**
+     * Terms page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function terms() {
         return view('pages.terms');
     }
 
+    /**
+     * Privacy page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function privacy() {
         return view('pages.privacy');
     }

@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Managers\PasswordResetManager;
+use App\Models\Email;
 use Illuminate\Http\Request;
 
-class PasswordForgetController extends Controller
-{
+class PasswordForgetController extends Controller {
+
+    /**
+     * Create a new controller instance.
+     */
+    public function __construct() {
+        // The user must not be authenticated
+        $this->middleware('guest');
+    }
+
     public function request() {
         return view('myauth.password.request');
     }
@@ -13,12 +23,20 @@ class PasswordForgetController extends Controller
     public function doRequest(Request $request) {
         // Validate
         $this->validate($request, [
-            'email' => 'required|string|email|max:255|unique:users',
+            'email' => 'required|string|email|max:255',
         ]);
 
-        // TODO: Send the request here!
+        // Get the email address
+        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
+        $email = Email::where('email', '=', $request->input('email'))->first();
+        if($email == null)
+            // TODO: Show a fancy error notification
+            throw new \Exception('Unknown email address given.');
 
-        // Redirect the user to the dashboard
-        return redirect()->route('dashboard');
+        // Create and send a password reset token to the user
+        PasswordResetManager::createAndSend($email);
+
+        // Show a success page
+        return view('myauth.password.requestSent');
     }
 }

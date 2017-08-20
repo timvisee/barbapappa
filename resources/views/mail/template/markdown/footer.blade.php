@@ -3,7 +3,7 @@
 My balance: €123,00
 
 Dashboard: {{ route('dashboard') }}
-My account: TODO
+My account: {{ route('account') }}
 
 Terms: {{ route('terms') }}
 Privacy: {{ route('privacy') }}

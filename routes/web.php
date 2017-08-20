@@ -14,6 +14,7 @@
 // Regular page routes
 Route::get('/', 'PagesController@index')->name('index');
 Route::get('/about', 'PagesController@about')->name('about');
+Route::get('/contact', 'PagesController@contact')->name('contact');
 Route::get('/terms', 'PagesController@terms')->name('terms');
 Route::get('/privacy', 'PagesController@privacy')->name('privacy');
 
@@ -35,6 +36,7 @@ Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('emai
 Route::post('/email/verify', 'EmailVerifyController@doVerify');
 
 // TODO: Routes to implement
+Route::get('/account', 'DashboardController@index')->name('account');
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
 
 // Posts
