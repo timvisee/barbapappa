@@ -98,6 +98,8 @@ class PasswordResetManager {
         $reset = PasswordReset::where('token', '=', trim($token))->first();
         if($reset == null)
             return new PasswordResetResult(PasswordResetResult::ERR_INVALID_TOKEN);
+        if($reset->isExpired())
+            return new PasswordResetResult(PasswordResetResult::ERR_EXPIRED_TOKEN);
         if($reset->used)
             return new PasswordResetResult(PasswordResetResult::ERR_USED_TOKEN);
 

@@ -29,7 +29,7 @@ class Session extends Model {
      */
     public function isExpired() {
         // Get the attribute value, and make sure it's valid
-        $expireAt = $this->attributes['expire_at'];
+        $expireAt = $this->expire_at;
         if($expireAt == null)
             return true;
 

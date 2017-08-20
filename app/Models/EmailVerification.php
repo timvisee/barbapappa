@@ -20,4 +20,19 @@ class EmailVerification extends Model {
     public function email() {
         return $this->belongsTo('App\Models\Email');
     }
+
+    /**
+     * Check whether this session has expired.
+     *
+     * @return bool True if expired, false if not.
+     */
+    public function isExpired() {
+        // Get the attribute value, and make sure it's valid
+        $expireAt = $this->expire_at;
+        if($expireAt == null)
+            return true;
+
+        // Check whether the time is expired
+        return Carbon::parse($expireAt)->isPast();
+    }
 }

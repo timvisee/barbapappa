@@ -25,15 +25,21 @@ class EmailVerifyResult {
     /**
      * Error state, when an invalid token is given.
      * This state is returned when an invalid token is given.
-     * The token might be unknown because it has expired.
+     * The token might be unknown because it has expired and was removed from the database because of it.
      */
     const ERR_INVALID_TOKEN = 3;
+
+    /**
+     * Error state, when an expired token is given.
+     * This state is returned when the given token has already expired.
+     */
+    const ERR_EXPIRED_TOKEN = 4;
 
     /**
      * Error state, when the email address is already verified.
      * This state is returned when the associated email address was already verified.
      */
-    const ERR_ALREADY_VERIFIED = 4;
+    const ERR_ALREADY_VERIFIED = 5;
 
     /**
      * The result code.

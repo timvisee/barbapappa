@@ -59,6 +59,8 @@ class EmailVerifyController extends Controller {
                 die('No token was given');
             case EmailVerifyResult::ERR_INVALID_TOKEN:
                 die('Invalid token');
+            case EmailVerifyResult::ERR_EXPIRED_TOKEN:
+                die('Expired token');
             case EmailVerifyResult::ERR_ALREADY_VERIFIED:
                 die('Already verified');
             default:

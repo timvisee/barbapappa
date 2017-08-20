@@ -30,10 +30,16 @@ class PasswordResetResult {
     const ERR_INVALID_TOKEN = 3;
 
     /**
+     * Error state, when the given token has expired.
+     * This state is returned when the given token has expired.
+     */
+    const ERR_EXPIRED_TOKEN = 4;
+
+    /**
      * Error state, when the given token has already been used.
      * This state is returned when the given token has already been used.
      */
-    const ERR_USED_TOKEN = 4;
+    const ERR_USED_TOKEN = 5;
 
     /**
      * The result code.
