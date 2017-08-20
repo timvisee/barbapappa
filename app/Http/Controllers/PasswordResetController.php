@@ -32,7 +32,9 @@ class PasswordResetController extends Controller {
 
         // If we're ok, show the success page
         if($result->isOk())
-            return view('myauth.password.resetDone');
+            return redirect()
+                ->route('dashboard')
+                ->with('success', 'Your password has been changed.');
 
         // TODO: Properly handle errors here!
         switch($result->getResult()) {
