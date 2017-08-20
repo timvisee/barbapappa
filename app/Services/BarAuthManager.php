@@ -95,6 +95,19 @@ class BarAuthManager {
     }
 
     /**
+     * Get the session user.
+     * This returns the user that is owner of the current session.
+     * Even if a linked account is currently selected, this always returns the user of the initial session.
+     *
+     * If the user isn't authenticated, null is returned.
+     *
+     * @return \App\Models\User|null
+     */
+    public function getSessionUser() {
+        return $this->authState->getSession()->user()->first();
+    }
+
+    /**
      * Check whether any of the mail addresses of the user is verified.
      *
      * @return bool True if any of the mail addresses is verified, false if not.

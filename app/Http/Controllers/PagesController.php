@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use PhpParser\Node\Expr\Array_;
-
 class PagesController extends Controller {
 
     /**

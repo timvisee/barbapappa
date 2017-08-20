@@ -27,6 +27,8 @@ Route::post('/login', 'LoginController@doLogin');
 Route::get('/register', 'RegisterController@register')->name('register');
 Route::post('/register', 'RegisterController@doRegister');
 Route::get('/logout', 'LogoutController@logout')->name('logout');
+Route::get('/password/change', 'PasswordChangeController@change')->name('password.change');
+Route::post('/password/change', 'PasswordChangeController@doChange')->name('password.change');
 Route::get('/password/request', 'PasswordForgetController@request')->name('password.request');
 Route::post('/password/request', 'PasswordForgetController@doRequest');
 Route::get('/password/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
@@ -37,7 +39,7 @@ Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('emai
 Route::post('/email/verify', 'EmailVerifyController@doVerify');
 
 // TODO: Routes to implement
-Route::get('/account', 'DashboardController@index')->name('account');
+Route::get('/account', 'AccountController@overview')->name('account');
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
 
 // Posts

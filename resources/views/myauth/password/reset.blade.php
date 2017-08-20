@@ -20,17 +20,17 @@
         <p>Please enter the new password you'd like to use from now on.</p>
         <br />
 
-        {{ Form::label('password', 'Password') }}
+        {{ Form::label('password', 'New password') }}
         {{ Form::password('password') }}
         <br />
 
-        {{ Form::label('password_confirmation', 'Confirm password') }}
+        {{ Form::label('password_confirmation', 'Confirm new password') }}
         {{ Form::password('password_confirmation') }}
         <br />
 
         <p>
             Check the box below to log you out from your account on all devices.<br />
-            This option should be checked if you assume your account has been hijacked by someone else.
+            This option should be checked if you believe your account may have been used by someone else.
         </p>
         <br />
 
