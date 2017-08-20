@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Mail\Password\Reset;
+use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -202,7 +203,7 @@ class User extends Model {
             // Send an additional reset token to allow the user to revert the password if the change was unwanted
             if($email != null) {
                 // Create an additional reset token to allow the user to revert the password change
-                $extraReset = self::create($this);
+                $extraReset = PasswordResetManager::create($this);
 
                 // Create a mailable
                 $recipient = new EmailRecipient($email, $this);
