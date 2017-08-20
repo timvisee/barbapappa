@@ -29,13 +29,20 @@
         <br />
 
         <p>
-            Check the box below to log you out from your account on all devices.<br />
+            @if(barauth()->isAuth())
+                Check the box below to log out on all other devices.<br />
+            @else
+                Check the box below to log out on all devices.<br />
+            @endif
             This option should be checked if you believe your account may have been used by someone else.
         </p>
         <br />
 
-        {{ Form::label('invalidate_sessions', 'Log out on all devices') }}
-        {{ Form::checkbox('invalidate_sessions', 'true', true) }}
+        @if(barauth()->isAuth())
+            {{ Form::label('invalidate_other_sessions', 'Log out on other devices') }}
+        @else
+            {{ Form::label('invalidate_other_sessions', 'Log out on all devices') }}
+        @endif
         <br />
 
         {{ Form::submit('Change password') }}

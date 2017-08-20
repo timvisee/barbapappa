@@ -20,14 +20,14 @@ class PasswordResetController extends Controller {
             'password' => 'required|string|min:6|confirmed'
         ]);
 
-        // Check whether to invalidate sessions
-        $invalidateSessions = $request->input('invalidate_sessions') == 'true';
+        // Check whether to invalidate other sessions
+        $invalidateOtherSessions = $request->input('invalidate_other_sessions') == 'true';
 
         // Reset the password with the given token
         $result = PasswordResetManager::resetPassword(
             $request->input('token'),
             $request->input('password'),
-            $invalidateSessions
+            $invalidateOtherSessions
         );
 
         // If we're ok, show the success page

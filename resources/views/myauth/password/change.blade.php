@@ -23,7 +23,7 @@
         <br />
 
         <p>
-            Check the box below to log you out from your account on all other devices.<br />
+            Check the box below to log out on all other devices.<br />
             This option should be checked if you believe your account may have been used by someone else.
         </p>
 
