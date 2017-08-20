@@ -2,20 +2,19 @@
 // TODO: Define this
 $message = Array(
     'bottom' => Array(
-        'linkDashboard' => 'http://localhost/',
+        'linkDashboard' => url('/'),
         'textDashboard' => 'Dashboard',
-        'linkMyAccount' => 'http://localhost/',
+        'linkMyAccount' => url('/'),
         'textMyAccount' => 'My account',
         'balance' => 'Balance',
         'myBalance' => 'My balance',
         'balanceValue' => '&euro;1.23',
     ),
     'footer' => Array(
-        'linkTerms' => 'http://localhost/',
+        'linkTerms' => url('/'),
         'textTerms' => 'Terms',
-        'linkPrivacy' => 'http://localhost/',
+        'linkPrivacy' => url('/'),
         'textPrivacy' => 'Privacy',
-        'linkEmailPreferences' => 'http://localhost/',
         'textEmailPreferences' => 'Email preferences'
     )
 );
@@ -125,7 +124,7 @@ $message = Array(
                                     {{ $message['footer']['textPrivacy'] }}
                                 </a>
                                 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
-                                <a href="{{ $message['footer']['linkEmailPreferences'] }}" style="color: #2BA6CB; text-decoration: none;">
+                                <a href="{{ route('email.preferences') }}" style="color: #2BA6CB; text-decoration: none;">
                                     {{ $message['footer']['textEmailPreferences'] }}
                                 </a>
                             </p>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Managers\EmailVerificationManager;
 use App\Models\Email;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -46,7 +46,7 @@ class RegisterController extends Controller {
 
         // Make an email verification request
         // TODO: Finish this
-        EmailVerificationManager::requestVerification($email);
+        EmailVerificationManager::createAndSend($email, true);
 
         // Create a user session and store the result
         $authResult = barauth()->getAuthenticator()->createSession($user);

@@ -17,9 +17,10 @@ Route::get('/about', 'PagesController@about')->name('about');
 // Posts
 Route::resource('posts', 'PostsController');
 
-//Auth::routes();
+// Dashboard
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-// Authentication
+// Authentication routes
 Route::get('/login', 'LoginController@login')->name('login');
 Route::post('/login', 'LoginController@doLogin');
 Route::get('/register', 'RegisterController@register')->name('register');
@@ -29,8 +30,9 @@ Route::post('/password/request', 'PasswordForgetController@doRequest');
 Route::get('/password/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
 Route::post('/password/reset', 'PasswordResetController@doReset');
 
-// TODO: Create a proper controller for this mail verification route
-Route::get('/email/verify/{token?}', 'PasswordResetController@reset')->name('email.verify');
+// Email routes
+Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('email.verify');
+Route::post('/email/verify', 'EmailVerifyController@doVerify');
 
-// Dashboard
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+// TODO: Routes to implement
+Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');

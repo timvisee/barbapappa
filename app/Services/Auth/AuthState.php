@@ -2,8 +2,7 @@
 
 namespace App\Services\Auth;
 
-use App\Session;
-use App\User;
+use App\Models\Session;
 
 class AuthState {
 
@@ -54,7 +53,7 @@ class AuthState {
      *
      * If the user isn't authenticated, null is returned.
      *
-     * @return User|null
+     * @return \App\Models\User|null
      */
     public function getUser() {
         // The session must not be null

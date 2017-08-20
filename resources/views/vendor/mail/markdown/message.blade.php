@@ -2,7 +2,7 @@
 
 {{-- Title --}}
 @component('mail::title')
-Hello Tim
+Hello {{ $recipient->getFirstName() }}
 
 @if(isset($subtitle))
 @slot('lead')

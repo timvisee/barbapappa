@@ -1,8 +1,3 @@
-<?php
-// TODO: Define this
-$imageUrl = 'https://uploads.timvisee.com/logo_header_mail.png';
-?>
-
 <table class="row header"
        style="margin-bottom: 10px; border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; background: #BBB; padding: 0px;"
        bgcolor="#999999">
@@ -26,7 +21,7 @@ $imageUrl = 'https://uploads.timvisee.com/logo_header_mail.png';
                                     <td class="six sub-columns"
                                         style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; min-width: 0px; width: 50%; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 10px 10px 0px;"
                                         align="left" valign="top">
-                                        <img src="{{ $imageUrl }}"
+                                        <img src="{{ asset('img/logo/logo_header_mail.png') }}"
                                              style="outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; width: auto; max-width: 100%; float: left; clear: both; display: block; height: 36px;"
                                              align="left"
                                              alt="{{ config('app.name') }}" /></td>

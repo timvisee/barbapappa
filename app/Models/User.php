@@ -1,11 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\Email;
 use Carbon\Carbon;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * User model.
@@ -14,12 +12,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property string password
  * @property string first_name
  * @property string last_name
+ * @property-read string name
  * @property Carbon created_at
  * @property Carbon updated_at
+ * @property-read string email
  */
-class User extends Authenticatable
-{
-    use Notifiable;
+class User extends Model {
 
     /**
      * The attributes that are mass assignable.
@@ -39,8 +37,44 @@ class User extends Authenticatable
         'password'
     ];
 
+    /**
+     * Get dynamic properties.
+     *
+     * @param string $name Property name.
+     *
+     * @return mixed|string Result.
+     */
+    public function __get($name) {
+        switch ($name) {
+            case 'name':
+                return $this->first_name . ' ' . $this->last_name;
+            case 'email':
+                return $this->getPrimaryEmail()->email;
+            default:
+                return parent::__get($name);
+        }
+    }
+
+    /**
+     * Check whether dynamic properties exist.
+     *
+     * @param string $name Property name.
+     *
+     * @return bool True if exists, false if not.
+     */
+    public function __isset($name) {
+        switch ($name) {
+            case 'name':
+                return true;
+            case 'email':
+                return $this->getPrimaryEmail() != null;
+            default:
+                return parent::__isset($name);
+        }
+    }
+
     public function posts() {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Models\Post');
     }
 
     public function emails() {
@@ -53,8 +87,18 @@ class User extends Authenticatable
      * @return bool True if the user has any verified email address, false if not.
      */
     public function hasVerifiedEmail() {
-        return Email::where('user_id', '=', $this->id)
+        return $this->emails()
                 ->where('verified_at', '!=', null)
                 ->first() != null;
+    }
+
+    /**
+     * Get the primary email address of the user.
+     *
+     * @return Email|null Primary email address or null if the user doesn't have any.
+     */
+    public function getPrimaryEmail() {
+        // TODO: Actually return the primary email address instead of the first one.
+        return $this->emails()->first();
     }
 }

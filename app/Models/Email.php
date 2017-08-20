@@ -19,11 +19,11 @@ use Illuminate\Database\Eloquent\Model;
 class Email extends Model {
 
     public function user() {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\Models\User');
     }
 
     public function emailVerifications() {
-        return $this->hasMany('App\EmailVerification');
+        return $this->hasMany('App\Models\EmailVerification');
     }
 
     /**

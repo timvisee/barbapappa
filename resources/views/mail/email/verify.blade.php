@@ -1,11 +1,15 @@
-@component('mail::message', ['subject' => $subject, 'subtitle' => 'Your account is almost ready.'])
+@component('mail::message', [
+    'recipient' => $recipient,
+    'subject' => $subject,
+    'subtitle' => 'You\'re about to verify your email address.',
+])
 
 @component('mail::text')
-Thank you for registering an account.
+You've just added a new email address to your account.
 
-Before you can use our service, you need to verify your email address.
+Before you can use it on our service, you need to verify it.
 
-Please do this as soon as possible as the verification link expires within 48 hours.
+Please do this as soon as possible as the verification link expires **within 48 hours**.
 @endcomponent
 
 @component('mail::notice')

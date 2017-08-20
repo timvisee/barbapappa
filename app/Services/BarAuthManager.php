@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Services\Auth\Authenticator;
 use App\Services\Auth\AuthState;
-use App\User;
+use App\Models\User;
 use Illuminate\Foundation\Application;
 
 class BarAuthManager {
@@ -88,7 +88,7 @@ class BarAuthManager {
      *
      * If the user isn't authenticated, null is returned.
      *
-     * @return User|null
+     * @return \App\Models\User|null
      */
     public function getUser() {
         return $this->authState->getUser();

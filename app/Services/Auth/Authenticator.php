@@ -3,12 +3,13 @@
 namespace App\Services\Auth;
 
 use App\Models\Email;
-use App\Session;
-use App\User;
+use App\Models\Session;
+use App\Models\User;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 
 /**
