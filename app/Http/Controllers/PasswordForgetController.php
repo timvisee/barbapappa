@@ -30,8 +30,8 @@ class PasswordForgetController extends Controller {
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         $email = Email::where('email', '=', $request->input('email'))->first();
         if($email == null)
-            // TODO: Show a fancy error notification
-            throw new \Exception('Unknown email address given.');
+            // If the email address is unknown, also show the reset page
+            return view('myauth.password.requestSent');
 
         // Create and send a password reset token to the user
         PasswordResetManager::createAndSend($email);
