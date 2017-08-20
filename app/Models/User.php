@@ -2,8 +2,13 @@
 
 namespace App\Models;
 
+use App\Mail\Password\Reset;
+use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * User model.
@@ -108,5 +113,104 @@ class User extends Model {
     public function getPrimaryEmail() {
         // TODO: Actually return the primary email address instead of the first one.
         return $this->emails()->first();
+    }
+
+    /**
+     * Invalidate sessions for this user.
+     *
+     * @param bool $current True to invalidate the current session, false to keep it alive.
+     * @param bool $other True to invalidate all other sessions, false to keep it alive.
+     */
+    public function invalidateSessions($current, $other) {
+        // Return if nothing should be invalidated
+        if(!$current && !$other)
+            return;
+
+        // Get the current session
+        $currentSession = barauth()->getAuthState()->getSession();
+
+        // Invalidate other user sessions
+        $this->sessions()->get()->each(function($session) use($current, $other, $currentSession) {
+            // Invalidate the current session
+            if($current && $currentSession != null && $currentSession->id == $session->id) {
+                $session->invalidate();
+                return;
+            }
+
+            // Invalidate other sessions
+            if($other && ($currentSession == null || $currentSession->id != $session->id)) {
+                $session->invalidate();
+                return;
+            }
+        });
+    }
+
+    /**
+     * Check if the given user password is valid.
+     *
+     * TODO: Should we throttle this?
+     *
+     * @param string $password Password to check.
+     * @param bool $rehash=true True to automatically rehash the password if needed.
+     *
+     * @return bool True if the password is valid, false if not.
+     */
+    public function checkPassword($password, $rehash = true) {
+        // Make sure the given password isn't null
+        if($password == null)
+            return false;
+
+        // Check whether the given password is valid
+        if(!Hash::check($password, $this->password))
+            return false;
+
+        // Rehash the password if needed
+        if($rehash && Hash::needsRehash($this->password)) {
+            // Log a message, then change the password to rehash it
+            Log::info('Rehashing password for user with ID ' . $this->id);
+            $this->changePassword($password, false);
+        }
+
+        // The password seems to be valid
+        return true;
+    }
+
+    /**
+     * Change the password for this user.
+     *
+     * @param string $password New password (not hashed).
+     * @param bool $sendMail True to send a mail about the password change, false if not.
+     *
+     * @throws \Exception Throws if the given password is invalid.
+     */
+    public function changePassword($password, $sendMail) {
+        // Make sure the password isn't null
+        if($password == null)
+            throw new \Exception('New password for user is null');
+
+        // TODO: Validate the password
+
+        // Change the password
+        $this->password = Hash::make($password);
+        $this->save();
+
+        // Send an email about the password change
+        if($sendMail) {
+            // Get the primary email address for the user
+            $email = $this->getPrimaryEmail();
+
+            // Send an additional reset token to allow the user to revert the password if the change was unwanted
+            if($email != null) {
+                // Create an additional reset token to allow the user to revert the password change
+                $extraReset = self::create($this);
+
+                // Create a mailable
+                $recipient = new EmailRecipient($email, $this);
+                $mailable = new Reset($recipient, $extraReset);
+
+                // Send the mailable
+                Mail::send($mailable);
+            }
+        }
     }
 }

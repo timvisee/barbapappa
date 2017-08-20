@@ -3,14 +3,12 @@
 namespace App\Managers;
 
 use App\Mail\Password\Request;
-use App\Mail\Password\Reset;
 use App\Models\Email;
 use App\Models\PasswordReset;
 use App\Models\User;
 use App\Utils\EmailRecipient;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class PasswordResetManager {
@@ -83,10 +81,10 @@ class PasswordResetManager {
      *
      * @param string $token Password reset token.
      * @param string $password The new password.
-     * @param boolean $invalidateSessions True to invalidate all existing sessions for the user, false to keep the sessions alive.
+     * @param boolean $invalidateOtherSessions True to invalidate all other sessions for the user except the current one, false to keep all the sessions alive.
      * @return PasswordResetResult Password reset result.
      */
-    public static function resetPassword($token, $password, $invalidateSessions) {
+    public static function resetPassword($token, $password, $invalidateOtherSessions) {
         // TODO: Make sure the given password is valid
 
         // The token must not be null
@@ -103,42 +101,17 @@ class PasswordResetManager {
         if($reset->used)
             return new PasswordResetResult(PasswordResetResult::ERR_USED_TOKEN);
 
-        // Get the associated user
-        /** @var User $user */
-        $user = $reset->user()->firstOrFail();
-
-        // Change the password of the user
-        $user->password = Hash::make($password);
-        $user->save();
-
         // Mark the token as used
         $reset->used = true;
         $reset->save();
 
-        // Invalidate sessions
-        if($invalidateSessions)
-            $user->sessions()->get()->each(function($session) {
-                $session->invalidate();
-            });
+        // Get the associated user
+        /** @var User $user */
+        $user = $reset->user()->firstOrFail();
 
-        // Get the primary email address for the user
-        $email = $user->getPrimaryEmail();
-
-        // Send an additional reset token to allow the user to revert the password if the change was unwanted
-        if($email != null) {
-            // Create an additional reset token to allow the user to revert the password change
-            $extraReset = self::create($user);
-
-            try {
-                // Create a mailable
-                $recipient = new EmailRecipient($email, $user);
-                $mailable = new Reset($recipient, $extraReset);
-
-                // Send the mailable
-                Mail::send($mailable);
-
-            } catch (\Exception $e) {}
-        }
+        // Change the password for the user, and invalidate the user sessions
+        $user->changePassword($password, true);
+        $user->invalidateSessions(false, $invalidateOtherSessions);
 
         // Return the result
         return new PasswordResetResult(PasswordResetResult::OK);

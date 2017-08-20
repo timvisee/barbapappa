@@ -8,8 +8,6 @@ use App\Models\User;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Request;
 
 /**
@@ -130,26 +128,14 @@ class Authenticator {
         // TODO: Should we try to authenticate multiple email addresses here?
         foreach($emailModels as $emailModel) {
             // Get the user, must be valid
+            /** @var User $user */
             $user = $emailModel->user;
             if($user == null)
                 continue;
 
-            // Get the password hash
-            $hash = $user->password;
-
             // The password must be valid
-            if(!Hash::check($password, $hash))
+            if(!$user->checkPassword($password, true))
                 continue;
-
-            // Rehash the password if needed
-            if(Hash::needsRehash($hash)) {
-                // Log a message
-                Log::info('Rehashing password for user with ID ' . $user->id);
-
-                // Rehash and save the password
-                $user->password = Hash::make($password);
-                $user->save();
-            }
 
             // Create a session for this user, return the result
             return $this->createSession($user);
