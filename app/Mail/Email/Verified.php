@@ -11,7 +11,7 @@ class Verified extends PersonalizedEmail {
     /**
      * Message view.
      */
-    const VIEW = 'mail.email.verified';
+    const VIEW = 'mail.email.verifiedAndWelcome';
 
     /**
      * Verified constructor.
