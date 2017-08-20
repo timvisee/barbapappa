@@ -8,3 +8,4 @@ My account: {{ route('account') }}
 Terms: {{ route('terms') }}
 Privacy: {{ route('privacy') }}
 Email preferences: {{ route('email.preferences') }}
+Contact: {{ route('contact') }}

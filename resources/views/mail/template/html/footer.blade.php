@@ -3,16 +3,16 @@
 $message = Array(
     'bottom' => Array(
         'textDashboard' => 'Dashboard',
-        'linkMyAccount' => url('/'),
-        'textMyAccount' => 'My account',
+        'textMyAccount' => 'Your account',
         'balance' => 'Balance',
-        'myBalance' => 'My balance',
+        'myBalance' => 'Your balance',
         'balanceValue' => '&euro;1.23',
     ),
     'footer' => Array(
         'textTerms' => 'Terms',
         'textPrivacy' => 'Privacy',
-        'textEmailPreferences' => 'Email preferences'
+        'textEmailPreferences' => 'Email preferences',
+        'textContact' => 'Contact'
     )
 );
 ?>
@@ -123,6 +123,10 @@ $message = Array(
                                 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
                                 <a href="{{ route('email.preferences') }}" style="color: #2BA6CB; text-decoration: none;">
                                     {{ $message['footer']['textEmailPreferences'] }}
+                                </a>
+                                &nbsp;&nbsp;&middot;&nbsp;&nbsp;
+                                <a href="{{ route('contact') }}" style="color: #2BA6CB; text-decoration: none;">
+                                    {{ $message['footer']['textContact'] }}
                                 </a>
                             </p>
                         </center>
