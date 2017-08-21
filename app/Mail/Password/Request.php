@@ -12,7 +12,7 @@ class Request extends PersonalizedEmail {
     /**
      * Email subject.
      */
-    const SUBJECT = 'Password reset request';
+    const SUBJECT = 'mail.password.request.subject';
 
     /**
      * Email view.

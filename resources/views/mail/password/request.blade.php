@@ -1,32 +1,32 @@
 @component('mail::message', [
     'recipient' => $recipient,
     'subject' => $subject,
-    'subtitle' => 'We\'ll help you configuring a new password.',
+    'subtitle' => __('mail.password.request.subtitle'),
 ])
 
 @component('mail::text')
-You've just requested to reset your password.
+@lang('mail.password.request.requestedReset')<br>
 
-Simply visit the password reset page and enter your preferred password.
+@lang('mail.password.request.visitResetPage')<br>
 
-Please do this as soon as possible as the reset link expires **within 24 hours**.
+@lang('mail.password.request.soon', ['hours' => 24])
 @endcomponent
 
 @component('mail::notice')
-Please click the following button to reset your password.
+@lang('mail.password.request.clickButtonToReset')<br>
 
 @component('mail::button', ['url' => route('password.reset', ['token' => $token])])
-Reset your password
+@lang('mail.password.request.resetButton')
 @endcomponent
 @endcomponent
 
 @component('mail::text')
-If the above button doesn't work, you may use the following link and token to reset your password manually.<br>
+@lang('mail.password.request.manual')<br>
 
-**Link:** [{{ route('password.reset') }}]({{ route('password.reset', ['token' => $token]) }})<br>
-**Token:** _{{ $token }}_
+**@lang('general.link'):** [{{ route('password.reset') }}]({{ route('password.reset', ['token' => $token]) }})<br>
+**@lang('general.token'):** _{{ $token }}_<br>
 
-If you haven't requested a password reset, you may ignore this email message.
+@lang('mail.password.request.notRequested')
 @endcomponent
 
 @endcomponent

@@ -2,10 +2,10 @@
 
 My balance: €123,00
 
-Dashboard: {{ route('dashboard') }}
-My account: {{ route('account') }}
+@lang('pages.dashboard'): {{ route('dashboard') }}
+@lang('pages.yourAccount'): {{ route('account') }}
 
-Terms: {{ route('terms') }}
-Privacy: {{ route('privacy') }}
-Email preferences: {{ route('email.preferences') }}
-Contact: {{ route('contact') }}
+@lang('pages.terms'): {{ route('terms') }}
+@lang('pages.privacy'): {{ route('privacy') }}
+@lang('pages.emailPreferences'): {{ route('email.preferences') }}
+@lang('pages.contact'): {{ route('contact') }}

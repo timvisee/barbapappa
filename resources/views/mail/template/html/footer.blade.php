@@ -2,17 +2,9 @@
 // TODO: Define this
 $message = Array(
     'bottom' => Array(
-        'textDashboard' => 'Dashboard',
-        'textMyAccount' => 'Your account',
         'balance' => 'Balance',
         'myBalance' => 'Your balance',
         'balanceValue' => '&euro;1.23',
-    ),
-    'footer' => Array(
-        'textTerms' => 'Terms',
-        'textPrivacy' => 'Privacy',
-        'textEmailPreferences' => 'Email preferences',
-        'textContact' => 'Contact'
     )
 );
 ?>
@@ -69,7 +61,7 @@ $message = Array(
                                     align="center" bgcolor="#3b5998" valign="top">
                                     <a href="{{ route('dashboard') }}"
                                        style="color: #FFF; text-decoration: none; font-weight: normal; font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                        {{ $message['bottom']['textDashboard'] }}
+                                        @lang('pages.dashboard')
                                     </a>
                                 </td>
                             </tr>
@@ -82,7 +74,7 @@ $message = Array(
                                     align="center" bgcolor="#3b5998" valign="top">
                                     <a href="{{ route('account') }}"
                                        style="color: #FFF; text-decoration: none; font-weight: normal; font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                        {{ $message['bottom']['textMyAccount'] }}
+                                        @lang('pages.yourAccount')
                                     </a>
                                 </td>
                             </tr>
@@ -111,22 +103,21 @@ $message = Array(
                         style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0px 0px 10px;"
                         valign="top">
                         <center style="width: 100%; min-width: 580px;">
-                            <p style="text-align: center; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;"
-                               align="center">
+                            <p style="text-align: center; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;">
                                 <a href="{{ route('terms') }}" style="color: #2BA6CB; text-decoration: none;">
-                                    {{ $message['footer']['textTerms'] }}
+                                    @lang('pages.terms')
                                 </a>
                                 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
                                 <a href="{{ route('privacy') }}" style="color: #2BA6CB; text-decoration: none;">
-                                    {{ $message['footer']['textPrivacy'] }}
+                                    @lang('pages.privacy')
                                 </a>
                                 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
                                 <a href="{{ route('email.preferences') }}" style="color: #2BA6CB; text-decoration: none;">
-                                    {{ $message['footer']['textEmailPreferences'] }}
+                                    @lang('pages.emailPreferences')
                                 </a>
                                 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
                                 <a href="{{ route('contact') }}" style="color: #2BA6CB; text-decoration: none;">
-                                    {{ $message['footer']['textContact'] }}
+                                    @lang('pages.contact')
                                 </a>
                             </p>
                         </center>

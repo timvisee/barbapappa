@@ -18,20 +18,34 @@ abstract class PersonalizedEmail extends Mailable {
     public $recipient;
 
     /**
-     * The subject of the message.
-     * @var string
+     * The subject key of the message.
+     * @var string|null
      */
-    public $subject;
+    public $subject = null;
+
+    /**
+     * The subject language key.
+     * @var string|null
+     */
+    private $subjectKey = null;
+
+    /**
+     * The subject language key replacements.
+     * @var array
+     */
+    private $subjectKeyReplace = [];
 
     /**
      * Constructor.
      *
      * @param EmailRecipient $recipient Email recipient.
-     * @param string $subject Message subject.
+     * @param string $subjectKey Message subject language key.
+     * @param array $replace Fields to replace in the subject language value.
      */
-    public function __construct(EmailRecipient $recipient, $subject) {
+    public function __construct(EmailRecipient $recipient, $subjectKey, array $replace = []) {
         $this->recipient = $recipient;
-        $this->subject = $subject;
+        $this->subjectKey = $subjectKey;
+        $this->subjectKeyReplace = $replace;
     }
 
     /**
@@ -40,6 +54,13 @@ abstract class PersonalizedEmail extends Mailable {
      * @return Mailable
      */
     public function build() {
-        return $this->to($this->recipient)->subject($this->subject);
+        // Define the subject
+        if(empty($this->subject) && !empty($this->subjectKey))
+            $this->subject = __($this->subjectKey, $this->subjectKeyReplace);
+
+        // Build the mailable
+        return $this
+            ->to($this->recipient)
+            ->subject($this->subject);
     }
 }

@@ -3,7 +3,6 @@
 namespace App\Mail\Password;
 
 use App\Mail\PersonalizedEmail;
-use App\Models\PasswordReset;
 use App\Utils\EmailRecipient;
 use Illuminate\Mail\Mailable;
 
@@ -12,7 +11,7 @@ class Reset extends PersonalizedEmail {
     /**
      * Email subject.
      */
-    const SUBJECT = 'Password changed';
+    const SUBJECT = 'mail.password.reset.subject';
 
     /**
      * Email view.

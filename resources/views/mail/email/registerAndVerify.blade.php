@@ -1,30 +1,30 @@
 @component('mail::message', [
     'recipient' => $recipient,
     'subject' => $subject,
-    'subtitle' => 'Your account is almost ready.',
+    'subtitle' => __('mail.email.verify.subtitleRegistered'),
 ])
 
 @component('mail::text')
-Thank you for registering an account.
+@lang('mail.email.verify.registered')<br>
 
-Before you can use our service, you need to verify your email address.
+@lang('mail.email.verify.verifyBeforeUseAccount')<br>
 
-Please do this as soon as possible as the verification link expires within 48 hours.
+@lang('mail.email.verify.soon', ['hours' => 48])
 @endcomponent
 
 @component('mail::notice')
-Please click the following button to verify your email address.
+@lang('mail.email.verify.clickButtonToVerify')<br>
 
 @component('mail::button', ['url' => route('email.verify', ['token' => $token])])
-Verify your email address
+@lang('mail.email.verify.verifyButton')
 @endcomponent
 @endcomponent
 
 @component('mail::text')
-If the above button doesn't work, you may use the following link and token to verify your email address manually.
+@lang('mail.email.verify.manual')<br>
 
-**Link:** [{{ route('email.verify') }}]({{ route('email.verify', ['token' => $token]) }})<br>
-**Token:** _{{ $token }}_
+**@lang('general.link'):** [{{ route('email.verify') }}]({{ route('email.verify', ['token' => $token]) }})<br>
+**@lang('general.token'):** _{{ $token }}_
 @endcomponent
 
 @endcomponent

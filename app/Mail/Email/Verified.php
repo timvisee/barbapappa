@@ -14,6 +14,11 @@ class Verified extends PersonalizedEmail {
     const VIEW = 'mail.email.verifiedAndWelcome';
 
     /**
+     * Message subject.
+     */
+    const SUBJECT = 'mail.email.verified.subject';
+
+    /**
      * Verified constructor.
      *
      * @param EmailRecipient $recipient Email recipient.
@@ -21,7 +26,10 @@ class Verified extends PersonalizedEmail {
     public function __construct(EmailRecipient $recipient) {
         parent::__construct(
             $recipient,
-            'Start using ' . config('app.name')
+            self::SUBJECT,
+            [
+                'app' => config('app.name')
+            ]
         );
     }
 

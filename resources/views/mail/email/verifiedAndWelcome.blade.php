@@ -1,25 +1,25 @@
 @component('mail::message', [
     'recipient' => $recipient,
     'subject' => $subject,
-    'subtitle' => 'First of all, welcome to the club!',
+    'subtitle' => __('mail.email.verified.subtitle'),
 ])
 
 @component('mail::text')
-Your email address has just been verified and your account is now ready.
+@lang('mail.email.verified.accountReady')<br>
 
-To start using {{ config('app.name') }}, take a look at your personalized dashboard.
+@lang('mail.email.verified.startUsingSeeDashboard', ['app' => config('app.name')])
 @endcomponent
 
 @component('mail::button', ['url' => route('dashboard')])
-Your personal dashboard
+@lang('pages.yourPersonalDashboard')
 @endcomponent
 
 @component('mail::text')
-To configure how often you receive email updates from {{ config('app.name') }}, check out your email preferences panel.
+@lang('mail.email.verified.configureEmailPreferences', ['app' => config('app.name')])
 @endcomponent
 
 @component('mail::button', ['url' => route('email.preferences')])
-Email preferences
+@lang('pages.emailPreferences')
 @endcomponent
 
 @endcomponent

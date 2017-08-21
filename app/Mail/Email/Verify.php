@@ -12,12 +12,12 @@ class Verify extends PersonalizedEmail {
     /**
      * Special email subject for when the user has just registered.
      */
-    const SUBJECT_REGISTERED = 'Registration & email verification';
+    const SUBJECT_REGISTERED = 'mail.email.verify.subjectRegistered';
 
     /**
      * Email subject normal verification messages.
      */
-    const SUBJECT = 'Email verification';
+    const SUBJECT = 'mail.email.verify.subject';
 
     /**
      * The view to use when users have just registered.

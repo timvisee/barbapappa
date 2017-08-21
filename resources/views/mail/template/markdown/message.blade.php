@@ -2,7 +2,7 @@
 
 {{-- Title --}}
 @component('mail::title')
-Hello {{ $recipient->getFirstName() }}
+{{ trans_random('general.hellos') }} {{ $recipient->getFirstName() }}
 
 @if(isset($subtitle))
 @slot('lead')
@@ -15,8 +15,8 @@ Hello {{ $recipient->getFirstName() }}
 {{ $slot }}
 
 @component('mail::text')
-Thanks,<br>
-The {{ config('app.name') }} team
+{{ trans_random('mail.signature.caption') }}<br>
+@lang('mail.signature.name', ['app' => config('app.name')])
 @endcomponent
 
 @endcomponent

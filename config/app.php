@@ -90,7 +90,7 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
+    'fallback_locale' => 'nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -185,6 +185,7 @@ return [
         /**
          * Custom service providers...
          */
+        App\Providers\LanguageServiceProvider::class,
         App\Providers\BarAuthServiceProvider::class,
 
     ],
