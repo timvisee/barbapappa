@@ -77,7 +77,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'pirate',
 
     /*
     |--------------------------------------------------------------------------
@@ -185,7 +185,7 @@ return [
         /**
          * Custom service providers...
          */
-        App\Providers\LanguageServiceProvider::class,
+        App\Providers\LanguageManagerServiceProvider::class,
         App\Providers\BarAuthServiceProvider::class,
 
     ],

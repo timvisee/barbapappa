@@ -2,7 +2,17 @@
 
 return [
 
+    /**
+     * Common actions.
+     */
+    'login' => 'Inloggen',
+    'logout' => 'Uitloggen',
+    'register' => 'Registreren',
+    'forgotPassword' => 'Wachtwoord vergeten?',
+
     /*
+    | TODO: Are these properties still required?
+    |
     |--------------------------------------------------------------------------
     | Authentication Language Lines
     |--------------------------------------------------------------------------
@@ -14,6 +24,6 @@ return [
     */
 
     'failed' => 'Deze gegevens komen niet overeen met onze gegevens.',
-    'throttle' => 'Te veel inlogpogingen. Probeer het alstublieft opnieuw in :seconds seconden.',
+    'throttle' => 'Te veel inlogpogingen. Probeer het alsjeblieft opnieuw in :seconds seconden.',
 
 ];

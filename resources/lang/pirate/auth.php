@@ -5,13 +5,14 @@ return [
     /**
      * Common actions.
      */
-    'login' => 'Login',
-    'logout' => 'Logout',
-    'register' => 'Register',
-    'forgotPassword' => 'Forgot your password?',
+    'login' => 'Enter ship',
+    'logout' => 'Abandon ship',
+    'register' => 'New ship',
+    'forgotPassword' => 'Lost yer passcode?',
 
     /*
     | TODO: Are these properties still required?
+    | TODO: Translate these.
     |
     |--------------------------------------------------------------------------
     | Authentication Language Lines

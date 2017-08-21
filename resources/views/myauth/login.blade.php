@@ -2,14 +2,14 @@
 
 @section('content')
 
-    <h1>Login</h1>
+    <h1>@lang('auth.login')</h1>
 
     {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST']) !!}
 
-        {{ Form::label('email', 'Email') }}
-        {{ Form::text('email', '', ['placeholder' => 'me@domain.com']) }}
+        {{ Form::label('email', __('account.email')) }}
+        {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
 
-        {{ Form::label('password', 'Password') }}
+        {{ Form::label('password', __('account.password')) }}
         {{ Form::password('password') }}
 
         @if ($errors->has('password'))
@@ -18,15 +18,11 @@
             </span>
         @endif
 
-        {{ Form::submit('Login') }}
+        {{ Form::submit(__('auth.login')) }}
 
-        <a href="{{ route('password.request') }}">
-            Forgot Your Password?
-        </a>
+        <a href="{{ route('password.request') }}">@lang('auth.forgotPassword')</a>
 
-        <a href="{{ route('register') }}">
-            Register
-        </a>
+        <a href="{{ route('register') }}">@lang('auth.register')</a>
 
     {!! Form::close() !!}
 

@@ -6,15 +6,6 @@
 
     <hr />
 
-    @lang('general.test')
-
-    <br>
-    <br>
-
-    {{ trans_random('general.test', ['a' => 'SOMETHING']) }}
-
-    <hr />
-
     <table>
         <tr>
             <td>Auth:</td>

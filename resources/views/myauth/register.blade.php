@@ -2,30 +2,28 @@
 
 @section('content')
 
-    <h1>Register</h1>
+    <h1>@lang('auth.register')</h1>
 
     {!! Form::open(['action' => ['RegisterController@doRegister'], 'method' => 'POST']) !!}
 
-        {{ Form::label('email', 'Email') }}
-        {{ Form::text('email', '', ['placeholder' => 'me@domain.com']) }}
+        {{ Form::label('email', __('account.email')) }}
+        {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
 
-        {{ Form::label('first_name', 'First name') }}
-        {{ Form::text('first_name', '', ['placeholder' => 'First name']) }}
+        {{ Form::label('first_name', __('account.firstName')) }}
+        {{ Form::text('first_name', '', ['placeholder' => __('account.firstNamePlaceholder')]) }}
 
-        {{ Form::label('last_name', 'Last name') }}
-        {{ Form::text('last_name', '', ['placeholder' => 'Last name']) }}
+        {{ Form::label('last_name', __('account.lastName')) }}
+        {{ Form::text('last_name', '', ['placeholder' => __('account.lastNamePlaceholder')]) }}
 
-        {{ Form::label('password', 'Password') }}
+        {{ Form::label('password', __('account.password')) }}
         {{ Form::password('password') }}
 
-        {{ Form::label('password_confirmation', 'Confirm password') }}
+        {{ Form::label('password_confirmation', __('account.confirmPassword')) }}
         {{ Form::password('password_confirmation') }}
 
-        {{ Form::submit('Register') }}
+        {{ Form::submit(__('auth.register')) }}
 
-        <a href="{{ route('login') }}">
-            Login
-        </a>
+        <a href="{{ route('login') }}">@lang('auth.login')</a>
 
     {!! Form::close() !!}
 

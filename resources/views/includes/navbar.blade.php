@@ -12,7 +12,7 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                {{ config('app.name', 'BARbapAPPa') }}
             </a>
         </div>
 
@@ -26,8 +26,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if(!barauth()->isAuth())
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
+                    <li><a href="{{ route('login') }}">@lang('auth.login')</a></li>
+                    <li><a href="{{ route('register') }}">@lang('auth.register')</a></li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -36,13 +36,13 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a href="{{ route('dashboard') }}">Dashboard</a>
+                                <a href="{{ route('dashboard') }}">@lang('pages.dashboard')</a>
                             </li>
                             <li>
-                                <a href="{{ route('account') }}">Account</a>
+                                <a href="{{ route('account') }}">@lang('pages.account')</a>
                             </li>
                             <li>
-                                <a href="{{ route('logout') }}">Logout</a>
+                                <a href="{{ route('logout') }}">@lang('auth.logout')</a>
                             </li>
                         </ul>
                     </li>

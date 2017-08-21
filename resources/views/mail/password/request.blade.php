@@ -23,8 +23,8 @@
 @component('mail::text')
 @lang('mail.password.request.manual')<br>
 
-**@lang('general.link'):** [{{ route('password.reset') }}]({{ route('password.reset', ['token' => $token]) }})<br>
-**@lang('general.token'):** _{{ $token }}_<br>
+**@lang('misc.link'):** [{{ route('password.reset') }}]({{ route('password.reset', ['token' => $token]) }})<br>
+**@lang('misc.token'):** _{{ $token }}_<br>
 
 @lang('mail.password.request.notRequested')
 @endcomponent

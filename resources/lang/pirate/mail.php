@@ -21,7 +21,7 @@ return [
             'subject' => 'Email verification',
             'subjectRegistered' => 'Registration & email verification',
             'subtitle' => 'You\'re about to verify your email address.',
-            'subtitleRegistered' => 'Your account is almost ready.',
+            'subtitleRegistered' => 'Your account be almost ready.',
             'registered' => 'Thank you for registering an account.',
             'addNewEmail' => 'You\'ve just added a new email address to your account.',
             'verifyBeforeUseAccount' => 'Before you can use our service, you need to verify your email address.',
@@ -38,7 +38,7 @@ return [
         'verified' => [
             'subject' => 'Start using :app',
             'subtitle' => 'First of all, welcome to the club!',
-            'accountReady' => 'Your email address has just been verified and your account is now ready.',
+            'accountReady' => 'Your email address has just been verified and your account be now ready.',
             'startUsingSeeDashboard' => 'To start using :app, take a look at your personalized dashboard.',
             'configureEmailPreferences' => 'To configure how often you receive email updates from :app, check out your email preferences panel.',
         ]

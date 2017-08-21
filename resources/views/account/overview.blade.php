@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Your account</h1>
-    <p>This page shows an overview of your account.</p>
+    <h1>@lang('pages.yourAccount')</h1>
+    <p>@lang('pages.accountOverview.description')</p>
 
-    <h3>Profile</h3>
+    <h3>@lang('pages.profile')</h3>
     <table>
         <tr>
-            <td>First name:</td>
+            <td>@lang('account.firstName'):</td>
             <td>{{ $user->first_name }}</td>
         </tr>
         <tr>
-            <td>Last name:</td>
+            <td>@lang('account.lastName'):</td>
             <td>{{ $user->last_name }}</td>
         </tr>
     </table>
-    <a href="{{ route('profile.edit', ['userId' => $user->id]) }}">Edit profile</a><br />
-    <a href="{{ route('password.change') }}">Change password</a>
+    <a href="{{ route('profile.edit', ['userId' => $user->id]) }}">@lang('pages.editProfile')</a><br />
+    <a href="{{ route('password.change') }}">@lang('pages.changePassword')</a>
 
-    <h3>Email</h3>
+    <h3>@lang('account.email')</h3>
     <ul>
         <li>timvisee@gmail.com</li>
     </ul>

@@ -2,14 +2,14 @@
 
 @section('content')
 
-    <h1>Reset your password</h1>
+    <h1>@lang('account.resetPassword')</h1>
 
     {!! Form::open(['action' => ['PasswordResetController@doReset'], 'method' => 'POST']) !!}
 
-        <p>Please enter the password reset token. This token can be found in the email message you've received with password reset instructions.</p>
+        <p>@lang('pages.passwordReset.enterResetToken')</p>
         <br />
 
-        {{ Form::label('token', 'Token') }}
+        {{ Form::label('token', __('misc.token')) }}
         @if(!empty($token))
             {{ Form::text('token', $token) }}
         @else
@@ -17,35 +17,35 @@
         @endif
         <br />
 
-        <p>Please enter the new password you'd like to use from now on.</p>
+        <p>@lang('pages.passwordReset.enterNewPassword')</p>
         <br />
 
-        {{ Form::label('password', 'New password') }}
+        {{ Form::label('password', __('account.newPassword')) }}
         {{ Form::password('password') }}
         <br />
 
-        {{ Form::label('password_confirmation', 'Confirm new password') }}
+        {{ Form::label('password_confirmation', __('account.confirmNewPassword')) }}
         {{ Form::password('password_confirmation') }}
         <br />
 
         <p>
             @if(barauth()->isAuth())
-                Check the box below to log out on all other devices.<br />
+                @lang('account.invalidateOtherSessionsDescription')
             @else
-                Check the box below to log out on all devices.<br />
+                @lang('account.invalidateAllSessionsDescription')
             @endif
-            This option should be checked if you believe your account may have been used by someone else.
         </p>
         <br />
 
         @if(barauth()->isAuth())
-            {{ Form::label('invalidate_other_sessions', 'Log out on other devices') }}
+            {{ Form::label('invalidate_other_sessions', __('account.invalidateOtherSessions')) }}
         @else
-            {{ Form::label('invalidate_other_sessions', 'Log out on all devices') }}
+            {{ Form::label('invalidate_other_sessions', __('account.invalidateAllSessions')) }}
         @endif
+        {{ Form::checkbox('invalidate_other_sessions', 'true') }}
         <br />
 
-        {{ Form::submit('Change password') }}
+        {{ Form::submit(__('pages.changePassword')) }}
 
     {!! Form::close() !!}
 

@@ -2,18 +2,16 @@
 
 @section('content')
 
-    <h1>Request password reset</h1>
+    <h1>@lang('pages.requestPasswordReset')</h1>
 
     {!! Form::open(['action' => ['PasswordForgetController@doRequest'], 'method' => 'POST']) !!}
 
-        {{ Form::label('email', 'Email') }}
-        {{ Form::text('email', '', ['placeholder' => 'me@domain.com']) }}
+        {{ Form::label('email', __('account.email')) }}
+        {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
 
-        {{ Form::submit('Reset password') }}
+        {{ Form::submit(__('account.resetPassword')) }}
 
-        <a href="{{ route('login') }}">
-            Login
-        </a>
+        <a href="{{ route('login') }}">@lang('auth.login')</a>
 
     {!! Form::close() !!}
 

@@ -23,8 +23,8 @@
 @component('mail::text')
 @lang('mail.email.verify.manual')<br>
 
-**@lang('general.link'):** [{{ route('email.verify') }}]({{ route('email.verify', ['token' => $token]) }})<br>
-**@lang('general.token'):** _{{ $token }}_
+**@lang('misc.link'):** [{{ route('email.verify') }}]({{ route('email.verify', ['token' => $token]) }})<br>
+**@lang('misc.token'):** _{{ $token }}_
 @endcomponent
 
 @endcomponent

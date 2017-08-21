@@ -4,7 +4,7 @@ namespace App\Services;
 
 use Illuminate\Foundation\Application;
 
-class LanguageService {
+class LanguageManagerService {
 
     /**
      * Application instance.

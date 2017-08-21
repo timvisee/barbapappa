@@ -1,5 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    About page placeholder
+    <h1>@lang('pages.about')</h1>
+    [About page placeholder]
 @endsection

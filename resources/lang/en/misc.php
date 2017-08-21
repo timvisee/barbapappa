@@ -1,7 +1,7 @@
 <?php
 
 /**
- * General translations.
+ * Miscellaneous translations.
  */
 return [
     'link' => 'Link',

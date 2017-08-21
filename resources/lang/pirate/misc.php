@@ -1,10 +1,10 @@
 <?php
 
 /**
- * General translations.
+ * Miscellaneous translations.
  */
 return [
     'link' => 'Link',
     'token' => 'Token',
-    'saveChanges' => 'Save changes',
+    'saveChanges' => 'Stow changes',
 ];

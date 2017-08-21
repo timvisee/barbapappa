@@ -4,9 +4,9 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Lang extends Facade {
+class LangManager extends Facade {
 
     protected static function getFacadeAccessor() {
-        return 'lang';
+        return 'langManager';
     }
 }

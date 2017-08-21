@@ -20,8 +20,8 @@
 @if(isset($token))
 @lang('mail.password.reset.noChangeThenReset')<br>
 
-**@lang('general.link'):** [{{ route('password.reset') }}]({{ route('password.reset', ['token' => $token]) }})<br>
-**@lang('general.token'):** _{{ $token }}_<br>
+**@lang('misc.link'):** [{{ route('password.reset') }}]({{ route('password.reset', ['token' => $token]) }})<br>
+**@lang('misc.token'):** _{{ $token }}_<br>
 
 @lang('mail.password.reset.orContact', ['contact' => route('contact'), 'app' => config('app.name')])
 @else
