@@ -29,7 +29,7 @@ return [
             'soon' => 'Please do dis as soon as possible, th\' verification link sinks **within :hours turns o\'the hourglass**.',
             'clickButtonToVerify' => 'Please click th\' following button be verify yer e-bottle address.',
             'verifyButton' => 'Verify yer e-bottle address',
-            'manual' => 'If th\' above button doesn\'t work, ye may use the following coordinate \'nd token to verify yer e-bottle address by hand.',
+            'manual' => 'If th\' above button doesn\'t work, ye may use the following coordinate n\' token to verify yer e-bottle address by hook.',
         ],
 
         /**
@@ -38,7 +38,7 @@ return [
         'verified' => [
             'subject' => 'Sail wit :app',
             'subtitle' => 'First, sail ho to th\' crew!',
-            'accountReady' => 'Yer e-bottle coordinate has just be verified and yer ship be now to sail.',
+            'accountReady' => 'Yer e-bottle coordinate has just be verified n\' yer ship be now to sail.',
             'startUsingSeeDashboard' => 'To sail wit :app, navigate to yer pirate dashboard.',
             'configureEmailPreferences' => 'To mend th\' sails \'bout how often ye receive e-bottle parchments from :app, navigate to yer e-bottle preferences panel.',
         ]
@@ -56,11 +56,11 @@ return [
             'subject' => 'Passcode reset request',
             'subtitle' => 'We\'ll help ye to mend th\' sails for a shiny passcode.',
             'requestedReset' => 'Ye just requested yer shiny passcode.',
-            'visitResetPage' => 'Navigate to th\' passcode reset parchment \'nd enter yer shiny passcode.',
+            'visitResetPage' => 'Navigate to th\' passcode reset parchment n\' enter yer shiny passcode.',
             'soon' => 'Do dis as soon as possible. Th\' reset coordinate sinks **within :hours turns o\'the hourglass**.',
             'clickButtonToReset' => 'Navigate to th\' following button to reset yer passcode.',
             'resetButton' => 'Reset yer passcode',
-            'manual' => 'If th\' above button doesn\'t work, ye may use be following coordinate and token to reset yer passcode by hand.',
+            'manual' => 'If th\' above button doesn\'t work, ye may use be following coordinate n\' token to reset yer passcode by hook.',
             'notRequested' => 'If ye have nay requested a shiny passcode, ye may ignore dis e-bottle message.',
         ],
 
@@ -68,11 +68,11 @@ return [
          * Password reset email.
          */
         'reset' => [
-            'subject' => 'Passcode mend th\' sails',
+            'subject' => 'Yer passcode mend th\' sails',
             'subtitle' => 'Yer passcode be changed.',
             'forSecurity' => 'Our jolly crew notified ye for piracy reasons.',
             'useNewPassword' => 'From now, use yer shiny passcode to enter ye ship.',
-            'noChangeThenReset' => 'If ye did nay change yer passcode, change it as soon as possible using th\' following coordinate and token.',
+            'noChangeThenReset' => 'If ye did nay change yer passcode, change it as soon as possible using th\' following coordinate n\' token.',
             'orContact' => 'Or [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy issue.',
             'noChangeThenContact' => 'If ye received dis message but have nay change yer passcode, [contact](:contact) th\' :contact crew as soon as possible \'bout dis piracy issue.',
         ]

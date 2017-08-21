@@ -2,12 +2,12 @@
 
 namespace App\Mail;
 
+use App\Facades\LangManager;
 use App\Utils\EmailRecipient;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\App;
 
 abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
 
@@ -48,12 +48,11 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
      * @return Mailable
      */
     public function build() {
-        // TODO: Get the user's locale here!
-        $locale = 'pirate';
+        // Get the user's locale
+        $locale = LangManager::getUserLocaleSafe($this->recipient->getUser());
 
-        // Set the locale for the mail
-        /** @noinspection PhpUndefinedMethodInspection */
-        App::setLocale($locale);
+        // Set the locale
+        LangManager::setLocale($locale, false, false);
 
         // Build the mailable
         return $this

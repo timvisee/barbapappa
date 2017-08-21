@@ -66,6 +66,15 @@ return [
 
     'timezone' => 'UTC',
 
+    /**
+     * Available locales.
+     */
+    'locales' => [
+        'en',
+        'nl',
+        'pirate'
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration
@@ -77,7 +86,7 @@ return [
     |
     */
 
-    'locale' => 'pirate',
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------

@@ -8,6 +8,10 @@
 
     <table>
         <tr>
+            <td>Locale:</td>
+            <td>{{ (langManager()->hasSelectedLocale() ? 'yes' : 'no') }}</td>
+        </tr>
+        <tr>
             <td>Auth:</td>
             <td>{{ $auth }}</td>
         </tr>

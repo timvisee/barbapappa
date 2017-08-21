@@ -11,9 +11,9 @@ if(!function_exists('barauth')) {
 }
 
 // Build the lang function
-if(!function_exists('lang')) {
-    function lang() {
-        return app('lang');
+if(!function_exists('langManager')) {
+    function langManager() {
+        return app('langManager');
     }
 }
 

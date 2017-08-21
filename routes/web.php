@@ -17,6 +17,7 @@ Route::get('/about', 'PagesController@about')->name('about');
 Route::get('/contact', 'PagesController@contact')->name('contact');
 Route::get('/terms', 'PagesController@terms')->name('terms');
 Route::get('/privacy', 'PagesController@privacy')->name('privacy');
+Route::get('/language/{locale?}', 'PagesController@language')->name('language');
 
 // Dashboard route
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

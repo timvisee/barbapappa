@@ -21,11 +21,13 @@ use Illuminate\Support\Facades\Hash;
  * User factory.
  */
 $factory->define(User::class, function(Faker\Generator $faker) {
-    static $password;
+    // Get a random locale
+    $locale = config('app.locales')[array_rand(config('app.locales'))];
 
     return [
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
+        'locale' => rand(0, 1) == 0 ? $locale : null,
         'password' => Hash::make('secret'),
     ];
 });

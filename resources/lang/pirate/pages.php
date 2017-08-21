@@ -13,7 +13,7 @@ return [
     'editProfile' => 'Edit manifest',
     'requestPasswordReset' => 'Request passcode reset',
     'changePassword' => 'Change passcode',
-    'changePasswordDescription' => 'First enter yer ol\' and passcode. Den enter ye shiny, fresh and new passcode to take abroad.',
+    'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny, fresh n\' new passcode to take abroad.',
     'about' => '\'bout',
     'terms' => 'Terms',
     'privacy' => 'Piracy',
@@ -31,7 +31,7 @@ return [
      */
     'passwordRequestSent' => [
         'title' => 'Check for bottle messages',
-        'message' => 'If yer e-bottle coordinate ye\'ve entered be known by our captain, our jolly crew will send ye a map to reset yer passcode.<br><br>'
+        'message' => 'If yer e-bottle coordinate ye entered be known by our captain, our jolly crew will send ye a map to reset yer passcode.<br><br>'
             . 'Please note that if we\'ve send a map, it\'s only valid for <b>:hours turns o\'the hourglass</b>.<br><br>'
             . 'Ye may burn dis parchment now.',
     ],
@@ -41,7 +41,7 @@ return [
      */
     'passwordReset' => [
         'enterResetToken' => 'Enter th\' passcode reset token. '
-            . 'Th\' token can be discovered in th\' e-bottle message you\'ve received with passcode reset map.',
+            . 'Th\' token be discovered in th\' e-bottle message yer received with th\' passcode reset map.',
         'enterNewPassword' => 'Enter th\' shiny passcode ye\'d like to take aboard.',
     ],
 ];

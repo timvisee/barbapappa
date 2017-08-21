@@ -170,6 +170,9 @@ class Authenticator {
         $session->expire_at = $expire;
         $session->save();
 
+        // Select the user's locale
+        langManager()->useUserLocale($user);
+
         // We're authenticated now, return the state
         return self::finalizeResult(
             AuthResult::OK,

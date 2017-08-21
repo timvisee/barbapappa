@@ -1,18 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Schema;
 
-class UserAddFullName extends Migration
-{
+class UserAddFullName extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::table('users', function($table) {
             // Add the name fields
             $table->string('first_name');
@@ -28,8 +26,7 @@ class UserAddFullName extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::table('users', function($table) {
             // Drop the name fields
             $table->dropColumn('first_name');

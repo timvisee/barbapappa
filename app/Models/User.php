@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
  * @property string first_name
  * @property string last_name
  * @property-read string name
+ * @property string|null locale
  * @property Carbon created_at
  * @property Carbon updated_at
  * @property-read string email

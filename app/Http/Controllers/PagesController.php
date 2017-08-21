@@ -57,4 +57,31 @@ class PagesController extends Controller {
     public function privacy() {
         return view('pages.privacy');
     }
+
+    /**
+     * Language selection page.
+     *
+     * @param string|null $locale The selected locale.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function language($locale = null) {
+        // TODO: Redirect to the page we were going to!
+
+        // Get the language manager
+        $langManager = langManager();
+
+        // Set the locale if valid
+        // TODO: Show an error instead if the locale is invalid
+        if(!empty($locale) && $langManager->isValidLocale($locale)) {
+            // Set the locale
+            $langManager->setLocale($locale, true, true);
+
+            // Redirect to the dashboard
+            return redirect()->route('dashboard');
+        }
+
+        // Show the languages page
+        return view('pages.language');
+    }
 }

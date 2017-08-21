@@ -36,6 +36,7 @@ class RegisterController extends Controller {
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->password = Hash::make($request->input('password'));
+        $user->locale = langManager()->getLocale(null);
         $user->save();
 
         // Create the email address
