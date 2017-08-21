@@ -4,7 +4,7 @@
  * Miscellaneous translations.
  */
 return [
-    'link' => 'Link',
+    'link' => 'Coordinate',
     'token' => 'Token',
     'saveChanges' => 'Stow changes',
 ];

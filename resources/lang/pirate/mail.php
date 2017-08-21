@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Blimey!|Sail ho!',
-        'name' => 'Th\' :app team',
+        'name' => 'Th\' :app crew',
     ],
 
     /**
@@ -18,29 +18,29 @@ return [
          * Email verification email.
          */
         'verify' => [
-            'subject' => 'Email verification',
-            'subjectRegistered' => 'Registration & email verification',
-            'subtitle' => 'You\'re about to verify your email address.',
-            'subtitleRegistered' => 'Your account be almost ready.',
-            'registered' => 'Thank you for registering an account.',
-            'addNewEmail' => 'You\'ve just added a new email address to your account.',
-            'verifyBeforeUseAccount' => 'Before you can use our service, you need to verify your email address.',
-            'verifyBeforeUseEmail' => 'Before you can use it on our service, you need to verify it.',
-            'soon' => 'Please do this as soon as possible as the verification link expires **within :hours hours**.',
-            'clickButtonToVerify' => 'Please click the following button to verify your email address.',
-            'verifyButton' => 'Verify your email address',
-            'manual' => 'If the above button doesn\'t work, you may use the following link and token to verify your email address manually.',
+            'subject' => 'E-bottle check',
+            'subjectRegistered' => 'New ship & e-bottle check',
+            'subtitle' => 'You be \'bout to check yer e-bottle address',
+            'subtitleRegistered' => 'Yer ship be almost sailable.',
+            'registered' => 'Thank ye for entering a new ship.',
+            'addNewEmail' => 'Ye just entered a new e-bottle address to yer ship.',
+            'verifyBeforeUseAccount' => 'Before ye use our service, be need to verify ye e-bottle address.',
+            'verifyBeforeUseEmail' => 'Before ye can use it on our service, be need to verify it.',
+            'soon' => 'Please do dis as soon as possible, th\' verification link sinks **within :hours turns o\'the hourglass**.',
+            'clickButtonToVerify' => 'Please click th\' following button be verify yer e-bottle address.',
+            'verifyButton' => 'Verify yer e-bottle address',
+            'manual' => 'If th\' above button doesn\'t work, ye may use the following coordinate \'nd token to verify yer e-bottle address by hand.',
         ],
 
         /**
          * Email verified email.
          */
         'verified' => [
-            'subject' => 'Start using :app',
-            'subtitle' => 'First of all, welcome to the club!',
-            'accountReady' => 'Your email address has just been verified and your account be now ready.',
-            'startUsingSeeDashboard' => 'To start using :app, take a look at your personalized dashboard.',
-            'configureEmailPreferences' => 'To configure how often you receive email updates from :app, check out your email preferences panel.',
+            'subject' => 'Sail wit :app',
+            'subtitle' => 'First, sail ho to th\' crew!',
+            'accountReady' => 'Yer e-bottle coordinate has just be verified and yer ship be now to sail.',
+            'startUsingSeeDashboard' => 'To sail wit :app, navigate to yer pirate dashboard.',
+            'configureEmailPreferences' => 'To mend th\' sails \'bout how often ye receive e-bottle parchments from :app, navigate to yer e-bottle preferences panel.',
         ]
     ],
 
@@ -53,28 +53,28 @@ return [
          * Password request email.
          */
         'request' => [
-            'subject' => 'Password reset request',
-            'subtitle' => 'We\'ll help you to configure a new password.',
-            'requestedReset' => 'You\'ve just requested to reset your password.',
-            'visitResetPage' => 'Simply visit the password reset page and enter your preferred password.',
-            'soon' => 'Please do this as soon as possible as the reset link expires **within :hours hours**.',
-            'clickButtonToReset' => 'Please click the following button to reset your password.',
-            'resetButton' => 'Reset your password',
-            'manual' => 'If the above button doesn\'t work, you may use the following link and token to reset your password manually.',
-            'notRequested' => 'If you haven\'t requested a password reset, you may ignore this email message.',
+            'subject' => 'Passcode reset request',
+            'subtitle' => 'We\'ll help ye to mend th\' sails for a shiny passcode.',
+            'requestedReset' => 'Ye just requested yer shiny passcode.',
+            'visitResetPage' => 'Navigate to th\' passcode reset parchment \'nd enter yer shiny passcode.',
+            'soon' => 'Do dis as soon as possible. Th\' reset coordinate sinks **within :hours turns o\'the hourglass**.',
+            'clickButtonToReset' => 'Navigate to th\' following button to reset yer passcode.',
+            'resetButton' => 'Reset yer passcode',
+            'manual' => 'If th\' above button doesn\'t work, ye may use be following coordinate and token to reset yer passcode by hand.',
+            'notRequested' => 'If ye have nay requested a shiny passcode, ye may ignore dis e-bottle message.',
         ],
 
         /**
          * Password reset email.
          */
         'reset' => [
-            'subject' => 'Password changed',
-            'subtitle' => 'Your password has been changed.',
-            'forSecurity' => 'We\'re just notifying you for security reasons.',
-            'useNewPassword' => 'From now on, use your new password to login to your account.',
-            'noChangeThenReset' => 'If you didn\'t change your password yourself, please change it as soon as possible using the following link and token.',
-            'orContact' => 'Or [contact](:contact) the :app team as soon as possible about this security issue.',
-            'noChangeThenContact' => 'If you received this message but haven\'t changed your password, please [contact](:contact) the :contact team as soon as possible.',
+            'subject' => 'Passcode mend th\' sails',
+            'subtitle' => 'Yer passcode be changed.',
+            'forSecurity' => 'Our jolly crew notified ye for piracy reasons.',
+            'useNewPassword' => 'From now, use yer shiny passcode to enter ye ship.',
+            'noChangeThenReset' => 'If ye did nay change yer passcode, change it as soon as possible using th\' following coordinate and token.',
+            'orContact' => 'Or [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy issue.',
+            'noChangeThenContact' => 'If ye received dis message but have nay change yer passcode, [contact](:contact) th\' :contact crew as soon as possible \'bout dis piracy issue.',
         ]
     ],
 ];

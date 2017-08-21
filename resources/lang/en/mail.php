@@ -72,7 +72,7 @@ return [
             'useNewPassword' => 'From now on, use your new password to login to your account.',
             'noChangeThenReset' => 'If you didn\'t change your password yourself, please change it as soon as possible using the following link and token.',
             'orContact' => 'Or [contact](:contact) the :app team as soon as possible about this security issue.',
-            'noChangeThenContact' => 'If you received this message but haven\'t changed your password, please [contact](:contact) the :contact team as soon as possible.',
+            'noChangeThenContact' => 'If you received this message but haven\'t changed your password, please [contact](:contact) the :contact team as soon as possible about this security issue.',
         ]
     ],
 ];

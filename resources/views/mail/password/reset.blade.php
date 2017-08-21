@@ -1,3 +1,5 @@
+@include('mail.inc.fixLocale')
+
 @component('mail::message', [
     'recipient' => $recipient,
     'subject' => $subject,

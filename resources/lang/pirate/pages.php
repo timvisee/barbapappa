@@ -6,18 +6,18 @@
 return [
     'dashboard' => 'Home port',
     'yourPersonalDashboard' => 'Ye home port',
-    'emailPreferences' => 'E-bottle message preferences',
+    'emailPreferences' => 'E-bottle preferences',
     'account' => 'Ye ship',
     'yourAccount' => 'Ye ship',
     'profile' => 'Manifest',
     'editProfile' => 'Edit manifest',
     'requestPasswordReset' => 'Request passcode reset',
     'changePassword' => 'Change passcode',
-    'changePasswordDescription' => 'Enter yer shiny passcode below to take aboard.',
+    'changePasswordDescription' => 'First enter yer ol\' and passcode. Den enter ye shiny, fresh and new passcode to take abroad.',
     'about' => '\'bout',
     'terms' => 'Terms',
     'privacy' => 'Piracy',
-    'contact' => 'Cap\'n',
+    'contact' => 'Contact',
 
     /**
      * Account page.
@@ -31,9 +31,9 @@ return [
      */
     'passwordRequestSent' => [
         'title' => 'Check for bottle messages',
-        'message' => 'If yer e-bottle address ye\'ve entered be known by our captain, we\'ll send ye a map to reset yer passcode.<br><br>'
-            . 'Please note that if we\'ve send a map, it\'s only valid for <b>:hours hours</b>.<br><br>'
-            . 'Ye may burn this message now.',
+        'message' => 'If yer e-bottle coordinate ye\'ve entered be known by our captain, our jolly crew will send ye a map to reset yer passcode.<br><br>'
+            . 'Please note that if we\'ve send a map, it\'s only valid for <b>:hours turns o\'the hourglass</b>.<br><br>'
+            . 'Ye may burn dis parchment now.',
     ],
 
     /**

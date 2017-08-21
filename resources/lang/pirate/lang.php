@@ -5,6 +5,6 @@
  */
 return [
     'name' => 'Pirate Speak',
-    'choose' => 'Choose a speak',
+    'choose' => 'Choose yer speak',
     'visit' => 'Visit in Pirate Speak',
 ];

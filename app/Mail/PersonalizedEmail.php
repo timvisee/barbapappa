@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\App;
 
 abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
 
@@ -48,17 +49,18 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
      */
     public function build() {
         // TODO: Get the user's locale here!
-//        $locale = 'en';
-//
-//        // Set the locale for the mail
-//        /** @noinspection PhpUndefinedMethodInspection */
-//        App::setLocale($locale);
+        $locale = 'pirate';
+
+        // Set the locale for the mail
+        /** @noinspection PhpUndefinedMethodInspection */
+        App::setLocale($locale);
 
         // Build the mailable
         return $this
             ->to($this->recipient)
             ->subject($this->subject)
-            ->onQueue($this->getWorkerQueue());
+            ->onQueue($this->getWorkerQueue())
+            ->with('locale', $locale);
     }
 
     /**
