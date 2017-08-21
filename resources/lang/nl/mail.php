@@ -68,11 +68,11 @@ return [
         'reset' => [
             'subject' => 'Wachtwoord aangepast',
             'subtitle' => 'Je wachtwoord is aangepast.',
-            'forSecurity' => 'We informeren je even voor veiligheidsredenen.',
+            'forSecurity' => 'We informeren je even wegens veiligheidsredenen.',
             'useNewPassword' => 'Vanaf nu kun je je nieuwe wachtwoord gebruiken om in te loggen.',
             'noChangeThenReset' => 'Als je je wachtwoord niet zelf hebt aangepast, verander het alstublieft zo snel mogelijk met behulp van de volgende link en token.',
-            'orContact' => 'Of neem zo snel mogelijk [contact op](:contact) met het :app team wegens dit mogelijke veiligheidsincident.',
-            'noChangeThenContact' => 'Als je dit bericht ontvangen hebt maar niet je wachtwoord hebt aangepast, neem zo snel mogelijk [contact op](:contact) met het :contact team wegens dit mogelijke veiligheidsincident.',
+            'orContact' => 'Of neem zo snel mogelijk [contact](:contact) op met het :app team wegens dit mogelijke veiligheidsincident.',
+            'noChangeThenContact' => 'Als je dit bericht ontvangen hebt maar niet je wachtwoord hebt aangepast, neem zo snel mogelijk [contact](:contact) op met het :contact team wegens dit mogelijke veiligheidsincident.',
         ]
     ],
 ];

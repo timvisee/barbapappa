@@ -52,7 +52,7 @@ return [
          */
         'request' => [
             'subject' => 'Password reset request',
-            'subtitle' => 'We\'ll help you configuring a new password.',
+            'subtitle' => 'We\'ll help you to configure a new password.',
             'requestedReset' => 'You\'ve just requested to reset your password.',
             'visitResetPage' => 'Simply visit the password reset page and enter your preferred password.',
             'soon' => 'Please do this as soon as possible as the reset link expires **within :hours hours**.',

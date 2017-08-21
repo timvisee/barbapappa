@@ -20,6 +20,11 @@ class Request extends PersonalizedEmail {
     const VIEW = 'mail.password.request';
 
     /**
+     * The worker queue to put this mailable on.
+     */
+    const QUEUE = 'high';
+
+    /**
      * Password reset token.
      * @var string
      */
@@ -45,5 +50,13 @@ class Request extends PersonalizedEmail {
      */
     public function build() {
         return parent::build()->markdown(self::VIEW);
+    }
+
+    /**
+     * Get the worker queue to put this mailable on.
+     * @return string
+     */
+    protected function getWorkerQueue() {
+        return self::QUEUE;
     }
 }

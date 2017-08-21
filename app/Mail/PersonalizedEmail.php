@@ -4,12 +4,18 @@ namespace App\Mail;
 
 use App\Utils\EmailRecipient;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-abstract class PersonalizedEmail extends Mailable {
+abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
 
     use Queueable, SerializesModels;
+
+    /**
+     * The default queue to put this mailable on.
+     */
+    const QUEUE_DEFAULT = 'normal';
 
     /**
      * The recipient that will receive the email.
@@ -18,22 +24,10 @@ abstract class PersonalizedEmail extends Mailable {
     public $recipient;
 
     /**
-     * The subject key of the message.
-     * @var string|null
+     * The subject of the message.
+     * @var string
      */
     public $subject = null;
-
-    /**
-     * The subject language key.
-     * @var string|null
-     */
-    private $subjectKey = null;
-
-    /**
-     * The subject language key replacements.
-     * @var array
-     */
-    private $subjectKeyReplace = [];
 
     /**
      * Constructor.
@@ -44,8 +38,7 @@ abstract class PersonalizedEmail extends Mailable {
      */
     public function __construct(EmailRecipient $recipient, $subjectKey, array $replace = []) {
         $this->recipient = $recipient;
-        $this->subjectKey = $subjectKey;
-        $this->subjectKeyReplace = $replace;
+        $this->subject = trans($subjectKey, $replace);
     }
 
     /**
@@ -54,13 +47,26 @@ abstract class PersonalizedEmail extends Mailable {
      * @return Mailable
      */
     public function build() {
-        // Define the subject
-        if(empty($this->subject) && !empty($this->subjectKey))
-            $this->subject = __($this->subjectKey, $this->subjectKeyReplace);
+        // TODO: Get the user's locale here!
+//        $locale = 'en';
+//
+//        // Set the locale for the mail
+//        /** @noinspection PhpUndefinedMethodInspection */
+//        App::setLocale($locale);
 
         // Build the mailable
         return $this
             ->to($this->recipient)
-            ->subject($this->subject);
+            ->subject($this->subject)
+            ->onQueue($this->getWorkerQueue());
+    }
+
+    /**
+     * Get the worker queue to put this mailable on.
+     *
+     * @return string|null The name of the queue, or null for default.
+     */
+    protected function getWorkerQueue() {
+        return self::QUEUE_DEFAULT;
     }
 }

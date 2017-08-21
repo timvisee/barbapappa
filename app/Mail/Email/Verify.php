@@ -30,6 +30,11 @@ class Verify extends PersonalizedEmail {
     const VIEW = 'mail.email.verify';
 
     /**
+     * The worker queue to put this mailable on.
+     */
+    const QUEUE = 'high';
+
+    /**
      * Defines whether the user has just registered.
      *
      * @var bool True if just registered, false if not.
@@ -69,5 +74,13 @@ class Verify extends PersonalizedEmail {
         return parent::build()->markdown(
             $this->justRegistered ? self::VIEW_REGISTERED : self::VIEW
         );
+    }
+
+    /**
+     * Get the worker queue to put this mailable on.
+     * @return string
+     */
+    protected function getWorkerQueue() {
+        return self::QUEUE;
     }
 }
