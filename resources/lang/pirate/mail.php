@@ -69,7 +69,6 @@ return [
          */
         'reset' => [
             'subject' => 'Yer passcode mend th\' sails',
-            'subtitle' => 'Yer passcode be changed.',
             'forSecurity' => 'Our jolly crew notified ye for piracy reasons.',
             'useNewPassword' => 'From now, use yer shiny passcode to enter ye ship.',
             'noChangeThenReset' => 'If ye did nay change yer passcode, change it as soon as possible using th\' following coordinate n\' token.',

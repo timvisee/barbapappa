@@ -52,6 +52,9 @@ class ProfileController extends Controller {
 
         // TODO: Make sure the current user has permission to edit the given user
 
+        // Determine whether an other user is being updated
+        $isOther = $user->id != barauth()->getSessionUser()->id;
+
         // Validate
         $this->validate($request, [
             'first_name' => 'required|string|min:2|max:255',
@@ -79,6 +82,9 @@ class ProfileController extends Controller {
         // Redirect the user to the account overview page
         return redirect()
             ->route('account.show', ['userId' => $user->id])
-            ->with('success', 'Your/the profile has been updated.');
+            ->with('success', $isOther
+                ? __('pages.editProfile.updated')
+                : __('pages.editProfile.otherUpdated')
+            );
     }
 }

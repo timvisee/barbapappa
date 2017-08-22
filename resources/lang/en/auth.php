@@ -10,6 +10,20 @@ return [
     'register' => 'Register',
     'forgotPassword' => 'Forgot your password?',
 
+    /**
+     * Authentication related messages.
+     */
+    'authRequired' => 'You must be logged in to view this page.',
+    'guestRequired' => 'You can\'t visit this page while you\'re logged in.',
+    'unauthorized' => 'You are unauthorized to view this page.',
+    'passwordChanged' => 'Your password has been changed.',
+    'currentPasswordInvalid' => 'Your current password is invalid.',
+    'invalidCredentials' => 'Invalid email address or password.',
+
+    'loggedIn' => 'You\'ve been logged in.',
+    'registeredAndLoggedIn' => 'Account registered, you\'ve been logged in.',
+    'loggedOut' => 'You\'ve been logged out.',
+
     /*
     | TODO: Are these properties still required?
     |

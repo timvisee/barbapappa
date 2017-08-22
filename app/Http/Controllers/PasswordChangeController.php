@@ -31,15 +31,13 @@ class PasswordChangeController extends Controller {
         // Get the user and session
         $user = barauth()->getSessionUser();
         if($user == null)
-            // TODO: Report an error here!
             throw new \Exception('Failed to change password, unable to get session user');
 
         // The current password must be valid
         if(!$user->checkPassword($request->input('password'), false))
-            // TODO: Show some error message
             return redirect()
-                ->route('password.change')
-                ->with('error', 'Your current password is invalid.');
+                ->back()
+                ->with('error', __('auth.currentPasswordInvalid'));
 
         // Change the password and invalidate user sessions of others
         $user->changePassword($request->input('new_password'), true);
@@ -48,6 +46,6 @@ class PasswordChangeController extends Controller {
         // Redirect the user to the account overview page
         return redirect()
             ->route('account')
-            ->with('success', 'Your password has been changed.');
+            ->with('success', __('auth.passwordChanged'));
     }
 }

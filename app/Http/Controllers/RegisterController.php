@@ -46,7 +46,6 @@ class RegisterController extends Controller {
         $email->save();
 
         // Make an email verification request
-        // TODO: Finish this
         EmailVerificationManager::createAndSend($email, true);
 
         // Create a user session and store the result
@@ -54,11 +53,14 @@ class RegisterController extends Controller {
         barauth()->setAuthState($authResult->getAuthState());
 
         // Show an error if session creation failed
-        if($authResult->isErr()) {
-            // TODO: Show an error here
-        }
+        if($authResult->isErr())
+            return redirect()
+                ->back()
+                ->with('error', __('general.serverError'));
 
         // Redirect the user to the dashboard
-        return redirect()->route('dashboard');
+        return redirect()
+            ->route('dashboard')
+            ->with('success', __('auth.registeredAndLoggedIn'));
     }
 }

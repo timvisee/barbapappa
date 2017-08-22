@@ -10,6 +10,20 @@ return [
     'register' => 'Registreren',
     'forgotPassword' => 'Wachtwoord vergeten?',
 
+    /**
+     * Authentication related messages.
+     */
+    'authRequired' => 'Je moet ingelogd zijn om deze pagina te bekijken.',
+    'guestRequired' => 'Je kunt deze pagina niet bekijken als je bent ingelogd.',
+    'unauthorized' => 'Je bent onbevoegd deze pagina te bekijken.',
+    'passwordChanged' => 'Je wachtwoord is aangepast.',
+    'currentPasswordInvalid' => 'Je huidige wachtwoord is incorrect.',
+    'invalidCredentials' => 'Ongeldig e-maildares of wachtwoord.',
+
+    'loggedIn' => 'Je bent ingelogd.',
+    'registeredAndLoggedIn' => 'Account aangemaakt, je bent ingelogd.',
+    'loggedOut' => 'Je bent uitgelogd.',
+
     /*
     | TODO: Are these properties still required?
     |

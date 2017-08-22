@@ -30,22 +30,33 @@ class PasswordResetController extends Controller {
             $invalidateOtherSessions
         );
 
-        // If we're ok, show the success page
-        if($result->isOk())
-            return redirect()
-                ->route('dashboard')
-                ->with('success', 'Your password has been changed.');
-
-        // TODO: Properly handle errors here!
+        // Create a proper response
+        $response = redirect();
         switch($result->getResult()) {
             case PasswordResetResult::ERR_NO_TOKEN:
-                die('No token was given');
+                return $response->back()
+                    ->with('error', __('misc.noToken'));
+
             case PasswordResetResult::ERR_INVALID_TOKEN:
-                die('Invalid token');
+                return $response->back()
+                    ->with('error', __('pages.passwordReset.invalid'));
+
             case PasswordResetResult::ERR_USED_TOKEN:
-                die('Token already used');
+                return $response->back()
+                    ->with('error', __('pages.passwordReset.used'));
+
+            case PasswordResetResult::ERR_EXPIRED_TOKEN:
+                // TODO: Show a page to request a new password reset
+                return $response->back()
+                    ->with('error', __('pages.passwordReset.expired'));
+
+            case PasswordResetResult::OK:
+                return $response->route('login')
+                    ->with('success', __('auth.passwordReset.changed'));
+
             default:
-                die('Server error');
+                return $response->back()
+                    ->with('error', __('general.serverError'));
         }
     }
 }

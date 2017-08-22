@@ -67,7 +67,6 @@ return [
          */
         'reset' => [
             'subject' => 'Wachtwoord aangepast',
-            'subtitle' => 'Je wachtwoord is aangepast.',
             'forSecurity' => 'We informeren je even wegens veiligheidsredenen.',
             'useNewPassword' => 'Vanaf nu kun je je nieuwe wachtwoord gebruiken om in te loggen.',
             'noChangeThenReset' => 'Als je je wachtwoord niet zelf hebt aangepast, verander het alsjeblieft zo snel mogelijk met behulp van de volgende link en token.',

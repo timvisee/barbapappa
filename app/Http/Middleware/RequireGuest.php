@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class RequireAuth.
@@ -27,7 +26,9 @@ class RequireGuest {
     public function handle($request, Closure $next) {
         // Redirect to the dashboard if the user is authenticated
         if(barauth()->isAuth())
-            return redirect()->route('dashboard');
+            return redirect()
+                ->route('dashboard')
+                ->with('error', __('auth.guestRequired'));
 
         return $next($request);
     }

@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * Class RequireAuth.
@@ -28,7 +27,9 @@ class RequireAuth {
         // Redirect to the login page if not authenticated
         // TODO: Add the current URL as redirect URL
         if(!barauth()->isAuth())
-            return redirect()->route('login');
+            return redirect()
+                ->route('login')
+                ->with('error', __('auth.authRequired'));
 
         return $next($request);
     }

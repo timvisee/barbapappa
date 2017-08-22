@@ -67,7 +67,6 @@ return [
          */
         'reset' => [
             'subject' => 'Password changed',
-            'subtitle' => 'Your password has been changed.',
             'forSecurity' => 'We\'re just notifying you for security reasons.',
             'useNewPassword' => 'From now on, use your new password to login to your account.',
             'noChangeThenReset' => 'If you didn\'t change your password yourself, please change it as soon as possible using the following link and token.',

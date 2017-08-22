@@ -10,6 +10,20 @@ return [
     'register' => 'New ship',
     'forgotPassword' => 'Lost yer passcode?',
 
+    /**
+     * Authentication related messages.
+     */
+    'authRequired' => 'Ye must be aboard to spot dis page.',
+    'guestRequired' => 'Ye ship must be sunk to view dis page.',
+    'unauthorized' => 'Ye be unauthorized to view dis page.',
+    'passwordChanged' => 'Yer passcode be changed.',
+    'currentPasswordInvalid' => 'Yer ol\' passcode be invalid.',
+    'invalidCredentials' => 'Invalid e-bottle coordinate or passcode.',
+
+    'loggedIn' => 'Ye be aboard.',
+    'registeredAndLoggedIn' => 'Ship created, ye be aboard now.',
+    'loggedOut' => 'Ye ship be sunk.',
+
     /*
     | TODO: Are these properties still required?
     | TODO: Translate these.

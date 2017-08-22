@@ -4,7 +4,9 @@
  * General translations.
  */
 return [
-    'link' => 'Link',
-    'token' => 'Token',
-    'saveChanges' => 'Save changes',
+    'hello' => 'Hello',
+    'hellos' => 'Hello|Hey|Hi|Howdy',
+
+    'error' => 'Error',
+    'serverError' => 'A server error occurred.',
 ];

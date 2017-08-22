@@ -33,16 +33,20 @@ class LoginController extends Controller {
         );
 
         // Show an error if the user is not authenticated
-        if($result->getResult() == AuthResult::ERR_INVALID_CREDENTIALS) {
-            die('Invalid credentials!');
-        }
+        if($result->getResult() == AuthResult::ERR_INVALID_CREDENTIALS)
+            return redirect()
+                ->back()
+                ->with('error', __('auth.invalidCredentials'));
 
         // Show an error if the user is not authenticated
-        if($result->isErr()) {
-            die('Other error occurred!');
-        }
+        if($result->isErr())
+            return redirect()
+                ->back()
+                ->with('error', __('general.serverError'));
 
         // Redirect the user to the dashboard
-        return redirect()->route('dashboard');
+        return redirect()
+            ->route('dashboard')
+            ->with('success', __('auth.loggedIn'));
     }
 }

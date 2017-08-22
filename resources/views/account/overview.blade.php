@@ -4,7 +4,7 @@
     <h1>@lang('pages.yourAccount')</h1>
     <p>@lang('pages.accountOverview.description')</p>
 
-    <h3>@lang('pages.profile')</h3>
+    <h3>@lang('pages.profile.name')</h3>
     <table>
         <tr>
             <td>@lang('account.firstName'):</td>
@@ -19,7 +19,7 @@
             <td>{{ $user->locale != null ? __('lang.name', [], $user->locale) : __('misc.unspecified') }}</td>
         </tr>
     </table>
-    <a href="{{ route('profile.edit', ['userId' => $user->id]) }}">@lang('pages.editProfile')</a><br />
+    <a href="{{ route('profile.edit', ['userId' => $user->id]) }}">@lang('pages.editProfile.name')</a><br />
     <a href="{{ route('password.change') }}">@lang('pages.changePassword')</a>
 
     <h3>@lang('account.email')</h3>

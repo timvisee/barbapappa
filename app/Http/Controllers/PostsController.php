@@ -99,7 +99,9 @@ class PostsController extends Controller
 
         // Check for correct user
         if(barauth()->getUser()->id != $post->user_id)
-            return redirect()->route('posts.index')->with('error', 'Unauthorized page');
+            return redirect()
+                ->route('posts.index')
+                ->with('error', __('auth.authRequired'));
 
         return view('model.post.edit')->with('post', $post);
     }
@@ -124,7 +126,9 @@ class PostsController extends Controller
 
         // Check for correct user
         if(auth()->user()->id != $post->user_id)
-            return redirect()->route('posts.index')->with('error', 'Unauthorized page');
+            return redirect()
+                ->route('posts.index')
+                ->with('error', __('auth.authRequired'));
 
         // Update the properties
         $post->title = $request->input('title');

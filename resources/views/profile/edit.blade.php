@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>@lang('pages.editProfile')</h1>
+    <h1>@lang('pages.editProfile.name')</h1>
 
     {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'POST']) !!}
 

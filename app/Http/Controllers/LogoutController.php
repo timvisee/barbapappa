@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\Auth\Authenticator;
-use App\Services\Auth\AuthResult;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
 class LogoutController extends Controller {
@@ -26,7 +24,7 @@ class LogoutController extends Controller {
 
         // Finish
         return $this->finishAndRedirect()
-            ->with('success', 'You have been logged out.');
+            ->with('success', __('auth.loggedOut'));
     }
 
     /**

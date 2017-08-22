@@ -49,22 +49,33 @@ class EmailVerifyController extends Controller {
         // Verify the given token
         $result = EmailVerificationManager::verifyToken($token);
 
-        // If we're ok, redirect to the dashboard
-        if($result->isOk())
-            return redirect()->route('dashboard');
-
-        // TODO: Properly handle errors here!
+        // Build the response
+        $response = redirect();
         switch($result->getResult()) {
             case EmailVerifyResult::ERR_NO_TOKEN:
-                die('No token was given');
+                return $response->back()
+                    ->with('error', __('misc.noToken'));
+
             case EmailVerifyResult::ERR_INVALID_TOKEN:
-                die('Invalid token');
+                return $response->back()
+                    ->with('error', __('pages.verifyEmail.invalid'));
+
             case EmailVerifyResult::ERR_EXPIRED_TOKEN:
-                die('Expired token');
+                // TODO: Show a page to allow requesting a new verification email.
+                return $response->back()
+                    ->with('error', __('pages.verifyEmail.expired'));
+
             case EmailVerifyResult::ERR_ALREADY_VERIFIED:
-                die('Already verified');
+                return $response->route('dashboard')
+                    ->with('success', __('pages.verifyEmail.alreadyVerified'));
+
+            case EmailVerifyResult::OK:
+                return $response->route('dashboard')
+                    ->with('success', __('pages.verifyEmail.verified'));
+
             default:
-                die('Server error');
+                return $response->back()
+                    ->with('error', __('general.serverError'));
         }
     }
 }
