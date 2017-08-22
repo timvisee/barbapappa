@@ -1,10 +1,15 @@
 <?php
 
-// Build the barauth function
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
+// Build the barauth function
 if(!function_exists('barauth')) {
+    /**
+     * Get the bar authentication manager singleton instance.
+     *
+     * @return \App\Services\BarAuthManager
+     */
     function barauth() {
         return app('barauth');
     }
@@ -12,6 +17,11 @@ if(!function_exists('barauth')) {
 
 // Build the lang function
 if(!function_exists('langManager')) {
+    /**
+     * Get the language manager service singleton instance.
+     *
+     * @return \App\Services\LanguageManagerService
+     */
     function langManager() {
         return app('langManager');
     }
@@ -19,6 +29,14 @@ if(!function_exists('langManager')) {
 
 // Build the random translation function
 if(!function_exists('trans_random')) {
+    /**
+     * Pick a random translation from the given key.
+     *
+     * @param string $key Translation key to use.
+     * @param array $replace=[] Map with elements to replace.
+     * @param string|null $locale=null Use the specified locale.
+     * @return string Random translation.
+     */
     function trans_random($key, array $replace = [], $locale = null) {
         // Get the translator
         $translator = app('translator');

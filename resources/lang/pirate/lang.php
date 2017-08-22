@@ -11,4 +11,5 @@ return [
     'visit' => 'Visit in Pirate Speak',
 
     'unknownLanguage' => 'Unknown speak',
+    'selectedLanguage' => 'Selected ye pirate speak.',
 ];

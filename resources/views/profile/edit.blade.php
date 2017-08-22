@@ -13,6 +13,19 @@
         {{ Form::text('last_name', $user->last_name) }}
         <br />
 
+        <?php
+            // Create a locales map for the selection box
+            $locales = Array(
+                '' => '- ' . __('misc.unspecified') . ' -'
+            );
+            foreach(langManager()->getLocales(true, false) as $entry)
+                $locales[$entry] = __('lang.name', [], $entry);
+        ?>
+
+        {{ Form::label('locale', __('lang.language')) }}
+        {{ Form::select('locale', $locales, $user->locale) }}
+        <br />
+
         {{ Form::hidden('_method', 'PUT') }}
 
         {{ Form::submit(__('misc.saveChanges')) }}

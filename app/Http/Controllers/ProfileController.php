@@ -58,10 +58,23 @@ class ProfileController extends Controller {
             'last_name' => 'required|string|min:2|max:255',
         ]);
 
-        // Update the properties
+        // Change the name properties
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
+
+        // Get the input locale and update it if it's valid
+        $locale = $request->input('locale');
+        if(langManager()->isValidLocale($locale))
+            $user->locale = $locale;
+        else if(empty($locale))
+            $user->locale = null;
+
+        // Save the user
         $user->save();
+
+        // Change the interface locale if the changed user is the currently logged in user
+        if(langManager()->isValidLocale($locale) && $user->id == barauth()->getSessionUser()->id)
+            langManager()->setLocale($locale, true, false);
 
         // Redirect the user to the account overview page
         return redirect()

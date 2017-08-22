@@ -80,7 +80,9 @@ class PagesController extends Controller {
             $langManager->setLocale($locale, true, true);
 
             // Redirect to the dashboard
-            return redirect()->route('dashboard');
+            return redirect()
+                ->route('dashboard')
+                ->with('success', __('lang.selectedLanguage'));
 
         } else if(!empty($locale))
             $response = $response->with('error', __('lang.unknownLanguage'));
