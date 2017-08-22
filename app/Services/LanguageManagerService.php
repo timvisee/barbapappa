@@ -244,15 +244,55 @@ class LanguageManagerService {
      * @return boolean True if the locale is valid and supported, false if not.
      */
     public function isValidLocale($locale) {
-        return $locale != null && in_array($locale, $this->getAvailableLocales());
+        return $locale != null && in_array($locale, $this->getLocales(true, true));
+    }
+
+    /**
+     * Check whether the given locale is hidden by default.
+     *
+     * @param string $locale Locale to check for.
+     *
+     * @return boolean True if the given locale is hidden, false if not.
+     */
+    public function isHiddenLocale($locale) {
+        return $locale == null || in_array($locale, config('app.hidden_locales'));
     }
 
     /**
      * Get an array of available locales.
+     * This lists only the visible locales by default.
+     *
+     * If $user is set to true, and the user currently has a hidden locale selected.
+     * That locale is included in the list too.
+     *
+     * If $hidden is set to true, all locales are returned.
+     *
+     * @param bool $user=true True to get all locales visible to the user.
+     * @param bool $hidden=false True to get all locales, including all hidden ones.
      *
      * @return array Available locale strings.
      */
-    public function getAvailableLocales() {
-        return config('app.locales');
+    public function getLocales($user = true, $hidden = false) {
+        return array_filter(config('app.locales'), function($locale) use($user, $hidden) {
+            return $hidden || ($user && $locale == $this->locale) || !$this->isHiddenLocale($locale);
+        });
+    }
+
+    /**
+     * Get the url of the flag icon asset for the given locale.
+     *
+     * If an invalid locale is given, the url for the application default locale is returned.
+     *
+     * @param string $locale Locale to get the flag for.
+     *
+     * @return string URL to the flag asset.
+     */
+    public function getLocaleFlagUrl($locale) {
+        // The locale must be valid
+        if(!$this->isValidLocale($locale))
+            $locale = $this->getDefaultLocale();
+
+        // Return the flag URL
+        return asset('/img/flag/' . $locale . '.png');
     }
 }

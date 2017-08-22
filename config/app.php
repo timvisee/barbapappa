@@ -68,11 +68,19 @@ return [
 
     /**
      * Available locales.
+     * This should also include the hidden locales.
      */
     'locales' => [
         'en',
         'nl',
-        'pirate'
+        'pirate',
+    ],
+
+    /**
+     * The locales that are hidden by default.
+     */
+    'hidden_locales' => [
+        'pirate',
     ],
 
     /*

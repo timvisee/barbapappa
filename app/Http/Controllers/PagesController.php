@@ -71,17 +71,21 @@ class PagesController extends Controller {
         // Get the language manager
         $langManager = langManager();
 
+        // Create the response
+        $response = view('pages.language');
+
         // Set the locale if valid
-        // TODO: Show an error instead if the locale is invalid
-        if(!empty($locale) && $langManager->isValidLocale($locale)) {
+        if($langManager->isValidLocale($locale)) {
             // Set the locale
             $langManager->setLocale($locale, true, true);
 
             // Redirect to the dashboard
             return redirect()->route('dashboard');
-        }
 
-        // Show the languages page
-        return view('pages.language');
+        } else if(!empty($locale))
+            $response = $response->with('error', __('lang.unknownLanguage'));
+
+        // Respond
+        return $response;
     }
 }
