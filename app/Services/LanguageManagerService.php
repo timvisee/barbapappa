@@ -41,8 +41,6 @@ class LanguageManagerService {
 
         // Use the locale from the session
         $this->useSessionLocale();
-
-        // TODO: Figure out the current language of the user
     }
 
     /**
@@ -51,17 +49,43 @@ class LanguageManagerService {
      * If no locale was selected, nothing will happen.
      */
     public function useSessionLocale() {
-        // Check whether a locale cookie exists
-        if(!Cookie::has(self::LOCALE_COOKIE))
-            return;
+        // Get the session locale, and set it
+        $locale = $this->getSessionLocale(null);
+        if($locale != null)
+            $this->setLocale($locale, false, false);
+    }
 
-        // Get the selected locale
+    /**
+     * Get the locale selected in this session.
+     * If no locale was selected, the given default is returned.
+     *
+     * @param string|null $default=null The default to return.
+     * @return string|null The locale or null if not selected.
+     */
+    public function getSessionLocale($default = null) {
+        // Return the default if no cookie is set
+        if(!Cookie::has(self::LOCALE_COOKIE))
+            return $default;
+
+        // Get the locale
         $locale = Cookie::get(self::LOCALE_COOKIE);
 
-        // Set the locale, safely
-        try {
-            $this->setLocale($locale, false, false);
-        } catch (\Exception $e) {}
+        // Return it if valid
+        return $this->isValidLocale($locale) ? $locale : (
+            $this->isValidLocale($default) ? $default : null
+        );
+    }
+
+    /**
+     * Get the locale selected in this session.
+     * If no locale was selected, the application default locale is returned.
+     *
+     * This method is safe because it always returns any locale.
+     *
+     * @return string The locale.
+     */
+    public function getSessionLocaleSafe() {
+        return $this->getSessionLocale($this->getDefaultLocale());
     }
 
     /**
@@ -88,19 +112,32 @@ class LanguageManagerService {
 
     /**
      * Get the locale selected by the given user.
+     * If the user doesn't have a locale selected, the given default is returned.
      *
      * @param User $user User to get the locale for.
-     * @param string|null $default Default locale value, returned when the user doesn't have a locale selected.
+     * @param string|null $default=null The default locale returned if no locale was selected.
      *
-     * @return string|null The locale.
+     * @return string|null The locale or null.
      */
     public function getUserLocale(User $user, $default = null) {
-        return $user != null ? ($user->locale ?: $default) : null;
+        // Validate the default value
+        if(!$this->isValidLocale($default))
+            $default = null;
+
+        // The user must be valid
+        if($user == null)
+            return $default;
+
+        // Get the locale, return it if valid
+        $locale = $user->locale;
+        return $this->isValidLocale($locale) ? $locale : $default;
     }
 
     /**
      * Get the locale selected by the given user.
-     * If the user doesn't have a selected locale, the default application locale is returned.
+     * If the user doesn't have a locale selected the application default is returned.
+     *
+     * This method is safe because a locale is always returned.
      *
      * @param User $user User to get the locale for.
      *
@@ -115,26 +152,29 @@ class LanguageManagerService {
 
     /**
      * Get the currently selected locale.
+     * If no locale is currently selected, the given default is returned.
      *
-     * @param string|null $default=null The default locale to return if none is selected.
+     * @param string|null $default=null The default locale to return if nothing is selected.
      *
-     * @return string|null The locale.
+     * @return string|null The locale or null.
      */
     public function getLocale($default = null) {
-        return $this->locale ?: $default;
+        // Return the valid locale
+        return $this->isValidLocale($this->locale) ? $this->locale : (
+            $this->isValidLocale($default) ? $default : null
+        );
     }
 
     /**
      * Get the currently selected locale.
+     * If no locale is currently selected, the application default is returned.
      *
-     * The default application locale is returned if no locale was selected.
+     * This method is safe because a locale is always returned.
      *
      * @return string The locale.
      */
     public function getLocaleSafe() {
-        return $this->getLocale(
-            $this->getDefaultLocale()
-        );
+        return $this->getLocale($this->getDefaultLocale());
     }
 
     /**
@@ -204,7 +244,7 @@ class LanguageManagerService {
      * @return boolean True if the locale is valid and supported, false if not.
      */
     public function isValidLocale($locale) {
-        return in_array($locale, $this->getAvailableLocales());
+        return $locale != null && in_array($locale, $this->getAvailableLocales());
     }
 
     /**

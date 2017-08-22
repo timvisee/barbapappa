@@ -23,7 +23,7 @@ return [
      * Account page.
      */
     'accountOverview' => [
-        'description' => 'This page shows an overview of your account.',
+        'description' => 'Deze pagina laat een overzicht van je account zien.',
     ],
 
     /**
