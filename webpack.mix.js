@@ -11,21 +11,32 @@ let mix = require('laravel-mix');
  |
  */
 
+/**
+ * Copy static assets.
+ */
+mix.copyDirectory(
+    'resources/assets/img',
+    'public/img'
+);
+
+/**
+ * Compile the application assets.
+ */
 mix.js('resources/assets/js/app.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
 
 /**
  * Package jQuery and jQuery mobile resources.
  */
-mix.scripts([ 'resources/assets/libs/jquery/jquery-2.1.4.js',
+mix.scripts([ 'resources/assets/vendor/jquery/jquery-2.1.4.js',
     'resources/assets/js/jquery.mobile.settings.js',
-    'resources/assets/libs/jquery-mobile/jquery.mobile-1.4.5.js'
+    'resources/assets/vendor/jquery-mobile/jquery.mobile-1.4.5.js'
 ], 'public/js/jquery-packed.js');
 mix.styles([
-    'resources/assets/libs/jquery-mobile/jquery.mobile-1.4.5.css'
+    'resources/assets/vendor/jquery-mobile/jquery.mobile-1.4.5.css'
 ], 'public/css/jquery-mobile.css');
 mix.copyDirectory(
-    'resources/assets/libs/jquery-mobile/images',
+    'resources/assets/vendor/jquery-mobile/images',
     'public/css/images'
 );
 
@@ -33,14 +44,14 @@ mix.copyDirectory(
  * Package Glyphicons resources.
  */
 mix.copyDirectory(
-    'resources/assets/libs/glyphicons/fonts',
+    'resources/assets/vendor/glyphicons/fonts',
     'public/fonts'
 );
 mix.copyDirectory(
-    'resources/assets/libs/glyphicons-halflings/fonts',
+    'resources/assets/vendor/glyphicons-halflings/fonts',
     'public/fonts'
 );
 mix.styles([
-    'resources/assets/libs/glyphicons/css/glyphicons.css',
-    'resources/assets/libs/glyphicons-halflings/css/glyphicons-halflings.css'
+    'resources/assets/vendor/glyphicons/css/glyphicons.css',
+    'resources/assets/vendor/glyphicons-halflings/css/glyphicons-halflings.css'
 ], 'public/css/glyphicons-packed.css');
