@@ -1,53 +1,16 @@
-<nav class="navbar navbar-default navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
+{{-- Optional header style: border-top: none; border-bottom: 1px solid #CCCCCC; --}}
 
-            <!-- Collapsed Hamburger -->
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+<div id="header" data-role="header">
 
-            <!-- Branding Image -->
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'BARbapAPPa') }}
-            </a>
-        </div>
+    <a id="sidebar-toggle" href="#sidebar-panel" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-bars">MENU</a>
 
-        <div class="collapse navbar-collapse" id="app-navbar-collapse">
-            <!-- Left Side Of Navbar -->
-            <ul class="nav navbar-nav">
-                &nbsp;
-            </ul>
+    {{--<a href="" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-delete" data-rel="back">CLOSE</a>--}}
 
-            <!-- Right Side Of Navbar -->
-            <ul class="nav navbar-nav navbar-right">
-                <!-- Authentication Links -->
-                @if(!barauth()->isAuth())
-                    <li><a href="{{ route('login') }}">@lang('auth.login')</a></li>
-                    <li><a href="{{ route('register') }}">@lang('auth.register')</a></li>
-                @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            {{ barauth()->getSessionUser()->first_name }} <span class="caret"></span>
-                        </a>
+    <h1>
+        <a href="{{ route('index') }}" data-ajax="false" title="Refresh app">
+            {{-- TODO: Use a properly sized image here --}}
+            <img src="{{ asset('img/logo/logo_header_big.png') }}" style="height: 21px;" />
+        </a>
+    </h1>
 
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="{{ route('dashboard') }}">@lang('pages.dashboard')</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('account') }}">@lang('pages.account')</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('logout') }}">@lang('auth.logout')</a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
-            </ul>
-        </div>
-    </div>
-</nav>
+</div>

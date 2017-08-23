@@ -10,4 +10,5 @@ return [
     'noToken' => 'No token specified.',
     'saveChanges' => 'Save changes',
     'unspecified' => 'Unspecified',
+    'information' => 'Information'
 ];

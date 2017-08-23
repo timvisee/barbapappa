@@ -4,6 +4,7 @@
  * Pages and their names.
  */
 return [
+    'pages' => 'Parchments',
     'dashboard' => 'Home port',
     'yourPersonalDashboard' => 'Ye home port',
     'emailPreferences' => 'E-bottle preferences',

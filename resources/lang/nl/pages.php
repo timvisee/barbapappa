@@ -4,6 +4,7 @@
  * Pages and their names.
  */
 return [
+    'pages' => 'Pagina\'s',
     'dashboard' => 'Dashboard',
     'yourPersonalDashboard' => 'Je persoonlijke dashboard',
     'emailPreferences' => 'E-mailvoorkeuren',

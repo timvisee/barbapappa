@@ -4,6 +4,7 @@
  * Pages and their names.
  */
 return [
+    'pages' => 'Pages',
     'dashboard' => 'Dashboard',
     'yourPersonalDashboard' => 'Your personal dashboard',
     'emailPreferences' => 'Email preferences',

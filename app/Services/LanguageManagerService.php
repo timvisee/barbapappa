@@ -281,16 +281,16 @@ class LanguageManagerService {
     /**
      * Get the url of the flag icon asset for the given locale.
      *
-     * If an invalid locale is given, the url for the application default locale is returned.
+     * If an invalid locale is given, the url for the current or application default locale is returned.
      *
-     * @param string $locale Locale to get the flag for.
+     * @param string $locale=null Locale to get the flag for. Null to use the current locale.
      *
      * @return string URL to the flag asset.
      */
-    public function getLocaleFlagUrl($locale) {
+    public function getLocaleFlagUrl($locale = null) {
         // The locale must be valid
-        if(!$this->isValidLocale($locale))
-            $locale = $this->getDefaultLocale();
+        if($locale == null || !$this->isValidLocale($locale))
+            $locale = $this->getLocaleSafe();
 
         // Return the flag URL
         return asset('/img/flag/' . $locale . '.png');
