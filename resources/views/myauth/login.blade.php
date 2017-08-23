@@ -2,23 +2,28 @@
 
 @section('content')
 
-    <h1>@lang('auth.login')</h1>
+    {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST', 'data-ajax' => 'false']) !!}
 
-    {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST']) !!}
-
-        {{ Form::label('email', __('account.email')) }}
+    <div class="ui-field-contain">
+        {{ Form::label('email', __('account.email') . ':') }}
         {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
         {{ ErrorRenderer::inline('email') }}
+    </div>
 
-        {{ Form::label('password', __('account.password')) }}
+    <div class="ui-field-contain">
+        {{ Form::label('password', __('account.password') . ':') }}
         {{ Form::password('password') }}
         {{ ErrorRenderer::inline('password') }}
+    </div>
 
-        {{ Form::submit(__('auth.login')) }}
+    <br />
+    {{ Form::submit(__('auth.login')) }}
 
-        <a href="{{ route('password.request') }}">@lang('auth.forgotPassword')</a>
-
-        <a href="{{ route('register') }}">@lang('auth.register')</a>
+    <br />
+    <div data-role="controlgroup">
+        <a href="{{ route('password.request') }}" class="ui-btn ui-btn-corner-all">@lang('auth.forgotPassword')</a>
+        <a href="{{ route('register') }}" class="ui-btn ui-btn-corner-all">@lang('auth.register')</a>
+    </div>
 
     {!! Form::close() !!}
 
