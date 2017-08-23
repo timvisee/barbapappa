@@ -45,6 +45,8 @@ return [
      */
     'verifyEmail' => [
         'title' => 'E-mailadres verifiëren',
+        'description' => 'Vul alsjeblieft de verificatie token in voor het e-mailadres dat je wilt verifiëren.<br>'
+            . 'Deze token onder in de e-mail te vinden die je hebt ontvangen met verificatie instructies.',
         'invalid' => 'Token onbekend. Misschien is het e-mailadres al geverifiëerd, of de token is verlopen.',
         'expired' => 'De token is verlopen. Vraag alsjeblieft een nieuwe verificatie e-mail aan.',
         'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',

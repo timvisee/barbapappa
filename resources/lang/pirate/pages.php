@@ -45,6 +45,8 @@ return [
      */
     'verifyEmail' => [
         'title' => 'Verify e-bottle coordinate',
+        'description' => 'Enter th\' verification token of the e-bottle coordinate ye like to verify.<br>'
+            . 'Dis token be found at th\' bottom of ye verification e-bottle message ye\'ve received in yer e-bottle-box.',
         'invalid' => 'Unknown token. Maybe th\' e-bottle coordinate be already verified, or th\' token expired.',
         'expired' => 'Th\' token be sunk. Request a shiny e-bottle verification message.',
         'alreadyVerified' => 'Th\' e-bottle coordinate be already verified.',
