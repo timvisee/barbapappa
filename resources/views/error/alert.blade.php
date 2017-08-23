@@ -1,5 +1,5 @@
 @foreach($messages as $message)
     <div class="alert alert-danger">
-        {{ $message }}
+        <span class="halflings halflings-exclamation-sign icon"></span> {{ $message }}
     </div>
 @endforeach

@@ -1,6 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/js/jquery-package.js": "/js/jquery-package.js",
-    "/css/jquery-mobile.css": "/css/jquery-mobile.css"
+    "/js/jquery-packed.js": "/js/jquery-packed.js",
+    "/css/jquery-mobile.css": "/css/jquery-mobile.css",
+    "/css/glyphicons-packed.css": "/css/glyphicons-packed.css"
 }

@@ -1,13 +1,13 @@
-{{ ErrorRenderer::alert(null, null, false) }}
+{{ ErrorRenderer::alert(null, null, true) }}
 
 @if(session('success'))
     <div class="alert alert-success">
-        {{ session('success') }}
+        <span class="halflings halflings-ok-sign icon"></span> {{ session('success') }}
     </div>
 @endif
 
 @if(session('error'))
     <div class="alert alert-danger">
-        {{ session('error') }}
+        <span class="halflings halflings-exclamation-sign icon"></span> {{ session('error') }}
     </div>
 @endif

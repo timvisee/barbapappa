@@ -27,7 +27,7 @@ class RegisterController extends Controller {
         // Validate
         $this->validate($request, [
             'first_name' => 'required|' . ValidationDefaults::FIRST_NAME,
-            'last_name' => 'required' . ValidationDefaults::LAST_NAME,
+            'last_name' => 'required|' . ValidationDefaults::LAST_NAME,
             'email' => 'required|' . ValidationDefaults::EMAIL . '|unique:emails',
             'password' => 'required|' . ValidationDefaults::PASSWORD . '|confirmed',
         ], [

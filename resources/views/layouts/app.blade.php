@@ -11,19 +11,22 @@
     <title>{{ config('app.name', 'BARbapAPPa') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/jquery-mobile.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/glyphicons-packed.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 
     <!-- Scripts -->
-    <script type="text/javascript" src="{{ asset('js/jquery-package.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery-packed.js') }}"></script>
 </head>
 <body>
-    <div id="app">
-        @include('includes.navbar')
+    <div data-role="page">
+        @include('includes.toolbar')
 
-        @include('includes.message')
+        <div data-role="main" class="ui-content">
+            @include('includes.message')
 
-        @yield('content')
+            @yield('content')
+        </div>
 
         @include('includes.sidebar')
     </div>

@@ -11,4 +11,5 @@ return [
     'saveChanges' => 'Stow changes',
     'unspecified' => 'Unspecified',
     'information' => 'Spyglasses',
+    'welcomeTo' => 'Welcome to',
 ];

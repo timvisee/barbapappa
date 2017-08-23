@@ -18,7 +18,7 @@ return [
     'unauthorized' => 'You are unauthorized to view this page.',
     'passwordChanged' => 'Your password has been changed.',
     'currentPasswordInvalid' => 'Your current password is invalid.',
-    'invalidCredentials' => 'Invalid email address or password.',
+    'invalidCredentials' => 'Incorrect email address or password.',
     'invalidPassword' => 'Incorrect password.',
     'invalidCurrentPassword' => 'Your current password is incorrect.',
     'newPasswordDifferent' => 'The new password must be different than your current password.',

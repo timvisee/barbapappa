@@ -1,0 +1,54 @@
+/**
+ * Glyphicons for use with jQuery mobile and it's default theme.
+ *
+ * This sheet has been developed by Tim Visée (https://timvisee.com).
+ * It is based off of the original Glyphicons sources,
+ * and some parts have been transcoded to suit jQuery mobile.
+ *
+ * For more information about Glyphicons, visit: https://glyphicons.com/
+ */
+
+// Defaults
+@mixin icons-base {
+  font-size:18px;
+  font-style:normal;
+  font-weight:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 21px;
+  text-align: center;
+  text-shadow: none;
+
+  // Remove the default background disk
+  background: transparent !important;
+}
+
+// Glyphicons base
+.ui-icon-glyphicons:after,
+.ui-nosvg .ui-icon-glyphicons:after {
+  @include icons-base;
+  font-family: 'Glyphicons Regular';
+}
+
+// Glyphicons halflings base
+.ui-icon-halflings:after,
+.ui-nosvg .ui-icon-halflings:after {
+  @include icons-base;
+  font-family: 'Glyphicons Halflings';
+}
+
+// Add the background disk
+.ui-icon-glyphicons.disk:after,
+.ui-icon-halflings.disk:after,
+.ui-nosvg .ui-icon-glyphicons.disk:after,
+.ui-nosvg .ui-icon-halflings.disk:after {
+  font-size:14px;
+  line-height: 22px;
+  background-color: rgba(0, 0, 0, 0.3) !important;
+  -webkit-border-radius: 1em;
+  border-radius: 1em;
+}
+
+// Import the icon mappings
+@import "glyphicons";
+@import "halflings";

@@ -18,7 +18,7 @@ return [
     'unauthorized' => 'Ye be unauthorized to view dis page.',
     'passwordChanged' => 'Yer passcode be changed.',
     'currentPasswordInvalid' => 'Yer ol\' passcode be invalid.',
-    'invalidCredentials' => 'Invalid e-bottle coordinate or passcode.',
+    'invalidCredentials' => 'Incorrect e-bottle coordinate or passcode.',
     'invalidPassword' => 'Incorrect passcode.',
     'invalidCurrentPassword' => 'Yer current passcode be incorrect.',
     'newPasswordDifferent' => 'Th\' shiny passcode must be different than yer ol\' passcode.',

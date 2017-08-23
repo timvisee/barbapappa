@@ -1,9 +1,98 @@
-
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
 // Variables
 @import "variables";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+// Utilities
+@import "utils/fluid-type";
+
+// Import the Glyphicons configured for jQuery mobile
+@import "jquery-mobile-glyphicons/icons";
+
+// Highlight box
+$highlight-dynamic-min-width: 100px;
+$highlight-dynamic-max-width: 600px;
+
+.highlight-box {
+  text-align: center;
+  margin: 0 0 3em 0;
+  padding: 0.5em 0.5em 0.3em;
+}
+
+.highlight-box i.attention-icon {
+  padding: 0.2em 0 0.25em;
+  font-size: 72px;
+  @include fluid-type(font-size, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 32px, 96px);
+}
+
+.highlight-box img.logo {
+  max-width: 100%;
+  @include fluid-type(width, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 100px, 300px);
+  @include fluid-type(margin-top, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 5px, 25px);
+  @include fluid-type(margin-bottom, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 5px, 25px);
+}
+
+ul.ui-listview.center > li > a.ui-btn {
+  text-align: center;
+}
+
+// Alerts
+.alert {
+  margin: 0.2em 0 0.8em 0;
+  padding: 0.3em 0.6em;
+  border: 1px solid;
+  -webkit-border-radius: 3px;
+  border-radius: 0.2em;
+  line-height: 1.4em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  align-content: flex-start;
+}
+
+.alert .glyphicons.icon,
+.alert .halflings.icon {
+  top: 0.15em;
+  margin-right: 0.45em;
+  order: -1;
+}
+
+.alert.alert-success {
+  color: $alert-success-color;
+  background-color: $alert-success-background-color;
+  border-color: $alert-success-accent-color;
+}
+
+.alert.alert-info {
+  color: $alert-info-color;
+  background-color: $alert-info-background-color;
+  border-color: $alert-info-accent-color;
+}
+
+.alert.alert-warning {
+  color: $alert-warning-color;
+  background-color: $alert-warning-background-color;
+  border-color: $alert-warning-accent-color;
+}
+
+.alert.alert-danger {
+  color: $alert-danger-color;
+  background-color: $alert-danger-background-color;
+  border-color: $alert-danger-accent-color;
+}
+
+.alert-text-success {
+  color: $alert-success-color !important;
+}
+
+.alert-text-info {
+  color: $alert-info-color !important;
+}
+
+.alert-text-warning {
+  color: $alert-warning-color !important;
+}
+
+.alert-text-danger {
+  color: $alert-danger-color !important;
+}

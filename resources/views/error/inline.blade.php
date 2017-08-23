@@ -1,5 +1,5 @@
 @foreach($messages as $message)
-    <span class="help-block">
-        <strong>{{ $message }}</strong>
-    </span>
+    <div class="alert alert-danger">
+        <span class="halflings halflings-exclamation-sign icon"></span> {{ $message }}
+    </div>
 @endforeach

@@ -10,5 +10,6 @@ return [
     'noToken' => 'Geen token opgegeven.',
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',
-    'information' => 'Informatie'
+    'information' => 'Informatie',
+    'welcomeTo' => 'Welkom bij',
 ];

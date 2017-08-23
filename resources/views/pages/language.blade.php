@@ -2,31 +2,33 @@
 
 @section('content')
     <?php
-        // Get the title locales and selectable locales
+        // Get the title and selectable locales, and build a description string
         $titleLocales = array_slice(langManager()->getLocales(false, false), 0, 2);
         $selectableLocales = langManager()->getLocales(true, false);
-
-        // Build the title and description
-        $title = implode(' / ', array_map(function($locale) {
-            return __('lang.language', [], $locale);
-        }, $titleLocales));
-        $description = implode(' / ', array_map(function($locale) {
-            return __('lang.choose', [], $locale);
-        }, $titleLocales));
     ?>
 
-    <h1>{{ $title }}</h1>
-    <p>{{ $description }}:</p>
+    {{-- Create a properly styled element here --}}
+    <div class="highlight-box">
+        <i class="glyphicons glyphicons-flag attention-icon"></i>
+        <br />
+
+        @foreach($titleLocales as $locale)
+            <p>
+                <i>@lang('lang.choose', [], $locale)...</i>
+            </p>
+        @endforeach
+    </div>
 
     @if(count($selectableLocales) > 0)
-        <ul>
+        <ul class="ui-listview" data-role="listview" data-inset="false">
             @foreach($selectableLocales as $locale)
                 <li>
-                    <img src="{{ langManager()->getLocaleFlagUrl($locale) }}"
-                        alt="{{ __('lang.nameFlag', [], $locale) }}"
-                        title="{{ __('lang.nameFlag', [], $locale) }}" />
+                    <a href="{{ route('language', ['locale' => $locale]) }}" class="ui-btn ui-btn-icon-right ui-icon-glyphicons ui-icon-glyphicons-chevron-right">
+                        <img src="{{ langManager()->getLocaleFlagUrl($locale) }}"
+                             alt="{{ __('lang.nameFlag', [], $locale) }}"
+                             class="ui-li-icon ui-corner-none ui-li-icon"
+                             style="margin-top: 2px;">
 
-                    <a href="{{ route('language', ['locale' => $locale]) }}">
                         @lang('lang.name', [], $locale)
                     </a>
                 </li>
