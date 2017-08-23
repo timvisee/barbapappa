@@ -8,15 +8,11 @@
 
         {{ Form::label('email', __('account.email')) }}
         {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
+        {{ ErrorRenderer::inline('email') }}
 
         {{ Form::label('password', __('account.password')) }}
         {{ Form::password('password') }}
-
-        @if ($errors->has('password'))
-            <span class="help-block">
-                <strong>{{ $errors->first('password') }}</strong>
-            </span>
-        @endif
+        {{ ErrorRenderer::inline('password') }}
 
         {{ Form::submit(__('auth.login')) }}
 

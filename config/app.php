@@ -260,6 +260,11 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
 
+        /**
+         * BARbapAPPa aliases.
+         */
+        'ErrorRenderer' => App\Helpers\ErrorRenderer::class,
+
     ],
 
 ];

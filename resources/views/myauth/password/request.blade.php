@@ -8,6 +8,7 @@
 
         {{ Form::label('email', __('account.email')) }}
         {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
+        {{ ErrorRenderer::inline('email') }}
 
         {{ Form::submit(__('account.resetPassword')) }}
 

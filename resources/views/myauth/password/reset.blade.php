@@ -15,6 +15,7 @@
         @else
             {{ Form::text('token', '') }}
         @endif
+        {{ ErrorRenderer::inline('token') }}
         <br />
 
         <p>@lang('pages.passwordReset.enterNewPassword')</p>
@@ -22,10 +23,12 @@
 
         {{ Form::label('password', __('account.newPassword')) }}
         {{ Form::password('password') }}
+        {{ ErrorRenderer::inline('password') }}
         <br />
 
         {{ Form::label('password_confirmation', __('account.confirmNewPassword')) }}
         {{ Form::password('password_confirmation') }}
+        {{ ErrorRenderer::inline('password') }}
         <br />
 
         <p>
@@ -43,6 +46,7 @@
             {{ Form::label('invalidate_other_sessions', __('account.invalidateAllSessions')) }}
         @endif
         {{ Form::checkbox('invalidate_other_sessions', 'true') }}
+        {{ ErrorRenderer::inline('invalidate_other_sessions') }}
         <br />
 
         {{ Form::submit(__('pages.changePassword')) }}
