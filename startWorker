@@ -5,6 +5,6 @@ cd "$(dirname "$0")"
 
 # Start the queue
 echo "Starting the worker..."
-sudo -u www-data php artisan queue:work --queue=high,normal,default,low
+sudo -u www-data php artisan queue:work --queue=high,normal,low
 echo "The worker died."
 
