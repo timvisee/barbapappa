@@ -1,4 +1,13 @@
 #################
+## BARbapAPPa
+#################
+
+/public/js
+/public/img
+/public/css
+/public/fonts
+
+#################
 ## Laravel
 #################
 
