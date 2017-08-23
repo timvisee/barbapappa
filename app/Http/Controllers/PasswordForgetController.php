@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationDefaults;
 use App\Managers\PasswordResetManager;
 use App\Models\Email;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class PasswordForgetController extends Controller {
     public function doRequest(Request $request) {
         // Validate
         $this->validate($request, [
-            'email' => 'required|string|email|max:255',
+            'email' => 'required|' . ValidationDefaults::EMAIL,
         ]);
 
         // Get the email address

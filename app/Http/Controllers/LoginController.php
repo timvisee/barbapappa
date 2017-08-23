@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationDefaults;
 use App\Services\Auth\AuthResult;
 use Illuminate\Http\Request;
 
@@ -22,8 +23,8 @@ class LoginController extends Controller {
     public function doLogin(Request $request) {
         // Validate
         $this->validate($request, [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6',
+            'email' => 'required|' . ValidationDefaults::EMAIL,
+            'password' => 'required|' . ValidationDefaults::PASSWORD,
         ]);
 
         // Authenticate

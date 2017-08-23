@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationDefaults;
 use App\Managers\PasswordResetManager;
 use App\Managers\PasswordResetResult;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class PasswordResetController extends Controller {
 
@@ -16,8 +18,8 @@ class PasswordResetController extends Controller {
     public function doReset(Request $request) {
         // Validate
         $this->validate($request, [
-            'token' => 'required|string',
-            'password' => 'required|string|min:6|confirmed'
+            'token' => 'required|' . ValidationDefaults::PASSWORD_RESET_TOKEN,
+            'password' => 'required|' . ValidationDefaults::PASSWORD . '|confirmed'
         ]);
 
         // Check whether to invalidate other sessions
@@ -30,25 +32,28 @@ class PasswordResetController extends Controller {
             $invalidateOtherSessions
         );
 
+        // Create a message bag for errors
+        $errorBag = new MessageBag();
+
         // Create a proper response
         $response = redirect();
         switch($result->getResult()) {
             case PasswordResetResult::ERR_NO_TOKEN:
-                return $response->back()
-                    ->with('error', __('misc.noToken'));
+                $errorBag->add('token', __('misc.noToken'));
+                break;
 
             case PasswordResetResult::ERR_INVALID_TOKEN:
-                return $response->back()
-                    ->with('error', __('pages.passwordReset.invalid'));
+                $errorBag->add('token', __('pages.passwordReset.invalid'));
+                break;
 
             case PasswordResetResult::ERR_USED_TOKEN:
                 return $response->back()
                     ->with('error', __('pages.passwordReset.used'));
 
             case PasswordResetResult::ERR_EXPIRED_TOKEN:
-                // TODO: Show a page to request a new password reset
-                return $response->back()
-                    ->with('error', __('pages.passwordReset.expired'));
+                // TODO: Show a button/page to request a new password reset
+                $errorBag->add('token', __('pages.passwordReset.expired'));
+                break;
 
             case PasswordResetResult::OK:
                 return $response->route('login')
@@ -58,5 +63,8 @@ class PasswordResetController extends Controller {
                 return $response->back()
                     ->with('error', __('general.serverError'));
         }
+
+        // Go back with errors
+        return $response->back()->withErrors($errorBag);
     }
 }

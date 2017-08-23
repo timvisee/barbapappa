@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationDefaults;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class PasswordChangeController extends Controller {
 
@@ -19,10 +21,12 @@ class PasswordChangeController extends Controller {
     }
 
     public function doChange(Request $request) {
-        // Validate
+        // Validate the inputs
         $this->validate($request, [
-            'password' => 'required|string|min:6',
-            'new_password' => 'required|string|min:6|confirmed'
+            'password' => 'required|' . ValidationDefaults::PASSWORD,
+            'new_password' => 'required|' . ValidationDefaults::PASSWORD . '|confirmed|different:password'
+        ], [
+            'different' => __('auth.newPasswordDifferent')
         ]);
 
         // Check whether to invalidate other sessions
@@ -34,10 +38,16 @@ class PasswordChangeController extends Controller {
             throw new \Exception('Failed to change password, unable to get session user');
 
         // The current password must be valid
-        if(!$user->checkPassword($request->input('password'), false))
+        if(!$user->checkPassword($request->input('password'), false)) {
+            // Build the error bag with the error message
+            $errorBag = new MessageBag();
+            $errorBag->add('password', __('auth.invalidCurrentPassword'));
+
+            // Redirect with the errors
             return redirect()
                 ->back()
-                ->with('error', __('auth.currentPasswordInvalid'));
+                ->withErrors($errorBag);
+        }
 
         // Change the password and invalidate user sessions of others
         $user->changePassword($request->input('new_password'), true);

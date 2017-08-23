@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationDefaults;
 use App\Managers\EmailVerificationManager;
 use App\Models\Email;
 use App\Models\User;
@@ -25,10 +26,12 @@ class RegisterController extends Controller {
     public function doRegister(Request $request) {
         // Validate
         $this->validate($request, [
-            'first_name' => 'required|string|min:2|max:255',
-            'last_name' => 'required|string|min:2|max:255',
-            'email' => 'required|string|email|max:255|unique:emails',
-            'password' => 'required|string|min:6|confirmed',
+            'first_name' => 'required|' . ValidationDefaults::FIRST_NAME,
+            'last_name' => 'required' . ValidationDefaults::LAST_NAME,
+            'email' => 'required|' . ValidationDefaults::EMAIL . '|unique:emails',
+            'password' => 'required|' . ValidationDefaults::PASSWORD . '|confirmed',
+        ], [
+            'email.unique' => __('auth.emailUsed')
         ]);
 
         // Create a new user

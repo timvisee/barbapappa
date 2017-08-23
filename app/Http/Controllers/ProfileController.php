@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationDefaults;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -52,13 +53,10 @@ class ProfileController extends Controller {
 
         // TODO: Make sure the current user has permission to edit the given user
 
-        // Determine whether an other user is being updated
-        $isOther = $user->id != barauth()->getSessionUser()->id;
-
         // Validate
         $this->validate($request, [
-            'first_name' => 'required|string|min:2|max:255',
-            'last_name' => 'required|string|min:2|max:255',
+            'first_name' => 'required|' . ValidationDefaults::FIRST_NAME,
+            'last_name' => 'required|' . ValidationDefaults::LAST_NAME,
         ]);
 
         // Change the name properties
@@ -66,7 +64,7 @@ class ProfileController extends Controller {
         $user->last_name = $request->input('last_name');
 
         // Get the input locale and update it if it's valid
-        $locale = $request->input('locale');
+        $locale = $request->input('language');
         if(langManager()->isValidLocale($locale))
             $user->locale = $locale;
         else if(empty($locale))
@@ -78,6 +76,9 @@ class ProfileController extends Controller {
         // Change the interface locale if the changed user is the currently logged in user
         if(langManager()->isValidLocale($locale) && $user->id == barauth()->getSessionUser()->id)
             langManager()->setLocale($locale, true, false);
+
+        // Determine whether an other user is being updated
+        $isOther = $user->id != barauth()->getSessionUser()->id;
 
         // Redirect the user to the account overview page
         return redirect()
