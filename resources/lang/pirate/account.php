@@ -11,9 +11,9 @@ return [
      * Password.
      */
     'password' => 'Passcode',
-    'confirmPassword' => 'Confirm passcode',
+    'confirmPassword' => 'Passcode check',
     'newPassword' => 'Shiny passcode',
-    'confirmNewPassword' => 'Confirm shiny passcode',
+    'confirmNewPassword' => 'Shiny passcode check',
     'currentPassword' => 'Barnacle-covered passcode',
     'resetPassword' => 'Reset yer password',
 

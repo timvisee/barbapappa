@@ -22,7 +22,7 @@ return [
             'subjectRegistered' => 'New ship & e-bottle check',
             'subtitle' => 'You be \'bout to check yer e-bottle address',
             'subtitleRegistered' => 'Yer ship be almost sailable.',
-            'registered' => 'Thank ye for entering a new ship.',
+            'registered' => 'Ahoy mate for entering a new ship.',
             'addNewEmail' => 'Ye just entered a new e-bottle address to yer ship.',
             'verifyBeforeUseAccount' => 'Before ye use our service, be need to verify ye e-bottle address.',
             'verifyBeforeUseEmail' => 'Before ye can use it on our service, be need to verify it.',

@@ -3,7 +3,7 @@
 @component('mail::message', [
     'recipient' => $recipient,
     'subject' => $subject,
-    'subtitle' => __('lang.passwordChanged'),
+    'subtitle' => __('auth.passwordChanged'),
 ])
 
 @component('mail::text')

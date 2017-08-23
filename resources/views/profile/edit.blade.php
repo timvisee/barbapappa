@@ -7,10 +7,12 @@
 
         {{ Form::label('first_name', __('account.firstName')) }}
         {{ Form::text('first_name', $user->first_name) }}
+        {{ ErrorRenderer::inline('first_name') }}
         <br />
 
         {{ Form::label('last_name', __('account.lastName')) }}
         {{ Form::text('last_name', $user->last_name) }}
+        {{ ErrorRenderer::inline('last_name') }}
         <br />
 
         <?php
@@ -22,8 +24,9 @@
                 $locales[$entry] = __('lang.name', [], $entry);
         ?>
 
-        {{ Form::label('locale', __('lang.language')) }}
-        {{ Form::select('locale', $locales, $user->locale) }}
+        {{ Form::label('language', __('lang.language')) }}
+        {{ Form::select('language', $locales, $user->locale) }}
+        {{ ErrorRenderer::inline('language') }}
         <br />
 
         {{ Form::hidden('_method', 'PUT') }}

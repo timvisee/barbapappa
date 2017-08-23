@@ -6,6 +6,7 @@
 return [
     'link' => 'Link',
     'token' => 'Token',
+    'verify' => 'Verifiëren',
     'noToken' => 'Geen token opgegeven.',
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',

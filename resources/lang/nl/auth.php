@@ -19,6 +19,10 @@ return [
     'passwordChanged' => 'Je wachtwoord is aangepast.',
     'currentPasswordInvalid' => 'Je huidige wachtwoord is incorrect.',
     'invalidCredentials' => 'Ongeldig e-maildares of wachtwoord.',
+    'invalidPassword' => 'Incorrect wachtwoord.',
+    'invalidCurrentPassword' => 'Je huidige wachtwoord is incorrect.',
+    'newPasswordDifferent' => 'Het nieuwe wachtwoord moet anders zijn dan je huidige wachtwoord.',
+    'emailUsed' => 'Dit e-mailadres is al gebruikt. Log alsjeblieft in.',
 
     'loggedIn' => 'Je bent ingelogd.',
     'registeredAndLoggedIn' => 'Account aangemaakt, je bent ingelogd.',

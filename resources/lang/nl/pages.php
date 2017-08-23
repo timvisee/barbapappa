@@ -44,6 +44,7 @@ return [
      * Verify email address page.
      */
     'verifyEmail' => [
+        'title' => 'E-mailadres verifiëren',
         'invalid' => 'Token onbekend. Misschien is het e-mailadres al geverifiëerd, of de token is verlopen.',
         'expired' => 'De token is verlopen. Vraag alsjeblieft een nieuwe verificatie e-mail aan.',
         'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',

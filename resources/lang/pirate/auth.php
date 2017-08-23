@@ -19,6 +19,10 @@ return [
     'passwordChanged' => 'Yer passcode be changed.',
     'currentPasswordInvalid' => 'Yer ol\' passcode be invalid.',
     'invalidCredentials' => 'Invalid e-bottle coordinate or passcode.',
+    'invalidPassword' => 'Incorrect passcode.',
+    'invalidCurrentPassword' => 'Yer current passcode be incorrect.',
+    'newPasswordDifferent' => 'Th\' shiny passcode must be different than yer ol\' passcode.',
+    'emailUsed' => 'Dis e-bottle coordinate be used. Enter yer ship instead.',
 
     'loggedIn' => 'Ye be aboard.',
     'registeredAndLoggedIn' => 'Ship created, ye be aboard now.',

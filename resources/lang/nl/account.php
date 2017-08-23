@@ -13,7 +13,7 @@ return [
     'password' => 'Wachtwoord',
     'confirmPassword' => 'Wachtwoord controle',
     'newPassword' => 'Nieuw wachtwoord',
-    'confirmNewPassword' => 'Nieuw wachtwoord verificatie',
+    'confirmNewPassword' => 'Nieuw wachtwoord controle',
     'currentPassword' => 'Huidige wachtwoord',
     'resetPassword' => 'Wachtwoord resetten',
 

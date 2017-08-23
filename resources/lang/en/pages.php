@@ -44,6 +44,9 @@ return [
      * Verify email address page.
      */
     'verifyEmail' => [
+        'title' => 'Verify email address',
+        'description' => 'Please enter the verification token of the email address you\'d like to verify.<br>'
+            . 'This token can be found at the bottom of the verification email you\'ve received in your mailbox.',
         'invalid' => 'Unknown token. Maybe the e-mail address is already verified, or the token has expired.',
         'expired' => 'The token has expired. Please request a new verification email.',
         'alreadyVerified' => 'This email address has already been verified.',
