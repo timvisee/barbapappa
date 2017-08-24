@@ -14,6 +14,12 @@ return [
 
     'name' => env('APP_NAME', 'BARbapAPPa'),
 
+    /**
+     * Application version name and code.
+     */
+    'version_name' => '0.0.1-snapshot',
+    'version_code' => 1,
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

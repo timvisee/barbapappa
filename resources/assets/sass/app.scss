@@ -7,6 +7,37 @@
 // Import the Glyphicons configured for jQuery mobile
 @import "jquery-mobile-glyphicons/icons";
 
+span.spacer {
+  margin: 0;
+  padding: 0;
+  display: block;
+  height: 1em;
+}
+
+span.spacer.x05 {
+  height: 0.5em;
+}
+
+span.spacer.x2 {
+  height: 2em;
+}
+
+span.spacer.x3 {
+  height: 3em;
+}
+
+span.spacer.x4 {
+  height: 4em;
+}
+
+span.spacer.x5 {
+  height: 5em;
+}
+
+.align-center {
+  text-align: center;
+}
+
 // Highlight box
 $highlight-dynamic-min-width: 100px;
 $highlight-dynamic-max-width: 600px;
