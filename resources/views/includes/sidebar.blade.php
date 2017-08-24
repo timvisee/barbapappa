@@ -17,6 +17,11 @@
             </li>
         @else
             <li>
+                <a href="{{ route('index') }}" class="ui-btn ui-btn-icon-right ui-icon-glyphicons ui-icon-glyphicons-home">
+                    @lang('pages.dashboard')
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('login') }}" class="ui-btn ui-btn-icon-right ui-icon-glyphicons ui-icon-glyphicons-user">
                     @lang('auth.login')
                 </a>

@@ -13,11 +13,12 @@ $highlight-dynamic-max-width: 600px;
 
 .highlight-box {
   text-align: center;
-  margin: 0 0 3em 0;
+  margin: 0 0 1.5em 0;
   padding: 0.5em 0.5em 0.3em;
 }
 
 .highlight-box i.attention-icon {
+  text-shadow: 0 1px #111;
   padding: 0.2em 0 0.25em;
   font-size: 72px;
   @include fluid-type(font-size, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 32px, 96px);
@@ -25,9 +26,58 @@ $highlight-dynamic-max-width: 600px;
 
 .highlight-box img.logo {
   max-width: 100%;
-  @include fluid-type(width, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 100px, 300px);
+  @include fluid-type(width, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 75px, 200px);
   @include fluid-type(margin-top, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 5px, 25px);
   @include fluid-type(margin-bottom, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 5px, 25px);
+}
+
+// Page dividers
+$page-divider-slot-color: #555555;
+$page-divider-slot-shadow: #222222;
+$page-divider-color: #D5D5D5;
+
+.page-divider {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: space-between;
+}
+
+.page-divider .slot,
+.page-divider i.glyphicons,
+.page-divider i.halflings {
+    margin: 10px 15px;
+    order: 0;
+    flex-grow: 0;
+    display: inline-block;
+    color: $page-divider-slot-color;
+    text-shadow: 0 1px $page-divider-slot-shadow;
+}
+
+.page-divider i.glyphicons.scale,
+.page-divider i.halflings.scale {
+    @include fluid-type(font-size, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 16px, 48px);
+}
+
+@mixin page-divider-line {
+    height: 1px;
+    margin: 20px 0;
+    background-color: $page-divider-color;
+    display: inline-block;
+    flex-grow: 1;
+    content: '';
+}
+
+.page-divider span.line:nth-of-type(1) {
+    order: -1;
+    @include page-divider-line;
+}
+
+.page-divider span.line:nth-of-type(2) {
+    order: 1;
+    @include page-divider-line;
 }
 
 ul.ui-listview.center > li > a.ui-btn {
@@ -39,7 +89,6 @@ ul.ui-listview.center > li > a.ui-btn {
   margin: 0.2em 0 0.8em 0;
   padding: 0.3em 0.6em;
   border: 1px solid;
-  -webkit-border-radius: 3px;
   border-radius: 0.2em;
   line-height: 1.4em;
   display: flex;
