@@ -42,6 +42,10 @@ span.spacer.x5 {
 $highlight-dynamic-min-width: 100px;
 $highlight-dynamic-max-width: 600px;
 
+$page-divider-slot-color: #555555;
+$page-divider-slot-shadow: #222222;
+$page-divider-color: #D5D5D5;
+
 .highlight-box {
   text-align: center;
   margin: 0 0 1.5em 0;
@@ -49,9 +53,11 @@ $highlight-dynamic-max-width: 600px;
 }
 
 .highlight-box i.attention-icon {
-  text-shadow: 0 1px #111;
+  //text-shadow: 0 1px #111;
   padding: 0.2em 0 0.25em;
   font-size: 72px;
+  color: $page-divider-slot-color;
+  text-shadow: 0 1px $page-divider-slot-shadow;
   @include fluid-type(font-size, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 32px, 96px);
 }
 
@@ -63,10 +69,6 @@ $highlight-dynamic-max-width: 600px;
 }
 
 // Page dividers
-$page-divider-slot-color: #555555;
-$page-divider-slot-shadow: #222222;
-$page-divider-color: #D5D5D5;
-
 .page-divider {
     display: flex;
     flex-direction: row;
