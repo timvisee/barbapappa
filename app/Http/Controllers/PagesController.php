@@ -50,6 +50,15 @@ class PagesController extends Controller {
     }
 
     /**
+     * License page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function license() {
+        return view('pages.license');
+    }
+
+    /**
      * Language selection page.
      *
      * @param string|null $locale The selected locale.

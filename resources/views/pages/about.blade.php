@@ -56,7 +56,7 @@
         <p>
             Released under the license
             <span class="spacer x05"></span>
-            <a href="license">GNU GPL-3.0</a><br />
+            <a href="{{ route('license') }}">GNU GPL-3.0</a><br />
             (Open source)
         </p>
 
