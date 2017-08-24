@@ -13,4 +13,9 @@
         </a>
     </h1>
 
+    {{-- Style this icon in the stylesheet --}}
+    <div style="display: inline-block; position: absolute; top: .6em; right: .4em; padding: 0 .4em;">
+        <i class="glyphicons glyphicons-lock" style="color: green;"></i>
+    </div>
+
 </div>
