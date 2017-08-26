@@ -143,7 +143,7 @@ It is used for mutations that don't fit in the other mutation types available.
 This kind of mutation doesn't explicitly specify what the mutation is for, with for example a attached payment or wallet.
 Except for the fact that a `description` field is available on this mutation.
 This should be filled in by the initiating user when possible to further describe what this magical mutation is about.
-The `description` field is purely for accounting purposes and isn't used by BARbapAPPa itself.
+The `description` field is purely for accounting purposes and isn't interpreted by BARbapAPPa itself.
 
 Additionally, a magic mutation isn't tied to a specific bar or banking account.
 Because of this, a single magic mutation may be used to add money to two wallets on different bars or banking accounts.
@@ -155,7 +155,22 @@ Of course, this transaction would contain a wallet mutation to add €10 to the 
 Because the money sum of a transaction must be zero, the money has to flow from somewhere.
 For this specific case, the second mutation might be a magic mutation.
 This because it doesn't fit the other mutation types,
-and because from the systems perspective the money would appear to be _created from thin air_.
+and because from the systems perspective the money would appear to be _spawned from thin air_.
 
 ## Payment
+A payment defines a single transaction that is made through a third party payment service.
+This could be through PayPal, through iDeal, it could be a manual bank transfer or whatever is available for the relevant bank.
 
+This payment is attached to a payment mutation for a transaction.
+
+The _payment model_ has a state value:  
+- Pending
+- Processing
+- Success
+- Failure
+
+Additional data might be attached for some payment methods when relevant.
+Think of PayPal specific transaction IDs or an IBAN a user might be sending money from.
+
+When the state of the transaction is changed by the payment service, the state of this payment should be changed accordingly.  
+The state of any related payment mutations should be updated along with it.
