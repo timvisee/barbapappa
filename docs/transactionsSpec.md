@@ -94,6 +94,7 @@ Types:
 - [Wallet mutation](#wallet-mutation)
 - [Payment mutation](#payment-mutation)
 - [Product mutation](#product-mutation)
+- [Magic mutation](#magic-mutation)
 - _Additional mutation types may be added in the future to support more transaction types._
 
 Each type is further documented in it's own paragraph below.
@@ -148,13 +149,13 @@ Additionally, a magic mutation isn't tied to a specific bar or banking account.
 Because of this, a single magic mutation may be used to add money to two wallets on different bars or banking accounts.
 
 To give a better picture of what this magic mutation might be used for, take a look at the following use case:  
-In a given BARbapAPPa setup, users have an initial wallet balance of €10,-.
-The balance of an initialized wallet is zero by default.
-To achieve the initial balance specified, a transaction must be used.
+In a given BARbapAPPa setup, users have a default wallet balance of €10,-.
+The balance of an initialized wallet is zero. To get to default balance specified, a transaction must be used.
 Of course, this transaction would contain a wallet mutation to add €10 to the user's wallet.
 Because the money sum of a transaction must be zero, the money has to flow from somewhere.
-The magic mutation may be used for this specific case, as it doesn't fit the other mutation types,
-and the money would appear to be _created from thin air_.
+For this specific case, the second mutation might be a magic mutation.
+This because it doesn't fit the other mutation types,
+and because from the systems perspective the money would appear to be _created from thin air_.
 
 ## Payment
 
