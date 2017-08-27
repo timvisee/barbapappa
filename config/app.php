@@ -206,6 +206,11 @@ return [
         Collective\Html\HtmlServiceProvider::class,
 
         /**
+         * Laravel currency.
+         */
+        \Torann\Currency\CurrencyServiceProvider::class,
+
+        /**
          * Custom service providers...
          */
         App\Providers\LanguageManagerServiceProvider::class,
@@ -265,6 +270,11 @@ return [
          */
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+
+        /**
+         * Laravel currency.
+         */
+        'Currency' => \torann\Currency\Facades\Currency::class,
 
         /**
          * BARbapAPPa aliases.
