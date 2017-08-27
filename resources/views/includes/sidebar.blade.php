@@ -39,7 +39,7 @@
             <a href="{{ route('terms') }}" class="ui-btn ui-btn-icon-right ui-icon-glyphicons ui-icon-glyphicons-handshake">@lang('pages.terms')</a>
         </li>
         <li>
-            <a href="{{ route('privacy') }}" class="ui-btn ui-btn-icon-right ui-icon-glyphicons ui-icon-glyphicons-fingerprint">@lang('pages.privacy')</a>
+            <a href="{{ route('privacy') }}" class="ui-btn ui-btn-icon-right ui-icon-glyphicons ui-icon-glyphicons-{{ (langManager()->getLocale() != 'pirate' ? 'fingerprint' : 'skull') }}">@lang('pages.privacy')</a>
         </li>
     </ul>
 
