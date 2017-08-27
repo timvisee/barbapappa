@@ -2,20 +2,20 @@
 
 <div id="header" data-role="header">
 
-    <a id="sidebar-toggle" href="#sidebar-panel" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-bars">MENU</a>
-
-    {{--<a href="" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-delete" data-rel="back">CLOSE</a>--}}
+    <div class="left">
+        <a id="sidebar-toggle" href="#sidebar-panel" class="glyphicons glyphicons-menu-hamburger"></a>
+    </div>
 
     <h1>
         <a href="{{ route('index') }}" data-ajax="false" title="Refresh app">
             {{-- TODO: Use a properly sized image here --}}
-            <img src="{{ asset('img/logo/logo_header_big.png') }}" style="height: 21px;" />
+            <img src="{{ asset('img/logo/logo_header_big.png') }}" style="height: 21px; display: block;" />
         </a>
     </h1>
 
-    {{-- Style this icon in the stylesheet --}}
-    <div style="display: inline-block; position: absolute; top: .6em; right: .4em; padding: 0 .4em;">
-        <i class="glyphicons glyphicons-lock" style="color: green;"></i>
+    <div class="right">
+        <a href="{{ route('index') }}" class="glyphicons glyphicons-message-new toolbar-btn-message"></a>
+        <a href="{{ route('index') }}" class="glyphicons glyphicons-lock toolbar-btn-security"></a>
     </div>
 
 </div>

@@ -1,0 +1,66 @@
+/**
+ * Styles for alert boxes and notifications.
+ */
+
+@import "variables";
+
+.alert {
+  margin: 0.2em 0 0.8em 0;
+  padding: 0.3em 0.6em;
+  border: 1px solid;
+  border-radius: 0.2em;
+  line-height: 1.4em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: baseline;
+  align-content: flex-start;
+}
+
+.alert .glyphicons.icon,
+.alert .halflings.icon {
+  top: 0.15em;
+  margin-right: 0.45em;
+  order: -1;
+}
+
+.alert.alert-success {
+  color: $alert-success-color;
+  background-color: $alert-success-background-color;
+  border-color: $alert-success-accent-color;
+}
+
+.alert.alert-info {
+  color: $alert-info-color;
+  background-color: $alert-info-background-color;
+  border-color: $alert-info-accent-color;
+}
+
+.alert.alert-warning {
+  color: $alert-warning-color;
+  background-color: $alert-warning-background-color;
+  border-color: $alert-warning-accent-color;
+}
+
+.alert.alert-danger {
+  color: $alert-danger-color;
+  background-color: $alert-danger-background-color;
+  border-color: $alert-danger-accent-color;
+}
+
+.alert-text-success {
+  color: $alert-success-color !important;
+}
+
+.alert-text-info {
+  color: $alert-info-color !important;
+}
+
+.alert-text-warning {
+  color: $alert-warning-color !important;
+}
+
+.alert-text-danger {
+  color: $alert-danger-color !important;
+}

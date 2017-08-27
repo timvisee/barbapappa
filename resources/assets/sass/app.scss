@@ -7,6 +7,13 @@
 // Import the Glyphicons configured for jQuery mobile
 @import "jquery-mobile-glyphicons/icons";
 
+// Alerts
+@import "alert";
+
+// Toolbar
+@import "toolbar";
+
+// Spacers
 span.spacer {
   margin: 0;
   padding: 0;
@@ -70,23 +77,23 @@ $page-divider-color: #D5D5D5;
 
 // Page dividers
 .page-divider {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-evenly;
-    align-items: center;
-    align-content: space-between;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  align-content: space-between;
 }
 
 .page-divider .slot,
 .page-divider i.glyphicons,
 .page-divider i.halflings {
-    margin: 10px 15px;
-    order: 0;
-    flex-grow: 0;
-    display: inline-block;
-    color: $page-divider-slot-color;
-    text-shadow: 0 1px $page-divider-slot-shadow;
+  margin: 10px 15px;
+  order: 0;
+  flex-grow: 0;
+  display: inline-block;
+  color: $page-divider-slot-color;
+  text-shadow: 0 1px $page-divider-slot-shadow;
 }
 
 .page-divider i.glyphicons.scale,
@@ -95,12 +102,12 @@ $page-divider-color: #D5D5D5;
 }
 
 @mixin page-divider-line {
-    height: 1px;
-    margin: 20px 0;
-    background-color: $page-divider-color;
-    display: inline-block;
-    flex-grow: 1;
-    content: '';
+  height: 1px;
+  margin: 20px 0;
+  background-color: $page-divider-color;
+  display: inline-block;
+  flex-grow: 1;
+  content: '';
 }
 
 .page-divider span.line:nth-of-type(1) {
@@ -117,64 +124,7 @@ ul.ui-listview.center > li > a.ui-btn {
   text-align: center;
 }
 
-// Alerts
-.alert {
-  margin: 0.2em 0 0.8em 0;
-  padding: 0.3em 0.6em;
-  border: 1px solid;
-  border-radius: 0.2em;
-  line-height: 1.4em;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  align-items: baseline;
-  align-content: flex-start;
-}
-
-.alert .glyphicons.icon,
-.alert .halflings.icon {
-  top: 0.15em;
-  margin-right: 0.45em;
-  order: -1;
-}
-
-.alert.alert-success {
-  color: $alert-success-color;
-  background-color: $alert-success-background-color;
-  border-color: $alert-success-accent-color;
-}
-
-.alert.alert-info {
-  color: $alert-info-color;
-  background-color: $alert-info-background-color;
-  border-color: $alert-info-accent-color;
-}
-
-.alert.alert-warning {
-  color: $alert-warning-color;
-  background-color: $alert-warning-background-color;
-  border-color: $alert-warning-accent-color;
-}
-
-.alert.alert-danger {
-  color: $alert-danger-color;
-  background-color: $alert-danger-background-color;
-  border-color: $alert-danger-accent-color;
-}
-
-.alert-text-success {
-  color: $alert-success-color !important;
-}
-
-.alert-text-info {
-  color: $alert-info-color !important;
-}
-
-.alert-text-warning {
-  color: $alert-warning-color !important;
-}
-
-.alert-text-danger {
-  color: $alert-danger-color !important;
+// Flag icon modifiers
+.flag-icon.flag-icon-rounded {
+  border-radius: 0.15em;
 }

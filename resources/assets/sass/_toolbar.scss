@@ -1,0 +1,96 @@
+/**
+ * Styles specific to the toolbar.
+ */
+
+// Toolbar configuration
+.ui-header {
+  // Use a fixed header height
+  height: 50px;
+  box-sizing: border-box;
+
+  // Flex box the header
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap !important;
+  justify-content: space-between;
+  align-items: center !important;
+  align-content: space-between !important;
+  vertical-align: middle;
+}
+
+// Make icon sizes consistent
+.ui-header .left .glyphicons,
+.ui-header .left .halflings,
+.ui-header .right .glyphicons,
+.ui-header .right .halflings {
+  font-size: 17px;
+}
+
+// Pad the logo
+.ui-header h1 a img {
+  padding: 6px;
+}
+
+// Proper button styles
+.ui-header a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: normal;
+  outline: 0;
+}
+
+// Nice background on link activation
+.ui-header a:active,
+.ui-header h1 a:active > img {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+// Configure the main toolbar bag
+.ui-header h1.ui-title {
+  order: 0;
+  flex-shrink: 1;
+  align-self: center;
+  margin: 0 6px !important;
+  padding: 0;
+}
+
+// Configure left and right toolbar bags
+@mixin ui-header-div-side {
+  flex-shrink: 0;
+  align-self: center;
+  display: inline;
+}
+
+.ui-header div.left {
+  order: -1;
+  @include ui-header-div-side;
+  margin-left: 6px;
+  text-align: left;
+}
+
+.ui-header div.right {
+  order: 1;
+  @include ui-header-div-side;
+  margin-right: 6px;
+  text-align: right;
+}
+
+// Message button specific styles
+a.toolbar-btn-message,
+a.toolbar-btn-message:visited {
+  color: inherit;
+}
+
+a.toolbar-btn-message:focus,
+a.toolbar-btn-message:active {
+  &:before {
+    content: "\E121";
+    background: rgba(0, 0, 0, 0.15);
+  }
+}
+
+// Security button specific styles
+a.toolbar-btn-security,
+a.toolbar-btn-security:visited {
+  color: green;
+}
