@@ -1,5 +1,7 @@
+TODO: Currency constraints
+
 # Transactions specifications
-Version: 0.1-draft (2017-08-26)
+Version: 0.1-draft (2017-08-27)
 
 This document describes the basics of the transactions model BARbapAPPa uses.
 It is technical and intended for developers.
@@ -14,6 +16,24 @@ Transaction examples:
 - A user deposits money.
 - A user transfers money to another user.
 - A refund for a failed transaction.
+
+### Mutability
+The properties of a transaction that has been created may be changed at any time when the state is still in `pending` or `processing`.
+When the transaction reaches a different state, the properties are frozen.
+
+[Mutations](#mutation) may also be added, removed or changed when the transaction is the state described above.
+
+### Transaction model
+- `id`: index
+- `description`: optional description
+- `state`: transaction processing state
+    - 1: `pending`: still pending, waiting for the system to start processing
+    - 2: `processing`: currently processing, waiting for all mutations to complete
+    - 3: `success`: transaction succeeded, all mutations succeeded, all constraints are met
+    - 4: `failed`: transaction failed because of failed mutation
+- `reference_to`: optional reference to a previous transaction
+- `created_at`: time the transaction was created at
+- `updated_at`: time the transaction was last updated at
 
 ## Wallet
 A wallet is a virtual purse that is owned by a user.
@@ -30,6 +50,15 @@ The available options here are configured by the related bar the wallet is for.
 
 Multiple named wallets may be created by a user for a single bar to allow better financial organization,
 by using different wallets for different kind of transactions.
+
+### Wallet model
+- `id`: index
+- `bar`: bar this wallet is created at
+- `name`: name of the wallet decided by the user
+- `balance`: current wallet balance
+- `currency_id`: reference to a currency
+- `created_at`: time the wallet was created at
+- `updated_at`: time the wallet was last updated at
 
 ## Mutation
 Transactions contain _Mutations_ to describe the money flow and behaviour for a transaction.
@@ -85,6 +114,33 @@ that €10 euro must also be subtracted by other mutations related to the same b
 
 Transactions with mutations to multiple bars are possible if their bar specific money sums are all equal zero.
 
+### Mutation dependency
+A mutation may depend on another mutation.
+The mutation that depends will wait until the dependent mutation has been successfully processed.
+
+### Mutation mutability
+The properties of a mutation may be changed, when it's in the `pending` or `processing` state.
+In any different state, the mutation is frozen.
+
+### Mutation model
+- `id`: index
+- `transaction_id`: reference to a owning transaction
+- `type`: type of mutation
+    - 1: magic mutation
+    - 2: wallet mutation
+    - 3: product mutation
+    - 4: payment mutation
+- `money`: money this mutation processed
+- `currency`: reference to a currency
+- `state`: mutation processing state
+    - 1: `pending`: waiting on the system or on a dependency for processing
+    - 2: `processing`: waiting on the mutation to complete
+    - 3: `success`: mutation successfully applied
+    - 4: `failed`: mutation failed
+- `depend_on`: optional reference to mutation which must complete first
+- `created_at`: time this mutation was created at
+- `updated_at`: time this mutation was last updated at
+
 ### Mutation types
 There are various types of mutations that are attached to a transaction.
 One mutation might modify the balance in a wallet,
@@ -107,6 +163,15 @@ The wallet that is _mutated_ is attached to this mutation instance.
 If money is subtracted from a users wallet, the mutation `money` field will be positive because money is added to the transaction sum.
 Therefore if money is added to a users wallet, the mutation `money` field will be negative.
 
+##### Wallet mutation model
+- `id`: index
+- `mutation_id`: reference to the super mutation
+- `wallet_id`: reference to the related wallet
+- `balance_before`: balance at the moment of completing this mutation, just before the money change is applied
+TODO: move these to the super mutation?
+- `created_at`: time this wallet mutation was created at
+- `updated_at`: time this wallet mutation was last updated at
+
 #### Payment mutation
 A payment mutation defines a money transfer using a supported payment service.
 
@@ -125,6 +190,14 @@ as the mutation adds money to the transaction money sum.
 Therefore if money was deposited to a user's payment service account (possibly a cashback to a bank account, because a payment failed)
 the `money` field value would be below zero.
 
+##### Payment mutation model
+- `id`: index
+- `mutation_id`: reference to the super mutation
+- `payment_id`: reference to the payment
+TODO: move these to the super mutation?
+- `created_at`: time this payment mutation was created at
+- `updated_at`: time this payment mutation was last updated at
+
 #### Product mutation
 A product mutation defines money being consumed because a user buys any number of products.
 
@@ -135,6 +208,14 @@ If a user would buy products for €10, the `money` field value would be €-10 
 Product mutations with a `money` field value of zero or above are currently not supported,
 as these would define a mutation that a user receives money for supplying a product.
 Support for this might be added in the future if there's a proper use case that requires this state.
+
+##### Product mutation model
+- `id`: index
+- `mutation_id`: reference to the super mutation
+- TODO: Entry with the list of products that were bought
+TODO: move these to the super mutation?
+- `created_at`: time this product mutation was created at
+- `updated_at`: time this product mutation was last updated at
 
 #### Magic mutation
 A magic mutation is a special kind of mutation, and it allows many special cases to be handled.
@@ -157,20 +238,38 @@ For this specific case, the second mutation might be a magic mutation.
 This because it doesn't fit the other mutation types,
 and because from the systems perspective the money would appear to be _spawned from thin air_.
 
+##### Magic mutation model
+- `id`: index
+- `mutation_id`: reference to the super mutation
+- `description`: description by the user
+TODO: move these to the super mutation?
+- `created_at`: time this magic mutation was created at
+- `updated_at`: time this magic mutation was last updated at
+
 ## Payment
 A payment defines a single transaction that is made through a third party payment service.
 This could be through PayPal, through iDeal, it could be a manual bank transfer or whatever is available for the relevant bank.
 
 This payment is attached to a payment mutation for a transaction.
 
-The _payment model_ has a state value:  
-- Pending
-- Processing
-- Success
-- Failure
-
 Additional data might be attached for some payment methods when relevant.
 Think of PayPal specific transaction IDs or an IBAN a user might be sending money from.
 
 When the state of the transaction is changed by the payment service, the state of this payment should be changed accordingly.  
 The state of any related payment mutations should be updated along with it.
+
+### Payment model
+- `id`: index
+- `state`: state of the payment
+    - 1: `pending`: waiting for the payment to be started
+    - 2: `processing`: waiting on the payment service to finish processing
+    - 3: `paid`: the payment has been completed
+    - 4: `revoked`: the payment was revoked because TODO, DO WE NEED THIS?
+    - 5: `rejected`: the payment was rejected at the payment service, possibly by the user
+    - 6: `failed`: the payment failed
+- `money`: the money receiving by this payment
+- `currency_id`: reference to a currency
+- `created_at`: the time this payment was created at
+- `updated_at`: the time this payment was last updated at
+- TODO: Service type
+- TODO: Bar service config
