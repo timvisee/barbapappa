@@ -128,3 +128,12 @@ ul.ui-listview.center > li > a.ui-btn {
 .flag-icon.flag-icon-rounded {
   border-radius: 0.15em;
 }
+
+// Custom pirate flag
+.flag-icon-pirate {
+  background-image: url(/img/flag/pirate_4x3.svg);
+}
+
+.flag-icon-pirate.flag-icon-squared {
+  background-image: url(/img/flag/pirate_1x1.svg);
+}
