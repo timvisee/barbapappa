@@ -46,7 +46,7 @@
     {{-- TODO: Better style this language button --}}
     <br />
     <a href="{{ route('language') }}" class="ui-btn ui-corner-all ui-btn-inline">
-        <img src="{{ langManager()->getLocaleFlagUrl() }}" />
+        {{ langManager()->renderFlag(null, true, true) }}
     </a>
 
     {{--<a href="#" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close panel</a>--}}

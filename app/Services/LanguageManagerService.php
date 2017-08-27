@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\HtmlString;
 
 class LanguageManagerService {
 
@@ -279,20 +280,56 @@ class LanguageManagerService {
     }
 
     /**
-     * Get the url of the flag icon asset for the given locale.
+     * Get the flag identifier for the given locale.
      *
-     * If an invalid locale is given, the url for the current or application default locale is returned.
+     * Examples:
+     * - For a Dutch flag, 'nl' would be returned.
+     * - For an English flag, 'gb' would probably be returned.
      *
-     * @param string $locale=null Locale to get the flag for. Null to use the current locale.
+     * If an invalid locale is given, the users locale or the application default locale is used.
      *
-     * @return string URL to the flag asset.
+     * @param string|null $locale=null Locale to get the flag identifier for. Null to use the user or application default locale.
+     *
+     * @return string Flag identifier.
      */
-    public function getLocaleFlagUrl($locale = null) {
+    public function getLocaleFlagIdentifier($locale = null) {
         // The locale must be valid
         if($locale == null || !$this->isValidLocale($locale))
             $locale = $this->getLocaleSafe();
 
-        // Return the flag URL
-        return asset('/img/flag/' . $locale . '.png');
+        // Get the identifier
+        return trans('lang.iconName', [], $locale);
+    }
+
+    /**
+     * Get the class of the flag icon for the given locale.
+     *
+     * If an invalid locale is given, the users locale or the application default locale is used.
+     *
+     * @param string|null $locale=null Locale to get the flag class for. Null to use the user or application default locale.
+     * @param boolean $square=false True to render a square flag, otherwise a 4:3 flag is rendered.
+     * @param boolean $rounded=true True to render the flag with rounded corners, false to use sharp corners.
+     *
+     * @return string Flag class.
+     */
+    public function getLocaleFlagClass($locale = null, $square = false, $rounded = true) {
+        return 'flag-icon flag-icon-' . $this->getLocaleFlagIdentifier($locale)
+            . ($square ? ' flag-icon-squared' : '')
+            . ($rounded ? ' flag-icon-rounded' : '');
+    }
+
+    /**
+     * Render a flag as HTML element.
+     *
+     * If an invalid locale is given, the users locale or the application default locale is used.
+     *
+     * @param string|null $locale=null Locale to get the flag class for. Null to use the user or application default locale.
+     * @param boolean $square=false True to render a square flag, otherwise a 4:3 flag is rendered.
+     * @param boolean $rounded=true True to render the flag with rounded corners, false to use sharp corners.
+     *
+     * @return HtmlString Element which renders the flag.
+     */
+    public function renderFlag($locale = null, $square = false, $rounded = true) {
+        return new HtmlString('<span class="' . $this->getLocaleFlagClass($locale, $square, $rounded) . '"></span>');
     }
 }

@@ -6,6 +6,7 @@
 return [
     'name' => 'Pirate Speak',
     'nameFlag' => 'Pirate flag',
+    'iconName' => 'gb',
     'language' => 'Speak',
     'choose' => 'Choose yer speak',
     'visit' => 'Visit in Pirate Speak',

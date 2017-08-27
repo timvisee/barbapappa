@@ -24,11 +24,7 @@
             @foreach($selectableLocales as $locale)
                 <li>
                     <a href="{{ route('language', ['locale' => $locale]) }}" class="ui-btn ui-btn-icon-right ui-icon-glyphicons ui-icon-glyphicons-chevron-right">
-                        <img src="{{ langManager()->getLocaleFlagUrl($locale) }}"
-                             alt="{{ __('lang.nameFlag', [], $locale) }}"
-                             class="ui-li-icon ui-corner-none ui-li-icon"
-                             style="margin-top: 2px;">
-
+                        <span class="{{ langManager()->getLocaleFlagClass($locale, false, true) }} ui-li-icon" style="margin-right: 5px;"></span>
                         @lang('lang.name', [], $locale)
                     </a>
                 </li>

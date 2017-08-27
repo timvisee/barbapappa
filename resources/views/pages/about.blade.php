@@ -37,14 +37,23 @@
             <span class="spacer"></span>
 
             Some awesome technologies that have been used are
+
             <span class="spacer x05"></span>
             <a href="https://laravel.com/" target="_blank">Laravel</a>
+
             <span class="spacer x05"></span>
-            <a href="https://glyphicons.com/" target="_blank">Glyphicons</a> <i class="halflings halflings-heart" style="color: #b80000;"></i>
+            <a href="https://glyphicons.com/" target="_blank">Glyphicons</a>
+            <i class="halflings halflings-heart" style="color: #b80000;"></i>
+
             <span class="spacer x05"></span>
             <a href="https://jquery.com/" target="_blank">jQuery</a>
+
             <span class="spacer x05"></span>
-            <a href="https://jquerymobile.com/" target="_blank">jQuery Mobile</a><br />
+            <a href="https://jquerymobile.com/" target="_blank">jQuery Mobile</a>
+
+            <span class="spacer x05"></span>
+            <a href="http://flag-icon-css.lip.is/" target="_blank">flag-icon-css</a>
+            <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span>
         </p>
 
         <div class="page-divider">

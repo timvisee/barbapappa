@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/jquery-mobile.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/glyphicons-packed.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/flag-icon.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 
     <!-- Scripts -->
