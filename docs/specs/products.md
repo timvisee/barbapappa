@@ -1,7 +1,7 @@
 TODO: allow users to create a temporary custom product, for items that aren't on the list
 
 # Products specification
-Version: 0.1-draft (2017-08-27)
+Version: 0.1-draft (2017-08-87)
 
 This document describes the basics of products models BARbapAPPa uses.
 It is technical and intended for developers.
