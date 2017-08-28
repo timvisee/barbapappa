@@ -29,6 +29,7 @@ class TokenGenerator {
         // Generate the token
         $token = '';
         for($i = 0; $i < $length; $i++)
+            // TODO: Use a crypto secure randomization function here!
             $token .= $chars[rand(0, strlen($chars) - 1)];
 
         return $token;
