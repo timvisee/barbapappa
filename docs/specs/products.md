@@ -25,15 +25,44 @@ but it will never show up as new available product in a bar.
 
 ### Product model
 - `id`: index
+- `economy_id`: reference to the economy
 - `user_id`: reference to the user that added this product
 - `type`: type of product this is
     - 1: `normal`: a normal product added to a bar economy
     - 2: `custom`: a custom product added by a user
 - `name`: base name of the product
+- `product_category_id`: optional reference to a product category
 - `enabled`: true if enabled and visible, false if not
 - `archived`: false if available, true if archived and hidden
 - `created_at`: time the product was last created at
 - `updated_at`: time the product was last updated at
+
+### Product category
+A category that can be assigned to products, to better organize the product structure.
+
+Product categories are hierarchical thus a tree of categories can be made.
+
+#### Product category model
+- `id`: index
+- `economy_id`: reference to the economy
+- `name`: Category name
+- `parent`: reference to a parent category
+- `created_at`: time the category was created at
+- `updated_at`: time the category was last updated at
+
+### Product category translation
+A product may have name translations, to support different languages.
+Translations override the base name of the product if set.
+
+Only one product translation should be made in each locale.
+
+#### Product category translation model
+- `id`: index
+- `product_category_id`: reference to the product category
+- `locale`: locale the translation is in
+- `name`: product category name
+- `created_at`: time the product category translation was created at
+- `updated_at`: time the product category translation was last updated at
 
 ### Product offer
 A product offer specifies in what bars a product is available.
@@ -55,7 +84,7 @@ There may only be one offer instance per product and bar combination.
 - `product_id`: reference to a product
 - `bar_id`: optional reference to a bar
 - `offered`: true if the product is offered in the given bar, false if not
-- `created_at`: time the product offer was last created at
+- `created_at`: time the product offer was created at
 - `updated_at`: time the product offer was last updated at
 
 ### Product translation
@@ -69,7 +98,7 @@ Only one product translation should be made in each locale.
 - `product_id`: reference to the product
 - `locale`: locale the translation is in
 - `name`: product name
-- `created_at`: time the product translation was last created at
+- `created_at`: time the product translation was created at
 - `updated_at`: time the product translation was last updated at
 
 ### Product price
