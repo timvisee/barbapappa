@@ -1,5 +1,3 @@
-TODO: Currency constraints
-
 # Transactions specifications
 Version: 0.1-draft (2017-08-27)
 
@@ -40,20 +38,17 @@ A wallet is a virtual purse that is owned by a user.
 Wallets are used to quickly make payments to buy products,
 so the user doesn't have to initiate a bank transfer for each transaction.
 
-A wallet is created for a specific bar, and the wallet may only be used for payments on that specific bar in the future.
-At the time of writing this document,
-it is unsure whether multiple bars would allow the use of the same wallet if they share the same banking account.
-This is in the current specification however, not possible.
+A wallet is created for a specific economy, and the wallet may only be used for payments in that economy in the future.
 
 Users should have the ability to deposit money to their virtual wallet with payment services or other methods.
 The available options here are configured by the related bar the wallet is for.
 
-Multiple named wallets may be created by a user for a single bar to allow better financial organization,
-by using different wallets for different kind of transactions.
+Multiple named wallets may be created by a user in a single economy to allow better financial organization,
+by using different wallets for different kind of transactions managed by the user.
 
 ### Wallet model
 - `id`: index
-- `bar`: bar this wallet is created at
+- `economy_id`: reference to the economy
 - `name`: name of the wallet decided by the user
 - `balance`: current wallet balance
 - `currency`: currency identifier
@@ -75,6 +70,16 @@ Mutation examples:
 A valid transaction should also have a resulting sum value of zero when all mutations are considered,
 because money that flows somewhere, has to get from somewhere.
 Therefore, transactions that have a sum value other than zero are inherently invalid.
+
+The transaction money sum is grouped by economy and currency.
+When €10 is added, it must also be subtracted by another mutation to the same economy.
+The following transactions would be valid:  
+- `+€1, +€2, +$3, -€3, -$3 == €0, $0`
+- `+€5(econ a), +€7(econ b), -€5(econ a), -€7(econ b) == €0(econ a), €0(econ b)`
+The following transactions would be invalid:  
+- `+€1, +$2, -€1 == €0, $2`
+- `+€3, +$7, -€10 == €-7, $7`
+- `+€4(econ a), +€3(econ b), -€7(econ a) == €-3(econ a), €3(econ b)`
 
 Mutations only flow money in one direction.
 To further clarify; mutations only add money to xor subtract money from the transaction sum.
@@ -110,7 +115,7 @@ It is not possible to create a transaction to transfer money from one wallet to 
 where the two wallets are used for different bars (and thus, different banking accounts).
 
 If mutations in a transaction add €10 to the transaction money sum,
-that €10 euro must also be subtracted by other mutations related to the same bar (and banking account).
+that €10 must also be subtracted by other mutations related to the same bar (and banking account).
 
 Transactions with mutations to multiple bars are possible if their bar specific money sums are all equal zero.
 

@@ -1,3 +1,5 @@
+TODO: allow users to create a temporary custom product, for items that aren't on the list
+
 # Products specification
 Version: 0.1-draft (2017-08-27)
 
