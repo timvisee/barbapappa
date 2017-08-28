@@ -16,6 +16,7 @@ By default, all permission nodes are `false`.
 
 Wildcards may be used to define the allowance state for a group of permissions.
 The node `user.product.*` with a value of `true` would give the user permission for all nodes under `user.product.`.
+In contrast, setting `user.product` to true without a wildcard does not yield the same result.
 
 ## Permission nodes
 TODO: Specify a list of permissions here.

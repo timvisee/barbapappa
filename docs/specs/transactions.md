@@ -1,5 +1,5 @@
 # Transactions specifications
-Version: 0.1-draft (2017-08-27)
+Version: 0.1-draft (2017-08-28)
 
 This document describes the basics of the transactions model BARbapAPPa uses.
 It is technical and intended for developers.
@@ -215,6 +215,7 @@ Support for this might be added in the future if there's a proper use case that 
 ##### Product mutation model
 - `id`: index
 - `mutation_id`: reference to the super mutation
+- `bar_id`: reference to the bar the products were bought from
 - `product_bag_id`: reference to a product bag defining the products
 
 #### Magic mutation
@@ -261,12 +262,38 @@ The state of any related payment mutations should be updated along with it.
     - 1: `pending`: waiting for the payment to be started
     - 2: `processing`: waiting on the payment service to finish processing
     - 3: `paid`: the payment has been completed
-    - 4: `revoked`: the payment was revoked because TODO, DO WE NEED THIS?
+    - 4: `revoked`: the payment has been revoked by BARbapAPPa, possibly by a user
     - 5: `rejected`: the payment was rejected at the payment service, possibly by the user
-    - 6: `failed`: the payment failed
+    - 6: `failed`: the payment failed due to an error or another issue
+- `payment_type`: payment type
+    - 1: manual IBAN transfer
+    - 2: bunq payment request
+    - 3: bunq automated IBAN transfer
+- `payment_service_id`: reference to the payment service that was used
+- `reference`: an unique ID/token used for reference
 - `money`: the money receiving by this payment
 - `currency`: currency identifier
 - `created_at`: the time this payment was created at
 - `updated_at`: the time this payment was last updated at
-- TODO: Service type
-- TODO: Bar service config
+
+### Manual IBAN transfer payment
+`payment_manual_iban`:
+- `id`: index
+- `payment_id`: reference to the payment
+- `to_bank_account_iban_id`: reference to the receiving IBAN account
+- `from_bank_account_iban_id`: reference to the sending IBAN account
+- `approved_user_id`: reference to the user that approved this payment
+- `approved_at`: the time the payment was approved at
+
+### bunq payment request payment
+`payment_manual_bunq_request`:
+- `id`: index
+- `payment_id`: reference to the payment
+- TODO: bunq payment request identifier
+
+### bunq automated IBAN transfer payment
+`payment_manual_bunq_automated`:
+- `id`: index
+- `payment_id`: reference to the payment
+- `user_bank_account_iban_id`: reference to the IBAN account of the user
+- TODO: bunq banking account identifier
