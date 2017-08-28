@@ -124,7 +124,6 @@ The list of available service types will grow when more payment services are add
     - 2: manual IBAN transfer: a manual IBAN transfer, that must be approved by authorized users
     - 3: bunq request: a payment request through bunq
     - 4: bunq automated IBAN transfer: IBAN transfer that is automatically processed
-    
 - `can_withdraw`: true if money can be withdrawn through this service
 - `enabled`: true if enabled
 - `archived`: false if available, true if archived and hidden
