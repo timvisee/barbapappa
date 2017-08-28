@@ -7,10 +7,103 @@ This document describes the basics of products models BARbapAPPa uses.
 It is technical and intended for developers.
 
 ## Product
-TODO
+A product defines something that can be bought in a bar.
+The product defines the name, the prices in different currencies and availability
 
-## Product price
-TODO
+There are normal products, which are added by authorized users in a community.
+These product can then be made available in a bar, so users can buy them.
+The products are generally static, and available at all times.
+
+Custom products are used in special cases.
+Users generally have the ability to create custom products for a transaction.
+This is useful if the user buys something for a given price in a bar,
+that isn't listed in the list of products the bar has.
+The custom products are only visible by the user itself,
+and can be found when looking at the transaction in detail.
+Of course, authorised users inside a community will be able to view the product as well,
+but it will never show up as new available product in a bar.
+
+### Product model
+- `id`: index
+- `user_id`: reference to the user that added this product
+- `type`: type of product this is
+    - 1: `normal`: a normal product added to a bar economy
+    - 2: `custom`: a custom product added by a user
+- `name`: base name of the product
+- `enabled`: true if enabled and visible, false if not
+- `archived`: false if available, true if archived and hidden
+- `created_at`: time the product was last created at
+- `updated_at`: time the product was last updated at
+
+### Product offer
+A product offer specifies in what bars a product is available.
+
+An offer model overrides the default availability properties for a product,
+and is used to authorized users in a community can configure specifically
+in what bar a product is available.
+
+The `bar_id` field is used to specify what bar the offer is for.
+If the field is `null`, the offer is used for all bars in the community.
+
+The `offered` property finally determines whether the offer is available,
+or whether it is not.
+
+There may only be one offer instance per product and bar combination.
+
+#### Product offer model
+- `id`: index
+- `product_id`: reference to a product
+- `bar_id`: optional reference to a bar
+- `offered`: true if the product is offered in the given bar, false if not
+- `created_at`: time the product offer was last created at
+- `updated_at`: time the product offer was last updated at
+
+### Product translation
+A product may have name translations, to support different languages.
+Translations override the base name of the product if set.
+
+Only one product translation should be made in each locale.
+
+#### Product translation model
+- `id`: index
+- `product_id`: reference to the product
+- `locale`: locale the translation is in
+- `name`: product name
+- `created_at`: time the product translation was last created at
+- `updated_at`: time the product translation was last updated at
+
+### Product price
+The product price model specifies the price properties of a product in a given currency.
+A product may have multiple prices in different currencies,
+so multiple product price models may be created when multiple currencies are available.
+
+Only one price should be specified per currency.
+If no price is specified for the currency, the default currency properties are used from the economy.
+
+A product price may specify 3 different types of prices:  
+- 1: `none`: no price, not buyable (disables default prices)
+- 2: `specified`: the specified price in the `price` field
+- 3: `convert`: automatically convert to this `currency` based on another specified price on this product
+
+#### Product price model
+- `id`: index
+- `product_id`: reference to the product
+- `type`: type of the price
+    - 1: `none`: no price in this currency
+    - 2: `specified`: price as specified
+    - 3: `convert`: automatically convert the price to the selected currency when possible
+- `price`: product price
+- `currency`: currency identifier
+- `created_at`: time the product price was created at
+- `updated_at`: time the product price was last updated at
+
+#### Custom product model
+- `id`: index
+- `product_id`: reference to the super product
+- `price`: price of the product
+- `currency`: currency identifier
+- `created_at`: time the custom product was created at
+- `updated_at`: time the custom product was last updated at
 
 ## Product bag
 A product bag is a virtual bag or container products are stored in.
