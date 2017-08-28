@@ -56,7 +56,7 @@ by using different wallets for different kind of transactions.
 - `bar`: bar this wallet is created at
 - `name`: name of the wallet decided by the user
 - `balance`: current wallet balance
-- `currency_id`: reference to a currency
+- `currency`: currency identifier
 - `created_at`: time the wallet was created at
 - `updated_at`: time the wallet was last updated at
 
@@ -131,7 +131,7 @@ In any different state, the mutation is frozen.
     - 3: product mutation
     - 4: payment mutation
 - `money`: money this mutation processed
-- `currency`: reference to a currency
+- `currency`: currency identifier
 - `state`: mutation processing state
     - 1: `pending`: waiting on the system or on a dependency for processing
     - 2: `processing`: waiting on the mutation to complete
@@ -140,6 +140,8 @@ In any different state, the mutation is frozen.
 - `depend_on`: optional reference to mutation which must complete first
 - `created_at`: time this mutation was created at
 - `updated_at`: time this mutation was last updated at
+
+Note: the `updated_at` value must be changed when the child mutation state is changed.
 
 ### Mutation types
 There are various types of mutations that are attached to a transaction.
@@ -168,9 +170,6 @@ Therefore if money is added to a users wallet, the mutation `money` field will b
 - `mutation_id`: reference to the super mutation
 - `wallet_id`: reference to the related wallet
 - `balance_before`: balance at the moment of completing this mutation, just before the money change is applied
-TODO: move these to the super mutation?
-- `created_at`: time this wallet mutation was created at
-- `updated_at`: time this wallet mutation was last updated at
 
 #### Payment mutation
 A payment mutation defines a money transfer using a supported payment service.
@@ -194,9 +193,6 @@ the `money` field value would be below zero.
 - `id`: index
 - `mutation_id`: reference to the super mutation
 - `payment_id`: reference to the payment
-TODO: move these to the super mutation?
-- `created_at`: time this payment mutation was created at
-- `updated_at`: time this payment mutation was last updated at
 
 #### Product mutation
 A product mutation defines money being consumed because a user buys any number of products.
@@ -212,10 +208,7 @@ Support for this might be added in the future if there's a proper use case that 
 ##### Product mutation model
 - `id`: index
 - `mutation_id`: reference to the super mutation
-- TODO: Entry with the list of products that were bought
-TODO: move these to the super mutation?
-- `created_at`: time this product mutation was created at
-- `updated_at`: time this product mutation was last updated at
+- `product_bag_id`: reference to a product bag defining the products
 
 #### Magic mutation
 A magic mutation is a special kind of mutation, and it allows many special cases to be handled.
@@ -242,9 +235,6 @@ and because from the systems perspective the money would appear to be _spawned f
 - `id`: index
 - `mutation_id`: reference to the super mutation
 - `description`: description by the user
-TODO: move these to the super mutation?
-- `created_at`: time this magic mutation was created at
-- `updated_at`: time this magic mutation was last updated at
 
 ## Payment
 A payment defines a single transaction that is made through a third party payment service.
@@ -268,7 +258,7 @@ The state of any related payment mutations should be updated along with it.
     - 5: `rejected`: the payment was rejected at the payment service, possibly by the user
     - 6: `failed`: the payment failed
 - `money`: the money receiving by this payment
-- `currency_id`: reference to a currency
+- `currency`: currency identifier
 - `created_at`: the time this payment was created at
 - `updated_at`: the time this payment was last updated at
 - TODO: Service type
