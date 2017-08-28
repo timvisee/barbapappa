@@ -1,10 +1,6 @@
-# Permissions specification
+# Permissions
 Version: 0.1-draft (2017-08-28)
 
-This document describes the basics of permissions and related concepts in BARbapAPPa.
-It is technical and intended for developers.
-
-## Permissions
 In BARbapAPPa permissions are used to define what a given user is authorised to do.
 
 There is a predefined list of permissions, which are identified by a dot-separated string.  
@@ -28,6 +24,7 @@ There might be an _administrators_ and _normal users_ group where different user
 The _administrators_ would have different permissions to allow economy and bar management.
 
 ### Permission group model
+`permission_group`:
 - `id`: index
 - `name`: name of the permission group
 - `enabled`: true if enabled, false if fully ignored
@@ -41,6 +38,7 @@ The _administrators_ would have different permissions to allow economy and bar m
 A permission entry is a model to define a permission node and it's state for a permission group.
 
 #### Permission node model
+`permission_node`:
 - `id`: index
 - `permission_group_id`: reference to a permission group this is part of
 - `node`: permission node as a string
@@ -56,6 +54,7 @@ When a user is in multiple groups,
 permission properties might override each other depending on the order the groups are evaluated in.
 
 #### Permission group user model
+`permission_group_user`:
 - `id`: index
 - `permission_group_id`: reference to a group
 - `user_id`: reference to a user
@@ -74,6 +73,7 @@ A user selector has the following properties to define a constraint:
 - `in_community`: users that are in the _current_ community
 
 #### Permission group user selector model
+`permission_group_user_selector`:
 - `id`: index
 - `permission_group_id`: reference to a permission group
 - `is_authenticated`: optional, for authenticated users
