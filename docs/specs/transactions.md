@@ -73,10 +73,12 @@ Therefore, transactions that have a sum value other than zero are inherently inv
 
 The transaction money sum is grouped by economy and currency.
 When €10 is added, it must also be subtracted by another mutation to the same economy.  
-_The following transactions would be valid:_  
+
+_The following transaction mutations would be valid:_  
 - `+€1, +€2, +$3, -€3, -$3 == €0, $0`
 - `+€5(econ a), +€7(econ b), -€5(econ a), -€7(econ b) == €0(econ a), €0(econ b)`  
-_The following transactions would be invalid:_  
+
+_The following transaction mutations would be invalid:_  
 - `+€1, +$2, -€1 == €0, $2`
 - `+€3, +$7, -€10 == €-7, $7`
 - `+€4(econ a), +€3(econ b), -€7(econ a) == €-3(econ a), €3(econ b)`
