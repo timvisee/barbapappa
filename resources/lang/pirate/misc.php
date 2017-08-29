@@ -12,4 +12,5 @@ return [
     'unspecified' => 'Unspecified',
     'information' => 'Spyglasses',
     'welcomeTo' => 'Welcome to',
+    'logo' => 'Logo',
 ];

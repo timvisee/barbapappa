@@ -4,7 +4,7 @@
 
     <div class="highlight-box">
         <h3>@lang('pages.about')</h3>
-        <img src="{{ asset('img/logo/logo_wrap.svg') }}" class="logo" />
+        {{ logo()->element(true, ['class' => 'logo']) }}
         <p>{{ config('app.version_name') }} <span style="color: darkgray;">({{ config('app.version_code') }})</span></p>
     </div>
 

@@ -4,7 +4,7 @@
 
     <div class="highlight-box">
         <h3>@lang('misc.welcomeTo')</h3>
-        <img src="{{ asset('img/logo/logo_wrap.svg') }}" class="logo" />
+        {{ logo()->element(true, ['class' => 'logo']) }}
     </div>
 
     <br />

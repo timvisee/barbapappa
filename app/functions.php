@@ -15,7 +15,7 @@ if(!function_exists('barauth')) {
     }
 }
 
-// Build the lang function
+// Build the lang manager function
 if(!function_exists('langManager')) {
     /**
      * Get the language manager service singleton instance.
@@ -24,6 +24,18 @@ if(!function_exists('langManager')) {
      */
     function langManager() {
         return app('langManager');
+    }
+}
+
+// Build the logo provider function
+if(!function_exists('logo')) {
+    /**
+     * Get the logo provider singleton instance.
+     *
+     * @return \App\Services\LanguageManagerService
+     */
+    function logo() {
+        return app('logo');
     }
 }
 

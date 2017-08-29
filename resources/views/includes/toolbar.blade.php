@@ -9,7 +9,7 @@
     <h1>
         <a href="{{ route('index') }}" data-ajax="false" title="Refresh app">
             {{-- TODO: Use a properly sized image here --}}
-            <img src="{{ asset('img/logo/logo_nowrap.svg') }}" style="height: 21px; display: block;" />
+            {{ logo()->element(false, ['style' => 'height: 21px; display: block;']) }}
         </a>
     </h1>
 
