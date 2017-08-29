@@ -55,7 +55,7 @@ class PermissionGroup extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function inherit() {
-        return $this->hasOne(self::class);
+        return $this->hasOne(self::class, 'inherit_from');
     }
 
     /**
@@ -64,7 +64,7 @@ class PermissionGroup extends Model {
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function inherited_by() {
-        return $this->hasMany(self::class);
+        return $this->hasMany(self::class, 'id', 'inherit_from');
     }
 
     /**

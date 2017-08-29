@@ -40,4 +40,9 @@ class ValidationDefaults {
      * Last name validation configuration.
      */
     const LAST_NAME = 'string|min:2|max:255';
+
+    /**
+     * Permission group name validation configuration.
+     */
+    const PERMISSION_GROUP_NAME = 'string|min:2|max:255';
 }

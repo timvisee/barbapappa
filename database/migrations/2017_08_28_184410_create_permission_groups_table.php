@@ -16,8 +16,8 @@ class CreatePermissionGroupsTable extends Migration {
             $table->string('name');
             $table->boolean('enabled')->defaults(true);
             $table->integer('community_id')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->integer('inherit_permission_group_id')->nullable();
+            $table->integer('bar_id')->nullable();
+            $table->integer('inherit_from')->nullable();
             $table->timestamps();
         });
     }

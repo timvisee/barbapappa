@@ -48,6 +48,15 @@ Route::get('/account/{userId}', 'AccountController@show')->name('account.show');
 Route::get('/profile/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
 Route::put('/profile/{userId}', 'ProfileController@update')->name('profile.update');
 
+// Permission group routes
+Route::get('/permissions/groups/create', 'PermissionGroupsController@create')->name('permissionGroups.create');
+Route::post('/permissions/groups', 'PermissionGroupsController@store')->name('permissionGroups.store');
+Route::get('/permissions/groups', 'PermissionGroupsController@index')->name('permissionGroups.index');
+Route::get('/permissions/groups/{id}', 'PermissionGroupsController@show')->name('permissionGroups.show');
+Route::get('/permissions/groups/{id}/edit', 'PermissionGroupsController@edit')->name('permissionGroups.edit');
+Route::put('/permissions/groups/{id}', 'PermissionGroupsController@update')->name('permissionGroups.update');
+Route::delete('/permissions/groups/{id}', 'PermissionGroupsController@destroy')->name('permissionGroups.delete');
+
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
 

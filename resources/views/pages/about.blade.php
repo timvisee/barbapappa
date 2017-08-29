@@ -46,14 +46,14 @@
             <i class="halflings halflings-heart" style="color: #b80000;"></i>
 
             <span class="spacer x05"></span>
+            <a href="http://flag-icon-css.lip.is/" target="_blank">flag-icon-css</a>
+            <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span>
+
+            <span class="spacer x05"></span>
             <a href="https://jquery.com/" target="_blank">jQuery</a>
 
             <span class="spacer x05"></span>
             <a href="https://jquerymobile.com/" target="_blank">jQuery Mobile</a>
-
-            <span class="spacer x05"></span>
-            <a href="http://flag-icon-css.lip.is/" target="_blank">flag-icon-css</a>
-            <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span>
         </p>
 
         <div class="page-divider">
