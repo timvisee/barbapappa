@@ -27,6 +27,18 @@ if(!function_exists('langManager')) {
     }
 }
 
+// Build the permissions manager function
+if(!function_exists('perms')) {
+    /**
+     * Get the permissions manager singleton instance.
+     *
+     * @return \App\Services\LanguageManagerService
+     */
+    function perms() {
+        return app('perms');
+    }
+}
+
 // Build the logo provider function
 if(!function_exists('logo')) {
     /**
