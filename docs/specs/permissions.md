@@ -34,7 +34,8 @@ The _administrators_ would have different permissions to allow economy and bar m
 - `enabled`: true if enabled, false if fully ignored
 - `community_id`: optional reference to a community this group is for
 - `bar_id`: optional reference to a bar this group is for
-- `inherit_permission_group_id`: optional reference to a permission group to inherit from
+- `inherit_from`: optional reference to a permission group to inherit from
+- `order`: order value for group sorting and priority inside their scope
 - `created_at`: time the group was created at
 - `updated_at`: time the group was last updated at
 

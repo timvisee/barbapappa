@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int|null community_id
  * @property int|null bar_id
  * @property int|null inherit_from
+ * @property int order
  * @property Carbon created_at
  * @property Carbon updated_at
  */

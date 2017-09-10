@@ -18,6 +18,7 @@ class CreatePermissionGroupsTable extends Migration {
             $table->integer('community_id')->nullable();
             $table->integer('bar_id')->nullable();
             $table->integer('inherit_from')->nullable();
+            $table->integer('order')->defaults(0);
             $table->timestamps();
         });
     }
