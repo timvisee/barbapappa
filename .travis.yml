@@ -1,13 +1,22 @@
+# PHP, no sudo required
 language: php
+sudo: false
 
+# Test common PHP versions
 php:
   - 5.6
+  - 7.0
+  - 7.1
 
+# Set up the environment, install dependencies and seed the database
 before_script:
   - cp .env.travis .env
   - mysql -e 'create database barapp;'
   - composer self-update
   - composer install --no-interaction
+  - php artisan key:generate
+  - php artisan migrate --seed
 
+# Run unit tests
 script:
   - vendor/bin/phpunit
