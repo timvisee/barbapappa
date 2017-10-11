@@ -14,7 +14,7 @@ return [
     'confirmPassword' => 'Wachtwoord controle',
     'newPassword' => 'Nieuw wachtwoord',
     'confirmNewPassword' => 'Nieuw wachtwoord controle',
-    'currentPassword' => 'Huidige wachtwoord',
+    'currentPassword' => 'Huidig wachtwoord',
     'resetPassword' => 'Wachtwoord resetten',
 
     /**
