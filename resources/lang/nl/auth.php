@@ -18,7 +18,7 @@ return [
     'unauthorized' => 'Je bent onbevoegd deze pagina te bekijken.',
     'passwordChanged' => 'Je wachtwoord is aangepast.',
     'currentPasswordInvalid' => 'Je huidige wachtwoord is incorrect.',
-    'invalidCredentials' => 'Onjuist e-maildares of wachtwoord.',
+    'invalidCredentials' => 'Onjuist e-mailadres of wachtwoord.',
     'invalidPassword' => 'Onjuist wachtwoord.',
     'invalidCurrentPassword' => 'Je huidige wachtwoord is onjuist.',
     'newPasswordDifferent' => 'Het nieuwe wachtwoord moet anders zijn dan je huidige wachtwoord.',
