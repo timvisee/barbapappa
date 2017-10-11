@@ -1,3 +1,5 @@
+[![Build Status on Travis CI](https://travis-ci.org/timvisee/barbapappa.svg?branch=master)](https://travis-ci.org/timvisee/barbapappa)
+
 # BARbapAPPa
 BARbapAPPa bar management application.
 
@@ -65,6 +67,16 @@ When you've made changes to the project, make sure to:
 Some resources have to be compiled, see the _Compiled resources_ section above.
 
 To watch the resources and automatically recompile on change, use: `npm run watch`
+
+## Builds
+This project is currently automatically tested for each commit using CI services.
+
+|Service|Platforms|PHP|Branch|Build Status| |
+|---:|:---|:---|:---|:---:|:---|
+|Travis CI|Linux|5.6, 7.0, 7.1|master|[![Build status on Travis CI on master](https://travis-ci.org/timvisee/barbapappa.svg?branch=master)](https://travis-ci.org/timvisee/barbapappa)|[View Status](https://travis-ci.org/timvisee/barbapappa)|
+|Travis CI|Linux|5.6, 7.0, 7.1|last commit|[![Build status on Travis CI for last commit](https://travis-ci.org/timvisee/barbapappa.svg)](https://travis-ci.org/timvisee/barbapappa)|[View Status](https://travis-ci.org/timvisee/barbapappa)|
+
+Note: Tests are currently fairly basic, and should be improved at a later time.
 
 ## About
 This project is currently developed and maintained by [Tim Visée](https://github.com/timvisee), [www.timvisee.com](https://timvisee.com/).
