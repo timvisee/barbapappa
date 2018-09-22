@@ -27,6 +27,11 @@ class ValidationDefaults {
     const EMAIL_RESET_TOKEN = 'string|size:32';
 
     /**
+     * Email reset token validation configuration.
+     */
+    const EMAIL_VERIFY_TOKEN = self::EMAIL_RESET_TOKEN;
+
+    /**
      * Password reset token validation configuration.
      */
     const PASSWORD_RESET_TOKEN = 'string|size:32';
