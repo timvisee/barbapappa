@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Community;
+use App\Models\Economy;
 use Illuminate\Database\Seeder;
 
 class CommunitySeeder extends Seeder {
@@ -11,6 +12,9 @@ class CommunitySeeder extends Seeder {
      * @return void
      */
     public function run() {
-        factory(Community::class, 5)->create();
+        factory(Community::class, 5)->create()->each(function($community) {
+            // Add an economy
+            $community->economies()->save(factory(Economy::class)->make());
+        });
     }
 }
