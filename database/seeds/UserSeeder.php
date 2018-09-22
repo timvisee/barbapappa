@@ -12,7 +12,6 @@ class UserSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        // Make the users
         factory(User::class, 50)->create()->each(function($user) {
             // Add an email address
             $user->emails()->save(factory(Email::class)->make());
