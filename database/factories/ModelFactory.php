@@ -13,6 +13,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Models\Community;
 use App\Models\Email;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -40,5 +41,17 @@ $factory->define(Email::class, function(Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'verified_at' => $faker->dateTime(),
         'verified_ip' => $faker->ipv4
+    ];
+});
+
+/**
+ * Community factory.
+ */
+$factory->define(Community::class, function(Faker\Generator $faker) {
+    return [
+        'name' => $faker->company,
+        'visible' => $faker->boolean,
+        'public' => $faker->boolean,
+        'password' => rand(0, 1) == 0 ? $faker->numberBetween(1000, 9999) : null,
     ];
 });

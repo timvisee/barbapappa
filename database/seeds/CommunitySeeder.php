@@ -1,8 +1,9 @@
 <?php
 
+use App\Models\Community;
 use Illuminate\Database\Seeder;
 
-class DatabaseSeeder extends Seeder {
+class CommunitySeeder extends Seeder {
 
     /**
      * Run the database seeds.
@@ -10,7 +11,6 @@ class DatabaseSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $this->call(UserSeeder::class);
-        $this->call(CommunitySeeder::class);
+        factory(Community::class, 5)->create();
     }
 }

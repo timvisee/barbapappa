@@ -12,7 +12,7 @@ class CreateCommunity extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('community', function(Blueprint $table) {
+        Schema::create('communities', function(Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->boolean('visible');
@@ -28,6 +28,6 @@ class CreateCommunity extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('community');
+        Schema::dropIfExists('communities');
     }
 }
