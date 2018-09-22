@@ -84,10 +84,6 @@ class User extends Model {
         return $this->hasMany('App\Models\Session');
     }
 
-    public function posts() {
-        return $this->hasMany('App\Models\Post');
-    }
-
     public function emails() {
         return $this->hasMany('App\Models\Email');
     }
