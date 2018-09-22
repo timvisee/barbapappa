@@ -42,7 +42,7 @@ If the field is set to `false` (and thus is disabled), the currency should be hi
 - `id`: index
 - `economy_id`: reference to an economy
 - `enabled`: true if enabled and visible, false if disabled and not visible
-- `currency`: the currency identifier
+- `currency_id`: the ID of the currency that is used
 - `allow_wallet`: true to allow wallet creation by users in this currency
 - `product_price_default`:
     - 1: Specify
