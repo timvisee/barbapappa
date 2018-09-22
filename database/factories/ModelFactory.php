@@ -14,6 +14,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Models\Community;
+use App\Models\Economy;
 use App\Models\Email;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -53,5 +54,14 @@ $factory->define(Community::class, function(Faker\Generator $faker) {
         'visible' => $faker->boolean,
         'public' => $faker->boolean,
         'password' => rand(0, 1) == 0 ? $faker->numberBetween(1000, 9999) : null,
+    ];
+});
+
+/**
+ * Economy factory.
+ */
+$factory->define(Economy::class, function(Faker\Generator $faker) {
+    return [
+        'name' => rand(0, 1) == 0 ? "Main economy" : null,
     ];
 });

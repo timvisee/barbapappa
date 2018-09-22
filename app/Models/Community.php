@@ -43,6 +43,15 @@ class Community extends Model {
     // }
 
     /**
+     * Get a list of economies that are part of this community.
+     *
+     * @return List of economies.
+     */
+    public function economies() {
+        return $this->hasMany('App\Models\Economy');
+    }
+
+    /**
      * Check whether this community has a password specified.
      *
      * @return bool True if specified, false if not or if empty.
