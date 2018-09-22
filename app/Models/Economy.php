@@ -30,4 +30,13 @@ class Economy extends Model {
     public function community() {
         return $this->belongsTo('App\Models\Community');
     }
+
+    /**
+     * Get the list of supported currencies in this economy.
+     *
+     * @return The list of supported currencies.
+     */
+    public function supportedCurrencies() {
+        return $this->hasMany('App\Models\SupprotedCurrency');
+    }
 }
