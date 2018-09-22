@@ -64,14 +64,14 @@
 .ui-header div.left {
   order: -1;
   @include ui-header-div-side;
-  margin-left: 6px;
+  margin-left: 12px;
   text-align: left;
 }
 
 .ui-header div.right {
   order: 1;
   @include ui-header-div-side;
-  margin-right: 6px;
+  margin-right: 12px;
   text-align: right;
 }
 

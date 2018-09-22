@@ -15,7 +15,6 @@
 
     <div class="right">
         <a href="{{ route('index') }}" class="glyphicons glyphicons-message-new toolbar-btn-message"></a>
-        <a href="{{ route('index') }}" class="glyphicons glyphicons-lock toolbar-btn-security"></a>
     </div>
 
 </div>
