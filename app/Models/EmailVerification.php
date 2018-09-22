@@ -22,6 +22,17 @@ class EmailVerification extends Model {
     }
 
     /**
+     * Check whether the given token is valid.
+     *
+     * @param bool $token The token.
+     *
+     * @return bool True if the token is valid, false otherwise.
+     */
+    public function isValidToken($token) {
+        return trim($this->token) == trim($token) && !empty($this->token);
+    }
+
+    /**
      * Check whether this session has expired.
      *
      * @return bool True if expired, false if not.
