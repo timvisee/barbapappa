@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Mail;
  */
 class CurrencySupport extends Model {
 
+    protected $table = "currency_support";
+
     /**
      * Get the economy this currency support model is part of.
      *
