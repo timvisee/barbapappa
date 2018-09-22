@@ -57,10 +57,9 @@ mix.styles([
     'resources/assets/vendor/glyphicons-halflings/css/glyphicons-halflings.css'
 ], 'public/css/glyphicons-packed.css');
 
-
-
-mix.sass('node_modules/flag-icon-css/sass/_flag-icon.scss', 'public/css/flag-icon.css');
-// mix.copyDirectory(
-//     'node_modules/flag-icon-css/flags',
-//     'public/flags'
-// );
+// Flag icon files
+mix.sass('node_modules/flag-icon-css/sass/flag-icon.scss', 'public/css/flag-icon.css');
+mix.copyDirectory(
+    'node_modules/flag-icon-css/flags',
+    'public/flags'
+);
