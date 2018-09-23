@@ -26,4 +26,7 @@ $(document).ready(function() {
         $('.ui.sidebar').sidebar('toggle');
         return false;
     });
+
+    // Initialize checkboxes
+    $('.ui.checkbox').checkbox();
 });

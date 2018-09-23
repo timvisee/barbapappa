@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <h3 class="ui header">@lang('auth.register')</h3>
+
     {!! Form::open(['action' => ['RegisterController@doRegister'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
     <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
@@ -38,7 +40,7 @@
         </div>
     </div>
 
-    <div data-role="ui buttons">
+    <div>
         <button class="ui button primary" type="submit">@lang('auth.register')</button>
         <a href="{{ route('login') }}" class="ui button basic">@lang('auth.login')</a>
     </div>

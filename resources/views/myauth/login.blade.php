@@ -2,6 +2,8 @@
 
 @section('content')
 
+    <h3 class="ui header">@lang('auth.login')</h3>
+
     {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
     <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
@@ -16,7 +18,7 @@
         {{ ErrorRenderer::inline('password') }}
     </div>
 
-    <div data-role="ui buttons">
+    <div>
         <button class="ui button primary" type="submit">@lang('auth.login')</button>
         <a href="{{ route('password.request') }}" class="ui button basic">@lang('auth.forgotPassword')</a>
         <a href="{{ route('register') }}" class="ui button basic">@lang('auth.register')</a>

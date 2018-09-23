@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>@lang('pages.passwordRequestSent.title')</h1>
+    <h3 class="ui header">@lang('pages.passwordRequestSent.title')</h3>
     <p>@lang('pages.passwordRequestSent.message', ['hours' => 24])</p>
 
 @endsection

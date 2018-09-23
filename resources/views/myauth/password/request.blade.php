@@ -2,17 +2,20 @@
 
 @section('content')
 
-    <h1>@lang('pages.requestPasswordReset')</h1>
+    <h3 class="ui header">@lang('pages.requestPasswordReset')</h3>
 
-    {!! Form::open(['action' => ['PasswordForgetController@doRequest'], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['PasswordForgetController@doRequest'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        {{ Form::label('email', __('account.email')) }}
-        {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
-        {{ ErrorRenderer::inline('email') }}
+        <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
+            {{ Form::label('email', __('account.email') . ':') }}
+            {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
+            {{ ErrorRenderer::inline('email') }}
+        </div>
 
-        {{ Form::submit(__('account.resetPassword')) }}
-
-        <a href="{{ route('login') }}">@lang('auth.login')</a>
+        <div>
+            <button class="ui button primary" type="submit">@lang('account.resetPassword')</button>
+            <a href="{{ route('login') }}" class="ui button basic">@lang('auth.login')</a>
+        </div>
 
     {!! Form::close() !!}
 
