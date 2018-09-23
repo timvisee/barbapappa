@@ -62,16 +62,5 @@ Route::prefix('/profile')->middleware(['selectUser'])->group(function() {
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
 
-// Permission group routes
-Route::prefix('/permissions/groups')->group(function() {
-    Route::get('/create', 'PermissionGroupsController@create')->name('permissionGroups.create');
-    Route::post('/', 'PermissionGroupsController@store')->name('permissionGroups.store');
-    Route::get('/', 'PermissionGroupsController@index')->name('permissionGroups.index');
-    Route::get('/{id}', 'PermissionGroupsController@show')->name('permissionGroups.show');
-    Route::get('/{id}/edit', 'PermissionGroupsController@edit')->name('permissionGroups.edit');
-    Route::put('/{id}', 'PermissionGroupsController@update')->name('permissionGroups.update');
-    Route::delete('/{id}', 'PermissionGroupsController@destroy')->name('permissionGroups.delete');
-});
-
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
