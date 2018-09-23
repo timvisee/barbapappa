@@ -55,7 +55,7 @@ $page-divider-color: #D5D5D5;
 
 .highlight-box {
   text-align: center;
-  margin: 0 0 1.5em 0;
+  margin: 2.5em 0 1.5em 0;
   padding: 0.5em 0.5em 0.3em;
 }
 
@@ -136,4 +136,10 @@ ul.ui-listview.center > li > a.ui-btn {
 
 .flag-icon-pirate.flag-icon-squared {
   background-image: url(/img/flag/pirate_1x1.svg);
+}
+
+// Flags on buttons
+.ui.button .icon .flag-icon {
+    display: inline-block;
+    height: 100%;
 }

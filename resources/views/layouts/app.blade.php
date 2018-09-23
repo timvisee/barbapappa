@@ -27,9 +27,11 @@
     <div class="pusher">
         @include('includes.toolbar')
 
-        @include('includes.message')
+        <div class="ui container">
+            @include('includes.message')
 
-        @yield('content')
+            @yield('content')
+        </div>
     </div>
 </body>
 </html>
