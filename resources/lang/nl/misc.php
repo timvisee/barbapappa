@@ -16,6 +16,7 @@ return [
     'unspecified' => 'Niet gespecificeerd',
     'information' => 'Informatie',
     'add' => 'Toevoegen',
+    'actions' => 'Acties',
     'welcomeTo' => 'Welkom bij',
     'logo' => 'Logo',
 ];

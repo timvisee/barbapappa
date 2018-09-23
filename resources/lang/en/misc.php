@@ -16,6 +16,7 @@ return [
     'unspecified' => 'Unspecified',
     'information' => 'Information',
     'add' => 'Add',
+    'actions' => 'Actions',
     'welcomeTo' => 'Welcome to',
     'logo' => 'Logo',
 ];
