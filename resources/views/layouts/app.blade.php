@@ -11,7 +11,6 @@
     <title>{{ config('app.name', 'BARbapAPPa') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/jquery-mobile.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/glyphicons-packed.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/flag-icon.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
@@ -22,16 +21,14 @@
     <script type="text/javascript" src="{{ asset('js/semantic.min.js') }}"></script>
 </head>
 <body>
-    <div data-role="page">
+    @include('includes.sidebar')
+
+    <div class="pusher">
         @include('includes.toolbar')
 
-        <div data-role="main" class="ui-content">
-            @include('includes.message')
+        @include('includes.message')
 
-            @yield('content')
-        </div>
-
-        @include('includes.sidebar')
+        @yield('content')
     </div>
 
     <!-- Scripts -->
