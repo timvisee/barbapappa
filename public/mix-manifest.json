@@ -4,5 +4,7 @@
     "/css/flag-icon.css": "/css/flag-icon.css",
     "/js/jquery-packed.js": "/js/jquery-packed.js",
     "/css/jquery-mobile.css": "/css/jquery-mobile.css",
-    "/css/glyphicons-packed.css": "/css/glyphicons-packed.css"
+    "/css/glyphicons-packed.css": "/css/glyphicons-packed.css",
+    "/css/semantic.min.css": "/css/semantic.min.css",
+    "/css/semantic.min.js": "/css/semantic.min.js"
 }
