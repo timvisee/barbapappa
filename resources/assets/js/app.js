@@ -20,8 +20,10 @@
 //     el: '#app'
 // });
 
-// Sidebar toggle
-$('.sidebar-toggle').click(function() {
-    $('.ui.sidebar').sidebar('toggle');
-    return false;
+$(document).ready(function() {
+    // Sidebar toggle
+    $('.sidebar-toggle').click(function() {
+        $('.ui.sidebar').sidebar('toggle');
+        return false;
+    });
 });
