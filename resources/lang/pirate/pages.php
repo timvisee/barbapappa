@@ -42,6 +42,7 @@ return [
         'email' => [
             'description' => 'Th\' page shows an overview of ye e-bottle coordinates.',
             'yourEmails' => 'Ye e-bottles',
+            'resendVerify' => 'Sally forth verification',
             'verifySent' => 'A fresh verification e-bottle be sally forth.',
             'alreadyVerified' => 'Th\' e-bottle coordinate be verified.',
             'cannotDeleteMustHaveVerified' => 'Ye no delete \'his e-bottle coordinate, ye must be one verified coordinate.',

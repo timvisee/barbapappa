@@ -126,7 +126,7 @@ class EmailController extends Controller {
         }
 
         // Delete the email address and it's verification tokens
-        // TODO: don't explicitly delete verifications, configure this in SQL
+        // TODO: don't explicitly delete verifications, cascade through SQL
         $email->verifications()->delete();
         $email->delete();
 

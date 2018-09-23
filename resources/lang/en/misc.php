@@ -10,7 +10,6 @@ return [
     'verified' => 'Verified',
     'notVerified' => 'Not verified',
     'unverified' => 'unverified',
-    'reverify' => 'Reverify',
     'delete' => 'Delete',
     'noToken' => 'No token specified.',
     'saveChanges' => 'Save changes',

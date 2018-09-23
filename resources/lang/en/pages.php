@@ -42,6 +42,7 @@ return [
         'email' => [
             'description' => 'This page shows your email addresses.',
             'yourEmails' => 'Your email addresses',
+            'resendVerify' => 'Resend verification',
             'verifySent' => 'A new verification email will be sent shortly.',
             'alreadyVerified' => 'This email address has already been verified.',
             'cannotDeleteMustHaveVerified' => 'You cannot delete this email address, you must have at least one verified address.',
