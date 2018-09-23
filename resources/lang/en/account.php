@@ -6,6 +6,7 @@ return [
      */
     'email' => 'Email',
     'emails' => 'Emails',
+    'noEmails' => 'No emails',
     'emailPlaceholder' => 'jack@gmail.com',
     'unverifiedEmails' => 'Unverified emails',
     'manageEmails' => 'Manage emails',

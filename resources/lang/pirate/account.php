@@ -6,6 +6,7 @@ return [
      */
     'email' => 'E-bottle',
     'emails' => 'E-bottles',
+    'noEmails' => 'Nay e-bottles',
     'emailPlaceholder' => 'blackbeard@thepiratebay.org',
     'unverifiedEmails' => 'Unverified e-bottle',
     'manageEmails' => 'Manage e-bottles',

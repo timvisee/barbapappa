@@ -28,8 +28,14 @@
     <a href="{{ route('password.change') }}">@lang('pages.changePassword')</a>
 
     <h3>@lang('account.email')</h3>
-    <ul>
-        <li>timvisee@gmail.com</li>
-    </ul>
+    @php
+        // Count configured and unverified email addresses
+        $mailsConfigured = $user->emails()->count();
+        $mailsUnverified = $user->emails()->where('verified_at', null)->count();
+    @endphp
+    @if($mailsUnverified > 0)
+        {{ $mailsUnverified }} @lang('misc.unverified'), 
+    @endif
+    {{ $mailsConfigured }} configured<br />
     <a href="{{ route('account.emails', ['userId' => $user->id]) }}">@lang('account.manageEmails')</a>
 @endsection
