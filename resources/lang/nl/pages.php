@@ -44,6 +44,8 @@ return [
             'yourEmails' => 'Jouw e-mailadressen',
             'verifySent' => 'Een nieuwe verificatie-e-mail zal binnenkort verzonden worden.',
             'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',
+            'cannotDeleteMustHaveVerified' => 'Je kunt dit e-mailadres niet verwijderen, je moet tenminste één geverifiëerd adres hebben.',
+            'deleted' => 'Het e-mailadres is verwijderd.',
         ],
         'addEmail' => [
             'title' => 'E-mailadres toevoegen',

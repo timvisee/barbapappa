@@ -10,6 +10,8 @@ return [
     'verified' => 'Geverifiëerd',
     'notVerified' => 'Niet geverifiëerd',
     'unverified' => 'ongeverifiëerd',
+    'reverify' => 'Herverifiëren',
+    'delete' => 'Verwijderen',
     'noToken' => 'Geen token opgegeven.',
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',

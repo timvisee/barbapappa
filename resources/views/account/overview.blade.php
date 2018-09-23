@@ -31,7 +31,7 @@
     @php
         // Count configured and unverified email addresses
         $mailsConfigured = $user->emails()->count();
-        $mailsUnverified = $user->emails()->where('verified_at', null)->count();
+        $mailsUnverified = $mailsConfigured - $user->emails()->verified()->count();
     @endphp
     @if($mailsUnverified > 0)
         {{ $mailsUnverified }} @lang('misc.unverified'), 

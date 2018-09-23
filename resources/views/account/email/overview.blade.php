@@ -18,8 +18,10 @@
                 @if(!$email->isVerified())
                     <i>@lang('misc.notVerified')</i>
 
-                    <a href="{{ route('account.emails.reverify', ['userId' => $user->id, 'emailId' => $email->id]) }}">Resend verification</a>
+                    <a href="{{ route('account.emails.reverify', ['userId' => $user->id, 'emailId' => $email->id]) }}">@lang('misc.reverify')</a>
                 @endif
+
+                <a href="{{ route('account.emails.delete', ['userId' => $user->id, 'emailId' => $email->id]) }}">@lang('misc.delete')</a>
             </li>
         @empty
             <i>@lang('account.noEmails')</i>

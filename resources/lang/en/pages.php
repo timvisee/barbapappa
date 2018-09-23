@@ -44,6 +44,8 @@ return [
             'yourEmails' => 'Your email addresses',
             'verifySent' => 'A new verification email will be sent shortly.',
             'alreadyVerified' => 'This email address has already been verified.',
+            'cannotDeleteMustHaveVerified' => 'You cannot delete this email address, you must have at least one verified address.',
+            'deleted' => 'The email address has been deleted.',
         ],
         'addEmail' => [
             'title' => 'Add email address',
