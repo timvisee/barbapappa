@@ -49,7 +49,7 @@ mix.copyDirectory(
     'public/fonts',
 ).styles([
     'resources/assets/vendor/glyphicons/css/glyphicons.css',
-    // 'resources/assets/vendor/glyphicons-halflings/css/glyphicons-halflings.css'
+    'resources/assets/vendor/glyphicons-halflings/css/glyphicons-halflings.css',
 ], 'public/css/glyphicons-packed.css');
 
 // Flag icon files
