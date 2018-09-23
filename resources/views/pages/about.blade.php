@@ -42,6 +42,9 @@
             <a href="https://laravel.com/" target="_blank">Laravel</a>
 
             <span class="spacer x05"></span>
+            <a href="https://semantic-ui.com" target="_blank">Semantic UI</a>
+
+            <span class="spacer x05"></span>
             <a href="https://glyphicons.com/" target="_blank">Glyphicons</a>
             <i class="halflings halflings-heart" style="color: #b80000;"></i>
 
@@ -51,9 +54,6 @@
 
             <span class="spacer x05"></span>
             <a href="https://jquery.com/" target="_blank">jQuery</a>
-
-            <span class="spacer x05"></span>
-            <a href="https://jquerymobile.com/" target="_blank">jQuery Mobile</a>
         </p>
 
         <div class="page-divider">
