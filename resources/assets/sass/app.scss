@@ -55,7 +55,7 @@ $page-divider-color: #D5D5D5;
 
 .highlight-box {
   text-align: center;
-  margin: 2.5em 0 1.5em 0;
+  margin: 1.5em 0;
   padding: 0.5em 0.5em 0.3em;
 }
 
@@ -73,6 +73,11 @@ $page-divider-color: #D5D5D5;
   @include fluid-type(width, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 75px, 200px);
   @include fluid-type(margin-top, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 5px, 25px);
   @include fluid-type(margin-bottom, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 5px, 25px);
+}
+
+// Page
+.page {
+    margin-top: 2em;
 }
 
 // Page dividers

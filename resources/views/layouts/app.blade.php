@@ -27,7 +27,7 @@
     <div class="pusher">
         @include('includes.toolbar')
 
-        <div class="ui container">
+        <div class="ui container page">
             @include('includes.message')
 
             @yield('content')
