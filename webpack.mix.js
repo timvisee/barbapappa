@@ -66,4 +66,4 @@ mix.copyDirectory(
 
 // Semantic UI files
 mix.copy('node_modules/semantic-ui-css/semantic.min.css', 'public/css/semantic.min.css')
-    .copy('node_modules/semantic-ui-css/semantic.min.js', 'public/css/semantic.min.js');
+    .copy('node_modules/semantic-ui-css/semantic.min.js', 'public/js/semantic.min.js');
