@@ -16,9 +16,14 @@ class CreateSessionsTable extends Migration {
             $table->increments('id');
             $table->integer('user_id');
             $table->string('token');
-            $table->timestamps();
             $table->ipAddress('created_ip');
             $table->timestamp('expire_at')->nullable();
+            $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascase');
         });
     }
 
