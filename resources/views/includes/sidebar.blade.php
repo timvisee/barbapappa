@@ -4,6 +4,14 @@
             <i class="icon-glyphicons glyphicons glyphicons-dashboard"></i>
             @lang('pages.dashboard')
         </a>
+        <a href="{{ route('community.overview') }}" class="item">
+            <i class="icon-glyphicons glyphicons glyphicons-group"></i>
+            @lang('pages.communities')
+        </a>
+        <a href="{{ route('bar.overview') }}" class="item">
+            <i class="icon-glyphicons glyphicons glyphicons-beer"></i>
+            @lang('pages.bars')
+        </a>
         <a href="{{ route('account') }}" class="item">
             <i class="icon-glyphicons glyphicons glyphicons-user"></i>
             @lang('pages.account')

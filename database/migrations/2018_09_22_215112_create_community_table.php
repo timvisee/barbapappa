@@ -15,6 +15,7 @@ class CreateCommunityTable extends Migration {
         Schema::create('communities', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name');
+            $table->string('slug')->index()->unique()->nullable(true)->default(null);
             $table->boolean('visible');
             $table->boolean('public');
             $table->string('password')->nullable()->default(null);

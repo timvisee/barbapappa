@@ -24,7 +24,7 @@ class ValidationDefaults {
     /**
      * Email reset token validation configuration.
      */
-    const EMAIL_RESET_TOKEN = 'string|size:32';
+    const EMAIL_RESET_TOKEN = 'string|alpha_num|size:32';
 
     /**
      * Email reset token validation configuration.
@@ -47,7 +47,22 @@ class ValidationDefaults {
     const LAST_NAME = 'string|min:2|max:255';
 
     /**
-     * Permission group name validation configuration.
+     * Base slug validation configuration.
      */
-    const PERMISSION_GROUP_NAME = 'string|min:2|max:255';
+    const SLUG = 'string|alpha_dash|min:2|max:64|regex:' . self::SLUG_REGEX;
+
+    /**
+     * A regex for slug validation.
+     */
+    const SLUG_REGEX = '/^[a-zA-Z_][a-zA-Z0-9_-]{1,64}$/';
+
+    /**
+     * Community slug validation configuration.
+     */
+    const COMMUNITY_SLUG = self::SLUG . '|unique:communities,slug';
+
+    /**
+     * Bar slug validation configuration.
+     */
+    const BAR_SLUG = self::SLUG . '|unique:bars,slug';
 }

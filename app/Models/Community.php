@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Helpers\ValidationDefaults;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
+use App\Utils\SlugUtils;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -33,6 +36,19 @@ class Community extends Model {
         'password'
     ];
 
+    /**
+     * The "booting" method of the model.
+     *
+     * @return void
+     */
+    protected static function boot() {
+        parent::boot();
+
+        static::addGlobalScope('visible', function(Builder $builder) {
+            $builder->where('visible', true);
+        });
+    }
+
     // /**
     //  * Get a list of users that joined this community.
     //  *
@@ -41,6 +57,31 @@ class Community extends Model {
     // public function users() {
     //     return $this->hasMany('App\Models\Email');
     // }
+
+    /**
+     * Find the community in a smart manner, using the slug if a slug is given.
+     *
+     * @param string $id The community ID or slug.
+     *
+     * @return Community The community if found.
+     */
+    public static function smartFindOrFail($id) {
+        if(SlugUtils::isValid($id))
+            return Community::slugOrFail($id);
+        else
+            return Community::findOrFail($id);
+    }
+
+    /**
+     * Find the community by the given slug, or fail.
+     *
+     * @param string $slug The slug.
+     *
+     * @return Community The community if found.
+     */
+    public static function slugOrFail($slug) {
+        return Community::where('slug', $slug)->firstOrFail();
+    }
 
     /**
      * Get a list of economies that are part of this community.
@@ -67,5 +108,14 @@ class Community extends Model {
      */
     public function hasPassword() {
         return !empty($this->password);
+    }
+
+    /**
+     * Check whether this community has a slug specified.
+     *
+     * @return bool True if specified, false if not or if empty.
+     */
+    public function hasSlug() {
+        return !empty($this->slug);
     }
 }

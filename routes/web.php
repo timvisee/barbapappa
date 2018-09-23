@@ -62,5 +62,35 @@ Route::prefix('/profile')->middleware(['selectUser'])->group(function() {
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
 
+// Community routes
+Route::prefix('/c')->group(function() {
+    Route::get('/', 'CommunityController@overview')->name('community.overview');
+    Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
+        Route::get('/', 'CommunityController@show')->name('community.show');
+        // Route::prefix("/emails")->group(function() {
+        //     Route::get('/', 'EmailController@show')->name('account.emails');
+        //     Route::get('/new', 'EmailController@create')->name('account.emails.create');
+        //     Route::post('/new', 'EmailController@doCreate');
+        //     Route::get('/reverify/{emailId}', 'EmailController@reverify')->name('account.emails.reverify');
+        //     Route::get('/delete/{emailId}', 'EmailController@delete')->name('account.emails.delete');
+        // });
+    });
+});
+
+// Bar routes
+Route::prefix('/b')->group(function() {
+    Route::get('/', 'BarController@overview')->name('bar.overview');
+    Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
+        Route::get('/', 'BarController@show')->name('bar.show');
+        // Route::prefix("/emails")->group(function() {
+        //     Route::get('/', 'EmailController@show')->name('account.emails');
+        //     Route::get('/new', 'EmailController@create')->name('account.emails.create');
+        //     Route::post('/new', 'EmailController@doCreate');
+        //     Route::get('/reverify/{emailId}', 'EmailController@reverify')->name('account.emails.reverify');
+        //     Route::get('/delete/{emailId}', 'EmailController@delete')->name('account.emails.delete');
+        // });
+    });
+});
+
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');

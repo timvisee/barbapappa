@@ -8,6 +8,8 @@ return [
     'dashboard' => 'Dashboard',
     'yourPersonalDashboard' => 'Your personal dashboard',
     'emailPreferences' => 'Email preferences',
+    'communities' => 'Communities',
+    'bars' => 'Bars',
     'account' => 'Account',
     'yourAccount' => 'Your account',
     'requestPasswordReset' => 'Request password reset',
@@ -53,6 +55,23 @@ return [
             'description' => 'Fill in the email address you\'d like to add.',
             'added' => 'Email address added. A verification email has been sent.',
         ],
+    ],
+
+    /**
+     * Community pages.
+     */
+    'community' => [
+        'noCommunities' => 'No communities available...',
+        'viewCommunities' => 'View communities',
+    ],
+
+    /**
+     * Bar pages.
+     */
+    'bar' => [
+        'noBars' => 'No bars available...',
+        'searchByCommunity' => 'Search by community',
+        'searchByCommunityDescription' => 'It\'s usually easier to find a specific bar by it\'s community.',
     ],
 
     /**

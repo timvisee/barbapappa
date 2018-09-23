@@ -8,6 +8,8 @@ return [
     'dashboard' => 'Home port',
     'yourPersonalDashboard' => 'Ye home port',
     'emailPreferences' => 'E-bottle preferences',
+    'communities' => 'Pirates',
+    'bars' => 'Bars',
     'account' => 'Ye ship',
     'yourAccount' => 'Ye ship',
     'requestPasswordReset' => 'Request passcode reset',
@@ -53,6 +55,23 @@ return [
             'description' => 'Enter yer e-bottle coordinate to conquer.',
             'added' => 'E-bottle coordinate added. \'ll verification be sent.',
         ],
+    ],
+
+    /**
+     * Community pages.
+     */
+    'community' => [
+        'noCommunities' => 'Nay pirates asea...',
+        'viewCommunities' => 'View pirates',
+    ],
+
+    /**
+     * Bar pages.
+     */
+    'bar' => [
+        'noBars' => 'Nay bars asea...',
+        'searchByCommunity' => 'Search by pirate',
+        'searchByCommunityDescription' => 'It\' usually be easier to find ye bar by it\'s pirate.',
     ],
 
     /**

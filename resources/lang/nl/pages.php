@@ -8,6 +8,8 @@ return [
     'dashboard' => 'Dashboard',
     'yourPersonalDashboard' => 'Je persoonlijke dashboard',
     'emailPreferences' => 'E-mailvoorkeuren',
+    'communities' => 'Groepen',
+    'bars' => 'Bars',
     'account' => 'Account',
     'yourAccount' => 'Jouw account',
     'requestPasswordReset' => 'Wachtwoord reset aanvragen',
@@ -53,6 +55,23 @@ return [
             'description' => 'Vul the e-mailadres in dat je wilt toevoegen.',
             'added' => 'E-mailadres toegevoegd. Er is een verificatie-e-mail gestuurd.',
         ],
+    ],
+
+    /**
+     * Community pages.
+     */
+    'community' => [
+        'noCommunities' => 'Geen groepen beschikbaar...',
+        'viewCommunities' => 'Bekijk groepen',
+    ],
+
+    /**
+     * Bar pages.
+     */
+    'bar' => [
+        'noBars' => 'Geen bars beschikbaar...',
+        'searchByCommunity' => 'Zoeken via groepen',
+        'searchByCommunityDescription' => 'Vaak is het makkelijker om een bar te zoeken via de bijbehorende groep.',
     ],
 
     /**
