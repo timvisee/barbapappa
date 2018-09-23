@@ -17,6 +17,8 @@
 
                 @if(!$email->isVerified())
                     <i>@lang('misc.notVerified')</i>
+
+                    <a href="{{ route('account.emails.reverify', ['userId' => $user->id, 'emailId' => $email->id]) }}">Resend verification</a>
                 @endif
             </li>
         @empty
@@ -26,7 +28,7 @@
 
     <br />
     <div data-role="controlgroup">
-        <a href="{{ route('account.emails.create', ['user_id' => $user->id]) }}" class="ui-btn ui-btn-corner-all">@lang('pages.accountPage.addEmail.title')</a>
+        <a href="{{ route('account.emails.create', ['userId' => $user->id]) }}" class="ui-btn ui-btn-corner-all">@lang('pages.accountPage.addEmail.title')</a>
     </div>
 @endsection
 

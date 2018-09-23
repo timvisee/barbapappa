@@ -51,6 +51,7 @@ Route::prefix('/account/{userId?}')->middleware(['selectUser'])->group(function(
         Route::get('/', 'EmailController@show')->name('account.emails');
         Route::get('/new', 'EmailController@create')->name('account.emails.create');
         Route::post('/new', 'EmailController@doCreate');
+        Route::get('/reverify/{emailId}', 'EmailController@reverify')->name('account.emails.reverify');
     });
 });
 

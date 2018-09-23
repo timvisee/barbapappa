@@ -67,4 +67,33 @@ class EmailController extends Controller {
             ->route('account.emails', ['userId' => $userId])
             ->with('success', __('pages.accountPage.addEmail.added'));
     }
+
+    /**
+     * Resend a verification email.
+     *
+     * @return Response
+     */
+    public function reverify($userId, $emailId, Request $request) {
+        // TODO: ensure the user has enough permission to reverify this email
+        // address
+
+        // Get the selected email address and user
+        $email = Email::findOrFail($emailId);
+        $user = \Request::get('user');
+
+        // Ensure it isn't verified
+        if($email->isVerified()) {
+            return redirect()
+                ->route('account.emails', ['userId' => $userId])
+                ->with('error', __('pages.accountPage.email.alreadyVerified'));
+        }
+
+        // Make an email verification request
+        EmailVerificationManager::createAndSend($email, false);
+
+        // Redirect to the emails page, show a success message
+        return redirect()
+            ->route('account.emails', ['userId' => $userId])
+            ->with('success', __('pages.accountPage.email.verifySent'));
+    }
 }

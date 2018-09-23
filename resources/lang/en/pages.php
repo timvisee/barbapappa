@@ -42,6 +42,8 @@ return [
         'email' => [
             'description' => 'This page shows your email addresses.',
             'yourEmails' => 'Your email addresses',
+            'verifySent' => 'A new verification email will be sent shortly.',
+            'alreadyVerified' => 'This email address has already been verified.',
         ],
         'addEmail' => [
             'title' => 'Add email address',

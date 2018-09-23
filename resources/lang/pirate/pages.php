@@ -42,6 +42,8 @@ return [
         'email' => [
             'description' => 'Th\' page shows an overview of ye e-bottle coordinates.',
             'yourEmails' => 'Ye e-bottles',
+            'verifySent' => 'A fresh verification e-bottle be sally forth.',
+            'alreadyVerified' => 'Th\' e-bottle coordinate be verified.',
         ],
         'addEmail' => [
             'title' => 'Add e-bottle coordinate',
