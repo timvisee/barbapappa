@@ -12,18 +12,23 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Economy model.
+ * Bar model.
  *
  * @property int id
  * @property int community_id
+ * @property int economy_id
  * @property string name
+ * @property bool visible
+ * @property bool public
+ * @property string|null password
+ * @property string|null slug
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class Economy extends Model {
+class Bar extends Model {
 
     /**
-     * Get the community this economy is part of.
+     * Get the community this bar is part of.
      *
      * @return The community.
      */
@@ -32,20 +37,11 @@ class Economy extends Model {
     }
 
     /**
-     * Get a list of bars that use this economy.
+     * Get the economy this bar uses.
      *
-     * @return The list of bars.
+     * @return Economy The economy.
      */
-    public function bars() {
-        return $this->hasMany('App\Models\Bar');
-    }
-
-    /**
-     * Get the list of supported currencies in this economy.
-     *
-     * @return The list of supported currencies.
-     */
-    public function supportedCurrencies() {
-        return $this->hasMany('App\Models\SupprotedCurrency');
+    public function economy() {
+        return $this->belongsTo('App\Models\Economy');
     }
 }

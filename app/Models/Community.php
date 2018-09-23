@@ -52,6 +52,15 @@ class Community extends Model {
     }
 
     /**
+     * Get a list of bars that are part of this community.
+     *
+     * @return List of bars.
+     */
+    public function bars() {
+        return $this->hasMany('App\Models\Bar');
+    }
+
+    /**
      * Check whether this community has a password specified.
      *
      * @return bool True if specified, false if not or if empty.
