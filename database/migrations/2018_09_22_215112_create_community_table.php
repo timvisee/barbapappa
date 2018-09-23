@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCommunity extends Migration {
+class CreateCommunityTable extends Migration {
 
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateCommunity extends Migration {
      */
     public function up() {
         Schema::create('communities', function(Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id')->unsigned();
             $table->string('name');
             $table->boolean('visible');
             $table->boolean('public');
-            $table->string('password')->nullable();
+            $table->string('password')->nullable()->default(null);
             $table->timestamps();
         });
     }
