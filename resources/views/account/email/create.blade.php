@@ -2,17 +2,20 @@
 
 @section('content')
 
-    <h1>@lang('pages.accountPage.addEmail.title')</h1>
+    <h3 class="ui header">@lang('pages.accountPage.addEmail.title')</h3>
+    <p>@lang('pages.accountPage.addEmail.description')</p>
 
-    {!! Form::open(['action' => ['EmailController@doCreate', 'userId' => $user->id], 'method' => 'POST', 'data-ajax' => 'false']) !!}
+    {!! Form::open(['action' => ['EmailController@doCreate', 'userId' => $user->id], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        <p>@lang('pages.accountPage.addEmail.description')</p>
+        <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
+            {{ Form::label('email', __('account.email') . ':') }}
+            {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
+            {{ ErrorRenderer::inline('email') }}
+        </div>
 
-        {{ Form::label('email', __('account.email') . ':') }}
-        {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
-        {{ ErrorRenderer::inline('email') }}
-
-        {{ Form::submit(__('misc.add')) }}
+        <div>
+            <button class="ui button primary" type="submit">@lang('misc.add')</button>
+        </div>
 
     {!! Form::close() !!}
 
