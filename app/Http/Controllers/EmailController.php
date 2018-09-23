@@ -125,9 +125,7 @@ class EmailController extends Controller {
                 ->with('error', __('pages.accountPage.email.cannotDeleteMustHaveVerified'));
         }
 
-        // Delete the email address and it's verification tokens
-        // TODO: don't explicitly delete verifications, cascade through SQL
-        $email->verifications()->delete();
+        // Delete the email address
         $email->delete();
 
         // Redirect to the emails page, show a success message

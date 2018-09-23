@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEconomy extends Migration {
+class CreateEconomyTable extends Migration {
 
     /**
      * Run the migrations.
@@ -13,10 +13,15 @@ class CreateEconomy extends Migration {
      */
     public function up() {
         Schema::create('economies', function(Blueprint $table) {
-            $table->increments('id');
-            $table->integer('community_id');
+            $table->increments('id')->unsigned();
+            $table->integer('community_id')->unsigned();
             $table->string('name')->nullable();
             $table->timestamps();
+
+            $table->foreign('community_id')
+                ->references('id')
+                ->on('communities')
+                ->onDelete('cascade');
         });
     }
 
