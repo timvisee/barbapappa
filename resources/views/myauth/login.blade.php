@@ -2,7 +2,7 @@
 
 @section('content')
 
-    {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST', 'class' =>'ui form']) !!}
+    {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
     <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
         {{ Form::label('email', __('account.email') . ':') }}
