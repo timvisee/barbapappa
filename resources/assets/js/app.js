@@ -27,6 +27,7 @@ $(document).ready(function() {
         return false;
     });
 
-    // Initialize checkboxes
+    // Initialize components
     $('.ui.checkbox').checkbox();
+    $('.ui.dropdown').dropdown();
 });
