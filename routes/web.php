@@ -45,13 +45,13 @@ Route::prefix('/email/verify')->group(function() {
 });
 
 // Account routes
-Route::prefix('/account')->group(function() {
+Route::prefix('/account')->middleware(['selectUser'])->group(function() {
     Route::get('/{userId?}', 'AccountController@show')->name('account');
     Route::get('/{userId?}/emails', 'EmailController@show')->name('account.emails');
 });
 
 // Profile routes
-Route::prefix('/profile')->group(function() {
+Route::prefix('/profile')->middleware(['selectUser'])->group(function() {
     Route::get('/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
@@ -69,6 +69,3 @@ Route::prefix('/permissions/groups')->group(function() {
 
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
-
-// Posts
-Route::resource('posts', 'PostsController');

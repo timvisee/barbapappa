@@ -60,5 +60,6 @@ class Kernel extends HttpKernel {
 
         'auth' => \App\Http\Middleware\RequireAuth::class,
         'guest' => \App\Http\Middleware\RequireGuest::class,
+        'selectUser' => \App\Http\Middleware\SelectUser::class,
     ];
 }

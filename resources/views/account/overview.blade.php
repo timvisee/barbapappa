@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if($isOtherUser)
+        {{-- TODO: translate this properly --}}
+        <i>Note: viewing account of someone else</i>
+    @endif
+
     <h1>@lang('pages.yourAccount')</h1>
     <p>@lang('pages.accountOverview.description')</p>
 
@@ -26,4 +31,5 @@
     <ul>
         <li>timvisee@gmail.com</li>
     </ul>
+    <a href="{{ route('account.emails', ['userId' => $user->id]) }}">@lang('account.manageEmails')</a>
 @endsection
