@@ -10,7 +10,6 @@ return [
     'emailPreferences' => 'E-bottle preferences',
     'account' => 'Ye ship',
     'yourAccount' => 'Ye ship',
-    'yourEmails' => 'Ye e-bottles',
     'requestPasswordReset' => 'Request passcode reset',
     'changePassword' => 'Change passcode',
     'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny, fresh n\' new passcode to take abroad.',
@@ -38,8 +37,17 @@ return [
     /**
      * Account page.
      */
-    'accountOverview' => [
+    'accountPage' => [
         'description' => 'Th\' page shows an overview of ye ship.',
+        'email' => [
+            'description' => 'Th\' page shows an overview of ye e-bottle coordinates.',
+            'yourEmails' => 'Ye e-bottles',
+        ],
+        'addEmail' => [
+            'title' => 'Add e-bottle coordinate',
+            'description' => 'Enter yer e-bottle coordinate to conquer.',
+            'added' => 'E-bottle coordinate added. \'ll verification has been sent.',
+        ],
     ],
 
     /**

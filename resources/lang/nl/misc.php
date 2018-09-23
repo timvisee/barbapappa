@@ -14,6 +14,7 @@ return [
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',
     'information' => 'Informatie',
+    'add' => 'Toevoegen',
     'welcomeTo' => 'Welkom bij',
     'logo' => 'Logo',
 ];

@@ -10,7 +10,6 @@ return [
     'emailPreferences' => 'Email preferences',
     'account' => 'Account',
     'yourAccount' => 'Your account',
-    'yourEmails' => 'Your email addresses',
     'requestPasswordReset' => 'Request password reset',
     'changePassword' => 'Change password',
     'changePasswordDescription' => 'To change your password, fill in the fields below.',
@@ -38,8 +37,17 @@ return [
     /**
      * Account page.
      */
-    'accountOverview' => [
+    'accountPage' => [
         'description' => 'This page shows an overview of your account.',
+        'email' => [
+            'description' => 'This page shows your email addresses.',
+            'yourEmails' => 'Your email addresses',
+        ],
+        'addEmail' => [
+            'title' => 'Add email address',
+            'description' => 'Fill in the email address you\'d like to add.',
+            'added' => 'Email address added. A verification email has been sent.',
+        ],
     ],
 
     /**

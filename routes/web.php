@@ -45,9 +45,13 @@ Route::prefix('/email/verify')->group(function() {
 });
 
 // Account routes
-Route::prefix('/account')->middleware(['selectUser'])->group(function() {
-    Route::get('/{userId?}', 'AccountController@show')->name('account');
-    Route::get('/{userId?}/emails', 'EmailController@show')->name('account.emails');
+Route::prefix('/account/{userId?}')->middleware(['selectUser'])->group(function() {
+    Route::get('/', 'AccountController@show')->name('account');
+    Route::prefix("/emails")->group(function() {
+        Route::get('/', 'EmailController@show')->name('account.emails');
+        Route::get('/new', 'EmailController@create')->name('account.emails.create');
+        Route::post('/new', 'EmailController@doCreate');
+    });
 });
 
 // Profile routes

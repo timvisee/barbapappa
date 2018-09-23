@@ -14,6 +14,7 @@ return [
     'saveChanges' => 'Save changes',
     'unspecified' => 'Unspecified',
     'information' => 'Information',
+    'add' => 'Add',
     'welcomeTo' => 'Welcome to',
     'logo' => 'Logo',
 ];

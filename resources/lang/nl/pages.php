@@ -10,7 +10,6 @@ return [
     'emailPreferences' => 'E-mailvoorkeuren',
     'account' => 'Account',
     'yourAccount' => 'Jouw account',
-    'yourEmails' => 'Jouw e-mailadressen',
     'requestPasswordReset' => 'Wachtwoord reset aanvragen',
     'changePassword' => 'Wachtwoord veranderen',
     'changePasswordDescription' => 'Vul de onderstaande velden in om je wachtwoord te veranderen.',
@@ -38,8 +37,17 @@ return [
     /**
      * Account page.
      */
-    'accountOverview' => [
+    'accountPage' => [
         'description' => 'Deze pagina laat een overzicht van je account zien.',
+        'email' => [
+            'description' => 'Deze pagina laat een overzicht van je e-mailaddressen zien.',
+            'yourEmails' => 'Jouw e-mailadressen',
+        ],
+        'addEmail' => [
+            'title' => 'E-mailadres toevoegen',
+            'description' => 'Vul the e-mailadres in dat je wilt toevoegen.',
+            'added' => 'E-mailadres toegevoegd. Er is een verificatie-e-mail gestuurd.',
+        ],
     ],
 
     /**

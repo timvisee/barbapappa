@@ -7,7 +7,7 @@
     @endif
 
     <h1>@lang('pages.yourAccount')</h1>
-    <p>@lang('pages.accountOverview.description')</p>
+    <p>@lang('pages.accountPage.description')</p>
 
     <h3>@lang('pages.profile.name')</h3>
     <table>
