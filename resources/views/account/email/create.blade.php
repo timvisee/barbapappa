@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h3 class="ui header">@lang('pages.accountPage.addEmail.title')</h3>
+    <h2 class="ui header">@lang('pages.accountPage.addEmail.title')</h2>
     <p>@lang('pages.accountPage.addEmail.description')</p>
 
     {!! Form::open(['action' => ['EmailController@doCreate', 'userId' => $user->id], 'method' => 'POST', 'class' => 'ui form']) !!}

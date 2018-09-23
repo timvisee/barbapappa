@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="highlight-box">
-        <h3>@lang('pages.about')</h3>
+        <h2 class="ui header">@lang('pages.about')</h2>
         {{ logo()->element(true, ['class' => 'logo']) }}
         <p>{{ config('app.version_name') }} <span style="color: darkgray;">({{ config('app.version_code') }})</span></p>
     </div>

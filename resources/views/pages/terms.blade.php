@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>@lang('pages.terms')</h1>
+    <h2 class="ui header">@lang('pages.terms')</h2>
     [Terms page placeholder]
 @endsection

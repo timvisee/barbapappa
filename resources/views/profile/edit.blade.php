@@ -6,7 +6,7 @@
         <i>Note: viewing account of someone else</i>
     @endif
 
-    <h1>@lang('pages.editProfile.name')</h1>
+    <h2 class="ui header">@lang('pages.editProfile.name')</h2>
 
     {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'POST']) !!}
 

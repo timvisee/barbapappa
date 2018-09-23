@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h3 class="ui header">@lang('auth.register')</h3>
+    <h2 class="ui header">@lang('auth.register')</h2>
 
     {!! Form::open(['action' => ['RegisterController@doRegister'], 'method' => 'POST', 'class' => 'ui form']) !!}
 

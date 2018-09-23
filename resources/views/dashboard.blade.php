@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>@lang('pages.dashboard')</h1>
+    <h2 class="ui header">@lang('pages.dashboard')</h2>
 @endsection

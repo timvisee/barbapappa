@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h1>@lang('pages.verifyEmail.title')</h1>
+    <h2 class="ui header">@lang('pages.verifyEmail.title')</h2>
 
     {!! Form::open(['action' => ['EmailVerifyController@doVerify'], 'method' => 'POST']) !!}
 

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h3 class="ui header">@lang('account.resetPassword')</h3>
+    <h2 class="ui header">@lang('account.resetPassword')</h2>
     <p>@lang('pages.passwordReset.enterResetToken')</p>
 
     {!! Form::open(['action' => ['PasswordResetController@doReset'], 'method' => 'POST', 'class' =>'ui form']) !!}

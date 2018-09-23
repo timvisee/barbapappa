@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h3 class="ui header">@lang('pages.changePassword')</h3>
+    <h2 class="ui header">@lang('pages.changePassword')</h2>
     <p>@lang('pages.changePasswordDescription')</p>
 
     {!! Form::open(['action' => ['PasswordChangeController@doChange'], 'method' => 'POST', 'class' => 'ui form']) !!}

@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <h3 class="ui header">@lang('auth.login')</h3>
+    <h2 class="ui header">@lang('auth.login')</h2>
 
     {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
