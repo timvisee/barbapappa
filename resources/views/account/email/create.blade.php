@@ -4,7 +4,7 @@
 
     <h1>@lang('pages.accountPage.addEmail.title')</h1>
 
-    {!! Form::open(['action' => ['EmailController@doCreate', 'userId' => $user->id], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['EmailController@doCreate', 'userId' => $user->id], 'method' => 'POST', 'data-ajax' => 'false']) !!}
 
         <p>@lang('pages.accountPage.addEmail.description')</p>
 

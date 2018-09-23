@@ -22,7 +22,7 @@ return [
     'invalidPassword' => 'Incorrect password.',
     'invalidCurrentPassword' => 'Your current password is incorrect.',
     'newPasswordDifferent' => 'The new password must be different than your current password.',
-    'emailUsed' => 'This email address has been used. Please login instead.',
+    'emailUsed' => 'This email address has been used.',
 
     'loggedIn' => 'You\'ve been logged in.',
     'registeredAndLoggedIn' => 'Account registered, you\'ve been logged in.',

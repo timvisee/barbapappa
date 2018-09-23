@@ -22,7 +22,7 @@ return [
     'invalidPassword' => 'Onjuist wachtwoord.',
     'invalidCurrentPassword' => 'Je huidige wachtwoord is onjuist.',
     'newPasswordDifferent' => 'Het nieuwe wachtwoord moet anders zijn dan je huidige wachtwoord.',
-    'emailUsed' => 'Dit e-mailadres is al gebruikt. Log alsjeblieft in.',
+    'emailUsed' => 'Dit e-mailadres is al gebruikt.',
 
     'loggedIn' => 'Je bent ingelogd.',
     'registeredAndLoggedIn' => 'Account aangemaakt, je bent ingelogd.',
