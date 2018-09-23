@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="ui header">@lang('pages.bars')</h2>
+    <h3 class="ui header">@lang('pages.bar.yourBars')</h3>
     @include('bar.include.list')
 
-    <h2 class="ui header">@lang('pages.communities')</h2>
+    <h3 class="ui header">@lang('pages.community.yourCommunities')</h3>
     @include('community.include.list')
 @endsection

@@ -61,6 +61,7 @@ return [
      * Community pages.
      */
     'community' => [
+        'yourCommunities' => 'Your communities',
         'noCommunities' => 'No communities available...',
         'viewCommunities' => 'View communities',
     ],
@@ -69,6 +70,7 @@ return [
      * Bar pages.
      */
     'bar' => [
+        'yourBars' => 'Your bars',
         'noBars' => 'No bars available...',
         'searchByCommunity' => 'Search by community',
         'searchByCommunityDescription' => 'It\'s usually easier to find a specific bar by it\'s community.',

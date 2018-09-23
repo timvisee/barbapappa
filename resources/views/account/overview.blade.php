@@ -45,7 +45,7 @@
     <table class="ui compact celled definition table">
         <tbody>
             <tr>
-                <td>Configured</td>
+                <td>@lang('pages.accountPage.email.yourEmails')</td>
                 <td>{{ $mailsConfigured }}</td>
             </tr>
             @if($mailsConfigured > 0 && $mailsUnverified <= 0)

@@ -61,6 +61,7 @@ return [
      * Community pages.
      */
     'community' => [
+        'yourCommunities' => 'Jouw groepen',
         'noCommunities' => 'Geen groepen beschikbaar...',
         'viewCommunities' => 'Bekijk groepen',
     ],
@@ -69,6 +70,7 @@ return [
      * Bar pages.
      */
     'bar' => [
+        'yourBars' => 'Jouw bars',
         'noBars' => 'Geen bars beschikbaar...',
         'searchByCommunity' => 'Zoeken via groepen',
         'searchByCommunityDescription' => 'Vaak is het makkelijker om een bar te zoeken via de bijbehorende groep.',

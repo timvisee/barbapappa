@@ -61,6 +61,7 @@ return [
      * Community pages.
      */
     'community' => [
+        'yourCommunities' => 'Ye pirates',
         'noCommunities' => 'Nay pirates asea...',
         'viewCommunities' => 'View pirates',
     ],
@@ -69,6 +70,7 @@ return [
      * Bar pages.
      */
     'bar' => [
+        'yourBars' => 'Ye bars',
         'noBars' => 'Nay bars asea...',
         'searchByCommunity' => 'Search by pirate',
         'searchByCommunityDescription' => 'It\' usually be easier to find ye bar by it\'s pirate.',
