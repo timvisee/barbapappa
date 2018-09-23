@@ -5,10 +5,15 @@
     </div>
 
     <h1>
-        <a href="{{ route('index') }}" title="Refresh app">
-            {{-- TODO: Use a properly sized image here --}}
-            {{ logo()->element(false) }}
-        </a>
+        @if(barauth()->isAuth())
+            <a href="{{ route('dashboard') }}" title="@lang('pages.dashboard')">
+                {{ logo()->element(false) }}
+            </a>
+        @else
+            <a href="{{ route('index') }}" title="@lang('pages.dashboard')">
+                {{ logo()->element(false) }}
+            </a>
+        @endif
     </h1>
 
     <div class="right">
