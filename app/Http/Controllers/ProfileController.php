@@ -20,21 +20,10 @@ class ProfileController extends Controller {
     /**
      * Profile edit page.
      *
-     * @param int $userId ID of the user to edit the profile for.
-     *
      * @return Response
      */
-    public function edit($userId) {
-        // Get the user
-        /** @var User $user */
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-        $user = User::findOrFail($userId);
-
-        // TODO: Make sure the current user has permission to edit the given user
-
-        // Show the view
-        return view('profile.edit')
-            ->with('user', $user);
+    public function edit() {
+        return view('profile.edit');
     }
 
     /**
@@ -45,13 +34,11 @@ class ProfileController extends Controller {
      *
      * @return Response
      */
-    public function update($userId, Request $request) {
-        // Get the user
-        /** @var User $user */
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-        $user = User::findOrFail($userId);
+    public function update(Request $request) {
+        // TODO: make sure the user has sufficient permissions to edit this user
 
-        // TODO: Make sure the current user has permission to edit the given user
+        // Get the user we're editing from middleware
+        $user = \Request::get('user');
 
         // Validate
         $this->validate($request, [
@@ -82,7 +69,7 @@ class ProfileController extends Controller {
 
         // Redirect the user to the account overview page
         return redirect()
-            ->route('account.show', ['userId' => $user->id])
+            ->route('account', ['userId' => $user->id])
             ->with('success', $isOther
                 ? __('pages.editProfile.updated')
                 : __('pages.editProfile.otherUpdated')

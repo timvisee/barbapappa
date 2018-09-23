@@ -18,11 +18,28 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Email extends Model {
 
+    /**
+     * A scope for selecting only verified email addresses.
+     */
+    public function scopeVerified($query) {
+        return $query->where('verified_at', '!=', null);
+    }
+
+    /**
+     * Get the user this email address belongs to.
+     *
+     * @return User The user.
+     */
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
 
-    public function emailVerifications() {
+    /**
+     * Get all email verification tokens that belong to this email address.
+     *
+     * @return The email verifications.
+     */
+    public function verifications() {
         return $this->hasMany('App\Models\EmailVerification');
     }
 

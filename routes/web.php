@@ -29,36 +29,49 @@ Route::post('/login', 'LoginController@doLogin');
 Route::get('/register', 'RegisterController@register')->name('register');
 Route::post('/register', 'RegisterController@doRegister');
 Route::get('/logout', 'LogoutController@logout')->name('logout');
-Route::get('/password/change', 'PasswordChangeController@change')->name('password.change');
-Route::post('/password/change', 'PasswordChangeController@doChange')->name('password.change');
-Route::get('/password/request', 'PasswordForgetController@request')->name('password.request');
-Route::post('/password/request', 'PasswordForgetController@doRequest');
-Route::get('/password/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
-Route::post('/password/reset', 'PasswordResetController@doReset');
+Route::prefix('/password')->group(function() {
+    Route::get('/change', 'PasswordChangeController@change')->name('password.change');
+    Route::post('/change', 'PasswordChangeController@doChange')->name('password.change');
+    Route::get('/request', 'PasswordForgetController@request')->name('password.request');
+    Route::post('/request', 'PasswordForgetController@doRequest');
+    Route::get('/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
+    Route::post('/reset', 'PasswordResetController@doReset');
+});
 
 // Email routes
-Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('email.verify');
-Route::post('/email/verify', 'EmailVerifyController@doVerify');
+Route::prefix('/email/verify')->group(function() {
+    Route::get('/{token?}', 'EmailVerifyController@verify')->name('email.verify');
+    Route::post('/', 'EmailVerifyController@doVerify');
+});
 
 // Account routes
-Route::get('/account', 'AccountController@my')->name('account');
-Route::get('/account/{userId}', 'AccountController@show')->name('account.show');
+Route::prefix('/account/{userId?}')->middleware(['selectUser'])->group(function() {
+    Route::get('/', 'AccountController@show')->name('account');
+    Route::prefix("/emails")->group(function() {
+        Route::get('/', 'EmailController@show')->name('account.emails');
+        Route::get('/new', 'EmailController@create')->name('account.emails.create');
+        Route::post('/new', 'EmailController@doCreate');
+        Route::get('/reverify/{emailId}', 'EmailController@reverify')->name('account.emails.reverify');
+        Route::get('/delete/{emailId}', 'EmailController@delete')->name('account.emails.delete');
+    });
+});
 
 // Profile routes
-Route::get('/profile/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
-Route::put('/profile/{userId}', 'ProfileController@update')->name('profile.update');
+Route::prefix('/profile')->middleware(['selectUser'])->group(function() {
+    Route::get('/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
+    Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
+});
 
 // Permission group routes
-Route::get('/permissions/groups/create', 'PermissionGroupsController@create')->name('permissionGroups.create');
-Route::post('/permissions/groups', 'PermissionGroupsController@store')->name('permissionGroups.store');
-Route::get('/permissions/groups', 'PermissionGroupsController@index')->name('permissionGroups.index');
-Route::get('/permissions/groups/{id}', 'PermissionGroupsController@show')->name('permissionGroups.show');
-Route::get('/permissions/groups/{id}/edit', 'PermissionGroupsController@edit')->name('permissionGroups.edit');
-Route::put('/permissions/groups/{id}', 'PermissionGroupsController@update')->name('permissionGroups.update');
-Route::delete('/permissions/groups/{id}', 'PermissionGroupsController@destroy')->name('permissionGroups.delete');
+Route::prefix('/permissions/groups')->group(function() {
+    Route::get('/create', 'PermissionGroupsController@create')->name('permissionGroups.create');
+    Route::post('/', 'PermissionGroupsController@store')->name('permissionGroups.store');
+    Route::get('/', 'PermissionGroupsController@index')->name('permissionGroups.index');
+    Route::get('/{id}', 'PermissionGroupsController@show')->name('permissionGroups.show');
+    Route::get('/{id}/edit', 'PermissionGroupsController@edit')->name('permissionGroups.edit');
+    Route::put('/{id}', 'PermissionGroupsController@update')->name('permissionGroups.update');
+    Route::delete('/{id}', 'PermissionGroupsController@destroy')->name('permissionGroups.delete');
+});
 
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
-
-// Posts
-Route::resource('posts', 'PostsController');

@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    @if($isOtherUser)
+        {{-- TODO: translate this properly --}}
+        <i>Note: viewing account of someone else</i>
+    @endif
+
     <h1>@lang('pages.yourAccount')</h1>
-    <p>@lang('pages.accountOverview.description')</p>
+    <p>@lang('pages.accountPage.description')</p>
 
     <h3>@lang('pages.profile.name')</h3>
     <table>
@@ -23,7 +28,14 @@
     <a href="{{ route('password.change') }}">@lang('pages.changePassword')</a>
 
     <h3>@lang('account.email')</h3>
-    <ul>
-        <li>timvisee@gmail.com</li>
-    </ul>
+    @php
+        // Count configured and unverified email addresses
+        $mailsConfigured = $user->emails()->count();
+        $mailsUnverified = $mailsConfigured - $user->emails()->verified()->count();
+    @endphp
+    @if($mailsUnverified > 0)
+        {{ $mailsUnverified }} @lang('misc.unverified'), 
+    @endif
+    {{ $mailsConfigured }} configured<br />
+    <a href="{{ route('account.emails', ['userId' => $user->id]) }}">@lang('account.manageEmails')</a>
 @endsection

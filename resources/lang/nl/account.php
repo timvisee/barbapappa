@@ -5,7 +5,11 @@ return [
      * Email.
      */
     'email' => 'E-mail',
+    'emails' => 'E-mails',
+    'noEmails' => 'Geen e-mails',
     'emailPlaceholder' => 'jelle@gmail.com',
+    'unverifiedEmails' => 'Ongeverifieerde e-mails',
+    'manageEmails' => 'Beheer e-mails',
 
     /**
      * Password.

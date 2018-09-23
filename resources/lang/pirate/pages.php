@@ -37,8 +37,22 @@ return [
     /**
      * Account page.
      */
-    'accountOverview' => [
+    'accountPage' => [
         'description' => 'Th\' page shows an overview of ye ship.',
+        'email' => [
+            'description' => 'Th\' page shows an overview of ye e-bottle coordinates.',
+            'yourEmails' => 'Ye e-bottles',
+            'resendVerify' => 'Sally forth verification',
+            'verifySent' => 'A fresh verification e-bottle be sally forth.',
+            'alreadyVerified' => 'Th\' e-bottle coordinate be verified.',
+            'cannotDeleteMustHaveVerified' => 'Ye no delete \'his e-bottle coordinate, ye must be one verified coordinate.',
+            'deleted' => 'Th\' e-bottle coordinate be deleted.',
+        ],
+        'addEmail' => [
+            'title' => 'Add e-bottle coordinate',
+            'description' => 'Enter yer e-bottle coordinate to conquer.',
+            'added' => 'E-bottle coordinate added. \'ll verification be sent.',
+        ],
     ],
 
     /**

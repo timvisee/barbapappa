@@ -22,7 +22,7 @@ return [
     'invalidPassword' => 'Incorrect passcode.',
     'invalidCurrentPassword' => 'Yer current passcode be incorrect.',
     'newPasswordDifferent' => 'Th\' shiny passcode must be different than yer ol\' passcode.',
-    'emailUsed' => 'Dis e-bottle coordinate be used. Enter yer ship instead.',
+    'emailUsed' => 'Dis e-bottle coordinate be used.',
 
     'loggedIn' => 'Ye be aboard.',
     'registeredAndLoggedIn' => 'Ship created, ye be aboard now.',

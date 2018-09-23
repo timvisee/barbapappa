@@ -37,8 +37,22 @@ return [
     /**
      * Account page.
      */
-    'accountOverview' => [
+    'accountPage' => [
         'description' => 'This page shows an overview of your account.',
+        'email' => [
+            'description' => 'This page shows your email addresses.',
+            'yourEmails' => 'Your email addresses',
+            'resendVerify' => 'Resend verification',
+            'verifySent' => 'A new verification email will be sent shortly.',
+            'alreadyVerified' => 'This email address has already been verified.',
+            'cannotDeleteMustHaveVerified' => 'You cannot delete this email address, you must have at least one verified address.',
+            'deleted' => 'The email address has been deleted.',
+        ],
+        'addEmail' => [
+            'title' => 'Add email address',
+            'description' => 'Fill in the email address you\'d like to add.',
+            'added' => 'Email address added. A verification email has been sent.',
+        ],
     ],
 
     /**

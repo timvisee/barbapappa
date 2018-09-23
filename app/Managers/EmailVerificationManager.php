@@ -70,6 +70,9 @@ class EmailVerificationManager {
      * @throws \Exception Throws if an invalid email address is given, or if the email address is already verified.
      */
     public static function createAndSend(Email $email, $justRegistered) {
+        // Ensure the email model is saved
+        $email->save();
+
         // Create a verification entry for this email
         $verification = self::create($email);
 

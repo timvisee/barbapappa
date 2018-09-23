@@ -16,33 +16,11 @@ class AccountController extends Controller {
     }
 
     /**
-     * Account page for the current user.
-     *
-     * @return Response
-     */
-    public function my() {
-        return $this->show(
-            barauth()->getSessionUser()->id
-        );
-    }
-
-    /**
      * Account page.
      *
-     * @param int $userId ID of the user to show the account for.
-     *
      * @return Response
      */
-    public function show($userId) {
-        // Get the user
-        /** @var User $user */
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
-        $user = User::findOrFail($userId);
-
-        // TODO: Make sure the current user has permission to view this user's account
-
-        // Show the view
-        return view('account.overview')
-            ->with('user', $user);
+    public function show() {
+        return view('account.overview');
     }
 }

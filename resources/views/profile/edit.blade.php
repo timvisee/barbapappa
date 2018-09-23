@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+    @if($isOtherUser)
+        {{-- TODO: translate this properly --}}
+        <i>Note: viewing account of someone else</i>
+    @endif
+
     <h1>@lang('pages.editProfile.name')</h1>
 
     {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'POST']) !!}
