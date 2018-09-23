@@ -9,7 +9,7 @@ return [
     'verify' => 'Verify',
     'verified' => 'Verified',
     'notVerified' => 'Not verified',
-    'unverified' => 'unverified',
+    'unverified' => 'Unverified',
     'delete' => 'Delete',
     'noToken' => 'No token specified.',
     'saveChanges' => 'Save changes',

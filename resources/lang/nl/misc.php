@@ -9,7 +9,7 @@ return [
     'verify' => 'Verifiëren',
     'verified' => 'Geverifiëerd',
     'notVerified' => 'Niet geverifiëerd',
-    'unverified' => 'ongeverifiëerd',
+    'unverified' => 'Ongeverifiëerd',
     'delete' => 'Verwijderen',
     'noToken' => 'Geen token opgegeven.',
     'saveChanges' => 'Aanpassingen opslaan',
