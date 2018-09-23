@@ -13,6 +13,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
+use App\Models\Bar;
 use App\Models\Community;
 use App\Models\Economy;
 use App\Models\Email;
@@ -63,5 +64,18 @@ $factory->define(Community::class, function(Faker\Generator $faker) {
 $factory->define(Economy::class, function(Faker\Generator $faker) {
     return [
         'name' => rand(0, 1) == 0 ? "Main economy" : null,
+    ];
+});
+
+/**
+ * Bar factory.
+ */
+$factory->define(Bar::class, function(Faker\Generator $faker) {
+    return [
+        'name' => $faker->company,
+        'visible' => $faker->boolean,
+        'public' => $faker->boolean,
+        'password' => rand(0, 1) == 0 ? $faker->numberBetween(1000, 9999) : null,
+        'slug' => rand(0, 1) == 0 ? $faker->userName : null,
     ];
 });
