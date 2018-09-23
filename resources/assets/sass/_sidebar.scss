@@ -1,0 +1,34 @@
+// Patch for proper icons in the sidebar
+.icon-glyphicons {
+  display: inline-block;
+  margin: 0 .25rem 0 0;
+  width: 1.18em;
+  height: 1em;
+  text-align: center;
+  speak: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.ui.sidebar .icon-glyphicons {
+  font-size: 1em;
+  opacity: .9;
+  line-height: .15em;
+  width: 1.18em;
+  float: right;
+}
+
+// Flag icon in sidebar button
+.ui.sidebar a.item > span {
+  opacity: .5;
+  transition: opacity .1s ease;
+
+  float: right;
+  margin-right: -0.15rem;
+}
+
+.ui.sidebar a.item:hover > span {
+    opacity: 1;
+}

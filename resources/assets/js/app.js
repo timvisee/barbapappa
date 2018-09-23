@@ -19,3 +19,9 @@
 // const app = new Vue({
 //     el: '#app'
 // });
+
+// Sidebar toggle
+$('.sidebar-toggle').click(function() {
+    $('.ui.sidebar').sidebar('toggle');
+    return false;
+});

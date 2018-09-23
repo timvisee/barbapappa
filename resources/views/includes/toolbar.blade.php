@@ -1,7 +1,7 @@
 <div class="toolbar">
 
     <div class="left">
-        <a id="sidebar-toggle" href="#sidebar-panel" class="glyphicons glyphicons-menu-hamburger"></a>
+        <a href="#" class="sidebar-toggle glyphicons glyphicons-menu-hamburger"></a>
     </div>
 
     <h1>
