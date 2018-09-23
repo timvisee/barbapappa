@@ -10,6 +10,7 @@ return [
     'emailPreferences' => 'E-mailvoorkeuren',
     'account' => 'Account',
     'yourAccount' => 'Jouw account',
+    'yourEmails' => 'Jouw e-mailadressen',
     'requestPasswordReset' => 'Wachtwoord reset aanvragen',
     'changePassword' => 'Wachtwoord veranderen',
     'changePasswordDescription' => 'Vul de onderstaande velden in om je wachtwoord te veranderen.',

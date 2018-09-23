@@ -10,6 +10,7 @@ return [
     'emailPreferences' => 'E-bottle preferences',
     'account' => 'Ye ship',
     'yourAccount' => 'Ye ship',
+    'yourEmails' => 'Ye e-bottles',
     'requestPasswordReset' => 'Request passcode reset',
     'changePassword' => 'Change passcode',
     'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny, fresh n\' new passcode to take abroad.',

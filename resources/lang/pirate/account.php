@@ -5,7 +5,10 @@ return [
      * Email.
      */
     'email' => 'E-bottle',
+    'emails' => 'E-bottles',
     'emailPlaceholder' => 'blackbeard@thepiratebay.org',
+    'unverifiedEmails' => 'Unverified e-bottle',
+    'manageEmails' => 'Manage e-bottles',
 
     /**
      * Password.

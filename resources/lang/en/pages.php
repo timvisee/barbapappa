@@ -10,6 +10,7 @@ return [
     'emailPreferences' => 'Email preferences',
     'account' => 'Account',
     'yourAccount' => 'Your account',
+    'yourEmails' => 'Your email addresses',
     'requestPasswordReset' => 'Request password reset',
     'changePassword' => 'Change password',
     'changePasswordDescription' => 'To change your password, fill in the fields below.',
