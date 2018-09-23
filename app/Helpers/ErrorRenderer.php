@@ -79,7 +79,7 @@ class ErrorRenderer {
      * @param string|null $name Error name, or null to allow any error name.
      * @return bool True if an error with this name exists, false if not.
      */
-    private static function hasError($name) {
+    public static function hasError($name) {
         return self::hasErrors() && ($name == null || self::getErrorsObject()->has($name));
     }
 

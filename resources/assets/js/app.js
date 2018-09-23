@@ -19,3 +19,15 @@
 // const app = new Vue({
 //     el: '#app'
 // });
+
+$(document).ready(function() {
+    // Sidebar toggle
+    $('.sidebar-toggle').click(function() {
+        $('.ui.sidebar').sidebar('toggle');
+        return false;
+    });
+
+    // Initialize components
+    $('.ui.checkbox').checkbox();
+    $('.ui.dropdown').dropdown();
+});

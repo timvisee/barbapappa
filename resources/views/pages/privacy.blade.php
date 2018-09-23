@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>@lang('pages.privacy')</h1>
+    <h2 class="ui header">@lang('pages.privacy')</h2>
     [Privacy page placeholder.]
 @endsection

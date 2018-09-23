@@ -20,16 +20,19 @@
     </div>
 
     @if(count($selectableLocales) > 0)
-        <ul class="ui-listview" data-role="listview" data-inset="false">
+
+        <div class="ui stackable two column grid">
             @foreach($selectableLocales as $locale)
-                <li>
-                    <a href="{{ route('language', ['locale' => $locale]) }}" class="ui-btn ui-btn-icon-right ui-icon-glyphicons ui-icon-glyphicons-chevron-right">
-                        <span class="{{ langManager()->getLocaleFlagClass($locale, false, true) }} ui-li-icon" style="margin-right: 5px;"></span>
+                <div class="column">
+                    <a href="{{ route('language', ['locale' => $locale]) }}" class="ui button fluid labeled icon">
+                        <i class="icon">
+                            <span class="{{ langManager()->getLocaleFlagClass($locale, false, true) }}"></span>
+                        </i>
                         @lang('lang.name', [], $locale)
                     </a>
-                </li>
+                </div>
             @endforeach
-        </ul>
+        </div>
     @else
         <i>No languages available...</i>
     @endif

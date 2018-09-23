@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>@lang('pages.contact')</h1>
+    <h2 class="ui header">@lang('pages.contact')</h2>
     [Contact page placeholder]
 @endsection

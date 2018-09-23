@@ -26,6 +26,13 @@ class Email extends Model {
     }
 
     /**
+     * A scope for selecting only unverified email addresses.
+     */
+    public function scopeUnverified($query) {
+        return $query->whereNull('verified_at');
+    }
+
+    /**
      * Get the user this email address belongs to.
      *
      * @return User The user.

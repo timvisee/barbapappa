@@ -57,7 +57,7 @@ class PasswordResetController extends Controller {
 
             case PasswordResetResult::OK:
                 return $response->route('login')
-                    ->with('success', __('auth.passwordReset.changed'));
+                    ->with('success', __('auth.passwordChanged'));
 
             default:
                 return $response->back()

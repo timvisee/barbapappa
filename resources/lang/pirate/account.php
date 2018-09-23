@@ -33,10 +33,11 @@ return [
     /**
      * Session.
      */
+    'isCompromised' => 'Ship attacked?',
     'invalidateAllSessions' => 'Sink all yer ships. Sail ho!',
-    'invalidateAllSessionsDescription' => 'Tick ye box below to sink yer ships on all seas.<br />'
+    'invalidateAllSessionsDescription' => 'Flip ye box below to sink yer ships on all seas.<br />'
         . 'Dis option should be checked if yer believe ye ship may have been captured by other pirates.',
     'invalidateOtherSessions' => 'Sink other ships. Sail ho!',
-    'invalidateOtherSessionsDescription' => 'Tick ye box below to sink yer ships on other seas.<br />'
+    'invalidateOtherSessionsDescription' => 'Flip ye box below to sink yer ships on other seas.<br />'
         . 'Dis option should be checked if yer believe ye ship may have been captured by other pirates.',
 ];

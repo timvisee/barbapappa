@@ -33,10 +33,11 @@ return [
     /**
      * Session.
      */
+    'isCompromised' => 'Account compromised?',
     'invalidateAllSessions' => 'Log out on all devices',
-    'invalidateAllSessionsDescription' => 'Check the box below to log out on all devices.<br />'
+    'invalidateAllSessionsDescription' => 'Flip the switch below to log out on all devices.<br />'
         . 'This option should be checked if you believe your account may have been used by someone else.',
     'invalidateOtherSessions' => 'Log out on other devices',
-    'invalidateOtherSessionsDescription' => 'Check the box below to log out on all other devices.<br />'
+    'invalidateOtherSessionsDescription' => 'Flip the switch below to log out on all other devices.<br />'
         . 'This option should be checked if you believe your account may have been used by someone else.',
 ];

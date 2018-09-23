@@ -6,37 +6,55 @@
         <i>Note: viewing account of someone else</i>
     @endif
 
-    <h1>@lang('pages.editProfile.name')</h1>
+    <h2 class="ui header">@lang('pages.editProfile.name')</h2>
 
-    {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        {{ Form::label('first_name', __('account.firstName')) }}
-        {{ Form::text('first_name', $user->first_name) }}
-        {{ ErrorRenderer::inline('first_name') }}
-        <br />
+        <div class="two fields">
+            <div class="field {{ ErrorRenderer::hasError('first_name') ? 'error' : '' }}">
+                {{ Form::label('first_name', __('account.firstName') . ':') }}
+                {{ Form::text('first_name', $user->first_name, ['placeholder' => __('account.firstNamePlaceholder')]) }}
+                {{ ErrorRenderer::inline('first_name') }}
+            </div>
 
-        {{ Form::label('last_name', __('account.lastName')) }}
-        {{ Form::text('last_name', $user->last_name) }}
-        {{ ErrorRenderer::inline('last_name') }}
-        <br />
+            <div class="field {{ ErrorRenderer::hasError('last_name') ? 'error' : '' }}">
+                {{ Form::label('last_name', __('account.lastName') . ':') }}
+                {{ Form::text('last_name', $user->last_name, ['placeholder' => __('account.lastNamePlaceholder')]) }}
+                {{ ErrorRenderer::inline('last_name') }}
+            </div>
+        </div>
 
         <?php
             // Create a locales map for the selection box
-            $locales = Array(
-                '' => '- ' . __('misc.unspecified') . ' -'
-            );
+            $locales = [];
             foreach(langManager()->getLocales(true, false) as $entry)
                 $locales[$entry] = __('lang.name', [], $entry);
         ?>
 
-        {{ Form::label('language', __('lang.language')) }}
-        {{ Form::select('language', $locales, $user->locale) }}
-        {{ ErrorRenderer::inline('language') }}
-        <br />
+        <div class="field">
+            {{ Form::label('language', __('lang.language')) }}
+
+            <div class="ui fluid selection dropdown">
+                <input type="hidden" name="language">
+                <i class="dropdown icon"></i>
+
+                <div class="default text">@lang('misc.unspecified')</div>
+                <div class="menu">
+                    @foreach($locales as $locale => $name)
+                        <div class="item" data-value="{{ $locale }}">
+                            <span class="{{ langManager()->getLocaleFlagClass($locale, false, true) }} flag"></span>
+                            {{ $name }}
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{ ErrorRenderer::inline('language') }}
+        </div>
 
         {{ Form::hidden('_method', 'PUT') }}
 
-        {{ Form::submit(__('misc.saveChanges')) }}
+        <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
 
     {!! Form::close() !!}
 @endsection
