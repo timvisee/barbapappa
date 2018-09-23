@@ -13,7 +13,7 @@
             @lang('auth.logout')
         </a>
     @else
-        <a href="{{ route('dashboard') }}" class="item">
+        <a href="{{ route('index') }}" class="item">
             <i class="icon-glyphicons glyphicons glyphicons-dashboard"></i>
             @lang('pages.dashboard')
         </a>

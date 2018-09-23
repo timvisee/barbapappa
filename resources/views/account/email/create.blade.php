@@ -13,9 +13,7 @@
             {{ ErrorRenderer::inline('email') }}
         </div>
 
-        <div>
-            <button class="ui button primary" type="submit">@lang('misc.add')</button>
-        </div>
+        <button class="ui button primary" type="submit">@lang('misc.add')</button>
 
     {!! Form::close() !!}
 
