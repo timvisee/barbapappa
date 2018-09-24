@@ -84,6 +84,19 @@ return [
         'noBars' => 'No bars available...',
         'searchByCommunity' => 'Search by community',
         'searchByCommunityDescription' => 'It\'s usually easier to find a specific bar by it\'s community.',
+
+        // TODO: remove duplicates
+        'join' => 'Join',
+        'yesJoin' => 'Yes, join',
+        'joined' => 'Joined',
+        'notJoined' => 'Not joined',
+
+        'hintJoin' => 'You aren\'t part of this bar yet.',
+        'joinedClickToLeave' => 'Click to leave.',
+        'joinQuestion' => 'Would you like to join this bar?',
+        'joinedThisBar' => 'You\'ve joined this bar.',
+        'leaveQuestion' => 'Are you sure you want to leave this bar?',
+        'leftThisBar' => 'You left this bar.',
     ],
 
     /**

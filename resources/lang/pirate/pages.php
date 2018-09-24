@@ -84,6 +84,19 @@ return [
         'noBars' => 'Nay bars asea...',
         'searchByCommunity' => 'Search by crew',
         'searchByCommunityDescription' => 'It\' usually be easier to find ye bar by it\'s crew.',
+
+        // TODO: remove duplicates
+        'join' => 'Join',
+        'yesJoin' => 'Yey, sail ho!',
+        'joined' => 'Joined',
+        'notJoined' => 'Strangers!',
+
+        'hintJoin' => 'Ye be not part of th\' bar.',
+        'joinedClickToLeave' => 'Click to be sunk.',
+        'joinQuestion' => 'Ye like be joined th\' bar?',
+        'joinedThisBar' => 'Ye joined th\' bar.',
+        'leaveQuestion' => 'Ye be sure to sink th\' bar?',
+        'leftThisBar' => 'Ye sunk th\' bar.',
     ],
 
     /**

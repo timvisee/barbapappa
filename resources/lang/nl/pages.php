@@ -84,6 +84,19 @@ return [
         'noBars' => 'Geen bars beschikbaar...',
         'searchByCommunity' => 'Zoeken via groepen',
         'searchByCommunityDescription' => 'Vaak is het makkelijker om een bar te zoeken via de bijbehorende groep.',
+
+        // TODO: remove duplicates
+        'join' => 'Inschrijven',
+        'yesJoin' => 'Ja, inschrijven',
+        'joined' => 'Ingeschreven',
+        'notJoined' => 'Niet ingeschreven',
+
+        'hintJoin' => 'Je maakt nog geen deel uit van deze bar.',
+        'joinedClickToLeave' => 'Klik om uit te schrijven.',
+        'joinQuestion' => 'Wil je je bij deze bar inschrijven?',
+        'joinedThisBar' => 'Je bent ingeschreven bij deze bar.',
+        'leaveQuestion' => 'Weet je zeker dat je je wilt uitschrijven bij deze bar?',
+        'leftThisBar' => 'Je bent uitgeschreven bij deze bar.',
     ],
 
     /**
