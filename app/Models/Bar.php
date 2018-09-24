@@ -103,8 +103,8 @@ class Bar extends Model {
         return $this->belongsToMany(
             'App\Models\User',
             'bar_user',
-            'user_id',
-            'bar_id'
+            'bar_id',
+            'user_id'
         );
     }
 }

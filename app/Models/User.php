@@ -101,8 +101,8 @@ class User extends Model {
         return $this->belongsToMany(
             'App\Models\Community',
             'community_user',
-            'community_id',
-            'user_id'
+            'user_id',
+            'community_id'
         );
     }
 
@@ -115,8 +115,8 @@ class User extends Model {
         return $this->belongsToMany(
             'App\Models\Bar',
             'bar_user',
-            'bar_id',
-            'user_id'
+            'user_id',
+            'bar_id'
         );
     }
 

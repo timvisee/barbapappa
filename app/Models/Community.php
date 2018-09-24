@@ -101,8 +101,8 @@ class Community extends Model {
         return $this->belongsToMany(
             'App\Models\User',
             'community_user',
-            'user_id',
-            'community_id'
+            'community_id',
+            'user_id'
         );
     }
 
