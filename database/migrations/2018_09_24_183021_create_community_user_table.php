@@ -13,9 +13,11 @@ class CreateCommunityUserTable extends Migration {
      */
     public function up() {
         Schema::create('community_user', function(Blueprint $table) {
+            $table->increments('id')->unsigned();
             $table->integer('community_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
+
 
             $table->foreign('community_id')
                 ->references('id')
@@ -25,6 +27,8 @@ class CreateCommunityUserTable extends Migration {
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+
+            $table->unique(['community_id', 'user_id']);
         });
 
     }

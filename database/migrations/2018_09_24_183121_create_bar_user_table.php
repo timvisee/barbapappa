@@ -13,6 +13,7 @@ class CreateBarUserTable extends Migration {
      */
     public function up() {
         Schema::create('bar_user', function(Blueprint $table) {
+            $table->increments('id')->unsigned();
             $table->integer('bar_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
@@ -25,6 +26,8 @@ class CreateBarUserTable extends Migration {
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+
+            $table->unique(['bar_id', 'user_id']);
         });
 
     }
