@@ -9,4 +9,10 @@ return [
 
     'error' => 'Fout',
     'serverError' => 'Er is een serverfout opgetreden.',
+
+    'yes' => 'Ja',
+    'yesContinue' => 'Ja, ga door',
+    'no' => 'Nee',
+    'noGoBack' => 'Nee, ga terug',
+    'or' => 'of',
 ];

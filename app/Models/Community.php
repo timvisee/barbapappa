@@ -107,6 +107,37 @@ class Community extends Model {
     }
 
     /**
+     * Let the given user join this community.
+     * Note: this throws an error if the user has already joined.
+     *
+     * @param User $user The user to join.
+     */
+    public function join(User $user) {
+        $this->users()->attach($user);
+    }
+
+    /**
+     * Let the given user leave this community.
+     * Note: this throws an error if the user has not joined.
+     *
+     * @param User $user The user to leave.
+     */
+    public function leave(User $user) {
+        $this->users()->detach($user);
+    }
+
+    /**
+     * Check whether the given user is joined this community.
+     *
+     * @param User $user The user to check for.
+     *
+     * @return boolean True if joined, false if not.
+     */
+    public function isJoined(User $user) {
+        return $this->users->contains($user);
+    }
+
+    /**
      * Check whether this community has a password specified.
      *
      * @return bool True if specified, false if not or if empty.

@@ -19,4 +19,6 @@ return [
     'actions' => 'Acties',
     'welcomeTo' => 'Welkom bij',
     'logo' => 'Logo',
+
+    'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
 ];

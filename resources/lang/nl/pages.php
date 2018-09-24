@@ -64,6 +64,16 @@ return [
         'yourCommunities' => 'Jouw groepen',
         'noCommunities' => 'Geen groepen beschikbaar...',
         'viewCommunities' => 'Bekijk groepen',
+        'join' => 'Inschrijven',
+        'yesJoin' => 'Ja, inschrijven',
+        'joined' => 'Ingeschreven',
+        'notJoined' => 'Niet ingeschreven',
+        'hintJoin' => 'Je maakt nog geen deel uit van deze groep.',
+        'joinedClickToLeave' => 'Klik om uit te schrijven.',
+        'joinQuestion' => 'Wil je je bij deze groep inschrijven?',
+        'joinedThisCommunity' => 'Je bent ingeschreven bij deze groep.',
+        'leaveQuestion' => 'Weet je zeker dat je je wilt uitschrijven bij deze groep?',
+        'leftThisCommunity' => 'Je bent uitgeschreven bij deze groep.',
     ],
 
     /**

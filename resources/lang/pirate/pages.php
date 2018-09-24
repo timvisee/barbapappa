@@ -8,7 +8,7 @@ return [
     'dashboard' => 'Home port',
     'yourPersonalDashboard' => 'Ye home port',
     'emailPreferences' => 'E-bottle preferences',
-    'communities' => 'Pirates',
+    'communities' => 'Crews',
     'bars' => 'Bars',
     'account' => 'Ye ship',
     'yourAccount' => 'Ye ship',
@@ -61,9 +61,19 @@ return [
      * Community pages.
      */
     'community' => [
-        'yourCommunities' => 'Ye pirates',
-        'noCommunities' => 'Nay pirates asea...',
-        'viewCommunities' => 'View pirates',
+        'yourCommunities' => 'Ye crews',
+        'noCommunities' => 'Nay crews asea...',
+        'viewCommunities' => 'View crews',
+        'join' => 'Join',
+        'yesJoin' => 'Yey, sail ho!',
+        'joined' => 'Joined',
+        'notJoined' => 'Strangers!',
+        'hintJoin' => 'Ye be not part of th\' crew.',
+        'joinedClickToLeave' => 'Click to be sunk.',
+        'joinQuestion' => 'Ye like be joined th\' crew?',
+        'joinedThisCommunity' => 'Ye joined th\' crew.',
+        'leaveQuestion' => 'Ye be sure to sink th\' crew?',
+        'leftThisCommunity' => 'Ye sunk th\' crew.',
     ],
 
     /**

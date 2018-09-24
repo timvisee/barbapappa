@@ -64,6 +64,16 @@ return [
         'yourCommunities' => 'Your communities',
         'noCommunities' => 'No communities available...',
         'viewCommunities' => 'View communities',
+        'join' => 'Join',
+        'yesJoin' => 'Yes, join',
+        'joined' => 'Joined',
+        'notJoined' => 'Not joined',
+        'hintJoin' => 'You aren\'t part of this community yet.',
+        'joinedClickToLeave' => 'Click to leave.',
+        'joinQuestion' => 'Would you like to join this community?',
+        'joinedThisCommunity' => 'You\'ve joined this community.',
+        'leaveQuestion' => 'Are you sure you want to leave this community?',
+        'leftThisCommunity' => 'You left this community.',
     ],
 
     /**

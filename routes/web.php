@@ -67,13 +67,12 @@ Route::prefix('/c')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
         Route::get('/', 'CommunityController@show')->name('community.show');
-        // Route::prefix("/emails")->group(function() {
-        //     Route::get('/', 'EmailController@show')->name('account.emails');
-        //     Route::get('/new', 'EmailController@create')->name('account.emails.create');
-        //     Route::post('/new', 'EmailController@doCreate');
-        //     Route::get('/reverify/{emailId}', 'EmailController@reverify')->name('account.emails.reverify');
-        //     Route::get('/delete/{emailId}', 'EmailController@delete')->name('account.emails.delete');
-        // });
+        Route::get('/join', 'CommunityController@join')->name('community.join');
+        Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');
+
+        // TODO create controller actions
+        Route::get('/leave', 'CommunityController@leave')->name('community.leave');
+        Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
     });
 });
 

@@ -30,4 +30,10 @@ $(document).ready(function() {
     // Initialize components
     $('.ui.checkbox').checkbox();
     $('.ui.dropdown').dropdown();
+
+    // Join label popup
+    $('.joined-label-popup').popup({
+        position: 'bottom left',
+        transition: 'vertical flip',
+    });
 });

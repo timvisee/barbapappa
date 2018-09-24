@@ -19,4 +19,6 @@ return [
     'actions' => 'Actions',
     'welcomeTo' => 'Welcome to',
     'logo' => 'Logo',
+
+    'cannotBeUndone' => 'Th\' operation nay be undone.',
 ];

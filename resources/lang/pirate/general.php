@@ -9,4 +9,10 @@ return [
 
     'error' => 'Err\'arr',
     'serverError' => 'A server err\'arr occurred.',
+
+    'yes' => 'Yay',
+    'yesContinue' => 'Yay, sail ho!',
+    'no' => 'Nay',
+    'noGoBack' => 'Nay, paddle back',
+    'or' => 'o',
 ];
