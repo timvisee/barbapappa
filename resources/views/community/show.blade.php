@@ -15,7 +15,7 @@
     </h2>
 
     @unless($joined)
-        <div class="ui warning message visible">
+        <div class="ui info message visible">
             <div class="header">@lang('pages.community.notJoined')</div>
             <p>@lang('pages.community.hintJoin')</p>
             <a href="{{ route('community.join', ['communityId' => $community->id]) }}"

@@ -20,10 +20,10 @@ class DashboardController extends Controller {
      * @return Response Response.
      */
     public function index() {
-        //$user = barauth()-getUser();
+        $user = barauth()->getSessionUser();
 
         return view('dashboard')
-            ->with('bars', [])
-            ->with('communities', []);
+            ->with('bars', $user->bars()->get())
+            ->with('communities', $user->communities()->get());
     }
 }

@@ -82,8 +82,8 @@ return [
     'bar' => [
         'yourBars' => 'Ye bars',
         'noBars' => 'Nay bars asea...',
-        'searchByCommunity' => 'Search by pirate',
-        'searchByCommunityDescription' => 'It\' usually be easier to find ye bar by it\'s pirate.',
+        'searchByCommunity' => 'Search by crew',
+        'searchByCommunityDescription' => 'It\' usually be easier to find ye bar by it\'s crew.',
     ],
 
     /**
