@@ -93,4 +93,18 @@ class Bar extends Model {
     public function economy() {
         return $this->belongsTo('App\Models\Economy');
     }
+
+    /**
+     * A list of users that joined this bar.
+     *
+     * @return List of joined users.
+     */
+    public function users() {
+        return $this->belongsToMany(
+            'App\Models\User',
+            'bar_user',
+            'user_id',
+            'bar_id'
+        );
+    }
 }

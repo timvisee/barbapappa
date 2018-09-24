@@ -93,6 +93,34 @@ class User extends Model {
     }
 
     /**
+     * A list of communities this user has joined.
+     *
+     * @return A list of joined communities.
+     */
+    public function communities() {
+        return $this->belongsToMany(
+            'App\Models\Community',
+            'community_user',
+            'community_id',
+            'user_id'
+        );
+    }
+
+    /**
+     * A list of bars this user has joined.
+     *
+     * @return A list of joined bars.
+     */
+    public function bars() {
+        return $this->belongsToMany(
+            'App\Models\Bar',
+            'bar_user',
+            'bar_id',
+            'user_id'
+        );
+    }
+
+    /**
      * Check whether this user has any verified email addresses.
      *
      * @return bool True if the user has any verified email address, false if not.

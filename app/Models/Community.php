@@ -49,15 +49,6 @@ class Community extends Model {
         });
     }
 
-    // /**
-    //  * Get a list of users that joined this community.
-    //  *
-    //  * @return List of joined users.
-    //  */
-    // public function users() {
-    //     return $this->hasMany('App\Models\Email');
-    // }
-
     /**
      * Find the community in a smart manner, using the slug if a slug is given.
      *
@@ -99,6 +90,20 @@ class Community extends Model {
      */
     public function bars() {
         return $this->hasMany('App\Models\Bar');
+    }
+
+    /**
+     * A list of users that joined this community.
+     *
+     * @return List of joined users.
+     */
+    public function users() {
+        return $this->belongsToMany(
+            'App\Models\User',
+            'community_user',
+            'user_id',
+            'community_id'
+        );
     }
 
     /**
