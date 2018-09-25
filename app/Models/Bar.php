@@ -105,7 +105,7 @@ class Bar extends Model {
             'bar_user',
             'bar_id',
             'user_id'
-        );
+        )->withTimestamps();
     }
 
     /**

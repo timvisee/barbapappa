@@ -103,7 +103,7 @@ class Community extends Model {
             'community_user',
             'community_id',
             'user_id'
-        );
+        )->withTimestamps();
     }
 
     /**

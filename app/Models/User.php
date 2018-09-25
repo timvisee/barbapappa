@@ -103,7 +103,7 @@ class User extends Model {
             'community_user',
             'user_id',
             'community_id'
-        );
+        )->withTimestamps();
     }
 
     /**
@@ -117,7 +117,7 @@ class User extends Model {
             'bar_user',
             'user_id',
             'bar_id'
-        );
+        )->withTimestamps();
     }
 
     /**
