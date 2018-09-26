@@ -35,6 +35,13 @@ class SelectBar {
         $request->attributes->add(['bar' => $bar]);
         view()->share('bar', $bar);
 
+        // Make selected corresponding community available in the request and views if not set yet
+        if(!$request->has('community')) {
+            $community = $bar->community;
+            $request->attributes->add(['community' => $community]);
+            view()->share('community', $community);
+        }
+
         // Continue
         return $next($request);
     }
