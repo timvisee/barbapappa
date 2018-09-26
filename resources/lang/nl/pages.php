@@ -75,6 +75,7 @@ return [
         'joinedThisCommunity' => 'Je bent ingeschreven bij deze groep.',
         'leaveQuestion' => 'Weet je zeker dat je je wilt uitschrijven bij deze groep?',
         'leftThisCommunity' => 'Je bent uitgeschreven bij deze groep.',
+        'protectedByCode' => 'Deze groep is beveiligd met een code. Vraag er naar bij de groep, of scan de groep QR-code als deze beschikbaar is.',
     ],
 
     /**

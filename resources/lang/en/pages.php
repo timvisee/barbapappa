@@ -63,7 +63,7 @@ return [
     'community' => [
         'yourCommunities' => 'Your communities',
         'noCommunities' => 'No communities available...',
-        'viewCommunities' => 'View community',
+        'viewCommunity' => 'View community',
         'viewCommunities' => 'View communities',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
@@ -75,6 +75,7 @@ return [
         'joinedThisCommunity' => 'You\'ve joined this community.',
         'leaveQuestion' => 'Are you sure you want to leave this community?',
         'leftThisCommunity' => 'You left this community.',
+        'protectedByCode' => 'This community is protected by a passcode. Request it at the community, or scan the community QR code if available.',
     ],
 
     /**
