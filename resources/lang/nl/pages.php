@@ -63,6 +63,7 @@ return [
     'community' => [
         'yourCommunities' => 'Jouw groepen',
         'noCommunities' => 'Geen groepen beschikbaar...',
+        'viewCommunity' => 'Bekijk groep',
         'viewCommunities' => 'Bekijk groepen',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
@@ -94,6 +95,8 @@ return [
         'hintJoin' => 'Je maakt nog geen deel uit van deze bar.',
         'joinedClickToLeave' => 'Klik om uit te schrijven.',
         'joinQuestion' => 'Wil je je bij deze bar inschrijven?',
+        'alsoJoinCommunity' => 'Ook inschrijven bij de bijbehorende groep',
+        'alreadyJoinedTheirCommunity' => 'Je bent al lid van de bijbehorende groep',
         'joinedThisBar' => 'Je bent ingeschreven bij deze bar.',
         'leaveQuestion' => 'Weet je zeker dat je je wilt uitschrijven bij deze bar?',
         'leftThisBar' => 'Je bent uitgeschreven bij deze bar.',
