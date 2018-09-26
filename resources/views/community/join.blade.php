@@ -18,7 +18,7 @@
         {{-- TODO: only show if community is password protected --}}
         <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
             {{ Form::label('code', __('misc.code') . ':') }}
-            {{ Form::text('code', '', ['placeholder' => __('misc.codePlaceholder')]) }}
+            {{ Form::text('code', Request::query('code'), ['placeholder' => __('misc.codePlaceholder')]) }}
             {{ ErrorRenderer::inline('code') }}
         </div>
 
