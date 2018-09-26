@@ -23,7 +23,7 @@ class PasswordResetController extends Controller {
         ]);
 
         // Check whether to invalidate other sessions
-        $invalidateOtherSessions = $request->input('invalidate_other_sessions') == 'true';
+        $invalidateOtherSessions = is_checked($request->input('invalidate_other_sessions'));
 
         // Reset the password with the given token
         $result = PasswordResetManager::resetPassword(

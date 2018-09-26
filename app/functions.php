@@ -95,3 +95,20 @@ if(!function_exists('trans_random')) {
         return $line;
     }
 }
+
+// Custom function to assert a checkbox value
+if(!function_exists('is_checked')) {
+    /**
+     * Check whether a checkbox value represents true or false.
+     * Different types of checkboxes may return different kinds of values.
+     *
+     * For example:
+     * `$isChecked = is_checked($request->input('checkbox_name'));`
+     *
+     * @param string $value The checkbox value to check.
+     * @return boolean True if checked, false if not.
+     */
+    function is_checked($value) {
+        return $value != null && ($value == 'true' || $value == 'on' || $value == '1');
+    }
+}
