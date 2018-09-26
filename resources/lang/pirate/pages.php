@@ -63,6 +63,7 @@ return [
     'community' => [
         'yourCommunities' => 'Ye crews',
         'noCommunities' => 'Nay crews asea...',
+        'viewCommunity' => 'View crew',
         'viewCommunities' => 'View crews',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
@@ -94,6 +95,8 @@ return [
         'hintJoin' => 'Ye be not part of th\' bar.',
         'joinedClickToLeave' => 'Click to be sunk.',
         'joinQuestion' => 'Ye like be joined th\' bar?',
+        'alsoJoinCommunity' => 'Also be join their crew',
+        'alreadyJoinedTheirCommunity' => 'Ye already be a pirate of their crew',
         'joinedThisBar' => 'Ye joined th\' bar.',
         'leaveQuestion' => 'Ye be sure to sink th\' bar?',
         'leftThisBar' => 'Ye sunk th\' bar.',

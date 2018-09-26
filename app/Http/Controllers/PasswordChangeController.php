@@ -30,7 +30,7 @@ class PasswordChangeController extends Controller {
         ]);
 
         // Check whether to invalidate other sessions
-        $invalidateOtherSessions = $request->input('invalidate_other_sessions') == 'true';
+        $invalidateOtherSessions = is_checked($request->input('invalidate_other_sessions'));
 
         // Get the user and session
         $user = barauth()->getSessionUser();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bar;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class BarController extends Controller {
@@ -65,12 +66,25 @@ class BarController extends Controller {
      *
      * @return Response
      */
-    public function doJoin($barId) {
+    public function doJoin(Request $request, $barId) {
         // TODO: make sure the user has permission to join this bar
 
-        // Get the bar and user
+        // Get the bar, community and user
         $bar = \Request::get('bar');
+        $community = \Request::get('community');
         $user = barauth()->getSessionUser();
+
+        // Join the community
+        if(!$community->isJoined($user)) {
+            // TODO: ensure the user has permission to join this community
+
+            // Check whether to join their community
+            $joinCommunity = is_checked($request->input('join_community'));
+
+            // Join the community
+            if($joinCommunity)
+                $community->join($user);
+        }
 
         // Join the user
         $bar->join($user);

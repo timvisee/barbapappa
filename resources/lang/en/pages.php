@@ -63,6 +63,7 @@ return [
     'community' => [
         'yourCommunities' => 'Your communities',
         'noCommunities' => 'No communities available...',
+        'viewCommunities' => 'View community',
         'viewCommunities' => 'View communities',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
@@ -94,6 +95,8 @@ return [
         'hintJoin' => 'You aren\'t part of this bar yet.',
         'joinedClickToLeave' => 'Click to leave.',
         'joinQuestion' => 'Would you like to join this bar?',
+        'alsoJoinCommunity' => 'Also join their community',
+        'alreadyJoinedTheirCommunity' => 'You already are a member of their community',
         'joinedThisBar' => 'You\'ve joined this bar.',
         'leaveQuestion' => 'Are you sure you want to leave this bar?',
         'leftThisBar' => 'You left this bar.',

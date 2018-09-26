@@ -47,7 +47,7 @@ class PermissionGroupsController extends Controller {
         // TODO: Make sure the user has permission to do this
 
         // Determine whether the group is enabled
-        $enabled = $request->input('enabled') == 'true';
+        $enabled = is_checked($request->input('enabled'));
 
         // Create the permission group
         $group = new PermissionGroup();
@@ -105,7 +105,7 @@ class PermissionGroupsController extends Controller {
         ]);
 
         // Determine whether the group is enabled
-        $enabled = $request->input('enabled') == 'true';
+        $enabled = is_checked($request->input('enabled'));
 
         // Find the group
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */

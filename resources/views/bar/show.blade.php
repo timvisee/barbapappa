@@ -32,4 +32,11 @@
         <div class="item">Product 4</div>
         <div class="item">Product 5</div>
     </div>
+
+    <div class="ui section divider"></div>
+
+    <a href="{{ route('community.show', ['communityId' => $community->id]) }}"
+            class="ui button small basic">
+        @lang('pages.community.viewCommunity')
+    </a>
 @endsection
