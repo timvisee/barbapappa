@@ -103,6 +103,9 @@ return [
         'joinedThisBar' => 'You\'ve joined this bar.',
         'leaveQuestion' => 'Are you sure you want to leave this bar?',
         'leftThisBar' => 'You left this bar.',
+        'protectedByCode' => 'This bar is protected by a passcode. Request it at the bar, or scan the bar QR code if available.',
+        'protectedByCodeFilled' => 'This bar is protected by a passcode. We\'ve filled it in for you.',
+        'incorrectCode' => 'Incorrect bar code.',
     ],
 
     /**

@@ -6,7 +6,39 @@
 
     <p>@lang('pages.bar.joinQuestion')</p>
 
+    @php
+        $user = barauth()->getSessionUser();
+        $needsPassword = $bar->needsPassword($user);
+        $code = Request::query('code');
+    @endphp
+
+    @if($needsPassword)
+        <div class="ui divider"></div>
+
+        @if(empty($code))
+            <div class="ui warning message visible">
+                <div class="header">@lang('misc.protected')</div>
+                <p>@lang('pages.bar.protectedByCode')</p>
+            </div>
+        @else
+            <div class="ui info message visible">
+                <div class="header">@lang('misc.protected')</div>
+                <p>@lang('pages.bar.protectedByCodeFilled')</p>
+            </div>
+        @endif
+    @endif
+
     {!! Form::open(['action' => ['BarController@doJoin', 'barId' => $bar->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+
+        @if($needsPassword)
+            <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
+                {{ Form::label('code', __('misc.code') . ':') }}
+                {{ Form::text('code', $code, ['placeholder' => __('misc.codePlaceholder')]) }}
+                {{ ErrorRenderer::inline('code') }}
+            </div>
+            <br>
+        @endif
+
         @if(!$community->isJoined(barauth()->getSessionUser()))
             <div class="inline field">
                 <div class="ui toggle checkbox">

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Helpers\ValidationDefaults;
 use App\Models\Bar;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -73,6 +75,24 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
+
+        // Handle the password if required
+        if($bar->needsPassword($user)) {
+            // Validate password field input
+            $this->validate($request, [
+                'code' => 'required|' . ValidationDefaults::CODE,
+            ]);
+
+            // Test the password
+            if(!$bar->isPassword($request->input('code'))) {
+                // Mark the error and retur
+                $validator = Validator::make([], []);
+                $validator->errors()->add('code', __('pages.bar.incorrectCode'));
+                return back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        }
 
         // Join the community
         if(!$community->isJoined($user)) {

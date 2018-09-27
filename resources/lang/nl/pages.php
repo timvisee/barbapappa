@@ -103,6 +103,9 @@ return [
         'joinedThisBar' => 'Je bent ingeschreven bij deze bar.',
         'leaveQuestion' => 'Weet je zeker dat je je wilt uitschrijven bij deze bar?',
         'leftThisBar' => 'Je bent uitgeschreven bij deze bar.',
+        'protectedByCode' => 'Deze bar is beveiligd met een code. Vraag er naar bij de bar, of scan de bar QR-code als deze beschikbaar is.',
+        'protectedByCodeFilled' => 'Deze bar is beveiligd met een code. We hebben de code voor je ingevuld.',
+        'incorrectCode' => 'Verkeerde bar code.',
     ],
 
     /**
