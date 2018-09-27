@@ -6,23 +6,30 @@
 
     <p>@lang('pages.community.joinQuestion')</p>
 
-    <div class="ui divider"></div>
+    @php
+        $user = barauth()->getSessionUser();
+        $needsPassword = $community->needsPassword($user);
+    @endphp
 
-    <div class="ui warning message visible">
-        <div class="header">@lang('misc.protected')</div>
-        <p>@lang('pages.community.protectedByCode')</p>
-    </div>
+    @if($needsPassword)
+        <div class="ui divider"></div>
+
+        <div class="ui warning message visible">
+            <div class="header">@lang('misc.protected')</div>
+            <p>@lang('pages.community.protectedByCode')</p>
+        </div>
+    @endif
 
     {!! Form::open(['action' => ['CommunityController@doJoin', 'communityId' => $community->id], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        {{-- TODO: only show if community is password protected --}}
-        <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
-            {{ Form::label('code', __('misc.code') . ':') }}
-            {{ Form::text('code', Request::query('code'), ['placeholder' => __('misc.codePlaceholder')]) }}
-            {{ ErrorRenderer::inline('code') }}
-        </div>
-
-        <br>
+        @if($needsPassword)
+            <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
+                {{ Form::label('code', __('misc.code') . ':') }}
+                {{ Form::text('code', Request::query('code'), ['placeholder' => __('misc.codePlaceholder')]) }}
+                {{ ErrorRenderer::inline('code') }}
+            </div>
+            <br>
+        @endif
 
         <div class="ui buttons">
             <button class="ui button positive" type="submit">@lang('pages.community.yesJoin')</button>

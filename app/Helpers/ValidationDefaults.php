@@ -65,4 +65,9 @@ class ValidationDefaults {
      * Bar slug validation configuration.
      */
     const BAR_SLUG = self::SLUG . '|unique:bars,slug';
+
+    /**
+     * A protection code for a community or bar.
+     */
+    const CODE = 'string|min:2|max:4096';
 }

@@ -76,6 +76,7 @@ return [
         'leaveQuestion' => 'Ye be sure to sink th\' crew?',
         'leftThisCommunity' => 'Ye sunk th\' crew.',
         'protectedByCode' => 'Dis crew be protected by a secret. Request it at yer crew, or use yer binoculars to scan the crew Q-ARRRR code if available.',
+        'incorrectCode' => 'Crew code be incorrect.',
     ],
 
     /**

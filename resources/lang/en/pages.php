@@ -76,6 +76,7 @@ return [
         'leaveQuestion' => 'Are you sure you want to leave this community?',
         'leftThisCommunity' => 'You left this community.',
         'protectedByCode' => 'This community is protected by a passcode. Request it at the community, or scan the community QR code if available.',
+        'incorrectCode' => 'Incorrect community code.',
     ],
 
     /**
