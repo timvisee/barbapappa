@@ -9,15 +9,23 @@
     @php
         $user = barauth()->getSessionUser();
         $needsPassword = $community->needsPassword($user);
+        $code = Request::query('code');
     @endphp
 
     @if($needsPassword)
         <div class="ui divider"></div>
 
-        <div class="ui warning message visible">
-            <div class="header">@lang('misc.protected')</div>
-            <p>@lang('pages.community.protectedByCode')</p>
-        </div>
+        @if(empty($code))
+            <div class="ui warning message visible">
+                <div class="header">@lang('misc.protected')</div>
+                <p>@lang('pages.community.protectedByCode')</p>
+            </div>
+        @else
+            <div class="ui info message visible">
+                <div class="header">@lang('misc.protected')</div>
+                <p>@lang('pages.community.protectedByCodeFilled')</p>
+            </div>
+        @endif
     @endif
 
     {!! Form::open(['action' => ['CommunityController@doJoin', 'communityId' => $community->id], 'method' => 'POST', 'class' => 'ui form']) !!}
@@ -25,7 +33,7 @@
         @if($needsPassword)
             <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
                 {{ Form::label('code', __('misc.code') . ':') }}
-                {{ Form::text('code', Request::query('code'), ['placeholder' => __('misc.codePlaceholder')]) }}
+                {{ Form::text('code', $code, ['placeholder' => __('misc.codePlaceholder')]) }}
                 {{ ErrorRenderer::inline('code') }}
             </div>
             <br>
