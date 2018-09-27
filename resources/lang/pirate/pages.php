@@ -103,6 +103,9 @@ return [
         'joinedThisBar' => 'Ye joined th\' bar.',
         'leaveQuestion' => 'Ye be sure to sink th\' bar?',
         'leftThisBar' => 'Ye sunk th\' bar.',
+        'protectedByCode' => 'Dis bar be protected by a secret. Request it at yer bar, or use yer binoculars to scan the bar Q-ARRRR code if available.',
+        'protectedByCodeFilled' => 'Dis bar be protected by a secret. We filled it for ye.',
+        'incorrectCode' => 'Bar code be incorrect.',
     ],
 
     /**
