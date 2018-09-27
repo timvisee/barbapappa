@@ -17,7 +17,7 @@ trait HasSlug {
      * @return Community The community if found.
      */
     public static function slugOrFail($slug) {
-        return Community::where('slug', $slug)->firstOrFail();
+        return Self::where('slug', $slug)->firstOrFail();
     }
 
     /**
