@@ -15,7 +15,7 @@ class CreateEmailTable extends Migration {
         Schema::create('emails', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->string('email')->nullable(false);
+            $table->string('email', 255)->nullable(false);
             $table->datetime('verified_at')->nullable();
             $table->string('verified_ip')->nullable();
             $table->rememberToken();

@@ -37,14 +37,20 @@ class ValidationDefaults {
     const PASSWORD_RESET_TOKEN = 'string|size:32';
 
     /**
+     * A regular name.
+     * For example, a community or bar name.
+     */
+    const NAME = 'string|min:2|max:255';
+
+    /**
      * First name validation configuration.
      */
-    const FIRST_NAME = 'string|min:2|max:255';
+    const FIRST_NAME = self::NAME;
 
     /**
      * Last name validation configuration.
      */
-    const LAST_NAME = 'string|min:2|max:255';
+    const LAST_NAME = self::NAME;
 
     /**
      * Base slug validation configuration.
