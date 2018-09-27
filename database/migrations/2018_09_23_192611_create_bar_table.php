@@ -16,11 +16,11 @@ class CreateBarTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('community_id')->unsigned();
             $table->integer('economy_id')->unsigned();
-            $table->string('name')->nullable(false);
-            $table->string('slug')->index()->unique()->nullable(true)->default(null);
+            $table->string('name', 255)->nullable(false);
+            $table->string('slug', 64)->index()->unique()->nullable(true)->default(null);
             $table->boolean('visible');
             $table->boolean('public');
-            $table->string('password')->nullable(true)->default(null);
+            $table->string('password', 4096)->nullable(true)->default(null);
             $table->timestamps();
 
             $table->foreign('community_id')

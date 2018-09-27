@@ -15,7 +15,7 @@ class CreateEconomyTable extends Migration {
         Schema::create('economies', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('community_id')->unsigned();
-            $table->string('name')->nullable();
+            $table->string('name', 255)->nullable();
             $table->timestamps();
 
             $table->foreign('community_id')

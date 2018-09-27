@@ -19,6 +19,9 @@ return [
     'actions' => 'Acties',
     'welcomeTo' => 'Welkom bij',
     'logo' => 'Logo',
+    'code' => 'Code',
+    'codePlaceholder' => '1234',
+    'protected' => 'Beveiligd',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
 ];

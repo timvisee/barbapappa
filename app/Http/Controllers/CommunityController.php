@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Validator;
+use App\Helpers\ValidationDefaults;
 use App\Models\Community;
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 
 class CommunityController extends Controller {
 
@@ -66,12 +69,30 @@ class CommunityController extends Controller {
      *
      * @return Response
      */
-    public function doJoin($communityId) {
+    public function doJoin(Request $request, $communityId) {
         // TODO: make sure the user has permission to join this community
 
         // Get the community and user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
+
+        // Handle the password if required
+        if($community->needsPassword($user)) {
+            // Validate password field input
+            $this->validate($request, [
+                'code' => 'required|' . ValidationDefaults::CODE,
+            ]);
+
+            // Test the password
+            if(!$community->isPassword($request->input('code'))) {
+                // Mark the error and retur
+                $validator = Validator::make([], []);
+                $validator->errors()->add('code', __('pages.community.incorrectCode'));
+                return back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+        }
 
         // Join the user
         $community->join($user);

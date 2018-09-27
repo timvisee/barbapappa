@@ -19,6 +19,9 @@ return [
     'actions' => 'Actions',
     'welcomeTo' => 'Welcome to',
     'logo' => 'Logo',
+    'code' => 'Secret',
+    'codePlaceholder' => '-------------✗',
+    'protected' => 'Protected',
 
     'cannotBeUndone' => 'Th\' operation nay be undone.',
 ];
