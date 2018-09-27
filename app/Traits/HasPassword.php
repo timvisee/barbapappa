@@ -9,6 +9,7 @@ namespace App\Traits;
  * TODO: force that this is implemented on Eloquent models
  */
 trait HasPassword {
+
     /**
      * Check whether this community has a password specified.
      *

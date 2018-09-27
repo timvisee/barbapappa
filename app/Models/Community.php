@@ -6,6 +6,7 @@ use App\Helpers\ValidationDefaults;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Traits\HasPassword;
+use App\Traits\HasSlug;
 use App\Utils\EmailRecipient;
 use App\Utils\SlugUtils;
 use Carbon\Carbon;
@@ -28,7 +29,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class Community extends Model {
 
-    use HasPassword;
+    use HasPassword, HasSlug;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -59,17 +60,6 @@ class Community extends Model {
             return Community::slugOrFail($id);
         else
             return Community::findOrFail($id);
-    }
-
-    /**
-     * Find the community by the given slug, or fail.
-     *
-     * @param string $slug The slug.
-     *
-     * @return Community The community if found.
-     */
-    public static function slugOrFail($slug) {
-        return Community::where('slug', $slug)->firstOrFail();
     }
 
     /**
@@ -133,14 +123,5 @@ class Community extends Model {
      */
     public function isJoined(User $user) {
         return $this->users->contains($user);
-    }
-
-    /**
-     * Check whether this community has a slug specified.
-     *
-     * @return bool True if specified, false if not or if empty.
-     */
-    public function hasSlug() {
-        return !empty($this->slug);
     }
 }

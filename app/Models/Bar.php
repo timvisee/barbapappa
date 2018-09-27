@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Traits\HasPassword;
+use App\Traits\HasSlug;
 use App\Utils\EmailRecipient;
 use App\Utils\SlugUtils;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class Bar extends Model {
 
-    use HasPassword;
+    use HasPassword, HasSlug;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -61,17 +62,6 @@ class Bar extends Model {
             return Bar::slugOrFail($id);
         else
             return Bar::findOrFail($id);
-    }
-
-    /**
-     * Find the bar by the given slug, or fail.
-     *
-     * @param string $slug The slug.
-     *
-     * @return Bar The bar if found.
-     */
-    public static function slugOrFail($slug) {
-        return Bar::where('slug', $slug)->firstOrFail();
     }
 
     /**
