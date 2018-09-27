@@ -7,6 +7,7 @@ use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Traits\HasPassword;
 use App\Traits\HasSlug;
+use App\Traits\Joinable;
 use App\Utils\EmailRecipient;
 use App\Utils\SlugUtils;
 use Carbon\Carbon;
@@ -29,7 +30,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class Community extends Model {
 
-    use HasPassword, HasSlug;
+    use HasPassword, HasSlug, Joinable;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -92,36 +93,5 @@ class Community extends Model {
             'community_id',
             'user_id'
         )->withTimestamps();
-    }
-
-    /**
-     * Let the given user join this community.
-     * Note: this throws an error if the user has already joined.
-     *
-     * @param User $user The user to join.
-     */
-    public function join(User $user) {
-        $this->users()->attach($user);
-    }
-
-    /**
-     * Let the given user leave this community.
-     * Note: this throws an error if the user has not joined.
-     *
-     * @param User $user The user to leave.
-     */
-    public function leave(User $user) {
-        $this->users()->detach($user);
-    }
-
-    /**
-     * Check whether the given user is joined this community.
-     *
-     * @param User $user The user to check for.
-     *
-     * @return boolean True if joined, false if not.
-     */
-    public function isJoined(User $user) {
-        return $this->users->contains($user);
     }
 }
