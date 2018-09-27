@@ -25,7 +25,7 @@ class BarController extends Controller {
      */
     public function overview() {
         return view('bar.overview')
-            ->with('bars', Bar::all());
+            ->with('bars', Bar::visible()->get());
     }
 
     /**

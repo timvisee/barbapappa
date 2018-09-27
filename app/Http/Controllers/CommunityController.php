@@ -25,7 +25,7 @@ class CommunityController extends Controller {
      */
     public function overview() {
         return view('community.overview')
-            ->with('communities', Community::all());
+            ->with('communities', Community::visible()->get());
     }
 
     /**
@@ -40,7 +40,7 @@ class CommunityController extends Controller {
 
         return view('community.show')
             ->with('joined', $community->isJoined($user))
-            ->with('bars', $community->bars()->get());
+            ->with('bars', $community->bars()->visible()->get());
     }
 
     /**

@@ -37,16 +37,11 @@ class Community extends Model {
     ];
 
     /**
-     * The "booting" method of the model.
-     *
-     * @return void
+     * A scope for only showing communities that have been defined as visible by
+     * the owner.
      */
-    protected static function boot() {
-        parent::boot();
-
-        static::addGlobalScope('visible', function(Builder $builder) {
-            $builder->where('visible', true);
-        });
+    public function scopeVisible($query) {
+        $query->where('visible', true);
     }
 
     /**
