@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\ValidationDefaults;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
+use App\Traits\HasPassword;
 use App\Utils\EmailRecipient;
 use App\Utils\SlugUtils;
 use Carbon\Carbon;
@@ -26,6 +27,8 @@ use Illuminate\Support\Facades\Mail;
  * @property Carbon updated_at
  */
 class Community extends Model {
+
+    use HasPassword;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -130,43 +133,6 @@ class Community extends Model {
      */
     public function isJoined(User $user) {
         return $this->users->contains($user);
-    }
-
-    /**
-     * Check whether the given password is correct.
-     *
-     * Note: this always tries to compare and doesn't check whether a password
-     * is required.
-     *
-     * @param string $password The password to check.
-     * @return boolean True if the password is correct, false if not.
-     */
-    public function isPassword($password) {
-        return $this->password == $password;
-    }
-
-    /**
-     * Check whether this community has a password specified.
-     *
-     * @return bool True if specified, false if not or if empty.
-     */
-    public function hasPassword() {
-        return !empty($this->password);
-    }
-
-    /**
-     * Check whether the given user needs a password to join this community.
-     *
-     * @return bool True if a password is required, false if not.
-     */
-    public function needsPassword($user) {
-        // There must be a password
-        if(!$this->hasPassword())
-            return false;
-
-        // TODO: some password determining logic here
-
-        return true;
     }
 
     /**

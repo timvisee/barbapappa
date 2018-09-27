@@ -36,10 +36,10 @@
                 {{ Form::text('code', $code, ['placeholder' => __('misc.codePlaceholder')]) }}
                 {{ ErrorRenderer::inline('code') }}
             </div>
-            <br>
         @endif
 
         @if(!$community->isJoined(barauth()->getSessionUser()))
+            <br>
             <div class="inline field">
                 <div class="ui toggle checkbox">
                     <input type="checkbox" name="join_community" tabindex="0" class="hidden" checked="checked">
