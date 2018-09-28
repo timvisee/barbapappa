@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use Illuminate\Validation\Rule;
+
 /**
  * Class ValidationDefaults.
  *
@@ -63,17 +65,39 @@ class ValidationDefaults {
     const SLUG_REGEX = '/^[a-zA-Z_][a-zA-Z0-9_-]{1,64}$/';
 
     /**
-     * Community slug validation configuration.
-     */
-    const COMMUNITY_SLUG = self::SLUG . '|unique:communities,slug';
-
-    /**
-     * Bar slug validation configuration.
-     */
-    const BAR_SLUG = self::SLUG . '|unique:bars,slug';
-
-    /**
      * A protection code for a community or bar.
      */
     const CODE = 'string|min:2|max:4096';
+
+    /**
+     * Build the community slug validation configuration.
+     *
+     * @param int|null $community The community this configuration is built for.
+     * @return string The validation configuration.
+     */
+    public static function communitySlug($community = null) {
+        // Buid the uniqueness rule, ignore the current if given
+        $unique = Rule::unique('communities', 'slug');
+        if(!empty($community)) {
+            $unique = $unique->ignore($community->id);
+        }
+
+        return self::SLUG . '|' . $unique;
+    }
+
+    /**
+     * Build the bar slug validation configuration.
+     *
+     * @param int|null $bar The bar this configuration is built for.
+     * @return string The validation configuration.
+     */
+    public static function barSlug($bar = null) {
+        // Buid the uniqueness rule, ignore the current if given
+        $unique = Rule::unique('bars', 'slug');
+        if(!empty($bar)) {
+            $unique = $unique->ignore($bar->id);
+        }
+
+        return self::SLUG . '|' . $unique;
+    }
 }
