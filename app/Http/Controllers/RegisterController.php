@@ -29,7 +29,7 @@ class RegisterController extends Controller {
             'first_name' => 'required|' . ValidationDefaults::FIRST_NAME,
             'last_name' => 'required|' . ValidationDefaults::LAST_NAME,
             'email' => 'required|' . ValidationDefaults::EMAIL . '|unique:emails',
-            'password' => 'required|' . ValidationDefaults::PASSWORD . '|confirmed',
+            'password' => 'required|' . ValidationDefaults::PASSWORD_USER . '|confirmed',
         ], [
             'email.unique' => __('auth.emailUsed')
         ]);

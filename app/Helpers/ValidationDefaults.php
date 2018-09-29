@@ -19,9 +19,15 @@ class ValidationDefaults {
     const EMAIL = 'string|email|max:255';
 
     /**
-     * Password validation configuration.
+     * User password validation configuration.
      */
-    const PASSWORD = 'string|min:6|max:4096';
+    const USER_PASSWORD = 'string|min:6|max:4096';
+
+    /**
+     * Simple password validation configuration.
+     * This is used for community and bar passwords, and are less constrained.
+     */
+    const SIMPLE_PASSWORD = 'string|min:4|max:4096';
 
     /**
      * Email reset token validation configuration.

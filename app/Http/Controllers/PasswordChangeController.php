@@ -24,7 +24,7 @@ class PasswordChangeController extends Controller {
         // Validate the inputs
         $this->validate($request, [
             'password' => 'required|' . ValidationDefaults::PASSWORD,
-            'new_password' => 'required|' . ValidationDefaults::PASSWORD . '|confirmed|different:password'
+            'new_password' => 'required|' . ValidationDefaults::USER_PASSWORD . '|confirmed|different:password'
         ], [
             'different' => __('auth.newPasswordDifferent')
         ]);
