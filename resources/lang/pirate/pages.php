@@ -80,7 +80,10 @@ return [
         'protectedByCodeFilled' => 'Dis crew be protected by a secret. We filled it for ye.',
         'incorrectCode' => 'Crew code be incorrect.',
         'namePlaceholder' => 'Seven Seas',
+        'slugDescription' => 'Ye slug allows ye to create \'n easy to remember URL to access dis crew, by defining a short keyword.',
+        'slugDescriptionExample' => 'Dis could simplify ye crew URL:',
         'slugPlaceholder' => 'seven-seas',
+        'codeDescription' => 'With a crew secret, ye prevent random pirates from joining. To join the community, users be required to enter th\' secret.',
         'updated' => 'Th\' crew be updated.',
     ],
 

@@ -80,7 +80,10 @@ return [
         'protectedByCodeFilled' => 'This community is protected by a passcode. We\'ve filled it in for you.',
         'incorrectCode' => 'Incorrect community code.',
         'namePlaceholder' => 'The Vikings',
+        'slugDescription' => 'A slug allows you to create an easy to remember URL to access this community, by defining a short keyword.',
+        'slugDescriptionExample' => 'This could simplify your community URL:',
         'slugPlaceholder' => 'vikings',
+        'codeDescription' => 'With a community code, you prevent random users from joining. To join the community, users are required to enter the specified code.',
         'updated' => 'The community has been updated.',
     ],
 

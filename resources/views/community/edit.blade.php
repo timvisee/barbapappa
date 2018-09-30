@@ -11,18 +11,41 @@
             {{ ErrorRenderer::inline('name') }}
         </div>
 
+        <div class="ui divider"></div>
+
+        <div class="ui message">
+            <div class="header">@lang('misc.slug')</div>
+            <p>@lang('pages.community.slugDescription')</p>
+
+            <p>
+                @lang('pages.community.slugDescriptionExample')</br>
+                <u><code>{{ URL::to('/c/' . $community->id) }}</code></u>
+                <span class="glyphicons glyphicons-chevron-right"></span>
+                <u><code>{{ URL::to('/c/' . ($community->slug ? $community->slug : __('pages.community.slugPlaceholder'))) }}</code></u>.
+            </p>
+        </div>
+
         <div class="field {{ ErrorRenderer::hasError('slug') ? 'error' : '' }}">
-            {{ Form::label('slug', __('misc.slug') . ':') }}
+            {{ Form::label('slug', __('misc.slug') . ' (' .  __('general.optional') . '):') }}
             {{ Form::text('slug', $community->slug, ['placeholder' => __('pages.community.slugPlaceholder')]) }}
             {{ ErrorRenderer::inline('slug') }}
             {{-- TODO: suggest a clickable slug based on the community name --}}
         </div>
 
+        <div class="ui divider"></div>
+
+        <div class="ui message">
+            <div class="header">@lang('misc.code')</div>
+            <p>@lang('pages.community.codeDescription')</p>
+        </div>
+
         <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
-            {{ Form::label('password', __('misc.code') . ':') }}
+            {{ Form::label('password', __('misc.code') . ' (' .  __('general.optional') . '):') }}
             {{ Form::text('password', $community->password, ['placeholder' => __('misc.codePlaceholder')]) }}
             {{ ErrorRenderer::inline('password') }}
         </div>
+
+        <div class="ui divider"></div>
 
         <div class="inline field">
             <div class="ui checkbox">
