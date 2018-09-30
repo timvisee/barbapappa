@@ -65,6 +65,7 @@ return [
         'noCommunities' => 'Nay crews asea...',
         'viewCommunity' => 'View crew',
         'viewCommunities' => 'View crews',
+        'editCommunity' => 'Edit crew',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
         'joined' => 'Joined',
@@ -78,6 +79,9 @@ return [
         'protectedByCode' => 'Dis crew be protected by a secret. Request it at yer crew, or use yer binoculars to scan the crew Q-ARRRR code if available.',
         'protectedByCodeFilled' => 'Dis crew be protected by a secret. We filled it for ye.',
         'incorrectCode' => 'Crew code be incorrect.',
+        'namePlaceholder' => 'Seven Seas',
+        'slugPlaceholder' => 'seven-seas',
+        'updated' => 'Th\' crew be updated.',
     ],
 
     /**
@@ -103,7 +107,7 @@ return [
         'joinedThisBar' => 'Ye joined th\' bar.',
         'leaveQuestion' => 'Ye be sure to sink th\' bar?',
         'leftThisBar' => 'Ye sunk th\' bar.',
-        'protectedByCode' => 'Dis bar be protected by a secret. Request it at yer bar, or use yer binoculars to scan the bar Q-ARRRR code if available.',
+        'protectedByCode' => 'Dis bar be protected by a secret. Request it at yer bar, or use yer spyglass to scan the bar Q-ARRRR code if available.',
         'protectedByCodeFilled' => 'Dis bar be protected by a secret. We filled it for ye.',
         'incorrectCode' => 'Bar code be incorrect.',
     ],

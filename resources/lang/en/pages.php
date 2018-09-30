@@ -65,6 +65,7 @@ return [
         'noCommunities' => 'No communities available...',
         'viewCommunity' => 'View community',
         'viewCommunities' => 'View communities',
+        'editCommunity' => 'Edit community',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',
@@ -78,6 +79,9 @@ return [
         'protectedByCode' => 'This community is protected by a passcode. Request it at the community, or scan the community QR code if available.',
         'protectedByCodeFilled' => 'This community is protected by a passcode. We\'ve filled it in for you.',
         'incorrectCode' => 'Incorrect community code.',
+        'namePlaceholder' => 'The Vikings',
+        'slugPlaceholder' => 'vikings',
+        'updated' => 'The community has been updated.',
     ],
 
     /**

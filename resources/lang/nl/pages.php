@@ -65,6 +65,7 @@ return [
         'noCommunities' => 'Geen groepen beschikbaar...',
         'viewCommunity' => 'Bekijk groep',
         'viewCommunities' => 'Bekijk groepen',
+        'editCommunity' => 'Bewerk groep',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
         'joined' => 'Ingeschreven',
@@ -78,6 +79,9 @@ return [
         'protectedByCode' => 'Deze groep is beveiligd met een code. Vraag er naar bij de groep, of scan de groep QR-code als deze beschikbaar is.',
         'protectedByCodeFilled' => 'Deze groep is beveiligd met een code. We hebben de code voor je ingevuld.',
         'incorrectCode' => 'Verkeerde groep code.',
+        'namePlaceholder' => 'Viking Groep',
+        'slugPlaceholder' => 'vikings',
+        'updated' => 'De groep is aangepast.',
     ],
 
     /**
