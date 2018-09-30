@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="ui header">
-        {{ $community->name }}
-    </h2>
+    <h2 class="ui header">@lang('pages.community.editCommunity')</h2>
 
     {!! Form::open(['action' => ['CommunityController@update', $community->id], 'method' => 'POST', 'class' => 'ui form']) !!}
 
@@ -27,7 +25,7 @@
         </div>
 
         <div class="inline field">
-            <div class="ui toggle checkbox">
+            <div class="ui checkbox">
                 <input type="checkbox"
                         name="visible"
                         tabindex="0"
@@ -39,7 +37,7 @@
         </div>
 
         <div class="inline field">
-            <div class="ui toggle checkbox">
+            <div class="ui checkbox">
                 <input type="checkbox"
                         name="public"
                         tabindex="0"
