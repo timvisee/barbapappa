@@ -77,6 +77,8 @@ class CommunityController extends Controller {
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::communitySlug($community),
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+        ], [
+            'slug.regex' => __('pages.community.slugFieldRegexError'),
         ]);
 
         // Change the name properties

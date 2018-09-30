@@ -126,6 +126,7 @@ return [
         'last_name' => 'achternaam',
         'language' => 'taal',
         'invalidate_other_sessions' => 'log uit op andere apparaten',
+        'slug' => 'URL-pad',
     ],
 
 ];

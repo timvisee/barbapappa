@@ -83,6 +83,7 @@ return [
         'slugDescription' => 'Ye slug allows ye to create \'n easy to remember URL to access dis crew, by defining a short keyword.',
         'slugDescriptionExample' => 'Dis could simplify ye crew URL:',
         'slugPlaceholder' => 'seven-seas',
+        'slugFieldRegexError' => 'Dis slug must start with n alphabetical character.',
         'codeDescription' => 'With a crew secret, ye prevent random pirates from joining. To join the community, users be required to enter th\' secret.',
         'updated' => 'Th\' crew be updated.',
     ],

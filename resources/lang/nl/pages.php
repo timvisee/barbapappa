@@ -83,6 +83,7 @@ return [
         'slugDescription' => 'Een URL-pad laat je een makkelijk te onthouden link creëren om de groeps pagina te bezoeken, door een kort trefwoord te definieren.',
         'slugDescriptionExample' => 'Dit kan de groepslink versimpelen:',
         'slugPlaceholder' => 'vikings',
+        'slugFieldRegexError' => 'Dit trefword moet met een alfabetisch karakter beginnen.',
         'codeDescription' => 'Met een groepscode voorkom je dat willekeurige gebruikers zich inschrijven bij deze groep. Om in te schrijven moeten gebruikers de gespecificeerde code invullen.',
         'updated' => 'De groep is aangepast.',
     ],
