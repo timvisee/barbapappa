@@ -64,6 +64,7 @@ return [
         'noCommunities' => 'Geen groepen beschikbaar...',
         'viewCommunity' => 'Bekijk groep',
         'viewCommunities' => 'Bekijk groepen',
+        'editCommunity' => 'Bewerk groep',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
         'joined' => 'Ingeschreven',
@@ -77,6 +78,15 @@ return [
         'protectedByCode' => 'Deze groep is beveiligd met een code. Vraag er naar bij de groep, of scan de groep QR-code als deze beschikbaar is.',
         'protectedByCodeFilled' => 'Deze groep is beveiligd met een code. We hebben de code voor je ingevuld.',
         'incorrectCode' => 'Verkeerde groep code.',
+        'namePlaceholder' => 'Viking Groep',
+        'slugDescription' => 'Een URL-pad laat je een makkelijk te onthouden link creëren om de groeps pagina te bezoeken, door een kort trefwoord te definieren.',
+        'slugDescriptionExample' => 'Dit kan de groepslink versimpelen:',
+        'slugPlaceholder' => 'vikings',
+        'slugFieldRegexError' => 'Dit trefword moet met een alfabetisch karakter beginnen.',
+        'codeDescription' => 'Met een groepscode voorkom je dat willekeurige gebruikers zich inschrijven bij deze groep. Om in te schrijven moeten gebruikers de gespecificeerde code invullen.',
+        'visibleDescription' => 'Zichtbaar in lijst met bars.',
+        'publicDescription' => 'Sta zelf inschrijven zonder wachtwoord toe.',
+        'updated' => 'De groep is aangepast.',
     ],
 
     /**
@@ -160,7 +170,7 @@ return [
     'terms' => [
         'title' => 'Voorwaarden',
         'description' => 'Wanneer je onze service gebruikt, ga je akkoord met onze servicevoowaarden (Terms of Service) zoals hieronder getoond.',
-        'onlyEnglishNote' => 'De servicevoorwaarden (Terms of Service) zijn alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
+        'onlyEnglishNote' => 'De servicevoorwaarden (Terms of Service) zijn alleen beschikbaar in het Engels, maar zijn actief voor alle gebruikstalen.',
         'questions' => 'Questions?',
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over onze servicevoorwaarden (Terms of Service), neem gerust contact met ons op.',

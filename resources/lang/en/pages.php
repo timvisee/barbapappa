@@ -64,6 +64,7 @@ return [
         'noCommunities' => 'No communities available...',
         'viewCommunity' => 'View community',
         'viewCommunities' => 'View communities',
+        'editCommunity' => 'Edit community',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',
@@ -77,6 +78,15 @@ return [
         'protectedByCode' => 'This community is protected by a passcode. Request it at the community, or scan the community QR code if available.',
         'protectedByCodeFilled' => 'This community is protected by a passcode. We\'ve filled it in for you.',
         'incorrectCode' => 'Incorrect community code.',
+        'namePlaceholder' => 'The Vikings',
+        'slugDescription' => 'A slug allows you to create an easy to remember URL to access this community, by defining a short keyword.',
+        'slugDescriptionExample' => 'This could simplify your community URL:',
+        'slugPlaceholder' => 'vikings',
+        'slugFieldRegexError' => 'The slug must start with an alphabetical character.',
+        'codeDescription' => 'With a community code, you prevent random users from joining. To join the community, users are required to enter the specified code.',
+        'visibleDescription' => 'Visible in the list of bars.',
+        'publicDescription' => 'Allow users to join without a code.',
+        'updated' => 'The community has been updated.',
     ],
 
     /**

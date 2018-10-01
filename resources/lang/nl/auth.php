@@ -23,6 +23,8 @@ return [
     'invalidCurrentPassword' => 'Je huidige wachtwoord is onjuist.',
     'newPasswordDifferent' => 'Het nieuwe wachtwoord moet anders zijn dan je huidige wachtwoord.',
     'emailUsed' => 'Dit e-mailadres is al gebruikt.',
+    'iAgreeToTerms' => 'Ik ga akkoord met de <a href=":terms" target="_blank" title="Toon servicevoorwaarden">servicevoorwaarden</a> en met het <a href=":privacy" target="_blank" title="Toon privacybeleid">privacybeleid</a>.',
+    'mustAcceptTerms' => 'Je moet akkoord gaan om te registreren.',
 
     'loggedIn' => 'Je bent ingelogd.',
     'registeredAndLoggedIn' => 'Account aangemaakt, je bent ingelogd.',

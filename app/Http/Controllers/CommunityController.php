@@ -44,6 +44,60 @@ class CommunityController extends Controller {
     }
 
     /**
+     * Community edit page.
+     *
+     * @return Response
+     */
+    public function edit() {
+        // TODO: ensure the user has permission to edit this group
+
+        // Get the community and session user
+        $community = \Request::get('community');
+        $user = barauth()->getSessionUser();
+
+        return view('community.edit');
+    }
+
+    /**
+     * Community update endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function update(Request $request) {
+        // TODO: ensure the user has permission to edit this group
+
+        // Get the community and session user
+        $community = \Request::get('community');
+        $user = barauth()->getSessionUser();
+
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'slug' => 'nullable|' . ValidationDefaults::communitySlug($community),
+            'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+        ], [
+            'slug.regex' => __('pages.community.slugFieldRegexError'),
+        ]);
+
+        // Change the name properties
+        $community->name = $request->input('name');
+        $community->slug = $request->has('slug') ? $request->input('slug') : null;
+        $community->password = $request->has('password') ? $request->input('password') : null;
+        $community->visible = is_checked($request->input('visible'));
+        $community->public = is_checked($request->input('public'));
+
+        // Save the community
+        $community->save();
+
+        // Redirect the user to the account overview page
+        return redirect()
+            ->route('community.show', ['communityId' => $community->id])
+            ->with('success', __('pages.community.updated'));
+    }
+
+    /**
      * The community join confirmation page.
      *
      * @return Response

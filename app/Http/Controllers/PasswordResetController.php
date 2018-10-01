@@ -19,7 +19,7 @@ class PasswordResetController extends Controller {
         // Validate
         $this->validate($request, [
             'token' => 'required|' . ValidationDefaults::PASSWORD_RESET_TOKEN,
-            'password' => 'required|' . ValidationDefaults::PASSWORD . '|confirmed'
+            'password' => 'required|' . ValidationDefaults::USER_PASSWORD . '|confirmed'
         ]);
 
         // Check whether to invalidate other sessions

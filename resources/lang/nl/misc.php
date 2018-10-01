@@ -22,6 +22,10 @@ return [
     'code' => 'Code',
     'codePlaceholder' => '1234',
     'protected' => 'Beveiligd',
+    'visible' => 'Zichtbaar',
+    'public' => 'Publiek',
+    'name' => 'Naam',
+    'slug' => 'URL-pad',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
 ];

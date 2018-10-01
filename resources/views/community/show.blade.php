@@ -52,4 +52,12 @@
 
     <h3 class="ui header">@lang('pages.bars')</h3>
     @include('bar.include.list')
+
+    <div class="ui section divider"></div>
+
+    {{-- TODO only show if the user has permission --}}
+    <a href="{{ route('community.edit', ['communityId' => $community->id]) }}"
+            class="ui button small basic">
+        @lang('pages.community.editCommunity')
+    </a>
 @endsection

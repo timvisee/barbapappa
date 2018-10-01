@@ -24,7 +24,7 @@ class LoginController extends Controller {
         // Validate
         $this->validate($request, [
             'email' => 'required|' . ValidationDefaults::EMAIL,
-            'password' => 'required|' . ValidationDefaults::PASSWORD,
+            'password' => 'required|' . ValidationDefaults::USER_PASSWORD,
         ]);
 
         // Authenticate

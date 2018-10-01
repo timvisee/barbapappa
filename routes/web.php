@@ -67,6 +67,8 @@ Route::prefix('/c')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
         Route::get('/', 'CommunityController@show')->name('community.show');
+        Route::get('/edit', 'CommunityController@edit')->name('community.edit');
+        Route::put('/', 'CommunityController@update')->name('community.update');
         Route::get('/join', 'CommunityController@join')->name('community.join');
         Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');
         Route::get('/leave', 'CommunityController@leave')->name('community.leave');

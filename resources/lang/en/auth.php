@@ -23,6 +23,8 @@ return [
     'invalidCurrentPassword' => 'Your current password is incorrect.',
     'newPasswordDifferent' => 'The new password must be different than your current password.',
     'emailUsed' => 'This email address has been used.',
+    'iAgreeToTerms' => 'I agree to the <a href=":terms" target="_blank" title="Show Terms of Service">Terms of Service</a> and <a href=":privacy" target="_blank" title="Show Privacy Policy">Privacy Policy</a>.',
+    'mustAcceptTerms' => 'You must agree to register.',
 
     'loggedIn' => 'You\'ve been logged in.',
     'registeredAndLoggedIn' => 'Account registered, you\'ve been logged in.',

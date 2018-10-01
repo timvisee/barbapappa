@@ -11,7 +11,7 @@ namespace App\Traits;
 trait HasPassword {
 
     /**
-     * Check whether this community has a password specified.
+     * Check whether this model has a password specified.
      *
      * @return bool True if specified, false if not or if empty.
      */
@@ -33,7 +33,7 @@ trait HasPassword {
     }
 
     /**
-     * Check whether the given user needs a password to join this community.
+     * Check whether the given user needs a password to join this model.
      *
      * @return bool True if a password is required, false if not.
      */

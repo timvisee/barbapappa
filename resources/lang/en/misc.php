@@ -22,6 +22,10 @@ return [
     'code' => 'Code',
     'codePlaceholder' => '1234',
     'protected' => 'Protected',
+    'visible' => 'Visible',
+    'public' => 'Public',
+    'name' => 'Name',
+    'slug' => 'Slug',
 
     'cannotBeUndone' => 'This operation cannot be undone.',
 ];

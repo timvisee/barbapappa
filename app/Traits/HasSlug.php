@@ -10,18 +10,18 @@ namespace App\Traits;
 trait HasSlug {
 
     /**
-     * Find the community by the given slug, or fail.
+     * Find the model by the given slug, or fail.
      *
      * @param string $slug The slug.
      *
-     * @return Community The community if found.
+     * @return Self The model if found.
      */
     public static function slugOrFail($slug) {
         return Self::where('slug', $slug)->firstOrFail();
     }
 
     /**
-     * Check whether this community has a slug specified.
+     * Check whether this model has a slug specified.
      *
      * @return bool True if specified, false if not or if empty.
      */
