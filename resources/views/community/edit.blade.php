@@ -47,7 +47,7 @@
 
         <div class="ui divider"></div>
 
-        <div class="inline field">
+        <div class="inline field {{ ErrorRenderer::hasError('visible') ? 'error' : '' }}">
             <div class="ui checkbox">
                 <input type="checkbox"
                         name="visible"
@@ -56,10 +56,11 @@
                         {{ $community->visible ? 'checked="checked"' : '' }}>
                 {{ Form::label('visible', __('misc.visible')) }}
             </div>
+            <br />
             {{ ErrorRenderer::inline('visible') }}
         </div>
 
-        <div class="inline field">
+        <div class="inline field {{ ErrorRenderer::hasError('public') ? 'error' : '' }}">
             <div class="ui checkbox">
                 <input type="checkbox"
                         name="public"
@@ -68,6 +69,7 @@
                         {{ $community->public ? 'checked="checked"' : '' }}>
                 {{ Form::label('public', __('misc.public')) }}
             </div>
+            <br />
             {{ ErrorRenderer::inline('public') }}
         </div>
 
