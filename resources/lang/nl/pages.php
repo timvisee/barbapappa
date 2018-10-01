@@ -16,9 +16,8 @@ return [
     'changePassword' => 'Wachtwoord veranderen',
     'changePasswordDescription' => 'Vul de onderstaande velden in om je wachtwoord te veranderen.',
     'about' => 'Over',
-    'terms' => 'Voorwaarden',
-    'privacy' => 'Privacy',
     'contact' => 'Contact',
+    'contactUs' => 'Neem contact op',
 
     /**
      * Profile page.
@@ -150,5 +149,28 @@ return [
         'expired' => 'De token is verlopen. Vraag alsjeblieft een nieuwe wachtwoord reset aan.',
         'used' => 'Je wachtwoord is al aangepast met deze token.',
         'changed' => 'Weer zo goed als nieuw! Je wachtwoord is aangepast.',
+    ],
+
+    /**
+     * Privacy policy page.
+     */
+    'privacy' => [
+        'title' => 'Privacy',
+        'description' => 'Wanneer je onze service gebruikt, vertrouw je ons met je gegevens. We begrijpen dat dit een grote verantwoordelijkheid is.<br />Het privacybeleid (Privacy Policy) hieronder is bedoeld om je te helpen begrijpen hoe we jouw gegevens beheren.',
+        'onlyEnglishNote' => 'Het privacybeleid (Privacy Policy) is alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
+        'questions' => 'Vragen?',
+        'questionsDescription' => 'Als je verdere vragen hebt over ons privacybeleid (Privacy Policy) of over jouw privacy, neem gerust contact met ons op.',
+    ],
+
+    /**
+     * Terms of Service page.
+     */
+    'terms' => [
+        'title' => 'Voorwaarden',
+        'description' => 'Wanneer je onze service gebruikt, ga je akkoord met onze servicevoowaarden (Terms of Service) zoals hieronder getoond.',
+        'onlyEnglishNote' => 'De servicevoorwaarden (Terms of Service) zijn alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
+        'questions' => 'Questions?',
+        'questions' => 'Vragen?',
+        'questionsDescription' => 'Als je verdere vragen hebt over onze servicevoorwaarden (Terms of Service), neem gerust contact met ons op.',
     ],
 ];
