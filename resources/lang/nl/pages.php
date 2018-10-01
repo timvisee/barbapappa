@@ -17,8 +17,8 @@ return [
     'changePasswordDescription' => 'Vul de onderstaande velden in om je wachtwoord te veranderen.',
     'about' => 'Over',
     'terms' => 'Voorwaarden',
-    'privacy' => 'Privacy',
     'contact' => 'Contact',
+    'contactUs' => 'Neem contact op',
 
     /**
      * Profile page.
@@ -142,5 +142,17 @@ return [
         'expired' => 'De token is verlopen. Vraag alsjeblieft een nieuwe wachtwoord reset aan.',
         'used' => 'Je wachtwoord is al aangepast met deze token.',
         'changed' => 'Weer zo goed als nieuw! Je wachtwoord is aangepast.',
+    ],
+
+    /**
+     * Privacy policy page.
+     */
+    'privacy' => [
+        'title' => 'Privacy',
+        'privacyPolicy' => 'Privacy Policy',
+        'description' => 'Wanneer je onze service gebruikt, vertrouw je ons met je gegevens. We begrijpen dat dit een grote verantwoordelijkheid is.<br />De Privacy Policy hieronder is bedoeld om je te helpen begrijpen hoe we jouw dat gegevens beheren.',
+        'onlyEnglishNote' => 'De Privacy Policy is alleen beschikbaar in het Engels, al geld het voor onze service in alle talen.',
+        'questions' => 'Vragen?',
+        'questionsDescription' => 'Als je verdere vragen hebt over onze Privacy Policy of over je privacy, neem gerust contact met ons op.',
     ],
 ];

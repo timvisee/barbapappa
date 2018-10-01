@@ -17,8 +17,8 @@ return [
     'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny, fresh n\' new passcode to take abroad.',
     'about' => '\'bout',
     'terms' => 'Terms',
-    'privacy' => 'Piracy',
     'contact' => 'Contact',
+    'contactUs' => 'Contact us',
 
     /**
      * Profile page.
@@ -142,5 +142,17 @@ return [
         'expired' => 'Th\' token be sunken. Request a shiny password reset token.',
         'used' => 'Yer passcode be already changed using dis token.',
         'changed' => 'Y\'all fresh! Yer password be changed.',
+    ],
+
+    /**
+     * Privacy policy page.
+     */
+    'privacy' => [
+        'title' => 'Piracy',
+        'privacyPolicy' => 'Piracy Policy',
+        'description' => 'When ye use our seas, yer trusting us with yer information. We understand this be a big responsibility. We be pirates but we must follow landlubber laws.<br />Th\' Piracy Policy below is meant to help ye understand how we manage yer information.',
+        'onlyEnglishNote' => 'Note th\' Piracy Policy only be available in landlubber English, though it applies to our seas in any speak.',
+        'questions' => 'Questions?',
+        'questionsDescription' => 'If ye have any further questions about our Piracy Policy or yer piracy when using our seas, be sure to ship us a bottle message.',
     ],
 ];

@@ -17,8 +17,8 @@ return [
     'changePasswordDescription' => 'To change your password, fill in the fields below.',
     'about' => 'About',
     'terms' => 'Terms',
-    'privacy' => 'Privacy',
     'contact' => 'Contact',
+    'contactUs' => 'Contact us',
 
     /**
      * Profile page.
@@ -142,5 +142,17 @@ return [
         'expired' => 'The token has expired. Please request a new password reset.',
         'used' => 'Your password has already been changed using this token.',
         'changed' => 'As good as new! Your password has been changed.',
+    ],
+
+    /**
+     * Privacy policy page.
+     */
+    'privacy' => [
+        'title' => 'Privacy',
+        'privacyPolicy' => 'Privacy Policy',
+        'description' => 'When you use our service, you\'re trusting us with your information. We understand this is a big responsibility.<br />The Privacy Policy below is meant to help you understand how we manage your information.',
+        'onlyEnglishNote' => 'Note that the Privacy Policy is only available in English, although it applies to our service in any language.',
+        'questions' => 'Questions?',
+        'questionsDescription' => 'If you have any further questions about our Privacy Policy or your privacy when using our service, be sure to get in touch with us.',
     ],
 ];
