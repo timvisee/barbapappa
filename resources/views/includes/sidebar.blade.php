@@ -44,11 +44,11 @@
             </a>
             <a href="{{ route('terms') }}" class="item">
                 <i class="icon-glyphicons glyphicons glyphicons-handshake"></i>
-                @lang('pages.terms')
+                @lang('pages.terms.title')
             </a>
             <a href="{{ route('privacy') }}" class="item">
                 <i class="icon-glyphicons glyphicons glyphicons-{{ (langManager()->getLocale() != 'pirate' ? 'fingerprint' : 'skull') }}"></i>
-                @lang('pages.privacy')
+                @lang('pages.privacy.title')
             </a>
             <a href="{{ route('contact') }}" class="item">
                 <i class="icon-glyphicons glyphicons glyphicons-send"></i>
