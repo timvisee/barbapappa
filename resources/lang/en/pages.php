@@ -48,6 +48,7 @@ return [
             'alreadyVerified' => 'This email address has already been verified.',
             'cannotDeleteMustHaveVerified' => 'You cannot delete this email address, you must have at least one verified address.',
             'deleted' => 'The email address has been deleted.',
+            'deleteQuestion' => 'Are you sure you want to delete this email address?',
         ],
         'addEmail' => [
             'title' => 'Add email address',

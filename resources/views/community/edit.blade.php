@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="ui header">@lang('pages.community.editCommunity')</h2>
 
-    {!! Form::open(['action' => ['CommunityController@update', $community->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['CommunityController@update', $community->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
 
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
@@ -74,8 +74,6 @@
         </div>
 
         <br />
-
-        {{ Form::hidden('_method', 'PUT') }}
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
         <a href="{{ route('community.show', ['communityId' => $community->id]) }}"

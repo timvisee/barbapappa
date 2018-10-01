@@ -98,13 +98,44 @@ class EmailController extends Controller {
     }
 
     /**
-     * Delete an email address.
+     * The email address delete confirmation page.
      *
      * @return Response
      */
-    public function delete($userId, $emailId, Request $request) {
-        // TODO: ensure the user has enough permission to delete this email
-        // address
+    public function delete($userId, $emailId) {
+        // TODO: ensure the user has enough permission to delete this email address
+
+        // Get the selected email address and user
+        $email = Email::findOrFail($emailId);
+        $user = \Request::get('user');
+
+        // Count the number of verified e-mail addresses left after this
+        // deletion
+        $verifiedAfter = $user
+            ->emails()
+            ->verified()
+            ->where('id', '!=', $email->id)
+            ->count();
+
+        // Ensure there are enough verified email addresses left
+        if($verifiedAfter <= 0) {
+            return redirect()
+                ->route('account.emails', ['userId' => $userId])
+                ->with('error', __('pages.accountPage.email.cannotDeleteMustHaveVerified'));
+        }
+
+        // Show the delete confirm page
+        return view('account.email.delete')
+            ->with('email', $email);
+    }
+
+    /**
+     * Do delete an email address.
+     *
+     * @return Response
+     */
+    public function doDelete($userId, $emailId, Request $request) {
+        // TODO: ensure the user has enough permission to delete this email address
 
         // Get the selected email address and user
         $email = Email::findOrFail($emailId);

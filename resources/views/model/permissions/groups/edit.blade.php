@@ -3,7 +3,7 @@
 @section('content')
     <h1>Edit permission group</h1>
 
-    {!! Form::open(['action' => ['PermissionGroupsController@update', $group->id], 'method' => 'POST']) !!}
+    {!! Form::open(['action' => ['PermissionGroupsController@update', $group->id], 'method' => 'PUT']) !!}
 
     <div class="ui-field-contain">
         {{ Form::label('name', 'Name') }}
@@ -18,8 +18,6 @@
     </div>
 
     TODO: Show inherit from<br />
-
-    {{ Form::hidden('_method', 'PUT') }}
 
     {{ Form::submit('Update') }}
 

@@ -48,6 +48,7 @@ return [
             'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',
             'cannotDeleteMustHaveVerified' => 'Je kunt dit e-mailadres niet verwijderen, je moet tenminste één geverifiëerd adres hebben.',
             'deleted' => 'Het e-mailadres is verwijderd.',
+            'deleteQuestion' => 'Weet je zeker dat je dit e-mailadres wilt verwijderen?',
         ],
         'addEmail' => [
             'title' => 'E-mailadres toevoegen',
