@@ -12,6 +12,7 @@ return [
 
     'yes' => 'Yay',
     'yesContinue' => 'Yay, sail ho!',
+    'yesDelete' => 'Yay, sink!',
     'no' => 'Nay',
     'noGoBack' => 'Nay, paddl\' back',
     'or' => 'o',

@@ -48,6 +48,7 @@ return [
             'alreadyVerified' => 'Th\' e-bottle coordinate be verified.',
             'cannotDeleteMustHaveVerified' => 'Ye no delete \'his e-bottle coordinate, ye must be one verified coordinate.',
             'deleted' => 'Th\' e-bottle coordinate be deleted.',
+            'deleteQuestion' => 'Ye be sure ye want to sunk dis e-bottle address?',
         ],
         'addEmail' => [
             'title' => 'Add e-bottle coordinate',

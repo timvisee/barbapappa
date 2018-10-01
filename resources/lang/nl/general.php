@@ -12,6 +12,7 @@ return [
 
     'yes' => 'Ja',
     'yesContinue' => 'Ja, ga door',
+    'yesDelete' => 'Ja, verwijder',
     'no' => 'Nee',
     'noGoBack' => 'Nee, ga terug',
     'or' => 'of',

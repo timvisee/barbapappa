@@ -114,7 +114,7 @@ class CommunityController extends Controller {
             return redirect()
                 ->route('community.show', ['communityId' => $communityId]);
 
-        // Redirect to the community page
+        // Show the community join confirm page
         return view('community.join');
     }
 
@@ -174,7 +174,7 @@ class CommunityController extends Controller {
             return redirect()
                 ->route('community.show', ['communityId' => $communityId]);
 
-        // Redirect to the community page
+        // Show the communtiy leave confirm page
         return view('community.leave');
     }
 
