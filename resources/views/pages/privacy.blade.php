@@ -9,10 +9,11 @@
     <div class="ui piled segment">
         <h3 class="ui header">Privacy Policy</h3>
         <p>
-            Your privacy is important to us. It is BARbapAPPa's policy to respect
-            your privacy regarding any information we may collect from you across
-            our website, <a href="{{ URL::to('/') }}">{{ URL::to('/') }}</a>, and
-            other sites we own and operate.
+            Your privacy is important to us. It is {{ config('app.name') }}'s
+            policy to respect your privacy regarding any information we may
+            collect from you across our website,
+            <a href="{{ URL::to('/') }}">{{ URL::to('/') }}</a>, and other
+            sites we own and operate.
         </p>
 
         <p>
