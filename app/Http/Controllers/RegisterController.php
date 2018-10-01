@@ -30,8 +30,10 @@ class RegisterController extends Controller {
             'last_name' => 'required|' . ValidationDefaults::LAST_NAME,
             'email' => 'required|' . ValidationDefaults::EMAIL . '|unique:emails',
             'password' => 'required|' . ValidationDefaults::PASSWORD_USER . '|confirmed',
+            'accept_terms' => 'required',
         ], [
-            'email.unique' => __('auth.emailUsed')
+            'email.unique' => __('auth.emailUsed'),
+            'accept_terms.required' => __('auth.mustAcceptTerms'),
         ]);
 
         // Create a new user

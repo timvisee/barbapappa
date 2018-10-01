@@ -40,6 +40,19 @@
         </div>
     </div>
 
+    <br />
+
+    <div class="inline field {{ ErrorRenderer::hasError('accept_terms') ? 'error' : '' }}">
+        <div class="ui checkbox">
+            <input type="checkbox" name="accept_terms" tabindex="0" class="hidden">
+            <label for="accept_terms">@lang('auth.iAgreeToTerms', ['terms' => route('terms'), 'privacy' => route('privacy')])</label>
+        </div>
+        <br>
+        {{ ErrorRenderer::inline('accept_terms') }}
+    </div>
+
+    <br />
+
     <div>
         <button class="ui button primary" type="submit">@lang('auth.register')</button>
         <a href="{{ route('login') }}" class="ui button basic">@lang('auth.login')</a>
