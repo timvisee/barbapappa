@@ -23,7 +23,7 @@ class PasswordChangeController extends Controller {
     public function doChange(Request $request) {
         // Validate the inputs
         $this->validate($request, [
-            'password' => 'required|' . ValidationDefaults::PASSWORD,
+            'password' => 'required|' . ValidationDefaults::USER_PASSWORD,
             'new_password' => 'required|' . ValidationDefaults::USER_PASSWORD . '|confirmed|different:password'
         ], [
             'different' => __('auth.newPasswordDifferent')
