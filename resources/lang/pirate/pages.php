@@ -16,7 +16,6 @@ return [
     'changePassword' => 'Change passcode',
     'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny, fresh n\' new passcode to take abroad.',
     'about' => '\'bout',
-    'terms' => 'Terms',
     'contact' => 'Contact',
     'contactUs' => 'Contact us',
 
@@ -149,10 +148,20 @@ return [
      */
     'privacy' => [
         'title' => 'Piracy',
-        'privacyPolicy' => 'Piracy Policy',
         'description' => 'When ye use our seas, yer trusting us with yer information. We understand this be a big responsibility. We be pirates but we must follow landlubber laws.<br />Th\' Piracy Policy below is meant to help ye understand how we manage yer information.',
         'onlyEnglishNote' => 'Note th\' Piracy Policy only be available in landlubber English, though it applies to our seas in any speak.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If ye have any further questions about our Piracy Policy or yer piracy when using our seas, be sure to ship us a bottle message.',
+    ],
+
+    /**
+     * Terms of Service page.
+     */
+    'terms' => [
+        'title' => 'Terms',
+        'description' => 'When ye use our seas, ye be agree with our Terms o\' Service as shown below.',
+        'onlyEnglishNote' => 'Note th\' Terms \'o Service only be available in landlubber English, although it applies to our seas in any speak.',
+        'questions' => 'Questions?',
+        'questionsDescription' => 'If ye have any further questions about our Terms o\' Service, be sure to ship us a bottle message.',
     ],
 ];
