@@ -16,7 +16,7 @@
         </div>
 
         <p>
-            The project is developed and maintained by
+            <h5>The project is developed and maintained by</h5>
             <span class="spacer x05"></span>
             <a href="https://timvisee.com" target="_blank">Tim Vis&eacute;e</a>
             <span class="spacer x05"></span>
@@ -30,30 +30,49 @@
         </div>
 
         <p>
-            The source code and an overview of the development is available at
+            <h5>The source code and a development overview is available at</h5>
             <span class="spacer x05"></span>
-            <a href="https://github.com/timvisee/barbapappa">GitHub</a>
+            <a href="https://gitlab.com/timvisee/barbapappa">GitLab</a>
+            <span class="spacer x05"></span>
+            <a href="https://GitHub.com/timvisee/barbapappa">GitHub (mirror)</a>
 
             <span class="spacer"></span>
 
-            Some awesome technologies that have been used are
+            <h5>Some awesome technologies that have been used are</h5>
 
             <span class="spacer x05"></span>
-            <a href="https://laravel.com/" target="_blank">Laravel</a>
+            <a href="https://laravel.com/" target="_blank">Laravel</a><br />
+            <i>as backend framework</i>
 
             <span class="spacer x05"></span>
-            <a href="https://semantic-ui.com" target="_blank">Semantic UI</a>
+            <a href="https://semantic-ui.com" target="_blank">Semantic UI</a><br />
+            <i>as frontend theming framework</i>
 
             <span class="spacer x05"></span>
             <a href="https://glyphicons.com/" target="_blank">Glyphicons</a>
-            <i class="halflings halflings-heart" style="color: #b80000;"></i>
+            <i class="halflings halflings-heart" style="color: #b80000;"></i><br />
+            <i>for these icons and symbols</i>
 
             <span class="spacer x05"></span>
             <a href="http://flag-icon-css.lip.is/" target="_blank">flag-icon-css</a>
-            <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span>
+            <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span><br />
+            <i>for these flag icons</i>
 
             <span class="spacer x05"></span>
-            <a href="https://jquery.com/" target="_blank">jQuery</a>
+            <a href="https://jquery.com/" target="_blank">jQuery</a><br />
+            <i>for simplifying JavaScript</i>
+
+            <span class="spacer"></span>
+
+            <h5>Some resources that have been used are</h5>
+
+            <span class="spacer x05"></span>
+            <a href="https://getterms.io/" target="_blank">GetTerms.io</a><br />
+            <i>for providing Terms of Service & Privacy Policy</i>
+
+            <span class="spacer x05"></span>
+            <a href="http://eloydegen.nl/" target="_blank">E. Degen</a><br />
+            <i>who suggested the BARbapAPPa name</i>
         </p>
 
         <div class="page-divider">
@@ -63,10 +82,10 @@
         </div>
 
         <p>
-            Released under the license
+            <h5>Released under the license</h5>
             <span class="spacer x05"></span>
             <a href="{{ route('license') }}">GNU GPL-3.0</a><br />
-            (Open source)
+            <i>(open-source)</i>
         </p>
 
         <div class="page-divider">
@@ -88,7 +107,7 @@
         </div>
 
         <p>
-            Copyright &copy; Tim Visée {{ date('Y') }}.
+            Copyright &copy; BARbapAPPa {{ date('Y') }}.
             <span class="spacer x05"></span>
             All rights reserved.
         </p>
