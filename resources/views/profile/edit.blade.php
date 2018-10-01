@@ -8,7 +8,7 @@
 
     <h2 class="ui header">@lang('pages.editProfile.name')</h2>
 
-    {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
 
         <div class="two fields">
             <div class="field {{ ErrorRenderer::hasError('first_name') ? 'error' : '' }}">
@@ -51,8 +51,6 @@
 
             {{ ErrorRenderer::inline('language') }}
         </div>
-
-        {{ Form::hidden('_method', 'PUT') }}
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
         <a href="{{ route('account', ['userId' => $user->id]) }}"

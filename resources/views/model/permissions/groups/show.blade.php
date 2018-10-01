@@ -69,8 +69,7 @@
 
     {{-- The user must have permission --}}
     <a href="/permissions/groups/{{ $group->id }}/edit" class="ui-btn ui-btn-corner-all">Edit</a>
-    {!! Form::open(['action' => ['PermissionGroupsController@destroy', $group->id], 'method' => 'POST']) !!}
-        {!! Form::hidden('_method', 'DELETE') !!}
+    {!! Form::open(['action' => ['PermissionGroupsController@destroy', $group->id], 'method' => 'DELETE']) !!}
         {!! Form::submit('Delete') !!}
     {!! Form::close() !!}
 
