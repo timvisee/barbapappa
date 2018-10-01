@@ -84,6 +84,8 @@ return [
         'slugPlaceholder' => 'vikings',
         'slugFieldRegexError' => 'Dit trefword moet met een alfabetisch karakter beginnen.',
         'codeDescription' => 'Met een groepscode voorkom je dat willekeurige gebruikers zich inschrijven bij deze groep. Om in te schrijven moeten gebruikers de gespecificeerde code invullen.',
+        'visibleDescription' => 'Zichtbaar in lijst met bars.',
+        'publicDescription' => 'Sta zelf inschrijven zonder wachtwoord toe.',
         'updated' => 'De groep is aangepast.',
     ],
 
@@ -168,7 +170,7 @@ return [
     'terms' => [
         'title' => 'Voorwaarden',
         'description' => 'Wanneer je onze service gebruikt, ga je akkoord met onze servicevoowaarden (Terms of Service) zoals hieronder getoond.',
-        'onlyEnglishNote' => 'De servicevoorwaarden (Terms of Service) zijn alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
+        'onlyEnglishNote' => 'De servicevoorwaarden (Terms of Service) zijn alleen beschikbaar in het Engels, maar zijn actief voor alle gebruikstalen.',
         'questions' => 'Questions?',
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over onze servicevoorwaarden (Terms of Service), neem gerust contact met ons op.',

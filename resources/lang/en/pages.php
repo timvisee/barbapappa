@@ -84,6 +84,8 @@ return [
         'slugPlaceholder' => 'vikings',
         'slugFieldRegexError' => 'The slug must start with an alphabetical character.',
         'codeDescription' => 'With a community code, you prevent random users from joining. To join the community, users are required to enter the specified code.',
+        'visibleDescription' => 'Visible in the list of bars.',
+        'publicDescription' => 'Allow users to join without a code.',
         'updated' => 'The community has been updated.',
     ],
 

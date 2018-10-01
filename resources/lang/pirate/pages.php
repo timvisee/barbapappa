@@ -84,6 +84,8 @@ return [
         'slugPlaceholder' => 'seven-seas',
         'slugFieldRegexError' => 'Dis slug must start with n alphabetical character.',
         'codeDescription' => 'With a crew secret, ye prevent random pirates from joining. To join the community, users be required to enter th\' secret.',
+        'visibleDescription' => 'Visible in th\' list of crews.',
+        'publicDescription' => 'Allow pirates be joined with no secret.',
         'updated' => 'Th\' crew be updated.',
     ],
 

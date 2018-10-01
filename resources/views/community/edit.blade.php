@@ -54,7 +54,7 @@
                         tabindex="0"
                         class="hidden"
                         {{ $community->visible ? 'checked="checked"' : '' }}>
-                {{ Form::label('visible', __('misc.visible')) }}
+                {{ Form::label('visible', __('pages.community.visibleDescription')) }}
             </div>
             <br />
             {{ ErrorRenderer::inline('visible') }}
@@ -67,11 +67,13 @@
                         tabindex="0"
                         class="hidden"
                         {{ $community->public ? 'checked="checked"' : '' }}>
-                {{ Form::label('public', __('misc.public')) }}
+                {{ Form::label('public', __('pages.community.publicDescription')) }}
             </div>
             <br />
             {{ ErrorRenderer::inline('public') }}
         </div>
+
+        <br />
 
         {{ Form::hidden('_method', 'PUT') }}
 
