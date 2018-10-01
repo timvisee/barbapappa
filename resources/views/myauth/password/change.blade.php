@@ -45,6 +45,10 @@
         <br />
 
         <button class="ui button primary" type="submit">@lang('pages.changePassword')</button>
+        <a href="{{ route('account', ['userId' => barauth()->getSessionUser()]) }}"
+                class="ui button basic">
+            @lang('general.cancel')
+        </a>
 
     {!! Form::close() !!}
 

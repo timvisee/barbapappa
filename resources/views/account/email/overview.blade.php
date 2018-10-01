@@ -46,5 +46,10 @@
             </tr>
         </tfoot>
     </table>
+
+    <a href="{{ route('account', ['userId' => barauth()->getSessionUser()]) }}"
+            class="ui button basic">
+        @lang('pages.account')
+    </a>
 @endsection
 

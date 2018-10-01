@@ -55,6 +55,10 @@
         {{ Form::hidden('_method', 'PUT') }}
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
+        <a href="{{ route('account', ['userId' => $user->id]) }}"
+                class="ui button basic">
+            @lang('general.cancel')
+        </a>
 
     {!! Form::close() !!}
 @endsection

@@ -16,4 +16,5 @@ return [
     'noGoBack' => 'Nay, paddl\' back',
     'or' => 'o',
     'optional' => 'Optional',
+    'cancel' => 'Cancel',
 ];

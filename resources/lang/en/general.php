@@ -16,4 +16,5 @@ return [
     'noGoBack' => 'No, go back',
     'or' => 'or',
     'optional' => 'Optional',
+    'cancel' => 'Cancel',
 ];
