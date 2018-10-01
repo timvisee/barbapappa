@@ -105,11 +105,11 @@ $message = Array(
                         <center style="width: 100%; min-width: 580px;">
                             <p style="text-align: center; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0 0 10px; padding: 0;">
                                 <a href="{{ route('terms') }}" style="color: #2BA6CB; text-decoration: none;">
-                                    @lang('pages.terms')
+                                    @lang('pages.terms.title')
                                 </a>
                                 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
                                 <a href="{{ route('privacy') }}" style="color: #2BA6CB; text-decoration: none;">
-                                    @lang('pages.privacy')
+                                    @lang('pages.privacy.title')
                                 </a>
                                 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
                                 <a href="{{ route('email.preferences') }}" style="color: #2BA6CB; text-decoration: none;">
