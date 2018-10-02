@@ -15,9 +15,9 @@
 
     <div class="ui divider"></div>
 
-    {!! Form::open(['action' => ['BarController@doLeave', 'barId' => $bar->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['BarController@doLeave', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
         <div class="ui buttons">
-            <a href="{{ route('bar.show', ['barId' => $bar->id]) }}"
+            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')
             </a>

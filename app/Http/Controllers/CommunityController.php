@@ -93,7 +93,7 @@ class CommunityController extends Controller {
 
         // Redirect the user to the account overview page
         return redirect()
-            ->route('community.show', ['communityId' => $community->id])
+            ->route('community.show', ['communityId' => $community->human_id])
             ->with('success', __('pages.community.updated'));
     }
 

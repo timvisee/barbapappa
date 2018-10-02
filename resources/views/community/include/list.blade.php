@@ -9,7 +9,7 @@
     --}}
 
     @forelse($communities as $community)
-        <a href="{{ route('community.show', ['communityId' => $community->id ]) }}" class="item">
+        <a href="{{ route('community.show', ['communityId' => $community->human_id ]) }}" class="item">
             {{ $community->name }}
         </a>
     @empty

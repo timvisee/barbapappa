@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="ui header">
         @if($joined)
-            <a href="{{ route('bar.leave', ['barId' => $bar->id]) }}"
+            <a href="{{ route('bar.leave', ['barId' => $bar->human_id]) }}"
                     class="ui right pointing label green joined-label-popup"
                     data-title="@lang('pages.bar.joined')"
                     data-content="@lang('pages.bar.joinedClickToLeave')">
@@ -18,7 +18,7 @@
         <div class="ui info message visible">
             <div class="header">@lang('pages.bar.notJoined')</div>
             <p>@lang('pages.bar.hintJoin')</p>
-            <a href="{{ route('bar.join', ['barId' => $bar->id]) }}"
+            <a href="{{ route('bar.join', ['barId' => $bar->human_id]) }}"
                     class="ui button small positive basic">
                 @lang('pages.bar.join')
             </a>
@@ -35,13 +35,13 @@
 
     <div class="ui section divider"></div>
 
-    <a href="{{ route('community.show', ['communityId' => $community->id]) }}"
+    <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
             class="ui button small basic">
         @lang('pages.community.viewCommunity')
     </a>
 
     {{-- TODO only show if the user has permission --}}
-    <a href="{{ route('bar.edit', ['barId' => $bar->id]) }}"
+    <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}"
             class="ui button small basic">
         @lang('pages.bar.editBar')
     </a>

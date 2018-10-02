@@ -28,7 +28,7 @@
         @endif
     @endif
 
-    {!! Form::open(['action' => ['BarController@doJoin', 'barId' => $bar->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['BarController@doJoin', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
 
         @if($needsPassword)
             <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
@@ -59,7 +59,7 @@
         <div class="ui buttons">
             <button class="ui button positive" type="submit">@lang('pages.bar.yesJoin')</button>
             <div class="or" data-text="@lang('general.or')"></div>
-            <a href="{{ route('bar.show', ['barId' => $bar->id]) }}"
+            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')
             </a>

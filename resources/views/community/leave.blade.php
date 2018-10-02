@@ -15,9 +15,9 @@
 
     <div class="ui divider"></div>
 
-    {!! Form::open(['action' => ['CommunityController@doLeave', 'communityId' => $community->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['CommunityController@doLeave', 'communityId' => $community->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
         <div class="ui buttons">
-            <a href="{{ route('community.show', ['communityId' => $community->id]) }}"
+            <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')
             </a>
