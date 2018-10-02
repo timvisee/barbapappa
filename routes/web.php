@@ -82,6 +82,8 @@ Route::prefix('/b')->group(function() {
     Route::get('/', 'BarController@overview')->name('bar.overview');
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
+        Route::get('/edit', 'BarController@edit')->name('bar.edit');
+        Route::put('/', 'BarController@update')->name('bar.update');
         Route::get('/join', 'BarController@join')->name('bar.join');
         Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');
         Route::get('/leave', 'BarController@leave')->name('bar.leave');

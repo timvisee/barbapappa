@@ -85,7 +85,7 @@ return [
         'slugPlaceholder' => 'vikings',
         'slugFieldRegexError' => 'The slug must start with an alphabetical character.',
         'codeDescription' => 'With a community code, you prevent random users from joining. To join the community, users are required to enter the specified code.',
-        'visibleDescription' => 'Visible in the list of bars.',
+        'visibleDescription' => 'Visible in the list of communities.',
         'publicDescription' => 'Allow users to join without a code.',
         'updated' => 'The community has been updated.',
     ],
@@ -100,6 +100,7 @@ return [
         'searchByCommunityDescription' => 'It\'s usually easier to find a specific bar by it\'s community.',
 
         // TODO: remove duplicates
+        'editBar' => 'Edit bar',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',
@@ -116,6 +117,15 @@ return [
         'protectedByCode' => 'This bar is protected by a passcode. Request it at the bar, or scan the bar QR code if available.',
         'protectedByCodeFilled' => 'This bar is protected by a passcode. We\'ve filled it in for you.',
         'incorrectCode' => 'Incorrect bar code.',
+        'namePlaceholder' => 'Viking bar',
+        'slugDescription' => 'A slug allows you to create an easy to remember URL to access this bar, by defining a short keyword.',
+        'slugDescriptionExample' => 'This could simplify your bar URL:',
+        'slugPlaceholder' => 'viking',
+        'slugFieldRegexError' => 'The slug must start with an alphabetical character.',
+        'codeDescription' => 'With a bar code, you prevent random users from joining. To join the bar, users are required to enter the specified code.',
+        'visibleDescription' => 'Visible in the list of bars.',
+        'publicDescription' => 'Allow users to join without a code.',
+        'updated' => 'The bar has been updated.',
     ],
 
     /**

@@ -43,6 +43,60 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar edit page.
+     *
+     * @return Response
+     */
+    public function edit() {
+        // TODO: ensure the user has permission to edit this group
+
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        return view('bar.edit');
+    }
+
+    /**
+     * Bar update endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function update(Request $request) {
+        // TODO: ensure the user has permission to edit this group
+
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'slug' => 'nullable|' . ValidationDefaults::barSlug($bar),
+            'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+        ], [
+            'slug.regex' => __('pages.bar.slugFieldRegexError'),
+        ]);
+
+        // Change the name properties
+        $bar->name = $request->input('name');
+        $bar->slug = $request->has('slug') ? $request->input('slug') : null;
+        $bar->password = $request->has('password') ? $request->input('password') : null;
+        $bar->visible = is_checked($request->input('visible'));
+        $bar->public = is_checked($request->input('public'));
+
+        // Save the bar
+        $bar->save();
+
+        // Redirect the user to the account overview page
+        return redirect()
+            ->route('bar.show', ['barId' => $bar->id])
+            ->with('success', __('pages.bar.updated'));
+    }
+
+    /**
      * The bar join confirmation page.
      *
      * @return Response
