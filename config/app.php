@@ -219,7 +219,6 @@ return [
          * Custom service providers...
          */
         App\Providers\LanguageManagerServiceProvider::class,
-        App\Providers\PermissionManagerServiceProvider::class,
         App\Providers\BarAuthServiceProvider::class,
         App\Providers\LogoServiceProvider::class,
 
