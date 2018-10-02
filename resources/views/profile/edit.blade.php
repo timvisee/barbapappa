@@ -35,7 +35,7 @@
             {{ Form::label('language', __('lang.language')) }}
 
             <div class="ui fluid selection dropdown">
-                <input type="hidden" name="language">
+                <input type="hidden" name="language" value="{{ langManager()->getLocale() }}">
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.unspecified')</div>
