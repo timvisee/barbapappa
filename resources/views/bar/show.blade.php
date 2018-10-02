@@ -39,4 +39,10 @@
             class="ui button small basic">
         @lang('pages.community.viewCommunity')
     </a>
+
+    {{-- TODO only show if the user has permission --}}
+    <a href="{{ route('bar.edit', ['barId' => $bar->id]) }}"
+            class="ui button small basic">
+        @lang('pages.bar.editBar')
+    </a>
 @endsection

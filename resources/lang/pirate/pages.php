@@ -84,8 +84,8 @@ return [
         'slugDescriptionExample' => 'Dis could simplify ye crew URL:',
         'slugPlaceholder' => 'seven-seas',
         'slugFieldRegexError' => 'Dis slug must start with n alphabetical character.',
-        'codeDescription' => 'With a crew secret, ye prevent random pirates from joining. To join the community, users be required to enter th\' secret.',
-        'visibleDescription' => 'Visible in th\' list of crews.',
+        'codeDescription' => 'With a crew secret, ye prevent random pirates from joining. To join the crew, users be required to enter th\' secret.',
+        'visibleDescription' => 'Visible in th\' list o\' crews.',
         'publicDescription' => 'Allow pirates be joined with no secret.',
         'updated' => 'Th\' crew be updated.',
     ],
@@ -100,6 +100,7 @@ return [
         'searchByCommunityDescription' => 'It\' usually be easier to find ye bar by it\'s crew.',
 
         // TODO: remove duplicates
+        'editBar' => 'Edit bar',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
         'joined' => 'Joined',
@@ -116,6 +117,15 @@ return [
         'protectedByCode' => 'Dis bar be protected by a secret. Request it at yer bar, or use yer spyglass to scan the bar Q-ARRRR code if available.',
         'protectedByCodeFilled' => 'Dis bar be protected by a secret. We filled it for ye.',
         'incorrectCode' => 'Bar code be incorrect.',
+        'namePlaceholder' => 'Queen Anne\'s ship',
+        'slugDescription' => 'Ye slug allows ye to create \'n easy to remember URL to access dis bar, by defining a short keyword.',
+        'slugDescriptionExample' => 'Dis could simplify ye bar URL:',
+        'slugPlaceholder' => 'anne',
+        'slugFieldRegexError' => 'Dis slug must start with n alphabetical character.',
+        'codeDescription' => 'With a bar secret, ye prevent random pirates from joining. To join the bar, users be required to enter th\' secret.',
+        'visibleDescription' => 'Visible in th\' list o\' bars.',
+        'publicDescription' => 'Allow pirates be joined with no secret.',
+        'updated' => 'Th\' bar be updated.',
     ],
 
     /**
