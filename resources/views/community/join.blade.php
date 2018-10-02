@@ -28,7 +28,7 @@
         @endif
     @endif
 
-    {!! Form::open(['action' => ['CommunityController@doJoin', 'communityId' => $community->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['CommunityController@doJoin', 'communityId' => $community->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
 
         @if($needsPassword)
             <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
@@ -42,7 +42,7 @@
         <div class="ui buttons">
             <button class="ui button positive" type="submit">@lang('pages.community.yesJoin')</button>
             <div class="or" data-text="@lang('general.or')"></div>
-            <a href="{{ route('community.show', ['communityId' => $community->id]) }}"
+            <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')
             </a>

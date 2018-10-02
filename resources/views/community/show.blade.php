@@ -3,7 +3,7 @@
 @section('content')
     <h2 class="ui header">
         @if($joined)
-            <a href="{{ route('community.leave', ['communityId' => $community->id]) }}"
+            <a href="{{ route('community.leave', ['communityId' => $community->human_id]) }}"
                     class="ui right pointing label green joined-label-popup"
                     data-title="@lang('pages.community.joined')"
                     data-content="@lang('pages.community.joinedClickToLeave')">
@@ -18,7 +18,7 @@
         <div class="ui info message visible">
             <div class="header">@lang('pages.community.notJoined')</div>
             <p>@lang('pages.community.hintJoin')</p>
-            <a href="{{ route('community.join', ['communityId' => $community->id]) }}"
+            <a href="{{ route('community.join', ['communityId' => $community->human_id]) }}"
                     class="ui button small positive basic">
                 @lang('pages.community.join')
             </a>
@@ -29,7 +29,7 @@
         <tbody>
             <tr>
                 <td>ID</td>
-                <td><a href="{{ route('community.show', ['communityId' => $community->id]) }}">{{ $community->id }}</a></td>
+                <td><a href="{{ route('community.show', ['communityId' => $community->human_id]) }}">{{ $community->id }}</a></td>
             </tr>
             <tr>
                 <td>Name</td>
@@ -56,7 +56,7 @@
     <div class="ui section divider"></div>
 
     {{-- TODO only show if the user has permission --}}
-    <a href="{{ route('community.edit', ['communityId' => $community->id]) }}"
+    <a href="{{ route('community.edit', ['communityId' => $community->human_id]) }}"
             class="ui button small basic">
         @lang('pages.community.editCommunity')
     </a>

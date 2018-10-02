@@ -9,7 +9,7 @@
     --}}
 
     @forelse($bars as $bar)
-        <a href="{{ route('bar.show', ['barId' => $bar->id ]) }}" class="item">
+        <a href="{{ route('bar.show', ['barId' => $bar->human_id ]) }}" class="item">
             {{ $bar->name }}
         </a>
     @empty
