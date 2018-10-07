@@ -99,11 +99,13 @@ class User extends Model {
      */
     public function communities() {
         return $this->belongsToMany(
-            'App\Models\Community',
-            'community_user',
-            'user_id',
-            'community_id'
-        )->withTimestamps();
+                'App\Models\Community',
+                'community_user',
+                'user_id',
+                'community_id'
+            )
+            ->withPivot('role')
+            ->withTimestamps();
     }
 
     /**
@@ -113,11 +115,13 @@ class User extends Model {
      */
     public function bars() {
         return $this->belongsToMany(
-            'App\Models\Bar',
-            'bar_user',
-            'user_id',
-            'bar_id'
-        )->withTimestamps();
+                'App\Models\Bar',
+                'bar_user',
+                'user_id',
+                'bar_id'
+            )
+            ->withPivot('role')
+            ->withTimestamps();
     }
 
     /**

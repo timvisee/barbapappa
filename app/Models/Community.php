@@ -88,10 +88,12 @@ class Community extends Model {
      */
     public function users() {
         return $this->belongsToMany(
-            'App\Models\User',
-            'community_user',
-            'community_id',
-            'user_id'
-        )->withTimestamps();
+                'App\Models\User',
+                'community_user',
+                'community_id',
+                'user_id'
+            )
+            ->withPivot('role')
+            ->withTimestamps();
     }
 }

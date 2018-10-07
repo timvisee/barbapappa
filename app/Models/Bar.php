@@ -90,10 +90,12 @@ class Bar extends Model {
      */
     public function users() {
         return $this->belongsToMany(
-            'App\Models\User',
-            'bar_user',
-            'bar_id',
-            'user_id'
-        )->withTimestamps();
+                'App\Models\User',
+                'bar_user',
+                'bar_id',
+                'user_id'
+            )
+            ->withPivot('role')
+            ->withTimestamps();
     }
 }
