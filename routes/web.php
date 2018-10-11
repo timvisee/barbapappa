@@ -1,5 +1,7 @@
 <?php
 
+use App\Perms\AppRoles;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,12 +15,15 @@
 
 // Regular page routes
 Route::get('/', 'PagesController@index')->name('index');
-Route::get('/about', 'PagesController@about')->name('about')->middleware('permsApp:1');
+Route::get('/about', 'PagesController@about')->name('about');
 Route::get('/contact', 'PagesController@contact')->name('contact');
 Route::get('/terms', 'PagesController@terms')->name('terms');
 Route::get('/privacy', 'PagesController@privacy')->name('privacy');
 Route::get('/license', 'PagesController@license')->name('license');
 Route::get('/language/{locale?}', 'PagesController@language')->name('language');
+
+// TODO: remove this page after testing
+Route::get('/hidden', 'PagesController@about')->name('about')->middleware('permsApp:' . AppRoles::ADMIN);
 
 // Dashboard route
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
