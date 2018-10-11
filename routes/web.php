@@ -23,7 +23,7 @@ Route::get('/license', 'PagesController@license')->name('license');
 Route::get('/language/{locale?}', 'PagesController@language')->name('language');
 
 // TODO: remove this page after testing
-Route::get('/hidden', 'PagesController@about')->name('about')->middleware('permsApp:' . AppRoles::ADMIN);
+Route::get('/hidden', 'PagesController@about')->middleware('permsApp:' . AppRoles::ADMIN);
 
 // Dashboard route
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
