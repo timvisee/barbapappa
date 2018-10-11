@@ -5,6 +5,7 @@
  */
 return [
     'pages' => 'Pagina\'s',
+    'index' => 'Hoofdpagina',
     'dashboard' => 'Dashboard',
     'yourPersonalDashboard' => 'Je persoonlijke dashboard',
     'emailPreferences' => 'E-mailvoorkeuren',
