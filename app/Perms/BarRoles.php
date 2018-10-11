@@ -2,7 +2,7 @@
 
 namespace App\Perms;
 
-class CommunityRoles {
+class BarRoles {
     /**
     * A nobody role.
     * Users that aren't signed in get this role.

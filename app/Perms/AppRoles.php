@@ -2,7 +2,7 @@
 
 namespace App\Perms;
 
-class CommunityRoles {
+class AppRoles {
     /**
     * A nobody role.
     * Users that aren't signed in get this role.
@@ -16,14 +16,8 @@ class CommunityRoles {
     const USER = 0;
 
     /**
-    * The manager role.
-    * Includes permissions from `NORMAL`.
-    */
-    const MANAGER = 10;
-
-    /**
     * The administrator role.
-    * Includes permissions from `MANAGER`.
+    * Includes permissions from `USER`.
     */
     const ADMIN = 20;
 }
