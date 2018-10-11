@@ -186,4 +186,14 @@ return [
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over onze servicevoorwaarden (Terms of Service), neem gerust contact met ons op.',
     ],
+
+    /**
+     * No permission page.
+     */
+    'noPermission' => [
+        'title' => 'Je hoort hier niet te zijn...',
+        'description' => 'Je hebt een verkeerde afslag genomen.<br />Je hebt niet genoeg rechten voor deze content.',
+        'notLoggedIn' => 'Niet ingelogd',
+        'notLoggedInDescription' => 'Je bent op dit moment niet ingelogd. Log in om jouw juiste rechten te verkrijgen.',
+    ],
 ];

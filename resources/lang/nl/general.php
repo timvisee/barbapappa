@@ -15,6 +15,7 @@ return [
     'yesDelete' => 'Ja, verwijder',
     'no' => 'Nee',
     'noGoBack' => 'Nee, ga terug',
+    'goBack' => 'Ga terug',
     'or' => 'of',
     'optional' => 'Optioneel',
     'cancel' => 'Annuleren',

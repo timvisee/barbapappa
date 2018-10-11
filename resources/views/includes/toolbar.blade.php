@@ -5,15 +5,13 @@
     </div>
 
     <h1>
-        @if(barauth()->isAuth())
-            <a href="{{ route('dashboard') }}" title="@lang('pages.dashboard')">
-                {{ logo()->element(false) }}
-            </a>
-        @else
-            <a href="{{ route('index') }}" title="@lang('pages.dashboard')">
-                {{ logo()->element(false) }}
-            </a>
-        @endif
+        @php
+            $homeRoute = barauth()->isAuth() ? 'dashboard' : 'index';
+        @endphp
+
+        <a href="{{ route($homeRoute) }}" title="@lang('pages.' . $homeRoute)">
+            {{ logo()->element(false) }}
+        </a>
     </h1>
 
     <div class="right">

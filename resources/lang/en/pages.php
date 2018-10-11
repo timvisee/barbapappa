@@ -5,6 +5,7 @@
  */
 return [
     'pages' => 'Pages',
+    'index' => 'Hoofdpagina',
     'dashboard' => 'Dashboard',
     'yourPersonalDashboard' => 'Your personal dashboard',
     'emailPreferences' => 'Email preferences',
@@ -184,5 +185,15 @@ return [
         'onlyEnglishNote' => 'Note that the Terms of Service is only available in English, although it applies to our service in any language.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If you have any further questions about our Terms of Service, be sure to get in touch with us.',
+    ],
+
+    /**
+     * No permission page.
+     */
+    'noPermission' => [
+        'title' => 'You shouldn\'t be here...',
+        'description' => 'You took a wrong turn.<br />You don\'t have enough permission to access this content.',
+        'notLoggedIn' => 'Not logged in',
+        'notLoggedInDescription' => 'You\'re currently not logged in. You may want to login to get proper access rights.',
     ],
 ];

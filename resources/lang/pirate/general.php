@@ -15,6 +15,7 @@ return [
     'yesDelete' => 'Yay, sink!',
     'no' => 'Nay',
     'noGoBack' => 'Nay, paddl\' back',
+    'goBack' => 'Paddl\' back',
     'or' => 'o',
     'optional' => 'Optional',
     'cancel' => 'Cancel',

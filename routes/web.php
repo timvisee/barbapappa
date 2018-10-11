@@ -13,7 +13,7 @@
 
 // Regular page routes
 Route::get('/', 'PagesController@index')->name('index');
-Route::get('/about', 'PagesController@about')->name('about');
+Route::get('/about', 'PagesController@about')->name('about')->middleware('permsApp:1');
 Route::get('/contact', 'PagesController@contact')->name('contact');
 Route::get('/terms', 'PagesController@terms')->name('terms');
 Route::get('/privacy', 'PagesController@privacy')->name('privacy');

@@ -5,6 +5,7 @@
  */
 return [
     'pages' => 'Parchments',
+    'index' => 'Home port',
     'dashboard' => 'Home port',
     'yourPersonalDashboard' => 'Ye home port',
     'emailPreferences' => 'E-bottle preferences',
@@ -184,5 +185,15 @@ return [
         'onlyEnglishNote' => 'Note th\' Terms \'o Service only be available in landlubber English, although it applies to our seas in any speak.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If ye have any further questions about our Terms o\' Service, be sure to ship us a bottle message.',
+    ],
+
+    /**
+     * No permission page.
+     */
+    'noPermission' => [
+        'title' => 'Ye nay be here...',
+        'description' => 'Ye compass be upside down, ye sailed th\' wrong seas.<br />Ye nay be access to this sea.',
+        'notLoggedIn' => 'Nay entered',
+        'notLoggedInDescription' => 'Ye nay be entered. Ye may enter yer ship to get proper access rights.',
     ],
 ];
