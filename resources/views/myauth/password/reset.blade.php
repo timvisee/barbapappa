@@ -24,13 +24,13 @@
         <div class="two fields">
             <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
                 {{ Form::label('password', __('account.password') . ':') }}
-                {{ Form::password('password', '') }}
+                {{ Form::password('password') }}
                 {{ ErrorRenderer::inline('password') }}
             </div>
 
             <div class="field {{ ErrorRenderer::hasError('password_confirmation') ? 'error' : '' }}">
                 {{ Form::label('password_confirmation', __('account.confirmPassword') . ':') }}
-                {{ Form::password('password_confirmation', '') }}
+                {{ Form::password('password_confirmation') }}
                 {{ ErrorRenderer::inline('password_confirmation') }}
             </div>
         </div>
