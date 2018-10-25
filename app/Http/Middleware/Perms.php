@@ -149,8 +149,6 @@ class Perms {
                     ->first();
                 if(!empty($member))
                     $user_role = $member->role;
-                else
-                    throw new \Exception('TODO: REMOVE: Not a member of community!!');
             }
         }
 
@@ -191,8 +189,6 @@ class Perms {
                     ->first();
                 if(!empty($member))
                     $user_role = $member->role;
-                else
-                    throw new \Exception('TODO: REMOVE: Not a member of bar!!');
             }
         }
 
