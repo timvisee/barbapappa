@@ -65,6 +65,6 @@ class Kernel extends HttpKernel {
         'selectBar' => \App\Http\Middleware\SelectBar::class,
         'selectCommunity' => \App\Http\Middleware\SelectCommunity::class,
 
-        'permsApp' => \App\Http\Middleware\PermsApp::class,
+        'perms' => \App\Http\Middleware\Perms::class,
     ];
 }
