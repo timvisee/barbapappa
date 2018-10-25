@@ -49,7 +49,7 @@ class Perms {
      */
     public function evaluate($config, $request) {
         // A role configuration must be specified
-        if(empty($config))
+        if(empty(trim($config)))
             throw new \Exception("No role specified for PermsApp middleware");
 
         // Split each role entry by spaces
@@ -58,6 +58,10 @@ class Perms {
         // Evaluate each role
         $allowed = false;
         foreach($roles as $role) {
+            // Skip emtpy entries
+            if(empty(trim($role)))
+                continue;
+
             // Split by colon, extract the components
             $components = explode(':', $role, 2);
             $scope = $components[0];
@@ -131,16 +135,24 @@ class Perms {
             throw new \Exception("Invalid required role specified, not an integer");
         $role = (int) $role;
 
-        // TODO: get the user role in the current community (if the user is on a community
-        // page)
-        throw new \Exception(
-            'Community permission scope is not yet implemented'
-        );
-
-        // Get the current user, and it's role
+        // Get the session user and specify the default role
         $user_role = CommunityRoles::NOBODY;
-        if(barauth()->isAuth() && barauth()->getSessionUser()->role !== null)
-            $user_role = barauth()->getSessionUser()->role;
+        $user = barauth()->getSessionUser();
+
+        // Get the current community and set a default role
+        if(!empty($user)) {
+            $community = $request->get('community');
+            if(!empty($community)) {
+                // Get the user connection to this community
+                $member = $community->users()
+                    ->where('user_id', $user->id)
+                    ->first();
+                if(!empty($member))
+                    $user_role = $member->role;
+                else
+                    throw new \Exception('TODO: REMOVE: Not a member of community!!');
+            }
+        }
 
         // Evaluate, return the result
         return $user_role >= $role;
@@ -165,16 +177,24 @@ class Perms {
             throw new \Exception("Invalid required role specified, not an integer");
         $role = (int) $role;
 
-        // TODO: get the user role in the current bar (if the user is on a bar
-        // page)
-        throw new \Exception(
-            'Bar permission scope is not yet implemented'
-        );
-
-        // Get the current user, and it's role
+        // Get the session user and specify the default role
         $user_role = BarRoles::NOBODY;
-        if(barauth()->isAuth() && barauth()->getSessionUser()->role !== null)
-            $user_role = barauth()->getSessionUser()->role;
+        $user = barauth()->getSessionUser();
+
+        // Get the current bar and set a default role
+        if(!empty($user)) {
+            $bar = $request->get('bar');
+            if(!empty($bar)) {
+                // Get the user connection to this bar
+                $member = $bar->users()
+                    ->where('user_id', $user->id)
+                    ->first();
+                if(!empty($member))
+                    $user_role = $member->role;
+                else
+                    throw new \Exception('TODO: REMOVE: Not a member of bar!!');
+            }
+        }
 
         // Evaluate, return the result
         return $user_role >= $role;
