@@ -134,6 +134,7 @@ return [
      */
     'barMembers' => [
         'title' => 'Bar members',
+        'description' => 'This page shows an overview of all bar members.<br>Clicking on a member allows you remove the member, or change it\'s role.',
         'noMembers' => 'This bar has no members...',
     ],
 

@@ -134,6 +134,7 @@ return [
      */
     'barMembers' => [
         'title' => 'Bar leden',
+        'description' => 'Op deze pagina zie je een overzicht van alle bar leden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
         'noMembers' => 'Deze bar heeft geen leden...',
     ],
 

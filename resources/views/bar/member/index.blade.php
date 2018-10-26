@@ -8,8 +8,8 @@
 @endphp
 
 @section('content')
-    {{-- <h2 class="ui header">@lang('pages.bar.editBar')</h2> --}}
     <h2 class="ui header">@lang('pages.barMembers.title') ({{ count($members) }})</h2>
+    <p>@lang('pages.barMembers.description')</p>
 
     <div class="ui vertical menu fluid">
         {{--

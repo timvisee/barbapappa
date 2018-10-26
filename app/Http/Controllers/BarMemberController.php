@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Helpers\ValidationDefaults;
-use App\Models\Bar;
+
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -35,13 +35,14 @@ class BarMemberController extends Controller {
      *
      * @return Response
      */
-    public function show($userId) {
+    public function show($barId, $memberId) {
         // TODO: ensure the user has permission to edit this group
 
-        // // Get the bar and session user
-        // $bar = \Request::get('bar');
-        // $user = barauth()->getSessionUser();
+        // Get the bar, find the member
+        $bar = \Request::get('bar');
+        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
 
-        return view('bar.member.show');
+        return view('bar.member.show')
+            ->with('member', $member);
     }
 }
