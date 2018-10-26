@@ -25,8 +25,7 @@
             <a href="{{ route('bar.member.show', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}" class="item">
                 {{ $member->name }}
                 @if($member->pivot->role > BarRoles::USER)
-                    {{-- TODO: show role name --}}
-                    (role id: {{ $member->pivot->role }})
+                    ({{ BarRoles::roleName($member->pivot->role) }})
                 @endif
             </a>
         @empty
