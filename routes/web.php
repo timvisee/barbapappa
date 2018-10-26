@@ -90,8 +90,8 @@ Route::prefix('/b')->group(function() {
         Route::get('/edit', 'BarController@edit')->name('bar.edit');
         // TODO: require to be bar administrator
         Route::prefix('/members/')->group(function() {
-            Route::get('/', 'BarController@members')->name('bar.members');
-            Route::get('/{memberId}', 'BarController@member')->name('bar.member.show');
+            Route::get('/', 'BarMemberController@index')->name('bar.member.index');
+            Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');
         });
         Route::put('/', 'BarController@update')->name('bar.update');
         Route::get('/join', 'BarController@join')->name('bar.join');

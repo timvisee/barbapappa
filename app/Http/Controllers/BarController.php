@@ -54,28 +54,6 @@ class BarController extends Controller {
     }
 
     /**
-     * Bar members page.
-     *
-     * @return Response
-     */
-    public function members() {
-        // TODO: ensure the user has permission to edit this group
-
-        return view('bar.member.index');
-    }
-
-    /**
-     * Bar member page.
-     *
-     * @return Response
-     */
-    public function member() {
-        // TODO: ensure the user has permission to edit this group
-
-        return view('bar.member.show');
-    }
-
-    /**
      * Bar update endpoint.
      *
      * @param Request $request Request.
