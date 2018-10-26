@@ -130,6 +130,14 @@ return [
     ],
 
     /**
+     * Bar member pages.
+     */
+    'barMembers' => [
+        'title' => 'Bar leden',
+        'noMembers' => 'Deze bar heeft geen leden...',
+    ],
+
+    /**
      * Verify email address page.
      */
     'verifyEmail' => [

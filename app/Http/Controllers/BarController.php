@@ -61,7 +61,18 @@ class BarController extends Controller {
     public function members() {
         // TODO: ensure the user has permission to edit this group
 
-        return view('bar.members');
+        return view('bar.member.index');
+    }
+
+    /**
+     * Bar member page.
+     *
+     * @return Response
+     */
+    public function member() {
+        // TODO: ensure the user has permission to edit this group
+
+        return view('bar.member.show');
     }
 
     /**

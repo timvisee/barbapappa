@@ -130,6 +130,14 @@ return [
     ],
 
     /**
+     * Bar member pages.
+     */
+    'barMembers' => [
+        'title' => 'Bar members',
+        'noMembers' => 'This bar has no members...',
+    ],
+
+    /**
      * Verify email address page.
      */
     'verifyEmail' => [
