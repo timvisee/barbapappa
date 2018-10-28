@@ -59,6 +59,17 @@ class PagesController extends Controller {
     }
 
     /**
+     * Raw license page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function licenseRaw() {
+        $response = \Response::make(\View::make('pages.includes.raw.license'), 200);
+        $response->header('Content-Type', 'text/plain');
+        return $response;
+    }
+
+    /**
      * Language selection page.
      *
      * @param string|null $locale The selected locale.
