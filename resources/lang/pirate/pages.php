@@ -188,6 +188,19 @@ return [
     ],
 
     /**
+     * License page.
+     */
+    'license' => [
+        'title' => 'License',
+        'description' => 'Th\' ARRbapAPPa software project be released under th\' GNU GPL-3.0 license. Dis license maps what ye are and nay be allowed to do with th\' source code of dis project.<br />Read th\' full license below, o\' check out th\' TL;DR for dis license as quick summary.',
+        'onlyEnglishNote' => 'Note th\' license only be available in landlubber English, although it applies to our seas in any speak.',
+        'questions' => 'Questions?',
+        'questionsDescription' => 'If ye have any further questions about our license, be sure to ship us a bottle message. Ye can also check th\' raw license readable on any ship.',
+        'rawLicense' => 'Raw license',
+        'licenseTldr' => 'License TL;DR',
+    ],
+
+    /**
      * No permission page.
      */
     'noPermission' => [

@@ -50,6 +50,10 @@
                 <i class="glyphicons glyphicons-{{ (langManager()->getLocale() != 'pirate' ? 'fingerprint' : 'skull') }}"></i>
                 @lang('pages.privacy.title')
             </a>
+            <a href="{{ route('license') }}" class="item">
+                <i class="glyphicons glyphicons-scale-classic"></i>
+                @lang('pages.license.title')
+            </a>
             <a href="{{ route('contact') }}" class="item">
                 <i class="glyphicons glyphicons-send"></i>
                 @lang('pages.contact')

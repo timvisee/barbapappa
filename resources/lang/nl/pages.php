@@ -189,6 +189,19 @@ return [
     ],
 
     /**
+     * License page.
+     */
+    'license' => [
+        'title' => 'Licentie',
+        'description' => 'Het BARbapAPPa software project is uitgebracht onder de GNU GPL-3.0 licentie (License). Deze licentie beschrijft wat wel en niet is toegestaan met de broncode van dit project.<br />Lees de volledige licentie hieronder, of check de licentie TL;DR voor een snel overzicht.',
+        'onlyEnglishNote' => 'De licentie (License) is alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
+        'questions' => 'Vragen?',
+        'questionsDescription' => 'Als je verdere vragen hebt over de gebruikte licentie (License), neem gerust contact met ons op. Je kunt de licentie ook bekijken in ruuw formaat leesbaar op elk willekeurig apparaat.',
+        'rawLicense' => 'Licentie in ruwe tekst',
+        'licenseTldr' => 'Licentie TL;DR (Engels)',
+    ],
+
+    /**
      * No permission page.
      */
     'noPermission' => [
