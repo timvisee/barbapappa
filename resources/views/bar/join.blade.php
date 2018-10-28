@@ -3,7 +3,6 @@
 @section('content')
 
     <h2 class="ui header">{{ $bar->name }}</h2>
-
     <p>@lang('pages.bar.joinQuestion')</p>
 
     @php

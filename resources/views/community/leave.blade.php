@@ -3,7 +3,6 @@
 @section('content')
 
     <h2 class="ui header">{{ $community->name }}</h2>
-
     <p>@lang('pages.community.leaveQuestion')</p>
 
     <div class="ui warning message visible">

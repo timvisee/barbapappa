@@ -136,6 +136,8 @@ return [
         'title' => 'Bar members',
         'description' => 'Dis page shows th\' overview o\' all bar members.<br>Clicking a member allows ye to remove the member, or change be rank.',
         'noMembers' => 'Dis bar be nay members...',
+        'memberSince' => 'Member since',
+        'deleteQuestion' => 'Yer \'bout to remove dis member from our bar. Ye be sure ye want to continue?',
     ],
 
     /**

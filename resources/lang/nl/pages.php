@@ -136,6 +136,8 @@ return [
         'title' => 'Bar leden',
         'description' => 'Op deze pagina zie je een overzicht van alle bar leden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
         'noMembers' => 'Deze bar heeft geen leden...',
+        'memberSince' => 'Lid sinds',
+        'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze bar. Weet je zeker dat je door wilt gaan?',
     ],
 
     /**

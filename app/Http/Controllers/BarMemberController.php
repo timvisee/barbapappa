@@ -45,4 +45,37 @@ class BarMemberController extends Controller {
         return view('bar.member.show')
             ->with('member', $member);
     }
+
+    /**
+     * The role change page for a bar member.
+     *
+     * @return Response
+     */
+    public function role($barId, $memberId) {
+        // TODO: ensure the user has permission to edit this group
+
+        // Get the bar, find the member
+        $bar = \Request::get('bar');
+        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+
+        // TODO: update view
+        return view('bar.member.show')
+            ->with('member', $member);
+    }
+
+    /**
+     * The page to delete a bar member.
+     *
+     * @return Response
+     */
+    public function delete($barId, $memberId) {
+        // TODO: ensure the user has permission to edit this group
+
+        // Get the bar, find the member
+        $bar = \Request::get('bar');
+        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+
+        return view('bar.member.delete')
+            ->with('member', $member);
+    }
 }

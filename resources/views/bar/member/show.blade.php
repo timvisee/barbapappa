@@ -10,26 +10,23 @@
     <table class="ui compact celled definition table">
         <tbody>
             <tr>
-                <td>User</td>
-                {{-- <td><a href="{{ route('community.show', ['communityId' => $community->human_id]) }}">{{ $community->id }}</a></td> --}}
+                <td>@lang('misc.user')</td>
                 <td>{{ $member->name }}</td>
             </tr>
             <tr>
-                <td>Role</td>
+                <td>@lang('misc.role')</td>
                 <td>{{ BarRoles::roleName($member->pivot->role) }}</td>
             </tr>
             <tr>
-                <td>Member since</td>
+                <td>@lang('pages.barMembers.memberSince')</td>
                 <td>{{ $member->pivot->created_at }}</td>
             </tr>
-            {{-- <tr> --}}
-            {{--     <td>Slug</td> --}}
-            {{--     @if($community->hasSlug()) --}}
-            {{--         <td><a href="{{ route('community.show', ['communityId' => $community->slug]) }}">{{ $community->slug }}</a></td> --}}
-            {{--     @else --}}
-            {{--         <td><i>None</i></td> --}}
-            {{--     @endif --}}
-            {{-- </tr> --}}
+            @if($member->pivot->created_at != $member->pivot->created_at)
+                <tr>
+                    <td>@lang('misc.lastChanged')</td>
+                    <td>{{ $member->pivot->updated_at }}</td>
+                </tr>
+            @endif
         </tbody>
     </table>
 
@@ -38,5 +35,13 @@
     <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
             class="ui button basic">
         @lang('general.goBack')
+    </a>
+    <a href="{{ route('bar.member.role', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
+            class="ui button basic secondary">
+        Change role
+    </a>
+    <a href="{{ route('bar.member.delete', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
+            class="ui button basic negative">
+        Remove member
     </a>
 @endsection
