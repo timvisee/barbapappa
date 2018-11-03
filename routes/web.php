@@ -95,7 +95,7 @@ Route::prefix('/b')->group(function() {
             Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');
             Route::get('/{memberId}/role', 'BarMemberController@role')->name('bar.member.role');
             Route::get('/{memberId}/delete', 'BarMemberController@delete')->name('bar.member.delete');
-            Route::pst('/{memberId}/delete', 'BarMemberCntroller@doDelete')->name('bar.member.doDelete');
+            Route::post('/{memberId}/delete', 'BarMemberController@doDelete')->name('bar.member.doDelete');
         });
         Route::put('/', 'BarController@update')->name('bar.update');
         Route::get('/join', 'BarController@join')->name('bar.join');
