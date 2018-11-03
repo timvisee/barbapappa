@@ -34,7 +34,7 @@ trait Roles {
         $roles = Self::roles();
 
         // Ensure the ID is valid and exists
-        if(empty($roles) || $id == null || !isset($roles[$id]))
+        if(empty($roles) || $id === null || !isset($roles[$id]))
             throw new \Exception("failed to get role name, unknown role ID given");
 
         return $roles[$id];
