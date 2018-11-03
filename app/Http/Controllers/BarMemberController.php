@@ -78,4 +78,26 @@ class BarMemberController extends Controller {
         return view('bar.member.delete')
             ->with('member', $member);
     }
+
+    /**
+     * Make a member leave the bar.
+     *
+     * @return Response
+     */
+    public function doDelete($barId, $memberId) {
+        // TODO: ensure the user has permission to edit this group
+
+        // Get the bar, find the member
+        $bar = \Request::get('bar');
+        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+
+        // TODO: do not allow deletion if admin
+        // TODO: do not allow deletion of self
+
+        // Delete the member
+        $member->delete();
+
+        return view('bar.member.index')
+            ->with('success', __('pages.barMembers.memberRemoved'));
+    }
 }

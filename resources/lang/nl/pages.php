@@ -138,6 +138,7 @@ return [
         'noMembers' => 'Deze bar heeft geen leden...',
         'memberSince' => 'Lid sinds',
         'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze bar. Weet je zeker dat je door wilt gaan?',
+        'memberRemoved' => 'Het lid is verwijderd.',
     ],
 
     /**

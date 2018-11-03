@@ -138,6 +138,7 @@ return [
         'noMembers' => 'This bar has no members...',
         'memberSince' => 'Member since',
         'deleteQuestion' => 'You\'re about to remove this member from this bar. Are you sure you want to continue?',
+        'memberRemoved' => 'The member has been removed.',
     ],
 
     /**

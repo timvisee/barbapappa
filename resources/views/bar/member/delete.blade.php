@@ -10,17 +10,21 @@
         @lang('misc.cannotBeUndone')
     </div>
 
+    {{-- TODO: toggle to also remove user from community --}}
+    {{-- TODO: toggle to also remove user from other bars in community --}}
+
     <div class="ui divider"></div>
 
-    {{-- {!! Form::open(['action' => ['BarController@doLeave', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form']) !!} --}}
-    {{--     <div class="ui buttons"> --}}
-    {{--         <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" --}}
-    {{--                 class="ui button negative"> --}}
-    {{--             @lang('general.noGoBack') --}}
-    {{--         </a> --}}
-    {{--         <div class="or" data-text="@lang('general.or')"></div> --}}
-    {{--         <button class="ui button positive basic" type="submit">@lang('general.yesContinue')</button> --}}
-    {{--     </div> --}}
-    {{-- {!! Form::close() !!} --}}
+    {!! Form::open(['action' => ['BarMemberController@doDelete', 'barId' =>
+    $bar->human_id, 'memberId' => $member->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+        <div class="ui buttons">
+            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+                    class="ui button negative">
+                @lang('general.noGoBack')
+            </a>
+            <div class="or" data-text="@lang('general.or')"></div>
+            <button class="ui button positive basic" type="submit">@lang('general.yesRemove')</button>
+        </div>
+    {!! Form::close() !!}
 
 @endsection
