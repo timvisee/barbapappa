@@ -15,8 +15,7 @@
 
     <div class="ui divider"></div>
 
-    {!! Form::open(['action' => ['BarMemberController@doDelete', 'barId' =>
-    $bar->human_id, 'memberId' => $member->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['BarMemberController@doDelete', 'barId' => $bar->human_id, 'memberId' => $member->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         <div class="ui buttons">
             <a href="{{ route('bar.member.show', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
                     class="ui button negative">

@@ -21,6 +21,18 @@ trait Roles {
     }
 
     /**
+     * Check whether the given role ID is valid.
+     * This checks whehter the given role ID is known.
+     *
+     * @param int $id The role ID.
+     * @return bool True if valid, false if not.
+     */
+    public static function isValid($id) {
+        $roles = Self::roles();
+        return !empty($roles) && isset($roles[$id]);
+    }
+
+    /**
      * Get the display name for a role with the given ID.
      *
      * An exception is thrown if the role ID is unknown.

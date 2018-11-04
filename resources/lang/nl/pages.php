@@ -139,6 +139,8 @@ return [
         'memberSince' => 'Lid sinds',
         'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze bar. Weet je zeker dat je door wilt gaan?',
         'memberRemoved' => 'Het lid is verwijderd.',
+        'memberUpdated' => 'Lid aanpassingen opgeslagen.',
+        'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
     ],
 
     /**

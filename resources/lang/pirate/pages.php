@@ -139,6 +139,8 @@ return [
         'memberSince' => 'Member since',
         'deleteQuestion' => 'Yer \'bout to remove dis member from our bar. Ye be sure ye want to continue?',
         'memberRemoved' => 'Th\' member be sunk.',
+        'memberUpdated' => 'Member changes saved.',
+        'incorrectMemberRoleWarning' => 'Assigning th\' incorrect role that be too permissive to a member may cause significant security issues.',
     ],
 
     /**

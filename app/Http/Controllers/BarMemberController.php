@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Helpers\ValidationDefaults;
+use App\Perms\BarRoles;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -58,9 +59,37 @@ class BarMemberController extends Controller {
         $bar = \Request::get('bar');
         $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
 
-        // TODO: update view
+        // Show the edit view
         return view('bar.member.edit')
             ->with('member', $member);
+    }
+
+    /**
+     * Edit a bar member.
+     *
+     * @return Response
+     */
+    public function doEdit(Request $request, $barId, $memberId) {
+        // TODO: ensure the user has permission to edit this group
+        // TODO: do not allow role demotion if last admin
+
+        // Get the bar, find the member
+        $bar = \Request::get('bar');
+        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+
+        // Get the selected role, validate it
+        $role = $request->input('role');
+        if(!BarRoles::isValid($role))
+            throw new \Exception("unknown role ID specified");
+
+        // Set the role ID, save the member
+        $member->pivot->role = $role;
+        $member->pivot->save();
+
+        // Redirect to the show view after editing
+        return redirect()
+            ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+            ->with('success', __('pages.barMembers.memberUpdated'));
     }
 
     /**
@@ -97,7 +126,9 @@ class BarMemberController extends Controller {
         // Delete the member
         $member->delete();
 
-        return view('bar.member.index')
+        // Redirect to the index page after deleting
+        return redirect()
+            ->route('bar.member.index', ['barId' => $barId])
             ->with('success', __('pages.barMembers.memberRemoved'));
     }
 }
