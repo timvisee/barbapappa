@@ -137,10 +137,12 @@ return [
         'description' => 'This page shows an overview of all bar members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
         'noMembers' => 'This bar has no members...',
         'memberSince' => 'Member since',
+        'editMember' => 'Edit member',
+        'deleteMember' => 'Delete member',
         'deleteQuestion' => 'You\'re about to remove this member from this bar. Are you sure you want to continue?',
         'memberRemoved' => 'The member has been removed.',
         'memberUpdated' => 'Member changes saved.',
-        'incorrectMemberRoleWarning' => 'Assigning the incorrect role that is too permissive to a member may cause significant security issues.',
+        'incorrectMemberRoleWarning' => 'Assigning the incorrect role that is too permissive to a member may introduce significant security issues.',
     ],
 
     /**

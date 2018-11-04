@@ -124,7 +124,7 @@ class BarMemberController extends Controller {
         // TODO: do not allow deletion of self
 
         // Delete the member
-        $member->delete();
+        $bar->leave($member);
 
         // Redirect to the index page after deleting
         return redirect()

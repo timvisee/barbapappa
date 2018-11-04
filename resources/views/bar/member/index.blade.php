@@ -30,7 +30,7 @@
             </a>
         @empty
             <div class="item">
-                <i>@lang('pages.barmembers.noMembers')</i>
+                <i>@lang('pages.barMembers.noMembers')</i>
             </div>
         @endforelse
     </div>
