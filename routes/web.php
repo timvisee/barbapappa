@@ -1,6 +1,6 @@
 <?php
 
-use App\Perms\Builder\Builder as PermsBuilder;
+use App\Perms\Builder\Builder as Perms;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ Route::get('/license/raw', 'PagesController@licenseRaw')->name('license.raw');
 Route::get('/language/{locale?}', 'PagesController@language')->name('language');
 
 // TODO: remove this page after testing
-Route::get('/secret', 'PagesController@about')->middleware(PermsBuilder::init()->app()->admin()->middleware());
+Route::get('/secret', 'PagesController@about')->middleware(Perms::build()->app()->admin()->middleware());
 
 // Dashboard route
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
@@ -77,7 +77,7 @@ Route::prefix('/c')->group(function() {
         // TODO: require community administrator
         Route::get('/edit', 'CommunityController@edit')->name('community.edit');
         Route::prefix('/members/')
-            ->middleware(PermsBuilder::init()->app()->admin()->or()->community()->manager()->middleware())
+            ->middleware(Perms::build()->app()->admin()->or()->community()->admin()->middleware())
             ->group(function() {
                 Route::get('/', 'CommunityMemberController@index')->name('community.member.index');
                 Route::get('/{memberId}', 'CommunityMemberController@show')->name('community.member.show');
@@ -102,7 +102,7 @@ Route::prefix('/b')->group(function() {
         // TODO: require bar administrator
         Route::get('/edit', 'BarController@edit')->name('bar.edit');
         Route::prefix('/members/')
-            ->middleware(PermsBuilder::init()->app()->admin()->or()->community()->admin()->or()->bar()->manager()->middleware())
+            ->middleware(Perms::build()->app()->admin()->or()->community()->admin()->or()->bar()->admin()->middleware())
             ->group(function() {
                 Route::get('/', 'BarMemberController@index')->name('bar.member.index');
                 Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');

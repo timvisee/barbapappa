@@ -26,7 +26,7 @@ class Builder {
     /**
      * Chainable way of constructing this builder.
      */
-    public static function init() {
+    public static function build() {
         return new Self();
     }
 

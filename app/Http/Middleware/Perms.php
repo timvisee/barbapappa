@@ -151,7 +151,7 @@ class Perms {
                     ->where('user_id', $user->id)
                     ->first();
                 if(!empty($member))
-                    $user_role = $member->role;
+                    $user_role = $member->pivot->role;
             }
         }
 
@@ -191,7 +191,7 @@ class Perms {
                     ->where('user_id', $user->id)
                     ->first();
                 if(!empty($member))
-                    $user_role = $member->role;
+                    $user_role = $member->pivot->role;
             }
         }
 
