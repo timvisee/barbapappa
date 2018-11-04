@@ -42,6 +42,9 @@ class Perms {
      * Evaluate the given roles string, and evaulate whether the user has
      * permisison or not.
      *
+     * If multiple roles are given, separated by a space, only one has to
+     * evaluate to true. This logic is working in an OR configuration.
+     *
      * @param string $config The roles configuration string, or a part of a
      *      role string. This defines what permission a user must have.
      * @param Request $request The users request.

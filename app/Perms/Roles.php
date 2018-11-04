@@ -21,6 +21,15 @@ trait Roles {
     }
 
     /**
+     * Get the scope name/identifier, used in the middleware configuration.
+     *
+     * @return {string} The scope name/identifier.
+     */
+    public static function scope() {
+        throw new \Exception("the static scope() function is not implemented properly in the roles class it is used in");
+    }
+
+    /**
      * Check whether the given role ID is valid.
      * This checks whehter the given role ID is known.
      *
@@ -50,5 +59,26 @@ trait Roles {
             throw new \Exception("failed to get role name, unknown role ID given");
 
         return $roles[$id];
+    }
+
+    /**
+     * Get the role ID from the given role name.
+     *
+     * @param {string} $name The name of the role.
+     * @return {int} The role ID.
+     * @throws \Exception Throws if the given role name is unknown.
+     */
+    public static function fromName($name) {
+        // The name must be valid
+        if(empty($name) || strlen(trim($name)) == 0)
+            throw new \Exception("failed to get role ID by name, empty name given");
+
+        // Compare role names
+        foreach(Self::roles() as $id => $role)
+            if(!strcasecmp($name, $role))
+                return $id;
+
+        // Role not found, throw an exception
+        throw new \Exception("failed to get role ID by name, unknown name: " . $name);
     }
 }

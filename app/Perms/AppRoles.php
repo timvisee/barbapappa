@@ -6,6 +6,11 @@ class AppRoles {
     use Roles;
 
     /**
+     * The scope name.
+     */
+    const SCOPE = 'app';
+
+    /**
     * A nobody role.
     * Users that aren't signed in get this role.
     */
@@ -32,5 +37,12 @@ class AppRoles {
             Self::USER => 'User',
             Self::ADMIN => 'Admin',
         ];
+    }
+
+    /**
+     * The scope name.
+     */
+    public static function scope() {
+        return Self::SCOPE;
     }
 }

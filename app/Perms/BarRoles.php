@@ -6,6 +6,11 @@ class BarRoles {
     use Roles;
 
     /**
+     * The scope name.
+     */
+    const SCOPE = 'bar';
+
+    /**
     * A nobody role.
     * Users that aren't signed in get this role.
     */
@@ -39,5 +44,12 @@ class BarRoles {
             Self::MANAGER => 'Manager',
             Self::ADMIN => 'Admin',
         ];
+    }
+
+    /**
+     * The scope name.
+     */
+    public static function scope() {
+        return Self::SCOPE;
     }
 }
