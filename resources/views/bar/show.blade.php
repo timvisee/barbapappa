@@ -41,6 +41,12 @@
     </a>
 
     {{-- TODO only show if the user has permission --}}
+    <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
+            class="ui button small basic">
+        @lang('pages.barMembers.title')
+    </a>
+
+    {{-- TODO only show if the user has permission --}}
     <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}"
             class="ui button small basic">
         @lang('pages.bar.editBar')
