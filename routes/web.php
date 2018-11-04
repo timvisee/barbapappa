@@ -1,6 +1,6 @@
 <?php
 
-use App\Perms\AppRoles;
+use App\Perms\Builder\Builder as PermsBuilder;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ Route::get('/license/raw', 'PagesController@licenseRaw')->name('license.raw');
 Route::get('/language/{locale?}', 'PagesController@language')->name('language');
 
 // TODO: remove this page after testing
-Route::get('/secret', 'PagesController@about')->middleware('perms:app:' . AppRoles::ADMIN);
+Route::get('/secret', 'PagesController@about')->middleware(PermsBuilder::init()->app()->admin()->middleware());
 
 // Dashboard route
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
@@ -74,16 +74,18 @@ Route::prefix('/c')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
         Route::get('/', 'CommunityController@show')->name('community.show');
+        // TODO: require community administrator
         Route::get('/edit', 'CommunityController@edit')->name('community.edit');
-        // TODO: require to be community administrator
-        Route::prefix('/members/')->group(function() {
-            Route::get('/', 'CommunityMemberController@index')->name('community.member.index');
-            Route::get('/{memberId}', 'CommunityMemberController@show')->name('community.member.show');
-            Route::get('/{memberId}/edit', 'CommunityMemberController@edit')->name('community.member.edit');
-            Route::put('/{memberId}/edit', 'CommunityMemberController@doEdit')->name('community.member.doEdit');
-            Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
-            Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
-        });
+        Route::prefix('/members/')
+            ->middleware(PermsBuilder::init()->app()->admin()->or()->community()->manager()->middleware())
+            ->group(function() {
+                Route::get('/', 'CommunityMemberController@index')->name('community.member.index');
+                Route::get('/{memberId}', 'CommunityMemberController@show')->name('community.member.show');
+                Route::get('/{memberId}/edit', 'CommunityMemberController@edit')->name('community.member.edit');
+                Route::put('/{memberId}/edit', 'CommunityMemberController@doEdit')->name('community.member.doEdit');
+                Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
+                Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
+            });
         Route::put('/', 'CommunityController@update')->name('community.update');
         Route::get('/join', 'CommunityController@join')->name('community.join');
         Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');
@@ -97,16 +99,18 @@ Route::prefix('/b')->group(function() {
     Route::get('/', 'BarController@overview')->name('bar.overview');
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
+        // TODO: require bar administrator
         Route::get('/edit', 'BarController@edit')->name('bar.edit');
-        // TODO: require to be bar administrator
-        Route::prefix('/members/')->group(function() {
-            Route::get('/', 'BarMemberController@index')->name('bar.member.index');
-            Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');
-            Route::get('/{memberId}/edit', 'BarMemberController@edit')->name('bar.member.edit');
-            Route::put('/{memberId}/edit', 'BarMemberController@doEdit')->name('bar.member.doEdit');
-            Route::get('/{memberId}/delete', 'BarMemberController@delete')->name('bar.member.delete');
-            Route::delete('/{memberId}/delete', 'BarMemberController@doDelete')->name('bar.member.doDelete');
-        });
+        Route::prefix('/members/')
+            ->middleware(PermsBuilder::init()->app()->admin()->or()->community()->admin()->or()->bar()->manager()->middleware())
+            ->group(function() {
+                Route::get('/', 'BarMemberController@index')->name('bar.member.index');
+                Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');
+                Route::get('/{memberId}/edit', 'BarMemberController@edit')->name('bar.member.edit');
+                Route::put('/{memberId}/edit', 'BarMemberController@doEdit')->name('bar.member.doEdit');
+                Route::get('/{memberId}/delete', 'BarMemberController@delete')->name('bar.member.delete');
+                Route::delete('/{memberId}/delete', 'BarMemberController@doDelete')->name('bar.member.doDelete');
+            });
         Route::put('/', 'BarController@update')->name('bar.update');
         Route::get('/join', 'BarController@join')->name('bar.join');
         Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');

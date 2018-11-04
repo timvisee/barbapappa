@@ -82,9 +82,9 @@ class Perms {
                     'Could not evaluate permission, unknown permission scope specified'
                 );
 
-            // Show an error if the user doesn't have permission
-            if(!$allowed)
-                return false;
+            // If allowed, return true
+            if($allowed)
+                return true;
         }
 
         // Return whether the user is allowed (this should always be true)
