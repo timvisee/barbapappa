@@ -36,12 +36,14 @@
             class="ui button basic">
         @lang('general.goBack')
     </a>
-    <a href="{{ route('bar.member.role', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
+    <a href="{{ route('bar.member.edit', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
             class="ui button basic secondary">
+        {{-- TODO: translate --}}
         Change role
     </a>
     <a href="{{ route('bar.member.delete', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
             class="ui button basic negative">
+        {{-- TODO: translate --}}
         Remove member
     </a>
 @endsection

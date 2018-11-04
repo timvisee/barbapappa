@@ -47,11 +47,11 @@ class BarMemberController extends Controller {
     }
 
     /**
-     * The role change page for a bar member.
+     * The edit page for a bar member.
      *
      * @return Response
      */
-    public function role($barId, $memberId) {
+    public function edit($barId, $memberId) {
         // TODO: ensure the user has permission to edit this group
 
         // Get the bar, find the member
@@ -59,7 +59,7 @@ class BarMemberController extends Controller {
         $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
 
         // TODO: update view
-        return view('bar.member.show')
+        return view('bar.member.edit')
             ->with('member', $member);
     }
 
