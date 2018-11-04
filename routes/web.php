@@ -74,11 +74,18 @@ Route::prefix('/c')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
         Route::get('/', 'CommunityController@show')->name('community.show');
-        // TODO: require community administrator
-        Route::get('/edit', 'CommunityController@edit')->name('community.edit');
-        Route::prefix('/members/')
-            ->middleware(Perms::build()->app()->admin()->or()->community()->admin()->middleware())
-            ->group(function() {
+        Route::get('/join', 'CommunityController@join')->name('community.join');
+        Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');
+        Route::get('/leave', 'CommunityController@leave')->name('community.leave');
+        Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
+
+        // Require administrator
+        Route::middleware(Perms::build()->app()->admin()->or()->community()->admin()->middleware())
+            ->group(function()
+        {
+            Route::get('/edit', 'CommunityController@edit')->name('community.edit');
+            Route::put('/', 'CommunityController@update')->name('community.update');
+            Route::prefix('/members/')->group(function() {
                 Route::get('/', 'CommunityMemberController@index')->name('community.member.index');
                 Route::get('/{memberId}', 'CommunityMemberController@show')->name('community.member.show');
                 Route::get('/{memberId}/edit', 'CommunityMemberController@edit')->name('community.member.edit');
@@ -86,11 +93,7 @@ Route::prefix('/c')->group(function() {
                 Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
                 Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
             });
-        Route::put('/', 'CommunityController@update')->name('community.update');
-        Route::get('/join', 'CommunityController@join')->name('community.join');
-        Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');
-        Route::get('/leave', 'CommunityController@leave')->name('community.leave');
-        Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
+        });
     });
 });
 
@@ -99,11 +102,18 @@ Route::prefix('/b')->group(function() {
     Route::get('/', 'BarController@overview')->name('bar.overview');
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
-        // TODO: require bar administrator
-        Route::get('/edit', 'BarController@edit')->name('bar.edit');
-        Route::prefix('/members/')
-            ->middleware(Perms::build()->app()->admin()->or()->community()->admin()->or()->bar()->admin()->middleware())
-            ->group(function() {
+        Route::get('/join', 'BarController@join')->name('bar.join');
+        Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');
+        Route::get('/leave', 'BarController@leave')->name('bar.leave');
+        Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
+
+        // Require administrator
+        Route::middleware(Perms::build()->app()->admin()->or()->community()->admin()->or()->bar()->admin()->middleware())
+            ->group(function()
+        {
+            Route::get('/edit', 'BarController@edit')->name('bar.edit');
+            Route::put('/', 'BarController@update')->name('bar.update');
+            Route::prefix('/members/')->group(function() {
                 Route::get('/', 'BarMemberController@index')->name('bar.member.index');
                 Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');
                 Route::get('/{memberId}/edit', 'BarMemberController@edit')->name('bar.member.edit');
@@ -111,11 +121,7 @@ Route::prefix('/b')->group(function() {
                 Route::get('/{memberId}/delete', 'BarMemberController@delete')->name('bar.member.delete');
                 Route::delete('/{memberId}/delete', 'BarMemberController@doDelete')->name('bar.member.doDelete');
             });
-        Route::put('/', 'BarController@update')->name('bar.update');
-        Route::get('/join', 'BarController@join')->name('bar.join');
-        Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');
-        Route::get('/leave', 'BarController@leave')->name('bar.leave');
-        Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
+        });
     });
 });
 
