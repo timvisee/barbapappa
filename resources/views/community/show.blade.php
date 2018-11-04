@@ -56,6 +56,12 @@
     <div class="ui section divider"></div>
 
     {{-- TODO only show if the user has permission --}}
+    <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
+            class="ui button small basic">
+        @lang('pages.communityMembers.title')
+    </a>
+
+    {{-- TODO only show if the user has permission --}}
     <a href="{{ route('community.edit', ['communityId' => $community->human_id]) }}"
             class="ui button small basic">
         @lang('pages.community.editCommunity')

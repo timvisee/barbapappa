@@ -92,6 +92,22 @@ return [
     ],
 
     /**
+     * Community member pages.
+     */
+    'communityMembers' => [
+        'title' => 'Community members',
+        'description' => 'This page shows an overview of all community members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
+        'noMembers' => 'This community has no members...',
+        'memberSince' => 'Member since',
+        'editMember' => 'Edit member',
+        'deleteMember' => 'Delete member',
+        'deleteQuestion' => 'You\'re about to remove this member from this community. Are you sure you want to continue?',
+        'memberRemoved' => 'The member has been removed.',
+        'memberUpdated' => 'Member changes saved.',
+        'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [
@@ -142,7 +158,7 @@ return [
         'deleteQuestion' => 'You\'re about to remove this member from this bar. Are you sure you want to continue?',
         'memberRemoved' => 'The member has been removed.',
         'memberUpdated' => 'Member changes saved.',
-        'incorrectMemberRoleWarning' => 'Assigning the incorrect role that is too permissive to a member may introduce significant security issues.',
+        'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
     ],
 
     /**

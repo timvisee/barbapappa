@@ -26,7 +26,7 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function index() {
-        // TODO: ensure the user has permission to edit this group
+        // TODO: ensure the user has permission to view the bar members
 
         return view('bar.member.index');
     }

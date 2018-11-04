@@ -35,8 +35,6 @@
         @endforelse
     </div>
 
-    <br />
-
     <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
             class="ui button basic">
         @lang('general.goBack')

@@ -92,6 +92,22 @@ return [
     ],
 
     /**
+     * Community member pages.
+     */
+    'communityMembers' => [
+        'title' => 'Community leden',
+        'description' => 'Op deze pagina zie je een overzicht van alle community leden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
+        'noMembers' => 'Deze community heeft geen leden...',
+        'memberSince' => 'Lid sinds',
+        'editMember' => 'Lid aanpassen',
+        'deleteMember' => 'Lid verwijderen',
+        'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze community. Weet je zeker dat je door wilt gaan?',
+        'memberRemoved' => 'Het lid is verwijderd.',
+        'memberUpdated' => 'Lid aanpassingen opgeslagen.',
+        'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [
