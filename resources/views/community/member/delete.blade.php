@@ -12,7 +12,7 @@
 
     {{-- TODO: toggle to also remove user from community bars --}}
 
-    <div class="ui divider"></div>
+    <br />
 
     {!! Form::open(['action' => ['CommunityMemberController@doDelete', 'communityId' => $community->human_id, 'memberId' => $member->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         <div class="ui buttons">

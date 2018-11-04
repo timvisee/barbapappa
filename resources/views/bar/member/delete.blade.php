@@ -13,7 +13,7 @@
     {{-- TODO: toggle to also remove user from community --}}
     {{-- TODO: toggle to also remove user from other bars in community --}}
 
-    <div class="ui divider"></div>
+    <br />
 
     {!! Form::open(['action' => ['BarMemberController@doDelete', 'barId' => $bar->human_id, 'memberId' => $member->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         <div class="ui buttons">
