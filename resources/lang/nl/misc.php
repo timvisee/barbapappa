@@ -25,6 +25,9 @@ return [
     'visible' => 'Zichtbaar',
     'public' => 'Publiek',
     'name' => 'Naam',
+    'user' => 'Gebruiker',
+    'role' => 'Rol',
+    'lastChanged' => 'Laatst aangepast',
     'slug' => 'URL-pad',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',

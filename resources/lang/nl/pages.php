@@ -92,6 +92,22 @@ return [
     ],
 
     /**
+     * Community member pages.
+     */
+    'communityMembers' => [
+        'title' => 'Groepsleden',
+        'description' => 'Op deze pagina zie je een overzicht van alle groepsleden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
+        'noMembers' => 'Deze groep heeft geen leden...',
+        'memberSince' => 'Lid sinds',
+        'editMember' => 'Lid aanpassen',
+        'deleteMember' => 'Lid verwijderen',
+        'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
+        'memberRemoved' => 'Het lid is verwijderd.',
+        'memberUpdated' => 'Lid aanpassingen opgeslagen.',
+        'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [
@@ -127,6 +143,22 @@ return [
         'visibleDescription' => 'Zichtbaar in lijst met bars.',
         'publicDescription' => 'Sta zelf inschrijven zonder wachtwoord toe.',
         'updated' => 'De bar is aangepast.',
+    ],
+
+    /**
+     * Bar member pages.
+     */
+    'barMembers' => [
+        'title' => 'Bar leden',
+        'description' => 'Op deze pagina zie je een overzicht van alle bar leden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
+        'noMembers' => 'Deze bar heeft geen leden...',
+        'memberSince' => 'Lid sinds',
+        'editMember' => 'Lid aanpassen',
+        'deleteMember' => 'Lid verwijderen',
+        'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze bar. Weet je zeker dat je door wilt gaan?',
+        'memberRemoved' => 'Het lid is verwijderd.',
+        'memberUpdated' => 'Lid aanpassingen opgeslagen.',
+        'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
     ],
 
     /**

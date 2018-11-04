@@ -3,6 +3,8 @@
 namespace App\Perms;
 
 class CommunityRoles {
+    use Roles;
+
     /**
     * A nobody role.
     * Users that aren't signed in get this role.
@@ -26,4 +28,16 @@ class CommunityRoles {
     * Includes permissions from `MANAGER`.
     */
     const ADMIN = 20;
+
+    /**
+     * The roles map.
+     */
+    public static function roles() {
+        return [
+            Self::NOBODY => 'Nobody',
+            Self::USER => 'User',
+            Self::MANAGER => 'Manager',
+            Self::ADMIN => 'Admin',
+        ];
+    }
 }

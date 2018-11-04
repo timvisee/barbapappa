@@ -50,10 +50,6 @@ class BarController extends Controller {
     public function edit() {
         // TODO: ensure the user has permission to edit this group
 
-        // Get the bar and session user
-        $bar = \Request::get('bar');
-        $user = barauth()->getSessionUser();
-
         return view('bar.edit');
     }
 

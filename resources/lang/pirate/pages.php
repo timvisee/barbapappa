@@ -92,6 +92,22 @@ return [
     ],
 
     /**
+     * Community member pages.
+     */
+    'communityMembers' => [
+        'title' => 'Crew members',
+        'description' => 'Dis page shows th\' overview o\' all crew members.<br>Clicking a member allows ye to remove the member, or change be rank.',
+        'noMembers' => 'Dis crew be nay members...',
+        'memberSince' => 'Member since',
+        'editMember' => 'Edit member',
+        'deleteMember' => 'Sink member',
+        'deleteQuestion' => 'Yer \'bout to remove dis member from our crew. Ye be sure ye want to continue?',
+        'memberRemoved' => 'Th\' member be sunk.',
+        'memberUpdated' => 'Member changes saved.',
+        'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a member may introduce significant security issues.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [
@@ -127,6 +143,22 @@ return [
         'visibleDescription' => 'Visible in th\' list o\' bars.',
         'publicDescription' => 'Allow pirates be joined with no secret.',
         'updated' => 'Th\' bar be updated.',
+    ],
+
+    /**
+     * Bar member pages.
+     */
+    'barMembers' => [
+        'title' => 'Bar members',
+        'description' => 'Dis page shows th\' overview o\' all bar members.<br>Clicking a member allows ye to remove the member, or change be rank.',
+        'noMembers' => 'Dis bar be nay members...',
+        'memberSince' => 'Member since',
+        'editMember' => 'Edit member',
+        'deleteMember' => 'Sink member',
+        'deleteQuestion' => 'Yer \'bout to remove dis member from our bar. Ye be sure ye want to continue?',
+        'memberRemoved' => 'Th\' member be sunk.',
+        'memberUpdated' => 'Member changes saved.',
+        'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a member may introduce significant security issues.',
     ],
 
     /**

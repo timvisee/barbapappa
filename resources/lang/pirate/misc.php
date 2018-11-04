@@ -25,6 +25,9 @@ return [
     'visible' => 'Visible',
     'public' => 'Public',
     'name' => 'Name',
+    'user' => 'User',
+    'role' => 'Rank',
+    'lastChanged' => 'Last changed',
     'slug' => 'Slug',
 
     'cannotBeUndone' => 'Th\' operation nay be undone.',
