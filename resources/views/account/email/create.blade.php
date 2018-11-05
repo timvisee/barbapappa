@@ -14,7 +14,7 @@
         </div>
 
         <button class="ui button primary" type="submit">@lang('misc.add')</button>
-        <a href="{{ route('account.emails', ['userId' => barauth()->getSessionUser()]) }}"
+        <a href="{{ route('account.emails', ['userId' => $user->id]) }}"
                 class="ui button basic">
             @lang('general.cancel')
         </a>
