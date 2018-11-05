@@ -38,7 +38,7 @@ class Builder {
      * @param string $scope The permission scope identifier.
      * @parma int $id The role ID.
      */
-    public function raw(string $scope, int $id) {
+    public function raw($scope, $id) {
         $this->components[] = $scope . ':' . $id;
         return new Config($this->components);
     }
