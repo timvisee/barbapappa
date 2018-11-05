@@ -35,6 +35,7 @@ if(!function_exists('perms')) {
     /**
      * Get the permissions manager singleton instance.
      * If a configuration is given as parameter, it is immediately evaluated.
+     * An optional request parameter may be given as well.
      *
      * @param string|PermsConfig|null [$config] A permissions configuration to
      *      evaluate.

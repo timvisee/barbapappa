@@ -2,6 +2,9 @@
 
 namespace App\Perms;
 
+use \App\Perms\Builder\Builder;
+use \App\Perms\Builder\Config;
+
 class CommunityRoles {
     use Roles;
 
@@ -51,5 +54,29 @@ class CommunityRoles {
      */
     public static function scope() {
         return Self::SCOPE;
+    }
+
+    /**
+     * A preset for community managers.
+     * This includes application administrators.
+     *
+     * @return Config The permission configuration.
+     */
+    public static function presetManager() {
+        return AppRoles::presetAdmin()
+            ->or()
+            ->raw(Self::SCOPE, Self::MANAGER);
+    }
+
+    /**
+     * A preset for community administrators.
+     * This includes application administrators.
+     *
+     * @return Config The permission configuration.
+     */
+    public static function presetAdmin() {
+        return AppRoles::presetAdmin()
+            ->or()
+            ->raw(Self::SCOPE, Self::ADMIN);
     }
 }

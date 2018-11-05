@@ -31,6 +31,19 @@ class Builder {
     }
 
     /**
+     * Select a permission with the given scope identifier and role ID.
+     *
+     * Warning: the parameter values are not validated.
+     *
+     * @param string $scope The permission scope identifier.
+     * @parma int $id The role ID.
+     */
+    public function raw(string $scope, int $id) {
+        $this->components[] = $scope . ':' . $id;
+        return new Config($this->components);
+    }
+
+    /**
      * Select a permission in the application scope.
      * @param {Scoped} Permissions builder for the application scope.
      */

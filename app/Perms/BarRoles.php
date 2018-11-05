@@ -2,6 +2,9 @@
 
 namespace App\Perms;
 
+use \App\Perms\Builder\Builder;
+use \App\Perms\Builder\Config;
+
 class BarRoles {
     use Roles;
 
@@ -51,5 +54,29 @@ class BarRoles {
      */
     public static function scope() {
         return Self::SCOPE;
+    }
+
+    /**
+     * A preset for bar managers.
+     * This includes application and communtiy administrators.
+     *
+     * @return Config The permission configuration.
+     */
+    public static function presetManager() {
+        return CommunityRoles::presetAdmin()
+            ->or()
+            ->raw(Self::SCOPE, Self::MANAGER);
+    }
+
+    /**
+     * A preset for bar administrators.
+     * This includes application and communtiy administrators.
+     *
+     * @return Config The permission configuration.
+     */
+    public static function presetAdmin() {
+        return CommunityRoles::presetAdmin()
+            ->or()
+            ->raw(Self::SCOPE, Self::ADMIN);
     }
 }
