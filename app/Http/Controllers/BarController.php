@@ -13,14 +13,6 @@ use App\Perms\BarRoles;
 class BarController extends Controller {
 
     /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        $this->middleware('auth');
-    }
-
-    /**
      * Bar overview page.
      *
      * @return Response
@@ -50,8 +42,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function edit() {
-        // TODO: ensure the user has permission to edit this group
-
         return view('bar.edit');
     }
 
@@ -63,8 +53,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function update(Request $request) {
-        // TODO: ensure the user has permission to edit this group
-
         // Get the bar and session user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
@@ -100,8 +88,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function join($barId) {
-        // TODO: make sure the user has permission to join this bar
-
         // Get the bar and user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
@@ -121,8 +107,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function doJoin(Request $request, $barId) {
-        // TODO: make sure the user has permission to join this bar
-
         // Get the bar, community and user
         $bar = \Request::get('bar');
         $community = \Request::get('community');
