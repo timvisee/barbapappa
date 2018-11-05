@@ -47,7 +47,7 @@
         </tfoot>
     </table>
 
-    <a href="{{ route('account', ['userId' => barauth()->getSessionUser()]) }}"
+    <a href="{{ route('account', ['userId' => $user->id]) }}"
             class="ui button basic">
         @lang('pages.account')
     </a>

@@ -2,47 +2,62 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 use App\Helpers\ValidationDefaults;
 use App\Managers\EmailVerificationManager;
 use App\Models\Email;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Perms\AppRoles;
 
 class EmailController extends Controller {
 
     /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        $this->middleware('auth');
-    }
-
-    /**
      * Emails page.
+     *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
      *
      * @return Response
      */
-    public function show() {
+    public function show(Request $request, $userId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+
         return view('account.email.overview');
     }
 
     /**
      * Email add page.
      *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     *
      * @return Response
      */
-    public function create() {
+    public function create(Request $request, $userId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+
         return view('account.email.create');
     }
 
     /**
      * Email add page.
      *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     *
      * @return Response
      */
-    public function doCreate($userId, Request $request) {
+    public function doCreate(Request $request, $userId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+
         // Validate
         $this->validate($request, [
             'email' => 'required|' . ValidationDefaults::EMAIL . '|unique:emails',
@@ -71,11 +86,16 @@ class EmailController extends Controller {
     /**
      * Resend a verification email.
      *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     * @param string $emailId The email ID.
+     *
      * @return Response
      */
-    public function reverify($userId, $emailId, Request $request) {
-        // TODO: ensure the user has enough permission to reverify this email
-        // address
+    public function reverify(Request $request, $userId, $emailId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
 
         // Get the selected email address and user
         $email = Email::findOrFail($emailId);
@@ -100,10 +120,16 @@ class EmailController extends Controller {
     /**
      * The email address delete confirmation page.
      *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     * @param string $emailId The email ID.
+     *
      * @return Response
      */
     public function delete($userId, $emailId) {
-        // TODO: ensure the user has enough permission to delete this email address
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
 
         // Get the selected email address and user
         $email = Email::findOrFail($emailId);
@@ -132,10 +158,16 @@ class EmailController extends Controller {
     /**
      * Do delete an email address.
      *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     * @param string $emailId The email ID.
+     *
      * @return Response
      */
-    public function doDelete($userId, $emailId, Request $request) {
-        // TODO: ensure the user has enough permission to delete this email address
+    public function doDelete(Request $request, $userId, $emailId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
 
         // Get the selected email address and user
         $email = Email::findOrFail($emailId);
