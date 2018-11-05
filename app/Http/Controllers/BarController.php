@@ -3,20 +3,14 @@
 namespace App\Http\Controllers;
 
 use Validator;
-use App\Helpers\ValidationDefaults;
-use App\Models\Bar;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class BarController extends Controller {
+use App\Helpers\ValidationDefaults;
+use App\Models\Bar;
+use App\Perms\BarRoles;
 
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        $this->middleware('auth');
-    }
+class BarController extends Controller {
 
     /**
      * Bar overview page.
@@ -48,8 +42,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function edit() {
-        // TODO: ensure the user has permission to edit this group
-
         return view('bar.edit');
     }
 
@@ -61,8 +53,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function update(Request $request) {
-        // TODO: ensure the user has permission to edit this group
-
         // Get the bar and session user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
@@ -98,8 +88,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function join($barId) {
-        // TODO: make sure the user has permission to join this bar
-
         // Get the bar and user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
@@ -119,8 +107,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function doJoin(Request $request, $barId) {
-        // TODO: make sure the user has permission to join this bar
-
         // Get the bar, community and user
         $bar = \Request::get('bar');
         $community = \Request::get('community');
@@ -205,5 +191,13 @@ class BarController extends Controller {
         return redirect()
             ->route('bar.show', ['barId' => $barId])
             ->with('success', __('pages.bar.leftThisBar'));
+    }
+
+    /**
+     * The permission required for managing such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsManage() {
+        return BarRoles::presetAdmin();
     }
 }

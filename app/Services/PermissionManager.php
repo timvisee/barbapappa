@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Models\User;
 use App\Perms\AppRoles;
 use App\Perms\BarRoles;
+use App\Perms\CommunityRoles;
 use App\Perms\Builder\Config as PermsConfig;
 
 class PermissionManager {

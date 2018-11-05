@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @php
+    use \App\Http\Controllers\CommunityMemberController;
     use \App\Perms\CommunityRoles;
 @endphp
 
@@ -30,16 +31,18 @@
         </tbody>
     </table>
 
-    <p>
-        <a href="{{ route('community.member.edit', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
-                class="ui button basic secondary">
-            @lang('pages.communityMembers.editMember')
-        </a>
-        <a href="{{ route('community.member.delete', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
-                class="ui button basic negative">
-            @lang('pages.communityMembers.deleteMember')
-        </a>
-    </p>
+    @if(perms(CommunityMemberController::permsManage()))
+        <p>
+            <a href="{{ route('community.member.edit', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
+                    class="ui button basic secondary">
+                @lang('pages.communityMembers.editMember')
+            </a>
+            <a href="{{ route('community.member.delete', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
+                    class="ui button basic negative">
+                @lang('pages.communityMembers.deleteMember')
+            </a>
+        </p>
+    @endif
 
     <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
             class="ui button basic">

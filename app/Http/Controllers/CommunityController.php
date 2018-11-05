@@ -3,20 +3,14 @@
 namespace App\Http\Controllers;
 
 use Validator;
-use App\Helpers\ValidationDefaults;
-use App\Models\Community;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 
-class CommunityController extends Controller {
+use App\Helpers\ValidationDefaults;
+use App\Models\Community;
+use App\Perms\CommunityRoles;
 
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        $this->middleware('auth');
-    }
+class CommunityController extends Controller {
 
     /**
      * Community overview page.
@@ -49,8 +43,6 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function edit() {
-        // TODO: ensure the user has permission to edit this group
-
         // Get the community and session user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
@@ -66,8 +58,6 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function update(Request $request) {
-        // TODO: ensure the user has permission to edit this group
-
         // Get the community and session user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
@@ -103,8 +93,6 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function join($communityId) {
-        // TODO: make sure the user has permission to join this community
-
         // Get the community and user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
@@ -124,8 +112,6 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function doJoin(Request $request, $communityId) {
-        // TODO: make sure the user has permission to join this community
-
         // Get the community and user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
@@ -197,5 +183,13 @@ class CommunityController extends Controller {
         return redirect()
             ->route('community.show', ['communityId' => $communityId])
             ->with('success', __('pages.community.leftThisCommunity'));
+    }
+
+    /**
+     * The permission required for managing such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsManage() {
+        return CommunityRoles::presetAdmin();
     }
 }

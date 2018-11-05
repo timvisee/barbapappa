@@ -3,6 +3,8 @@
 use App\Perms\AppRoles;
 use App\Perms\BarRoles;
 use App\Perms\CommunityRoles;
+use App\Http\Controllers\BarController;
+use App\Http\Controllers\BarMemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +55,7 @@ Route::prefix('/email/verify')->group(function() {
 });
 
 // Account routes
-Route::prefix('/account/{userId?}')->middleware(['selectUser'])->group(function() {
+Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(function() {
     Route::get('/', 'AccountController@show')->name('account');
     Route::prefix("/emails")->group(function() {
         Route::get('/', 'EmailController@show')->name('account.emails');
@@ -66,13 +68,13 @@ Route::prefix('/account/{userId?}')->middleware(['selectUser'])->group(function(
 });
 
 // Profile routes
-Route::prefix('/profile')->middleware(['selectUser'])->group(function() {
+Route::prefix('/profile')->middleware(['auth', 'selectUser'])->group(function() {
     Route::get('/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
 
 // Community routes
-Route::prefix('/c')->group(function() {
+Route::prefix('/c')->middleware('auth')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
         Route::get('/', 'CommunityController@show')->name('community.show');
@@ -81,26 +83,32 @@ Route::prefix('/c')->group(function() {
         Route::get('/leave', 'CommunityController@leave')->name('community.leave');
         Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
 
-        // Require administrator
-        Route::middleware(CommunityRoles::presetManager()->middleware())
-            ->group(function()
-        {
+        // Require administrator to edit a community
+        Route::middleware(CommunityRoles::presetAdmin()->middleware())->group(function() {
             Route::get('/edit', 'CommunityController@edit')->name('community.edit');
             Route::put('/', 'CommunityController@update')->name('community.update');
+        });
+
+        // Require manager to manage community members
+        Route::middleware(CommunityRoles::presetManager()->middleware())->group(function() {
             Route::prefix('/members/')->group(function() {
                 Route::get('/', 'CommunityMemberController@index')->name('community.member.index');
                 Route::get('/{memberId}', 'CommunityMemberController@show')->name('community.member.show');
-                Route::get('/{memberId}/edit', 'CommunityMemberController@edit')->name('community.member.edit');
-                Route::put('/{memberId}/edit', 'CommunityMemberController@doEdit')->name('community.member.doEdit');
-                Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
-                Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
+
+                // Require admin to edit/delete community members
+                Route::middleware(BarMemberController::permsManage()->middleware())->group(function() {
+                    Route::get('/{memberId}/edit', 'CommunityMemberController@edit')->name('community.member.edit');
+                    Route::put('/{memberId}/edit', 'CommunityMemberController@doEdit')->name('community.member.doEdit');
+                    Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
+                    Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
+                });
             });
         });
     });
 });
 
 // Bar routes
-Route::prefix('/b')->group(function() {
+Route::prefix('/b')->middleware('auth')->group(function() {
     Route::get('/', 'BarController@overview')->name('bar.overview');
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
@@ -109,19 +117,25 @@ Route::prefix('/b')->group(function() {
         Route::get('/leave', 'BarController@leave')->name('bar.leave');
         Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
 
-        // Require administrator
-        Route::middleware(BarRoles::presetManager()->middleware())
-            ->group(function()
-        {
+        // Require administrator to edit a bar
+        Route::middleware(BarController::permsManage()->middleware())->group(function() {
             Route::get('/edit', 'BarController@edit')->name('bar.edit');
             Route::put('/', 'BarController@update')->name('bar.update');
+        });
+
+        // Require manager to manage bar members
+        Route::middleware(BarMemberController::permsView()->middleware())->group(function() {
             Route::prefix('/members/')->group(function() {
                 Route::get('/', 'BarMemberController@index')->name('bar.member.index');
                 Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');
-                Route::get('/{memberId}/edit', 'BarMemberController@edit')->name('bar.member.edit');
-                Route::put('/{memberId}/edit', 'BarMemberController@doEdit')->name('bar.member.doEdit');
-                Route::get('/{memberId}/delete', 'BarMemberController@delete')->name('bar.member.delete');
-                Route::delete('/{memberId}/delete', 'BarMemberController@doDelete')->name('bar.member.doDelete');
+
+                // Require admin to edit/delete bar members
+                Route::middleware(BarMemberController::permsManage()->middleware())->group(function() {
+                    Route::get('/{memberId}/edit', 'BarMemberController@edit')->name('bar.member.edit');
+                    Route::put('/{memberId}/edit', 'BarMemberController@doEdit')->name('bar.member.doEdit');
+                    Route::get('/{memberId}/delete', 'BarMemberController@delete')->name('bar.member.delete');
+                    Route::delete('/{memberId}/delete', 'BarMemberController@doDelete')->name('bar.member.doDelete');
+                });
             });
         });
     });

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @php
+    use \App\Http\Controllers\BarMemberController;
     use \App\Perms\BarRoles;
 @endphp
 
@@ -30,16 +31,18 @@
         </tbody>
     </table>
 
-    <p>
-        <a href="{{ route('bar.member.edit', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
-                class="ui button basic secondary">
-            @lang('pages.barMembers.editMember')
-        </a>
-        <a href="{{ route('bar.member.delete', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
-                class="ui button basic negative">
-            @lang('pages.barMembers.deleteMember')
-        </a>
-    </p>
+    @if(perms(BarMemberController::permsManage()))
+        <p>
+            <a href="{{ route('bar.member.edit', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
+                    class="ui button basic secondary">
+                @lang('pages.barMembers.editMember')
+            </a>
+            <a href="{{ route('bar.member.delete', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
+                    class="ui button basic negative">
+                @lang('pages.barMembers.deleteMember')
+            </a>
+        </p>
+    @endif
 
     <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
             class="ui button basic">

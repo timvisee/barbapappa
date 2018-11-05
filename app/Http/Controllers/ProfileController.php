@@ -10,14 +10,6 @@ use Illuminate\Http\Response;
 class ProfileController extends Controller {
 
     /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        $this->middleware('auth');
-    }
-
-    /**
      * Profile edit page.
      *
      * @return Response

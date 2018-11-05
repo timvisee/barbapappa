@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+    use \App\Http\Controllers\BarController;
+    use \App\Http\Controllers\BarMemberController;
+@endphp
+
 @section('content')
     <h2 class="ui header">
         @if($joined)
@@ -33,22 +38,24 @@
         <div class="item">Product 5</div>
     </div>
 
-    <div class="ui section divider"></div>
+    <br />
 
     <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
             class="ui button small basic">
         @lang('pages.community.viewCommunity')
     </a>
 
-    {{-- TODO only show if the user has permission --}}
-    <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
-            class="ui button small basic">
-        @lang('pages.barMembers.title')
-    </a>
+    @if(perms(BarMemberController::permsView()))
+        <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
+                class="ui button small basic">
+            @lang('pages.barMembers.title')
+        </a>
+    @endif
 
-    {{-- TODO only show if the user has permission --}}
-    <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}"
-            class="ui button small basic">
-        @lang('pages.bar.editBar')
-    </a>
+    @if(perms(BarController::permsManage()))
+        <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}"
+                class="ui button small basic">
+            @lang('pages.bar.editBar')
+        </a>
+    @endif
 @endsection
