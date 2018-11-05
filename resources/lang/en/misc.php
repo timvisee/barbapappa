@@ -31,5 +31,5 @@ return [
     'slug' => 'Slug',
 
     'cannotBeUndone' => 'This operation cannot be undone.',
-    'viewingOtherAccount' => 'You\'re viewing someone else\'s account',
+    'viewingAccountOf' => 'You\'re viewing the account of',
 ];

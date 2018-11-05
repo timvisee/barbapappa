@@ -28,15 +28,9 @@
         @include('includes.toolbar')
 
         <div class="ui container page">
-            @include('includes.message')
+            @include('includes.impersonate')
 
-            @if(isset($isOtherUser) && $isOtherUser)
-                <div class="ui warning message">
-                    <span class="halflings halflings-warning-sign icon"></span>
-                    {{-- TODO: translate this properly --}}
-                    @lang('misc.viewingOtherAccount'): {{ $user->name }}
-                </div>
-            @endif
+            @include('includes.message')
 
             @yield('content')
         </div>

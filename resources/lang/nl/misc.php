@@ -31,5 +31,5 @@ return [
     'slug' => 'URL-pad',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
-    'viewingOtherAccount' => 'Je bekijkt het account van iemand anders',
+    'viewingAccountOf' => 'Je bekijkt het account van',
 ];
