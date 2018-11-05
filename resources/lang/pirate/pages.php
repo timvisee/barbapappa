@@ -47,6 +47,7 @@ return [
             'resendVerify' => 'Sally forth verification',
             'verifySent' => 'A fresh verification e-bottle be sally forth.',
             'alreadyVerified' => 'Th\' e-bottle coordinate be verified.',
+            'cannotDeleteMustHaveOne' => 'Ye no delete \'his e-bottle coordinate, ye must be one coordinate.',
             'cannotDeleteMustHaveVerified' => 'Ye no delete \'his e-bottle coordinate, ye must be one verified coordinate.',
             'deleted' => 'Th\' e-bottle coordinate be deleted.',
             'deleteQuestion' => 'Ye be sure ye want to sunk dis e-bottle address?',

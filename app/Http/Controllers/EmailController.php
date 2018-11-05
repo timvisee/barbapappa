@@ -137,6 +137,8 @@ class EmailController extends Controller {
 
         // Count the number of verified e-mail addresses left after this
         // deletion
+        $after = $user->emails()->count() - 1;
+        $verifiedBefore = $user->emails()->verified()->count();
         $verifiedAfter = $user
             ->emails()
             ->verified()
@@ -144,11 +146,14 @@ class EmailController extends Controller {
             ->count();
 
         // Ensure there are enough verified email addresses left
-        if($verifiedAfter <= 0) {
+        if($after <= 0)
+            return redirect()
+                ->route('account.emails', ['userId' => $userId])
+                ->with('error', __('pages.accountPage.email.cannotDeleteMustHaveOne'));
+        if($verifiedAfter <= 0 && $verifiedBefore !== $verifiedAfter)
             return redirect()
                 ->route('account.emails', ['userId' => $userId])
                 ->with('error', __('pages.accountPage.email.cannotDeleteMustHaveVerified'));
-        }
 
         // Show the delete confirm page
         return view('account.email.delete')
@@ -175,6 +180,8 @@ class EmailController extends Controller {
 
         // Count the number of verified e-mail addresses left after this
         // deletion
+        $after = $user->emails()->count() - 1;
+        $verifiedBefore = $user->emails()->verified()->count();
         $verifiedAfter = $user
             ->emails()
             ->verified()
@@ -182,11 +189,14 @@ class EmailController extends Controller {
             ->count();
 
         // Ensure there are enough verified email addresses left
-        if($verifiedAfter <= 0) {
+        if($after <= 0)
+            return redirect()
+                ->route('account.emails', ['userId' => $userId])
+                ->with('error', __('pages.accountPage.email.cannotDeleteMustHaveOne'));
+        if($verifiedAfter <= 0 && $verifiedBefore !== $verifiedAfter)
             return redirect()
                 ->route('account.emails', ['userId' => $userId])
                 ->with('error', __('pages.accountPage.email.cannotDeleteMustHaveVerified'));
-        }
 
         // Delete the email address
         $email->delete();

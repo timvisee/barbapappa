@@ -47,6 +47,7 @@ return [
             'resendVerify' => 'Resend verification',
             'verifySent' => 'A new verification email will be sent shortly.',
             'alreadyVerified' => 'This email address has already been verified.',
+            'cannotDeleteMustHaveOne' => 'You cannot delete this email address, you must have at least one address.',
             'cannotDeleteMustHaveVerified' => 'You cannot delete this email address, you must have at least one verified address.',
             'deleted' => 'The email address has been deleted.',
             'deleteQuestion' => 'Are you sure you want to delete this email address?',

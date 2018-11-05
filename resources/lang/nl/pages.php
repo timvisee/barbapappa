@@ -47,6 +47,7 @@ return [
             'resendVerify' => 'Verificatie opnieuw versturen',
             'verifySent' => 'Een nieuwe verificatie-e-mail zal binnenkort verzonden worden.',
             'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',
+            'cannotDeleteMustHaveOne' => 'Je kunt dit e-mailadres niet verwijderen, je moet tenminste één adres hebben.',
             'cannotDeleteMustHaveVerified' => 'Je kunt dit e-mailadres niet verwijderen, je moet tenminste één geverifiëerd adres hebben.',
             'deleted' => 'Het e-mailadres is verwijderd.',
             'deleteQuestion' => 'Weet je zeker dat je dit e-mailadres wilt verwijderen?',
