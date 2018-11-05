@@ -34,7 +34,7 @@
                 <div class="ui warning message">
                     <span class="halflings halflings-warning-sign icon"></span>
                     {{-- TODO: translate this properly --}}
-                    Viewing account of someone else
+                    @lang('misc.viewingOtherAccount'): {{ $user->name }}
                 </div>
             @endif
 
