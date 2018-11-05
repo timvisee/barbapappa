@@ -12,17 +12,13 @@ let mix = require('laravel-mix');
  |
  */
 
-/**
- * Copy static assets.
- */
+// Static assets.
 mix.copyDirectory(
     'resources/assets/img',
     'public/img',
 );
 
-/**
- * Compile the application assets.
- */
+// Compile application assets
 mix.js(
     'resources/assets/js/app.js',
     'public/js',
@@ -31,16 +27,12 @@ mix.js(
     'public/css',
 );
 
-/**
- * Package jQuery and related resources.
- */
+// Package jQuery and related resources.
 mix.scripts([
     'resources/assets/vendor/jquery/jquery-2.1.4.js'
 ], 'public/js/jquery-packed.js');
 
-/**
- * Package Glyphicons resources.
- */
+// Glyphicons resources
 mix.copyDirectory(
     'resources/assets/vendor/glyphicons/fonts',
     'public/fonts',
@@ -52,7 +44,7 @@ mix.copyDirectory(
     'resources/assets/vendor/glyphicons-halflings/css/glyphicons-halflings.css',
 ], 'public/css/glyphicons-packed.css');
 
-// Flag icon files
+// Flag icon resources
 mix.sass(
     'node_modules/flag-icon-css/sass/flag-icon.scss',
     'public/css/flag-icon.css',
@@ -61,7 +53,7 @@ mix.sass(
     'public/flags',
 );
 
-// Semantic UI files
+// Semantic UI resources
 mix.copy(
     'node_modules/semantic-ui-css/semantic.min.css',
     'public/css/semantic.min.css',
