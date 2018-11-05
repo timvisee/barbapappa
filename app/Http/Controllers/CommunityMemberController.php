@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Validator;
-use App\Helpers\ValidationDefaults;
-use App\Perms\CommunityRoles;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use App\Helpers\ValidationDefaults;
+use App\Perms\CommunityRoles;
+use App\Perms\Builder\Config as PermsConfig;
 
 class CommunityMemberController extends Controller {
 
@@ -26,8 +27,6 @@ class CommunityMemberController extends Controller {
      * @return Response
      */
     public function show($communityId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
-
         // Get the community, find the member
         $community = \Request::get('community');
         $member = $community->users()->where('user_id', $memberId)->firstOrfail();
@@ -42,7 +41,7 @@ class CommunityMemberController extends Controller {
      * @return Response
      */
     public function edit($communityId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
+        // TODO: do not allow role demotion if last admin
 
         // Get the community, find the member
         $community = \Request::get('community');
@@ -59,7 +58,6 @@ class CommunityMemberController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $communityId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
         // TODO: do not allow role demotion if last admin
 
         // Get the community, find the member
@@ -87,8 +85,6 @@ class CommunityMemberController extends Controller {
      * @return Response
      */
     public function delete($communityId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
-
         // Get the community, find the member
         $community = \Request::get('community');
         $member = $community->users()->where('user_id', $memberId)->firstOrfail();
@@ -103,8 +99,6 @@ class CommunityMemberController extends Controller {
      * @return Response
      */
     public function doDelete($communityId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
-
         // Get the community, find the member
         $community = \Request::get('community');
         $member = $community->users()->where('user_id', $memberId)->firstOrfail();
@@ -119,5 +113,21 @@ class CommunityMemberController extends Controller {
         return redirect()
             ->route('community.member.index', ['communityId' => $communityId])
             ->with('success', __('pages.communityMembers.memberRemoved'));
+    }
+
+    /**
+     * The permission required for viewing.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsView() {
+        return CommunityRoles::presetManager();
+    }
+
+    /**
+     * The permission required for managing such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsManage() {
+        return CommunityRoles::presetAdmin();
     }
 }

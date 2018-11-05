@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+
 use App\Helpers\ValidationDefaults;
 use App\Perms\BarRoles;
 use App\Perms\Builder\Config as PermsConfig;
-
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class BarMemberController extends Controller {
 
@@ -41,7 +41,6 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function edit($barId, $memberId) {
-        // TODO: user must be community admin
         // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
@@ -59,7 +58,6 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $barId, $memberId) {
-        // TODO: user must be community admin
         // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member

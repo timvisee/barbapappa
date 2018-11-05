@@ -83,19 +83,25 @@ Route::prefix('/c')->middleware('auth')->group(function() {
         Route::get('/leave', 'CommunityController@leave')->name('community.leave');
         Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
 
-        // Require administrator
-        Route::middleware(CommunityRoles::presetManager()->middleware())
-            ->group(function()
-        {
+        // Require administrator to edit a community
+        Route::middleware(CommunityRoles::presetAdmin()->middleware())->group(function() {
             Route::get('/edit', 'CommunityController@edit')->name('community.edit');
             Route::put('/', 'CommunityController@update')->name('community.update');
+        });
+
+        // Require manager to manage community members
+        Route::middleware(CommunityRoles::presetManager()->middleware())->group(function() {
             Route::prefix('/members/')->group(function() {
                 Route::get('/', 'CommunityMemberController@index')->name('community.member.index');
                 Route::get('/{memberId}', 'CommunityMemberController@show')->name('community.member.show');
-                Route::get('/{memberId}/edit', 'CommunityMemberController@edit')->name('community.member.edit');
-                Route::put('/{memberId}/edit', 'CommunityMemberController@doEdit')->name('community.member.doEdit');
-                Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
-                Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
+
+                // Require admin to edit/delete community members
+                Route::middleware(BarMemberController::permsManage()->middleware())->group(function() {
+                    Route::get('/{memberId}/edit', 'CommunityMemberController@edit')->name('community.member.edit');
+                    Route::put('/{memberId}/edit', 'CommunityMemberController@doEdit')->name('community.member.doEdit');
+                    Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
+                    Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
+                });
             });
         });
     });

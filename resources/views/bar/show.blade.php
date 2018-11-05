@@ -38,7 +38,7 @@
         <div class="item">Product 5</div>
     </div>
 
-    <div class="ui section divider"></div>
+    <br />
 
     <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
             class="ui button small basic">

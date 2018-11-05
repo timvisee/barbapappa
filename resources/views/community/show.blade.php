@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@php
+    use \App\Http\Controllers\CommunityController;
+    use \App\Http\Controllers\CommunityMemberController;
+@endphp
+
 @section('content')
     <h2 class="ui header">
         @if($joined)
@@ -53,17 +58,19 @@
     <h3 class="ui header">@lang('pages.bars')</h3>
     @include('bar.include.list')
 
-    <div class="ui section divider"></div>
+    <br />
 
-    {{-- TODO only show if the user has permission --}}
-    <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
-            class="ui button small basic">
-        @lang('pages.communityMembers.title')
-    </a>
+    @if(perms(CommunityMemberController::permsView()))
+        <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
+                class="ui button small basic">
+            @lang('pages.communityMembers.title')
+        </a>
+    @endif
 
-    {{-- TODO only show if the user has permission --}}
-    <a href="{{ route('community.edit', ['communityId' => $community->human_id]) }}"
-            class="ui button small basic">
-        @lang('pages.community.editCommunity')
-    </a>
+    @if(perms(CommunityController::permsManage()))
+        <a href="{{ route('community.edit', ['communityId' => $community->human_id]) }}"
+                class="ui button small basic">
+            @lang('pages.community.editCommunity')
+        </a>
+    @endif
 @endsection
