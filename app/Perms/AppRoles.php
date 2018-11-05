@@ -2,6 +2,9 @@
 
 namespace App\Perms;
 
+use \App\Perms\Builder\Builder;
+use \App\Perms\Builder\Config;
+
 class AppRoles {
     use Roles;
 
@@ -44,5 +47,14 @@ class AppRoles {
      */
     public static function scope() {
         return Self::SCOPE;
+    }
+
+    /**
+     * A preset for application administrators.
+     *
+     * @return Config The permission configuration.
+     */
+    public static function presetAdmin() {
+        return Builder::build()->raw(Self::SCOPE, Self::ADMIN);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
-use App\Perms\Builder\Builder as Perms;
+use App\Perms\AppRoles;
+use App\Perms\BarRoles;
+use App\Perms\CommunityRoles;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,7 @@ Route::get('/license/raw', 'PagesController@licenseRaw')->name('license.raw');
 Route::get('/language/{locale?}', 'PagesController@language')->name('language');
 
 // TODO: remove this page after testing
-Route::get('/secret', 'PagesController@about')->middleware(Perms::build()->app()->admin()->middleware());
+Route::get('/secret', 'PagesController@about')->middleware(AppRoles::presetAdmin()->middleware());
 
 // Dashboard route
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
@@ -80,7 +82,7 @@ Route::prefix('/c')->group(function() {
         Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
 
         // Require administrator
-        Route::middleware(Perms::build()->app()->admin()->or()->community()->admin()->middleware())
+        Route::middleware(CommunityRoles::presetManager()->middleware())
             ->group(function()
         {
             Route::get('/edit', 'CommunityController@edit')->name('community.edit');
@@ -108,7 +110,7 @@ Route::prefix('/b')->group(function() {
         Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
 
         // Require administrator
-        Route::middleware(Perms::build()->app()->admin()->or()->community()->admin()->or()->bar()->admin()->middleware())
+        Route::middleware(BarRoles::presetManager()->middleware())
             ->group(function()
         {
             Route::get('/edit', 'BarController@edit')->name('bar.edit');

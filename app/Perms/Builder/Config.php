@@ -41,9 +41,18 @@ class Config {
     }
 
     /**
+     * Build the configuration string to use for this configuration.
+     * This cannot be used for middleware, as it's missing the middleware
+     * identifier. Use `middleware()` instead.
+     */
+    public function build() {
+        return implode(' ', $this->components);
+    }
+
+    /**
      * Build the middleware string to use for this configuration.
      */
     public function middleware() {
-        return Self::MIDDLEWARE_IDENTIFIER . ':' . implode(' ', $this->components);
+        return Self::MIDDLEWARE_IDENTIFIER . ':' . $this->build();
     }
 }
