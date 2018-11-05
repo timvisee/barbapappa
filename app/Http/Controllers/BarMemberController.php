@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use App\Helpers\ValidationDefaults;
 use App\Perms\BarRoles;
+use App\Perms\Builder\Config as PermsConfig;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -12,22 +13,11 @@ use Illuminate\Http\Response;
 class BarMemberController extends Controller {
 
     /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        // TODO: define proper middleware here
-        $this->middleware('auth');
-    }
-
-    /**
      * Bar member index page.
      *
      * @return Response
      */
     public function index() {
-        // TODO: ensure the user has permission to view the bar members
-
         return view('bar.member.index');
     }
 
@@ -37,8 +27,6 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function show($barId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
-
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
@@ -53,7 +41,8 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function edit($barId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
+        // TODO: user must be community admin
+        // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
@@ -70,7 +59,7 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $barId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
+        // TODO: user must be community admin
         // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
@@ -98,7 +87,8 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function delete($barId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
+        // TODO: user must be community admin
+        // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
@@ -114,7 +104,8 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function doDelete($barId, $memberId) {
-        // TODO: ensure the user has permission to edit this group
+        // TODO: user must be community admin
+        // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
@@ -130,5 +121,21 @@ class BarMemberController extends Controller {
         return redirect()
             ->route('bar.member.index', ['barId' => $barId])
             ->with('success', __('pages.barMembers.memberRemoved'));
+    }
+
+    /**
+     * The permission required for viewing.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsView() {
+        return BarRoles::presetManager();
+    }
+
+    /**
+     * The permission required for managing such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsManage() {
+        return BarRoles::presetAdmin();
     }
 }

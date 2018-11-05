@@ -12,22 +12,11 @@ use Illuminate\Http\Response;
 class CommunityMemberController extends Controller {
 
     /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        // TODO: define proper middleware here
-        $this->middleware('auth');
-    }
-
-    /**
      * Community member index page.
      *
      * @return Response
      */
     public function index() {
-        // TODO: ensure the user has permission to view the community members
-
         return view('community.member.index');
     }
 

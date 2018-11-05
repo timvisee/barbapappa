@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Validator;
-use App\Helpers\ValidationDefaults;
-use App\Models\Bar;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use App\Helpers\ValidationDefaults;
+use App\Models\Bar;
+use App\Perms\BarRoles;
 
 class BarController extends Controller {
 
@@ -205,5 +207,13 @@ class BarController extends Controller {
         return redirect()
             ->route('bar.show', ['barId' => $barId])
             ->with('success', __('pages.bar.leftThisBar'));
+    }
+
+    /**
+     * The permission required for managing such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsManage() {
+        return BarRoles::presetAdmin();
     }
 }

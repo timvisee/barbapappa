@@ -3,6 +3,8 @@
 use App\Perms\AppRoles;
 use App\Perms\BarRoles;
 use App\Perms\CommunityRoles;
+use App\Http\Controllers\BarController;
+use App\Http\Controllers\BarMemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -72,7 +74,7 @@ Route::prefix('/profile')->middleware(['selectUser'])->group(function() {
 });
 
 // Community routes
-Route::prefix('/c')->group(function() {
+Route::prefix('/c')->middleware('auth')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
         Route::get('/', 'CommunityController@show')->name('community.show');
@@ -100,7 +102,7 @@ Route::prefix('/c')->group(function() {
 });
 
 // Bar routes
-Route::prefix('/b')->group(function() {
+Route::prefix('/b')->middleware('auth')->group(function() {
     Route::get('/', 'BarController@overview')->name('bar.overview');
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
@@ -109,19 +111,25 @@ Route::prefix('/b')->group(function() {
         Route::get('/leave', 'BarController@leave')->name('bar.leave');
         Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
 
-        // Require administrator
-        Route::middleware(BarRoles::presetManager()->middleware())
-            ->group(function()
-        {
+        // Require administrator to edit a bar
+        Route::middleware(BarController::permsManage()->middleware())->group(function() {
             Route::get('/edit', 'BarController@edit')->name('bar.edit');
             Route::put('/', 'BarController@update')->name('bar.update');
+        });
+
+        // Require manager to manage bar members
+        Route::middleware(BarMemberController::permsView()->middleware())->group(function() {
             Route::prefix('/members/')->group(function() {
                 Route::get('/', 'BarMemberController@index')->name('bar.member.index');
                 Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');
-                Route::get('/{memberId}/edit', 'BarMemberController@edit')->name('bar.member.edit');
-                Route::put('/{memberId}/edit', 'BarMemberController@doEdit')->name('bar.member.doEdit');
-                Route::get('/{memberId}/delete', 'BarMemberController@delete')->name('bar.member.delete');
-                Route::delete('/{memberId}/delete', 'BarMemberController@doDelete')->name('bar.member.doDelete');
+
+                // Require admin to edit/delete bar members
+                Route::middleware(BarMemberController::permsManage()->middleware())->group(function() {
+                    Route::get('/{memberId}/edit', 'BarMemberController@edit')->name('bar.member.edit');
+                    Route::put('/{memberId}/edit', 'BarMemberController@doEdit')->name('bar.member.doEdit');
+                    Route::get('/{memberId}/delete', 'BarMemberController@delete')->name('bar.member.delete');
+                    Route::delete('/{memberId}/delete', 'BarMemberController@doDelete')->name('bar.member.doDelete');
+                });
             });
         });
     });
