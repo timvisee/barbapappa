@@ -1,7 +1,10 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+
+use App\Perms\Builder\Config as PermsConfig;
 
 // Build the barauth function
 if(!function_exists('barauth')) {
@@ -31,11 +34,19 @@ if(!function_exists('langManager')) {
 if(!function_exists('perms')) {
     /**
      * Get the permissions manager singleton instance.
+     * If a configuration is given as parameter, it is immediately evaluated.
      *
-     * @return \App\Services\LanguageManagerService
+     * @param string|PermsConfig|null [$config] A permissions configuration to
+     *      evaluate.
+     * @param Request|null [$request] The request to evaluate permissions for.
+     *
+     * @return \App\Services\PermissionManager
      */
-    function perms() {
-        return app('perms');
+    function perms($config = null, $request = null) {
+        if($config !== null)
+            return app('perms')->evaluate($config, $request !== null ? $request : request());
+        else
+            return app('perms');
     }
 }
 
@@ -44,7 +55,7 @@ if(!function_exists('logo')) {
     /**
      * Get the logo provider singleton instance.
      *
-     * @return \App\Services\LanguageManagerService
+     * @return \App\Services\LogoService
      */
     function logo() {
         return app('logo');

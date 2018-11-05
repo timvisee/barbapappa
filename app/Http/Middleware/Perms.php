@@ -20,7 +20,7 @@ class Perms {
      * Handle an incoming request.
      *
      * @param Request $request Request.
-     * @param \Closure $next Next callback.
+     * @param Closure $next Next callback.
      * @param int $config The permission role configuration to require.
      *
      * @return Response Response.
@@ -28,7 +28,7 @@ class Perms {
     public function handle(Request $request, Closure $next, $config = null) {
         // Ensure the user role is sufficient, show error page or continue
         // TODO: return 403 forbidden
-        if(!perms()->evaluate($config, $request))
+        if(!perms($config, $request))
             return response(view('noPermission'));
         else
             return $next($request);
