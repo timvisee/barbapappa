@@ -1,11 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @if($isOtherUser)
-        {{-- TODO: translate this properly --}}
-        <i>Note: viewing account of someone else</i>
-    @endif
-
     <h2 class="ui header">@lang('pages.accountPage.email.yourEmails')</h2>
     <p>@lang('pages.accountPage.email.description')</p>
 

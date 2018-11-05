@@ -30,6 +30,14 @@
         <div class="ui container page">
             @include('includes.message')
 
+            @if(isset($isOtherUser) && $isOtherUser)
+                <div class="ui warning message">
+                    <span class="halflings halflings-warning-sign icon"></span>
+                    {{-- TODO: translate this properly --}}
+                    Viewing account of someone else
+                </div>
+            @endif
+
             @yield('content')
         </div>
     </div>
