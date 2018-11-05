@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ValidationDefaults;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+
+use App\Helpers\ValidationDefaults;
+use App\Models\User;
+use App\Perms\AppRoles;
 
 class ProfileController extends Controller {
 
@@ -14,20 +16,26 @@ class ProfileController extends Controller {
      *
      * @return Response
      */
-    public function edit() {
+    public function edit(Request $request, $userId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+
         return view('profile.edit');
     }
 
     /**
      * Profile update endpoint.
      *
-     * @param int $userId ID of the user to update the profile for.
      * @param Request $request Request.
+     * @param int $userId ID of the user to update the profile for.
      *
      * @return Response
      */
-    public function update(Request $request) {
-        // TODO: make sure the user has sufficient permissions to edit this user
+    public function update(Request $request, $userId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
 
         // Get the user we're editing from middleware
         $user = \Request::get('user');
