@@ -8,19 +8,13 @@ use Illuminate\Http\Response;
 class AccountController extends Controller {
 
     /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        $this->middleware('auth');
-    }
-
-    /**
      * Account page.
      *
      * @return Response
      */
     public function show() {
+        // TODO: make sure the user has enough permission to view other users
+
         return view('account.overview');
     }
 }

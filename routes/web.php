@@ -55,7 +55,7 @@ Route::prefix('/email/verify')->group(function() {
 });
 
 // Account routes
-Route::prefix('/account/{userId?}')->middleware(['selectUser'])->group(function() {
+Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(function() {
     Route::get('/', 'AccountController@show')->name('account');
     Route::prefix("/emails")->group(function() {
         Route::get('/', 'EmailController@show')->name('account.emails');
@@ -68,7 +68,7 @@ Route::prefix('/account/{userId?}')->middleware(['selectUser'])->group(function(
 });
 
 // Profile routes
-Route::prefix('/profile')->middleware(['selectUser'])->group(function() {
+Route::prefix('/profile')->middleware(['auth', 'selectUser'])->group(function() {
     Route::get('/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
