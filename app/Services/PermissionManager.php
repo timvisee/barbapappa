@@ -156,9 +156,9 @@ class PermissionManager {
                     $user_role = $this->communityUserRoles[$user->id][$community->id];
                 else {
                     // Query the user connection, cache and set the result
-                    $member = $community->users()
+                    $member = $community->users(['role'], false)
                         ->where('user_id', $user->id)
-                        ->first();
+                        ->first([]);
                     if(!empty($member))
                         $user_role = $this->communityUserRoles[$user->id][$community->id] = $member->pivot->role;
                 }
@@ -200,9 +200,9 @@ class PermissionManager {
                     $user_role = $this->barUserRoles[$user->id][$bar->id];
                 else {
                     // Query the user connection, cache and set the result
-                    $member = $bar->users()
+                    $member = $bar->users(['role'], false)
                         ->where('user_id', $user->id)
-                        ->first();
+                        ->first([]);
                     if(!empty($member))
                         $user_role = $this->barUserRoles[$user->id][$bar->id] = $member->pivot->role;
                 }

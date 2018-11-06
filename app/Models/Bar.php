@@ -86,16 +86,28 @@ class Bar extends Model {
     /**
      * A list of users that joined this bar.
      *
+     * @param array [$pivotColumns] An array of pivot columns to include.
+     * @param boolean [$withTimestamps=true] True to include timestamp columns.
+     *
      * @return List of joined users.
      */
-    public function users() {
-        return $this->belongsToMany(
+    public function users($pivotColumns = [], $withTimestamps = true) {
+        // Query relation
+        $query = $this->belongsToMany(
                 'App\Models\User',
                 'bar_user',
                 'bar_id',
                 'user_id'
-            )
-            ->withPivot('role')
-            ->withTimestamps();
+            );
+
+        // With pivot columns
+        if(!empty($pivotColumns))
+            $query = $query->withPivot($pivotColumns);
+
+        // With timestamps
+        if($withTimestamps)
+            $query = $query->withTimestamps();
+
+        return $query;
     }
 }
