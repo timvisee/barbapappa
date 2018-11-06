@@ -67,8 +67,6 @@ class AuthState {
 
         // Set the session
         $this->session = $session;
-
-        \Debugbar::info("set session");
     }
 
     /**
