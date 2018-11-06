@@ -104,7 +104,7 @@ class BarAuthManager {
      * @return \App\Models\User|null
      */
     public function getSessionUser() {
-        return $this->authState->getSession()->user()->first();
+        return $this->authState->getSessionUser();
     }
 
     /**

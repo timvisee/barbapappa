@@ -208,7 +208,7 @@ return [
         /**
          * Laravel currency.
          */
-        \Torann\Currency\CurrencyServiceProvider::class,
+        Torann\Currency\CurrencyServiceProvider::class,
 
         /**
          * Laravel DebugBar
@@ -288,7 +288,6 @@ return [
          * BARbapAPPa aliases.
          */
         'ErrorRenderer' => App\Helpers\ErrorRenderer::class,
-
     ],
 
 ];
