@@ -1,5 +1,9 @@
 <div class="ui sidebar mainmenu inverted vertical menu">
     @if(barauth()->isAuth())
+        <div class="item header">
+            {{ trans_random('general.hellos') }}
+            {{ barauth()->getSessionUser()->name }}
+        </div>
         <a href="{{ route('dashboard') }}" class="item">
             <i class="glyphicons glyphicons-dashboard"></i>
             @lang('pages.dashboard')
