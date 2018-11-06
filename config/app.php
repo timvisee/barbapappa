@@ -216,6 +216,11 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
 
         /**
+         * Sentry
+         */
+        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+
+        /**
          * Custom service providers...
          */
         App\Providers\LanguageManagerServiceProvider::class,
@@ -283,6 +288,11 @@ return [
          * Laravel currency.
          */
         'Currency' => \torann\Currency\Facades\Currency::class,
+
+        /**
+         * Sentry
+         */
+        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
 
         /**
          * BARbapAPPa aliases.
