@@ -116,7 +116,7 @@ class AuthState {
             return $this->sessionUser;
 
         // Query the session user, cache and return it
-        return $this->sessionUser = $this->session->user->firstOrFail();
+        return $this->sessionUser = $this->session->user()->firstOrFail();
     }
 
     /**
