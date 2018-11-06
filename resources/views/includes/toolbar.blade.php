@@ -1,7 +1,9 @@
 <div class="toolbar">
 
     <div class="left">
-        <a href="#" class="sidebar-toggle glyphicons glyphicons-menu-hamburger"></a>
+        <a href="#"
+            class="sidebar-toggle glyphicons glyphicons-menu-hamburger"
+            data-sidebar="mainmenu"></a>
     </div>
 
     <h1>
@@ -15,7 +17,9 @@
     </h1>
 
     <div class="right">
-        <a href="{{ route('index') }}" class="glyphicons glyphicons-message-new toolbar-btn-message"></a>
+        <a href="#"
+            class="sidebar-toggle glyphicons glyphicons-message-new toolbar-btn-message"
+            data-sidebar="messages"></a>
     </div>
 
 </div>

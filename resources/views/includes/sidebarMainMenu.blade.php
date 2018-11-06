@@ -1,4 +1,4 @@
-<div class="ui sidebar inverted vertical menu">
+<div class="ui sidebar mainmenu inverted vertical menu">
     @if(barauth()->isAuth())
         <a href="{{ route('dashboard') }}" class="item">
             <i class="glyphicons glyphicons-dashboard"></i>

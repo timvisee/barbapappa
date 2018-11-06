@@ -23,7 +23,8 @@
 $(document).ready(function() {
     // Sidebar toggle
     $('.sidebar-toggle').click(function() {
-        $('.ui.sidebar').sidebar('toggle');
+        let sidebarClass = $(this).data('sidebar');
+        $('.ui.sidebar.' + sidebarClass).sidebar('toggle');
         return false;
     });
 
