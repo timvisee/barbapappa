@@ -22,7 +22,8 @@
     <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
-    @include('includes.sidebar')
+    @include('includes.sidebarMainMenu')
+    @include('includes.sidebarMessages')
 
     <div class="pusher">
         @include('includes.toolbar')
