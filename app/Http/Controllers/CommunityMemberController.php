@@ -29,7 +29,7 @@ class CommunityMemberController extends Controller {
     public function show($communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
         return view('community.member.show')
             ->with('member', $member);
@@ -45,7 +45,7 @@ class CommunityMemberController extends Controller {
 
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Show the edit view
         return view('community.member.edit')
@@ -62,7 +62,7 @@ class CommunityMemberController extends Controller {
 
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $community->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
 
         // Get the selected role, validate it
         $role = $request->input('role');

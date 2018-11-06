@@ -4,7 +4,7 @@
     use \App\Perms\BarRoles;
 
     // Get all bar members
-    $members = $bar->users()->get();
+    $members = $bar->users(['role'])->get();
 @endphp
 
 @section('content')

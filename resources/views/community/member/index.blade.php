@@ -4,7 +4,7 @@
     use \App\Perms\CommunityRoles;
 
     // Get all community members
-    $members = $community->users()->get();
+    $members = $community->users(['role'])->get();
 @endphp
 
 @section('content')

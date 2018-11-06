@@ -29,7 +29,7 @@ class BarMemberController extends Controller {
     public function show($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
         return view('bar.member.show')
             ->with('member', $member);
@@ -45,7 +45,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Show the edit view
         return view('bar.member.edit')
@@ -62,7 +62,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
 
         // Get the selected role, validate it
         $role = $request->input('role');
