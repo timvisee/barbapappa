@@ -38,6 +38,11 @@ class CommunityRoles {
     const ADMIN = 20;
 
     /**
+     * Role configuration preset cache.
+     */
+    private static $presetCache = [];
+
+    /**
      * The roles map.
      */
     public static function roles() {
@@ -63,9 +68,11 @@ class CommunityRoles {
      * @return Config The permission configuration.
      */
     public static function presetManager() {
-        return AppRoles::presetAdmin()
-            ->or()
-            ->raw(Self::SCOPE, Self::MANAGER);
+        return isset(Self::$presetCache[Self::MANAGER]) ?
+            Self::$presetCache[Self::MANAGER] :
+            Self::$presetCache[Self::MANAGER] = AppRoles::presetAdmin()
+                ->or()
+                ->raw(Self::SCOPE, Self::MANAGER);
     }
 
     /**
@@ -75,7 +82,9 @@ class CommunityRoles {
      * @return Config The permission configuration.
      */
     public static function presetAdmin() {
-        return AppRoles::presetAdmin()
+        return isset(Self::$presetCache[Self::ADMIN]) ?
+            Self::$presetCache[Self::ADMIN] :
+            Self::$presetCache[Self::ADMIN] = AppRoles::presetAdmin()
             ->or()
             ->raw(Self::SCOPE, Self::ADMIN);
     }

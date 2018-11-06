@@ -14,13 +14,23 @@ use App\Perms\Builder\Config as PermsConfig;
 
 class PermissionManager {
 
-    // TODO: implement permission check caching
-
     /**
      * Application instance.
      * @var Application
      */
     private $app;
+
+    /**
+     * A cache map for community user roles.
+     * This map holds: `community_id:user_id -> role`
+     */
+    private $communityUserRoles = [];
+
+    /**
+     * A cache map for bar user roles.
+     * This map holds: `bar_id -> user_id -> role`
+     */
+    private $barUserRoles = [];
 
     /**
      * BarAuthManager constructor.
@@ -138,16 +148,20 @@ class PermissionManager {
         $user_role = CommunityRoles::NOBODY;
         $user = barauth()->getSessionUser();
 
-        // Get the current community and set a default role
+        // Get current community and users role if set, use cache or query
         if(!empty($user)) {
             $community = $request->get('community');
             if(!empty($community)) {
-                // Get the user connection to this community
-                $member = $community->users()
-                    ->where('user_id', $user->id)
-                    ->first();
-                if(!empty($member))
-                    $user_role = $member->pivot->role;
+                if(isset($this->communityUserRoles[$user->id][$community->id]))
+                    $user_role = $this->communityUserRoles[$user->id][$community->id];
+                else {
+                    // Query the user connection, cache and set the result
+                    $member = $community->users(['role'], false)
+                        ->where('user_id', $user->id)
+                        ->first([]);
+                    if(!empty($member))
+                        $user_role = $this->communityUserRoles[$user->id][$community->id] = $member->pivot->role;
+                }
             }
         }
 
@@ -178,20 +192,32 @@ class PermissionManager {
         $user_role = BarRoles::NOBODY;
         $user = barauth()->getSessionUser();
 
-        // Get the current bar and set a default role
+        // Get current bar and users role if set, use cache or query
         if(!empty($user)) {
             $bar = $request->get('bar');
             if(!empty($bar)) {
-                // Get the user connection to this bar
-                $member = $bar->users()
-                    ->where('user_id', $user->id)
-                    ->first();
-                if(!empty($member))
-                    $user_role = $member->pivot->role;
+                if(isset($this->barUserRoles[$user->id][$bar->id]))
+                    $user_role = $this->barUserRoles[$user->id][$bar->id];
+                else {
+                    // Query the user connection, cache and set the result
+                    $member = $bar->users(['role'], false)
+                        ->where('user_id', $user->id)
+                        ->first([]);
+                    if(!empty($member))
+                        $user_role = $this->barUserRoles[$user->id][$bar->id] = $member->pivot->role;
+                }
             }
         }
 
         // Evaluate, return the result
         return $user_role >= $role;
+    }
+
+    /**
+     * Flush permission caches.
+     */
+    public function flush() {
+        $this->communityUserRoles = [];
+        $this->barUserRoles = [];
     }
 }

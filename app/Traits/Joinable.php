@@ -42,6 +42,11 @@ trait Joinable {
      * @return boolean True if joined, false if not.
      */
     public function isJoined(User $user) {
-        return $this->users->contains($user);
+        // Optimized query
+        return $this
+            ->users()
+            ->limit(1)
+            ->where('user_id', $user->id)
+            ->count(['user_id']) == 1;
     }
 }

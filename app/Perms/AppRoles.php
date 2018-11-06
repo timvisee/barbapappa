@@ -32,6 +32,11 @@ class AppRoles {
     const ADMIN = 20;
 
     /**
+     * Role configuration preset cache.
+     */
+    private static $presetCache = [];
+
+    /**
      * The roles map.
      */
     public static function roles() {
@@ -55,6 +60,8 @@ class AppRoles {
      * @return Config The permission configuration.
      */
     public static function presetAdmin() {
-        return Builder::build()->raw(Self::SCOPE, Self::ADMIN);
+        return isset(Self::$presetCache[Self::ADMIN]) ?
+            Self::$presetCache[Self::ADMIN] :
+            Self::$presetCache[Self::ADMIN] = Builder::build()->raw(Self::SCOPE, Self::ADMIN);
     }
 }
