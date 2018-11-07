@@ -3,7 +3,15 @@
         <div class="item header">
             {{ trans_random('general.hellos') }}
             {{ barauth()->getSessionUser()->name }}
+
+            {{-- TODO: move logout button into this item --}}
+            {{-- <a href="{{ route('logout') }}" class="glyphicons glyphicons-exit"></a> --}}
         </div>
+        <a href="{{ route('dashboard') }}" class="item">
+            <i class="glyphicons glyphicons-undo"></i>
+            {{-- @lang('pages.dashboard') --}}
+            Visit last
+        </a>
         <a href="{{ route('dashboard') }}" class="item">
             <i class="glyphicons glyphicons-dashboard"></i>
             @lang('pages.dashboard')
