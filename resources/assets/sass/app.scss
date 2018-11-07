@@ -152,3 +152,41 @@ ul.ui-listview.center > li > a.ui-btn {
     display: inline-block;
     height: 100%;
 }
+
+// Alt buttons inside sidebar menu items, used for logout button
+.sidebar .alt-button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 40px;
+  height: 40px;
+
+  display: block;
+  padding: 13px 5px 13px 5px;
+  transition: background .1s ease, color .1s ease;
+  border-left: 1px solid rgba(255,255,255,.08);
+
+  .glyphicons {
+    width: 30px;
+    height: 14px;
+    margin: 0;
+  }
+
+  &:hover {
+    background: rgba(255,255,255,.08) !important;
+  }
+
+  &.logout {
+    background: darkred !important;
+    &:hover {
+        background: rgba(darkred,.8) !important;
+    }
+  }
+}
+
+.sidebar .has-alt-button {
+  padding-right: 50px !important;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

@@ -1,11 +1,14 @@
 <div class="ui sidebar mainmenu inverted vertical menu">
     @if(barauth()->isAuth())
-        <div class="item header">
+        <div class="item header has-alt-button">
             {{ trans_random('general.hellos') }}
             {{ barauth()->getSessionUser()->name }}
 
-            {{-- TODO: move logout button into this item --}}
-            {{-- <a href="{{ route('logout') }}" class="glyphicons glyphicons-exit"></a> --}}
+            <a href="{{ route('logout') }}"
+                    class="alt-button logout"
+                    title="@lang('auth.logout')">
+                <i class="glyphicons glyphicons-exit"></i>
+            </a>
         </div>
         <a href="{{ route('dashboard') }}" class="item">
             <i class="glyphicons glyphicons-undo"></i>
@@ -27,10 +30,6 @@
         <a href="{{ route('account') }}" class="item">
             <i class="glyphicons glyphicons-user"></i>
             @lang('pages.account')
-        </a>
-        <a href="{{ route('logout') }}" class="item red">
-            <i class="glyphicons glyphicons-exit"></i>
-            @lang('auth.logout')
         </a>
     @else
         <a href="{{ route('index') }}" class="item">
