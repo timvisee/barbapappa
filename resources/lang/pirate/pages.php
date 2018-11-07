@@ -129,6 +129,7 @@ return [
         'searchByCommunityDescription' => 'It\' usually be easier to find ye bar by it\'s crew.',
 
         // TODO: remove duplicates
+        'createBar' => 'Create bar',
         'editBar' => 'Edit bar',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
@@ -154,6 +155,7 @@ return [
         'codeDescription' => 'With a bar secret, ye prevent random pirates from joining. To join the bar, users be required to enter th\' secret.',
         'visibleDescription' => 'Visible in th\' list o\' bars.',
         'publicDescription' => 'Allow pirates be joined with no secret.',
+        'created' => 'Th\' bar be created.',
         'updated' => 'Th\' bar be updated.',
     ],
 

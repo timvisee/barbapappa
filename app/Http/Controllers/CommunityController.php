@@ -241,7 +241,7 @@ class CommunityController extends Controller {
     }
 
     /**
-     * The permission required for creating such as editing and deleting.
+     * The permission required for creating a new community.
      * @return PermsConfig The permission configuration.
      */
     public static function permsCreate() {
