@@ -29,7 +29,7 @@ class BarMemberController extends Controller {
     public function show($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->users(['role', 'visited_at'])->where('user_id', $memberId)->firstOrfail();
 
         return view('bar.member.show')
             ->with('member', $member);

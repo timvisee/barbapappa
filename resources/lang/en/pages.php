@@ -162,6 +162,7 @@ return [
         'description' => 'This page shows an overview of all bar members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
         'noMembers' => 'This bar has no members...',
         'memberSince' => 'Member since',
+        'lastVisit' => 'Last visit',
         'editMember' => 'Edit member',
         'deleteMember' => 'Delete member',
         'deleteQuestion' => 'You\'re about to remove this member from this bar. Are you sure you want to continue?',
