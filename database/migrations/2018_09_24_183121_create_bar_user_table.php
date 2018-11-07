@@ -17,7 +17,7 @@ class CreateBarUserTable extends Migration {
             $table->integer('bar_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('role')->unsigned()->default(0);
-            $table->timestamps();
+            $table->timestamp('visited_at')->nullable(true);
 
             $table->foreign('bar_id')
                 ->references('id')

@@ -26,6 +26,7 @@ Route::get('/privacy', 'PagesController@privacy')->name('privacy');
 Route::get('/license', 'PagesController@license')->name('license');
 Route::get('/license/raw', 'PagesController@licenseRaw')->name('license.raw');
 Route::get('/language/{locale?}', 'PagesController@language')->name('language');
+Route::middleware('auth')->get('/last', 'PagesController@last')->name('last');
 
 // TODO: remove this page after testing
 Route::get('/secret', 'PagesController@about')->middleware(AppRoles::presetAdmin()->middleware());

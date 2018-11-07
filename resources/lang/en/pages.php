@@ -21,6 +21,14 @@ return [
     'contactUs' => 'Contact us',
 
     /**
+     * Last page.
+     */
+    'last' => [
+        'title' => 'Visit last',
+        'noLast' => 'You haven\'t visited a bar yet, visit one now!',
+    ],
+
+    /**
      * Profile page.
      */
     'profile' => [

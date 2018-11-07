@@ -21,6 +21,14 @@ return [
     'contactUs' => 'Neem contact op',
 
     /**
+     * Last page.
+     */
+    'last' => [
+        'title' => 'Bezoek laatste',
+        'noLast' => 'Je hebt nog geen bar bezocht, bezoek er nu een!',
+    ],
+
+    /**
      * Profile page.
      */
     'profile' => [
