@@ -7,14 +7,6 @@ use Illuminate\Http\Response;
 class DashboardController extends Controller {
 
     /**
-     * Create a new controller instance.
-     */
-    public function __construct() {
-        // The user must be authenticated
-        $this->middleware('auth');
-    }
-
-    /**
      * Show the dashboard.
      *
      * @return Response Response.
