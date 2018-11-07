@@ -123,9 +123,9 @@ class AuthState {
      * @return bool True if the user is authenticated, false if not.
      */
     public function isAuth() {
-        return $this->getSession() !== null
-            && $this->getSession() instanceof Session
-            && $this->getSessionUser() !== null;
+        return $this->session != null
+            && $this->session instanceof Session
+            && $this->getSessionUser() != null;
     }
 
     /**
