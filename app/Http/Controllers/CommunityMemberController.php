@@ -29,7 +29,7 @@ class CommunityMemberController extends Controller {
     public function show($communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $community->users(['role', 'visited_at'])->where('user_id', $memberId)->firstOrfail();
 
         return view('community.member.show')
             ->with('member', $member);

@@ -17,6 +17,7 @@ class CreateCommunityUserTable extends Migration {
             $table->integer('community_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('role')->unsigned()->default(0);
+            $table->timestamp('visited_at')->nullable(true);
             $table->timestamps();
 
             $table->foreign('community_id')
