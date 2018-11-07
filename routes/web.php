@@ -5,6 +5,7 @@ use App\Perms\BarRoles;
 use App\Perms\CommunityRoles;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
+use App\Http\Controllers\CommunityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,7 +80,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
 
     // Require app administrator to create a community
-    Route::middleware(AppRoles::presetAdmin()->middleware())->group(function() {
+    Route::middleware(CommunityController::permsCreate()->middleware())->group(function() {
         Route::get('/create', 'CommunityController@create')->name('community.create');
         Route::post('/', 'CommunityController@doCreate')->name('community.doCreate');
     });

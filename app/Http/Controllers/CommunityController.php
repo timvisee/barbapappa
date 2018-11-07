@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Community;
+use App\Perms\AppRoles;
 use App\Perms\CommunityRoles;
 
 class CommunityController extends Controller {
@@ -237,5 +238,13 @@ class CommunityController extends Controller {
      */
     public static function permsManage() {
         return CommunityRoles::presetAdmin();
+    }
+
+    /**
+     * The permission required for creating such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsCreate() {
+        return AppRoles::presetAdmin();
     }
 }
