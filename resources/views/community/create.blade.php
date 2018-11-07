@@ -75,7 +75,7 @@
         <br />
 
         <button class="ui button primary" type="submit">@lang('misc.create')</button>
-        <a href="{{ url()->previous() }}"
+        <a href="{{ url()->previous(route('community.overview')) }}"
                 class="ui button basic">
             @lang('general.cancel')
         </a>
