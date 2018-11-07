@@ -75,6 +75,7 @@ return [
         'noCommunities' => 'Geen groepen beschikbaar...',
         'viewCommunity' => 'Bekijk groep',
         'viewCommunities' => 'Bekijk groepen',
+        'createCommunity' => 'Groep aanmaken',
         'editCommunity' => 'Groep aanpassen',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
@@ -97,6 +98,7 @@ return [
         'codeDescription' => 'Met een groepscode voorkom je dat willekeurige gebruikers zich inschrijven bij deze groep. Om in te schrijven moeten gebruikers de gespecificeerde code invullen.',
         'visibleDescription' => 'Zichtbaar in lijst met groepen.',
         'publicDescription' => 'Sta zelf inschrijven zonder wachtwoord toe.',
+        'created' => 'De groep is aangemaakt.',
         'updated' => 'De groep is aangepast.',
     ],
 

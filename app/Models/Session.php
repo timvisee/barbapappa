@@ -18,6 +18,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Session extends Model {
 
+    /**
+     * The user this session belongs to.
+     */
     public function user() {
         return $this->belongsTo('App\Models\User');
     }

@@ -75,6 +75,7 @@ return [
         'noCommunities' => 'No communities available...',
         'viewCommunity' => 'View community',
         'viewCommunities' => 'View communities',
+        'createCommunity' => 'Create community',
         'editCommunity' => 'Edit community',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
@@ -97,6 +98,7 @@ return [
         'codeDescription' => 'With a community code, you prevent random users from joining. To join the community, users are required to enter the specified code.',
         'visibleDescription' => 'Visible in the list of communities.',
         'publicDescription' => 'Allow users to join without a code.',
+        'created' => 'The community has been created.',
         'updated' => 'The community has been updated.',
     ],
 
@@ -108,6 +110,7 @@ return [
         'description' => 'This page shows an overview of all community members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
         'noMembers' => 'This community has no members...',
         'memberSince' => 'Member since',
+        'lastVisit' => 'Last visit',
         'editMember' => 'Edit member',
         'deleteMember' => 'Delete member',
         'deleteQuestion' => 'You\'re about to remove this member from this community. Are you sure you want to continue?',

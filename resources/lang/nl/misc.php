@@ -12,6 +12,7 @@ return [
     'unverified' => 'Ongeverifiëerd',
     'delete' => 'Verwijderen',
     'noToken' => 'Geen token opgegeven.',
+    'create' => 'Aanmaken',
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',
     'information' => 'Informatie',
