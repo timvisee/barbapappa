@@ -96,33 +96,57 @@ class User extends Model {
     /**
      * A list of communities this user has joined.
      *
+     * @param array [$pivotColumns] An array of pivot columns to include.
+     * @param boolean [$withTimestamps=true] True to include timestamp columns.
+     *
      * @return A list of joined communities.
      */
-    public function communities() {
-        return $this->belongsToMany(
+    public function communities($pivotColumns = [], $withTimestamps = true) {
+        // Query relation
+        $query = $this->belongsToMany(
                 'App\Models\Community',
                 'community_user',
                 'user_id',
                 'community_id'
-            )
-            ->withPivot('role')
-            ->withTimestamps();
+            );
+
+        // With pivot columns
+        if(!empty($pivotColumns))
+            $query = $query->withPivot($pivotColumns);
+
+        // With timestamps
+        if($withTimestamps)
+            $query = $query->withTimestamps();
+
+        return $query;
     }
 
     /**
      * A list of bars this user has joined.
      *
+     * @param array [$pivotColumns] An array of pivot columns to include.
+     * @param boolean [$withTimestamps=true] True to include timestamp columns.
+     *
      * @return A list of joined bars.
      */
-    public function bars() {
-        return $this->belongsToMany(
+    public function bars($pivotColumns = [], $withTimestamps = true) {
+        // Query relation
+        $query = $this->belongsToMany(
                 'App\Models\Bar',
                 'bar_user',
                 'user_id',
                 'bar_id'
-            )
-            ->withPivot('role')
-            ->withTimestamps();
+            );
+
+        // With pivot columns
+        if(!empty($pivotColumns))
+            $query = $query->withPivot($pivotColumns);
+
+        // With timestamps
+        if($withTimestamps)
+            $query = $query->withTimestamps();
+
+        return $query;
     }
 
     /**

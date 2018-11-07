@@ -33,7 +33,7 @@ Route::middleware('auth')->get('/last', 'PagesController@last')->name('last');
 Route::get('/secret', 'PagesController@about')->middleware(AppRoles::presetAdmin()->middleware());
 
 // Dashboard route
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::middleware('auth')->get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 // Authentication routes
 Route::get('/login', 'LoginController@login')->name('login');
