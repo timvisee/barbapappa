@@ -14,8 +14,19 @@ class DashboardController extends Controller {
     public function index() {
         $user = barauth()->getSessionUser();
 
+        // Get a list of communities and bars
+        $communities = $user
+            ->communities(['visited_at'], false)
+            ->orderBy('pivot_visited_at', 'desc')
+            ->get();
+        $bars = $user
+            ->bars(['visited_at'], false)
+            ->orderBy('pivot_visited_at', 'desc')
+            ->get();
+
+        // Show the dashboard
         return view('dashboard')
-            ->with('bars', $user->bars()->get())
-            ->with('communities', $user->communities()->get());
+            ->with('communities', $communities)
+            ->with('bars', $bars);
     }
 }
