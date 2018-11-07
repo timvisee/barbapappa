@@ -129,6 +129,7 @@ return [
         'searchByCommunityDescription' => 'It\'s usually easier to find a specific bar by it\'s community.',
 
         // TODO: remove duplicates
+        'createBar' => 'Create bar',
         'editBar' => 'Edit bar',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
@@ -154,6 +155,7 @@ return [
         'codeDescription' => 'With a bar code, you prevent random users from joining. To join the bar, users are required to enter the specified code.',
         'visibleDescription' => 'Visible in the list of bars.',
         'publicDescription' => 'Allow users to join without a code.',
+        'created' => 'The bar has been created.',
         'updated' => 'The bar has been updated.',
     ],
 

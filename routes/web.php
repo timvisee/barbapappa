@@ -119,6 +119,13 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 // Bar routes
 Route::prefix('/b')->middleware('auth')->group(function() {
     Route::get('/', 'BarController@overview')->name('bar.overview');
+
+    // Require app administrator to create a bar
+    Route::middleware(['selectCommunity', BarController::permsCreate()->middleware()])->group(function() {
+        Route::get('/create/{communityId}', 'BarController@create')->name('bar.create');
+        Route::post('/create/{communityId}', 'BarController@doCreate')->name('bar.doCreate');
+    });
+
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
         Route::get('/join', 'BarController@join')->name('bar.join');

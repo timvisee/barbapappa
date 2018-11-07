@@ -129,6 +129,7 @@ return [
         'searchByCommunityDescription' => 'Vaak is het makkelijker om een bar te zoeken via de bijbehorende groep.',
 
         // TODO: remove duplicates
+        'createBar' => 'Bar aanmaken',
         'editBar' => 'Bar aanpassen',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
@@ -154,6 +155,7 @@ return [
         'codeDescription' => 'Met een barcode voorkom je dat willekeurige gebruikers zich inschrijven bij deze bar. Om in te schrijven moeten gebruikers de gespecificeerde code invullen.',
         'visibleDescription' => 'Zichtbaar in lijst met bars.',
         'publicDescription' => 'Sta zelf inschrijven zonder wachtwoord toe.',
+        'created' => 'De bar is aangemaakt.',
         'updated' => 'De bar is aangepast.',
     ],
 

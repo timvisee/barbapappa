@@ -23,6 +23,54 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar creation page.
+     *
+     * @return Response
+     */
+    public function create() {
+        return view('bar.create');
+    }
+
+    /**
+     * Bar create page.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doCreate(Request $request) {
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'slug' => 'nullable|' . ValidationDefaults::barSlug(),
+            'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+        ], [
+            'slug.regex' => __('pages.bar.slugFieldRegexError'),
+        ]);
+
+        // Get the community
+        $community = \Request::get('community');
+
+        // TODO: let the user specify the economy to use
+
+        // Create the bar
+        $bar = new Bar();
+        $bar->community_id = $community->id;
+        $bar->economy_id = $community->economies()->firstOrFail()->id;
+        $bar->name = $request->input('name');
+        $bar->slug = $request->has('slug') ? $request->input('slug') : null;
+        $bar->password = $request->has('password') ? $request->input('password') : null;
+        $bar->visible = is_checked($request->input('visible'));
+        $bar->public = is_checked($request->input('public'));
+        $bar->save();
+
+        // Redirect the user to the account overview page
+        return redirect()
+            ->route('bar.show', ['barId' => $bar->human_id])
+            ->with('success', __('pages.bar.created'));
+    }
+
+    /**
      * Bar show page.
      *
      * @return Response
@@ -209,5 +257,13 @@ class BarController extends Controller {
      */
     public static function permsManage() {
         return BarRoles::presetAdmin();
+    }
+
+    /**
+     * The permission required creating a new bar.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsCreate() {
+        return CommunityController::permsManage();
     }
 }

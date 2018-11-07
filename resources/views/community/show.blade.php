@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @php
+    use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\CommunityController;
     use \App\Http\Controllers\CommunityMemberController;
 @endphp
@@ -34,7 +35,7 @@
         <tbody>
             <tr>
                 <td>ID</td>
-                <td><a href="{{ route('community.show', ['communityId' => $community->human_id]) }}">{{ $community->id }}</a></td>
+                <td><a href="{{ route('community.show', ['communityId' => $community->id]) }}">{{ $community->id }}</a></td>
             </tr>
             <tr>
                 <td>Name</td>
@@ -71,6 +72,13 @@
         <a href="{{ route('community.edit', ['communityId' => $community->human_id]) }}"
                 class="ui button small basic">
             @lang('pages.community.editCommunity')
+        </a>
+    @endif
+
+    @if(perms(BarController::permsCreate()))
+        <a href="{{ route('bar.create', ['communityId' => $community->human_id]) }}"
+                class="ui button small basic">
+            @lang('pages.bar.createBar')
         </a>
     @endif
 @endsection
