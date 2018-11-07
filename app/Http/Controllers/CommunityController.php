@@ -23,6 +23,48 @@ class CommunityController extends Controller {
     }
 
     /**
+     * Community create page.
+     *
+     * @return Response
+     */
+    public function create() {
+        return view('community.create');
+    }
+
+    /**
+     * Create a community.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doCreate(Request $request) {
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'slug' => 'nullable|' . ValidationDefaults::communitySlug(),
+            'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+        ], [
+            'slug.regex' => __('pages.community.slugFieldRegexError'),
+        ]);
+
+        // Create the community
+        $community = new Community();
+        $community->name = $request->input('name');
+        $community->slug = $request->has('slug') ? $request->input('slug') : null;
+        $community->password = $request->has('password') ? $request->input('password') : null;
+        $community->visible = is_checked($request->input('visible'));
+        $community->public = is_checked($request->input('public'));
+        $community->save();
+
+        // Redirect the user to the community page
+        return redirect()
+            ->route('community.show', ['communityId' => $community->human_id])
+            ->with('success', __('pages.community.created'));
+    }
+
+
+    /**
      * Community show page.
      *
      * @return Response
@@ -52,10 +94,6 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function edit() {
-        // Get the community and session user
-        $community = \Request::get('community');
-        $user = barauth()->getSessionUser();
-
         return view('community.edit');
     }
 
@@ -67,9 +105,8 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function update(Request $request) {
-        // Get the community and session user
+        // Get the community
         $community = \Request::get('community');
-        $user = barauth()->getSessionUser();
 
         // Validate
         $this->validate($request, [
@@ -90,7 +127,7 @@ class CommunityController extends Controller {
         // Save the community
         $community->save();
 
-        // Redirect the user to the account overview page
+        // Redirect the user to the community page
         return redirect()
             ->route('community.show', ['communityId' => $community->human_id])
             ->with('success', __('pages.community.updated'));

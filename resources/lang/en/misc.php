@@ -12,6 +12,7 @@ return [
     'unverified' => 'Unverified',
     'delete' => 'Delete',
     'noToken' => 'No token specified.',
+    'create' => 'Create',
     'saveChanges' => 'Save changes',
     'unspecified' => 'Unspecified',
     'information' => 'Information',

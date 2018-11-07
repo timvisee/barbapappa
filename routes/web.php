@@ -77,6 +77,13 @@ Route::prefix('/profile')->middleware(['auth', 'selectUser'])->group(function() 
 // Community routes
 Route::prefix('/c')->middleware('auth')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
+
+    // Require app administrator to create a community
+    Route::middleware(AppRoles::presetAdmin()->middleware())->group(function() {
+        Route::get('/create', 'CommunityController@create')->name('community.create');
+        Route::post('/', 'CommunityController@doCreate')->name('community.doCreate');
+    });
+
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
         Route::get('/', 'CommunityController@show')->name('community.show');
         Route::get('/join', 'CommunityController@join')->name('community.join');

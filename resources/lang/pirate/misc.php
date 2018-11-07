@@ -12,6 +12,7 @@ return [
     'unverified' => 'Nay verified',
     'delete' => 'Abandon',
     'noToken' => 'Nay token specified.',
+    'create' => 'Create',
     'saveChanges' => 'Stow changes',
     'unspecified' => 'Unspecified',
     'information' => 'Spyglasses',

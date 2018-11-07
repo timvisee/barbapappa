@@ -75,6 +75,7 @@ return [
         'noCommunities' => 'Nay crews asea...',
         'viewCommunity' => 'View crew',
         'viewCommunities' => 'View crews',
+        'createCommunity' => 'Create crew',
         'editCommunity' => 'Edit crew',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
@@ -97,6 +98,7 @@ return [
         'codeDescription' => 'With a crew secret, ye prevent random pirates from joining. To join the crew, users be required to enter th\' secret.',
         'visibleDescription' => 'Visible in th\' list o\' crews.',
         'publicDescription' => 'Allow pirates be joined with no secret.',
+        'created' => 'Th\' crew be created.',
         'updated' => 'Th\' crew be updated.',
     ],
 
