@@ -21,6 +21,14 @@ return [
     'contactUs' => 'Neem contact op',
 
     /**
+     * Last page.
+     */
+    'last' => [
+        'title' => 'Bezoek laatste',
+        'noLast' => 'Je hebt nog geen bar bezocht, bezoek er nu een!',
+    ],
+
+    /**
      * Profile page.
      */
     'profile' => [
@@ -100,6 +108,7 @@ return [
         'description' => 'Op deze pagina zie je een overzicht van alle groepsleden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
         'noMembers' => 'Deze groep heeft geen leden...',
         'memberSince' => 'Lid sinds',
+        'lastVisit' => 'Laatste bezoek',
         'editMember' => 'Lid aanpassen',
         'deleteMember' => 'Lid verwijderen',
         'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
@@ -154,6 +163,7 @@ return [
         'description' => 'Op deze pagina zie je een overzicht van alle bar leden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
         'noMembers' => 'Deze bar heeft geen leden...',
         'memberSince' => 'Lid sinds',
+        'lastVisit' => 'Laatste bezoek',
         'editMember' => 'Lid aanpassen',
         'deleteMember' => 'Lid verwijderen',
         'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze bar. Weet je zeker dat je door wilt gaan?',

@@ -32,6 +32,15 @@ class CommunityController extends Controller {
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
 
+        // Update the visit time for this member
+        $member = $community->users(['visited_at'], true)
+            ->where('user_id', $user->id)
+            ->first();
+        if($member != null) {
+            $member->pivot->visited_at = new \DateTime();
+            $member->pivot->save();
+        }
+
         return view('community.show')
             ->with('joined', $community->isJoined($user))
             ->with('bars', $community->bars()->visible()->get());

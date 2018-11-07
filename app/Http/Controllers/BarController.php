@@ -32,6 +32,16 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
 
+        // Update the visit time for this member
+        $member = $bar->users(['visited_at'], true)
+            ->where('user_id', $user->id)
+            ->first();
+        if($member != null) {
+            $member->pivot->visited_at = new \DateTime();
+            $member->pivot->save();
+        }
+
+        // Show the bar page
         return view('bar.show')
             ->with('joined', $bar->isJoined($user));
     }

@@ -21,6 +21,14 @@ return [
     'contactUs' => 'Contact us',
 
     /**
+     * Last page.
+     */
+    'last' => [
+        'title' => 'Visit last',
+        'noLast' => 'Ye visited no bar yet, enter one now!',
+    ],
+
+    /**
      * Profile page.
      */
     'profile' => [
@@ -100,6 +108,7 @@ return [
         'description' => 'Dis page shows th\' overview o\' all crew members.<br>Clicking a member allows ye to remove the member, or change be rank.',
         'noMembers' => 'Dis crew be nay members...',
         'memberSince' => 'Member since',
+        'lastVisit' => 'Last visit',
         'editMember' => 'Edit member',
         'deleteMember' => 'Sink member',
         'deleteQuestion' => 'Yer \'bout to remove dis member from our crew. Ye be sure ye want to continue?',
@@ -154,6 +163,7 @@ return [
         'description' => 'Dis page shows th\' overview o\' all bar members.<br>Clicking a member allows ye to remove the member, or change be rank.',
         'noMembers' => 'Dis bar be nay members...',
         'memberSince' => 'Member since',
+        'lastVisit' => 'Last visit',
         'editMember' => 'Edit member',
         'deleteMember' => 'Sink member',
         'deleteQuestion' => 'Yer \'bout to remove dis member from our bar. Ye be sure ye want to continue?',

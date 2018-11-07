@@ -10,10 +10,9 @@
                 <i class="glyphicons glyphicons-exit"></i>
             </a>
         </div>
-        <a href="{{ route('dashboard') }}" class="item">
+        <a href="{{ route('last') }}" class="item">
             <i class="glyphicons glyphicons-undo"></i>
-            {{-- @lang('pages.dashboard') --}}
-            Visit last
+            @lang('pages.last.title')
         </a>
         <a href="{{ route('dashboard') }}" class="item">
             <i class="glyphicons glyphicons-dashboard"></i>

@@ -70,6 +70,28 @@ class PagesController extends Controller {
     }
 
     /**
+     * Last bar or community page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function last() {
+        // Obtain the users last bar ID, visit the page if any was found
+        $barId = \DB::table('bar_user')
+            ->where('user_id', barauth()->getSessionUser()->id)
+            ->whereNotNull('visited_at')
+            ->orderBy('visited_at', 'desc')
+            ->pluck('bar_id')
+            ->first();
+        if($barId !== null)
+            return redirect()->route('bar.show', ['barId' => $barId]);
+
+        // No last bar, visit the dashboard and tell the user
+        return redirect()
+            ->route('dashboard')
+            ->with('info', __('pages.last.noLast'));
+    }
+
+    /**
      * Language selection page.
      *
      * @param string|null $locale The selected locale.

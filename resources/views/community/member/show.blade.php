@@ -22,6 +22,12 @@
                 <td>@lang('pages.communityMembers.memberSince')</td>
                 <td>{{ $member->pivot->created_at }}</td>
             </tr>
+            @if($member->pivot->visited_at != null)
+                <tr>
+                    <td>@lang('pages.communityMembers.lastVisit')</td>
+                    <td>{{ $member->pivot->visited_at }}</td>
+                </tr>
+            @endif
             @if($member->pivot->created_at != $member->pivot->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>
