@@ -105,9 +105,9 @@ class AuthState {
      * @return User|null
      */
     public function getSessionUser() {
-        // We must be authenticated
-        if(!$this->isAuth())
-            return null;
+        // // We must be authenticated
+        // if(!$this->isAuth())
+        //     return null;
 
         // Return a cached user
         if($this->sessionUser !== null)
@@ -123,7 +123,9 @@ class AuthState {
      * @return bool True if the user is authenticated, false if not.
      */
     public function isAuth() {
-        return $this->getSession() !== null && $this->getSession() instanceof Session;
+        return $this->getSession() !== null
+            && $this->getSession() instanceof Session
+            && $this->getSessionUser() !== null;
     }
 
     /**
