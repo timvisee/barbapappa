@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Mail;
  *
  * @property int id
  * @property int economy_id
- * @property bool enabled
  * @property int currency_id
+ * @property bool enabled
  * @property bool allow_wallet
  * @property int product_price_default
  * @property Carbon created_at
@@ -28,6 +28,15 @@ use Illuminate\Support\Facades\Mail;
 class CurrencySupport extends Model {
 
     protected $table = "currency_support";
+
+    /**
+     * Get the specified currency information.
+     *
+     * @return The economy.
+     */
+    public function currency() {
+        return $this->belongsTo('App\Models\Currency');
+    }
 
     /**
      * Get the economy this currency support model is part of.
