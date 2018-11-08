@@ -5,6 +5,9 @@ namespace App\Helpers;
 use Illuminate\Validation\Rule;
 
 use \App\Models\Community;
+use \App\Perms\AppRoles;
+use \App\Perms\BarRoles;
+use \App\Perms\CommunityRoles;
 
 /**
  * Class ValidationDefaults.
@@ -118,5 +121,32 @@ class ValidationDefaults {
             ->where(function($query) use($community) {
                 return $query->where('community_id', $community->id);
             });
+    }
+
+    /**
+     * Build a validator configuration for application role IDs.
+     *
+     * @return string The validation configuration.
+     */
+    public static function appRoles() {
+        return Rule::in(implode(',', AppRoles::ids()));
+    }
+
+    /**
+     * Build a validator configuration for community role IDs.
+     *
+     * @return string The validation configuration.
+     */
+    public static function communityRoles() {
+        return Rule::in(implode(',', CommunityRoles::ids()));
+    }
+
+    /**
+     * Build a validator configuration for bar role IDs.
+     *
+     * @return string The validation configuration.
+     */
+    public static function barRoles() {
+        return Rule::in(implode(',', BarRoles::ids()));
     }
 }
