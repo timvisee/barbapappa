@@ -9,6 +9,15 @@ namespace App\Perms;
 trait Roles {
 
     /**
+     * Get all role IDs.
+     *
+     * @return {array} A list of role IDs.
+     */
+    public static function ids() {
+        return array_keys(Self::roles());
+    }
+
+    /**
      * Get a key/value list of user role IDs and their display names.
      *
      * Important: When using this trait, classes must implementg

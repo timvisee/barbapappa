@@ -60,17 +60,17 @@ class BarMemberController extends Controller {
     public function doEdit(Request $request, $barId, $memberId) {
         // TODO: do not allow role demotion if last admin
 
+        // Validate
+        $this->validate($request, [
+            'role' => 'required|' . ValidationDefaults::barRoles(),
+        ]);
+
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
 
-        // Get the selected role, validate it
-        $role = $request->input('role');
-        if(!BarRoles::isValid($role))
-            throw new \Exception("unknown role ID specified");
-
         // Set the role ID, save the member
-        $member->pivot->role = $role;
+        $member->pivot->role = $request->input('role');
         $member->pivot->save();
 
         // Redirect to the show view after editing

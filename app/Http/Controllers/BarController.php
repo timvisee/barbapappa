@@ -31,7 +31,7 @@ class BarController extends Controller {
         // Get the community
         $community = \Request::get('community');
 
-        // Redirect to the economy creation page if theres no economy
+        // An economy must be created first if not available
         if($community->economies()->count() == 0) {
             // TODO: redirect the user back to this page after economy creation
             return redirect()
