@@ -100,6 +100,7 @@ return [
         'publicDescription' => 'Sta zelf inschrijven zonder wachtwoord toe.',
         'created' => 'De groep is aangemaakt.',
         'updated' => 'De groep is aangepast.',
+        'economy' => 'Economie',
     ],
 
     /**

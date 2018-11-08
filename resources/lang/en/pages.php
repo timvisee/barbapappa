@@ -100,6 +100,7 @@ return [
         'publicDescription' => 'Allow users to join without a code.',
         'created' => 'The community has been created.',
         'updated' => 'The community has been updated.',
+        'economy' => 'Economy',
     ],
 
     /**

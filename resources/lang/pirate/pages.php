@@ -100,6 +100,7 @@ return [
         'publicDescription' => 'Allow pirates be joined with no secret.',
         'created' => 'Th\' crew be created.',
         'updated' => 'Th\' crew be updated.',
+        'economy' => 'Booty',
     ],
 
     /**

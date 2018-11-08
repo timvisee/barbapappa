@@ -8,7 +8,7 @@
     <h2 class="ui header">{{ $member->name }}</h2>
 
     {!! Form::open(['action' => ['CommunityMemberController@doEdit', $community->human_id, $member->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
-        <div class="field">
+        <div class="field {{ ErrorRenderer::hasError('role') ? 'error' : '' }}">
             {{ Form::label('role', __('misc.role')) }}
 
             <div class="ui fluid selection dropdown">

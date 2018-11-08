@@ -4,6 +4,8 @@ namespace App\Helpers;
 
 use Illuminate\Validation\Rule;
 
+use \App\Models\Community;
+
 /**
  * Class ValidationDefaults.
  *
@@ -84,9 +86,8 @@ class ValidationDefaults {
     public static function communitySlug($community = null) {
         // Buid the uniqueness rule, ignore the current if given
         $unique = Rule::unique('communities', 'slug');
-        if(!empty($community)) {
+        if(!empty($community))
             $unique = $unique->ignore($community->id);
-        }
 
         return self::SLUG . '|' . $unique;
     }
@@ -100,10 +101,22 @@ class ValidationDefaults {
     public static function barSlug($bar = null) {
         // Buid the uniqueness rule, ignore the current if given
         $unique = Rule::unique('bars', 'slug');
-        if(!empty($bar)) {
+        if(!empty($bar))
             $unique = $unique->ignore($bar->id);
-        }
 
         return self::SLUG . '|' . $unique;
+    }
+
+    /**
+     * Build the community economy validation configuration.
+     *
+     * @param int $community The community this configuration is built for.
+     * @return Rule The validation rule.
+     */
+    public static function communityEconomy(Community $community) {
+        return Rule::exists('economies', 'id')
+            ->where(function($query) use($community) {
+                return $query->where('community_id', $community->id);
+            });
     }
 }
