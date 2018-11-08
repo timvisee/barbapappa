@@ -124,6 +124,8 @@ return [
         'title' => 'Economies',
         'description' => 'This page shows an overview of the economies available in this community.<br>Click on an economy to manage it, or create a new one for a new bar.',
         'noEconomies' => 'This community has no economies...',
+        'createEconomy' => 'Create economy',
+        'economyCreated' => 'The economy has been created.',
         'deleteQuestion' => 'You\'re about to delete this economy from this community. Are you sure you want to continue?',
         'economyDeleted' => 'The economy has been removed.',
         'economyUpdated' => 'Economy changes saved.',

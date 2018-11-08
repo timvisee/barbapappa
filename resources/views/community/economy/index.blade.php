@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @php
+    use \App\Http\Controllers\EconomyController;
+
     $economies = $community->economies()->get();
 @endphp
 
@@ -28,6 +30,13 @@
             </div>
         @endforelse
     </div>
+
+    @if(perms(EconomyController::permsManage()))
+        <a href="{{ route('community.economy.create', ['communityId' => $community->human_id]) }}"
+                class="ui button basic positive">
+            @lang('misc.create')
+        </a>
+    @endif
 
     <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
             class="ui button basic">

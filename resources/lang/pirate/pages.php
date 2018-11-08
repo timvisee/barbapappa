@@ -124,6 +124,8 @@ return [
         'title' => 'Booties',
         'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Click a booty to manage it, or create new booty for a new bar.',
         'noEconomies' => 'Dis crew be nay booties...',
+        'createEconomy' => 'Create booty',
+        'economyCreated' => 'Th\' booty be created.',
         'deleteQuestion' => 'Yer \'bout to sink dis booty from our crew. Ye be sure ye want to continue?',
         'economyDeleted' => 'Th\' booty be sunk.',
         'economyUpdated' => 'Booty changes saved.',

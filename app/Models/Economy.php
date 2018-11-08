@@ -23,6 +23,8 @@ use App\Utils\EmailRecipient;
  */
 class Economy extends Model {
 
+    protected $fillable = ['name'];
+
     /**
      * Get the community this economy is part of.
      *

@@ -41,20 +41,20 @@
     <br />
 
     <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
-            class="ui button small basic">
+            class="ui button basic">
         @lang('pages.community.viewCommunity')
     </a>
 
     @if(perms(BarMemberController::permsView()))
         <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
-                class="ui button small basic">
+                class="ui button basic">
             @lang('pages.barMembers.title')
         </a>
     @endif
 
     @if(perms(BarController::permsManage()))
         <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}"
-                class="ui button small basic">
+                class="ui button basic">
             @lang('pages.bar.editBar')
         </a>
     @endif

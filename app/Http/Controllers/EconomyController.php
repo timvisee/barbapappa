@@ -36,6 +36,40 @@ class EconomyController extends Controller {
     }
 
     /**
+     * The create page for a community economy.
+     *
+     * @return Response
+     */
+    public function create($communityId) {
+        return view('community.economy.create');
+    }
+
+    /**
+     * Create a community economy.
+     *
+     * @return Response
+     */
+    public function doCreate(Request $request, $communityId) {
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
+
+        // Get the community
+        $community = \Request::get('community');
+
+        // Create an economy and save
+        $economy = $community->economies()->create([
+            'name' => $request->input('name'),
+        ]);
+
+        // Redirect to the show view after editing
+        return redirect()
+            ->route('community.economy.show', ['communityId' => $communityId, 'economyId' => $economy->id])
+            ->with('success', __('pages.economies.economyCreated'));
+    }
+
+    /**
      * The edit page for a community economy.
      *
      * @return Response

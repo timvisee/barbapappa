@@ -63,28 +63,28 @@
 
     @if(perms(CommunityMemberController::permsView()))
         <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
-                class="ui button small basic">
+                class="ui button basic">
             @lang('pages.communityMembers.title')
         </a>
     @endif
 
     @if(perms(EconomyController::permsView()))
         <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
-                class="ui button small basic">
+                class="ui button basic">
             @lang('pages.economies.title')
         </a>
     @endif
 
     @if(perms(CommunityController::permsManage()))
         <a href="{{ route('community.edit', ['communityId' => $community->human_id]) }}"
-                class="ui button small basic">
+                class="ui button basic">
             @lang('pages.community.editCommunity')
         </a>
     @endif
 
     @if(perms(BarController::permsCreate()))
         <a href="{{ route('bar.create', ['communityId' => $community->human_id]) }}"
-                class="ui button small basic">
+                class="ui button basic">
             @lang('pages.bar.createBar')
         </a>
     @endif

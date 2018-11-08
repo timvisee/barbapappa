@@ -12,7 +12,7 @@
         <br />
 
         <a href="{{ route('community.create') }}"
-                class="ui button small basic">
+                class="ui button basic">
             @lang('pages.community.createCommunity')
         </a>
     @endif
