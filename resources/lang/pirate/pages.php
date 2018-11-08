@@ -171,6 +171,7 @@ return [
         'publicDescription' => 'Allow pirates be joined with no secret.',
         'created' => 'Th\' bar be created.',
         'updated' => 'Th\' bar be updated.',
+        'mustCreateEconomyFirst' => 'To create a bar, ye must create booty first.',
     ],
 
     /**

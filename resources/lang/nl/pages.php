@@ -171,6 +171,7 @@ return [
         'publicDescription' => 'Sta zelf inschrijven zonder wachtwoord toe.',
         'created' => 'De bar is aangemaakt.',
         'updated' => 'De bar is aangepast.',
+        'mustCreateEconomyFirst' => 'Voor een nieuwe bar moest je eerst een economie aanmaken.',
     ],
 
     /**

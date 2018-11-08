@@ -28,6 +28,17 @@ class BarController extends Controller {
      * @return Response
      */
     public function create() {
+        // Get the community
+        $community = \Request::get('community');
+
+        // Redirect to the economy creation page if theres no economy
+        if($community->economies()->count() == 0) {
+            // TODO: redirect the user back to this page after economy creation
+            return redirect()
+                ->route('community.economy.create', ['communityId' => $community->id])
+                ->with('error', __('pages.bar.mustCreateEconomyFirst'));
+        }
+
         return view('bar.create');
     }
 

@@ -171,6 +171,7 @@ return [
         'publicDescription' => 'Allow users to join without a code.',
         'created' => 'The bar has been created.',
         'updated' => 'The bar has been updated.',
+        'mustCreateEconomyFirst' => 'To create a bar, you must create an economy first.',
     ],
 
     /**
