@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e5c0821975d29da4e0c22bcf95a60224",
+    "content-hash": "ebdee15b0e61ee387495c88c534a1485",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -804,16 +804,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.34.0",
+            "version": "1.34.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33"
+                "reference": "19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33",
-                "reference": "1dbd3cb01c5645f3e7deda7aa46ef780d95fcc33",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9",
+                "reference": "19201b87f7dba2a7cbf1cccdf0e1da13c04ee9c9",
                 "shasum": ""
             },
             "require": {
@@ -855,7 +855,7 @@
                 "datetime",
                 "time"
             ],
-            "time": "2018-09-20T19:36:25+00:00"
+            "time": "2018-11-08T13:33:47+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -2264,16 +2264,16 @@
         },
         {
             "name": "torann/currency",
-            "version": "1.0.10",
+            "version": "1.0.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Torann/laravel-currency.git",
-                "reference": "9ff88f6ecefd3fc2f3fd08072dc41d6516aea17f"
+                "reference": "d7d5dc721122f5491a475fc6f0026f110334acd4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Torann/laravel-currency/zipball/9ff88f6ecefd3fc2f3fd08072dc41d6516aea17f",
-                "reference": "9ff88f6ecefd3fc2f3fd08072dc41d6516aea17f",
+                "url": "https://api.github.com/repos/Torann/laravel-currency/zipball/d7d5dc721122f5491a475fc6f0026f110334acd4",
+                "reference": "d7d5dc721122f5491a475fc6f0026f110334acd4",
                 "shasum": ""
             },
             "require": {
@@ -2286,8 +2286,13 @@
             },
             "type": "library",
             "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
+                "laravel": {
+                    "providers": [
+                        "Torann\\Currency\\CurrencyServiceProvider"
+                    ],
+                    "aliases": {
+                        "Currency": "Torann\\Currency\\Facades\\Currency"
+                    }
                 }
             },
             "autoload": {
@@ -2300,7 +2305,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD 2-Clause"
+                "BSD-2-Clause"
             ],
             "authors": [
                 {
@@ -2315,10 +2320,9 @@
                 "finance",
                 "laravel",
                 "money",
-                "openexchangerates",
-                "yahoo finance"
+                "openexchangerates"
             ],
-            "time": "2017-05-16T22:24:13+00:00"
+            "time": "2018-05-09T14:36:57+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
