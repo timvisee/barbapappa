@@ -42,10 +42,11 @@ class Economy extends Model {
 
     /**
      * Get the list of supported currencies in this economy.
+     * Note that some returned currencies might be disabled.
      *
      * @return The list of supported currencies.
      */
     public function supportedCurrencies() {
-        return $this->hasMany('App\Models\SupprotedCurrency');
+        return $this->hasMany('App\Models\CurrencySupport');
     }
 }
