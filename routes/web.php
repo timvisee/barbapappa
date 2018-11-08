@@ -116,10 +116,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
             Route::prefix('/economies')->group(function() {
                 Route::get('/', 'EconomyController@index')->name('community.economy.index');
-
-                // TODO: temporary, implement these routes below
                 Route::get('/{economyId}', 'EconomyController@show')->name('community.economy.show');
 
+                // TODO: temporary, implement these routes below
                 // Require admin to edit/delete community economies
                 Route::middleware(EconomyController::permsManage()->middleware())->group(function() {
                     Route::get('/{economyId}/edit', 'EconomyController@edit')->name('community.economy.edit');

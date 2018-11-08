@@ -1,56 +1,45 @@
 @extends('layouts.app')
 
 @php
-    use \App\Http\Controllers\CommunityMemberController;
-    use \App\Perms\CommunityRoles;
+    use \App\Http\Controllers\EconomyController;
 @endphp
 
 @section('content')
-    <h2 class="ui header">{{ $member->name }}</h2>
+    <h2 class="ui header">{{ $economy->name }}</h2>
 
     <table class="ui compact celled definition table">
         <tbody>
             <tr>
-                <td>@lang('misc.user')</td>
-                <td>{{ $member->name }}</td>
+                <td>@lang('misc.name')</td>
+                <td>{{ $economy->name }}</td>
             </tr>
             <tr>
-                <td>@lang('misc.role')</td>
-                <td>{{ CommunityRoles::roleName($member->pivot->role) }}</td>
+                <td>@lang('misc.createdAt')</td>
+                <td>{{ $economy->created_at }}</td>
             </tr>
-            <tr>
-                <td>@lang('pages.communityMembers.memberSince')</td>
-                <td>{{ $member->pivot->created_at }}</td>
-            </tr>
-            @if($member->pivot->visited_at != null)
-                <tr>
-                    <td>@lang('pages.communityMembers.lastVisit')</td>
-                    <td>{{ $member->pivot->visited_at }}</td>
-                </tr>
-            @endif
-            @if($member->pivot->created_at != $member->pivot->updated_at)
+            @if($economy->created_at != $economy->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>
-                    <td>{{ $member->pivot->updated_at }}</td>
+                    <td>{{ $economy->updated_at }}</td>
                 </tr>
             @endif
         </tbody>
     </table>
 
-    @if(perms(CommunityMemberController::permsManage()))
+    @if(perms(EconomyController::permsManage()))
         <p>
-            <a href="{{ route('community.member.edit', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
+            <a href="{{ route('community.economy.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                     class="ui button basic secondary">
-                @lang('pages.communityMembers.editMember')
+                @lang('misc.edit')
             </a>
-            <a href="{{ route('community.member.delete', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
+            <a href="{{ route('community.economy.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                     class="ui button basic negative">
-                @lang('pages.communityMembers.deleteMember')
+                @lang('misc.delete')
             </a>
         </p>
     @endif
 
-    <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
+    <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
             class="ui button basic">
         @lang('general.goBack')
     </a>

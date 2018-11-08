@@ -21,28 +21,28 @@ class EconomyController extends Controller {
         return view('community.economy.index');
     }
 
-
-
-
-
-
-
-
-
-
     /**
-     * Show a member of a community with the given user ID.
+     * Show a community economy with the given ID.
      *
      * @return Response
      */
-    public function show($communityId, $memberId) {
-        // Get the community, find the member
+    public function show($communityId, $economyId) {
+        // Get the community, find economy
         $community = \Request::get('community');
-        $member = $community->users(['role', 'visited_at'])->where('user_id', $memberId)->firstOrfail();
+        $economy = $community->economies()->findOrFail($economyId);
 
-        return view('community.member.show')
-            ->with('member', $member);
+        return view('community.economy.show')
+            ->with('economy', $economy);
     }
+
+
+
+
+
+
+
+
+
 
     /**
      * The edit page for a community member.
