@@ -12,40 +12,27 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Economy model.
+ * Currency model.
  *
- * @property int id
- * @property int community_id
- * @property string name
- * @property Carbon created_at
- * @property Carbon updated_at
+ * @property-read int id
+ * @property-read string name
+ * @property-read string code
+ * @property-read string symbol
+ * @property-read string format
+ * @property-read string exchange_rate
+ * @property-read boolean active
+ * @property-read Carbon created_at
+ * @property-read Carbon updated_at
  */
-class Economy extends Model {
+class Currency extends Model {
 
     /**
-     * Get the community this economy is part of.
+     * Get the currency support entries for bars, that use this currency.
+     * Note that this might also return disabled currency support entries.
      *
-     * @return The community.
-     */
-    public function community() {
-        return $this->belongsTo('App\Models\Community');
-    }
-
-    /**
-     * Get a list of bars that use this economy.
-     *
-     * @return The list of bars.
-     */
-    public function bars() {
-        return $this->hasMany('App\Models\Bar');
-    }
-
-    /**
-     * Get the list of supported currencies in this economy.
-     *
-     * @return The list of supported currencies.
+     * @return The list of currency support entries.
      */
     public function supportedCurrencies() {
-        return $this->hasMany('App\Models\SupprotedCurrency');
+        return $this->hasMany('App\Models\CurrencySupport');
     }
 }
