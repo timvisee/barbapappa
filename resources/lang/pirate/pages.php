@@ -126,8 +126,8 @@ return [
         'noEconomies' => 'Dis crew be nay booties...',
         'deleteQuestion' => 'Yer \'bout to sink dis booty from our crew. Ye be sure ye want to continue?',
         'economyDeleted' => 'Th\' booty be sunk.',
-        // 'memberUpdated' => 'Member changes saved.',
-        // 'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a member may introduce significant security issues.',
+        'economyUpdated' => 'Booty changes saved.',
+        'namePlaceholder' => 'Our booty',
     ],
 
     /**

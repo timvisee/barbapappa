@@ -126,8 +126,8 @@ return [
         'noEconomies' => 'Deze groep heeft geen economieën...',
         'deleteQuestion' => 'Je staat op het punt deze economie te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
         'economyDeleted' => 'De economy is verwijderd.',
-        // 'memberUpdated' => 'Lid aanpassingen opgeslagen.',
-        // 'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
+        'economyUpdated' => 'Economie aanpassingen opgeslagen.',
+        'namePlaceholder' => 'Hoofdeconomie',
     ],
 
     /**

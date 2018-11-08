@@ -36,6 +36,46 @@ class EconomyController extends Controller {
     }
 
     /**
+     * The edit page for a community economy.
+     *
+     * @return Response
+     */
+    public function edit($communityId, $economyId) {
+        // Get the community, find the economy
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // Show the edit view
+        return view('community.economy.edit')
+            ->with('economy', $economy);
+    }
+
+    /**
+     * Edit a community economy.
+     *
+     * @return Response
+     */
+    public function doEdit(Request $request, $communityId, $economyId) {
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
+
+        // Get the community, find the economy
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // Update the properties
+        $economy->name = $request->input('name');
+        $economy->save();
+
+        // Redirect to the show view after editing
+        return redirect()
+            ->route('community.economy.show', ['communityId' => $communityId, 'economyId' => $economyId])
+            ->with('success', __('pages.economies.economyUpdated'));
+    }
+
+    /**
      * The page to delete a community economy.
      *
      * @return Response
@@ -84,58 +124,5 @@ class EconomyController extends Controller {
      */
     public static function permsManage() {
         return CommunityRoles::presetAdmin();
-    }
-
-
-
-
-
-
-
-
-
-
-    /**
-     * The edit page for a community member.
-     *
-     * @return Response
-     */
-    public function edit($communityId, $memberId) {
-        // TODO: do not allow role demotion if last admin
-
-        // Get the community, find the member
-        $community = \Request::get('community');
-        $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
-
-        // Show the edit view
-        return view('community.member.edit')
-            ->with('member', $member);
-    }
-
-    /**
-     * Edit a community member.
-     *
-     * @return Response
-     */
-    public function doEdit(Request $request, $communityId, $memberId) {
-        // TODO: do not allow role demotion if last admin
-
-        // Get the community, find the member
-        $community = \Request::get('community');
-        $member = $community->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
-
-        // Get the selected role, validate it
-        $role = $request->input('role');
-        if(!CommunityRoles::isValid($role))
-            throw new \Exception("unknown role ID specified");
-
-        // Set the role ID, save the member
-        $member->pivot->role = $role;
-        $member->pivot->save();
-
-        // Redirect to the show view after editing
-        return redirect()
-            ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
-            ->with('success', __('pages.communityMembers.memberUpdated'));
     }
 }

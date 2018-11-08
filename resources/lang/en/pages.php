@@ -126,8 +126,8 @@ return [
         'noEconomies' => 'This community has no economies...',
         'deleteQuestion' => 'You\'re about to delete this economy from this community. Are you sure you want to continue?',
         'economyDeleted' => 'The economy has been removed.',
-        // 'memberUpdated' => 'Member changes saved.',
-        // 'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
+        'economyUpdated' => 'Economy changes saved.',
+        'namePlaceholder' => 'Main economy',
     ],
 
     /**
