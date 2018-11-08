@@ -2,35 +2,49 @@
 
 namespace App\Models;
 
-use App\Mail\Password\Reset;
-use App\Managers\PasswordResetManager;
-use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
+use App\Mail\Password\Reset;
+use App\Managers\PasswordResetManager;
+use App\Utils\EmailRecipient;
+
 /**
- * Currency model.
+ * Economy model.
  *
- * @property-read int id
- * @property-read string name
- * @property-read string code
- * @property-read string symbol
- * @property-read string format
- * @property-read string exchange_rate
- * @property-read boolean active
- * @property-read Carbon created_at
- * @property-read Carbon updated_at
+ * @property int id
+ * @property int community_id
+ * @property string name
+ * @property Carbon created_at
+ * @property Carbon updated_at
  */
-class Currency extends Model {
+class Economy extends Model {
 
     /**
-     * Get the currency support entries for bars, that use this currency.
-     * Note that this might also return disabled currency support entries.
+     * Get the community this economy is part of.
      *
-     * @return The list of currency support entries.
+     * @return The community.
+     */
+    public function community() {
+        return $this->belongsTo('App\Models\Community');
+    }
+
+    /**
+     * Get the bars that use this economy.
+     *
+     * @return The bars.
+     */
+    public function bars() {
+        return $this->hasMany('App\Models\Bar');
+    }
+
+    /**
+     * Get a list of supported currencies within this economy.
+     *
+     * @return List of supported currencies.
      */
     public function supportedCurrencies() {
         return $this->hasMany('App\Models\CurrencySupport');
