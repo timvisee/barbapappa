@@ -6,6 +6,7 @@ use App\Perms\CommunityRoles;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\EconomyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,6 +111,21 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::put('/{memberId}/edit', 'CommunityMemberController@doEdit')->name('community.member.doEdit');
                     Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
                     Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
+                });
+            });
+
+            Route::prefix('/economies')->group(function() {
+                Route::get('/', 'EconomyController@index')->name('community.economy.index');
+
+                // TODO: temporary, implement these routes below
+                Route::get('/{economyId}', 'EconomyController@show')->name('community.economy.show');
+
+                // Require admin to edit/delete community economies
+                Route::middleware(EconomyController::permsManage()->middleware())->group(function() {
+                    Route::get('/{economyId}/edit', 'EconomyController@edit')->name('community.economy.edit');
+                    Route::put('/{economyId}/edit', 'EconomyController@doEdit')->name('community.economy.doEdit');
+                    Route::get('/{economyId}/delete', 'EconomyController@delete')->name('community.economy.delete');
+                    Route::delete('/{economyId}/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
                 });
             });
         });

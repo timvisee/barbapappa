@@ -120,6 +120,23 @@ return [
     ],
 
     /**
+     * Community economy pages.
+     */
+    'economies' => [
+        'title' => 'Booties',
+        'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Click a booty to manage it, or create new booty for a new bar.',
+        'noEconomies' => 'Dis crew be nay booties...',
+        // 'memberSince' => 'Member since',
+        // 'lastVisit' => 'Last visit',
+        // 'editMember' => 'Edit member',
+        // 'deleteMember' => 'Sink member',
+        // 'deleteQuestion' => 'Yer \'bout to remove dis member from our crew. Ye be sure ye want to continue?',
+        // 'memberRemoved' => 'Th\' member be sunk.',
+        // 'memberUpdated' => 'Member changes saved.',
+        // 'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a member may introduce significant security issues.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

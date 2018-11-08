@@ -120,6 +120,23 @@ return [
     ],
 
     /**
+     * Community economy pages.
+     */
+    'economies' => [
+        'title' => 'Economieën',
+        'description' => 'Op deze pagina zie je een overzicht van alle economieën binnen deze groep.<br>Klik op een economy om deze te beheren, of maak een nieuwe aan voor een nieuwe bar.',
+        'noMembers' => 'Deze groep heeft geen economieën...',
+        // 'memberSince' => 'Lid sinds',
+        // 'lastVisit' => 'Laatste bezoek',
+        // 'editMember' => 'Lid aanpassen',
+        // 'deleteMember' => 'Lid verwijderen',
+        // 'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
+        // 'memberRemoved' => 'Het lid is verwijderd.',
+        // 'memberUpdated' => 'Lid aanpassingen opgeslagen.',
+        // 'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

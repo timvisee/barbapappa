@@ -4,8 +4,8 @@
     use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\CommunityController;
     use \App\Http\Controllers\CommunityMemberController;
+    use \App\Http\Controllers\EconomyController;
 @endphp
-
 @section('content')
     <h2 class="ui header">
         @if($joined)
@@ -65,6 +65,13 @@
         <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
                 class="ui button small basic">
             @lang('pages.communityMembers.title')
+        </a>
+    @endif
+
+    @if(perms(EconomyController::permsView()))
+        <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
+                class="ui button small basic">
+            @lang('pages.economies.title')
         </a>
     @endif
 
