@@ -6,6 +6,7 @@ use App\Perms\CommunityRoles;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
+use App\Http\Controllers\EconomyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,9 +99,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             Route::put('/', 'CommunityController@update')->name('community.update');
         });
 
-        // Require manager to manage community members
+        // Require manager to manage community aspects
         Route::middleware(CommunityRoles::presetManager()->middleware())->group(function() {
-            Route::prefix('/members/')->group(function() {
+            Route::prefix('/members')->group(function() {
                 Route::get('/', 'CommunityMemberController@index')->name('community.member.index');
                 Route::get('/{memberId}', 'CommunityMemberController@show')->name('community.member.show');
 
@@ -111,6 +112,21 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::get('/{memberId}/delete', 'CommunityMemberController@delete')->name('community.member.delete');
                     Route::delete('/{memberId}/delete', 'CommunityMemberController@doDelete')->name('community.member.doDelete');
                 });
+            });
+
+            Route::prefix('/economies')->group(function() {
+                // Require admin to create/edit/delete community economies
+                Route::middleware(EconomyController::permsManage()->middleware())->group(function() {
+                    Route::get('/create', 'EconomyController@create')->name('community.economy.create');
+                    Route::post('/', 'EconomyController@doCreate')->name('community.economy.doCreate');
+                    Route::get('/{economyId}/edit', 'EconomyController@edit')->name('community.economy.edit');
+                    Route::put('/{economyId}/edit', 'EconomyController@doEdit')->name('community.economy.doEdit');
+                    Route::get('/{economyId}/delete', 'EconomyController@delete')->name('community.economy.delete');
+                    Route::delete('/{economyId}/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
+                });
+
+                Route::get('/', 'EconomyController@index')->name('community.economy.index');
+                Route::get('/{economyId}', 'EconomyController@show')->name('community.economy.show');
             });
         });
     });
@@ -141,7 +157,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 
         // Require manager to manage bar members
         Route::middleware(BarMemberController::permsView()->middleware())->group(function() {
-            Route::prefix('/members/')->group(function() {
+            Route::prefix('/members')->group(function() {
                 Route::get('/', 'BarMemberController@index')->name('bar.member.index');
                 Route::get('/{memberId}', 'BarMemberController@show')->name('bar.member.show');
 

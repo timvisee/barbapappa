@@ -43,6 +43,15 @@ class Bar extends Model {
         'password'
     ];
 
+    protected $fillable = [
+        'economy_id',
+        'name',
+        'slug',
+        'password',
+        'visible',
+        'public',
+    ];
+
     /**
      * A scope for only showing bars that have been defined as visible by the
      * owner.

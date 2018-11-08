@@ -111,12 +111,25 @@ return [
         'noMembers' => 'This community has no members...',
         'memberSince' => 'Member since',
         'lastVisit' => 'Last visit',
-        'editMember' => 'Edit member',
-        'deleteMember' => 'Delete member',
         'deleteQuestion' => 'You\'re about to remove this member from this community. Are you sure you want to continue?',
         'memberRemoved' => 'The member has been removed.',
         'memberUpdated' => 'Member changes saved.',
         'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
+    ],
+
+    /**
+     * Community economy pages.
+     */
+    'economies' => [
+        'title' => 'Economies',
+        'description' => 'This page shows an overview of the economies available in this community.<br>Click on an economy to manage it, or create a new one for a new bar.',
+        'noEconomies' => 'This community has no economies...',
+        'createEconomy' => 'Create economy',
+        'economyCreated' => 'The economy has been created.',
+        'deleteQuestion' => 'You\'re about to delete this economy from this community. Are you sure you want to continue?',
+        'economyDeleted' => 'The economy has been removed.',
+        'economyUpdated' => 'Economy changes saved.',
+        'namePlaceholder' => 'Main economy',
     ],
 
     /**
@@ -168,8 +181,6 @@ return [
         'noMembers' => 'This bar has no members...',
         'memberSince' => 'Member since',
         'lastVisit' => 'Last visit',
-        'editMember' => 'Edit member',
-        'deleteMember' => 'Delete member',
         'deleteQuestion' => 'You\'re about to remove this member from this bar. Are you sure you want to continue?',
         'memberRemoved' => 'The member has been removed.',
         'memberUpdated' => 'Member changes saved.',

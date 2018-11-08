@@ -54,15 +54,14 @@ class BarController extends Controller {
         // TODO: let the user specify the economy to use
 
         // Create the bar
-        $bar = new Bar();
-        $bar->community_id = $community->id;
-        $bar->economy_id = $community->economies()->firstOrFail()->id;
-        $bar->name = $request->input('name');
-        $bar->slug = $request->has('slug') ? $request->input('slug') : null;
-        $bar->password = $request->has('password') ? $request->input('password') : null;
-        $bar->visible = is_checked($request->input('visible'));
-        $bar->public = is_checked($request->input('public'));
-        $bar->save();
+        $bar = $community->bars()->create([
+            'economy_id' => $community->economies()->firstOrFail()->id,
+            'name' => $request->input('name'),
+            'slug' => $request->has('slug') ? $request->input('slug') : null,
+            'password' => $request->has('password') ? $request->input('password') : null,
+            'visible' => is_checked($request->input('visible')),
+            'public' => is_checked($request->input('public')),
+        ]);
 
         // Redirect the user to the account overview page
         return redirect()

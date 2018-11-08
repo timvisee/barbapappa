@@ -41,11 +41,11 @@
         <p>
             <a href="{{ route('bar.member.edit', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
                     class="ui button basic secondary">
-                @lang('pages.barMembers.editMember')
+                @lang('misc.edit')
             </a>
             <a href="{{ route('bar.member.delete', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
                     class="ui button basic negative">
-                @lang('pages.barMembers.deleteMember')
+                @lang('misc.delete')
             </a>
         </p>
     @endif

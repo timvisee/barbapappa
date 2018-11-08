@@ -111,12 +111,25 @@ return [
         'noMembers' => 'Dis crew be nay members...',
         'memberSince' => 'Member since',
         'lastVisit' => 'Last visit',
-        'editMember' => 'Edit member',
-        'deleteMember' => 'Sink member',
         'deleteQuestion' => 'Yer \'bout to remove dis member from our crew. Ye be sure ye want to continue?',
         'memberRemoved' => 'Th\' member be sunk.',
         'memberUpdated' => 'Member changes saved.',
         'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a member may introduce significant security issues.',
+    ],
+
+    /**
+     * Community economy pages.
+     */
+    'economies' => [
+        'title' => 'Booties',
+        'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Click a booty to manage it, or create new booty for a new bar.',
+        'noEconomies' => 'Dis crew be nay booties...',
+        'createEconomy' => 'Create booty',
+        'economyCreated' => 'Th\' booty be created.',
+        'deleteQuestion' => 'Yer \'bout to sink dis booty from our crew. Ye be sure ye want to continue?',
+        'economyDeleted' => 'Th\' booty be sunk.',
+        'economyUpdated' => 'Booty changes saved.',
+        'namePlaceholder' => 'Our booty',
     ],
 
     /**
@@ -168,8 +181,6 @@ return [
         'noMembers' => 'Dis bar be nay members...',
         'memberSince' => 'Member since',
         'lastVisit' => 'Last visit',
-        'editMember' => 'Edit member',
-        'deleteMember' => 'Sink member',
         'deleteQuestion' => 'Yer \'bout to remove dis member from our bar. Ye be sure ye want to continue?',
         'memberRemoved' => 'Th\' member be sunk.',
         'memberUpdated' => 'Member changes saved.',
