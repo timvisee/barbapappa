@@ -35,6 +35,57 @@ class EconomyController extends Controller {
             ->with('economy', $economy);
     }
 
+    /**
+     * The page to delete a community economy.
+     *
+     * @return Response
+     */
+    public function delete($communityId, $economyId) {
+        // Get the community, and the economy
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        return view('community.economy.delete')
+            ->with('economy', $economy);
+    }
+
+    /**
+     * Delete a community economy.
+     *
+     * @return Response
+     */
+    public function doDelete($communityId, $economyId) {
+        // Get the community, find the economy
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // TODO: ensure deletion is allowed (and no users are using it)
+
+        // Delete the economy
+        $economy->delete();
+
+        // Redirect to the index page after deleting
+        return redirect()
+            ->route('community.economy.index', ['communityId' => $communityId])
+            ->with('success', __('pages.economies.economyDeleted'));
+    }
+
+    /**
+     * The permission required for viewing.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsView() {
+        return CommunityRoles::presetManager();
+    }
+
+    /**
+     * The permission required for managing such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsManage() {
+        return CommunityRoles::presetAdmin();
+    }
+
 
 
 
@@ -86,57 +137,5 @@ class EconomyController extends Controller {
         return redirect()
             ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
             ->with('success', __('pages.communityMembers.memberUpdated'));
-    }
-
-    /**
-     * The page to delete a community member.
-     *
-     * @return Response
-     */
-    public function delete($communityId, $memberId) {
-        // Get the community, find the member
-        $community = \Request::get('community');
-        $member = $community->users()->where('user_id', $memberId)->firstOrfail();
-
-        return view('community.member.delete')
-            ->with('member', $member);
-    }
-
-    /**
-     * Make a member leave the community.
-     *
-     * @return Response
-     */
-    public function doDelete($communityId, $memberId) {
-        // Get the community, find the member
-        $community = \Request::get('community');
-        $member = $community->users()->where('user_id', $memberId)->firstOrfail();
-
-        // TODO: do not allow deletion if admin
-        // TODO: do not allow deletion of self
-
-        // Delete the member
-        $community->leave($member);
-
-        // Redirect to the index page after deleting
-        return redirect()
-            ->route('community.member.index', ['communityId' => $communityId])
-            ->with('success', __('pages.communityMembers.memberRemoved'));
-    }
-
-    /**
-     * The permission required for viewing.
-     * @return PermsConfig The permission configuration.
-     */
-    public static function permsView() {
-        return CommunityRoles::presetManager();
-    }
-
-    /**
-     * The permission required for managing such as editing and deleting.
-     * @return PermsConfig The permission configuration.
-     */
-    public static function permsManage() {
-        return CommunityRoles::presetAdmin();
     }
 }
