@@ -26,7 +26,7 @@
                 $locales[$entry] = __('lang.name', [], $entry);
         ?>
 
-        <div class="field">
+        <div class="field {{ ErrorRenderer::hasError('language') ? 'error' : '' }}">
             {{ Form::label('language', __('lang.language')) }}
 
             <div class="ui fluid selection dropdown">

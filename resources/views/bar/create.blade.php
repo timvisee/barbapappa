@@ -47,6 +47,26 @@
 
         <div class="ui divider"></div>
 
+        <div class="field {{ ErrorRenderer::hasError('economy') ? 'error' : '' }}">
+            {{ Form::label('economy', __('pages.community.economy')) }}
+
+            <div class="ui fluid selection dropdown">
+                <input type="hidden" name="economy">
+                <i class="dropdown icon"></i>
+
+                <div class="default text">@lang('misc.unspecified')</div>
+                <div class="menu">
+                    @foreach($community->economies()->get() as $economy)
+                        <div class="item" data-value="{{ $economy->id }}">{{ $economy->name }}</div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{ ErrorRenderer::inline('economy') }}
+        </div>
+
+        <div class="ui divider"></div>
+
         <div class="inline field {{ ErrorRenderer::hasError('visible') ? 'error' : '' }}">
             <div class="ui checkbox">
                 <input type="checkbox"

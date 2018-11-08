@@ -100,6 +100,7 @@ return [
         'publicDescription' => 'Allow pirates be joined with no secret.',
         'created' => 'Th\' crew be created.',
         'updated' => 'Th\' crew be updated.',
+        'economy' => 'Booty',
     ],
 
     /**
@@ -170,6 +171,7 @@ return [
         'publicDescription' => 'Allow pirates be joined with no secret.',
         'created' => 'Th\' bar be created.',
         'updated' => 'Th\' bar be updated.',
+        'mustCreateEconomyFirst' => 'To create a bar, ye must create booty first.',
     ],
 
     /**

@@ -28,6 +28,17 @@ class BarController extends Controller {
      * @return Response
      */
     public function create() {
+        // Get the community
+        $community = \Request::get('community');
+
+        // Redirect to the economy creation page if theres no economy
+        if($community->economies()->count() == 0) {
+            // TODO: redirect the user back to this page after economy creation
+            return redirect()
+                ->route('community.economy.create', ['communityId' => $community->id])
+                ->with('error', __('pages.bar.mustCreateEconomyFirst'));
+        }
+
         return view('bar.create');
     }
 
@@ -39,8 +50,12 @@ class BarController extends Controller {
      * @return Response
      */
     public function doCreate(Request $request) {
+        // Get the community
+        $community = \Request::get('community');
+
         // Validate
         $this->validate($request, [
+            'economy' => ['required', ValidationDefaults::communityEconomy($community)],
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::barSlug(),
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
@@ -48,14 +63,9 @@ class BarController extends Controller {
             'slug.regex' => __('pages.bar.slugFieldRegexError'),
         ]);
 
-        // Get the community
-        $community = \Request::get('community');
-
-        // TODO: let the user specify the economy to use
-
         // Create the bar
         $bar = $community->bars()->create([
-            'economy_id' => $community->economies()->firstOrFail()->id,
+            'economy_id' => $request->input('economy'),
             'name' => $request->input('name'),
             'slug' => $request->has('slug') ? $request->input('slug') : null,
             'password' => $request->has('password') ? $request->input('password') : null,
@@ -110,12 +120,14 @@ class BarController extends Controller {
      * @return Response
      */
     public function update(Request $request) {
-        // Get the bar and session user
+        // Get the community, bar and session user
+        $community = \Request::get('community');
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
 
         // Validate
         $this->validate($request, [
+            'economy' => ['required', ValidationDefaults::communityEconomy($community)],
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::barSlug($bar),
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
@@ -124,6 +136,7 @@ class BarController extends Controller {
         ]);
 
         // Change the name properties
+        $bar->economy_id = $request->input('economy');
         $bar->name = $request->input('name');
         $bar->slug = $request->has('slug') ? $request->input('slug') : null;
         $bar->password = $request->has('password') ? $request->input('password') : null;
