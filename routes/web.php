@@ -8,6 +8,7 @@ use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
+use App\Http\Controllers\EconomyCurrencyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +144,32 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::put('/edit', 'EconomyController@doEdit')->name('community.economy.doEdit');
                     Route::get('/delete', 'EconomyController@delete')->name('community.economy.delete');
                     Route::delete('/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
+                });
+
+                // Supported economy currencies
+                Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
+
+                    // Create, require manage perms
+                    Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
+                        Route::get('/add', 'EconomyCurrencyController@create')->name('community.economy.currency.create');
+                        Route::post('/', 'EconomyCurrencyController@doCreate')->name('community.economy.currency.doCreate');
+                    });
+
+                    // Specific
+                    Route::prefix('/{economyId}')->group(function() {
+                        // Show
+                        Route::get('/', 'EconomyCurrencyController@show')->name('community.economy.currency.show');
+
+                        // Edit/delete, require manager perms
+                        Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
+                            Route::get('/edit', 'EconomyCurrencyController@edit')->name('community.economy.currency.edit');
+                            Route::put('/edit', 'EconomyCurrencyController@doEdit')->name('community.economy.currency.doEdit');
+                            Route::get('/remove', 'EconomyCurrencyController@delete')->name('community.economy.currency.delete');
+                            Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
+                        });
+                    });
                 });
             });
         });
