@@ -49,6 +49,6 @@ class Economy extends Model {
      * @return List of supported currencies.
      */
     public function supportedCurrencies() {
-        return $this->hasMany('App\Models\CurrencySupport');
+        return $this->hasMany('App\Models\CurrencySupport')->with('currency');
     }
 }
