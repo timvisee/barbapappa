@@ -134,6 +134,20 @@ return [
     ],
 
     /**
+     * Community economy supported currency pages.
+     */
+    'supportedCurrencies' => [
+        'title' => 'Enabled currencies',
+        'description' => 'Dis page shows \'n overview of enabled currencies in th\' economy.<br>At least one currency must be enabled to use dis economy for a bar.<br>Add new supported currency, or click one to manage.',
+        'noCurrencies' => 'Dis community be nay enabled currencies...',
+        'createCurrency' => 'Add currency',
+        'currencyCreated' => 'Th\' currency be added.',
+        'deleteQuestion' => 'Yer \'bout to sink dis currency from dis booty. Ye be sure ye want to continue?',
+        'currencyDeleted' => 'Th\' currency be sunk.',
+        'currencyUpdated' => 'Currency changes saved.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

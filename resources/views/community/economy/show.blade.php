@@ -2,6 +2,7 @@
 
 @php
     use \App\Http\Controllers\EconomyController;
+    use \App\Http\Controllers\EconomyCurrencyController;
 @endphp
 
 @section('content')
@@ -25,6 +26,17 @@
             @endif
         </tbody>
     </table>
+
+    @if(perms(EconomyCurrencyController::permsView()))
+        <p>
+            <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                    class="ui button basic">
+                {{-- TODO: proper translation --}}
+                {{-- @lang('misc.edit') --}}
+                Currencies
+            </a>
+        </p>
+    @endif
 
     @if(perms(EconomyController::permsManage()))
         <p>

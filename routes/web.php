@@ -158,7 +158,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     });
 
                     // Specific
-                    Route::prefix('/{economyId}')->group(function() {
+                    Route::prefix('/{supportedCurrencyId}')->group(function() {
                         // Show
                         Route::get('/', 'EconomyCurrencyController@show')->name('community.economy.currency.show');
 

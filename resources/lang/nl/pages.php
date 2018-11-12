@@ -134,6 +134,20 @@ return [
     ],
 
     /**
+     * Community economy supported currency pages.
+     */
+    'supportedCurrencies' => [
+        'title' => 'Ingeschakelde valuta\'s',
+        'description' => 'Op deze pagina zie je een overzicht van de ingeschakelde valuta\'s voor deze economie.<br>Tenminste één valuta moet ingeschakeld zijn om de economie te kunnen gebruiken voor een bar.<br>Voeg een nieuwe valuta toe, of klik op een valuta om deze te beheren.',
+        'noCurrencies' => 'Deze economie heeft geen valuta\'s',
+        'createCurrency' => 'Valuta toevoegen',
+        'currencyCreated' => 'Valuta aangemaakt',
+        'deleteQuestion' => 'Je staat op het punt deze valuta te verwijderen van deze economie. Weet je zeker dat je door wilt gaan?',
+        'currencyDeleted' => 'De valuta is verwijderd.',
+        'currencyUpdated' => 'Valuta aanpassingen opgeslagen.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [
