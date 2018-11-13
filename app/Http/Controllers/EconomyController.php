@@ -109,7 +109,7 @@ class EconomyController extends Controller {
 
         // Redirect to the show view after editing
         return redirect()
-            ->route('community.economy.show', ['communityId' => $communityId, 'economyId' => $economyId])
+            ->route('community.economy.index', ['communityId' => $communityId])
             ->with('success', __('pages.economies.economyUpdated'));
     }
 

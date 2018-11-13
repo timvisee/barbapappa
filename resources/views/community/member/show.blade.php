@@ -18,16 +18,16 @@
                 <td>@lang('misc.role')</td>
                 <td>{{ CommunityRoles::roleName($member->pivot->role) }}</td>
             </tr>
-            <tr>
-                <td>@lang('pages.communityMembers.memberSince')</td>
-                <td>{{ $member->pivot->created_at }}</td>
-            </tr>
             @if($member->pivot->visited_at != null)
                 <tr>
                     <td>@lang('pages.communityMembers.lastVisit')</td>
                     <td>{{ $member->pivot->visited_at }}</td>
                 </tr>
             @endif
+            <tr>
+                <td>@lang('pages.communityMembers.memberSince')</td>
+                <td>{{ $member->pivot->created_at }}</td>
+            </tr>
             @if($member->pivot->created_at != $member->pivot->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>
@@ -39,14 +39,16 @@
 
     @if(perms(CommunityMemberController::permsManage()))
         <p>
-            <a href="{{ route('community.member.edit', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
-                    class="ui button basic secondary">
-                @lang('misc.edit')
-            </a>
-            <a href="{{ route('community.member.delete', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
-                    class="ui button basic negative">
-                @lang('misc.delete')
-            </a>
+            <div class="ui buttons">
+                <a href="{{ route('community.member.edit', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
+                        class="ui button secondary">
+                    @lang('misc.edit')
+                </a>
+                <a href="{{ route('community.member.delete', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
+                        class="ui button negative">
+                    @lang('misc.delete')
+                </a>
+            </div>
         </p>
     @endif
 
