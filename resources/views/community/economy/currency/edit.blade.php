@@ -27,10 +27,6 @@
         <div class="ui message">
             <div class="header">@lang('pages.supportedCurrencies.changeCurrencyTitle')</div>
             <p>@lang('pages.supportedCurrencies.changeCurrencyDescription')</p>
-            <a href="{{ route('community.economy.currency.delete', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
-                    class="ui button basic small">
-                @lang('misc.remove')
-            </a>
         </div>
 
         <div class="field disabled">
