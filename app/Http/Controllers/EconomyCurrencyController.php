@@ -148,38 +148,41 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * The page to delete a community economy.
+     * The page to delete a supported currency of an economy.
      *
      * @return Response
      */
-    public function delete($communityId, $economyId) {
+    public function delete($communityId, $economyId, $supportedCurrencyId) {
         // Get the community, and the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
 
         return view('community.economy.currency.delete')
-            ->with('economy', $economy);
+            ->with('economy', $economy)
+            ->with('currency', $currency);
     }
 
     /**
-     * Delete a community economy.
+     * Delete a supported currency of an economy.
      *
      * @return Response
      */
-    public function doDelete($communityId, $economyId) {
+    public function doDelete($communityId, $economyId, $supportedCurrencyId) {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
 
-        // TODO: ensure deletion is allowed (and no users are using it)
+        // TODO: ensure deletion is allowed
 
-        // Delete the economy
-        $economy->delete();
+        // Delete the supported currency configuration
+        $currency->delete();
 
         // Redirect to the index page after deleting
         return redirect()
-            ->route('community.economy.currency.index', ['communityId' => $communityId])
-            ->with('success', __('pages.economies.economyDeleted'));
+            ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economy->id])
+            ->with('success', __('pages.supportedCurrencies.currencyDeleted'));
     }
 
     /**

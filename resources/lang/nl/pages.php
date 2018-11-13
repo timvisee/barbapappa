@@ -143,6 +143,7 @@ return [
         'createCurrency' => 'Valuta toevoegen',
         'currencyCreated' => 'Valuta aangemaakt',
         'deleteQuestion' => 'Je staat op het punt deze valuta te verwijderen van deze economie. Weet je zeker dat je door wilt gaan?',
+        'deleteVoidNotice' => 'Als je deze valuta verwijderd, zullen alle ingestelde prijzen in deze valuta verwijderd worden in bars die gebruik maken van deze economie.<br>Je kunt de valuta ook tijdelijk uitschakelen door deze aan te passen, zodat je de valuta later weer kunt inschakelen zonder alle prijzen opnieuw in te vullen.',
         'currencyDeleted' => 'De valuta is verwijderd.',
         'currencyUpdated' => 'Valuta aanpassingen opgeslagen.',
         'enabledTitle' => 'Valuta inschakelen',

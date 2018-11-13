@@ -139,10 +139,11 @@ return [
     'supportedCurrencies' => [
         'title' => 'Enabled currencies',
         'description' => 'This page shows an overview of the enabled currencies in the economy.<br>At least one currency must be enabled to use this economy for a bar.<br>Add a new supported currency, or click on one to manage it.',
-        'noCurrencies' => 'This community has no enabled currencies...',
+        'noCurrencies' => 'This economy has no enabled currencies...',
         'createCurrency' => 'Add currency',
         'currencyCreated' => 'The currency has been added to the economy.',
-        'deleteQuestion' => 'You\'re about to delete this currency from this economy. Are you sure you want to continue?',
+        'deleteQuestion' => 'You\'re about to remove this currency from this economy. Are you sure you want to continue?',
+        'deleteVoidNotice' => 'When you remove this currency, all configured product prices for this currency will be voided in bars that use this economy.<br>You might want to disable this currency instead by changing it, which allows you to enable it again at a later time without having to reenter all prices again.',
         'currencyDeleted' => 'The currency has been removed.',
         'currencyUpdated' => 'Currency changes saved.',
         'enabledTitle' => 'Enable currency',

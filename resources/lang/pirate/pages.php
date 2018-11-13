@@ -139,10 +139,11 @@ return [
     'supportedCurrencies' => [
         'title' => 'Enabled currencies',
         'description' => 'Dis page shows \'n overview of enabled currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add new supported currency, or click one to manage.',
-        'noCurrencies' => 'Dis community be nay enabled currencies...',
+        'noCurrencies' => 'Dis booty be nay enabled currencies...',
         'createCurrency' => 'Add currency',
         'currencyCreated' => 'Th\' currency be added.',
         'deleteQuestion' => 'Yer \'bout to sink dis currency from dis booty. Ye be sure ye want to continue?',
+        'deleteVoidNotice' => 'When ye remove dis booty, all configured product prices for dis currency will be voided in bars dat use dis booty.<br>Ye may want to disable dis currency instead by changing it, which allows yer to enable it again later without having to reenter all prices again.',
         'currencyDeleted' => 'Th\' currency be sunk.',
         'currencyUpdated' => 'Currency changes saved.',
         'enabledTitle' => 'Enable currency',
