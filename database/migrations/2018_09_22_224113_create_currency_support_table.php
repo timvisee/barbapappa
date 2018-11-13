@@ -29,6 +29,8 @@ class CreateCurrencySupportTable extends Migration {
                 ->references('id')
                 ->on('currencies')
                 ->onDelete('restrict');
+
+            $table->unique(['economy_id', 'currency_id']);
         });
     }
 

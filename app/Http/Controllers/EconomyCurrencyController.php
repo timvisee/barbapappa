@@ -36,7 +36,7 @@ class EconomyCurrencyController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $supportedCurrencyId) {
-        // Get the community, find economy, query currencies
+        // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
@@ -87,7 +87,7 @@ class EconomyCurrencyController extends Controller {
             'currency' => array_merge(['required'], ValidationDefaults::economySupportedCurrency($economy)),
         ]);
 
-        // Create an economy and save
+        // Create the supported currency configuration and save
         $currency = $economy->supportedCurrencies()->create([
             'enabled' => is_checked($request->input('enabled')),
             'currency_id' => $request->input('currency'),
@@ -96,50 +96,55 @@ class EconomyCurrencyController extends Controller {
             'product_price_default' => 1,
         ]);
 
-        // Redirect to the show view after editing
+        // Redirect to the show view after creation
         return redirect()
             ->route('community.economy.currency.show', ['communityId' => $communityId, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id])
             ->with('success', __('pages.supportedCurrencies.currencyCreated'));
     }
 
     /**
-     * The edit page for a community economy.
+     * The edit page for a supported currency of an economy.
      *
      * @return Response
      */
-    public function edit($communityId, $economyId) {
-        // Get the community, find the economy
+    public function edit($communityId, $economyId, $supportedCurrencyId) {
+        // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
 
         // Show the edit view
         return view('community.economy.currency.edit')
-            ->with('economy', $economy);
+            ->with('economy', $economy)
+            ->with('currency', $currency);
     }
 
     /**
-     * Edit a community economy.
+     * Edit a supported currency of an economy.
      *
      * @return Response
      */
-    public function doEdit(Request $request, $communityId, $economyId) {
-        // Validate
-        $this->validate($request, [
-            'name' => 'required|' . ValidationDefaults::NAME,
-        ]);
+    public function doEdit(Request $request, $communityId, $economyId, $supportedCurrencyId) {
+        // TODO: validate future price default property
+        // // Validate
+        // $this->validate($request, [
+        //     'name' => 'required|' . ValidationDefaults::NAME,
+        // ]);
 
-        // Get the community, find the economy
+        // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
 
         // Update the properties
-        $economy->name = $request->input('name');
-        $economy->save();
+        $currency->enabled = is_checked($request->input('enabled'));
+        $currency->allow_wallet = is_checked($request->input('allow_wallet'));
+        $currency->save();
 
         // Redirect to the show view after editing
         return redirect()
-            ->route('community.economy.currency.show', ['communityId' => $communityId, 'economyId' => $economyId])
-            ->with('success', __('pages.economies.economyUpdated'));
+            ->route('community.economy.currency.show', ['communityId' => $communityId, 'economyId' => $economyId, 'supportedCurrencyId' => $currency->id])
+            ->with('success', __('pages.supportedCurrencies.currencyUpdated'));
     }
 
     /**
