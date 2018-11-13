@@ -150,7 +150,7 @@ return [
         'enabledDescription' => 'Stel in of deze valuta in bars is ingeschakeld die gebruik maken van deze economie. Barleden kunnen geen producten kopen met deze valuta als uitgeschakeld, en moeten een ander valuta gebruiken, of wachten totdat de valuta weer is ingeschakeld.',
         'changeCurrencyTitle' => 'Valuta aanpassen?',
         'changeCurrencyDescription' => 'De valuta kan niet direct worden aangepast. Om de valuta aan te passen moet je deze configuratie verwijderen, en een nieuwe valuta toevoegen aan deze economie.',
-        'allowWallets' => 'Portemonnees toestaan',
+        'allowWallets' => 'Portemonnee maken toestaan',
         'allowWalletsDescription' => 'Met deze optie stel je in of barleden een nieuwe persoonlijke portemonnee aan kunnen maken voor deze valuta. Huidige portemonnees blijven altijd bestaan.',
         'noCurrenciesToAdd' => 'Er zijn geen valutas die je kunt toevoegen. Vraag de website administrator om een valuta te configureren.',
         'noMoreCurrenciesToAdd' => 'Er zijn geen andere valutas om toe te voegen.',

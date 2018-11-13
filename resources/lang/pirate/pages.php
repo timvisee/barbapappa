@@ -150,7 +150,7 @@ return [
         'enabledDescription' => 'Specify whether dis currency be enabled in bars dat arrr using dis booty. If disabled, bar members won\'t be able to purchase products with dis currency, \'n must use a different currency if available until it is enabled again.',
         'changeCurrencyTitle' => 'Change currency?',
         'changeCurrencyDescription' => 'Th\' currency nay be changed directly. To change th\' currency, ye must remove dis configuration and add a new one to dis booty.',
-        'allowWallets' => 'Allow wallets',
+        'allowWallets' => 'Allow wallet creation',
         'allowWalletsDescription' => 'With dis option ye specify whether bar members be create a new personal wallet for dis currency. Existing wallets always be kept afloat.',
         'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
         'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
