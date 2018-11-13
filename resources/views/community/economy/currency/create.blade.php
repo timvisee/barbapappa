@@ -62,6 +62,8 @@
             {{ ErrorRenderer::inline('allow_wallet') }}
         </div>
 
+        <div class="ui divider hidden"></div>
+
         <button class="ui button primary" type="submit">@lang('misc.add')</button>
         <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                 class="ui button basic">

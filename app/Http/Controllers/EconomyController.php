@@ -80,10 +80,12 @@ class EconomyController extends Controller {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $currencies = $economy->supportedCurrencies()->get();
 
         // Show the edit view
         return view('community.economy.edit')
-            ->with('economy', $economy);
+            ->with('economy', $economy)
+            ->with('currencies', $currencies);
     }
 
     /**

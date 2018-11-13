@@ -15,36 +15,6 @@
                 <td>{{ $economy->name }}</td>
             </tr>
             <tr>
-                <td>
-                    @lang('pages.supportedCurrencies.title')
-                    ({{ $currencies->count() }})
-                </td>
-                <td>
-                    @if($currencies->isNotEmpty())
-                        <div class="ui bulleted list">
-                            @forelse($currencies as $currency)
-                                <div class="item">
-                                    <a href="{{ route('community.economy.currency.show', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}">
-                                        {{ $currency->displayName}}
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <p><i>None</i></p>
-                    @endif
-
-                    @if(perms(EconomyCurrencyController::permsView()))
-                        <p>
-                            <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                                    class="mini ui button basic">
-                                @lang('misc.manage')
-                            </a>
-                        </p>
-                    @endif
-                </td>
-            </tr>
-            <tr>
                 <td>@lang('misc.createdAt')</td>
                 <td>{{ $economy->created_at }}</td>
             </tr>
@@ -70,16 +40,30 @@
                 </a>
             </div>
         @endif
-
-        @if(perms(EconomyCurrencyController::permsView()))
-            <div class="ui buttons">
-                <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                        class="ui button">
-                    @lang('misc.currencies')
-                </a>
-            </div>
-        @endif
     </p>
+
+    @if(perms(EconomyCurrencyController::permsView()))
+        <div class="ui divider hidden"></div>
+
+        <div class="ui top attached vertical menu fluid">
+            <h5 class="ui item header">
+                @lang('misc.currencies')
+                ({{ $currencies->count() }})
+            </h5>
+            @forelse($currencies as $currency)
+                <a class="item"
+                        href="{{ route('community.economy.currency.show', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}">
+                    {{ $currency->displayName}}
+                </a>
+            @endforeach
+        </div>
+        <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                class="ui bottom attached button">
+            @lang('misc.manage')
+        </a>
+
+        <div class="ui divider hidden"></div>
+    @endif
 
     <p>
         <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
