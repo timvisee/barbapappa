@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="ui header">{{ $economy->name }}</h2>
+    <h2 class="ui header">{{ $currency->name }}</h2>
 
     {!! Form::open(['action' => ['EconomyCurrencyController@doEdit', $community->human_id, $economy->id, $currency->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
         <div class="ui message">
@@ -27,6 +27,10 @@
         <div class="ui message">
             <div class="header">@lang('pages.supportedCurrencies.changeCurrencyTitle')</div>
             <p>@lang('pages.supportedCurrencies.changeCurrencyDescription')</p>
+            <a href="{{ route('community.economy.currency.delete', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
+                    class="ui button basic small">
+                @lang('misc.remove')
+            </a>
         </div>
 
         <div class="field disabled">
