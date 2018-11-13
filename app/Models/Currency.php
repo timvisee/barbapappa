@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Mail;
  *
  * @property-read int id
  * @property-read string name
+ * @property-read string displayName
  * @property-read string code
  * @property-read string symbol
  * @property-read string format
@@ -25,6 +26,38 @@ use Illuminate\Support\Facades\Mail;
  * @property-read Carbon updated_at
  */
 class Currency extends Model {
+
+    /**
+     * Get dynamic properties.
+     *
+     * @param string $name Property name.
+     *
+     * @return mixed|string Result.
+     */
+    public function __get($name) {
+        switch($name) {
+            case 'displayName':
+                return $this->name . ': ' . $this->symbol;
+            default:
+                return parent::__get($name);
+        }
+    }
+
+    /**
+     * Check whether dynamic properties exist.
+     *
+     * @param string $name Property name.
+     *
+     * @return bool True if exists, false if not.
+     */
+    public function __isset($name) {
+        switch($name) {
+            case 'displayName':
+                return true;
+            default:
+                return parent::__isset($name);
+        }
+    }
 
     /**
      * Get the currency support entries for bars, that use this currency.

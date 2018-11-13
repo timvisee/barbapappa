@@ -145,7 +145,12 @@ return [
         'deleteQuestion' => 'You\'re about to delete this currency from this economy. Are you sure you want to continue?',
         'currencyDeleted' => 'The currency has been removed.',
         'currencyUpdated' => 'Currency changes saved.',
+        'enabledTitle' => 'Enable currency?',
+        'enabledDescription' => 'Specify whether this currency is enabled in bars that are using this economy. If disabled, bar members won\'t be able to purchase products with this currency, and must use a different currency if available until it is enabled again.',
         'allowWallets' => 'Allow wallets',
+        'allowWalletsDescription' => 'With this option you can specify whether bar members can create a personal wallet for this currency.',
+        'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
+        'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
     ],
 
     /**

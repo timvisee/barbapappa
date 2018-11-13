@@ -145,7 +145,12 @@ return [
         'deleteQuestion' => 'Yer \'bout to sink dis currency from dis booty. Ye be sure ye want to continue?',
         'currencyDeleted' => 'Th\' currency be sunk.',
         'currencyUpdated' => 'Currency changes saved.',
+        'enabledTitle' => 'Enable currency?',
+        'enabledDescription' => 'Specify whether dis currency be enabled in bars dat arrr using dis economy. If disabled, bar members won\'t be able to purchase products with dis currency, \'n must use a different currency if available until it is enabled again.',
         'allowWallets' => 'Allow wallets',
+        'allowWalletsDescription' => 'With dis option ye specify whether bar members be create a personal wallet for dis currency.',
+        'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
+        'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
     ],
 
     /**

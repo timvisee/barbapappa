@@ -145,7 +145,12 @@ return [
         'deleteQuestion' => 'Je staat op het punt deze valuta te verwijderen van deze economie. Weet je zeker dat je door wilt gaan?',
         'currencyDeleted' => 'De valuta is verwijderd.',
         'currencyUpdated' => 'Valuta aanpassingen opgeslagen.',
+        'enabledTitle' => 'Valuta inschakelen?',
+        'enabledDescription' => 'Stel in of deze valuta in bars is ingeschakeld die gebruik maken van deze economie. Barleden kunnen geen producten kopen met deze valuta als uitgeschakeld, en moeten een ander valuta gebruiken, of wachten totdat de valuta weer is ingeschakeld.',
         'allowWallets' => 'Portemonnees toestaan',
+        'allowWalletsDescription' => 'Met deze optie stel je in of barleden een persoonlijke portemonnee aan kunnen maken voor deze valuta.',
+        'noCurrenciesToAdd' => 'Er zijn geen valutas die je kunt toevoegen. Vraag de website administrator om een valuta te configureren.',
+        'noMoreCurrenciesToAdd' => 'Er zijn geen andere valutas om toe te voegen.',
     ],
 
     /**

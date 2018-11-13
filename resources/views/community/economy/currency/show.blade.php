@@ -15,10 +15,7 @@
             </tr>
             <tr>
                 <td>@lang('misc.currency')</td>
-                <td>
-                    {{ $currency->name }}
-                    ({{ $currency->symbol }})
-                </td>
+                <td>{{ $currency->displayName }}</td>
             </tr>
             <tr>
                 <td>@lang('pages.supportedCurrencies.allowWallets')</td>

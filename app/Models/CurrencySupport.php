@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Mail;
  * @property int id
  * @property int economy_id
  * @property int currency_id
+ * @property-read string displayName
  * @property-read string name
  * @property-read string symbol
  * @property bool enabled
@@ -31,6 +32,13 @@ class CurrencySupport extends Model {
 
     protected $table = "currency_support";
 
+    protected $fillable = [
+        'enabled',
+        'currency_id',
+        'allow_wallet',
+        'product_price_default',
+    ];
+
     /**
      * Get dynamic properties.
      *
@@ -39,13 +47,35 @@ class CurrencySupport extends Model {
      * @return mixed|string Result.
      */
     public function __get($name) {
-        switch ($name) {
+        switch($name) {
+            case 'displayName':
+                return $this->currency !== null ? $this->currency->displayName : '?';
             case 'name':
                 return $this->currency !== null ? $this->currency->name : '?';
             case 'symbol':
                 return $this->currency !== null ? $this->currency->symbol : '?';
             default:
                 return parent::__get($name);
+        }
+    }
+
+    /**
+     * Check whether dynamic properties exist.
+     *
+     * @param string $name Property name.
+     *
+     * @return bool True if exists, false if not.
+     */
+    public function __isset($name) {
+        switch($name) {
+            case 'displayName':
+                return true;
+            case 'name':
+                return true;
+            case 'symbol':
+                return $this->currency !== null;
+            default:
+                return parent::__isset($name);
         }
     }
 

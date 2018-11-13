@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
-use App\Perms\CommunityRoles;
+use App\Models\Currency;
+use App\Models\CurrencySupport;
 use App\Perms\Builder\Config as PermsConfig;
+use App\Perms\CommunityRoles;
 
 class EconomyCurrencyController extends Controller {
 
@@ -53,11 +55,19 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
+        $usedCurrencies = $economy->supportedCurrencies()->pluck('currency_id');
+        $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
+
+        // Make sure there's a currency that can be added
+        if($currencies->isEmpty()) {
+            return redirect()
+                ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economyId])
+                ->with('error', __('pages.supportedCurrencies.' . ($usedCurrencies->isNotEmpty() ? 'noMoreCurrenciesToAdd' : 'noCurrenciesToAdd')));
+        }
 
         return view('community.economy.currency.create')
             ->with('economy', $economy)
-            ->with('currency', $currency);
+            ->with('currencies', $currencies);
     }
 
     /**
@@ -65,24 +75,31 @@ class EconomyCurrencyController extends Controller {
      *
      * @return Response
      */
-    public function doCreate(Request $request, $communityId) {
+    public function doCreate(Request $request, $communityId, $economyId) {
+        // Get the community, find economy, query currencies
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $usedCurrencies = $economy->supportedCurrencies()->pluck('currency_id');
+        $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
+
         // Validate
         $this->validate($request, [
-            'name' => 'required|' . ValidationDefaults::NAME,
+            'currency' => array_merge(['required'], ValidationDefaults::economySupportedCurrency($economy)),
         ]);
 
-        // Get the community
-        $community = \Request::get('community');
-
         // Create an economy and save
-        $economy = $community->economies()->create([
-            'name' => $request->input('name'),
+        $currency = $economy->supportedCurrencies()->create([
+            'enabled' => is_checked($request->input('enabled')),
+            'currency_id' => $request->input('currency'),
+            'allow_wallet' => is_checked($request->input('allow_wallet')),
+            // TODO: define the proper value here
+            'product_price_default' => 1,
         ]);
 
         // Redirect to the show view after editing
         return redirect()
-            ->route('community.economy.currency.show', ['communityId' => $communityId, 'economyId' => $economy->id])
-            ->with('success', __('pages.economies.economyCreated'));
+            ->route('community.economy.currency.show', ['communityId' => $communityId, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id])
+            ->with('success', __('pages.supportedCurrencies.currencyCreated'));
     }
 
     /**

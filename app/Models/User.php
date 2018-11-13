@@ -53,7 +53,7 @@ class User extends Model {
      * @return mixed|string Result.
      */
     public function __get($name) {
-        switch ($name) {
+        switch($name) {
             case 'name':
                 return $this->first_name . ' ' . $this->last_name;
             case 'email':
@@ -71,7 +71,7 @@ class User extends Model {
      * @return bool True if exists, false if not.
      */
     public function __isset($name) {
-        switch ($name) {
+        switch($name) {
             case 'name':
                 return true;
             case 'email':
