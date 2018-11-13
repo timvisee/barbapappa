@@ -30,9 +30,11 @@ class EconomyController extends Controller {
         // Get the community, find economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $currencies = $economy->supportedCurrencies()->get();
 
         return view('community.economy.show')
-            ->with('economy', $economy);
+            ->with('economy', $economy)
+            ->with('currencies', $currencies);
     }
 
     /**
@@ -78,10 +80,12 @@ class EconomyController extends Controller {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $currencies = $economy->supportedCurrencies()->get();
 
         // Show the edit view
         return view('community.economy.edit')
-            ->with('economy', $economy);
+            ->with('economy', $economy)
+            ->with('currencies', $currencies);
     }
 
     /**
@@ -105,7 +109,7 @@ class EconomyController extends Controller {
 
         // Redirect to the show view after editing
         return redirect()
-            ->route('community.economy.show', ['communityId' => $communityId, 'economyId' => $economyId])
+            ->route('community.economy.index', ['communityId' => $communityId])
             ->with('success', __('pages.economies.economyUpdated'));
     }
 

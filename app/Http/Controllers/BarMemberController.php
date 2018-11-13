@@ -75,7 +75,7 @@ class BarMemberController extends Controller {
 
         // Redirect to the show view after editing
         return redirect()
-            ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+            ->route('bar.member.index', ['barId' => $barId])
             ->with('success', __('pages.barMembers.memberUpdated'));
     }
 

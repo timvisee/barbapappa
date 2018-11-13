@@ -27,32 +27,48 @@
         </tbody>
     </table>
 
+    <p>
+        @if(perms(EconomyController::permsManage()))
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                        class="ui button secondary">
+                    @lang('misc.edit')
+                </a>
+                <a href="{{ route('community.economy.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                        class="ui button negative">
+                    @lang('misc.delete')
+                </a>
+            </div>
+        @endif
+    </p>
+
     @if(perms(EconomyCurrencyController::permsView()))
-        <p>
-            <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                    class="ui button basic">
-                {{-- TODO: proper translation --}}
-                {{-- @lang('misc.edit') --}}
-                Currencies
-            </a>
-        </p>
+        <div class="ui divider hidden"></div>
+
+        <div class="ui top attached vertical menu fluid">
+            <h5 class="ui item header">
+                @lang('misc.currencies')
+                ({{ $currencies->count() }})
+            </h5>
+            @forelse($currencies as $currency)
+                <a class="item"
+                        href="{{ route('community.economy.currency.show', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}">
+                    {{ $currency->displayName}}
+                </a>
+            @endforeach
+        </div>
+        <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                class="ui bottom attached button">
+            @lang('misc.manage')
+        </a>
+
+        <div class="ui divider hidden"></div>
     @endif
 
-    @if(perms(EconomyController::permsManage()))
-        <p>
-            <a href="{{ route('community.economy.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                    class="ui button basic secondary">
-                @lang('misc.edit')
-            </a>
-            <a href="{{ route('community.economy.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                    class="ui button basic negative">
-                @lang('misc.delete')
-            </a>
-        </p>
-    @endif
-
-    <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
-            class="ui button basic">
-        @lang('general.goBack')
-    </a>
+    <p>
+        <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
+                class="ui button basic">
+            @lang('general.goBack')
+        </a>
+    </p>
 @endsection

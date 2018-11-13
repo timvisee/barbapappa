@@ -75,7 +75,7 @@ class CommunityMemberController extends Controller {
 
         // Redirect to the show view after editing
         return redirect()
-            ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
+            ->route('community.member.index', ['communityId' => $communityId])
             ->with('success', __('pages.communityMembers.memberUpdated'));
     }
 

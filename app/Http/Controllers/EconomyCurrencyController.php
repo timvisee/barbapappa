@@ -99,7 +99,7 @@ class EconomyCurrencyController extends Controller {
 
         // Redirect to the show view after creation
         return redirect()
-            ->route('community.economy.currency.show', ['communityId' => $communityId, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id])
+            ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economy->id])
             ->with('success', __('pages.supportedCurrencies.currencyCreated'));
     }
 
@@ -144,7 +144,7 @@ class EconomyCurrencyController extends Controller {
 
         // Redirect to the show view after editing
         return redirect()
-            ->route('community.economy.currency.show', ['communityId' => $communityId, 'economyId' => $economyId, 'supportedCurrencyId' => $currency->id])
+            ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economyId])
             ->with('success', __('pages.supportedCurrencies.currencyUpdated'));
     }
 
