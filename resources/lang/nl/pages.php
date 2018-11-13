@@ -126,7 +126,7 @@ return [
         'description' => 'Op deze pagina zie je een overzicht van alle economieën binnen deze groep.<br>Klik op een economy om deze te beheren, of maak een nieuwe aan voor een nieuwe bar.',
         'noEconomies' => 'Deze groep heeft geen economieën...',
         'createEconomy' => 'Economie aanmaken',
-        'economyCreated' => 'De economie is aangemaakt.',
+        'economyCreated' => 'De economie is aangemaakt. Voeg nu een valuta toe.',
         'deleteQuestion' => 'Je staat op het punt deze economie te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
         'economyDeleted' => 'De economie is verwijderd.',
         'economyUpdated' => 'Economie aanpassingen opgeslagen.',
