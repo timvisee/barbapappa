@@ -11,8 +11,7 @@
     <div class="ui vertical menu fluid">
         @forelse($currencies as $currency)
             <a href="{{ route('community.economy.currency.show', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}" class="item">
-                {{ $currency->currency->name }}
-                ({{ $currency->currency->symbol }})
+                {{ $currency->name }}
             </a>
         @empty
             <div class="item">

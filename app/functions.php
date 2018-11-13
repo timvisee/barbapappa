@@ -124,3 +124,18 @@ if(!function_exists('is_checked')) {
         return $value != null && ($value == 'true' || $value == 'on' || $value == '1');
     }
 }
+
+// Custom function to render yes or no
+if(!function_exists('yesno')) {
+    /**
+     * Print yes or no depending on the given value.
+     * The `is_checked` function is used to determine whehter a value should be
+     * yes.
+     *
+     * @param string $value The value.
+     * @return string Yes or no.
+     */
+    function yesno($value) {
+        return __('general.' . (is_checked($value) ? 'yes' : 'no'));
+    }
+}

@@ -145,6 +145,7 @@ return [
         'deleteQuestion' => 'Yer \'bout to sink dis currency from dis booty. Ye be sure ye want to continue?',
         'currencyDeleted' => 'Th\' currency be sunk.',
         'currencyUpdated' => 'Currency changes saved.',
+        'allowWallets' => 'Allow wallets',
     ],
 
     /**

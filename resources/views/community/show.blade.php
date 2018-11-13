@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <td>Joined</td>
-                <td>{{ $joined ? "Yes" : "No" }}</td>
+                <td>{{ yesno($joined) }}</td>
             </tr>
             <tr>
                 <td>Slug</td>

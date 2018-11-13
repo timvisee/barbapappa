@@ -145,6 +145,7 @@ return [
         'deleteQuestion' => 'Je staat op het punt deze valuta te verwijderen van deze economie. Weet je zeker dat je door wilt gaan?',
         'currencyDeleted' => 'De valuta is verwijderd.',
         'currencyUpdated' => 'Valuta aanpassingen opgeslagen.',
+        'allowWallets' => 'Portemonnees toestaan',
     ],
 
     /**

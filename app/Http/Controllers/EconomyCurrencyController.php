@@ -37,11 +37,11 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currencies = $economy->supportedCurrencies()->get();
+        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
 
         return view('community.economy.currency.show')
             ->with('economy', $economy)
-            ->with('currencies', $currencies);
+            ->with('currency', $currency);
     }
 
     /**
@@ -53,9 +53,11 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
 
         return view('community.economy.currency.create')
-            ->with('economy', $economy);
+            ->with('economy', $economy)
+            ->with('currency', $currency);
     }
 
     /**

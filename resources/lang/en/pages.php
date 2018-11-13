@@ -145,6 +145,7 @@ return [
         'deleteQuestion' => 'You\'re about to delete this currency from this economy. Are you sure you want to continue?',
         'currencyDeleted' => 'The currency has been removed.',
         'currencyUpdated' => 'Currency changes saved.',
+        'allowWallets' => 'Allow wallets',
     ],
 
     /**

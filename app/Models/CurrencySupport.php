@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Mail;
  * @property int id
  * @property int economy_id
  * @property int currency_id
+ * @property-read string name
+ * @property-read string symbol
  * @property bool enabled
  * @property bool allow_wallet
  * @property int product_price_default
@@ -28,6 +30,24 @@ use Illuminate\Support\Facades\Mail;
 class CurrencySupport extends Model {
 
     protected $table = "currency_support";
+
+    /**
+     * Get dynamic properties.
+     *
+     * @param string $name Property name.
+     *
+     * @return mixed|string Result.
+     */
+    public function __get($name) {
+        switch ($name) {
+            case 'name':
+                return $this->currency !== null ? $this->currency->name : '?';
+            case 'symbol':
+                return $this->currency !== null ? $this->currency->symbol : '?';
+            default:
+                return parent::__get($name);
+        }
+    }
 
     /**
      * Get the specified currency information.
