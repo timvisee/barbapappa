@@ -35,11 +35,13 @@ return [
     'lastChanged' => 'Laatst aangepast',
     'slug' => 'URL-pad',
     'currency' => 'Valuta',
+    'currencies' => 'Valuta\'s',
     'symbol' => 'Symbool',
     'enable' => 'Inschakelen',
     'enabled' => 'Ingeschakeld',
     'disable' => 'Uitschakelen',
     'disabled' => 'Uitgeschakeld',
+    'manage' => 'Beheren',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',

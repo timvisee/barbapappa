@@ -34,21 +34,25 @@
         </tbody>
     </table>
 
-    @if(perms(EconomyCurrencyController::permsManage()))
-        <p>
-            <a href="{{ route('community.economy.currency.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
-                    class="ui button basic secondary">
-                @lang('misc.change')
-            </a>
-            <a href="{{ route('community.economy.currency.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
-                    class="ui button basic negative">
-                @lang('misc.remove')
-            </a>
-        </p>
-    @endif
+    <p>
+        @if(perms(EconomyCurrencyController::permsManage()))
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.currency.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
+                        class="ui button secondary">
+                    @lang('misc.change')
+                </a>
+                <a href="{{ route('community.economy.currency.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
+                        class="ui button negative">
+                    @lang('misc.remove')
+                </a>
+            </div>
+        @endif
+    </p>
 
-    <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-            class="ui button basic">
-        @lang('general.goBack')
-    </a>
+    <p>
+        <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                class="ui button basic">
+            @lang('general.goBack')
+        </a>
+    </p>
 @endsection

@@ -15,6 +15,36 @@
                 <td>{{ $economy->name }}</td>
             </tr>
             <tr>
+                <td>
+                    @lang('pages.supportedCurrencies.title')
+                    ({{ $currencies->count() }})
+                </td>
+                <td>
+                    @if($currencies->isNotEmpty())
+                        <div class="ui bulleted list">
+                            @forelse($currencies as $currency)
+                                <div class="item">
+                                    <a href="{{ route('community.economy.currency.show', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}">
+                                        {{ $currency->displayName}}
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p><i>None</i></p>
+                    @endif
+
+                    @if(perms(EconomyCurrencyController::permsView()))
+                        <p>
+                            <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                                    class="mini ui button basic">
+                                @lang('misc.manage')
+                            </a>
+                        </p>
+                    @endif
+                </td>
+            </tr>
+            <tr>
                 <td>@lang('misc.createdAt')</td>
                 <td>{{ $economy->created_at }}</td>
             </tr>
@@ -27,32 +57,34 @@
         </tbody>
     </table>
 
-    @if(perms(EconomyCurrencyController::permsView()))
-        <p>
-            <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                    class="ui button basic">
-                {{-- TODO: proper translation --}}
-                {{-- @lang('misc.edit') --}}
-                Currencies
-            </a>
-        </p>
-    @endif
+    <p>
+        @if(perms(EconomyController::permsManage()))
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                        class="ui button secondary">
+                    @lang('misc.edit')
+                </a>
+                <a href="{{ route('community.economy.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                        class="ui button negative">
+                    @lang('misc.delete')
+                </a>
+            </div>
+        @endif
 
-    @if(perms(EconomyController::permsManage()))
-        <p>
-            <a href="{{ route('community.economy.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                    class="ui button basic secondary">
-                @lang('misc.edit')
-            </a>
-            <a href="{{ route('community.economy.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                    class="ui button basic negative">
-                @lang('misc.delete')
-            </a>
-        </p>
-    @endif
+        @if(perms(EconomyCurrencyController::permsView()))
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                        class="ui button">
+                    @lang('misc.currencies')
+                </a>
+            </div>
+        @endif
+    </p>
 
-    <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
-            class="ui button basic">
-        @lang('general.goBack')
-    </a>
+    <p>
+        <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
+                class="ui button basic">
+            @lang('general.goBack')
+        </a>
+    </p>
 @endsection

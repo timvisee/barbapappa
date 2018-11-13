@@ -35,11 +35,13 @@ return [
     'lastChanged' => 'Last changed',
     'slug' => 'Slug',
     'currency' => 'Currency',
+    'currencies' => 'Currencies',
     'symbol' => 'Symbol',
     'enable' => 'Enable',
     'enabled' => 'Enabled',
     'disable' => 'Disable',
     'disabled' => 'Disabled',
+    'manage' => 'Manage',
 
     'cannotBeUndone' => 'Th\' operation nay be undone.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',
