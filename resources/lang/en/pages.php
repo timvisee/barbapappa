@@ -151,7 +151,7 @@ return [
         'changeCurrencyTitle' => 'Change currency?',
         'changeCurrencyDescription' => 'The currency can\'t be changed directly. To change the currency, you must remove this configuration and add a new one to this economy.',
         'allowWallets' => 'Allow wallets',
-        'allowWalletsDescription' => 'With this option you can specify whether bar members can create a personal wallet for this currency.',
+        'allowWalletsDescription' => 'With this option you can specify whether bar members can create a new personal wallet for this currency. Existing wallets will always be kept.',
         'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
         'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
     ],

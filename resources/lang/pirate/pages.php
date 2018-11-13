@@ -151,7 +151,7 @@ return [
         'changeCurrencyTitle' => 'Change currency?',
         'changeCurrencyDescription' => 'Th\' currency nay be changed directly. To change th\' currency, ye must remove dis configuration and add a new one to dis booty.',
         'allowWallets' => 'Allow wallets',
-        'allowWalletsDescription' => 'With dis option ye specify whether bar members be create a personal wallet for dis currency.',
+        'allowWalletsDescription' => 'With dis option ye specify whether bar members be create a new personal wallet for dis currency. Existing wallets always be kept afloat.',
         'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
         'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
     ],
