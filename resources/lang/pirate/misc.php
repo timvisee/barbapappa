@@ -38,6 +38,8 @@ return [
     'symbol' => 'Symbol',
     'enable' => 'Enable',
     'enabled' => 'Enabled',
+    'disable' => 'Disable',
+    'disabled' => 'Disabled',
 
     'cannotBeUndone' => 'Th\' operation nay be undone.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',

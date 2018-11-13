@@ -23,11 +23,12 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currencies = $economy->supportedCurrencies()->get();
+        $currencies = $economy->supportedCurrencies()->withDisabled()->get();
 
         return view('community.economy.currency.index')
             ->with('economy', $economy)
-            ->with('currencies', $currencies);
+            ->with('enabled', $currencies->filter(function($c) { return $c->enabled; }))
+            ->with('disabled', $currencies->filter(function($c) { return !$c->enabled; }));
     }
 
     /**
@@ -39,7 +40,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
+        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         return view('community.economy.currency.show')
             ->with('economy', $economy)
@@ -55,7 +56,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $usedCurrencies = $economy->supportedCurrencies()->pluck('currency_id');
+        $usedCurrencies = $economy->supportedCurrencies()->withDisabled()->pluck('currency_id');
         $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
 
         // Make sure there's a currency that can be added
@@ -79,7 +80,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $usedCurrencies = $economy->supportedCurrencies()->pluck('currency_id');
+        $usedCurrencies = $economy->supportedCurrencies()->withDisabled()->pluck('currency_id');
         $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
 
         // Validate
@@ -111,7 +112,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
+        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         // Show the edit view
         return view('community.economy.currency.edit')
@@ -134,7 +135,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
+        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         // Update the properties
         $currency->enabled = is_checked($request->input('enabled'));
@@ -156,7 +157,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, and the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
+        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         return view('community.economy.currency.delete')
             ->with('economy', $economy)
@@ -172,7 +173,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->findOrFail($supportedCurrencyId);
+        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         // TODO: ensure deletion is allowed
 

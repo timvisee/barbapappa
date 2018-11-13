@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-use App\Mail\Password\Reset;
-use App\Managers\PasswordResetManager;
-use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+
+use App\Mail\Password\Reset;
+use App\Managers\PasswordResetManager;
+use App\Scopes\EnabledScope;
+use App\Utils\EmailRecipient;
 
 /**
  * CurrencySupport model.
@@ -38,6 +40,11 @@ class CurrencySupport extends Model {
         'allow_wallet',
         'product_price_default',
     ];
+
+    public static function boot() {
+        parent::boot();
+        static::addGlobalScope(new EnabledScope);
+    }
 
     /**
      * Get dynamic properties.
@@ -77,6 +84,13 @@ class CurrencySupport extends Model {
             default:
                 return parent::__isset($name);
         }
+    }
+
+    /**
+     * Disable the enabled scope, and also return the disabled entities.
+     */
+    public function scopeWithDisabled($query) {
+        return $query->withoutGlobalScope(EnabledScope::class);
     }
 
     /**

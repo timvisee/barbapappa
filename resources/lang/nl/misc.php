@@ -38,6 +38,8 @@ return [
     'symbol' => 'Symbool',
     'enable' => 'Inschakelen',
     'enabled' => 'Ingeschakeld',
+    'disable' => 'Uitschakelen',
+    'disabled' => 'Uitgeschakeld',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',
