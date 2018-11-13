@@ -126,11 +126,34 @@ return [
         'description' => 'This page shows an overview of the economies available in this community.<br>Click on an economy to manage it, or create a new one for a new bar.',
         'noEconomies' => 'This community has no economies...',
         'createEconomy' => 'Create economy',
-        'economyCreated' => 'The economy has been created.',
+        'economyCreated' => 'The economy has been created. Please add and configure a currency now.',
         'deleteQuestion' => 'You\'re about to delete this economy from this community. Are you sure you want to continue?',
         'economyDeleted' => 'The economy has been removed.',
         'economyUpdated' => 'Economy changes saved.',
         'namePlaceholder' => 'Main economy',
+    ],
+
+    /**
+     * Community economy supported currency pages.
+     */
+    'supportedCurrencies' => [
+        'title' => 'Enabled currencies',
+        'description' => 'This page shows an overview of the enabled currencies in the economy.<br>At least one currency must be enabled to use this economy for a bar.<br>Add a new supported currency, or click on one to manage it.',
+        'noCurrencies' => 'This economy has no enabled currencies...',
+        'createCurrency' => 'Add currency',
+        'currencyCreated' => 'The currency has been added to the economy.',
+        'deleteQuestion' => 'You\'re about to remove this currency from this economy. Are you sure you want to continue?',
+        'deleteVoidNotice' => 'When you remove this currency, all configured product prices for this currency will be voided in bars that use this economy.<br>You might want to disable this currency instead by changing it, which allows you to enable it again at a later time without having to reenter all prices again.',
+        'currencyDeleted' => 'The currency has been removed.',
+        'currencyUpdated' => 'Currency changes saved.',
+        'enabledTitle' => 'Enable currency',
+        'enabledDescription' => 'Specify whether this currency is enabled in bars that are using this economy. If disabled, bar members won\'t be able to purchase products with this currency, and must use a different currency if available until it is enabled again.',
+        'changeCurrencyTitle' => 'Change currency?',
+        'changeCurrencyDescription' => 'The currency can\'t be changed directly. To change the currency, you must remove this configuration and add a new one to this economy.',
+        'allowWallets' => 'Allow wallets',
+        'allowWalletsDescription' => 'With this option you can specify whether bar members can create a new personal wallet for this currency. Existing wallets will always be kept.',
+        'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
+        'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
     ],
 
     /**

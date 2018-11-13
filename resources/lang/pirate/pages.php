@@ -126,11 +126,34 @@ return [
         'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Click a booty to manage it, or create new booty for a new bar.',
         'noEconomies' => 'Dis crew be nay booties...',
         'createEconomy' => 'Create booty',
-        'economyCreated' => 'Th\' booty be created.',
+        'economyCreated' => 'Th\' booty be created. Please add \'n configure a currency now.',
         'deleteQuestion' => 'Yer \'bout to sink dis booty from our crew. Ye be sure ye want to continue?',
         'economyDeleted' => 'Th\' booty be sunk.',
         'economyUpdated' => 'Booty changes saved.',
         'namePlaceholder' => 'Our booty',
+    ],
+
+    /**
+     * Community economy supported currency pages.
+     */
+    'supportedCurrencies' => [
+        'title' => 'Enabled currencies',
+        'description' => 'Dis page shows \'n overview of enabled currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add new supported currency, or click one to manage.',
+        'noCurrencies' => 'Dis booty be nay enabled currencies...',
+        'createCurrency' => 'Add currency',
+        'currencyCreated' => 'Th\' currency be added.',
+        'deleteQuestion' => 'Yer \'bout to sink dis currency from dis booty. Ye be sure ye want to continue?',
+        'deleteVoidNotice' => 'When ye remove dis booty, all configured product prices for dis currency will be voided in bars dat use dis booty.<br>Ye may want to disable dis currency instead by changing it, which allows yer to enable it again later without having to reenter all prices again.',
+        'currencyDeleted' => 'Th\' currency be sunk.',
+        'currencyUpdated' => 'Currency changes saved.',
+        'enabledTitle' => 'Enable currency',
+        'enabledDescription' => 'Specify whether dis currency be enabled in bars dat arrr using dis booty. If disabled, bar members won\'t be able to purchase products with dis currency, \'n must use a different currency if available until it is enabled again.',
+        'changeCurrencyTitle' => 'Change currency?',
+        'changeCurrencyDescription' => 'Th\' currency nay be changed directly. To change th\' currency, ye must remove dis configuration and add a new one to dis booty.',
+        'allowWallets' => 'Allow wallets',
+        'allowWalletsDescription' => 'With dis option ye specify whether bar members be create a new personal wallet for dis currency. Existing wallets always be kept afloat.',
+        'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
+        'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
     ],
 
     /**

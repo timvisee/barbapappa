@@ -5,6 +5,7 @@ namespace App\Helpers;
 use Illuminate\Validation\Rule;
 
 use \App\Models\Community;
+use \App\Models\Economy;
 use \App\Perms\AppRoles;
 use \App\Perms\BarRoles;
 use \App\Perms\CommunityRoles;
@@ -113,14 +114,38 @@ class ValidationDefaults {
     /**
      * Build the community economy validation configuration.
      *
-     * @param int $community The community this configuration is built for.
-     * @return Rule The validation rule.
+     * This checks whether the submitted economy is part of the given community.
+     *
+     * @param int $community The community this configuration is built for.  @return Rule The validation rule.
      */
     public static function communityEconomy(Community $community) {
         return Rule::exists('economies', 'id')
             ->where(function($query) use($community) {
+                // Scope to the current community
                 return $query->where('community_id', $community->id);
             });
+    }
+
+    /**
+     * Build the economy supported currency validation configuration.
+     *
+     * This checks whether the submitted currency within an economy is unique,
+     * and not yet configured.
+     *
+     * Note: this function returns an array of validation rules.
+     *
+     * @param int $economy The economy this configuration is built for.
+     * @return Array An array of validation rules.
+     */
+    public static function economySupportedCurrency(Economy $economy) {
+        return [
+            Rule::exists('currencies', 'id'),
+            Rule::unique('currency_support', 'currency_id')
+                ->where(function($query) use($economy) {
+                    // Scope to the current economy
+                    return $query->where('economy_id', $economy->id);
+                }),
+        ];
     }
 
     /**

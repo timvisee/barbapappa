@@ -126,11 +126,34 @@ return [
         'description' => 'Op deze pagina zie je een overzicht van alle economieën binnen deze groep.<br>Klik op een economy om deze te beheren, of maak een nieuwe aan voor een nieuwe bar.',
         'noEconomies' => 'Deze groep heeft geen economieën...',
         'createEconomy' => 'Economie aanmaken',
-        'economyCreated' => 'De economie is aangemaakt.',
+        'economyCreated' => 'De economie is aangemaakt. Voeg nu een valuta toe.',
         'deleteQuestion' => 'Je staat op het punt deze economie te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
         'economyDeleted' => 'De economie is verwijderd.',
         'economyUpdated' => 'Economie aanpassingen opgeslagen.',
         'namePlaceholder' => 'Hoofdeconomie',
+    ],
+
+    /**
+     * Community economy supported currency pages.
+     */
+    'supportedCurrencies' => [
+        'title' => 'Ingeschakelde valuta\'s',
+        'description' => 'Op deze pagina zie je een overzicht van de ingeschakelde valuta\'s voor deze economie.<br>Tenminste één valuta moet ingeschakeld zijn om de economie te kunnen gebruiken voor een bar.<br>Voeg een nieuwe valuta toe, of klik op een valuta om deze te beheren.',
+        'noCurrencies' => 'Deze economie heeft geen valuta\'s',
+        'createCurrency' => 'Valuta toevoegen',
+        'currencyCreated' => 'Valuta aangemaakt',
+        'deleteQuestion' => 'Je staat op het punt deze valuta te verwijderen van deze economie. Weet je zeker dat je door wilt gaan?',
+        'deleteVoidNotice' => 'Als je deze valuta verwijderd, zullen alle ingestelde prijzen in deze valuta verwijderd worden in bars die gebruik maken van deze economie.<br>Je kunt de valuta ook tijdelijk uitschakelen door deze aan te passen, zodat je de valuta later weer kunt inschakelen zonder alle prijzen opnieuw in te vullen.',
+        'currencyDeleted' => 'De valuta is verwijderd.',
+        'currencyUpdated' => 'Valuta aanpassingen opgeslagen.',
+        'enabledTitle' => 'Valuta inschakelen',
+        'enabledDescription' => 'Stel in of deze valuta in bars is ingeschakeld die gebruik maken van deze economie. Barleden kunnen geen producten kopen met deze valuta als uitgeschakeld, en moeten een ander valuta gebruiken, of wachten totdat de valuta weer is ingeschakeld.',
+        'changeCurrencyTitle' => 'Valuta aanpassen?',
+        'changeCurrencyDescription' => 'De valuta kan niet direct worden aangepast. Om de valuta aan te passen moet je deze configuratie verwijderen, en een nieuwe valuta toevoegen aan deze economie.',
+        'allowWallets' => 'Portemonnees toestaan',
+        'allowWalletsDescription' => 'Met deze optie stel je in of barleden een nieuwe persoonlijke portemonnee aan kunnen maken voor deze valuta. Huidige portemonnees blijven altijd bestaan.',
+        'noCurrenciesToAdd' => 'Er zijn geen valutas die je kunt toevoegen. Vraag de website administrator om een valuta te configureren.',
+        'noMoreCurrenciesToAdd' => 'Er zijn geen andere valutas om toe te voegen.',
     ],
 
     /**
