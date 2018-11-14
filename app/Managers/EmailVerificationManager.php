@@ -103,7 +103,7 @@ class EmailVerificationManager {
         if($verification == null)
             return new EmailVerifyResult(EmailVerifyResult::ERR_INVALID_TOKEN);
         if($verification->isExpired())
-            return new EmailVerifyResult(EmailVerifyResult::ERR_EXPIRED_TOKEn);
+            return new EmailVerifyResult(EmailVerifyResult::ERR_EXPIRED_TOKEN);
 
         // Get the email address, make sure it isn't already verified
         $email = $verification->email()->firstOrFail();
