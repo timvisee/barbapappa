@@ -65,6 +65,10 @@
             {{ ErrorRenderer::inline('economy') }}
         </div>
 
+        <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}">
+            @lang('pages.economies.manage')
+        </a>
+
         <div class="ui divider"></div>
 
         <div class="inline field {{ ErrorRenderer::hasError('visible') ? 'error' : '' }}">

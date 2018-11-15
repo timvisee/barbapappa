@@ -124,6 +124,7 @@ return [
     'economies' => [
         'title' => 'Booties',
         'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Click a booty to manage it, or create new booty for a new bar.',
+        'manage' => 'Manage booties',
         'noEconomies' => 'Dis crew be nay booties...',
         'createEconomy' => 'Create booty',
         'economyCreated' => 'Th\' booty be created. Please add \'n configure a currency now.',
@@ -139,6 +140,7 @@ return [
     'supportedCurrencies' => [
         'title' => 'Enabled currencies',
         'description' => 'Dis page shows \'n overview of enabled currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add new supported currency, or click one to manage.',
+        'change' => 'Change currency',
         'noCurrencies' => 'Dis booty be nay enabled currencies...',
         'createCurrency' => 'Add currency',
         'currencyCreated' => 'Th\' currency be added.',

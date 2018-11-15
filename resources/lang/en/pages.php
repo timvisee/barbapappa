@@ -124,6 +124,7 @@ return [
     'economies' => [
         'title' => 'Economies',
         'description' => 'This page shows an overview of the economies available in this community.<br>Click on an economy to manage it, or create a new one for a new bar.',
+        'manage' => 'Manage economies',
         'noEconomies' => 'This community has no economies...',
         'createEconomy' => 'Create economy',
         'economyCreated' => 'The economy has been created. Please add and configure a currency now.',
@@ -139,6 +140,7 @@ return [
     'supportedCurrencies' => [
         'title' => 'Enabled currencies',
         'description' => 'This page shows an overview of the enabled currencies in the economy.<br>At least one currency must be enabled to use this economy for a bar.<br>Add a new supported currency, or click on one to manage it.',
+        'change' => 'Change currency',
         'noCurrencies' => 'This economy has no enabled currencies...',
         'createCurrency' => 'Add currency',
         'currencyCreated' => 'The currency has been added to the economy.',

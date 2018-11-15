@@ -6,8 +6,8 @@
 
     <p>@lang('pages.supportedCurrencies.deleteVoidNotice')</p>
 
-    <a href="{{ route('community.economy.currency.edit', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}" class="ui button basic small">
-        @lang('misc.change')
+    <a href="{{ route('community.economy.currency.edit', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}">
+        @lang('pages.supportedCurrencies.change')
     </a>
 
     <br />
