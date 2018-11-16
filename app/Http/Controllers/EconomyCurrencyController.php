@@ -23,7 +23,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currencies = $economy->supportedCurrencies()->withDisabled()->get();
+        $currencies = $economy->currencies()->withDisabled()->get();
 
         return view('community.economy.currency.index')
             ->with('economy', $economy)
@@ -40,7 +40,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         return view('community.economy.currency.show')
             ->with('economy', $economy)
@@ -56,14 +56,14 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $usedCurrencies = $economy->supportedCurrencies()->withDisabled()->pluck('currency_id');
+        $usedCurrencies = $economy->currencies()->withDisabled()->pluck('currency_id');
         $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
 
         // Make sure there's a currency that can be added
         if($currencies->isEmpty()) {
             return redirect()
                 ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economyId])
-                ->with('error', __('pages.supportedCurrencies.' . ($usedCurrencies->isNotEmpty() ? 'noMoreCurrenciesToAdd' : 'noCurrenciesToAdd')));
+                ->with('error', __('pages.currencies.' . ($usedCurrencies->isNotEmpty() ? 'noMoreCurrenciesToAdd' : 'noCurrenciesToAdd')));
         }
 
         return view('community.economy.currency.create')
@@ -80,7 +80,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $usedCurrencies = $economy->supportedCurrencies()->withDisabled()->pluck('currency_id');
+        $usedCurrencies = $economy->currencies()->withDisabled()->pluck('currency_id');
         $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
 
         // Validate
@@ -89,7 +89,7 @@ class EconomyCurrencyController extends Controller {
         ]);
 
         // Create the supported currency configuration and save
-        $currency = $economy->supportedCurrencies()->create([
+        $currency = $economy->currencies()->create([
             'enabled' => is_checked($request->input('enabled')),
             'currency_id' => $request->input('currency'),
             'allow_wallet' => is_checked($request->input('allow_wallet')),
@@ -100,7 +100,7 @@ class EconomyCurrencyController extends Controller {
         // Redirect to the show view after creation
         return redirect()
             ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economy->id])
-            ->with('success', __('pages.supportedCurrencies.currencyCreated'));
+            ->with('success', __('pages.currencies.currencyCreated'));
     }
 
     /**
@@ -112,7 +112,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         // Show the edit view
         return view('community.economy.currency.edit')
@@ -135,7 +135,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find economy and supported currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         // Update the properties
         $currency->enabled = is_checked($request->input('enabled'));
@@ -145,7 +145,7 @@ class EconomyCurrencyController extends Controller {
         // Redirect to the show view after editing
         return redirect()
             ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economyId])
-            ->with('success', __('pages.supportedCurrencies.currencyUpdated'));
+            ->with('success', __('pages.currencies.currencyUpdated'));
     }
 
     /**
@@ -157,7 +157,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, and the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         return view('community.economy.currency.delete')
             ->with('economy', $economy)
@@ -173,7 +173,7 @@ class EconomyCurrencyController extends Controller {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->supportedCurrencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
 
         // TODO: ensure deletion is allowed
 
@@ -183,7 +183,7 @@ class EconomyCurrencyController extends Controller {
         // Redirect to the index page after deleting
         return redirect()
             ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economy->id])
-            ->with('success', __('pages.supportedCurrencies.currencyDeleted'));
+            ->with('success', __('pages.currencies.currencyDeleted'));
     }
 
     /**

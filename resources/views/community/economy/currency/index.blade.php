@@ -5,8 +5,8 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">@lang('pages.supportedCurrencies.title') ({{ count($enabled) }})</h2>
-    <p>@lang('pages.supportedCurrencies.description')</p>
+    <h2 class="ui header">@lang('pages.currencies.title') ({{ count($enabled) }})</h2>
+    <p>@lang('pages.currencies.description')</p>
 
     <h3 class="ui header">@lang('misc.enabled')</h3>
     <div class="ui vertical menu fluid">
@@ -16,7 +16,7 @@
             </a>
         @empty
             <div class="item">
-                <i>@lang('pages.supportedCurrencies.noCurrencies')</i>
+                <i>@lang('pages.currencies.noCurrencies')</i>
             </div>
         @endforelse
     </div>
@@ -30,7 +30,7 @@
                 </a>
             @empty
                 <div class="item">
-                    <i>@lang('pages.supportedCurrencies.noCurrencies')</i>
+                    <i>@lang('pages.currencies.noCurrencies')</i>
                 </div>
             @endforelse
         </div>

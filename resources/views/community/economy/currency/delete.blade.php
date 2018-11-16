@@ -2,12 +2,12 @@
 
 @section('content')
     <h2 class="ui header">{{ $currency->name }}</h2>
-    <p>@lang('pages.supportedCurrencies.deleteQuestion')</p>
+    <p>@lang('pages.currencies.deleteQuestion')</p>
 
-    <p>@lang('pages.supportedCurrencies.deleteVoidNotice')</p>
+    <p>@lang('pages.currencies.deleteVoidNotice')</p>
 
     <a href="{{ route('community.economy.currency.edit', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}">
-        @lang('pages.supportedCurrencies.change')
+        @lang('pages.currencies.change')
     </a>
 
     <br />

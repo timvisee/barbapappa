@@ -135,11 +135,11 @@ return [
     ],
 
     /**
-     * Community economy supported currency pages.
+     * Community economy currency pages.
      */
-    'supportedCurrencies' => [
+    'currencies' => [
         'title' => 'Enabled currencies',
-        'description' => 'Dis page shows \'n overview of enabled currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add new supported currency, or click one to manage.',
+        'description' => 'Dis page shows \'n overview of enabled currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add new currency, or click one to manage.',
         'change' => 'Change currency',
         'noCurrencies' => 'Dis booty be nay enabled currencies...',
         'createCurrency' => 'Add currency',

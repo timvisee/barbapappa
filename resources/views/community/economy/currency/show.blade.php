@@ -18,7 +18,7 @@
                 <td>{{ $currency->displayName }}</td>
             </tr>
             <tr>
-                <td>@lang('pages.supportedCurrencies.allowWallets')</td>
+                <td>@lang('pages.currencies.allowWallets')</td>
                 <td>{{ yesno($currency->allow_wallet) }}</td>
             </tr>
             <tr>

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <h2 class="ui header">@lang('pages.supportedCurrencies.createCurrency')</h2>
+    <h2 class="ui header">@lang('pages.currencies.createCurrency')</h2>
 
     {!! Form::open(['action' => ['EconomyCurrencyController@doCreate', $community->human_id, $economy->id], 'method' => 'POST', 'class' => 'ui form']) !!}
         <div class="ui message">
-            <div class="header">@lang('pages.supportedCurrencies.enabledTitle')</div>
-            <p>@lang('pages.supportedCurrencies.enabledDescription')</p>
+            <div class="header">@lang('pages.currencies.enabledTitle')</div>
+            <p>@lang('pages.currencies.enabledDescription')</p>
         </div>
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
@@ -45,8 +45,8 @@
         <div class="ui divider"></div>
 
         <div class="ui message">
-            <div class="header">@lang('pages.supportedCurrencies.allowWallets')</div>
-            <p>@lang('pages.supportedCurrencies.allowWalletsDescription')</p>
+            <div class="header">@lang('pages.currencies.allowWallets')</div>
+            <p>@lang('pages.currencies.allowWalletsDescription')</p>
         </div>
 
         <div class="inline field {{ ErrorRenderer::hasError('allow_wallet') ? 'error' : '' }}">
@@ -56,8 +56,7 @@
                         tabindex="0"
                         class="hidden"
                         checked="checked">
-                {{ Form::label('allow_wallet', __('pages.supportedCurrencies.allowWallets')) }}
-            </div>
+                {{ Form::label('allow_wallet', __('pages.currencies.allowWallets')) }} </div>
             <br />
             {{ ErrorRenderer::inline('allow_wallet') }}
         </div>

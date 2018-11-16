@@ -5,8 +5,8 @@
 
     {!! Form::open(['action' => ['EconomyCurrencyController@doEdit', $community->human_id, $economy->id, $currency->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
         <div class="ui message">
-            <div class="header">@lang('pages.supportedCurrencies.enabledTitle')</div>
-            <p>@lang('pages.supportedCurrencies.enabledDescription')</p>
+            <div class="header">@lang('pages.currencies.enabledTitle')</div>
+            <p>@lang('pages.currencies.enabledDescription')</p>
         </div>
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
@@ -25,8 +25,8 @@
         <div class="ui divider"></div>
 
         <div class="ui message">
-            <div class="header">@lang('pages.supportedCurrencies.changeCurrencyTitle')</div>
-            <p>@lang('pages.supportedCurrencies.changeCurrencyDescription')</p>
+            <div class="header">@lang('pages.currencies.changeCurrencyTitle')</div>
+            <p>@lang('pages.currencies.changeCurrencyDescription')</p>
         </div>
 
         <div class="field disabled">
@@ -46,8 +46,8 @@
         <div class="ui divider"></div>
 
         <div class="ui message">
-            <div class="header">@lang('pages.supportedCurrencies.allowWallets')</div>
-            <p>@lang('pages.supportedCurrencies.allowWalletsDescription')</p>
+            <div class="header">@lang('pages.currencies.allowWallets')</div>
+            <p>@lang('pages.currencies.allowWalletsDescription')</p>
         </div>
 
         <div class="inline field {{ ErrorRenderer::hasError('allow_wallet') ? 'error' : '' }}">
@@ -57,7 +57,7 @@
                         tabindex="0"
                         class="hidden"
                         {{ $currency->allow_wallet ? 'checked="checked"' : '' }}>
-                {{ Form::label('allow_wallet', __('pages.supportedCurrencies.allowWallets')) }}
+                {{ Form::label('allow_wallet', __('pages.currencies.allowWallets')) }}
             </div>
             <br />
             {{ ErrorRenderer::inline('allow_wallet') }}
@@ -70,6 +70,5 @@
                 class="ui button basic">
             @lang('general.cancel')
         </a>
-
     {!! Form::close() !!}
 @endsection

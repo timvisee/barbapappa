@@ -30,7 +30,7 @@ class EconomyController extends Controller {
         // Get the community, find economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currencies = $economy->supportedCurrencies()->get();
+        $currencies = $economy->currencies()->get();
 
         return view('community.economy.show')
             ->with('economy', $economy)
@@ -80,7 +80,7 @@ class EconomyController extends Controller {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currencies = $economy->supportedCurrencies()->get();
+        $currencies = $economy->currencies()->get();
 
         // Show the edit view
         return view('community.economy.edit')

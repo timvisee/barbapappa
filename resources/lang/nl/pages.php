@@ -135,9 +135,9 @@ return [
     ],
 
     /**
-     * Community economy supported currency pages.
+     * Community economy currency pages.
      */
-    'supportedCurrencies' => [
+    'currencies' => [
         'title' => 'Ingeschakelde valuta\'s',
         'description' => 'Op deze pagina zie je een overzicht van de ingeschakelde valuta\'s voor deze economie.<br>Tenminste één valuta moet ingeschakeld zijn om de economie te kunnen gebruiken voor een bar.<br>Voeg een nieuwe valuta toe, of klik op een valuta om deze te beheren.',
         'change' => 'Valuta aanpassen',

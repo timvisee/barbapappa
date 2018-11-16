@@ -48,7 +48,7 @@ class Economy extends Model {
      *
      * @return List of supported currencies.
      */
-    public function supportedCurrencies() {
+    public function currencies() {
         // TODO: eager load by default, in the currency support class itself
         return $this->hasMany('App\Models\CurrencySupport')->with('currency');
     }

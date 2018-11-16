@@ -65,7 +65,7 @@ class Currency extends Model {
      *
      * @return The list of currency support entries.
      */
-    public function supportedCurrencies() {
+    public function currencies() {
         return $this->hasMany('App\Models\CurrencySupport');
     }
 }

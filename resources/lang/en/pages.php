@@ -135,11 +135,11 @@ return [
     ],
 
     /**
-     * Community economy supported currency pages.
+     * Community economy currency pages.
      */
-    'supportedCurrencies' => [
+    'currencies' => [
         'title' => 'Enabled currencies',
-        'description' => 'This page shows an overview of the enabled currencies in the economy.<br>At least one currency must be enabled to use this economy for a bar.<br>Add a new supported currency, or click on one to manage it.',
+        'description' => 'This page shows an overview of the enabled currencies in the economy.<br>At least one currency must be enabled to use this economy for a bar.<br>Add a new currency, or click on one to manage it.',
         'change' => 'Change currency',
         'noCurrencies' => 'This economy has no enabled currencies...',
         'createCurrency' => 'Add currency',
