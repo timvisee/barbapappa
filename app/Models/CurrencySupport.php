@@ -14,7 +14,7 @@ use App\Scopes\EnabledScope;
 use App\Utils\EmailRecipient;
 
 /**
- * CurrencySupport model.
+ * EconomyCurrency model.
  *
  * This defines what currencies are supported in an economy.
  *
@@ -30,9 +30,9 @@ use App\Utils\EmailRecipient;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class CurrencySupport extends Model {
+class EconomyCurrency extends Model {
 
-    protected $table = "currency_support";
+    protected $table = "economy_currencies";
 
     protected $fillable = [
         'enabled',
@@ -103,7 +103,7 @@ class CurrencySupport extends Model {
     }
 
     /**
-     * Get the economy this currency support model is part of.
+     * Get the economy this currency model is part of.
      *
      * @return The economy.
      */

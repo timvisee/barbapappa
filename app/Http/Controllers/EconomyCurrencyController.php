@@ -8,7 +8,7 @@ use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
-use App\Models\CurrencySupport;
+use App\Models\EconomyCurrency;
 use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\CommunityRoles;
 

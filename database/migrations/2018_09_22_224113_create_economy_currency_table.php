@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCurrencySupportTable extends Migration {
+class CreateEconomyCurrencyTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateCurrencySupportTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('currency_support', function(Blueprint $table) {
+        Schema::create('economy_currency', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned();
             $table->integer('currency_id')->unsigned();
@@ -40,6 +40,6 @@ class CreateCurrencySupportTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('currency_support');
+        Schema::dropIfExists('economy_currency');
     }
 }

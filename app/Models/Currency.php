@@ -27,6 +27,8 @@ use Illuminate\Support\Facades\Mail;
  */
 class Currency extends Model {
 
+    protected $table = "currencies";
+
     /**
      * Get dynamic properties.
      *
@@ -66,6 +68,6 @@ class Currency extends Model {
      * @return The list of currency support entries.
      */
     public function currencies() {
-        return $this->hasMany('App\Models\CurrencySupport');
+        return $this->hasMany('App\Models\EconomyCurrency');
     }
 }

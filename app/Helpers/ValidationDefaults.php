@@ -140,7 +140,7 @@ class ValidationDefaults {
     public static function economySupportedCurrency(Economy $economy) {
         return [
             Rule::exists('currencies', 'id'),
-            Rule::unique('currency_support', 'currency_id')
+            Rule::unique('economy_currencies', 'currency_id')
                 ->where(function($query) use($economy) {
                     // Scope to the current economy
                     return $query->where('economy_id', $economy->id);
