@@ -11,7 +11,11 @@
     <h3 class="ui header">@lang('misc.enabled')</h3>
     <div class="ui vertical menu fluid">
         @forelse($enabled as $currency)
-            <a href="{{ route('community.economy.currency.show', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}" class="item">
+            <a href="{{ route('community.economy.currency.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'economyCurrencyId' => $currency->id
+            ]) }}" class="item">
                 {{ $currency->displayName }}
             </a>
         @empty
@@ -25,7 +29,11 @@
         <h3 class="ui header">@lang('misc.disabled')</h3>
         <div class="ui vertical menu fluid">
             @forelse($disabled as $currency)
-                <a href="{{ route('community.economy.currency.show', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}" class="item">
+                <a href="{{ route('community.economy.currency.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'economyCurrencyId' => $currency->id
+                ]) }}" class="item">
                     {{ $currency->displayName }}
                 </a>
             @empty

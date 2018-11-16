@@ -6,7 +6,11 @@
 
     <p>@lang('pages.currencies.deleteVoidNotice')</p>
 
-    <a href="{{ route('community.economy.currency.edit', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}">
+    <a href="{{ route('community.economy.currency.edit', [
+        'communityId' => $community->id,
+        'economyId' => $economy->id,
+        'economyCurrencyId' => $currency->id
+    ]) }}">
         @lang('pages.currencies.change')
     </a>
 
@@ -19,9 +23,18 @@
 
     <br />
 
-    {!! Form::open(['action' => ['EconomyCurrencyController@doDelete', 'communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => [
+        'EconomyCurrencyController@doDelete',
+        'communityId' => $community->human_id,
+        'economyId' => $economy->id,
+        'economyCurrencyId' => $currency->id
+    ], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         <div class="ui buttons">
-            <a href="{{ route('community.economy.currency.show', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
+            <a href="{{ route('community.economy.currency.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'economyCurrencyId' => $currency->id
+            ]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')
             </a>

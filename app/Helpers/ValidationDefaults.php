@@ -127,7 +127,7 @@ class ValidationDefaults {
     }
 
     /**
-     * Build the economy supported currency validation configuration.
+     * Build the economy currency validation configuration.
      *
      * This checks whether the submitted currency within an economy is unique,
      * and not yet configured.
@@ -137,7 +137,7 @@ class ValidationDefaults {
      * @param int $economy The economy this configuration is built for.
      * @return Array An array of validation rules.
      */
-    public static function economySupportedCurrency(Economy $economy) {
+    public static function economyCurrency(Economy $economy) {
         return [
             Rule::exists('currencies', 'id'),
             Rule::unique('economy_currencies', 'currency_id')

@@ -66,7 +66,11 @@
         <div class="ui divider hidden"></div>
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
-        <a href="{{ route('community.economy.currency.show', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
+        <a href="{{ route('community.economy.currency.show', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id,
+            'economyCurrencyId' => $currency->id
+        ]) }}"
                 class="ui button basic">
             @lang('general.cancel')
         </a>

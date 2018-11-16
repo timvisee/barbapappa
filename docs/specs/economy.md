@@ -13,6 +13,6 @@ The economy specifies various money related properties for the bars it is attach
 - `updated_at`: time the economy was last updated at
 
 What is configured inside an economy:  
-- [Supported currencies](/docs/specs/currencies.md#supported-currencies)
+- [Economy currencies](/docs/specs/currencies.md#economy-currencies)
 - [Bank accounts](/docs/specs/bank_accounts.md#bank-accounts)
 - [Economy payment services](/docs/specs/payment_services.md#payment-services)

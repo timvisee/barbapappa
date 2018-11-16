@@ -15,7 +15,7 @@ use App\Perms\CommunityRoles;
 class EconomyCurrencyController extends Controller {
 
     /**
-     * Supported currency for community economy index.
+     * Economy currency for community economy index.
      *
      * @return Response
      */
@@ -36,11 +36,11 @@ class EconomyCurrencyController extends Controller {
      *
      * @return Response
      */
-    public function show($communityId, $economyId, $supportedCurrencyId) {
-        // Get the community, find economy and supported currency
+    public function show($communityId, $economyId, $economyCurrencyId) {
+        // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
 
         return view('community.economy.currency.show')
             ->with('economy', $economy)
@@ -48,7 +48,7 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * Add a new supported currency for a community economy.
+     * Add a new economy currency for a community economy.
      *
      * @return Response
      */
@@ -85,10 +85,10 @@ class EconomyCurrencyController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'currency' => array_merge(['required'], ValidationDefaults::economySupportedCurrency($economy)),
+            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy)),
         ]);
 
-        // Create the supported currency configuration and save
+        // Create the economy currency configuration and save
         $currency = $economy->currencies()->create([
             'enabled' => is_checked($request->input('enabled')),
             'currency_id' => $request->input('currency'),
@@ -104,15 +104,15 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * The edit page for a supported currency of an economy.
+     * The edit page for a economy currency of an economy.
      *
      * @return Response
      */
-    public function edit($communityId, $economyId, $supportedCurrencyId) {
-        // Get the community, find economy and supported currency
+    public function edit($communityId, $economyId, $economyCurrencyId) {
+        // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
 
         // Show the edit view
         return view('community.economy.currency.edit')
@@ -121,21 +121,21 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * Edit a supported currency of an economy.
+     * Edit a economy currency of an economy.
      *
      * @return Response
      */
-    public function doEdit(Request $request, $communityId, $economyId, $supportedCurrencyId) {
+    public function doEdit(Request $request, $communityId, $economyId, $economyCurrencyId) {
         // TODO: validate future price default property
         // // Validate
         // $this->validate($request, [
         //     'name' => 'required|' . ValidationDefaults::NAME,
         // ]);
 
-        // Get the community, find economy and supported currency
+        // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
 
         // Update the properties
         $currency->enabled = is_checked($request->input('enabled'));
@@ -149,15 +149,15 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * The page to delete a supported currency of an economy.
+     * The page to delete a economy currency of an economy.
      *
      * @return Response
      */
-    public function delete($communityId, $economyId, $supportedCurrencyId) {
+    public function delete($communityId, $economyId, $economyCurrencyId) {
         // Get the community, and the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
 
         return view('community.economy.currency.delete')
             ->with('economy', $economy)
@@ -165,19 +165,19 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * Delete a supported currency of an economy.
+     * Delete a economy currency of an economy.
      *
      * @return Response
      */
-    public function doDelete($communityId, $economyId, $supportedCurrencyId) {
+    public function doDelete($communityId, $economyId, $economyCurrencyId) {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($supportedCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
 
         // TODO: ensure deletion is allowed
 
-        // Delete the supported currency configuration
+        // Delete the economy currency configuration
         $currency->delete();
 
         // Redirect to the index page after deleting

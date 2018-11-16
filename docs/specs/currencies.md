@@ -5,7 +5,8 @@ Multiple currencies are supported in this application.
 Administrators are able to manage and configure which currencies are available and which are not.
 Currencies can be added at application runtime, and don't have to be configured beforehand.
 
-Bars can choose which of the available currencies are supported.
+Bars can choose which of the available currencies are supported, by adding them
+as economy currency.
 
 ## Custom currencies
 Custom currencies are currently not supported.
@@ -16,8 +17,8 @@ and must not cause issues with existing money handling logic.
 Transactions and wallets inherently support these custom currencies.
 The custom currencies do have to be excluded from payment methods however. 
 
-## Supported currencies
-All supported currencies must be explicitly added to the economy.
+## Economy currencies
+All economy currencies must be explicitly added to the economy.
 Products inside the economy may specify a price in each currency from then on.
 
 The `allow_wallet` property defines whether users in a bar using this economy are allowed to create a wallet with this currency.
@@ -34,11 +35,11 @@ To better understand the product price default values, see the list below:
   by converting prices from other currencies that are set manually.
   If no manual prices are set on the product, the product doesn't have a price in this currency.
   
-The supported currency model also has an `enabled` field to define whether the currency may be used.
+The economy currency model also has an `enabled` field to define whether the currency may be used.
 If the field is set to `false` (and thus is disabled), the currency should be hidden from users and product prices.
 
-### Supported currency model
-`currency_support`:
+### Economy currency model
+`economy_currencies`:
 - `id`: index
 - `economy_id`: reference to an economy
 - `enabled`: true if enabled and visible, false if disabled and not visible

@@ -37,11 +37,19 @@
     <p>
         @if(perms(EconomyCurrencyController::permsManage()))
             <div class="ui buttons">
-                <a href="{{ route('community.economy.currency.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
+                <a href="{{ route('community.economy.currency.edit', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'economyCurrencyId' => $currency->id
+                ]) }}"
                         class="ui button secondary">
                     @lang('misc.change')
                 </a>
-                <a href="{{ route('community.economy.currency.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}"
+                <a href="{{ route('community.economy.currency.delete', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'economyCurrencyId' => $currency->id
+                ]) }}"
                         class="ui button negative">
                     @lang('misc.remove')
                 </a>

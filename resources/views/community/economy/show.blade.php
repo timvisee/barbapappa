@@ -52,7 +52,11 @@
             </h5>
             @forelse($currencies as $currency)
                 <a class="item"
-                        href="{{ route('community.economy.currency.show', ['communityId' => $community->id, 'economyId' => $economy->id, 'supportedCurrencyId' => $currency->id]) }}">
+                        href="{{ route('community.economy.currency.show', [
+                            'communityId' => $community->id,
+                            'economyId' => $economy->id,
+                            'economyCurrencyId' => $currency->id
+                        ]) }}">
                     {{ $currency->displayName}}
                 </a>
             @endforeach
