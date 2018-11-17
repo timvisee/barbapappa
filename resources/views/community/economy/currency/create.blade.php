@@ -31,7 +31,7 @@
                 <input type="hidden" name="currency" value="{{ $currencies->first()->id }}" />
                 <i class="dropdown icon"></i>
 
-                <div class="default text">@lang('misc.unspecified')</div>
+                <div class="default text">@lang('misc.pleaseSpecify')</div>
                 <div class="menu">
                     @foreach($currencies as $c)
                         <div class="item" data-value="{{ $c->id }}">{{ $c->displayName }}</div>

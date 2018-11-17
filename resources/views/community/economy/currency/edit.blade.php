@@ -36,7 +36,7 @@
                 <input type="hidden" name="currency" value="{{ $currency->currency->id }}" />
                 <i class="dropdown icon"></i>
 
-                <div class="default text">@lang('misc.unspecified')</div>
+                <div class="default text">@lang('misc.pleaseSpecify')</div>
                 <div class="menu">
                     <div class="item" data-value="{{ $currency->currency->id }}">{{ $currency->currency->displayName }}</div>
                 </div>

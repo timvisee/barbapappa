@@ -18,6 +18,7 @@ return [
     'remove' => 'Abandon',
     'saveChanges' => 'Stow changes',
     'unspecified' => 'Unspecified',
+    'pleaseSpecify' => 'Please specify',
     'information' => 'Spyglasses',
     'add' => 'Add',
     'actions' => 'Actions',

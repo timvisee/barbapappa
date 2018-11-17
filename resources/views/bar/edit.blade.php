@@ -54,7 +54,7 @@
                 <input type="hidden" name="economy" value="{{ $bar->economy_id }}">
                 <i class="dropdown icon"></i>
 
-                <div class="default text">@lang('misc.unspecified')</div>
+                <div class="default text">@lang('misc.pleaseSpecify')</div>
                 <div class="menu">
                     @foreach($community->economies()->get() as $economy)
                         <div class="item" data-value="{{ $economy->id }}">{{ $economy->name }}</div>

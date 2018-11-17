@@ -18,6 +18,7 @@ return [
     'remove' => 'Remove',
     'saveChanges' => 'Save changes',
     'unspecified' => 'Unspecified',
+    'pleaseSpecify' => 'Please specify',
     'information' => 'Information',
     'add' => 'Add',
     'actions' => 'Actions',

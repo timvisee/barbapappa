@@ -18,6 +18,7 @@ return [
     'remove' => 'Verwijderen',
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',
+    'pleaseSpecify' => 'Te specificeren',
     'information' => 'Informatie',
     'add' => 'Toevoegen',
     'actions' => 'Acties',

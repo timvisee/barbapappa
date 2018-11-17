@@ -15,7 +15,7 @@
                 <input type="hidden" name="role" value="{{ $member->pivot->role }}">
                 <i class="dropdown icon"></i>
 
-                <div class="default text">@lang('misc.unspecified')</div>
+                <div class="default text">@lang('misc.pleaseSpecify')</div>
                 <div class="menu">
                     @foreach(BarRoles::roles() as $id => $name)
                         <div class="item" data-value="{{ $id }}">{{ $name }}</div>
