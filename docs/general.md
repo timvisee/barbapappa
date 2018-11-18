@@ -6,3 +6,4 @@ Sites having useful pirate speak terms:
 - https://www.piratevoyages.com/pirate-lingo/
 - http://reference.yourdictionary.com/resources/pirate-terms-phrases.html
 - http://www.pirateglossary.com/
+- http://www.playcrossbones.com/Pirate_Talk.php

@@ -107,15 +107,15 @@ return [
      * Community member pages.
      */
     'communityMembers' => [
-        'title' => 'Crew members',
-        'description' => 'Dis page shows th\' overview o\' all crew members.<br>Clicking a member allows ye to remove the member, or change be rank.',
-        'noMembers' => 'Dis crew be nay members...',
-        'memberSince' => 'Member since',
+        'title' => 'Crew maties',
+        'description' => 'Dis page shows th\' overview o\' all crew maties.<br>Clicking a matey allows ye to remove the matey, or change be rank.',
+        'noMembers' => 'Dis crew be nay maties...',
+        'memberSince' => 'Matey since',
         'lastVisit' => 'Last visit',
-        'deleteQuestion' => 'Yer \'bout to remove dis member from our crew. Ye be sure ye want to continue?',
-        'memberRemoved' => 'Th\' member be sunk.',
-        'memberUpdated' => 'Member changes saved.',
-        'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a member may introduce significant security issues.',
+        'deleteQuestion' => 'Yer \'bout to remove dis matey from our crew. Ye be sure ye want to continue?',
+        'memberRemoved' => 'Th\' matey be sunk.',
+        'memberUpdated' => 'Matey changes saved.',
+        'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a matey may introduce significant security issues.',
     ],
 
     /**
@@ -149,11 +149,11 @@ return [
         'currencyDeleted' => 'Th\' currency be sunk.',
         'currencyUpdated' => 'Currency changes saved.',
         'enabledTitle' => 'Enable currency',
-        'enabledDescription' => 'Specify whether dis currency be enabled in bars dat arrr using dis booty. If disabled, bar members won\'t be able to purchase products with dis currency, \'n must use a different currency if available until it is enabled again.',
+        'enabledDescription' => 'Specify whether dis currency be enabled in bars dat arrr using dis booty. If disabled, bar maties won\'t be able to purchase products with dis currency, \'n must use a different currency if available until it is enabled again.',
         'changeCurrencyTitle' => 'Change currency?',
         'changeCurrencyDescription' => 'Th\' currency nay be changed directly. To change th\' currency, ye must remove dis configuration and add a new one to dis booty.',
         'allowWallets' => 'Allow wallet creation',
-        'allowWalletsDescription' => 'With dis option ye specify whether bar members be create a new personal wallet for dis currency. Existing wallets always be kept afloat.',
+        'allowWalletsDescription' => 'With dis option ye specify whether bar mateies be create a new personal wallet for dis currency. Existing wallets always be kept afloat.',
         'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
         'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
     ],
@@ -203,15 +203,15 @@ return [
      * Bar member pages.
      */
     'barMembers' => [
-        'title' => 'Bar members',
-        'description' => 'Dis page shows th\' overview o\' all bar members.<br>Clicking a member allows ye to remove the member, or change be rank.',
-        'noMembers' => 'Dis bar be nay members...',
-        'memberSince' => 'Member since',
+        'title' => 'Bar mateies',
+        'description' => 'Dis page shows th\' overview o\' all bar mateies.<br>Clicking a matey allows ye to remove the matey, or change be rank.',
+        'noMembers' => 'Dis bar be nay mateies...',
+        'memberSince' => 'Matey since',
         'lastVisit' => 'Last visit',
-        'deleteQuestion' => 'Yer \'bout to remove dis member from our bar. Ye be sure ye want to continue?',
-        'memberRemoved' => 'Th\' member be sunk.',
-        'memberUpdated' => 'Member changes saved.',
-        'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a member may introduce significant security issues.',
+        'deleteQuestion' => 'Yer \'bout to remove dis matey from our bar. Ye be sure ye want to continue?',
+        'memberRemoved' => 'Th\' matey be sunk.',
+        'memberUpdated' => 'Matey changes saved.',
+        'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a matey may introduce significant security issues.',
     ],
 
     /**
