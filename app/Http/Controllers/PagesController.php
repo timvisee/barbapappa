@@ -104,8 +104,6 @@ class PagesController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function language($locale = null) {
-        // TODO: Redirect to the page we were going to!
-
         // Get the language manager
         $langManager = langManager();
 
@@ -119,7 +117,7 @@ class PagesController extends Controller {
 
             // Redirect to the dashboard
             return redirect()
-                ->route('index')
+                ->intended(route('index'))
                 ->with('success', __('lang.selectedLanguage'));
 
         } else if(!empty($locale))

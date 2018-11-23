@@ -25,9 +25,8 @@ class SelectLocale {
      */
     public function handle($request, Closure $next) {
         // Redirect to the locale selection screen if needed, don't redirect if already on the language page
-        // TODO: Add the current URL as redirect URL
         if(!langManager()->hasSelectedLocale() && !$request->routeIs('language'))
-            return redirect()->route('language');
+            return redirect()->guest(route('language'));
 
         return $next($request);
     }
