@@ -24,11 +24,14 @@ class RequireGuest {
      * @return Response Response.
      */
     public function handle($request, Closure $next) {
-        // Redirect to the dashboard if the user is authenticated
-        if(barauth()->isAuth())
-            return redirect()
-                ->route('dashboard')
-                ->with('error', __('auth.guestRequired'));
+        // Redirect to the previous page if not logged in, fallback to the dashboard
+        if(barauth()->isAuth()) {
+            if(url()->previous() != url()->current())
+                $url = url()->previous();
+            else
+                $url = route('dashboard');
+            return redirect($url)->with('error', __('auth.guestRequired'));
+        }
 
         return $next($request);
     }

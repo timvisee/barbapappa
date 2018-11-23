@@ -47,7 +47,7 @@ class LoginController extends Controller {
 
         // Redirect the user to the dashboard
         return redirect()
-            ->route('dashboard')
+            ->intended(route('dashboard'))
             ->with('success', __('auth.loggedIn'));
     }
 }

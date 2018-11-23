@@ -25,10 +25,9 @@ class RequireAuth {
      */
     public function handle($request, Closure $next) {
         // Redirect to the login page if not authenticated
-        // TODO: Add the current URL as redirect URL
         if(!barauth()->isAuth())
             return redirect()
-                ->route('login')
+                ->guest(route('login'))
                 ->with('error', __('auth.authRequired'));
 
         return $next($request);
