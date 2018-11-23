@@ -86,12 +86,12 @@ class EmailVerifyController extends Controller {
 
             case EmailVerifyResult::ERR_ALREADY_VERIFIED:
                 return $response
-                    ->route('dashboard')
+                    ->route(barauth()->isAuth() ? 'dashboard' : 'index')
                     ->with('success', __('pages.verifyEmail.alreadyVerified'));
 
             case EmailVerifyResult::OK:
                 return $response
-                    ->route('dashboard')
+                    ->route(barauth()->isAuth() ? 'dashboard' : 'index')
                     ->with('success', __('pages.verifyEmail.verified'));
 
             default:
