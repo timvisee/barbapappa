@@ -10,6 +10,11 @@ class PagesController extends Controller {
      * @return $this
      */
     public function index() {
+        // If the user is logged in, redirect to his last bar
+        if(barauth()->isAuth())
+            return $this->last();
+
+        // Show the normal index page
         return view('pages.index');
     }
 
