@@ -96,7 +96,7 @@ class EconomyCurrency extends Model {
     /**
      * Get the specified currency information.
      *
-     * @return The economy.
+     * @return The currency.
      */
     public function currency() {
         return $this->belongsTo('App\Models\Currency');

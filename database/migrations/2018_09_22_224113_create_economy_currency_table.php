@@ -12,7 +12,7 @@ class CreateEconomyCurrencyTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('economy_currency', function(Blueprint $table) {
+        Schema::create('economy_currencies', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned();
             $table->integer('currency_id')->unsigned();
@@ -40,6 +40,6 @@ class CreateEconomyCurrencyTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('economy_currency');
+        Schema::dropIfExists('economy_currencies');
     }
 }
