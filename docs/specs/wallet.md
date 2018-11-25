@@ -16,6 +16,7 @@ by using different wallets for different kind of transactions managed by the use
 ## Wallet model
 `wallet`:
 - `id`: index
+- `user_id`: reference to the user
 - `economy_id`: reference to the economy
 - `name`: name of the wallet decided by the user
 - `balance`: current wallet balance
