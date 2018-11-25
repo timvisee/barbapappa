@@ -159,6 +159,15 @@ return [
     ],
 
     /**
+     * Wallet pages.
+     */
+    'wallets' => [
+        'title' => 'Portemonnees',
+        'yourWallets' => 'Jouw portemonnees',
+        'economySelectDescription' => 'Via deze pagina vind je al je portemonnees in deze group. Omdat de groep meerdere economieën heeft, moet je er eerst een kiezen om je portemonnees te zien.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

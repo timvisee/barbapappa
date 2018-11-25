@@ -159,6 +159,15 @@ return [
     ],
 
     /**
+     * Wallet pages.
+     */
+    'wallets' => [
+        'title' => 'Wallets',
+        'yourWallets' => 'Your wallets',
+        'economySelectDescription' => 'Through this page you can find all your wallets in this community. Because this community has multiple economies, you must choose one first to list your wallets in it.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

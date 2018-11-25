@@ -82,6 +82,15 @@ class Community extends Model {
     }
 
     /**
+     * Get all wallets created by users in this community.
+     *
+     * @return The wallets.
+     */
+    public function wallets() {
+        return $this->hasManyThrough('App\Models\Wallet', 'App\Models\Economy');
+    }
+
+    /**
      * A list of users that joined this community.
      *
      * @param array [$pivotColumns] An array of pivot columns to include.

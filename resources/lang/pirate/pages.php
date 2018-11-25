@@ -159,6 +159,15 @@ return [
     ],
 
     /**
+     * Wallet pages.
+     */
+    'wallets' => [
+        'title' => 'Wallets',
+        'yourWallets' => 'Yer wallets',
+        'economySelectDescription' => 'Through dis page ye can find all yer wallets in dis crew. \'cause dis community has multiple economies, ye must choose one first to list yer wallets.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [
