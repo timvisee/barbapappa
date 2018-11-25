@@ -31,6 +31,15 @@ class Wallet extends Model {
     protected $table = "wallets";
 
     /**
+     * Get the user this wallet model is from.
+     *
+     * @return The user.
+     */
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    /**
      * Get the economy this wallet model is part of.
      *
      * @return The economy.

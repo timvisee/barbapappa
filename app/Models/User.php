@@ -150,6 +150,15 @@ class User extends Model {
     }
 
     /**
+     * Get the wallets owned by this user.
+     *
+     * @return The wallets.
+     */
+    public function wallets() {
+        return $this->hasMany('App\Models\Wallet');
+    }
+
+    /**
      * Check whether this user has any verified email addresses.
      *
      * @return bool True if the user has any verified email address, false if not.
