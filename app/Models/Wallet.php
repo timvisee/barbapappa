@@ -59,4 +59,21 @@ class Wallet extends Model {
     public function currency() {
         return $this->belongsTo('App\Models\Currency');
     }
+
+    /**
+     * Format the wallet balance as human readable text using the proper
+     * currency format.
+     *
+     * @return string Formatted balance
+     */
+    public function formatBalance($color = true) {
+        // Format the balance
+        $balance = currency_format($this->balance, $this->currency->code);
+
+        // Add color for negative values
+        if($color && $this->balance < 0)
+            $balance = '<span style="color: red;">' . $balance . '</span>';
+
+        return $balance;
+    }
 }

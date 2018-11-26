@@ -33,12 +33,12 @@
                 'economyId' => $economy->id,
                 'walletId' => $wallet->id
             ]) }}" class="item">
-                {{ $wallet->name }}
+                {{ $wallet->name }}:
+                {!! $wallet->formatBalance(); !!}
             </a>
         @empty
             <div class="item">
-                {{-- TODO: proper message here --}}
-                <i>@lang('pages.economies.noEconomies')</i>
+                <i>@lang('pages.wallets.noWallets')</i>
             </div>
         @endforelse
     </div>

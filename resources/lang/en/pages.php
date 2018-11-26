@@ -167,6 +167,7 @@ return [
         'walletEconomies' => 'Wallet economies',
         'yourWallets' => 'Your wallets',
         'economySelectDescription' => 'Wallets in this community are grouped by economy.<br>Select the economy to manage your wallets in it.',
+        'noWallets' => 'You don\'t have any wallets yet...',
     ],
 
     /**

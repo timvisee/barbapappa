@@ -193,13 +193,11 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     // Show
                     Route::get('/', 'WalletController@show')->name('community.wallet.show');
 
-                    // // Edit/delete, require manager perms
-                    // Route::middleware(EconomyController::permsManage()->middleware())->group(function() {
-                    //     Route::get('/edit', 'EconomyController@edit')->name('community.economy.edit');
-                    //     Route::put('/edit', 'EconomyController@doEdit')->name('community.economy.doEdit');
-                    //     Route::get('/delete', 'EconomyController@delete')->name('community.economy.delete');
-                    //     Route::delete('/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
-                    // });
+                    // Edit/delete
+                    Route::get('/edit', 'WalletController@edit')->name('community.wallet.edit');
+                    Route::put('/edit', 'WalletController@doEdit')->name('community.wallet.doEdit');
+                    Route::get('/delete', 'WalletController@delete')->name('community.wallet.delete');
+                    Route::delete('/delete', 'WalletController@doDelete')->name('community.wallet.doDelete');
 
                     // // Supported economy currencies
                     // Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
