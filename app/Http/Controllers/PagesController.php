@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use \App\Models\Bar;
+
 class PagesController extends Controller {
 
     /**
@@ -81,14 +83,16 @@ class PagesController extends Controller {
      */
     public function last() {
         // Obtain the users last bar ID, visit the page if any was found
-        $barId = \DB::table('bar_user')
-            ->where('user_id', barauth()->getSessionUser()->id)
-            ->whereNotNull('visited_at')
-            ->orderBy('visited_at', 'desc')
-            ->pluck('bar_id')
-            ->first();
-        if($barId !== null)
-            return redirect()->route('bar.show', ['barId' => $barId]);
+        $bar = Bar::find(
+            \DB::table('bar_user')
+                ->where('user_id', barauth()->getSessionUser()->id)
+                ->whereNotNull('visited_at')
+                ->orderBy('visited_at', 'desc')
+                ->pluck('bar_id')
+                ->first()
+        );
+        if($bar != null)
+            return redirect()->route('bar.show', ['barId' => $bar->human_id]);
 
         // No last bar, visit the dashboard and tell the user
         return redirect()

@@ -28,7 +28,6 @@
             </a>
         @empty
             <div class="item">
-                {{-- TODO: proper message here --}}
                 <i>@lang('pages.economies.noEconomies')</i>
             </div>
         @endforelse
