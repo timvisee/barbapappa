@@ -149,6 +149,29 @@ class ValidationDefaults {
     }
 
     /**
+     * Build the wallet currency validation configuration.
+     *
+     * This checks whether the submitted currency for a wallet exists and allows
+     * wallet creation.
+     *
+     * Note: this function returns an array of validation rules.
+     *
+     * @param int $economy The economy this configuration is built for.
+     * @return Array An array of validation rules.
+     */
+    public static function walletEconomyCurrency(Economy $economy) {
+        return [
+            Rule::exists('economy_currencies', 'id')
+                ->where(function($query) use($economy) {
+                    // Scope to the current economy and to allowed wallet creation
+                    return $query
+                        ->where('economy_id', $economy->id)
+                        ->where('allow_wallet', true);
+                }),
+        ];
+    }
+
+    /**
      * Build a validator configuration for application role IDs.
      *
      * @return string The validation configuration.

@@ -159,6 +159,26 @@ return [
     ],
 
     /**
+     * Wallet pages.
+     */
+    'wallets' => [
+        'title' => 'Portemonnees',
+        'description' => 'Klik op één van je portemonnees om het te beheren, of maak een nieuwe aan.',
+        'walletEconomies' => 'Portemonee economieën',
+        'yourWallets' => 'Jouw portemonnees',
+        'economySelectDescription' => 'Portemonees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economy om je portemonees te beheren.',
+        'noWallets' => 'Je hebt nog geen portemonnees...',
+        'namePlaceholder' => 'Mijn portemonnee',
+        'createWallet' => 'Portemonnee aanmaken',
+        'walletCreated' => 'De portemonnee is aangemaakt.',
+        'walletUpdated' => 'Portemonnee aanpassingen opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt deze portemonnee te verwijderen. Weet je zeker dat je door wilt gaan?',
+        'cannotDeleteNonZeroBalance' => 'Om deze portemonnee te verwijderen moet het een saldo van precies :zero hebben.',
+        'walletDeleted' => 'De portemonnee is verwijderd.',
+        'cannotCreateNoCurrencies' => 'Je kunt nu geen portemonnee aanmaken. De groep administrator heeft geen valuta geconfigureerd waarbij dit is toegestaan.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

@@ -14,6 +14,7 @@ return [
     'create' => 'Aanmaken',
     'edit' => 'Aanpassen',
     'change' => 'Aanpassen',
+    'rename' => 'Hernoemen',
     'delete' => 'Verwijderen',
     'remove' => 'Verwijderen',
     'saveChanges' => 'Aanpassingen opslaan',

@@ -62,12 +62,21 @@ class Currency extends Model {
     }
 
     /**
-     * Get the currency support entries for bars, that use this currency.
+     * Get the economy currency entries for bars, that use this currency.
      * Note that this might also return disabled currency support entries.
      *
-     * @return The list of currency support entries.
+     * @return The list of economy currency entries.
      */
-    public function currencies() {
+    public function economyCurrencies() {
         return $this->hasMany('App\Models\EconomyCurrency');
+    }
+
+    /**
+     * Get the wallets created by users that use this currency.
+     *
+     * @return The wallets.
+     */
+    public function wallets() {
+        return $this->hasMany('App\Models\Wallet');
     }
 }

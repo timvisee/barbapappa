@@ -52,4 +52,13 @@ class Economy extends Model {
         // TODO: eager load by default, in the economy currency class itself
         return $this->hasMany('App\Models\EconomyCurrency')->with('currency');
     }
+
+    /**
+     * Get the wallets created by users in this economy.
+     *
+     * @return The wallets.
+     */
+    public function wallets() {
+        return $this->hasMany('App\Models\Wallet');
+    }
 }

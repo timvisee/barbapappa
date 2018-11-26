@@ -159,6 +159,26 @@ return [
     ],
 
     /**
+     * Wallet pages.
+     */
+    'wallets' => [
+        'title' => 'Wallets',
+        'description' => 'Click on one of yer wallets to manage it, or create a fresh one.',
+        'walletEconomies' => 'Wallet booties',
+        'yourWallets' => 'Yer wallets',
+        'economySelectDescription' => 'Wallets in dis community be grouped by booty.<br>Select \'the booty to manage yer wallets.',
+        'noWallets' => 'Yer nay be any wallets yet...',
+        'namePlaceholder' => 'My wallet',
+        'createWallet' => 'Create wallet',
+        'walletCreated' => 'Th\' wallet be created.',
+        'walletUpdated' => 'Wallet changes saved.',
+        'deleteQuestion' => 'Yer \'bout to sink this wallet. Ye be sure ye want to continue?',
+        'cannotDeleteNonZeroBalance' => 'To sink dis wallet, be have a balance of exactly :zero.',
+        'walletDeleted' => 'Th\' wallet be sunk.',
+        'cannotCreateNoCurrencies' => 'Ye nay create a wallet. Th\' crew admin did nay configure a currency which allows dis.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

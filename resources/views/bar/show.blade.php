@@ -52,6 +52,11 @@
         </a>
     @endif
 
+    <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
+            class="ui button basic">
+        @lang('pages.wallets.yourWallets')
+    </a>
+
     @if(perms(BarController::permsManage()))
         <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">

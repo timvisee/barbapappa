@@ -159,6 +159,26 @@ return [
     ],
 
     /**
+     * Wallet pages.
+     */
+    'wallets' => [
+        'title' => 'Wallets',
+        'description' => 'Click on one of your wallets to manage it, or create a new one.',
+        'walletEconomies' => 'Wallet economies',
+        'yourWallets' => 'Your wallets',
+        'economySelectDescription' => 'Wallets in this community are grouped by economy.<br>Select the economy to manage your wallets in it.',
+        'noWallets' => 'You don\'t have any wallets yet...',
+        'namePlaceholder' => 'My wallet',
+        'createWallet' => 'Create wallet',
+        'walletCreated' => 'The wallet has been created.',
+        'walletUpdated' => 'Wallet changes saved.',
+        'deleteQuestion' => 'You\'re about to delete this wallet. Are you sure you want to continue?',
+        'cannotDeleteNonZeroBalance' => 'To delete this wallet, it must have a balance of exactly :zero.',
+        'walletDeleted' => 'The wallet has been deleted.',
+        'cannotCreateNoCurrencies' => 'You can\'t create wallet at this moment. The community administrator did not configure a currency which allows this.',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

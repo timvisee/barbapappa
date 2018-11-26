@@ -75,6 +75,11 @@
         </a>
     @endif
 
+    <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}"
+            class="ui button basic">
+        @lang('pages.wallets.yourWallets')
+    </a>
+
     @if(perms(CommunityController::permsManage()))
         <a href="{{ route('community.edit', ['communityId' => $community->human_id]) }}"
                 class="ui button basic">
