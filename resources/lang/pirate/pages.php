@@ -164,7 +164,7 @@ return [
     'wallets' => [
         'title' => 'Wallets',
         'yourWallets' => 'Yer wallets',
-        'economySelectDescription' => 'Through dis page ye can find all yer wallets in dis crew. \'cause dis community has multiple economies, ye must choose one first to list yer wallets.',
+        'economySelectDescription' => 'Wallets in dis community be grouped by booty.<br>Select \'the booty to manage yer wallets.',
     ],
 
     /**

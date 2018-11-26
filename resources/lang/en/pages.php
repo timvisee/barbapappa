@@ -164,7 +164,7 @@ return [
     'wallets' => [
         'title' => 'Wallets',
         'yourWallets' => 'Your wallets',
-        'economySelectDescription' => 'Through this page you can find all your wallets in this community. Because this community has multiple economies, you must choose one first to list your wallets in it.',
+        'economySelectDescription' => 'Wallets in this community are grouped by economy.<br>Select the economy to manage your wallets in it.',
     ],
 
     /**
