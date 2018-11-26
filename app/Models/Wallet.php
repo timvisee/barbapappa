@@ -30,6 +30,12 @@ class Wallet extends Model {
 
     protected $table = "wallets";
 
+    protected $fillable = [
+        'economy_id',
+        'name',
+        'currency_id',
+    ];
+
     /**
      * Get the user this wallet model is from.
      *

@@ -169,8 +169,11 @@ return [
         'economySelectDescription' => 'Wallets in this community are grouped by economy.<br>Select the economy to manage your wallets in it.',
         'noWallets' => 'You don\'t have any wallets yet...',
         'namePlaceholder' => 'My wallet',
+        'createWallet' => 'Create wallet',
+        'walletCreated' => 'The wallet has been created.',
         'walletDeleted' => 'The wallet has been deleted.',
         'walletUpdated' => 'Wallet changes saved.',
+        'cannotCreateNoCurrencies' => 'You can\'t create wallet at this moment. The community administrator did not configure a currency which allows this.',
     ],
 
     /**

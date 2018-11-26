@@ -169,8 +169,11 @@ return [
         'economySelectDescription' => 'Portemonees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economy om je portemonees te beheren.',
         'noWallets' => 'Je hebt nog geen portemonnees...',
         'namePlaceholder' => 'Mijn portemonnee',
+        'createWallet' => 'Portemonnee aanmaken',
+        'walletCreated' => 'De portemonnee is aangemaakt.',
         'walletDeleted' => 'De portemonnee is verwijderd.',
         'walletUpdated' => 'Portemonnee aanpassingen opgeslagen.',
+        'cannotCreateNoCurrencies' => 'Je kunt nu geen portemonnee aanmaken. De groep administrator heeft geen valuta geconfigureerd waarbij dit is toegestaan.',
     ],
 
     /**

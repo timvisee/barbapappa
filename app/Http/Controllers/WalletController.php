@@ -76,61 +76,65 @@ class WalletController extends Controller {
             ->with('wallet', $wallet);
     }
 
-    // /**
-    //  * Add a new economy currency for a community economy.
-    //  *
-    //  * @return Response
-    //  */
-    // public function create($communityId, $economyId) {
-    //     // Get the community, find economy, query currencies
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $usedCurrencies = $economy->currencies()->withDisabled()->pluck('currency_id');
-    //     $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
+    /**
+     * Page for creating a new user wallet.
+     *
+     * @return Response
+     */
+    public function create($communityId, $economyId) {
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
 
-    //     // Make sure there's a currency that can be added
-    //     if($currencies->isEmpty()) {
-    //         return redirect()
-    //             ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economyId])
-    //             ->with('error', __('pages.currencies.' . ($usedCurrencies->isNotEmpty() ? 'noMoreCurrenciesToAdd' : 'noCurrenciesToAdd')));
-    //     }
+        // List the currencies a user can create a wallet for
+        $currencies = $economy->currencies()->where('allow_wallet', true)->get();
 
-    //     return view('community.economy.currency.create')
-    //         ->with('economy', $economy)
-    //         ->with('currencies', $currencies);
-    // }
+        // Show an error if a user can't create a wallet
+        if($currencies->isEmpty()) {
+            return redirect()
+                ->route('community.wallet.list', ['communityId' => $communityId, 'economyId' => $economyId])
+                ->with('error', __('pages.wallets.cannotCreateNoCurrencies'));
+        }
 
-    // /**
-    //  * Create a community economy.
-    //  *
-    //  * @return Response
-    //  */
-    // public function doCreate(Request $request, $communityId, $economyId) {
-    //     // Get the community, find economy, query currencies
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $usedCurrencies = $economy->currencies()->withDisabled()->pluck('currency_id');
-    //     $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
+        // Show the create view
+        return view('community.wallet.create')
+            ->with('economy', $economy)
+            ->with('currencies', $currencies);
+    }
 
-    //     // Validate
-    //     $this->validate($request, [
-    //         'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy)),
-    //     ]);
+    /**
+     * Create a new user wallet.
+     *
+     * @return Response
+     */
+    public function doCreate(Request $request, $communityId, $economyId) {
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
 
-    //     // Create the economy currency configuration and save
-    //     $currency = $economy->currencies()->create([
-    //         'enabled' => is_checked($request->input('enabled')),
-    //         'currency_id' => $request->input('currency'),
-    //         'allow_wallet' => is_checked($request->input('allow_wallet')),
-    //         // TODO: define the proper value here
-    //         'product_price_default' => 1,
-    //     ]);
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'currency' => array_merge(['required'], ValidationDefaults::walletEconomyCurrency($economy)),
+        ]);
 
-    //     // Redirect to the show view after creation
-    //     return redirect()
-    //         ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economy->id])
-    //         ->with('success', __('pages.currencies.currencyCreated'));
-    // }
+        // Find the selected economy currency, get it's currency ID
+        $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
+
+        // Create the wallet
+        $wallet = $user->wallets()->create([
+            'economy_id' => $economyId,
+            'name' => $request->input('name'),
+            'currency_id' => $currencyId,
+        ]);
+
+        // Redirect to the show view after creation
+        return redirect()
+            ->route('community.wallet.list', ['communityId' => $communityId, 'economyId' => $economy->id])
+            ->with('success', __('pages.wallets.walletCreated'));
+    }
 
     /**
      * The edit page for a user wallet.
@@ -159,11 +163,6 @@ class WalletController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $communityId, $economyId, $walletId) {
-        // Validate
-        $this->validate($request, [
-            'name' => 'required|' . ValidationDefaults::NAME,
-        ]);
-
         // Get the user, community, find economy and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -172,6 +171,11 @@ class WalletController extends Controller {
             ->wallets()
             ->where('economy_id', $economyId)
             ->findOrFail($walletId);
+
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
 
         // Update the name
         $wallet->name = $request->input('name');

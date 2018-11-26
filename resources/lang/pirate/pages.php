@@ -169,8 +169,11 @@ return [
         'economySelectDescription' => 'Wallets in dis community be grouped by booty.<br>Select \'the booty to manage yer wallets.',
         'noWallets' => 'Yer nay be any wallets yet...',
         'namePlaceholder' => 'My wallet',
+        'createWallet' => 'Create wallet',
+        'walletCreated' => 'Th\' wallet be created.',
         'walletDeleted' => 'Th\' wallet be sunk.',
         'walletUpdated' => 'Wallet changes saved.',
+        'cannotCreateNoCurrencies' => 'Ye nay create a wallet. Th\' crew admin did nay configure a currency which allows dis.',
     ],
 
     /**
