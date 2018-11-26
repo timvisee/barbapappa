@@ -2,7 +2,7 @@
 
 @section('content')
     <h2 class="ui header">
-        @lang('pages.wallets.title') ({{ count($wallets) }})
+        @lang('pages.wallets.yourWallets') ({{ count($wallets) }})
         <div class="sub header">
             in
             <a href="{{ route('community.show', ['communityId' => $community->id]) }}">

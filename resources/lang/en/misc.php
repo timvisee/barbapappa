@@ -14,6 +14,7 @@ return [
     'create' => 'Create',
     'edit' => 'Edit',
     'change' => 'Change',
+    'rename' => 'Rename',
     'delete' => 'Delete',
     'remove' => 'Remove',
     'saveChanges' => 'Save changes',
