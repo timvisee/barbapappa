@@ -9,6 +9,8 @@ This application requires some installation steps.
 ### Initial setup
 The project can be installed and configured by running the following commands:
 ```
+cd webapp
+
 # Install composer dependencies
 composer install # or update
 
@@ -22,7 +24,7 @@ your database and mail credentials.
 
 ### Database
 To initialize the database with tables, the database migration might be invoked:
-`php artisan migrate`
+`php ./artisan migrate`
 
 If the project is updated, the same command should be invoked as well to update the database structure.
 
@@ -40,7 +42,7 @@ The worker for these queues needs to be started however.
 
 #### Starting the worker
 To start the worker, use the helper script: `./startWorker`  
-Or start it directly (not prioritised): `php artisan queue:work`
+Or start it directly (not prioritised): `php ./artisan queue:work`
 
 #### Keep the worker running
 The worker must be kept running at all times.
@@ -49,7 +51,7 @@ in the Laravel documentation for more information.
 
 #### Restart the worker
 When the project is updated, the worker must be restarted using the helper script: `./restartWorker`  
-Or run the command directly: `php artisan queue:restart`
+Or run the command directly: `php ./artisan queue:restart`
 
 This destroy the worker process.
 It should automatically restart again if the _Supervisor_ is configured correctly.

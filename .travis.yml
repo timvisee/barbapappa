@@ -9,6 +9,7 @@ php:
 
 # Set up the environment, install dependencies and seed the database
 before_script:
+  - cd ./webapp
   - cp .env.travis .env
   - mysql -e 'create database barapp;'
   - composer self-update
