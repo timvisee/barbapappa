@@ -171,8 +171,10 @@ return [
         'namePlaceholder' => 'My wallet',
         'createWallet' => 'Create wallet',
         'walletCreated' => 'Th\' wallet be created.',
-        'walletDeleted' => 'Th\' wallet be sunk.',
         'walletUpdated' => 'Wallet changes saved.',
+        'deleteQuestion' => 'Yer \'bout to sink this wallet. Ye be sure ye want to continue?',
+        'cannotDeleteNonZeroBalance' => 'To sink dis wallet, be have a balance of exactly :zero.',
+        'walletDeleted' => 'Th\' wallet be sunk.',
         'cannotCreateNoCurrencies' => 'Ye nay create a wallet. Th\' crew admin did nay configure a currency which allows dis.',
     ],
 

@@ -171,8 +171,10 @@ return [
         'namePlaceholder' => 'Mijn portemonnee',
         'createWallet' => 'Portemonnee aanmaken',
         'walletCreated' => 'De portemonnee is aangemaakt.',
-        'walletDeleted' => 'De portemonnee is verwijderd.',
         'walletUpdated' => 'Portemonnee aanpassingen opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt deze portemonnee te verwijderen. Weet je zeker dat je door wilt gaan?',
+        'cannotDeleteNonZeroBalance' => 'Om deze portemonnee te verwijderen moet het een saldo van precies :zero hebben.',
+        'walletDeleted' => 'De portemonnee is verwijderd.',
         'cannotCreateNoCurrencies' => 'Je kunt nu geen portemonnee aanmaken. De groep administrator heeft geen valuta geconfigureerd waarbij dit is toegestaan.',
     ],
 

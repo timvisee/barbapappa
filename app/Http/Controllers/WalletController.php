@@ -17,7 +17,7 @@ class WalletController extends Controller {
     /**
      * Wallet index page for a community user.
      * This shows a list of economies wallets may be created in.
-     * A user clicks on an economy to go to a specialized page for wallet
+     * An user clicks on an economy to go to a specialized page for wallet
      * management.
      *
      * @return Response
@@ -57,7 +57,7 @@ class WalletController extends Controller {
     }
 
     /**
-     * Show a user wallet.
+     * Show an user wallet.
      *
      * @return Response
      */
@@ -87,10 +87,10 @@ class WalletController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
-        // List the currencies a user can create a wallet for
+        // List the currencies an user can create a wallet for
         $currencies = $economy->currencies()->where('allow_wallet', true)->get();
 
-        // Show an error if a user can't create a wallet
+        // Show an error if an user can't create a wallet
         if($currencies->isEmpty()) {
             return redirect()
                 ->route('community.wallet.list', ['communityId' => $communityId, 'economyId' => $economyId])
@@ -137,7 +137,7 @@ class WalletController extends Controller {
     }
 
     /**
-     * The edit page for a user wallet.
+     * Page for editing an user wallet.
      *
      * @return Response
      */
@@ -158,7 +158,7 @@ class WalletController extends Controller {
     }
 
     /**
-     * Edit a user wallet.
+     * Edit an user wallet.
      *
      * @return Response
      */
@@ -187,41 +187,64 @@ class WalletController extends Controller {
             ->with('success', __('pages.wallets.walletUpdated'));
     }
 
-    // /**
-    //  * The page to delete a economy currency of an economy.
-    //  *
-    //  * @return Response
-    //  */
-    // public function delete($communityId, $economyId, $economyCurrencyId) {
-    //     // Get the community, and the economy
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+    /**
+     * Page for confirming the deletion of an user wallet.
+     *
+     * @return Response
+     */
+    public function delete($communityId, $economyId, $walletId) {
+        // Get the user, community, find economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
 
-    //     return view('community.economy.currency.delete')
-    //         ->with('economy', $economy)
-    //         ->with('currency', $currency);
-    // }
+        // Make sure there's exactly zero balance
+        if($wallet->balance != 0.00) {
+            // Format the zero balance
+            $zero = $wallet->formatBalance(0, $color = false);
 
-    // /**
-    //  * Delete a economy currency of an economy.
-    //  *
-    //  * @return Response
-    //  */
-    // public function doDelete($communityId, $economyId, $economyCurrencyId) {
-    //     // Get the community, find the economy
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+            return redirect()
+                ->route('community.wallet.show', ['communityId' => $communityId, 'economyId' => $economyId, 'walletId' => $walletId])
+                ->with('error', __('pages.wallets.cannotDeleteNonZeroBalance', ['zero' => $zero]));
+        }
 
-    //     // TODO: ensure deletion is allowed
+        // TODO: ensure there are no other constraints that prevent deleting the
+        // wallet
 
-    //     // Delete the economy currency configuration
-    //     $currency->delete();
+        return view('community.wallet.delete')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet);
+    }
 
-    //     // Redirect to the index page after deleting
-    //     return redirect()
-    //         ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economy->id])
-    //         ->with('success', __('pages.currencies.currencyDeleted'));
-    // }
+    /**
+     * Delete an user wallet.
+     *
+     * @return Response
+     */
+    public function doDelete($communityId, $economyId, $walletId) {
+        // Get the user, community, find economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('balance', 0.00)
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+
+        // TODO: ensure there are no other constraints that prevent deleting the
+        // wallet
+
+        // Delete the wallet
+        $wallet->delete();
+
+        // Redirect to the list page after deleting
+        return redirect()
+            ->route('community.wallet.list', ['communityId' => $communityId, 'economyId' => $economy->id])
+            ->with('success', __('pages.wallets.walletDeleted'));
+    }
 }

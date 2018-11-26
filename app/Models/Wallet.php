@@ -70,11 +70,19 @@ class Wallet extends Model {
      * Format the wallet balance as human readable text using the proper
      * currency format.
      *
+     * @param decimal|null [$balance=null] The balance, or null for the wallet
+     *      balance.
+     * @param boolean [$color=true] True to add color to the balance.
+     *
      * @return string Formatted balance
      */
-    public function formatBalance($color = true) {
+    public function formatBalance($balance = null, $color = true) {
+        // Get the balance
+        if($balance === null)
+            $balance = $this->balance;
+
         // Format the balance
-        $balance = currency_format($this->balance, $this->currency->code);
+        $balance = currency_format($balance, $this->currency->code);
 
         // Add color for negative values
         if($color && $this->balance < 0)
