@@ -132,50 +132,56 @@ class WalletController extends Controller {
     //         ->with('success', __('pages.currencies.currencyCreated'));
     // }
 
-    // /**
-    //  * The edit page for a economy currency of an economy.
-    //  *
-    //  * @return Response
-    //  */
-    // public function edit($communityId, $economyId, $economyCurrencyId) {
-    //     // Get the community, find economy and economy currency
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+    /**
+     * The edit page for a user wallet.
+     *
+     * @return Response
+     */
+    public function edit($communityId, $economyId, $walletId) {
+        // Get the user, community, find economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
 
-    //     // Show the edit view
-    //     return view('community.economy.currency.edit')
-    //         ->with('economy', $economy)
-    //         ->with('currency', $currency);
-    // }
+        // Show the edit view
+        return view('community.wallet.edit')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet);
+    }
 
-    // /**
-    //  * Edit a economy currency of an economy.
-    //  *
-    //  * @return Response
-    //  */
-    // public function doEdit(Request $request, $communityId, $economyId, $economyCurrencyId) {
-    //     // TODO: validate future price default property
-    //     // // Validate
-    //     // $this->validate($request, [
-    //     //     'name' => 'required|' . ValidationDefaults::NAME,
-    //     // ]);
+    /**
+     * Edit a user wallet.
+     *
+     * @return Response
+     */
+    public function doEdit(Request $request, $communityId, $economyId, $walletId) {
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
 
-    //     // Get the community, find economy and economy currency
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+        // Get the user, community, find economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
 
-    //     // Update the properties
-    //     $currency->enabled = is_checked($request->input('enabled'));
-    //     $currency->allow_wallet = is_checked($request->input('allow_wallet'));
-    //     $currency->save();
+        // Update the name
+        $wallet->name = $request->input('name');
+        $wallet->save();
 
-    //     // Redirect to the show view after editing
-    //     return redirect()
-    //         ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economyId])
-    //         ->with('success', __('pages.currencies.currencyUpdated'));
-    // }
+        // Redirect to the show view after editing
+        return redirect()
+            ->route('community.wallet.list', ['communityId' => $communityId, 'economyId' => $economyId])
+            ->with('success', __('pages.wallets.walletUpdated'));
+    }
 
     // /**
     //  * The page to delete a economy currency of an economy.

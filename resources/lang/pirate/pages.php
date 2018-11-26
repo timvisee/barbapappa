@@ -168,6 +168,9 @@ return [
         'yourWallets' => 'Yer wallets',
         'economySelectDescription' => 'Wallets in dis community be grouped by booty.<br>Select \'the booty to manage yer wallets.',
         'noWallets' => 'Yer nay be any wallets yet...',
+        'namePlaceholder' => 'My wallet',
+        'walletDeleted' => 'Th\' wallet be sunk.',
+        'walletUpdated' => 'Wallet changes saved.',
     ],
 
     /**

@@ -168,6 +168,9 @@ return [
         'yourWallets' => 'Jouw portemonnees',
         'economySelectDescription' => 'Portemonees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economy om je portemonees te beheren.',
         'noWallets' => 'Je hebt nog geen portemonnees...',
+        'namePlaceholder' => 'Mijn portemonnee',
+        'walletDeleted' => 'De portemonnee is verwijderd.',
+        'walletUpdated' => 'Portemonnee aanpassingen opgeslagen.',
     ],
 
     /**
