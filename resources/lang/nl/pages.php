@@ -163,6 +163,8 @@ return [
      */
     'wallets' => [
         'title' => 'Portemonnees',
+        'description' => 'Klik op één van je portemonnees om het te beheren, of maak een nieuwe aan.',
+        'walletEconomies' => 'Portemonee economieën',
         'yourWallets' => 'Jouw portemonnees',
         'economySelectDescription' => 'Portemonees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economy om je portemonees te beheren.',
     ],

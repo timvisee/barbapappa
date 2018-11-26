@@ -163,6 +163,8 @@ return [
      */
     'wallets' => [
         'title' => 'Wallets',
+        'description' => 'Click on one of yer wallets to manage it, or create a fresh one.',
+        'walletEconomies' => 'Wallet booties',
         'yourWallets' => 'Yer wallets',
         'economySelectDescription' => 'Wallets in dis community be grouped by booty.<br>Select \'the booty to manage yer wallets.',
     ],

@@ -184,6 +184,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 // List wallets
                 Route::get('/', 'WalletController@list')->name('community.wallet.list');
 
+                // Create
+                Route::get('/create', 'WalletController@create')->name('community.wallet.create');
+                Route::post('/create', 'WalletController@doCreate')->name('community.wallet.doCreate');
+
                 // Specific
                 Route::prefix('/{walletId}')->group(function() {
                     // Show

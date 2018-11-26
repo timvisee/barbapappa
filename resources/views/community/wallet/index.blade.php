@@ -2,7 +2,7 @@
 
 @section('content')
     <h2 class="ui header">
-        @lang('pages.wallets.title')
+        @lang('pages.wallets.walletEconomies')
         <div class="sub header">
             in
             <a href="{{ route('community.show', ['communityId' => $community->id]) }}">

@@ -163,6 +163,8 @@ return [
      */
     'wallets' => [
         'title' => 'Wallets',
+        'description' => 'Click on one of your wallets to manage it, or create a new one.',
+        'walletEconomies' => 'Wallet economies',
         'yourWallets' => 'Your wallets',
         'economySelectDescription' => 'Wallets in this community are grouped by economy.<br>Select the economy to manage your wallets in it.',
     ],
