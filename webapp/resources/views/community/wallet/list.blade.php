@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    use \App\Models\Wallet;
+@endphp
+
 @section('content')
     <h2 class="ui header">
         @lang('pages.wallets.yourWallets') ({{ count($wallets) }})
@@ -33,8 +37,8 @@
                 'economyId' => $economy->id,
                 'walletId' => $wallet->id
             ]) }}" class="item">
-                {{ $wallet->name }}:
-                {!! $wallet->formatBalance(); !!}
+                {{ $wallet->name }}
+                {!! $wallet->formatBalance(null, Wallet::BALANCE_LABEL); !!}
             </a>
         @empty
             <div class="item">

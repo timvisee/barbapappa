@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    use \App\Models\Wallet;
+@endphp
+
 @section('content')
     <h2 class="ui header">{{ $wallet->name }}</h2>
 
@@ -11,7 +15,7 @@
             </tr>
             <tr>
                 <td>Balance</td>
-                <td>{!! $wallet->formatBalance() !!}</td>
+                <td>{!! $wallet->formatBalance(null, Wallet::BALANCE_COLOR) !!}</td>
             </tr>
             <tr>
                 <td>@lang('misc.createdAt')</td>
