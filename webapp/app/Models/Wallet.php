@@ -28,21 +28,6 @@ use App\Utils\EmailRecipient;
  */
 class Wallet extends Model {
 
-    /**
-     * Format the balance as plain text.
-     */
-    const BALANCE_PLAIN = 0;
-
-    /**
-     * Format the balance as colored text, depending on the value.
-     */
-    const BALANCE_COLOR = 1;
-
-    /**
-     * Format the balance as colored label, depending on the value.
-     */
-    const BALANCE_LABEL = 2;
-
     protected $table = "wallets";
 
     protected $fillable = [
@@ -85,42 +70,11 @@ class Wallet extends Model {
      * Format the wallet balance as human readable text using the proper
      * currency format.
      *
-     * @param decimal|null [$balance=null] The balance, or null for the wallet
-     *      balance.
-     * @param boolean [$color=true] True to add color to the balance.
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
      *
      * @return string Formatted balance
      */
-    public function formatBalance($balance = null, $formatting = Self::BALANCE_PLAIN) {
-        // Get the balance
-        if($balance === null)
-            $balance = $this->balance;
-
-        // Format the balance
-        $balance = currency_format($balance, $this->currency->code);
-
-        // Add color for negative values
-        switch($formatting) {
-            case Self::BALANCE_PLAIN:
-                break;
-            case Self::BALANCE_COLOR:
-                if($this->balance < 0)
-                    $balance = '<span style="color: red;">' . $balance . '</span>';
-                else if($this->balance > 0)
-                    $balance = '<span style="color: green;">' . $balance . '</span>';
-                break;
-            case Self::BALANCE_LABEL:
-                if($this->balance < 0)
-                    $balance = '<div class="ui red horizontal label">' . $balance . '</div>';
-                else if($this->balance > 0)
-                    $balance = '<div class="ui green horizontal label">' . $balance . '</div>';
-                else
-                    $balance = '<div class="ui horizontal label">' . $balance . '</div>';
-                break;
-            default:
-                throw new \Exception("Invalid balance formatting type given");
-        }
-
-        return $balance;
+    public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
+        return balance($this->balance, $this->currency->code, $format);
     }
 }

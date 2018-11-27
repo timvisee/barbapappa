@@ -25,6 +25,7 @@
         @forelse($economies as $economy)
             <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">
                 {{ $economy->name }}
+                {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}
             </a>
         @empty
             <div class="item">

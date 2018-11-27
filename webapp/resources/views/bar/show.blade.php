@@ -17,6 +17,15 @@
         @endif
 
         {{ $bar->name }}
+
+        @if($joined)
+            <a href="{{ route('community.wallet.list', [
+                        'communityId' => $community->id,
+                        'economyId' => $economy->id
+                    ]) }}">
+                {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}
+            </a>
+        @endif
     </h2>
 
     @unless($joined)

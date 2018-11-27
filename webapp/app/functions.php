@@ -139,3 +139,67 @@ if(!function_exists('yesno')) {
         return __('general.' . (is_checked($value) ? 'yes' : 'no'));
     }
 }
+
+/**
+ * Format the balance as plain text.
+ */
+const BALANCE_FORMAT_PLAIN = 0;
+
+/**
+ * Format the balance as colored text, depending on the value.
+ */
+const BALANCE_FORMAT_COLOR = 1;
+
+/**
+ * Format the balance as colored label, depending on the value.
+ */
+const BALANCE_FORMAT_LABEL = 2;
+
+// Custom function to render balance
+if(!function_exists('balance')) {
+    /**
+     * Format the given balance as human readable text using the proper
+     * currency format.
+     *
+     * @param decimal $balance The balance.
+     * @param string $currency The currency code, such as `USD` or `EUR`.
+     * @param int [$format=BALANCE_FORMAT_PLAIN] The balance formatting rules.
+     * @param string|null [$prefix=null] An optional prefix.
+     *
+     * @return string Formatted balance.
+     */
+    function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN, $prefix = null) {
+        // Format the balance
+        $out = currency_format($balance, $currency);
+
+        // Prefix
+        if(!empty($prefix))
+            $out = $prefix . $out;
+
+        // Add color for negative values
+        switch($format) {
+            case null:
+            case BALANCE_FORMAT_PLAIN:
+                break;
+            case BALANCE_FORMAT_COLOR:
+                if($balance < 0)
+                    $out = '<span style="color: red;">' . $out . '</span>';
+                else if($balance > 0)
+                    $out = '<span style="color: green;">' . $out . '</span>';
+                break;
+            case BALANCE_FORMAT_LABEL:
+                // TODO: may want to add horizontal class to labels
+                if($balance < 0)
+                    $out = '<div class="ui red label">' . $out . '</div>';
+                else if($balance > 0)
+                    $out = '<div class="ui green label">' . $out . '</div>';
+                else
+                    $out = '<div class="ui label">' . $out . '</div>';
+                break;
+            default:
+                throw new \Exception("Invalid balance format type given");
+        }
+
+        return $out;
+    }
+}

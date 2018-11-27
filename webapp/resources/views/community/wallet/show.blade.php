@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td>Balance</td>
-                <td>{!! $wallet->formatBalance(null, Wallet::BALANCE_COLOR) !!}</td>
+                <td>{!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
             <tr>
                 <td>@lang('misc.createdAt')</td>

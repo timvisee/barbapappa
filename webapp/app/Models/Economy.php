@@ -61,4 +61,86 @@ class Economy extends Model {
     public function wallets() {
         return $this->hasMany('App\Models\Wallet');
     }
+
+    /**
+     * Get the wallets created by the current logged in user in this economy.
+     *
+     * @return The wallets.
+     */
+    public function userWallets() {
+        return $this->wallets()->where('user_id', barauth()->getUser()->id);
+    }
+
+    /**
+     * Go through all wallets of the current user in this economy, and calculate
+     * the total balance.
+     *
+     * This method automatically selects the best currency to return in, and
+     * notes whether the returned value is approximate or not. Balances in other
+     * currencies are automatically converted using the latest known exchange
+     * rates from the currencies table. The method also notes whether the
+     * returned value is approximate, which is true when multiple currencies
+     * ware summed.
+     *
+     * If no wallet is created, zero is returned in the default currency.
+     *
+     * Example return:
+     * ```php
+     * [1.23, 'EUR', true] // 1.23 euro, approximately
+     * ```
+     *
+     * @return [$balance, $currency, $approximate] The balance, chosen currency
+     *      code and whether the value is approximate.
+     */
+    public function calcBalance() {
+        // Obtain the wallets, return zero with default currency if none
+        $wallets = $this->userWallets()->with('currency')->get();
+        if($wallets->isEmpty())
+            return [0, config('currency.default'), false];
+
+        // Build a map with per currency sums
+        $sums = [];
+        foreach($wallets as $wallet) {
+            $currency = $wallet->currency->code;
+            $sums[$wallet->currency->code] = ($sums[$wallet->currency->code] ?? 0) + $wallet->balance;
+        }
+
+        // Find the currency with the biggest difference from zero, is it approx
+        $currency = null;
+        $diff = 0;
+        foreach($sums as $c => $b)
+            if(abs($b) > $diff) {
+                $currency = $c;
+                $diff = abs($b);
+            }
+        $approximate = count($sums) > 1;
+
+        // Sum the balance, convert other currencies
+        $balance = collect($sums)
+            ->map(function($b, $c) use($currency) {
+                return $currency == $c ? $b : currency($b, $c, $currency, false);
+            })
+            ->sum();
+
+        return [$balance, $currency, $approximate];
+    }
+
+    /**
+     * Calcualte and format the total balance for all the wallets in this
+     * economy for the current user. See `$this->calcBalance()`.
+     *
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     *
+     * @return string Formatted balance
+     */
+    public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
+        // Obtain balance information
+        $out = $this->calcBalance();
+        $balance = $out[0];
+        $currency = $out[1];
+        $prefix = $out[2] ? '&asymp; ' : '';
+
+        // Format the balance
+        return balance($balance, $currency, $format, $prefix);
+    }
 }

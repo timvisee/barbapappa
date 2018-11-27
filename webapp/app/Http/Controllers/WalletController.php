@@ -49,7 +49,7 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallets = $user->wallets()->where('economy_id', $economyId);
+        $wallets = $user->wallets()->where('economy_id', $economyId)->with('currency');
 
         return view('community.wallet.list')
             ->with('economy', $economy)
@@ -205,7 +205,7 @@ class WalletController extends Controller {
         // Make sure there's exactly zero balance
         if($wallet->balance != 0.00) {
             // Format the zero balance
-            $zero = $wallet->formatBalance(0, $color = false);
+            $zero = balance($wallet->balance, $wallet->currency->code);
 
             return redirect()
                 ->route('community.wallet.show', ['communityId' => $communityId, 'economyId' => $economyId, 'walletId' => $walletId])
