@@ -100,6 +100,7 @@ class BarController extends Controller {
 
         // Show the bar page
         return view('bar.show')
+            ->with('economy', $bar->economy)
             ->with('joined', $bar->isJoined($user));
     }
 
