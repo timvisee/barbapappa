@@ -163,13 +163,18 @@ if(!function_exists('balance')) {
      *
      * @param decimal $balance The balance.
      * @param string $currency The currency code, such as `USD` or `EUR`.
-     * @param boolean [$color=BALANCE_FORMAT_PLAIN] The balance formatting rules.
+     * @param int [$format=BALANCE_FORMAT_PLAIN] The balance formatting rules.
+     * @param string|null [$prefix=null] An optional prefix.
      *
      * @return string Formatted balance.
      */
-    function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN) {
+    function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN, $prefix = null) {
         // Format the balance
         $out = currency_format($balance, $currency);
+
+        // Prefix
+        if(!empty($prefix))
+            $out = $prefix . $out;
 
         // Add color for negative values
         switch($format) {
@@ -183,12 +188,13 @@ if(!function_exists('balance')) {
                     $out = '<span style="color: green;">' . $out . '</span>';
                 break;
             case BALANCE_FORMAT_LABEL:
+                // TODO: may want to add horizontal class to labels
                 if($balance < 0)
-                    $out = '<div class="ui red horizontal label">' . $out . '</div>';
+                    $out = '<div class="ui red label">' . $out . '</div>';
                 else if($balance > 0)
-                    $out = '<div class="ui green horizontal label">' . $out . '</div>';
+                    $out = '<div class="ui green label">' . $out . '</div>';
                 else
-                    $out = '<div class="ui horizontal label">' . $out . '</div>';
+                    $out = '<div class="ui label">' . $out . '</div>';
                 break;
             default:
                 throw new \Exception("Invalid balance format type given");
