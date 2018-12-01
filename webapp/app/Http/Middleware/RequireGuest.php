@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 /**
- * Class RequireAuth.
+ * Class RequireGuest.
  *
  * Middleware that requires the user NOT to be authenticated.
  *

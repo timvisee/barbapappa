@@ -221,12 +221,13 @@ return [
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
         /**
-         * Custom service providers...
+         * Custom service providers for BARbapAPPa.
          */
         App\Providers\LanguageManagerServiceProvider::class,
         App\Providers\BarAuthServiceProvider::class,
         App\Providers\LogoServiceProvider::class,
         App\Providers\PermissionManagerServiceProvider::class,
+        App\Providers\HistoryManagerServiceProvider::class,
 
     ],
 
