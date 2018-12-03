@@ -205,7 +205,7 @@ class WalletController extends Controller {
         // Make sure there's exactly zero balance
         if($wallet->balance != 0.00) {
             // Format the zero balance
-            $zero = balance($wallet->balance, $wallet->currency->code);
+            $zero = balance(0.00, $wallet->currency->code);
 
             return redirect()
                 ->route('community.wallet.show', ['communityId' => $communityId, 'economyId' => $economyId, 'walletId' => $walletId])
