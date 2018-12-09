@@ -63,18 +63,6 @@ if(!function_exists('logo')) {
     }
 }
 
-// Custom function to render balance
-if(!function_exists('history')) {
-    /**
-     * Get the history manager singleton instance.
-     *
-     * @return \App\Services\HistoryManager
-     */
-    function history() {
-        return app('history');
-    }
-}
-
 // Build the random translation function
 if(!function_exists('trans_random')) {
     /**

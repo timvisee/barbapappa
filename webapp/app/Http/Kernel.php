@@ -35,8 +35,6 @@ class Kernel extends HttpKernel {
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
             \App\Http\Middleware\SelectLocale::class,
-
-            \App\Http\Middleware\HistoryTracker::class,
         ],
 
         'api' => [
@@ -62,8 +60,6 @@ class Kernel extends HttpKernel {
 
         'auth' => \App\Http\Middleware\RequireAuth::class,
         'guest' => \App\Http\Middleware\RequireGuest::class,
-
-        'historyTracker' => \App\Http\Middleware\HistoryTracker::class,
 
         'selectUser' => \App\Http\Middleware\SelectUser::class,
         'selectBar' => \App\Http\Middleware\SelectBar::class,
