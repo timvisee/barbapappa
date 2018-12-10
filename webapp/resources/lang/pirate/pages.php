@@ -101,6 +101,7 @@ return [
         'created' => 'Th\' crew be created.',
         'updated' => 'Th\' crew be updated.',
         'economy' => 'Booty',
+        'goTo' => 'Go to crew',
     ],
 
     /**
@@ -176,6 +177,7 @@ return [
         'cannotDeleteNonZeroBalance' => 'To sink dis wallet, be have a balance of exactly :zero.',
         'walletDeleted' => 'Th\' wallet be sunk.',
         'cannotCreateNoCurrencies' => 'Ye nay create a wallet. Th\' crew admin did nay configure a currency which allows dis.',
+        'all' => 'All wallets',
     ],
 
     /**

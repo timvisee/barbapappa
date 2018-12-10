@@ -101,6 +101,7 @@ return [
         'created' => 'De groep is aangemaakt.',
         'updated' => 'De groep is aangepast.',
         'economy' => 'Economie',
+        'goTo' => 'Ga naar groep',
     ],
 
     /**
@@ -123,7 +124,7 @@ return [
      */
     'economies' => [
         'title' => 'Economieën',
-        'description' => 'Op deze pagina zie je een overzicht van alle economieën binnen deze groep.<br>Klik op een economy om deze te beheren, of maak een nieuwe aan voor een nieuwe bar.',
+        'description' => 'Op deze pagina zie je een overzicht van alle economieën binnen deze groep.<br>Klik op een economie om deze te beheren, of maak een nieuwe aan voor een nieuwe bar.',
         'manage' => 'Economieën beheren',
         'noEconomies' => 'Deze groep heeft geen economieën...',
         'createEconomy' => 'Economie aanmaken',
@@ -163,10 +164,10 @@ return [
      */
     'wallets' => [
         'title' => 'Portemonnees',
-        'description' => 'Klik op één van je portemonnees om het te beheren, of maak een nieuwe aan.',
+        'description' => 'Klik op één van je portemonnees om deze te beheren, of maak een nieuwe aan.',
         'walletEconomies' => 'Portemonee economieën',
         'yourWallets' => 'Jouw portemonnees',
-        'economySelectDescription' => 'Portemonees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economy om je portemonees te beheren.',
+        'economySelectDescription' => 'Portemonnees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economie om je portemonnees te beheren.',
         'noWallets' => 'Je hebt nog geen portemonnees...',
         'namePlaceholder' => 'Mijn portemonnee',
         'createWallet' => 'Portemonnee aanmaken',
@@ -176,6 +177,7 @@ return [
         'cannotDeleteNonZeroBalance' => 'Om deze portemonnee te verwijderen moet het een saldo van precies :zero hebben.',
         'walletDeleted' => 'De portemonnee is verwijderd.',
         'cannotCreateNoCurrencies' => 'Je kunt nu geen portemonnee aanmaken. De groep administrator heeft geen valuta geconfigureerd waarbij dit is toegestaan.',
+        'all' => 'Alle portemonnees',
     ],
 
     /**
@@ -311,7 +313,7 @@ return [
      */
     'noPermission' => [
         'title' => 'Je hoort hier niet te zijn...',
-        'description' => 'Je hebt een verkeerde afslag genomen.<br />Je hebt niet genoeg rechten voor deze content.',
+        'description' => 'Je hebt een verkeerde afslag genomen.<br />Je hebt niet genoeg rechten voor deze inhoud.',
         'notLoggedIn' => 'Niet ingelogd',
         'notLoggedInDescription' => 'Je bent op dit moment niet ingelogd. Log in om jouw juiste rechten te verkrijgen.',
     ],

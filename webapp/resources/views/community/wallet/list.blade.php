@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @php
+    use \App\Http\Controllers\EconomyController;
     use \App\Models\Wallet;
 @endphp
 
@@ -8,14 +9,18 @@
     <h2 class="ui header">
         @lang('pages.wallets.yourWallets') ({{ count($wallets) }})
         <div class="sub header">
-            in
+            @lang('misc.in')
             <a href="{{ route('community.show', ['communityId' => $community->id]) }}">
                 {{ $community->name }}
             </a>
-            /
-            <a href="{{ route('community.economy.show', ['communityId' => $community->id, 'economyId' => $economy->id]) }}">
+            @lang('misc.for')
+            @if(perms(EconomyController::permsView()))
+                <a href="{{ route('community.economy.show', ['communityId' => $community->id, 'economyId' => $economy->id]) }}">
+                    {{ $economy->name }}
+                </a>
+            @else
                 {{ $economy->name }}
-            </a>
+            @endif
         </div>
     </h2>
     <p>@lang('pages.wallets.description')</p>
@@ -53,8 +58,14 @@
         @lang('misc.create')
     </a>
 
-    <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}"
+    {{-- TODO: only show if there are other wallet economies --}}
+    <a href="{{ route('community.wallet.index', ['communityId' => $community->id]) }}"
             class="ui button basic">
-        @lang('general.goBack')
+        @lang('pages.wallets.all')
+    </a>
+
+    <a href="{{ route('community.show', ['communityId' => $community->id]) }}"
+            class="ui button basic">
+        @lang('pages.community.goTo')
     </a>
 @endsection

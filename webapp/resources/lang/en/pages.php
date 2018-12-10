@@ -101,6 +101,7 @@ return [
         'created' => 'The community has been created.',
         'updated' => 'The community has been updated.',
         'economy' => 'Economy',
+        'goTo' => 'Go to community',
     ],
 
     /**
@@ -176,6 +177,7 @@ return [
         'cannotDeleteNonZeroBalance' => 'To delete this wallet, it must have a balance of exactly :zero.',
         'walletDeleted' => 'The wallet has been deleted.',
         'cannotCreateNoCurrencies' => 'You can\'t create wallet at this moment. The community administrator did not configure a currency which allows this.',
+        'all' => 'All wallets',
     ],
 
     /**
