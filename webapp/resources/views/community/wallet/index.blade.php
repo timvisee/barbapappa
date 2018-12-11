@@ -34,7 +34,7 @@
         @endforelse
     </div>
 
-    <a href="{{ route('community.show', ['communityId' => $community->id]) }}"
+    <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
             class="ui button basic">
         @lang('pages.community.goTo')
     </a>

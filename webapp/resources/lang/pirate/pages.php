@@ -133,6 +133,8 @@ return [
         'economyDeleted' => 'Th\' booty be sunk.',
         'economyUpdated' => 'Booty changes saved.',
         'namePlaceholder' => 'Our booty',
+        'all' => 'All booties',
+        'backToEconomy' => 'Back to booty',
     ],
 
     /**

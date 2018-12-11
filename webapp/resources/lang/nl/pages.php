@@ -133,6 +133,8 @@ return [
         'economyDeleted' => 'De economie is verwijderd.',
         'economyUpdated' => 'Economie aanpassingen opgeslagen.',
         'namePlaceholder' => 'Hoofdeconomie',
+        'all' => 'Alle economieën',
+        'backToEconomy' => 'Terug naar economie',
     ],
 
     /**

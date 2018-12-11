@@ -133,6 +133,8 @@ return [
         'economyDeleted' => 'The economy has been removed.',
         'economyUpdated' => 'Economy changes saved.',
         'namePlaceholder' => 'Main economy',
+        'all' => 'All economies',
+        'backToEconomy' => 'Back to economy',
     ],
 
     /**
