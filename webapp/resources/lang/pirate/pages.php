@@ -102,6 +102,7 @@ return [
         'updated' => 'Th\' crew be updated.',
         'economy' => 'Booty',
         'goTo' => 'Go to crew',
+        'backToCommunity' => 'Back to crew',
     ],
 
     /**
@@ -221,6 +222,7 @@ return [
         'created' => 'Th\' bar be created.',
         'updated' => 'Th\' bar be updated.',
         'mustCreateEconomyFirst' => 'To create a bar, ye must create booty first.',
+        'backToBar' => 'Back to bar',
     ],
 
     /**

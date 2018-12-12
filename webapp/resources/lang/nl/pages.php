@@ -101,7 +101,7 @@ return [
         'created' => 'De groep is aangemaakt.',
         'updated' => 'De groep is aangepast.',
         'economy' => 'Economie',
-        'goTo' => 'Ga naar groep',
+        'backToCommunity' => 'Terug naar groep',
     ],
 
     /**
@@ -221,6 +221,7 @@ return [
         'created' => 'De bar is aangemaakt.',
         'updated' => 'De bar is aangepast.',
         'mustCreateEconomyFirst' => 'Voor een nieuwe bar moest je eerst een economie aanmaken.',
+        'backToBar' => 'Terug naar bar',
     ],
 
     /**

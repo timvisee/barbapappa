@@ -102,6 +102,7 @@ return [
         'updated' => 'The community has been updated.',
         'economy' => 'Economy',
         'goTo' => 'Go to community',
+        'backToCommunity' => 'Back to community',
     ],
 
     /**
@@ -221,6 +222,7 @@ return [
         'created' => 'The bar has been created.',
         'updated' => 'The bar has been updated.',
         'mustCreateEconomyFirst' => 'To create a bar, you must create an economy first.',
+        'backToBar' => 'Back to bar',
     ],
 
     /**
