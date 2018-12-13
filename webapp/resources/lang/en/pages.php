@@ -65,6 +65,7 @@ return [
             'description' => 'Fill in the email address you\'d like to add.',
             'added' => 'Email address added. A verification email has been sent.',
         ],
+        'backToAccount' => 'Back to account',
     ],
 
     /**

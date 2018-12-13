@@ -65,6 +65,7 @@ return [
             'description' => 'Vul the e-mailadres in dat je wilt toevoegen.',
             'added' => 'E-mailadres toegevoegd. Er is een verificatie-e-mail gestuurd.',
         ],
+        'backToAccount' => 'Terug naar account',
     ],
 
     /**

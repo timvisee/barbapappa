@@ -44,7 +44,7 @@
 
     <a href="{{ route('account', ['userId' => $user->id]) }}"
             class="ui button basic">
-        @lang('pages.account')
+        @lang('pages.accountPage.backToAccount')
     </a>
 @endsection
 

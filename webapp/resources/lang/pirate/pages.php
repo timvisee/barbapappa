@@ -65,6 +65,7 @@ return [
             'description' => 'Enter yer e-bottle coordinate to conquer.',
             'added' => 'E-bottle coordinate added. \'ll verification be sent.',
         ],
+        'backToAccount' => 'Back to account',
     ],
 
     /**
