@@ -65,6 +65,7 @@ return [
             'description' => 'Enter yer e-bottle coordinate to conquer.',
             'added' => 'E-bottle coordinate added. \'ll verification be sent.',
         ],
+        'backToAccount' => 'Back to account',
     ],
 
     /**
@@ -101,6 +102,8 @@ return [
         'created' => 'Th\' crew be created.',
         'updated' => 'Th\' crew be updated.',
         'economy' => 'Booty',
+        'goTo' => 'Go to crew',
+        'backToCommunity' => 'Back to crew',
     ],
 
     /**
@@ -132,6 +135,8 @@ return [
         'economyDeleted' => 'Th\' booty be sunk.',
         'economyUpdated' => 'Booty changes saved.',
         'namePlaceholder' => 'Our booty',
+        'all' => 'All booties',
+        'backToEconomy' => 'Back to booty',
     ],
 
     /**
@@ -176,6 +181,7 @@ return [
         'cannotDeleteNonZeroBalance' => 'To sink dis wallet, be have a balance of exactly :zero.',
         'walletDeleted' => 'Th\' wallet be sunk.',
         'cannotCreateNoCurrencies' => 'Ye nay create a wallet. Th\' crew admin did nay configure a currency which allows dis.',
+        'all' => 'All wallets',
     ],
 
     /**
@@ -217,6 +223,7 @@ return [
         'created' => 'Th\' bar be created.',
         'updated' => 'Th\' bar be updated.',
         'mustCreateEconomyFirst' => 'To create a bar, ye must create booty first.',
+        'backToBar' => 'Back to bar',
     ],
 
     /**
