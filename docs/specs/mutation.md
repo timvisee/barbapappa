@@ -83,7 +83,7 @@ In any different state, the mutation is frozen.
     - 2: wallet mutation
     - 3: product mutation
     - 4: payment mutation
-- `money`: money this mutation processed
+- `amount`: money this mutation processed
 - `currency`: currency identifier
 - `state`: mutation processing state
     - 1: `pending`: waiting on the system or on a dependency for processing
