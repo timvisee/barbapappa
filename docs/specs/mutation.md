@@ -75,7 +75,7 @@ The properties of a mutation may be changed, when it's in the `pending` or `proc
 In any different state, the mutation is frozen.
 
 ## Mutation model
-`mutation`:  
+`mutations`:  
 - `id`: index
 - `transaction_id`: reference to a owning transaction
 - `type`: type of mutation
@@ -119,11 +119,10 @@ If money is subtracted from a users wallet, the mutation `money` field will be p
 Therefore if money is added to a users wallet, the mutation `money` field will be negative.
 
 #### Wallet mutation model
-`mutation_wallet`:  
+`mutations_wallet`:  
 - `id`: index
 - `mutation_id`: reference to the super mutation
 - `wallet_id`: reference to the related wallet
-- `balance_before`: balance at the moment of completing this mutation, just before the money change is applied
 
 ### Payment mutation
 A payment mutation defines a money transfer using a supported payment service.
@@ -188,8 +187,8 @@ For this specific case, the second mutation might be a magic mutation.
 This because it doesn't fit the other mutation types,
 and because from the systems perspective the money would appear to be _spawned from thin air_.
 
-#### Magic mutation model
-`mutation_magic`:  
-- `id`: index
-- `mutation_id`: reference to the super mutation
-- `description`: description by the user
+> #### Magic mutation model
+> `mutation_magic`:  
+> - `id`: index
+> - `mutation_id`: reference to the super mutation
+> - `description`: description by the user

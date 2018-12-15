@@ -67,6 +67,39 @@ class Wallet extends Model {
     }
 
     /**
+     * Get a list of wallet mutations, linked to this wallet.
+     * These aren't regular mutations, rather they are wallet specific
+     * mutations which are linked to a regular mutation.
+     *
+     * @return The wallet mutations.
+     */
+    public function walletMutations() {
+        throw new \Exception("not yet implemented");
+
+        return $this->hasMany('App\Models\WalletMutation');
+    }
+
+    /**
+     * Get a list of mutations, linked to this wallet.
+     *
+     * @return The mutations.
+     */
+    public function mutations() {
+        throw new \Exception("not yet implemented");
+
+        return $this->hasManyThrough('App\Models\Mutation', 'App\Models\WalletMutation');
+    }
+
+    /**
+     * Get a list of all transactions that have mutations for this wallet.
+     */
+    public function transactions() {
+        throw new \Exception("not yet implemented");
+
+        // TODO: obtian the transactions from the `mutations()`
+    }
+
+    /**
      * Format the wallet balance as human readable text using the proper
      * currency format.
      *
