@@ -15,7 +15,7 @@ class CreateMutationWalletTable extends Migration {
         Schema::create('mutations_wallet', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('mutation_id')->unsigned();
-            $table->integer('wallet_id')->unsigned();
+            $table->integer('wallet_id')->unsigned()->nullable(true);
             $table->timestamps();
 
             $table->foreign('mutation_id')

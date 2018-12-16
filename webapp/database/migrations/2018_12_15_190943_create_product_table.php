@@ -15,7 +15,7 @@ class CreateProductTable extends Migration {
         Schema::create('products', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable(true);
             // TODO: is a type field used for custom products?
             $table->integer('type')->unsigned()->nullable(false);
             $table->string('name')->nullable(false);
