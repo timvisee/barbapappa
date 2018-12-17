@@ -12,7 +12,7 @@ class CreatePaymentServiceTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('payment_service', function(Blueprint $table) {
+        Schema::create('payment_services', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
             $table->integer('service_type')->unsigned()->nullable(false);
@@ -37,6 +37,6 @@ class CreatePaymentServiceTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('payment_service');
+        Schema::dropIfExists('payment_services');
     }
 }

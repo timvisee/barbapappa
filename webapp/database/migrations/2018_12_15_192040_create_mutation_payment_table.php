@@ -22,11 +22,10 @@ class CreateMutationPaymentTable extends Migration {
                 ->references('id')
                 ->on('mutations')
                 ->onDelete('cascade');
-            // TODO: configure this foreign key once the payment table is available
-            // $table->foreign('payment_id')
-            //     ->references('id')
-            //     ->on('payments')
-            //     ->onDelete('set null');
+            $table->foreign('payment_id')
+                ->references('id')
+                ->on('payments')
+                ->onDelete('set null');
         });
     }
 
