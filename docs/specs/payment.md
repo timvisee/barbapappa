@@ -18,20 +18,22 @@ The state of any related payment mutations should be updated along with it.
 - `state`: state of the payment
     - 1: `pending`: waiting for the payment to be started
     - 2: `processing`: waiting on the payment service to finish processing
-    - 3: `paid`: the payment has been completed
-    - 4: `revoked`: the payment has been revoked by BARbapAPPa, possibly by a user
-    - 5: `rejected`: the payment was rejected at the payment service, possibly by the user
+    - 3: `completed`: the payment has been completed
+    - 4: `revoked`: the payment has been revoked by BARbapAPPa, possibly by a user through the BARbapAPPa platform
+    - 5: `rejected`: the payment was rejected at the payment service, possibly by the user through the payment platform
     - 6: `failed`: the payment failed due to an error or another issue
-- `payment_type`: payment type
-    - 1: manual IBAN transfer
-    - 2: bunq payment request
-    - 3: bunq automated IBAN transfer
 - `payment_service_id`: reference to the payment service that was used
 - `reference`: an unique ID/token used for reference
 - `money`: the money receiving by this payment
 - `currency`: currency identifier
 - `created_at`: the time this payment was created at
 - `updated_at`: the time this payment was last updated at
+
+Removed from table data:  
+> - `payment_type`: payment type
+>     - 1: manual IBAN transfer
+>     - 2: bunq payment request
+>     - 3: bunq automated IBAN transfer
 
 ### Manual IBAN transfer payment
 `payment_manual_iban`:

@@ -34,7 +34,8 @@ When the payment is processed through bunq, it is redirected to the proper IBAN 
     - 2: manual IBAN service: a manual IBAN transfer, that must be approved by authorized users
     - 3: bunq service: a payment through bunq, a payment request or an automated bank transfer
     - 4: provided bunq service: a provided payment through bunq, a payment request or an automated bank transfer
-- `can_withdraw`: true if money can be withdrawn through this service
+- `deposit`: true if money can be deposited through this service, or false
+- `withdraw`: true if money can be withdrawn through this service, or false
 - `enabled`: true if enabled, false if not
 - `archived`: false if available, true if archived and hidden
 - `created_at`: the date this service was created at
