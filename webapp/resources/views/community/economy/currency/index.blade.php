@@ -6,6 +6,7 @@
 
 @section('content')
     <h2 class="ui header">@lang('pages.currencies.title') ({{ count($enabled) }})</h2>
+    {{-- TODO: show breadcrumbs including the community and current economy --}}
     <p>@lang('pages.currencies.description')</p>
 
     <h3 class="ui header">@lang('misc.enabled')</h3>
@@ -53,6 +54,6 @@
 
     <a href="{{ route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
             class="ui button basic">
-        @lang('general.goBack')
+        @lang('pages.economies.backToEconomy')
     </a>
 @endsection

@@ -44,6 +44,8 @@ return [
     'disable' => 'Disable',
     'disabled' => 'Disabled',
     'manage' => 'Manage',
+    'in' => 'in',
+    'for' => 'for',
 
     'cannotBeUndone' => 'This operation cannot be undone.',
     'viewingAccountOf' => 'You\'re viewing the account of',

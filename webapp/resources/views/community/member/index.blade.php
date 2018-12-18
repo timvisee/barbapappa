@@ -37,6 +37,6 @@
 
     <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
             class="ui button basic">
-        @lang('general.goBack')
+        @lang('pages.community.backToCommunity')
     </a>
 @endsection

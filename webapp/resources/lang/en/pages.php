@@ -65,6 +65,7 @@ return [
             'description' => 'Fill in the email address you\'d like to add.',
             'added' => 'Email address added. A verification email has been sent.',
         ],
+        'backToAccount' => 'Back to account',
     ],
 
     /**
@@ -101,6 +102,8 @@ return [
         'created' => 'The community has been created.',
         'updated' => 'The community has been updated.',
         'economy' => 'Economy',
+        'goTo' => 'Go to community',
+        'backToCommunity' => 'Back to community',
     ],
 
     /**
@@ -132,6 +135,8 @@ return [
         'economyDeleted' => 'The economy has been removed.',
         'economyUpdated' => 'Economy changes saved.',
         'namePlaceholder' => 'Main economy',
+        'all' => 'All economies',
+        'backToEconomy' => 'Back to economy',
     ],
 
     /**
@@ -176,6 +181,7 @@ return [
         'cannotDeleteNonZeroBalance' => 'To delete this wallet, it must have a balance of exactly :zero.',
         'walletDeleted' => 'The wallet has been deleted.',
         'cannotCreateNoCurrencies' => 'You can\'t create wallet at this moment. The community administrator did not configure a currency which allows this.',
+        'all' => 'All wallets',
     ],
 
     /**
@@ -217,6 +223,7 @@ return [
         'created' => 'The bar has been created.',
         'updated' => 'The bar has been updated.',
         'mustCreateEconomyFirst' => 'To create a bar, you must create an economy first.',
+        'backToBar' => 'Back to bar',
     ],
 
     /**

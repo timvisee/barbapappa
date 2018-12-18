@@ -44,6 +44,8 @@ return [
     'disable' => 'Uitschakelen',
     'disabled' => 'Uitgeschakeld',
     'manage' => 'Beheren',
+    'in' => 'in',
+    'for' => 'voor',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',

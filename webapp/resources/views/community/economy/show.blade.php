@@ -72,7 +72,7 @@
     <p>
         <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
                 class="ui button basic">
-            @lang('general.goBack')
+            @lang('pages.economies.all')
         </a>
     </p>
 @endsection

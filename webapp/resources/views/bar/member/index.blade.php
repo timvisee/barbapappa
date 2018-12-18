@@ -37,6 +37,6 @@
 
     <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
             class="ui button basic">
-        @lang('general.goBack')
+        @lang('pages.bar.backToBar')
     </a>
 @endsection
