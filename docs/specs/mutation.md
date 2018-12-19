@@ -164,7 +164,9 @@ Support for this might be added in the future if there's a proper use case that 
 - `id`: index
 - `mutation_id`: reference to the super mutation
 - `bar_id`: reference to the bar the products were bought from
-- `product_bag_id`: reference to a product bag defining the products
+- `product_id`: reference to the product that was bought
+- `quantity`: the product quantity, usually 1
+> - `product_bag_id`: reference to a product bag defining the products
 
 ### Magic mutation
 A magic mutation is a special kind of mutation, and it allows many special cases to be handled.
