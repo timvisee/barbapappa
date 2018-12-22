@@ -63,6 +63,32 @@ class Mutation extends Model {
     }
 
     /**
+     * Get the mutation this depends on, if set.
+     *
+     * This mutation might depend on some other mutation before it can be marked
+     * as complete. This returns the relation to the dependant, if there is any.
+     *
+     * @return The mutation this mutation depends on.
+     */
+    public function dependsOn() {
+        // TODO: ensure this relation is configured correctly
+        return $this->belongsTo('App\Models\Mutation', 'depends_on');
+    }
+
+    /**
+     * Get all the mutations that depend on this mutation.
+     *
+     * Some mutation might depend on this mutation before they can be marked
+     * as complete. This returns the relation to the depending, if there are
+     * any.
+     *
+     * @return The mutations depending on this mutation.
+     */
+    public function depending() {
+        return $this->hasMany('App\Models\Mutation', 'depends_on');
+    }
+
+    /**
      * Format the mutaion amount as human readable text using the proper
      * currency format.
      *
