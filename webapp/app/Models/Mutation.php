@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -31,6 +32,18 @@ use App\Utils\EmailRecipient;
 class Mutation extends Model {
 
     protected $table = "mutations";
+
+    /**
+     * The child mutation types that belong to this mutation for a given type.
+     *
+     * This list is dynamically used to link child mutation data to this
+     * mutation, if this mutation is of a type that has additional data.
+     */
+    protected $typeModels = [
+        2 => MutationWallet::class,
+        3 => MutationProduct::class,
+        4 => MutationPayment::class,
+    ];
 
     /**
      * Get the transaction this mutation is part of.
@@ -86,6 +99,28 @@ class Mutation extends Model {
      */
     public function depending() {
         return $this->hasMany('App\Models\Mutation', 'depends_on');
+    }
+
+    /**
+     * Get the relation to the child mutation data object, if available.
+     *
+     * For example, this would provide a relation to the `MutationPayment`
+     * object that belongs to this mutation, for a payment mutation.
+     *
+     * @return HasOne The child mutation data model relation.
+     * @throws \Exception Throws if the current mutation type doesn't have
+     *      additional mutation data.
+     */
+    public function mutationData() {
+        // Make sure this mutation type has additional data
+        if(!isset($this->typeModels[$this->type]))
+            throw new \Exception(
+                "attempted to get relation to additional mutation data, " .
+                "for a mutation type that doesn't have this"
+            );
+
+        // Return the relation
+        return $this->hasOne($this->typeModels[$this->type], 'mutation_id', 'id');
     }
 
     /**
