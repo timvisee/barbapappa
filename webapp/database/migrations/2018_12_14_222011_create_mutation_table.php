@@ -15,6 +15,7 @@ class CreateMutationTable extends Migration {
         Schema::create('mutations', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('transaction_id')->unsigned();
+            $table->integer('economy_id')->unsigned()->nullable(true);
             $table->integer('type')->unsigned()->nullable(false);
             $table->decimal('amount')->nullable(false);
             $table->integer('currency_id')->unsigned();
@@ -26,6 +27,10 @@ class CreateMutationTable extends Migration {
                 ->references('id')
                 ->on('transactions')
                 ->onDelete('cascade');
+            $table->foreign('economy_id')
+                ->references('id')
+                ->on('economies')
+                ->onDelete('set null');
             $table->foreign('currency_id')
                 ->references('id')
                 ->on('currencies')

@@ -78,6 +78,7 @@ In any different state, the mutation is frozen.
 `mutations`:  
 - `id`: index
 - `transaction_id`: reference to a owning transaction
+- `economy_id`: reference to the economy the mutation was made in
 - `type`: type of mutation
     - 1: magic mutation
     - 2: wallet mutation

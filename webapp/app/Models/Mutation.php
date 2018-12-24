@@ -54,14 +54,14 @@ class Mutation extends Model {
         return $this->belongsTo('App\Models\Transaction');
     }
 
-    // /**
-    //  * Get the economy this mutation is taking place in.
-    //  *
-    //  * @return The economy.
-    //  */
-    // public function economy() {
-    //     return $this->belongsTo('App\Models\Economy');
-    // }
+    /**
+     * Get the economy this mutation is taking place in.
+     *
+     * @return The economy.
+     */
+    public function economy() {
+        return $this->belongsTo('App\Models\Economy');
+    }
 
     /**
      * Get the used currency.

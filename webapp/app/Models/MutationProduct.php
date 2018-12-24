@@ -13,6 +13,8 @@ use App\Managers\PasswordResetManager;
 use App\Scopes\EnabledScope;
 use App\Utils\EmailRecipient;
 
+// TODO: update parent mutation change time, if this model changes
+
 /**
  * Mutation product model.
  * This defines additional information for a product mutation, that belongs to a
