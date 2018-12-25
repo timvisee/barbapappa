@@ -29,6 +29,11 @@ class Transaction extends Model {
 
     protected $table = "transactions";
 
+    const STATE_PENDING = 1;
+    const STATE_PROCESSING = 2;
+    const STATE_SUCCESS = 3;
+    const STATE_FAILED = 4;
+
     /**
      * Get the mutations that are part of this transaction.
      *
@@ -37,15 +42,6 @@ class Transaction extends Model {
     public function mutations() {
         return $this->hasMany('App\Models\Mutation');
     }
-
-    // /**
-    //  * Get the economy this mutation is taking place in.
-    //  *
-    //  * @return The economy.
-    //  */
-    // public function economy() {
-    //     return $this->belongsTo('App\Models\Economy');
-    // }
 
     /**
      * Get the reference to another transaction, if set.
@@ -56,15 +52,42 @@ class Transaction extends Model {
         return $this->belongsTo('App\Models\Transaction');
     }
 
-    // /**
-    //  * Format the mutaion amount as human readable text using the proper
-    //  * currency format.
-    //  *
-    //  * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
-    //  *
-    //  * @return string Formatted balance
-    //  */
-    // public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
-    //     return balance($this->amount, $this->currency->code, $format);
-    // }
+    /**
+     * Determine the amount of money it costs the user to make this transaction.
+     *
+     * If the user pays money, the returned value is positive. If the user
+     * receives/deposits money, the returned value is negative.
+     *
+     * @return The cost is returned as decimal value.
+     */
+    public function cost() {
+        return $this
+            ->mutations()
+            ->where('type', Mutation::TYPE_WALLET)
+            ->pluck('amount')
+            ->sum();
+    }
+
+    /**
+     * Format the amount of money it costs the user to make this transaction as
+     * human readable text using the proper currency format.
+     *
+     * If the user pays money, the returned value is positive. If the user
+     * receives/deposits money, the returned value is negative.
+     *
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     * @param boolean [$invert=false] True to invert the cost value.
+     *
+     * @return string Formatted cost.
+     */
+    public function formatCost($format = BALANCE_FORMAT_PLAIN, $invert = false) {
+        // Determine the cost
+        $cost = $this->cost();
+        if($invert)
+            $cost *= -1;
+
+        // TODO: choose the correct currency here
+        // return balance($cost, $this->currency->code, $format);
+        return balance($cost, 'EUR', $format);
+    }
 }

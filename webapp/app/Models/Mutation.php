@@ -33,6 +33,15 @@ class Mutation extends Model {
 
     protected $table = "mutations";
 
+    const TYPE_MAGIC = 1;
+    const TYPE_WALLET = 2;
+    const TYPE_PRODUCT = 3;
+    const TYPE_PAYMENT = 4;
+    const STATE_PENDING = 1;
+    const STATE_PROCESSING = 2;
+    const STATE_SUCCESS = 3;
+    const STATE_FAILED = 4;
+
     /**
      * The child mutation types that belong to this mutation for a given type.
      *
@@ -40,9 +49,9 @@ class Mutation extends Model {
      * mutation, if this mutation is of a type that has additional data.
      */
     protected $typeModels = [
-        2 => MutationWallet::class,
-        3 => MutationProduct::class,
-        4 => MutationPayment::class,
+        Self::TYPE_WALLET => MutationWallet::class,
+        Self::TYPE_PRODUCT => MutationProduct::class,
+        Self::TYPE_PAYMENT => MutationPayment::class,
     ];
 
     /**
@@ -124,7 +133,7 @@ class Mutation extends Model {
     }
 
     /**
-     * Format the mutaion amount as human readable text using the proper
+     * Format the mutation amount as human readable text using the proper
      * currency format.
      *
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
