@@ -72,6 +72,35 @@ class Economy extends Model {
     }
 
     /**
+     * Get all the transactions that took place in this economy.
+     *
+     * TODO: filter by user
+     *
+     * @return The transactions.
+     */
+    public function transactions() {
+        // TODO: return proper selection
+        // return $this->hasMany('App\Models\Transaction');
+        return Transaction::where('id', '!=', -1);
+    }
+
+    /**
+     * Get the last few transactions that took place in this economy.
+     *
+     * TODO: filter by user
+     *
+     * @param [$limit=5] The number of last transactions to return at max.
+     *
+     * @return The last transactions.
+     */
+    public function lastTransactions($limit = 5) {
+        return $this
+            ->transactions()
+            ->orderBy('created_at', 'DESC')
+            ->limit($limit);
+    }
+
+    /**
      * Go through all wallets of the current user in this economy, and calculate
      * the total balance.
      *

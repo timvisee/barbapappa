@@ -185,6 +185,14 @@ return [
     ],
 
     /**
+     * Transaction pages.
+     */
+    'transactions' => [
+        'title' => 'Transactions',
+        'last#' => '{0} Last transactions|{1} Last transaction|[2,*] Last :count transactions',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

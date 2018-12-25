@@ -184,6 +184,14 @@ return [
     ],
 
     /**
+     * Transaction pages.
+     */
+    'transactions' => [
+        'title' => 'Transacties',
+        'last#' => '{0} Laatste transacties|{1} Laatste transactie|[2,*] Laatste :count transacties',
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

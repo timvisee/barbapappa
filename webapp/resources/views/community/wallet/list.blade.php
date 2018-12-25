@@ -68,4 +68,31 @@
             class="ui button basic">
         @lang('pages.community.goTo')
     </a>
+
+    <div class="ui divider hidden"></div>
+
+    {{-- TODO: complete this transaction view --}}
+    <div class="ui top attached vertical menu fluid">
+        <h5 class="ui item header">
+            {{ trans_choice('pages.transactions.last#', count($transactions)) }}
+        </h5>
+        @forelse($transactions as $transaction)
+            {{-- <a class="item" --}}
+            {{--         href="{{ route('community.economy.currency.show', [ --}}
+            {{--             'communityId' => $community->id, --}}
+            {{--             'economyId' => $economy->id, --}}
+            {{--             'economyCurrencyId' => $currency->id --}}
+            {{--         ]) }}"> --}}
+            <a class="item"
+                    href="#">
+                {{ $transaction->description}}
+                {!! $transaction->formatCost(BALANCE_FORMAT_LABEL); !!}
+            </a>
+        @endforeach
+    </div>
+    <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+            class="ui bottom attached button">
+        @lang('misc.showAll')
+    </a>
+
 @endsection

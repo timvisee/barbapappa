@@ -43,6 +43,7 @@ return [
     'enabled' => 'Ingeschakeld',
     'disable' => 'Uitschakelen',
     'disabled' => 'Uitgeschakeld',
+    'showAll' => 'Bekijk alles',
     'manage' => 'Beheren',
     'in' => 'in',
     'for' => 'voor',

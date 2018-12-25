@@ -43,6 +43,7 @@ return [
     'enabled' => 'Enabled',
     'disable' => 'Disable',
     'disabled' => 'Disabled',
+    'showAll' => 'Show \'ll',
     'manage' => 'Manage',
     'in' => 'in',
     'for' => 'for',
