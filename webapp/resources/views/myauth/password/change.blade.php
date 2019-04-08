@@ -36,7 +36,7 @@
 
         <div class="inline field">
             <div class="ui toggle checkbox">
-                <input type="checkbox" name="invalidate_other_sessions" tabindex="0" class="hidden">
+                <input type="checkbox" name="invalidate_other_sessions" tabindex="0" class="hidden" checked="checked">
                 {{ Form::label('invalidate_other_sessions', __('account.invalidateOtherSessions')) }}
             </div>
             {{ ErrorRenderer::inline('invalidate_other_sessions') }}

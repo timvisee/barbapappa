@@ -94,5 +94,6 @@
             class="ui bottom attached button">
         @lang('misc.showAll')
     </a>
+    <br />
 
 @endsection
