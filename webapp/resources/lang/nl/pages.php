@@ -62,7 +62,7 @@ return [
         ],
         'addEmail' => [
             'title' => 'E-mailadres toevoegen',
-            'description' => 'Vul the e-mailadres in dat je wilt toevoegen.',
+            'description' => 'Vul het e-mailadres in dat je wilt toevoegen.',
             'added' => 'E-mailadres toegevoegd. Er is een verificatie-e-mail gestuurd.',
         ],
         'backToAccount' => 'Terug naar account',
@@ -102,6 +102,7 @@ return [
         'created' => 'De groep is aangemaakt.',
         'updated' => 'De groep is aangepast.',
         'economy' => 'Economie',
+        'goTo' => 'Ga naar groep',
         'backToCommunity' => 'Terug naar groep',
     ],
 
