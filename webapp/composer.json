@@ -10,8 +10,9 @@
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
-        "torann/currency": "1.0.14",
-        "sentry/sentry-laravel": "^0.11"
+        "sentry/sentry-laravel": "^0.11",
+        "staudenmeir/eloquent-has-many-deep": "^1.7",
+        "torann/currency": "1.0.14"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
