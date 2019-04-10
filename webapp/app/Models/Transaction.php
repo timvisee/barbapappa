@@ -55,6 +55,7 @@ class Transaction extends Model {
     /**
      * Determine the amount of money it costs the user to make this transaction.
      *
+     * TODO: verify this statement is true
      * If the user pays money, the returned value is positive. If the user
      * receives/deposits money, the returned value is negative.
      *
@@ -66,6 +67,30 @@ class Transaction extends Model {
             ->where('type', Mutation::TYPE_WALLET)
             ->pluck('amount')
             ->sum();
+    }
+
+    /**
+     * Describe the transaction.
+     * This description may be printed in a transaction overview or list.
+     *
+     * If the `description` field on the transaction is set, it will be
+     * returned being a custom description.
+     *
+     * Otherwise a description is generated based on the mutations, for example:
+     * - Wallet deposit
+     * - Purchased 5 products
+     *
+     * @return A transaction description.
+     */
+    public function describe() {
+        // Use the user description as base
+        $text = $this->description;
+        if(empty(trim($text)))
+            $text = '?';
+
+        // TODO: describe the transaction here, deposit, bought products?
+
+        return $text;
     }
 
     /**
@@ -86,7 +111,7 @@ class Transaction extends Model {
         if($invert)
             $cost *= -1;
 
-        // TODO: choose the correct currency here
+        // TODO: choose the correct currency here based on transactions
         // return balance($cost, $this->currency->code, $format);
         return balance($cost, 'EUR', $format);
     }

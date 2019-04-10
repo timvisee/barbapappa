@@ -50,6 +50,7 @@ class WalletController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $wallets = $user->wallets()->where('economy_id', $economyId)->with('currency');
+        // TODO: only show transactions for current user
         $transactions = $economy->lastTransactions();
 
         return view('community.wallet.list')
@@ -72,10 +73,12 @@ class WalletController extends Controller {
             ->wallets()
             ->where('economy_id', $economyId)
             ->findOrFail($walletId);
+        $transactions = $wallet->lastTransactions();
 
         return view('community.wallet.show')
             ->with('economy', $economy)
-            ->with('wallet', $wallet);
+            ->with('wallet', $wallet)
+            ->with('transactions', $transactions->get());
     }
 
     /**
