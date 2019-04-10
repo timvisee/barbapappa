@@ -28,6 +28,8 @@ use App\Utils\EmailRecipient;
  */
 class Wallet extends Model {
 
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
+
     protected $table = "wallets";
 
     protected $fillable = [
@@ -74,6 +76,8 @@ class Wallet extends Model {
      * @return The wallet mutations.
      */
     public function walletMutations() {
+        // TODO: implement this!
+
         throw new \Exception("not yet implemented");
 
         return $this->hasMany('App\Models\WalletMutation');
@@ -85,18 +89,42 @@ class Wallet extends Model {
      * @return The mutations.
      */
     public function mutations() {
-        throw new \Exception("not yet implemented");
-
-        return $this->hasManyThrough('App\Models\Mutation', 'App\Models\WalletMutation');
+        return $this->hasManyDeep(
+            'App\Models\Mutation',
+            ['App\Models\MutationWallet'],
+            [
+                'wallet_id',
+                'id',
+            ],
+            [
+                'id',
+                'mutation_id',
+            ]
+        );
     }
 
     /**
-     * Get a list of all transactions that have mutations for this wallet.
+     * Get all transactions that affected this wallet, having at least one
+     * wallet mutation linked to this wallet.
+     *
+     * @return The transactions.
      */
     public function transactions() {
-        throw new \Exception("not yet implemented");
+        return $this->hasManyDeepFromRelations($this->mutations(), (new \App\Models\Mutation)->transaction());
+    }
 
-        // TODO: obtian the transactions from the `mutations()`
+    /**
+     * Get the last few transactions that took place, affecting this wallet.
+     *
+     * @param [$limit=5] The number of last transactions to return at max.
+     *
+     * @return The last transactions.
+     */
+    public function lastTransactions($limit = 5) {
+        return $this
+            ->transactions()
+            ->orderBy('created_at', 'DESC')
+            ->limit($limit);
     }
 
     /**
