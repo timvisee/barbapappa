@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.6.4",
         "barryvdh/laravel-debugbar": "~2.4",
-        "laravel/framework": "5.4.*",
+        "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
         "torann/currency": "1.0.14",
@@ -16,7 +16,8 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7"
+        "phpunit/phpunit": "~6.0",
+        "filp/whoops": "~2.0"
     },
     "autoload": {
         "classmap": [
@@ -48,6 +49,10 @@
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
             "php artisan optimize"
+        ],
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover"
         ]
     },
     "config": {
