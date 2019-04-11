@@ -189,7 +189,7 @@ return [
      */
     'transactions' => [
         'title' => 'Transactions',
-        'titleSingle' => 'Transaction',
+        'details' => 'Transaction details',
         'last#' => '{0} Last transactions|{1} Last transaction|[2,*] Last :count transactions',
     ],
 

@@ -331,6 +331,7 @@ Route::prefix('/transactions')->group(function() {
     // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
 
     // Specific
+    // TODO: find transaction, check permission
     Route::prefix('/{transactionId}')->group(function() {
         // Show
         Route::get('/', 'TransactionController@show')->name('transaction.show');

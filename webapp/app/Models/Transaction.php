@@ -115,4 +115,19 @@ class Transaction extends Model {
         // return balance($cost, $this->currency->code, $format);
         return balance($cost, 'EUR', $format);
     }
+
+    /**
+     * Get the display name for the current transaction state.
+     *
+     * @return State display name.
+     */
+    public function stateName() {
+        // TODO: properly transalte here!
+        return [
+            Self::STATE_PENDING => 'Pending',
+            Self::STATE_PROCESSING => 'Processing',
+            Self::STATE_SUCCESS => 'Success',
+            Self::STATE_FAILED => 'Failed',
+        ][$this->state] ?? 'Unknown';
+    }
 }

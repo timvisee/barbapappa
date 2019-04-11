@@ -6,7 +6,7 @@
 {{-- @endphp --}}
 
 @section('content')
-    <h2 class="ui header">@lang('pages.transactions.titleSingle')</h2>
+    <h2 class="ui header">@lang('pages.transactions.details')</h2>
 
     <table class="ui compact celled definition table">
         <tbody>
@@ -17,6 +17,11 @@
             <tr>
                 <td>@lang('misc.amount')</td>
                 <td>{!! $transaction->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
+            </tr>
+            {{-- TODO: show proper state, and translate --}}
+            <tr>
+                <td>State</td>
+                <td>{{ $transaction->stateName() }}</td>
             </tr>
             <tr>
                 <td>@lang('misc.createdAt')</td>
