@@ -17,8 +17,13 @@ return [
     /**
      * Application version name and code.
      */
-    'version_name' => '0.0.1-snapshot',
+    'version_name' => '0.1.0-snapshot',
     'version_code' => 1,
+
+    /**
+     * Application source location.
+     */
+    'source' => 'https://gitlab.com/timvisee/ffsend',
 
     /*
     |--------------------------------------------------------------------------

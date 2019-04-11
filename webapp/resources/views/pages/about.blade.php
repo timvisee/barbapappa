@@ -32,9 +32,9 @@
         <p>
             <h5>The source code and a development overview is available at</h5>
             <span class="spacer x05"></span>
-            <a href="https://gitlab.com/timvisee/barbapappa">GitLab</a>
+            <a href="{{ config('app.source') }}">GitLab</a>
             <span class="spacer x05"></span>
-            <a href="https://GitHub.com/timvisee/barbapappa">GitHub (mirror)</a>
+            <a href="https://github.com/timvisee/barbapappa">GitHub (mirror)</a>
 
             <span class="spacer"></span>
 

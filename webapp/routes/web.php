@@ -325,8 +325,14 @@ Route::prefix('/b')->middleware('auth')->group(function() {
     });
 });
 
-// Heartbeat route
+// Magic routes
 Route::get('/__heartbeat__', function() { return 'OK'; });
+Route::get('/__version__', function() { return [
+    'version' => config('app.version_name'),
+    'version_code' => config('app.version_code'),
+    'source' => config('app.source'),
+    'env' => config('app.env'),
+]; });
 
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
