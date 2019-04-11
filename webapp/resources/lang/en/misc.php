@@ -21,6 +21,7 @@ return [
     'unspecified' => 'Unspecified',
     'pleaseSpecify' => 'Please specify',
     'information' => 'Information',
+    'description' => 'Description',
     'add' => 'Add',
     'actions' => 'Actions',
     'welcomeTo' => 'Welcome to',

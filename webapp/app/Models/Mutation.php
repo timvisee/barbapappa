@@ -48,7 +48,7 @@ class Mutation extends Model {
      * This list is dynamically used to link child mutation data to this
      * mutation, if this mutation is of a type that has additional data.
      */
-    protected $typeModels = [
+    protected static $typeModels = [
         Self::TYPE_WALLET => MutationWallet::class,
         Self::TYPE_PRODUCT => MutationProduct::class,
         Self::TYPE_PAYMENT => MutationPayment::class,
@@ -111,6 +111,27 @@ class Mutation extends Model {
     }
 
     /**
+     * Describe the mutation in the current language as summary to show.
+     *
+     * @return Mutation description.
+     */
+    public function describe() {
+        // TODO: describe mutations here!
+        switch($this->type) {
+        case Self::TYPE_MAGIC:
+            return 'Some magic transaction';
+        case Self::TYPE_WALLET:
+            return 'Some wallet transaction';
+        case Self::TYPE_PRODUCT:
+            return 'Some product transaction';
+        case Self::TYPE_PAYMENT:
+            return 'Some payment transaction';
+        default:
+            return 'Some transaction';
+        }
+    }
+
+    /**
      * Get the relation to the child mutation data object, if available.
      *
      * For example, this would provide a relation to the `MutationPayment`
@@ -122,14 +143,14 @@ class Mutation extends Model {
      */
     public function mutationData() {
         // Make sure this mutation type has additional data
-        if(!isset($this->typeModels[$this->type]))
+        if(!isset(Self::$typeModels[$this->type]))
             throw new \Exception(
                 "attempted to get relation to additional mutation data, " .
                 "for a mutation type that doesn't have this"
             );
 
         // Return the relation
-        return $this->hasOne($this->typeModels[$this->type], 'mutation_id', 'id');
+        return $this->hasOne(Self::$typeModels[$this->type], 'mutation_id', 'id');
     }
 
     /**

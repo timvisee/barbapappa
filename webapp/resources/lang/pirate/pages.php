@@ -189,7 +189,16 @@ return [
      */
     'transactions' => [
         'title' => 'Transactions',
+        'titleSingle' => 'Transaction',
         'last#' => '{0} Last transactions|{1} Last transaction|[2,*] Last :count transactions',
+    ],
+
+    /**
+     * Mutation pages.
+     */
+    'mutations' => [
+        'title' => 'Mutations',
+        'number#' => '{0} Mutations|{1} Mutation|[2,*] :count mutations',
     ],
 
     /**

@@ -21,6 +21,7 @@ return [
     'unspecified' => 'Niet gespecificeerd',
     'pleaseSpecify' => 'Te specificeren',
     'information' => 'Informatie',
+    'description' => 'Omschrijving',
     'add' => 'Toevoegen',
     'actions' => 'Acties',
     'welcomeTo' => 'Welkom bij',
@@ -47,6 +48,7 @@ return [
     'manage' => 'Beheren',
     'in' => 'in',
     'for' => 'voor',
+    'amount' => 'Hoeveelheid',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',

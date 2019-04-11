@@ -189,7 +189,16 @@ return [
      */
     'transactions' => [
         'title' => 'Transacties',
+        'titleSingle' => 'Transactie',
         'last#' => '{0} Laatste transacties|{1} Laatste transactie|[2,*] Laatste :count transacties',
+    ],
+
+    /**
+     * Mutation pages.
+     */
+    'mutations' => [
+        'title' => 'Mutaties',
+        'number#' => '{0} Mutaties|{1} Mutatie|[2,*] :count mutaties',
     ],
 
     /**

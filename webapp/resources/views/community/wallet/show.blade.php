@@ -49,15 +49,10 @@
             {{ trans_choice('pages.transactions.last#', count($transactions)) }}
         </h5>
         @forelse($transactions as $transaction)
-            {{-- TODO: insert proper link here --}}
-            {{-- <a class="item" --}}
-            {{--         href="{{ route('community.economy.currency.show', [ --}}
-            {{--             'communityId' => $community->id, --}}
-            {{--             'economyId' => $economy->id, --}}
-            {{--             'economyCurrencyId' => $currency->id --}}
-            {{--         ]) }}"> --}}
             <a class="item"
-                    href="#">
+                    href="{{ route('transaction.show', [
+                        'transactionId' => $transaction->id,
+                    ]) }}">
                 {{ $transaction->describe() }}
                 {!! $transaction->formatCost(BALANCE_FORMAT_LABEL); !!}
             </a>

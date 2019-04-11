@@ -325,6 +325,26 @@ Route::prefix('/b')->middleware('auth')->group(function() {
     });
 });
 
+// Transactions
+Route::prefix('/transactions')->group(function() {
+    // Index
+    // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
+
+    // Specific
+    Route::prefix('/{transactionId}')->group(function() {
+        // Show
+        Route::get('/', 'TransactionController@show')->name('transaction.show');
+
+        // // Edit/delete, require manager perms
+        // Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
+        //     Route::get('/edit', 'EconomyCurrencyController@edit')->name('community.economy.currency.edit');
+        //     Route::put('/edit', 'EconomyCurrencyController@doEdit')->name('community.economy.currency.doEdit');
+        //     Route::get('/remove', 'EconomyCurrencyController@delete')->name('community.economy.currency.delete');
+        //     Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
+        // });
+    });
+});
+
 // Magic routes
 Route::get('/__heartbeat__', function() { return 'OK'; });
 Route::get('/__version__', function() { return [

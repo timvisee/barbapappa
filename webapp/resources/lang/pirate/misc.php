@@ -21,6 +21,7 @@ return [
     'unspecified' => 'Unspecified',
     'pleaseSpecify' => 'Please specify',
     'information' => 'Spyglasses',
+    'description' => 'Description',
     'add' => 'Add',
     'actions' => 'Actions',
     'welcomeTo' => 'Welcome to',
@@ -47,6 +48,7 @@ return [
     'manage' => 'Manage',
     'in' => 'in',
     'for' => 'for',
+    'amount' => 'Amount',
 
     'cannotBeUndone' => 'Th\' operation nay be undone.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',

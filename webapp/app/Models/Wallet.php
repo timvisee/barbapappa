@@ -68,23 +68,25 @@ class Wallet extends Model {
         return $this->belongsTo('App\Models\Currency');
     }
 
-    /**
-     * Get a list of wallet mutations, linked to this wallet.
-     * These aren't regular mutations, rather they are wallet specific
-     * mutations which are linked to a regular mutation.
-     *
-     * @return The wallet mutations.
-     */
-    public function walletMutations() {
-        // TODO: implement this!
-
-        throw new \Exception("not yet implemented");
-
-        return $this->hasMany('App\Models\WalletMutation');
-    }
+    // TODO: is this replaced by the `mutations` function?
+    // /**
+    //  * Get a list of wallet mutations, linked to this wallet.
+    //  * These aren't regular mutations, rather they are wallet specific
+    //  * mutations which are linked to a regular mutation.
+    //  *
+    //  * @return The wallet mutations.
+    //  */
+    // public function walletMutations() {
+    //     // TODO: implement this!
+    //     throw new \Exception("not yet implemented");
+    //     return $this->hasMany('App\Models\WalletMutation');
+    // }
 
     /**
      * Get a list of mutations, linked to this wallet.
+     *
+     * This method does not do any permission checking, all linked mutations are
+     * simply related.
      *
      * @return The mutations.
      */
@@ -107,6 +109,9 @@ class Wallet extends Model {
      * Get all transactions that affected this wallet, having at least one
      * wallet mutation linked to this wallet.
      *
+     * This method does not apply any permission checking, all linked
+     * transactions are simply related.
+     *
      * @return The transactions.
      */
     public function transactions() {
@@ -115,6 +120,9 @@ class Wallet extends Model {
 
     /**
      * Get the last few transactions that took place, affecting this wallet.
+     *
+     * This method does not apply any permission checking, all linked
+     * transactions are simply returned.
      *
      * @param [$limit=5] The number of last transactions to return at max.
      *
