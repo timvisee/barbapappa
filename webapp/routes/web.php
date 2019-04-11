@@ -325,5 +325,8 @@ Route::prefix('/b')->middleware('auth')->group(function() {
     });
 });
 
+// Heartbeat route
+Route::get('/__heartbeat__', function() { return 'OK'; });
+
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
