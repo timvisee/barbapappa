@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.yourAccount'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.yourAccount')</h2>
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.accountPage.description')</p>
 
     <h3>@lang('pages.profile.name')</h3>

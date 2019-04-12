@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', $bar->name)
 
-    <h2 class="ui header">{{ $bar->name }}</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.bar.joinQuestion')</p>
 
     @php
@@ -64,5 +65,4 @@
             </a>
         </div>
     {!! Form::close() !!}
-
 @endsection

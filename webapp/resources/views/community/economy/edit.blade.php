@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', $economy->name)
+
 @php
     use \App\Http\Controllers\EconomyCurrencyController;
 @endphp
 
 @section('content')
-    <h2 class="ui header">{{ $economy->name }}</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['EconomyController@doEdit', $community->human_id, $economy->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">

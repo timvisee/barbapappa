@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.bar.createBar'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.bar.createBar')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['BarController@doCreate', 'communityId' => $community->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
 

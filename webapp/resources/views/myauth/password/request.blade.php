@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('pages.requestPasswordReset'))
 
-    <h2 class="ui header">@lang('pages.requestPasswordReset')</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['PasswordForgetController@doRequest'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
@@ -18,5 +19,4 @@
         </div>
 
     {!! Form::close() !!}
-
 @endsection

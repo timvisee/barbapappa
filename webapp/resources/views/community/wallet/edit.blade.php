@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', $wallet->name)
+
 @section('content')
-    <h2 class="ui header">{{ $wallet->name }}</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['WalletController@doEdit', $community->human_id, $economy->id, $wallet->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">

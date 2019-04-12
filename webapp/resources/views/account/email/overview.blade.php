@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.accountPage.email.yourEmails'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.accountPage.email.yourEmails')</h2>
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.accountPage.email.description')</p>
 
     @php

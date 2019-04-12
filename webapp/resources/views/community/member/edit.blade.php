@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', $member->name)
+
 @php
     use \App\Perms\CommunityRoles;
 @endphp
 
 @section('content')
-    <h2 class="ui header">{{ $member->name }}</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['CommunityMemberController@doEdit', $community->human_id, $member->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
         <div class="field {{ ErrorRenderer::hasError('role') ? 'error' : '' }}">

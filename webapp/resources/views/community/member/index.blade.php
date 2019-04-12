@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('pages.communityMembers.title'))
+
 @php
     use \App\Perms\CommunityRoles;
 
@@ -8,7 +10,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">@lang('pages.communityMembers.title') ({{ count($members) }})</h2>
+    <h2 class="ui header">@yield('title') ({{ count($members) }})</h2>
     <p>@lang('pages.communityMembers.description')</p>
 
     <div class="ui vertical menu fluid">

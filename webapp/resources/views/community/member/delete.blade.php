@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', $member->name)
 
-    <h2 class="ui header">{{ $member->name }}</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.communityMembers.deleteQuestion')</p>
 
     <div class="ui warning message visible">
@@ -24,5 +25,4 @@
             <button class="ui button positive basic" type="submit">@lang('general.yesRemove')</button>
         </div>
     {!! Form::close() !!}
-
 @endsection

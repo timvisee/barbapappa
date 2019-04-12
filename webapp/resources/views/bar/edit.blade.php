@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.bar.editBar'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.bar.editBar')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['BarController@update', $bar->human_id], 'method' => 'PUT', 'class' => 'ui form']) !!}
 

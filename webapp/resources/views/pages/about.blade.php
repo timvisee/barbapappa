@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('pages.about'))
 
+@section('content')
     <div class="highlight-box">
-        <h2 class="ui header">@lang('pages.about')</h2>
+        <h2 class="ui header">@yield('title')</h2>
         {{ logo()->element(true, ['class' => 'logo']) }}
         <p>{{ config('app.version_name') }} <span style="color: darkgray;">({{ config('app.version_code') }})</span></p>
     </div>

@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', $email->email)
 
-    <h2 class="ui header">{{ $email->email }}</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
 
     <p>@lang('pages.accountPage.email.deleteQuestion')</p>
 
@@ -16,5 +17,4 @@
             <button class="ui button positive basic" type="submit">@lang('general.yesDelete')</button>
         </div>
     {!! Form::close() !!}
-
 @endsection

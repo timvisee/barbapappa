@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.economies.createEconomy'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.economies.createEconomy')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['EconomyController@doCreate', $community->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">

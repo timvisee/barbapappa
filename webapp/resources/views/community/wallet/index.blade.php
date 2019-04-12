@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
+@section('title', __('pages.wallets.walletEconomies'))
+
 @section('content')
     <h2 class="ui header">
-        @lang('pages.wallets.walletEconomies')
+        @yield('title')
         <div class="sub header">
             in
             <a href="{{ route('community.show', ['communityId' => $community->id]) }}">

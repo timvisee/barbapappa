@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', $economy->name)
 
-    <h2 class="ui header">{{ $economy->name }}</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.economies.deleteQuestion')</p>
 
     <div class="ui warning message visible">
@@ -22,5 +23,4 @@
             <button class="ui button positive basic" type="submit">@lang('general.yesRemove')</button>
         </div>
     {!! Form::close() !!}
-
 @endsection

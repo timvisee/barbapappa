@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', $currency->name)
+
 @section('content')
-    <h2 class="ui header">{{ $currency->name }}</h2>
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.currencies.deleteQuestion')</p>
 
     <p>@lang('pages.currencies.deleteVoidNotice')</p>

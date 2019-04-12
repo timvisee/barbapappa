@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', $bar->name)
 
-    <h2 class="ui header">{{ $bar->name }}</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.bar.leaveQuestion')</p>
 
     <div class="ui warning message visible">
@@ -24,5 +25,4 @@
             <button class="ui button positive basic" type="submit">@lang('general.yesContinue')</button>
         </div>
     {!! Form::close() !!}
-
 @endsection

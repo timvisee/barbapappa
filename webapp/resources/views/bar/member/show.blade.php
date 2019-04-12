@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
+@section('title', $member->name)
+
 @php
     use \App\Http\Controllers\BarMemberController;
     use \App\Perms\BarRoles;
 @endphp
 
 @section('content')
-    <h2 class="ui header">{{ $member->name }}</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <table class="ui compact celled definition table">
         <tbody>

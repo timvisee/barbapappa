@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', __('pages.currencies.title'))
+
 @php
     use \App\Http\Controllers\EconomyCurrencyController;
 @endphp
 
 @section('content')
-    <h2 class="ui header">@lang('pages.currencies.title') ({{ count($enabled) }})</h2>
+    <h2 class="ui header">@yield('title') ({{ count($enabled) }})</h2>
     {{-- TODO: show breadcrumbs including the community and current economy --}}
     <p>@lang('pages.currencies.description')</p>
 

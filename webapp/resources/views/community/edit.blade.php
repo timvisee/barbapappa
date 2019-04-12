@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.community.editCommunity'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.community.editCommunity')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['CommunityController@update', $community->human_id], 'method' => 'PUT', 'class' => 'ui form']) !!}
 

@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('auth.register'))
 
-    <h2 class="ui header">@lang('auth.register')</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['RegisterController@doRegister'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
@@ -59,5 +60,4 @@
     </div>
 
     {!! Form::close() !!}
-
 @endsection

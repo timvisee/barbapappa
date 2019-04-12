@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('account.resetPassword'))
 
-    <h2 class="ui header">@lang('account.resetPassword')</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.passwordReset.enterResetToken')</p>
 
     {!! Form::open(['action' => ['PasswordResetController@doReset'], 'method' => 'POST', 'class' =>'ui form']) !!}
@@ -65,5 +66,4 @@
         <button class="ui button primary" type="submit">@lang('pages.changePassword')</button>
 
     {!! Form::close() !!}
-
 @endsection

@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
+@section('title', $community->name)
+
 @php
     use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\CommunityController;
     use \App\Http\Controllers\CommunityMemberController;
     use \App\Http\Controllers\EconomyController;
 @endphp
+
 @section('content')
     <h2 class="ui header">
         @if($joined)
@@ -17,7 +20,7 @@
             </a>
         @endif
 
-        {{ $community->name }}
+        @yield('title')
     </h2>
 
     @unless($joined)

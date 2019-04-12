@@ -1,12 +1,9 @@
 @extends('layouts.app')
 
-{{-- TODO: remove this? --}}
-{{-- @php --}}
-{{--     use \App\Models\Transaction; --}}
-{{-- @endphp --}}
+@section('title', __('pages.transactions.details'))
 
 @section('content')
-    <h2 class="ui header">@lang('pages.transactions.details')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <table class="ui compact celled definition table">
         <tbody>

@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.privacy.title'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.privacy.title')</h2>
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.privacy.description')</p>
 
     <p><i>@lang('pages.privacy.onlyEnglishNote')</i></p>

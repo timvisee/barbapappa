@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('pages.dashboard'))
+
 @section('content')
     <h3 class="ui header">@lang('pages.bar.yourBars')</h3>
     @include('bar.include.list')

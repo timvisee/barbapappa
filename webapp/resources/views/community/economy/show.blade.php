@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
+@section('title', $economy->name)
+
 @php
     use \App\Http\Controllers\EconomyController;
     use \App\Http\Controllers\EconomyCurrencyController;
 @endphp
 
 @section('content')
-    <h2 class="ui header">{{ $economy->name }}</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <table class="ui compact celled definition table">
         <tbody>

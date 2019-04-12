@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('pages.barMembers.title'))
+
 @php
     use \App\Perms\BarRoles;
 
@@ -8,7 +10,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">@lang('pages.barMembers.title') ({{ count($members) }})</h2>
+    <h2 class="ui header">@yield('title') ({{ count($members) }})</h2>
     <p>@lang('pages.barMembers.description')</p>
 
     <div class="ui vertical menu fluid">

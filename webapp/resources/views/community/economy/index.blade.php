@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('pages.economies.title'))
+
 @php
     use \App\Http\Controllers\EconomyController;
 
@@ -7,7 +9,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">@lang('pages.economies.title') ({{ count($economies) }})</h2>
+    <h2 class="ui header">@yield('title') ({{ count($economies) }})</h2>
     <p>@lang('pages.economies.description')</p>
 
     <div class="ui vertical menu fluid">

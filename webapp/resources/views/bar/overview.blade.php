@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.bars'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.bars')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <div class="ui info message visible">
         <div class="header">@lang('pages.bar.searchByCommunity')</div>

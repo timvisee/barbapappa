@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.license.title'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.license.title')</h2>
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.license.description')</p>
 
     <p>

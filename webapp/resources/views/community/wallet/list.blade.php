@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', __('pages.wallets.yourWallets'))
+
 @php
     use \App\Http\Controllers\EconomyController;
     use \App\Models\Wallet;
@@ -7,7 +9,7 @@
 
 @section('content')
     <h2 class="ui header">
-        @lang('pages.wallets.yourWallets') ({{ count($wallets) }})
+        @yield('title') ({{ count($wallets) }})
         <div class="sub header">
             @lang('misc.in')
             <a href="{{ route('community.show', ['communityId' => $community->id]) }}">

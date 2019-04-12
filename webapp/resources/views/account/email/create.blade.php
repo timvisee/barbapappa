@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('pages.accountPage.addEmail.title'))
 
-    <h2 class="ui header">@lang('pages.accountPage.addEmail.title')</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.accountPage.addEmail.description')</p>
 
     {!! Form::open(['action' => ['EmailController@doCreate', 'userId' => $user->id], 'method' => 'POST', 'class' => 'ui form']) !!}
@@ -20,5 +21,4 @@
         </a>
 
     {!! Form::close() !!}
-
 @endsection

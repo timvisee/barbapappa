@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', $community->name)
 
-    <h2 class="ui header">{{ $community->name }}</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.community.joinQuestion')</p>
 
     @php
@@ -47,5 +48,4 @@
             </a>
         </div>
     {!! Form::close() !!}
-
 @endsection

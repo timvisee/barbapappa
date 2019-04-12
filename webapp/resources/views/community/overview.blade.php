@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', __('pages.communities'))
+
 @php
     use \App\Http\Controllers\CommunityController;
 @endphp
 
 @section('content')
-    <h2 class="ui header">@lang('pages.communities')</h2>
+    <h2 class="ui header">@yield('title')</h2>
     @include('community.include.list')
 
     @if(perms(CommunityController::permsCreate()))

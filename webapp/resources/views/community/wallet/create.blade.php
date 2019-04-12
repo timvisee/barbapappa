@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.wallets.createWallet'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.wallets.createWallet')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['WalletController@doCreate', $community->human_id, $economy->id], 'method' => 'POST', 'class' => 'ui form']) !!}
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">

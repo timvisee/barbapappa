@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.editProfile.name'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.editProfile.name')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
 

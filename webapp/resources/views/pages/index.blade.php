@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('misc.welcomeTo'))
 
+@section('content')
     <div class="highlight-box">
-        <h2 class="ui header">@lang('misc.welcomeTo')</h2>
+        <h2 class="ui header">@yield('title')</h2>
         {{ logo()->element(true, ['class' => 'logo']) }}
     </div>
 
@@ -15,5 +16,4 @@
             <a href="{{ route('register') }}" class="ui button fluid large">@lang('auth.register')</a>
         </div>
     </div>
-
 @endsection

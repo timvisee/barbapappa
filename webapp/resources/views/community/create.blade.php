@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.community.createCommunity'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.community.createCommunity')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['CommunityController@doCreate'], 'method' => 'POST', 'class' => 'ui form']) !!}
 

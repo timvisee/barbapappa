@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $bar->name)
+
 @php
     use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\BarMemberController;
@@ -16,7 +18,7 @@
             </a>
         @endif
 
-        {{ $bar->name }}
+        @yield('title')
 
         @if($joined)
             <a href="{{ route('community.wallet.list', [

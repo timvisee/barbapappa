@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'lang.language')
+
 @section('content')
     <?php
         // Get the title and selectable locales, and build a description string
@@ -20,7 +22,6 @@
     </div>
 
     @if(count($selectableLocales) > 0)
-
         <div class="ui stackable two column grid">
             @foreach($selectableLocales as $locale)
                 <div class="column">
@@ -36,5 +37,4 @@
     @else
         <i>No languages available...</i>
     @endif
-
 @endsection

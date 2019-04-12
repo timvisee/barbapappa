@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+@section('title', __('pages.currencies.createCurrency'))
+
 @section('content')
-    <h2 class="ui header">@lang('pages.currencies.createCurrency')</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['EconomyCurrencyController@doCreate', $community->human_id, $economy->id], 'method' => 'POST', 'class' => 'ui form']) !!}
         <div class="ui message">

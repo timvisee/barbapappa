@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', $wallet->name)
+
 @php
     use \App\Models\Wallet;
 @endphp
 
 @section('content')
-    <h2 class="ui header">{{ $wallet->name }}</h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <table class="ui compact celled definition table">
         <tbody>

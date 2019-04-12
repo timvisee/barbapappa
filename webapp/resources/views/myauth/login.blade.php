@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('auth.login'))
 
-    <h2 class="ui header">@lang('auth.login')</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
@@ -25,5 +26,4 @@
     </div>
 
     {!! Form::close() !!}
-
 @endsection

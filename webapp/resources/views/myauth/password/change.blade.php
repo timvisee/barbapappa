@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('pages.changePassword'))
 
-    <h2 class="ui header">@lang('pages.changePassword')</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.changePasswordDescription')</p>
 
     {!! Form::open(['action' => ['PasswordChangeController@doChange'], 'method' => 'POST', 'class' => 'ui form']) !!}
@@ -51,5 +52,4 @@
         </a>
 
     {!! Form::close() !!}
-
 @endsection

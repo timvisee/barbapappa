@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
-@section('content')
+@section('title', __('pages.noPermission.title'))
 
-    <h2 class="ui header">@lang('pages.noPermission.title')</h2>
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
 
     <p>@lang('pages.noPermission.description')</p>
 
@@ -49,5 +50,4 @@
             title="@lang('pages.' . $homeRoute)">
         @lang('pages.' . $homeRoute)
     </a>
-
 @endsection
