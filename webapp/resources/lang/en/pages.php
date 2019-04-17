@@ -182,6 +182,7 @@ return [
         'walletDeleted' => 'The wallet has been deleted.',
         'cannotCreateNoCurrencies' => 'You can\'t create wallet at this moment. The community administrator did not configure a currency which allows this.',
         'all' => 'All wallets',
+        'view' => 'View wallet',
     ],
 
     /**

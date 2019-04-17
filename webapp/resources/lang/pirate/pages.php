@@ -182,6 +182,7 @@ return [
         'walletDeleted' => 'Th\' wallet be sunk.',
         'cannotCreateNoCurrencies' => 'Ye nay create a wallet. Th\' crew admin did nay configure a currency which allows dis.',
         'all' => 'All wallets',
+        'view' => 'View wallet',
     ],
 
     /**

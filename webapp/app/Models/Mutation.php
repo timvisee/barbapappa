@@ -131,6 +131,16 @@ class Mutation extends Model {
     }
 
     /**
+     * Check whether the mutation has any related child mutation data, based on
+     * the mutation type. See `Self::mutationData()`.
+     *
+     * @return bool True if this mutation has child data, false if not.
+     */
+    public function hasMutationData() {
+        return isset(Self::$typeModels[$this->type]);
+    }
+
+    /**
      * Get the relation to the child mutation data object, if available.
      *
      * For example, this would provide a relation to the `MutationPayment`
@@ -142,7 +152,7 @@ class Mutation extends Model {
      */
     public function mutationData() {
         // Make sure this mutation type has additional data
-        if(!isset(Self::$typeModels[$this->type]))
+        if(!$this->hasMutationData())
             throw new \Exception(
                 "attempted to get relation to additional mutation data, " .
                 "for a mutation type that doesn't have this"

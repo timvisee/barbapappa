@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@php
+    use \App\Models\MutationWallet;
+@endphp
+
 @section('title', __('pages.mutations.details'))
 
 @section('content')
@@ -33,6 +37,32 @@
         </tbody>
     </table>
 
+    {{-- Metadata for transaction types --}}
+    @if($mutation->hasMutationData())
+        @php
+            // TODO: eager load data.wallet.economy here to improve performance!
+            $data = $mutation->mutationData()->firstOrFail();
+        @endphp
+        @if($data instanceof MutationWallet)
+            <p>
+                {{-- TODO: inefficient querying here, improve this! --}}
+                <a href="{{ route('community.wallet.show', [
+                    'communityId' => $data->wallet->economy->community_id,
+                    'economyId' => $data->wallet->economy_id,
+                    'walletId' => $data->wallet_id,
+                ]) }}"
+                        class="ui button basic">
+                    @lang('pages.wallets.view')
+                </a>
+            </p>
+        @else
+            <p>
+                TODO: show mutation type specific data, not yet implemented
+            </p>
+        @endif
+    @endif
+
+    {{-- Dependencies and dependents --}}
     @php
         $dependOn = $mutation->dependOn;
         $dependents = $mutation->dependents;

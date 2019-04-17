@@ -182,6 +182,7 @@ return [
         'walletDeleted' => 'De portemonnee is verwijderd.',
         'cannotCreateNoCurrencies' => 'Je kunt nu geen portemonnee aanmaken. De groep administrator heeft geen valuta geconfigureerd waarbij dit is toegestaan.',
         'all' => 'Alle portemonnees',
+        'view' => 'Portemonnee bekijken',
     ],
 
     /**
