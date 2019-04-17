@@ -24,6 +24,7 @@ return [
     'description' => 'Description',
     'add' => 'Add',
     'actions' => 'Actions',
+    'welcome' => 'Welcome',
     'welcomeTo' => 'Welcome to',
     'logo' => 'Logo',
     'code' => 'Secret',

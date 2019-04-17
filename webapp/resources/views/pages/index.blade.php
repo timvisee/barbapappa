@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', __('misc.welcomeTo'))
+@section('title', __('misc.welcome'))
 
 @section('content')
     <div class="highlight-box">
-        <h2 class="ui header">@yield('title')</h2>
+        <h2 class="ui header">@lang('misc.welcomeTo')</h2>
         {{ logo()->element(true, ['class' => 'logo']) }}
     </div>
 

@@ -24,6 +24,7 @@ return [
     'description' => 'Omschrijving',
     'add' => 'Toevoegen',
     'actions' => 'Acties',
+    'welcome' => 'Welkom',
     'welcomeTo' => 'Welkom bij',
     'logo' => 'Logo',
     'code' => 'Code',

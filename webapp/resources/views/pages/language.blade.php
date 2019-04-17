@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'lang.language')
+@section('title', __('lang.language'))
 
 @section('content')
     <?php
