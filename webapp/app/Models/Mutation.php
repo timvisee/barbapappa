@@ -92,13 +92,12 @@ class Mutation extends Model {
      *
      * @return The mutation this mutation depends on.
      */
-    public function dependsOn() {
-        // TODO: ensure this relation is configured correctly
-        return $this->belongsTo('App\Models\Mutation', 'depends_on');
+    public function dependOn() {
+        return $this->belongsTo(Self::class, 'depend_on');
     }
 
     /**
-     * Get all the mutations that depend on this mutation.
+     * Get all the dependents, mutations that depend on this mutation.
      *
      * Some mutation might depend on this mutation before they can be marked
      * as complete. This returns the relation to the depending, if there are
@@ -106,8 +105,8 @@ class Mutation extends Model {
      *
      * @return The mutations depending on this mutation.
      */
-    public function depending() {
-        return $this->hasMany('App\Models\Mutation', 'depends_on');
+    public function dependents() {
+        return $this->hasMany('App\Models\Mutation', 'depend_on');
     }
 
     /**
@@ -163,5 +162,20 @@ class Mutation extends Model {
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
         return balance($this->amount, $this->currency->code, $format);
+    }
+
+    /**
+     * Get the display name for the current mutation state.
+     *
+     * @return State display name.
+     */
+    public function stateName() {
+        // TODO: properly transalte here!
+        return [
+            Self::STATE_PENDING => 'Pending',
+            Self::STATE_PROCESSING => 'Processing',
+            Self::STATE_SUCCESS => 'Success',
+            Self::STATE_FAILED => 'Failed',
+        ][$this->state] ?? 'Unknown';
     }
 }

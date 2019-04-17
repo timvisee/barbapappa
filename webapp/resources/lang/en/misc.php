@@ -49,6 +49,9 @@ return [
     'manage' => 'Manage',
     'in' => 'in',
     'for' => 'for',
+    'amount' => 'Amount',
+    'dependsOn' => 'Depends on',
+    'dependents' => 'Dependents',
 
     'cannotBeUndone' => 'This operation cannot be undone.',
     'viewingAccountOf' => 'You\'re viewing the account of',

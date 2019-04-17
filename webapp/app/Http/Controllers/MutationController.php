@@ -11,24 +11,24 @@ use App\Models\Transaction;
 use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\CommunityRoles;
 
-class TransactionController extends Controller {
+class MutationController extends Controller {
 
     /**
-     * Show an user transaction.
+     * Show an transaction mutation.
      *
      * @return Response
      */
-    public function show($transactionId) {
-        // TODO: do some permission checking! user allowed to see transaction?
+    public function show($transactionId, $mutationId) {
+        // TODO: do some permission checking! user allowed to see mutation?
 
-        // Get the user, community, find the economy and transaction
+        // Get the user, community, find the economy and mutation
         $user = barauth()->getUser();
         // TODO: use more specific query
         $transaction = Transaction::findOrFail($transactionId);
-        $mutations = $transaction->mutations();
+        $mutation = $transaction->mutations()->findOrFail($mutationId);
 
-        return view('transaction.show')
+        return view('transaction.mutation.show')
             ->with('transaction', $transaction)
-            ->with('mutations', $mutations->get());
+            ->with('mutation', $mutation);
     }
 }

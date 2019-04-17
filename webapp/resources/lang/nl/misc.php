@@ -50,6 +50,8 @@ return [
     'in' => 'in',
     'for' => 'voor',
     'amount' => 'Hoeveelheid',
+    'dependsOn' => 'Hangt af van',
+    'dependents' => 'Afhankelijken',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',

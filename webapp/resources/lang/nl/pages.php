@@ -191,6 +191,7 @@ return [
         'title' => 'Transacties',
         'details' => 'Transactie details',
         'last#' => '{0} Laatste transacties|{1} Laatste transactie|[2,*] Laatste :count transacties',
+        'backToTransaction' => 'Terug naar transactie',
     ],
 
     /**
@@ -198,6 +199,7 @@ return [
      */
     'mutations' => [
         'title' => 'Mutaties',
+        'details' => 'Mutatie details',
         'number#' => '{0} Mutaties|{1} Mutatie|[2,*] :count mutaties',
     ],
 

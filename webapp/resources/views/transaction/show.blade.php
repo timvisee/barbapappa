@@ -53,10 +53,10 @@
         </h5>
         @forelse($mutations as $mutation)
             <a class="item"
-            {{--         href="{{ route('mutation.show', [ --}}
-            {{--             'transactionId' => $mutation->id, --}}
-            {{--         ]) }}"> --}}
-                    href="#">
+                    href="{{ route('transaction.mutation.show', [
+                        'transactionId' => $transaction->id,
+                        'mutationId' => $mutation->id,
+                    ]) }}">
                 {{ $mutation->describe() }}
                 {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL); !!}
             </a>

@@ -191,6 +191,7 @@ return [
         'title' => 'Transactions',
         'details' => 'Transaction details',
         'last#' => '{0} Last transactions|{1} Last transaction|[2,*] Last :count transactions',
+        'backToTransaction' => 'Back to transaction',
     ],
 
     /**
@@ -198,6 +199,7 @@ return [
      */
     'mutations' => [
         'title' => 'Mutations',
+        'details' => 'Mutation details',
         'number#' => '{0} Mutations|{1} Mutation|[2,*] :count mutations',
     ],
 

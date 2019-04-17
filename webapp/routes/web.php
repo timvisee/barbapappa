@@ -305,7 +305,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 
         // Bar members, require view perms
         Route::prefix('/members')->middleware(BarMemberController::permsView()->middleware())->group(function() {
-            // Show
+            // Index
             Route::get('/', 'BarMemberController@index')->name('bar.member.index');
 
             // Specific
@@ -343,6 +343,28 @@ Route::prefix('/transactions')->group(function() {
         //     Route::get('/remove', 'EconomyCurrencyController@delete')->name('community.economy.currency.delete');
         //     Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
         // });
+
+        // Transaction mutations
+        // TODO: add a permission check
+        // Route::prefix('/mutations')->middleware(MutationController::permsView()->middleware())->group(function() {
+        Route::prefix('/mutations')->group(function() {
+            // Index
+            // Route::get('/', 'MutationController@index')->name('transaction.mutation.index');
+
+            // Specific
+            Route::prefix('/{mutationId}')->group(function() {
+                // Show
+                Route::get('/', 'MutationController@show')->name('transaction.mutation.show');
+
+                // // Edit/delete, require manage perms
+                // Route::middleware(MutationController::permsManage()->middleware())->group(function() {
+                //     Route::get('/edit', 'MutationController@edit')->name('bar.member.edit');
+                //     Route::put('/edit', 'MutationController@doEdit')->name('bar.member.doEdit');
+                //     Route::get('/delete', 'MutationController@delete')->name('bar.member.delete');
+                //     Route::delete('/delete', 'MutationController@doDelete')->name('bar.member.doDelete');
+                // });
+            });
+        });
     });
 });
 
