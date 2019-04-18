@@ -35,9 +35,9 @@ return [
      */
     'isCompromised' => 'Account gehacked?',
     'invalidateAllSessions' => 'Log uit op alle apparaten',
-    'invalidateAllSessionsDescription' => 'Schuif het knopje aan om uit te loggen op alle apparaten.<br />'
+    'invalidateAllSessionsDescription' => 'Laat de knop hieronder aan staan om uit te loggen op alle apparaten.<br />'
         . 'Deze optie moet aangevinkt worden als je denkt dat je account misschien door iemand anders gebruikt is.',
     'invalidateOtherSessions' => 'Log uit op andere apparaten',
-    'invalidateOtherSessionsDescription' => 'Schuif het knopje aan om uit te loggen op alle andere apparaten.<br />'
+    'invalidateOtherSessionsDescription' => 'Laat de knop hieronder aan staan om uit te loggen op alle andere apparaten.<br />'
         . 'Deze optie moet aangevinkt worden als je denkt dat je account misschien door iemand anders gebruikt is.',
 ];
