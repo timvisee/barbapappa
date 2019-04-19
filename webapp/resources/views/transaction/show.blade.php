@@ -15,9 +15,8 @@
                 <td>@lang('misc.amount')</td>
                 <td>{!! $transaction->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
-            {{-- TODO: show proper state, and translate --}}
             <tr>
-                <td>State</td>
+                <td>@lang('misc.state')</td>
                 <td>{{ $transaction->stateName() }}</td>
             </tr>
             <tr>

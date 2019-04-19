@@ -221,7 +221,7 @@ return [
             'walletDepositDetail' => 'Storting naar :wallet portemonnee',
             'walletWithdrawDetail' => 'Betaald met :wallet portemonnee',
             'productDeposit' => 'Geld ontvangen voor product(en)',
-            'productWithdraw' => 'Betaling voor product(en)',
+            'productWithdraw' => 'Betaald voor product(en)',
             'paymentDeposit' => 'Opname naar extern account',
             'paymentWithdraw' => 'Storting vanaf extern account',
         ],

@@ -221,7 +221,7 @@ return [
             'walletDepositDetail' => 'Deposit to :wallet wallet',
             'walletWithdrawDetail' => 'Payed with :wallet wallet',
             'productDeposit' => 'Received money for product(s)',
-            'productWithdraw' => 'Payment for product(s)',
+            'productWithdraw' => 'Payed for product(s)',
             'paymentDeposit' => 'Withdraw to external account',
             'paymentWithdraw' => 'Deposit from external account',
         ],

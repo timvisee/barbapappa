@@ -52,6 +52,7 @@ return [
     'amount' => 'Hoeveelheid',
     'dependsOn' => 'Afhankelijk van',
     'dependents' => 'Afhankelijken',
+    'state' => 'Staat',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',

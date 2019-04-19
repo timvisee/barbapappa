@@ -19,9 +19,8 @@
                 <td>@lang('misc.amount')</td>
                 <td>{!! $mutation->formatAmount(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
-            {{-- TODO: show proper state, and translate --}}
             <tr>
-                <td>State</td>
+                <td>@lang('misc.state')</td>
                 <td>{{ $mutation->stateName() }}</td>
             </tr>
             <tr>

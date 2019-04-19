@@ -52,6 +52,7 @@ return [
     'amount' => 'Amount',
     'dependsOn' => 'Depends on',
     'dependents' => 'Dependents',
+    'state' => 'State',
 
     'cannotBeUndone' => 'Th\' operation nay be undone.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',
