@@ -122,12 +122,17 @@ class Transaction extends Model {
      * @return State display name.
      */
     public function stateName() {
-        // TODO: properly transalte here!
-        return [
-            Self::STATE_PENDING => 'Pending',
-            Self::STATE_PROCESSING => 'Processing',
-            Self::STATE_SUCCESS => 'Success',
-            Self::STATE_FAILED => 'Failed',
-        ][$this->state] ?? 'Unknown';
+        // Get the state key here
+        $key = [
+            Self::STATE_PENDING => 'pending',
+            Self::STATE_PROCESSING => 'processing',
+            Self::STATE_SUCCESS => 'success',
+            Self::STATE_FAILED => 'failed',
+        ][$this->state];
+        if(empty($key))
+            throw new \Exception("Unknown mutation state, cannot get state name");
+
+        // Translate and return
+        return __('pages.mutations.state.' . $key);
     }
 }

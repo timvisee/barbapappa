@@ -193,6 +193,12 @@ return [
         'details' => 'Transaction details',
         'last#' => '{0} Last transactions|{1} Last transaction|[2,*] Last :count transactions',
         'backToTransaction' => 'Back to transaction',
+        'state' => [
+            'pending' => 'Pending',
+            'processing' => 'Processing',
+            'success' => 'Completed',
+            'failed' => 'Failed',
+        ],
     ],
 
     /**
@@ -202,6 +208,12 @@ return [
         'title' => 'Mutations',
         'details' => 'Mutation details',
         'number#' => '{0} Mutations|{1} Mutation|[2,*] :count mutations',
+        'state' => [
+            'pending' => 'Pending',
+            'processing' => 'Processing',
+            'success' => 'Completed',
+            'failed' => 'Failed',
+        ],
         'types' => [
             'magic' => 'Special mutation',
             'walletDeposit' => 'Deposit to wallet',

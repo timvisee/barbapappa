@@ -193,6 +193,12 @@ return [
         'details' => 'Transactie details',
         'last#' => '{0} Laatste transacties|{1} Laatste transactie|[2,*] Laatste :count transacties',
         'backToTransaction' => 'Terug naar transactie',
+        'state' => [
+            'pending' => 'In afwachting',
+            'processing' => 'Bezig met verwerken',
+            'success' => 'Voltooid',
+            'failed' => 'Mislukt',
+        ],
     ],
 
     /**
@@ -202,6 +208,12 @@ return [
         'title' => 'Mutaties',
         'details' => 'Mutatie details',
         'number#' => '{0} Mutaties|{1} Mutatie|[2,*] :count mutaties',
+        'state' => [
+            'pending' => 'In afwachting',
+            'processing' => 'Bezig met verwerken',
+            'success' => 'Voltooid',
+            'failed' => 'Mislukt',
+        ],
         'types' => [
             'magic' => 'Speciale mutatie',
             'walletDeposit' => 'Storting naar portemonnee',
