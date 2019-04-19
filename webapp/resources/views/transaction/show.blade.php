@@ -23,6 +23,18 @@
                 <td>@lang('misc.createdAt')</td>
                 <td>{{ $transaction->created_at }}</td>
             </tr>
+            @if($transaction->reference_to != null)
+                <tr>
+                    <td>@lang('misc.referenceTo')</td>
+                    <td>
+                        <a href="{{ route('transaction.show', [
+                                'transactionId'=> $transaction->reference_to
+                            ]) }}" >
+                            {{ $transaction->reference->describe() }}
+                        </a>
+                    </td>
+                </tr>
+            @endif
             @if($transaction->created_at != $transaction->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>

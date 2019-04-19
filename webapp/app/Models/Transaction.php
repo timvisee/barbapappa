@@ -49,7 +49,7 @@ class Transaction extends Model {
      * @return The other transaction that is referred.
      */
     public function reference() {
-        return $this->belongsTo('App\Models\Transaction');
+        return $this->belongsTo('App\Models\Transaction', 'reference_to');
     }
 
     /**

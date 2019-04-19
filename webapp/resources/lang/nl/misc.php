@@ -53,6 +53,7 @@ return [
     'dependsOn' => 'Afhankelijk van',
     'dependents' => 'Afhankelijken',
     'state' => 'Staat',
+    'referenceTo' => 'Gerefereerd aan',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',
