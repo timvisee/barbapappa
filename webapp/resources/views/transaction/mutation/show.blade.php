@@ -46,11 +46,7 @@
         @if($data instanceof MutationWallet)
             <p>
                 {{-- TODO: inefficient querying here, improve this! --}}
-                <a href="{{ route('community.wallet.show', [
-                    'communityId' => $data->wallet->economy->community_id,
-                    'economyId' => $data->wallet->economy_id,
-                    'walletId' => $data->wallet_id,
-                ]) }}"
+                <a href="{{ $data->wallet->getUrlShow() }}"
                         class="ui button basic">
                     @lang('pages.wallets.view')
                 </a>

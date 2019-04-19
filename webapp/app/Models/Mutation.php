@@ -112,14 +112,19 @@ class Mutation extends Model {
     /**
      * Describe the mutation in the current language as summary to show.
      *
-     * @param bool [$detail=false] Describe the transaction in detail if true,
-     *          might produce HTML which should not be escaped.
+     * By default this provides a simple description. The `$detail` parameter
+     * may be set to `true` to show more advanced descriptions, which may
+     * include a link and name to an affected wallet. Enabling details is more
+     * expensive and can greatly slow down the application when rendering lots
+     * of mutations, it should therefore be used with care.
      *
-     * @return Mutation description.
+     * If detail mode is turned on, HTML instead of plain text is returned. A
+     * description in detail mode must therefore be rendered with `{!! $d !!}`.
+     *
+     * @param bool [$detail=false] Describe in detail or not.
+     *
+     * @return string Mutation description.
      */
-    // TODO: default detail parameter to false
-    // TODO: describe mutations here!
-    // TODO: translate
     public function describe($detail = false) {
         // Do some property checks
         $deposit = $this->amount > 0;
@@ -134,37 +139,23 @@ class Mutation extends Model {
                 // Get the wallet, it's name and build a link to it
                 $wallet = $this->mutationData->wallet;
                 $name = $wallet->name;
-                $link = '<a href="' . route('community.wallet.show', [
-                    'communityId' => $wallet->economy->community_id,
-                    'economyId' => $wallet->economy_id,
-                    'walletId' => $wallet->id,
-                ]) . '">' . htmlspecialchars($name) . "</a>";
+                $link = '<a href="' . $wallet->getUrlShow() . '">' . htmlspecialchars($name) . "</a>";
 
                 // Return the description string including the wallet name/link
                 if($deposit)
                     return __('pages.mutations.types.walletDepositDetail', ['wallet' => $link]);
                 else
                     return __('pages.mutations.types.walletWithdrawDetail', ['wallet' => $link]);
-            } else {
-                if($deposit)
-                    return __('pages.mutations.types.walletDeposit');
-                else
-                    return __('pages.mutations.types.walletWithdraw');
-            }
+            } else
+                return __('pages.mutations.types.wallet' . ($deposit ? 'Deposit' : 'Withdraw'));
 
         case Self::TYPE_PRODUCT:
             // TODO: describe mutation in detail here
-            if($deposit)
-                return __('pages.mutations.types.productDeposit');
-            else
-                return __('pages.mutations.types.productWithdraw');
+            return __('pages.mutations.types.product' . ($deposit ? 'Deposit' : 'Withdraw'));
 
         case Self::TYPE_PAYMENT:
             // TODO: describe mutation in detail here
-            if($deposit)
-                return __('pages.mutations.types.paymentDeposit');
-            else
-                return __('pages.mutations.types.paymentWithdraw');
+            return __('pages.mutations.types.payment' . ($deposit ? 'Deposit' : 'Withdraw'));
 
         default:
             throw new \Exception("Unknown mutation type, cannot describe");

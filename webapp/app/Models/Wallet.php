@@ -146,4 +146,19 @@ class Wallet extends Model {
     public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
         return balance($this->balance, $this->currency->code, $format);
     }
+
+    /**
+     * Build and return the URL for the wallet show page.
+     *
+     * @return string The wallet show URL.
+     */
+    // TODO: attempt to implement some eager loading of the economy model
+    public function getUrlShow() {
+        return route('community.wallet.show', [
+            // TODO: can we use $this->economy->community_id here?
+            'communityId' => $this->economy->community->human_id,
+            'economyId' => $this->economy_id,
+            'walletId' => $this->id,
+        ]);
+    }
 }
