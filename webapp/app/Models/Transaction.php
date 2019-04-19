@@ -48,8 +48,17 @@ class Transaction extends Model {
      *
      * @return The other transaction that is referred.
      */
-    public function reference() {
+    public function referencedTo() {
         return $this->belongsTo('App\Models\Transaction', 'reference_to');
+    }
+
+    /**
+     * Get a relation to all transactions that reference this one.
+     *
+     * @return Relation to other transactions that refer this one.
+     */
+    public function referencedBy() {
+        return $this->hasMany('App\Models\Transaction', 'reference_to');
     }
 
     /**

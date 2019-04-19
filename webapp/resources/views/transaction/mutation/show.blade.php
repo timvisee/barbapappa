@@ -93,7 +93,6 @@
                 @endforeach
             @endif
         </div>
-        <br />
     @endif
 
     {{-- <div class="ui top vertical menu fluid"> --}}
@@ -119,4 +118,6 @@
             @lang('pages.transactions.backToTransaction')
         </a>
     </p>
+
+    <br />
 @endsection

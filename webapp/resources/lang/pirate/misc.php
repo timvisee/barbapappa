@@ -53,7 +53,8 @@ return [
     'dependsOn' => 'Depends on',
     'dependents' => 'Dependents',
     'state' => 'State',
-    'referenceTo' => 'Referenced to',
+    'referencedTo' => 'Referenced to',
+    'referencedBy' => 'Referenced by',
 
     'cannotBeUndone' => 'Th\' operation nay be undone.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',
