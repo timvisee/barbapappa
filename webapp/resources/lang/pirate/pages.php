@@ -202,6 +202,17 @@ return [
         'title' => 'Mutations',
         'details' => 'Mutation details',
         'number#' => '{0} Mutations|{1} Mutation|[2,*] :count mutations',
+        'types' => [
+            'magic' => 'Special mutation',
+            'walletDeposit' => 'Deposit to wallet',
+            'walletWithdraw' => 'Payed wit\' wallet',
+            'walletDepositDetail' => 'Deposit to :wallet wallet',
+            'walletWithdrawDetail' => 'Payed wit\' :wallet wallet',
+            'productDeposit' => 'Received booty for product(s)',
+            'productWithdraw' => 'Payment for product(s)',
+            'paymentDeposit' => 'Withdraw to external account',
+            'paymentWithdraw' => 'Deposit from external account',
+        ],
     ],
 
     /**

@@ -13,7 +13,7 @@
         <tbody>
             <tr>
                 <td>@lang('misc.description')</td>
-                <td>{{ $mutation->describe() }}</td>
+                <td>{!! $mutation->describe($detail = true) !!}</td>
             </tr>
             <tr>
                 <td>@lang('misc.amount')</td>

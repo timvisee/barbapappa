@@ -112,21 +112,62 @@ class Mutation extends Model {
     /**
      * Describe the mutation in the current language as summary to show.
      *
+     * @param bool [$detail=false] Describe the transaction in detail if true,
+     *          might produce HTML which should not be escaped.
+     *
      * @return Mutation description.
      */
-    public function describe() {
-        // TODO: describe mutations here!
+    // TODO: default detail parameter to false
+    // TODO: describe mutations here!
+    // TODO: translate
+    public function describe($detail = false) {
+        // Do some property checks
+        $deposit = $this->amount > 0;
+
+        // Describe based on the mutation type
         switch($this->type) {
         case Self::TYPE_MAGIC:
-            return 'Some magic transaction';
+            return __('pages.mutations.types.magic');
+
         case Self::TYPE_WALLET:
-            return 'Some wallet transaction';
+            if($detail) {
+                // Get the wallet, it's name and build a link to it
+                $wallet = $this->mutationData->wallet;
+                $name = $wallet->name;
+                $link = '<a href="' . route('community.wallet.show', [
+                    'communityId' => $wallet->economy->community_id,
+                    'economyId' => $wallet->economy_id,
+                    'walletId' => $wallet->id,
+                ]) . '">' . htmlspecialchars($name) . "</a>";
+
+                // Return the description string including the wallet name/link
+                if($deposit)
+                    return __('pages.mutations.types.walletDepositDetail', ['wallet' => $link]);
+                else
+                    return __('pages.mutations.types.walletWithdrawDetail', ['wallet' => $link]);
+            } else {
+                if($deposit)
+                    return __('pages.mutations.types.walletDeposit');
+                else
+                    return __('pages.mutations.types.walletWithdraw');
+            }
+
         case Self::TYPE_PRODUCT:
-            return 'Some product transaction';
+            // TODO: describe mutation in detail here
+            if($deposit)
+                return __('pages.mutations.types.productDeposit');
+            else
+                return __('pages.mutations.types.productWithdraw');
+
         case Self::TYPE_PAYMENT:
-            return 'Some payment transaction';
+            // TODO: describe mutation in detail here
+            if($deposit)
+                return __('pages.mutations.types.paymentDeposit');
+            else
+                return __('pages.mutations.types.paymentWithdraw');
+
         default:
-            return 'Some transaction';
+            throw new \Exception("Unknown mutation type, cannot describe");
         }
     }
 

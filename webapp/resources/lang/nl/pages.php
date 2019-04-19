@@ -202,6 +202,17 @@ return [
         'title' => 'Mutaties',
         'details' => 'Mutatie details',
         'number#' => '{0} Mutaties|{1} Mutatie|[2,*] :count mutaties',
+        'types' => [
+            'magic' => 'Speciale mutatie',
+            'walletDeposit' => 'Storting naar portemonnee',
+            'walletWithdraw' => 'Betaald met portemonnee',
+            'walletDepositDetail' => 'Storting naar :wallet portemonnee',
+            'walletWithdrawDetail' => 'Betaald met :wallet portemonnee',
+            'productDeposit' => 'Geld ontvangen voor product(en)',
+            'productWithdraw' => 'Betaling voor product(en)',
+            'paymentDeposit' => 'Opname naar extern account',
+            'paymentWithdraw' => 'Storting vanaf extern account',
+        ],
     ],
 
     /**
