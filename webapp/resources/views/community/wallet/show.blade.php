@@ -2,10 +2,6 @@
 
 @section('title', $wallet->name)
 
-@php
-    use \App\Models\Wallet;
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
@@ -60,7 +56,11 @@
             </a>
         @endforeach
     </div>
-    <a href="{{ route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+    <a href="{{ route('community.wallet.transactions', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'walletId' => $wallet->id
+            ]) }}"
             class="ui bottom attached button">
         @lang('misc.showAll')
     </a>

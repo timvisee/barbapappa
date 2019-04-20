@@ -199,6 +199,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::get('/delete', 'WalletController@delete')->name('community.wallet.delete');
                     Route::delete('/delete', 'WalletController@doDelete')->name('community.wallet.doDelete');
 
+                    // Transactions
+                    Route::get('/transactions', 'WalletController@transactions')->name('community.wallet.transactions');
+
                     // // Supported economy currencies
                     // Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
                     //     // Index

@@ -183,6 +183,8 @@ return [
         'cannotCreateNoCurrencies' => 'You can\'t create wallet at this moment. The community administrator did not configure a currency which allows this.',
         'all' => 'All wallets',
         'view' => 'View wallet',
+        'backToWallet' => 'Back to wallet',
+        'walletTransactions' => 'Wallet transactions',
     ],
 
     /**

@@ -62,6 +62,8 @@ class WalletController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
         // Get the user, community, find the economy and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -248,5 +250,29 @@ class WalletController extends Controller {
         return redirect()
             ->route('community.wallet.list', ['communityId' => $communityId, 'economyId' => $economy->id])
             ->with('success', __('pages.wallets.walletDeleted'));
+    }
+
+    /**
+     * Show user wallet transactions.
+     *
+     * @return Response
+     */
+    public function transactions($communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+        $transactions = $wallet->transactions();
+
+        return view('community.wallet.transactions')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet)
+            ->with('transactions', $transactions->get());
     }
 }

@@ -183,6 +183,8 @@ return [
         'cannotCreateNoCurrencies' => 'Je kunt nu geen portemonnee aanmaken. De groep administrator heeft geen valuta geconfigureerd waarbij dit is toegestaan.',
         'all' => 'Alle portemonnees',
         'view' => 'Portemonnee bekijken',
+        'backToWallet' => 'Terug naar portemonnee',
+        'walletTransactions' => 'Portemonee transacties',
     ],
 
     /**

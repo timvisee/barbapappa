@@ -112,10 +112,17 @@ class Wallet extends Model {
      * This method does not apply any permission checking, all linked
      * transactions are simply related.
      *
+     * The returned relation is sorted, putting the newest transactions first.
+     *
      * @return The transactions.
      */
     public function transactions() {
-        return $this->hasManyDeepFromRelations($this->mutations(), (new \App\Models\Mutation)->transaction());
+        return $this
+            ->hasManyDeepFromRelations(
+                $this->mutations(),
+                (new \App\Models\Mutation)->transaction()
+            )
+            ->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -131,7 +138,7 @@ class Wallet extends Model {
     public function lastTransactions($limit = 5) {
         return $this
             ->transactions()
-            ->orderBy('created_at', 'DESC')
+            // ->orderBy('created_at', 'DESC')
             ->limit($limit);
     }
 
