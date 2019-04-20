@@ -16,7 +16,7 @@
                 <td>{{ $wallet->name }}</td>
             </tr>
             <tr>
-                <td>Balance</td>
+                <td>@lang('misc.balance')</td>
                 <td>{!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
             <tr>

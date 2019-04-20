@@ -42,6 +42,7 @@ return [
     'slug' => 'Slug',
     'currency' => 'Currency',
     'currencies' => 'Currencies',
+    'balance' => 'Balance',
     'symbol' => 'Symbol',
     'enable' => 'Enable',
     'enabled' => 'Enabled',

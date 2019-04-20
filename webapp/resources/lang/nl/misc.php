@@ -42,6 +42,7 @@ return [
     'slug' => 'URL-pad',
     'currency' => 'Valuta',
     'currencies' => 'Valuta\'s',
+    'balance' => 'Balans',
     'symbol' => 'Symbool',
     'enable' => 'Inschakelen',
     'enabled' => 'Ingeschakeld',
