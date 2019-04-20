@@ -9,7 +9,7 @@
         <tbody>
             <tr>
                 <td>@lang('misc.description')</td>
-                <td>{{ $transaction->describe() }}</td>
+                <td>{{ $transaction->describe(true) }}</td>
             </tr>
             <tr>
                 <td>@lang('misc.amount')</td>

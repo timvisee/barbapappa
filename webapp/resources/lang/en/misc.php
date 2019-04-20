@@ -55,6 +55,7 @@ return [
     'state' => 'State',
     'referencedTo' => 'Referenced to',
     'referencedBy' => 'Referenced by',
+    'estimate' => 'Estimate',
 
     'cannotBeUndone' => 'This operation cannot be undone.',
     'viewingAccountOf' => 'You\'re viewing the account of',

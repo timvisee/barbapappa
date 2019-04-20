@@ -55,6 +55,7 @@ return [
     'state' => 'Staat',
     'referencedTo' => 'Gerefereerd aan',
     'referencedBy' => 'Gerefereerd door',
+    'estimate' => 'Schatting',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',

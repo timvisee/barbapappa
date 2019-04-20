@@ -199,6 +199,14 @@ return [
             'success' => 'Voltooid',
             'failed' => 'Mislukt',
         ],
+        'descriptions' => [
+            'depositProductWithdrawWallet' => 'Betaling voor product(en) met portemonnee',
+            'depositProduct' => 'Betaling voor producten',
+            'depositWalletWithdrawPayment' => 'Storting naar portemonnee vanaf externe rekening',
+            'depositWalletWithdrawWallet' => 'Overdracht tussen portemonnees',
+            'depositWallet' => 'Storting naar portemonnee',
+            'withdrawWallet' => 'Opname vanaf portemonnee',
+        ],
     ],
 
     /**
@@ -218,8 +226,8 @@ return [
             'magic' => 'Speciale mutatie',
             'walletDeposit' => 'Storting naar portemonnee',
             'walletWithdraw' => 'Betaald met portemonnee',
-            'walletDepositDetail' => 'Storting naar :wallet portemonnee',
-            'walletWithdrawDetail' => 'Betaald met :wallet portemonnee',
+            'walletDepositDetail' => 'Storting naar :wallet',
+            'walletWithdrawDetail' => 'Betaald met :wallet',
             'productDeposit' => 'Geld ontvangen voor product(en)',
             'productWithdraw' => 'Betaald voor product(en)',
             'paymentDeposit' => 'Opname naar extern account',

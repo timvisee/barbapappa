@@ -89,17 +89,50 @@ class Transaction extends Model {
      * - Wallet deposit
      * - Purchased 5 products
      *
+     * @param bool [$details=false] True to return a longer, more detailed,
+     *      description. Recommended to use on detail pages.
+     *
      * @return A transaction description.
      */
-    public function describe() {
+    public function describe($details = false) {
         // Use the user description as base
         $text = $this->description;
-        if(empty(trim($text)))
-            $text = '?';
+        if(!empty(trim($text)))
+            return $text;
 
-        // TODO: describe the transaction here, deposit, bought products?
+        // Determine whether to use a suffix
+        $suffix = $details ? ' (' . strtolower(__('misc.estimate')) . ')' : '';
 
-        return $text;
+        // Collect all mutation types, separate by deposit/withdraw
+        list($d, $w) = $this
+            ->mutations
+            ->map(function($m) {
+                return [$m->type, $m->amount];
+            })->partition(function($m) {
+                return $m[1] >= 0;
+            });
+        $d = $d->pluck(0);
+        $w = $w->pluck(0);
+
+        // Based on the mutation types, find a fitting description
+        if($d->contains(Mutation::TYPE_PRODUCT) && $w->contains(Mutation::TYPE_WALLET))
+            return __('pages.transactions.descriptions.depositProductWithdrawWallet') . $suffix;
+        else if($d->contains(Mutation::TYPE_PRODUCT))
+            return __('pages.transactions.descriptions.depositProduct') . $suffix;
+        else if($d->contains(Mutation::TYPE_WALLET) && $w->contains(Mutation::TYPE_PAYMENT))
+            return __('pages.transactions.descriptions.depositWalletWithdrawPayment') . $suffix;
+        else if($d->contains(Mutation::TYPE_WALLET) && $w->contains(Mutation::TYPE_WALLET))
+            return __('pages.transactions.descriptions.depositWalletWithdrawWallet') . $suffix;
+        else if($d->contains(Mutation::TYPE_WALLET))
+            return __('pages.transactions.descriptions.depositWallet'). $suffix;
+        else if($w->contains(Mutation::TYPE_WALLET))
+            return __('pages.transactions.descriptions.withdrawWallet') . $suffix;
+
+        // Formulate description based on mutation descriptions
+        $text = $this->mutations->map(function($m) {
+            return $m->describe();
+        })->implode(', ');
+        return ucfirst(strtolower($text)) . $suffix;
     }
 
     /**
