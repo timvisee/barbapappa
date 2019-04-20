@@ -27,12 +27,12 @@
             </tr>
             <tr>
                 <td>@lang('misc.firstSeen')</td>
-                <td>{{ $transaction->created_at }}</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $transaction->created_at])</td>
             </tr>
             @if($transaction->created_at != $transaction->updated_at)
                 <tr>
                     <td>@lang('misc.lastUpdated')</td>
-                    <td>{{ $transaction->updated_at }}</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $transaction->updated_at])</td>
                 </tr>
             @endif
         </tbody>

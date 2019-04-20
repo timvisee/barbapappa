@@ -21,12 +21,12 @@
             </tr>
             <tr>
                 <td>@lang('misc.createdAt')</td>
-                <td>{{ $wallet->created_at }}</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $wallet->created_at])</td>
             </tr>
             @if($wallet->created_at != $wallet->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>
-                    <td>{{ $wallet->updated_at }}</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $wallet->updated_at])</td>
                 </tr>
             @endif
         </tbody>

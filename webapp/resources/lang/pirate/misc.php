@@ -59,6 +59,7 @@ return [
     'referencedTo' => 'Referenced to',
     'referencedBy' => 'Referenced by',
     'estimate' => 'Estimate',
+    'initiatedBy' => 'Initiated by',
 
     'cannotBeUndone' => 'Th\' operation nay be undone.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',

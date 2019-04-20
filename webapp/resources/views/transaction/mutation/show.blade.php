@@ -31,12 +31,12 @@
             </tr>
             <tr>
                 <td>@lang('misc.firstSeen')</td>
-                <td>{{ $mutation->created_at }}</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $mutation->created_at])</td>
             </tr>
             @if($mutation->created_at != $mutation->updated_at)
                 <tr>
                     <td>@lang('misc.lastUpdated')</td>
-                    <td>{{ $mutation->updated_at }}</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $mutation->updated_at])</td>
                 </tr>
             @endif
         </tbody>
