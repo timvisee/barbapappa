@@ -20,17 +20,17 @@ class TransactionController extends Controller {
      * @return Response
      */
     public function show($transactionId) {
-        // TODO: do some permission checking! user allowed to see transaction?
-
         // Get the user, community, find the economy and transaction
         $user = barauth()->getUser();
-        // TODO: use more specific query
         $transaction = Transaction::findOrFail($transactionId);
-        $mutations = $transaction->mutations();
 
         // Check permission
-        if(!$this->hasPermission($transaction))
+        // TODO: check this permission in middleware
+        if(!Self::hasPermission($transaction))
             return response(view('noPermission'));
+
+        // Get the related mutations
+        $mutations = $transaction->mutations();
 
         return view('transaction.show')
             ->with('transaction', $transaction)
@@ -45,7 +45,7 @@ class TransactionController extends Controller {
      *
      * @return boolean True if the user can view this transaction, false if not.
      */
-    function hasPermission(Transaction $transaction) {
+    static function hasPermission(Transaction $transaction) {
         // The user must be authenticated
         $barauth = barauth();
         if(!$barauth->isAuth())

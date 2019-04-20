@@ -19,16 +19,34 @@ class MutationController extends Controller {
      * @return Response
      */
     public function show($transactionId, $mutationId) {
-        // TODO: do some permission checking! user allowed to see mutation?
-
         // Get the user, community, find the economy and mutation
         $user = barauth()->getUser();
-        // TODO: use more specific query
         $transaction = Transaction::findOrFail($transactionId);
+
+        // Check permission
+        // TODO: check this permission in middleware
+        if(!Self::hasPermission($transaction))
+            return response(view('noPermission'));
+
+        // Get the selected mutation
         $mutation = $transaction->mutations()->findOrFail($mutationId);
 
         return view('transaction.mutation.show')
             ->with('transaction', $transaction)
             ->with('mutation', $mutation);
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to view the
+     * given mutation. This is determined in transaction scope.
+     *
+     * @param Transaction $transaction The transaction model this mutation is
+     * part of.
+     *
+     * @return boolean True if the user can view this transaction/mutation,
+     *      false if not.
+     */
+    static function hasPermission(Transaction $transaction) {
+        return TransactionController::hasPermission($transaction);
     }
 }
