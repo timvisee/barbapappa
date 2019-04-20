@@ -24,12 +24,12 @@
                 <td>{{ $mutation->stateName() }}</td>
             </tr>
             <tr>
-                <td>@lang('misc.createdAt')</td>
+                <td>@lang('misc.firstSeen')</td>
                 <td>{{ $mutation->created_at }}</td>
             </tr>
             @if($mutation->created_at != $mutation->updated_at)
                 <tr>
-                    <td>@lang('misc.lastChanged')</td>
+                    <td>@lang('misc.lastUpdated')</td>
                     <td>{{ $mutation->updated_at }}</td>
                 </tr>
             @endif

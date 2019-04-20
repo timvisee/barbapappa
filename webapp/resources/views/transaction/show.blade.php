@@ -20,12 +20,12 @@
                 <td>{{ $transaction->stateName() }}</td>
             </tr>
             <tr>
-                <td>@lang('misc.createdAt')</td>
+                <td>@lang('misc.firstSeen')</td>
                 <td>{{ $transaction->created_at }}</td>
             </tr>
             @if($transaction->created_at != $transaction->updated_at)
                 <tr>
-                    <td>@lang('misc.lastChanged')</td>
+                    <td>@lang('misc.lastUpdated')</td>
                     <td>{{ $transaction->updated_at }}</td>
                 </tr>
             @endif
