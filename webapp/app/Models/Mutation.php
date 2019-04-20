@@ -106,7 +106,16 @@ class Mutation extends Model {
      * @return The mutations depending on this mutation.
      */
     public function dependents() {
-        return $this->hasMany('App\Models\Mutation', 'depend_on');
+        return $this->hasMany(Self::class, 'depend_on');
+    }
+
+    /**
+     * Get a relation to the user that created this transaction.
+     *
+     * @return Relation to the user that created this transaction.
+     */
+    public function createdBy() {
+        return $this->belongsTo('App\Models\User', 'created_by');
     }
 
     /**

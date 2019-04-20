@@ -49,7 +49,7 @@ class Transaction extends Model {
      * @return The other transaction that is referred.
      */
     public function referencedTo() {
-        return $this->belongsTo('App\Models\Transaction', 'reference_to');
+        return $this->belongsTo(Self::class, 'reference_to');
     }
 
     /**
@@ -58,7 +58,16 @@ class Transaction extends Model {
      * @return Relation to other transactions that refer this one.
      */
     public function referencedBy() {
-        return $this->hasMany('App\Models\Transaction', 'reference_to');
+        return $this->hasMany(Self::class, 'reference_to');
+    }
+
+    /**
+     * Get a relation to the user that created this transaction.
+     *
+     * @return Relation to the user that created this transaction.
+     */
+    public function createdBy() {
+        return $this->belongsTo('App\Models\User', 'created_by');
     }
 
     /**

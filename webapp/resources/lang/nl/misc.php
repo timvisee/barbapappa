@@ -59,6 +59,7 @@ return [
     'referencedTo' => 'Gerefereerd aan',
     'referencedBy' => 'Gerefereerd door',
     'estimate' => 'Schatting',
+    'initiatedBy' => 'Geïnitieerd door',
 
     'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',

@@ -19,6 +19,12 @@
                 <td>@lang('misc.amount')</td>
                 <td>{!! $mutation->formatAmount(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
+            @if($transaction->created_by != null && $transaction->created_by != barauth()->getUser()->id)
+                <tr>
+                    <td>@lang('misc.initiatedBy')</td>
+                    <td>{{ $transaction->createdBy->name }}</td>
+                </tr>
+            @endif
             <tr>
                 <td>@lang('misc.state')</td>
                 <td>{{ $mutation->stateName() }}</td>
