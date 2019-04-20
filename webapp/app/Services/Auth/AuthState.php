@@ -113,6 +113,10 @@ class AuthState {
         if($this->sessionUser !== null)
             return $this->sessionUser;
 
+        // The session must not be null
+        if($this->session == null)
+            return null;
+
         // Query the session user, cache and return it
         return $this->sessionUser = $this->session->user()->firstOrFail();
     }

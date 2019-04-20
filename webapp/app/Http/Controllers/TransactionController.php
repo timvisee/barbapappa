@@ -25,7 +25,7 @@ class TransactionController extends Controller {
         $transaction = Transaction::findOrFail($transactionId);
 
         // Check permission
-        // TODO: check this permission in middleware
+        // TODO: check this permission in middleware, redirect to login
         if(!Self::hasPermission($transaction))
             return response(view('noPermission'));
 
