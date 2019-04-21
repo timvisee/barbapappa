@@ -28,13 +28,6 @@ class WalletController extends Controller {
         // TODO: only get community economies having at least one bar or user wallet
         $economies = $community->economies();
 
-        // Immediately redirect to specific economy if there's only one
-        if($economies->limit(2)->count() == 1) {
-            $economy = $economies->firstOrFail();
-            return redirect()
-                ->route('community.wallet.list', ['communityId' => $communityId, 'economyId' => $economy->id]);
-        }
-
         return view('community.wallet.index')
             ->with('economies', $economies->get());
     }
