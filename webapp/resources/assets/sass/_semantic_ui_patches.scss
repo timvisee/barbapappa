@@ -1,0 +1,17 @@
+/**
+ * Custom styles to patch some Semantic UI defaults.
+ */
+
+// Improve tables on small screens
+@media only screen and (max-width:767px) {
+    // Remove weird-looking padding
+    .ui.table:not(.unstackable) tr {
+        padding-top: 0em;
+        padding-bottom: 0em;
+    }
+
+    // Make tables slightly less-dense
+    .ui.table:not(.unstackable) tr > td, .ui.table:not(.unstackable) tr > th {
+        padding: .4em .75em !important;
+    }
+}

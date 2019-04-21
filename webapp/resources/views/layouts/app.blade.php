@@ -18,8 +18,8 @@
     {{-- Styles --}}
     <link href="{{ asset('css/glyphicons-packed.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/flag-icon.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/semantic.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
 
     {{-- Scripts --}}
     <script type="text/javascript" src="{{ asset('js/jquery-packed.js') }}"></script>
