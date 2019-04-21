@@ -5,6 +5,7 @@
 @section('content')
     <h2 class="ui header">
         @yield('title')
+
         <div class="sub header">
             in
             <a href="{{ route('community.show', ['communityId' => $community->id]) }}">
@@ -12,6 +13,7 @@
             </a>
         </div>
     </h2>
+
     <p>@lang('pages.wallets.economySelectDescription')</p>
 
     <div class="ui vertical menu fluid">
@@ -25,7 +27,10 @@
         --}}
 
         @forelse($economies as $economy)
-            <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">
+            <a href="{{ route('community.wallet.list', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $economy->id
+                    ]) }}" class="item">
                 {{ $economy->name }}
                 {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}
             </a>

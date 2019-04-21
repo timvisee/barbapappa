@@ -10,21 +10,17 @@
 @section('content')
     <h2 class="ui header">
         @yield('title') ({{ count($wallets) }})
+
         <div class="sub header">
             @lang('misc.in')
-            <a href="{{ route('community.show', ['communityId' => $community->id]) }}">
+            <a href="{{ route('community.wallet.index', ['communityId' => $community->id]) }}">
                 {{ $community->name }}
             </a>
             @lang('misc.for')
-            @if(perms(EconomyController::permsView()))
-                <a href="{{ route('community.economy.show', ['communityId' => $community->id, 'economyId' => $economy->id]) }}">
-                    {{ $economy->name }}
-                </a>
-            @else
-                {{ $economy->name }}
-            @endif
+            {{ $economy->name }}
         </div>
     </h2>
+
     <p>@lang('pages.wallets.description')</p>
 
     <div class="ui vertical menu fluid">
@@ -72,5 +68,4 @@
     </a>
 
     {{-- TODO: list transactions for the user here --}}
-
 @endsection

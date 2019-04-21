@@ -2,8 +2,26 @@
 
 @section('title', $wallet->name)
 
+@php
+    use \App\Http\Controllers\EconomyController;
+    use \App\Models\Wallet;
+@endphp
+
 @section('content')
-    <h2 class="ui header">@yield('title')</h2>
+    <h2 class="ui header">
+        @yield('title')
+
+        <div class="sub header">
+            @lang('misc.in')
+            <a href="{{ route('community.wallet.index', ['communityId' => $community->id]) }}">
+                {{ $community->name }}
+            </a>
+            @lang('misc.for')
+            <a href="{{ route('community.wallet.list', ['communityId' => $community->id, 'economyId' => $economy->id]) }}">
+                {{ $economy->name }}
+            </a>
+        </div>
+    </h2>
 
     <table class="ui compact celled definition table">
         <tbody>
