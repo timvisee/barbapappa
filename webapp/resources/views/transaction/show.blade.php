@@ -72,39 +72,24 @@
     @php
         $referencedTo = $transaction->referencedTo;
         $referencedBy = $transaction->referencedBy;
-    @endphp
-    @if($referencedTo != null || $referencedBy->isNotEmpty())
-        <div class="ui top vertical menu fluid">
-            @if($referencedTo != null)
-                <h5 class="ui item header">
-                    @lang('misc.referencedTo') (1)
-                </h5>
-                <a class="item"
-                        href="{{ route('transaction.show', [
-                            'transactionId' => $referencedTo->id,
-                        ]) }}">
-                    {{ $referencedTo->describe() }}
-                    {!! $referencedTo->formatCost(BALANCE_FORMAT_LABEL); !!}
-                </a>
-            @endif
-            @if($referencedBy->isNotEmpty())
-                <h5 class="ui item header">
-                    @lang('misc.referencedBy') ({{ count($referencedBy) }})
-                </h5>
-                @forelse($referencedBy as $ref)
-                    <a class="item"
-                            href="{{ route('transaction.show', [
-                                'transactionId' => $ref->id,
-                            ]) }}">
-                        {{ $ref->describe() }}
-                        {!! $ref->formatCost(BALANCE_FORMAT_LABEL); !!}
-                    </a>
-                @endforeach
-            @endif
-        </div>
-    @endif
 
-    <br />
+        $referenceGroups = [];
+        if($referencedTo != null)
+            $referenceGroups[] = [
+                'header' => __('misc.referencedTo') . ' (1)',
+                'transactions' => [$referencedTo],
+            ];
+        if($referencedBy->isNotEmpty())
+            $referenceGroups[] = [
+                'header' => __('misc.referencedBy') . ' (' .  count($referencedBy) . ')',
+                'transactions' => $referencedBy,
+            ];
+    @endphp
+    @if(count($referenceGroups) > 0)
+        @include('transaction.include.list', [
+            'groups' => $referenceGroups,
+        ])
+    @endif
 
     {{-- TODO: implement go back button! --}}
     {{-- <p> --}}

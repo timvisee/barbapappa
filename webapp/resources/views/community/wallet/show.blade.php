@@ -41,30 +41,21 @@
         </div>
     </p>
 
-    {{-- TODO: complete this transaction view --}}
-    <div class="ui top attached vertical menu fluid">
-        <h5 class="ui item header">
-            {{ trans_choice('pages.transactions.last#', count($transactions)) }}
-        </h5>
-        @forelse($transactions as $transaction)
-            <a class="item"
-                    href="{{ route('transaction.show', [
-                        'transactionId' => $transaction->id,
-                    ]) }}">
-                {{ $transaction->describe() }}
-                {!! $transaction->formatCost(BALANCE_FORMAT_LABEL); !!}
-            </a>
-        @endforeach
-    </div>
-    <a href="{{ route('community.wallet.transactions', [
+    {{-- Transaction list --}}
+    @include('transaction.include.list', [
+        'groups' => [[
+            'header' => trans_choice('pages.transactions.last#', count($transactions)),
+            'transactions' => $transactions,
+        ]],
+        'button' => [
+            'label' => __('misc.showAll'),
+            'link' => route('community.wallet.transactions', [
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id,
                 'walletId' => $wallet->id
-            ]) }}"
-            class="ui bottom attached button">
-        @lang('misc.showAll')
-    </a>
-    <br />
+            ]),
+        ],
+    ])
 
     <p>
         <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
