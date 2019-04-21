@@ -19,10 +19,10 @@
                 <td>@lang('misc.amount')</td>
                 <td>{!! $mutation->formatAmount(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
-            @if($transaction->created_by != null && $transaction->created_by != barauth()->getUser()->id)
+            @if($transaction->owner_id != null && $transaction->owner_id != barauth()->getUser()->id)
                 <tr>
                     <td>@lang('misc.initiatedBy')</td>
-                    <td>{{ $transaction->createdBy->name }}</td>
+                    <td>{{ $transaction->owner->name }}</td>
                 </tr>
             @endif
             <tr>

@@ -22,6 +22,8 @@ use App\Utils\EmailRecipient;
  * @property string|null description
  * @property int state
  * @property int|null reference_to
+ * @property int|null owner_id
+ * @property-read User|null owner
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -62,12 +64,13 @@ class Transaction extends Model {
     }
 
     /**
-     * Get a relation to the user that created this transaction.
+     * Get a relation to the user that owns this transaction.
+     * This is usually the user that initiated this transaction.
      *
      * @return Relation to the user that created this transaction.
      */
-    public function createdBy() {
-        return $this->belongsTo('App\Models\User', 'created_by');
+    public function owner() {
+        return $this->belongsTo('App\Models\User', 'owner_id');
     }
 
     /**

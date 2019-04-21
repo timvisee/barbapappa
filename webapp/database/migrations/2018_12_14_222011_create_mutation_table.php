@@ -21,7 +21,7 @@ class CreateMutationTable extends Migration {
             $table->integer('currency_id')->unsigned();
             $table->integer('state')->unsigned()->nullable(false)->default(1);
             $table->integer('depend_on')->unsigned()->nullable(true);
-            $table->integer('created_by')->unsigned()->nullable(true);
+            $table->integer('owner_id')->unsigned()->nullable(true);
             $table->timestamps();
 
             $table->foreign('transaction_id')
@@ -40,7 +40,7 @@ class CreateMutationTable extends Migration {
                 ->references('id')
                 ->on('mutations')
                 ->onDelete('set null');
-            $table->foreign('created_by')
+            $table->foreign('owner_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');

@@ -18,7 +18,7 @@
             @if($transaction->created_by != null && $transaction->created_by != barauth()->getUser()->id)
                 <tr>
                     <td>@lang('misc.initiatedBy')</td>
-                    <td>{{ $transaction->createdBy->name }}</td>
+                    <td>{{ $transaction->owner->name }}</td>
                 </tr>
             @endif
             <tr>

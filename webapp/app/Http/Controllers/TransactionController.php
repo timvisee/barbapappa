@@ -53,7 +53,7 @@ class TransactionController extends Controller {
         $user = $barauth->getUser();
 
         // If the current user initiated the transaction, it's all right
-        if($transaction->created_by == $user->id)
+        if($transaction->owner_id == $user->id)
             return true;
 
         // Get all wallet mutations
