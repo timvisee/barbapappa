@@ -171,6 +171,7 @@ return [
         'description' => 'Click on one of yer wallets to manage it, or create a fresh one.',
         'walletEconomies' => 'Wallet booties',
         'yourWallets' => 'Yer wallets',
+        '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
         'economySelectDescription' => 'Wallets in dis community be grouped by booty.<br>Select \'the booty to manage yer wallets.',
         'noWallets' => 'Yer nay be any wallets yet...',
         'namePlaceholder' => 'My wallet',

@@ -171,6 +171,7 @@ return [
         'description' => 'Click on one of your wallets to manage it, or create a new one.',
         'walletEconomies' => 'Wallet economies',
         'yourWallets' => 'Your wallets',
+        '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
         'economySelectDescription' => 'Wallets in this community are grouped by economy.<br>Select the economy to manage your wallets in it.',
         'noWallets' => 'You don\'t have any wallets yet...',
         'namePlaceholder' => 'My wallet',

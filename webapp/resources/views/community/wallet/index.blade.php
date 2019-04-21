@@ -33,6 +33,10 @@
                     ]) }}" class="item">
                 {{ $economy->name }}
                 {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}
+
+                <span style="color: gray; float: right">
+                    {{ trans_choice('pages.wallets.#wallets', $economy->userWallets->count()) }}
+                </span>
             </a>
         @empty
             <div class="item">

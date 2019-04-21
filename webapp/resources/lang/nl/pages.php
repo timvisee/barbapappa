@@ -171,6 +171,7 @@ return [
         'description' => 'Klik op één van je portemonnees om deze te beheren, of maak een nieuwe aan.',
         'walletEconomies' => 'Portemonee economieën',
         'yourWallets' => 'Jouw portemonnees',
+        '#wallets' => '{0} Geen portemonnees|{1} 1 portemonnee|[2,*] :count portemonnees',
         'economySelectDescription' => 'Portemonnees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economie om je portemonnees te beheren.',
         'noWallets' => 'Je hebt nog geen portemonnees...',
         'namePlaceholder' => 'Mijn portemonnee',
