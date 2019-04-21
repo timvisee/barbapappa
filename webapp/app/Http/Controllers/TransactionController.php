@@ -29,12 +29,16 @@ class TransactionController extends Controller {
         if(!Self::hasPermission($transaction))
             return response(view('noPermission'));
 
-        // Get the related mutations
-        $mutations = $transaction->mutations();
+        // Get the related mutations, partition into from/to
+        $mutations = $transaction->mutations()->get();
+        list($fromMutations, $toMutations) = $mutations->partition(function($m) {
+            return $m->amount >= 0;
+        });
 
         return view('transaction.show')
             ->with('transaction', $transaction)
-            ->with('mutations', $mutations->get());
+            ->with('fromMutations', $fromMutations)
+            ->with('toMutations', $toMutations);
     }
 
     /**

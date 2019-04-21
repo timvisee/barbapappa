@@ -38,11 +38,12 @@ class Transaction extends Model {
 
     /**
      * Get the mutations that are part of this transaction.
+     * Ordered by their amount, positive (incomming) first, negative (outgoing) last.
      *
      * @return The mutations.
      */
     public function mutations() {
-        return $this->hasMany('App\Models\Mutation');
+        return $this->hasMany('App\Models\Mutation')->orderBy('amount', 'DESC');
     }
 
     /**
@@ -82,8 +83,9 @@ class Transaction extends Model {
      *
      * @return The cost is returned as decimal value.
      */
+    // TODO: rename this to gain?
     public function cost() {
-        return $this
+        return -$this
             ->mutations()
             ->where('type', Mutation::TYPE_WALLET)
             ->pluck('amount')
@@ -116,29 +118,29 @@ class Transaction extends Model {
         $suffix = $details ? ' (' . strtolower(__('misc.estimate')) . ')' : '';
 
         // Collect all mutation types, separate by deposit/withdraw
-        list($d, $w) = $this
+        list($to, $from) = $this
             ->mutations
             ->map(function($m) {
                 return [$m->type, $m->amount];
             })->partition(function($m) {
-                return $m[1] >= 0;
+                return $m[1] < 0;
             });
-        $d = $d->pluck(0);
-        $w = $w->pluck(0);
+        $to = $to->pluck(0);
+        $from = $from->pluck(0);
 
         // Based on the mutation types, find a fitting description
-        if($d->contains(Mutation::TYPE_PRODUCT) && $w->contains(Mutation::TYPE_WALLET))
-            return __('pages.transactions.descriptions.depositProductWithdrawWallet') . $suffix;
-        else if($d->contains(Mutation::TYPE_PRODUCT))
-            return __('pages.transactions.descriptions.depositProduct') . $suffix;
-        else if($d->contains(Mutation::TYPE_WALLET) && $w->contains(Mutation::TYPE_PAYMENT))
-            return __('pages.transactions.descriptions.depositWalletWithdrawPayment') . $suffix;
-        else if($d->contains(Mutation::TYPE_WALLET) && $w->contains(Mutation::TYPE_WALLET))
-            return __('pages.transactions.descriptions.depositWalletWithdrawWallet') . $suffix;
-        else if($d->contains(Mutation::TYPE_WALLET))
-            return __('pages.transactions.descriptions.depositWallet'). $suffix;
-        else if($w->contains(Mutation::TYPE_WALLET))
-            return __('pages.transactions.descriptions.withdrawWallet') . $suffix;
+        if($from->containsStrict(Mutation::TYPE_WALLET) && $to->containsStrict(Mutation::TYPE_PRODUCT))
+            return __('pages.transactions.descriptions.fromWalletToProduct') . $suffix;
+        else if($to->containsStrict(Mutation::TYPE_PRODUCT))
+            return __('pages.transactions.descriptions.toProduct') . $suffix;
+        else if($from->containsStrict(Mutation::TYPE_PAYMENT && $to->containsStrict(Mutation::TYPE_WALLET)))
+            return __('pages.transactions.descriptions.fromPaymentToWallet') . $suffix;
+        else if($from->containsStrict(Mutation::TYPE_WALLET) && $to->containsStrict(Mutation::TYPE_WALLET))
+            return __('pages.transactions.descriptions.fromWalletToWallet') . $suffix;
+        else if($to->containsStrict(Mutation::TYPE_WALLET))
+            return __('pages.transactions.descriptions.toWallet'). $suffix;
+        else if($from->containsStrict(Mutation::TYPE_WALLET))
+            return __('pages.transactions.descriptions.fromWallet') . $suffix;
 
         // Formulate description based on mutation descriptions
         $text = $this->mutations->map(function($m) {

@@ -155,6 +155,11 @@ const BALANCE_FORMAT_COLOR = 1;
  */
 const BALANCE_FORMAT_LABEL = 2;
 
+/**
+ * Format the balance as neutrally colored label, depending on the value.
+ */
+const BALANCE_FORMAT_NEUTRAL_LABEL = 3;
+
 // Custom function to render balance
 if(!function_exists('balance')) {
     /**
@@ -169,6 +174,10 @@ if(!function_exists('balance')) {
      * @return string Formatted balance.
      */
     function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN, $prefix = null) {
+        // If neutrally formatting, always show positive number
+        if($format == BALANCE_FORMAT_NEUTRAL_LABEL)
+            $balance = abs($balance);
+
         // Format the balance
         $out = currency_format($balance, $currency);
 
@@ -195,6 +204,12 @@ if(!function_exists('balance')) {
                     $out = '<div class="ui green label">' . $out . '</div>';
                 else
                     $out = '<div class="ui label">' . $out . '</div>';
+                break;
+            case BALANCE_FORMAT_NEUTRAL_LABEL:
+                if($balance == 0)
+                    $out = '<div class="ui label">' . $out . '</div>';
+                else
+                    $out = '<div class="ui blue label">' . $out . '</div>';
                 break;
             default:
                 throw new \Exception("Invalid balance format type given");

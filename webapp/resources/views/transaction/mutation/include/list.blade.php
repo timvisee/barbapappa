@@ -17,7 +17,7 @@
                         'mutationId' => $mutation->id,
                     ]) }}">
                 {{ $mutation->describe() }}
-                {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL); !!}
+                {!! $mutation->formatAmount(BALANCE_FORMAT_NEUTRAL_LABEL); !!}
 
                 <span class="sub-label">
                     {{ $mutation->created_at->diffForHumans() }}

@@ -139,10 +139,10 @@ class Mutation extends Model {
      * @return string Mutation description.
      */
     public function describe($detail = false) {
-        // Do some property checks
-        $deposit = $this->amount > 0;
+        // Determine direction translation key name
+        $dir = $this->amount > 0 ? 'From' : 'To';
 
-        // Describe based on the mutation type
+        // Describe based on the mutation dir
         switch($this->type) {
         case Self::TYPE_MAGIC:
             return __('pages.mutations.types.magic');
@@ -155,20 +155,17 @@ class Mutation extends Model {
                 $link = '<a href="' . $wallet->getUrlShow() . '">' . htmlspecialchars($name) . "</a>";
 
                 // Return the description string including the wallet name/link
-                if($deposit)
-                    return __('pages.mutations.types.walletDepositDetail', ['wallet' => $link]);
-                else
-                    return __('pages.mutations.types.walletWithdrawDetail', ['wallet' => $link]);
+                return __('pages.mutations.types.wallet' . $dir . 'Detail', ['wallet' => $link]);
             } else
-                return __('pages.mutations.types.wallet' . ($deposit ? 'Deposit' : 'Withdraw'));
+                return __('pages.mutations.types.wallet' . $dir);
 
         case Self::TYPE_PRODUCT:
             // TODO: describe mutation in detail here
-            return __('pages.mutations.types.product' . ($deposit ? 'Deposit' : 'Withdraw'));
+            return __('pages.mutations.types.product' . $dir);
 
         case Self::TYPE_PAYMENT:
             // TODO: describe mutation in detail here
-            return __('pages.mutations.types.payment' . ($deposit ? 'Deposit' : 'Withdraw'));
+            return __('pages.mutations.types.payment' . $dir);
 
         default:
             throw new \Exception("Unknown mutation type, cannot describe");

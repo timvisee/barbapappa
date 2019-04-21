@@ -54,10 +54,16 @@
 
     {{-- Mutation list --}}
     @include('transaction.mutation.include.list', [
-        'groups' => [[
-            'header' => trans_choice('pages.mutations.number#', count($mutations)),
-            'mutations' => $mutations,
-        ]],
+        'groups' => [
+            [
+                'header' => trans_choice('pages.mutations.from#', $fromMutations->count()),
+                'mutations' => $fromMutations,
+            ],
+            [
+                'header' => trans_choice('pages.mutations.to#', $toMutations->count()),
+                'mutations' => $toMutations,
+            ],
+        ],
     ])
 
     {{-- Transaction references --}}
