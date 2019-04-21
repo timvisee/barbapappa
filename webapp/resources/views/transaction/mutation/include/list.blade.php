@@ -19,7 +19,7 @@
                 {{ $mutation->describe() }}
                 {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL); !!}
 
-                <span style="color: gray; float: right;">
+                <span class="sub-label">
                     {{ $mutation->created_at->diffForHumans() }}
                 </span>
             </a>

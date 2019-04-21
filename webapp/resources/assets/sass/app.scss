@@ -190,3 +190,12 @@ ul.ui-listview.center > li > a.ui-btn {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+.menu.fluid .sub-label {
+    color: gray;
+    float: right;
+    margin-left: 12px;
+    display: block;
+    font-size: smaller;
+    line-height: normal;
+}

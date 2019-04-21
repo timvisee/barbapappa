@@ -18,7 +18,7 @@
                 {{ $transaction->describe() }}
                 {!! $transaction->formatCost(BALANCE_FORMAT_LABEL); !!}
 
-                <span style="color: gray; float: right;">
+                <span class="sub-label">
                     {{ $transaction->created_at->diffForHumans() }}
                 </span>
             </a>
