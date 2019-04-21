@@ -67,56 +67,24 @@
     @php
         $dependOn = $mutation->dependOn;
         $dependents = $mutation->dependents;
-    @endphp
-    @if($dependOn != null || $dependents->isNotEmpty())
-        <div class="ui top vertical menu fluid">
-            @if($dependOn != null)
-                <h5 class="ui item header">
-                    @lang('misc.dependsOn') (1)
-                </h5>
-                <a class="item"
-                        href="{{ route('transaction.mutation.show', [
-                            'transactionId' => $transaction->id,
-                            'mutationId' => $dependOn->id,
-                        ]) }}">
-                    {{ $dependOn->describe() }}
-                    {!! $dependOn->formatAmount(BALANCE_FORMAT_LABEL); !!}
-                </a>
-            @endif
-            @if($dependents->isNotEmpty())
-                <h5 class="ui item header">
-                    @lang('misc.dependents') ({{ count($dependents) }})
-                </h5>
-                @forelse($dependents as $dependent)
-                    <a class="item"
-                            href="{{ route('transaction.mutation.show', [
-                                'transactionId' => $transaction->id,
-                                'mutationId' => $dependent->id,
-                            ]) }}">
-                        {{ $dependent->describe() }}
-                        {!! $dependent->formatAmount(BALANCE_FORMAT_LABEL); !!}
-                    </a>
-                @endforeach
-            @endif
-        </div>
-    @endif
 
-    {{-- <div class="ui top vertical menu fluid"> --}}
-    {{--     <h5 class="ui item header"> --}}
-    {{--         {{ trans_choice('pages.mutations.number#', count($mutations)) }} --}}
-    {{--     </h5> --}}
-    {{--     @forelse($mutations as $mutation) --}}
-    {{--         <a class="item" --}}
-    {{--                 href="{{ route('transaction.mutation.show', [ --}}
-    {{--                     'transactionId' => $transaction->id, --}}
-    {{--                     'mutationId' => $mutation->id, --}}
-    {{--                 ]) }}"> --}}
-    {{--             {{ $mutation->describe() }} --}}
-    {{--             {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL); !!} --}}
-    {{--         </a> --}}
-    {{--     @endforeach --}}
-    {{-- </div> --}}
-    {{-- <br /> --}}
+        $dependGroups = [];
+        if($dependOn != null)
+            $dependGroups[] = [
+                'header' => __('misc.dependsOn') . ' (1)',
+                'mutations' => [$dependOn],
+            ];
+        if($dependents->isNotEmpty())
+            $dependGroups[] = [
+                'header' => __('misc.dependents') . ' (' . count($dependents) . ')',
+                'mutations' => $dependents,
+            ];
+    @endphp
+    @if(count($dependGroups) > 0)
+        @include('transaction.mutation.include.list', [
+            'groups' => $dependGroups,
+        ])
+    @endif
 
     <p>
         <a href="{{ route('transaction.show', ['transactionId' => $transaction->id]) }}"

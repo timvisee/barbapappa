@@ -52,21 +52,13 @@
     {{--     </div> --}}
     {{-- </p> --}}
 
-    <div class="ui top vertical menu fluid">
-        <h5 class="ui item header">
-            {{ trans_choice('pages.mutations.number#', count($mutations)) }}
-        </h5>
-        @forelse($mutations as $mutation)
-            <a class="item"
-                    href="{{ route('transaction.mutation.show', [
-                        'transactionId' => $transaction->id,
-                        'mutationId' => $mutation->id,
-                    ]) }}">
-                {{ $mutation->describe() }}
-                {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL); !!}
-            </a>
-        @endforeach
-    </div>
+    {{-- Mutation list --}}
+    @include('transaction.mutation.include.list', [
+        'groups' => [[
+            'header' => trans_choice('pages.mutations.number#', count($mutations)),
+            'mutations' => $mutations,
+        ]],
+    ])
 
     {{-- Transaction references --}}
     @php
