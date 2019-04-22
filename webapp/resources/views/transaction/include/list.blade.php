@@ -19,7 +19,7 @@
                 {!! $transaction->formatCost(BALANCE_FORMAT_LABEL); !!}
 
                 <span class="sub-label">
-                    {{ $transaction->created_at->diffForHumans() }}
+                    {{ ($transaction->updated_at ?? $transaction->created_at)->diffForHumans() }}
                 </span>
             </a>
         @endforeach
