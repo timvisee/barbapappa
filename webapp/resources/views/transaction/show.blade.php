@@ -74,12 +74,12 @@
         $referenceGroups = [];
         if($referencedTo != null)
             $referenceGroups[] = [
-                'header' => __('misc.referencedTo') . ' (1)',
+                'header' => trans_choice('pages.transactions.referencedTo#', 1),
                 'transactions' => [$referencedTo],
             ];
         if($referencedBy->isNotEmpty())
             $referenceGroups[] = [
-                'header' => __('misc.referencedBy') . ' (' .  count($referencedBy) . ')',
+                'header' => trans_choice('pages.transactions.referencedBy#', count($referencedBy)),
                 'transactions' => $referencedBy,
             ];
     @endphp

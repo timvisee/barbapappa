@@ -56,8 +56,6 @@ return [
     'dependsOn' => 'Depends on',
     'dependents' => 'Dependents',
     'state' => 'State',
-    'referencedTo' => 'Referenced to',
-    'referencedBy' => 'Referenced by',
     'estimate' => 'Estimate',
     'initiatedBy' => 'Initiated by',
 

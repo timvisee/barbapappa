@@ -212,6 +212,8 @@ return [
             'toWallet' => 'Deposit to wallet',
             'fromWallet' => 'Withdrawal from wallet',
         ],
+        'referencedTo#' => '{0} Referenced to no transactions|{1} Referenced to transaction|[2,*] Referenced to :count transactions',
+        'referencedBy#' => '{0} Referenced by no transactions|{1} Referenced by transaction|[2,*] Referenced by :count transactions',
     ],
 
     /**

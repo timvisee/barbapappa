@@ -56,8 +56,6 @@ return [
     'dependsOn' => 'Afhankelijk van',
     'dependents' => 'Afhankelijken',
     'state' => 'Staat',
-    'referencedTo' => 'Gerefereerd aan',
-    'referencedBy' => 'Gerefereerd door',
     'estimate' => 'Schatting',
     'initiatedBy' => 'Geïnitieerd door',
 

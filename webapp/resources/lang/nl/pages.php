@@ -212,6 +212,8 @@ return [
             'toWallet' => 'Storting naar portemonnee',
             'fromWallet' => 'Opname vanaf portemonnee',
         ],
+        'referencedTo#' => '{0} Gerefereerd aan geen transacties|{1} Gerefereerd aan transactie|[2,*] Gerefereerd aan :count transacties',
+        'referencedBy#' => '{0} Gerefereerd door geen transacties|{1} Gerefereerd door transactie|[2,*] Gerefereerd door :count transacties',
     ],
 
     /**
