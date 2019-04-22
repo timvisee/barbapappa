@@ -196,6 +196,8 @@ return [
         'details' => 'Transaction details',
         'last#' => '{0} Last transactions|{1} Last transaction|[2,*] Last :count transactions',
         'backToTransaction' => 'Back to transaction',
+        'toTransaction' => 'to transaction',
+        'fromTransaction' => 'from transaction',
         'state' => [
             'pending' => 'Pendin\'',
             'processing' => 'Processin\'',

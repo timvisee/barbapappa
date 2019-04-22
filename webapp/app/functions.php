@@ -155,11 +155,6 @@ const BALANCE_FORMAT_COLOR = 1;
  */
 const BALANCE_FORMAT_LABEL = 2;
 
-/**
- * Format the balance as neutrally colored label, depending on the value.
- */
-const BALANCE_FORMAT_NEUTRAL_LABEL = 3;
-
 // Custom function to render balance
 if(!function_exists('balance')) {
     /**
@@ -170,12 +165,13 @@ if(!function_exists('balance')) {
      * @param string $currency The currency code, such as `USD` or `EUR`.
      * @param int [$format=BALANCE_FORMAT_PLAIN] The balance formatting rules.
      * @param string|null [$prefix=null] An optional prefix.
+     * @param bool [$neutral=null] Show a neutral balance, absolute and neutrally colored.
      *
      * @return string Formatted balance.
      */
-    function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN, $prefix = null) {
+    function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN, $prefix = null, $neutral = false) {
         // If neutrally formatting, always show positive number
-        if($format == BALANCE_FORMAT_NEUTRAL_LABEL)
+        if($neutral)
             $balance = abs($balance);
 
         // Format the balance
@@ -191,25 +187,24 @@ if(!function_exists('balance')) {
             case BALANCE_FORMAT_PLAIN:
                 break;
             case BALANCE_FORMAT_COLOR:
-                if($balance < 0)
+                if($neutral)
+                    // TODO: style instead of giving an explicit neutral color
+                    $out = '<span style="color: #2185d0;">' . $out . '</span>';
+                else if($balance < 0)
                     $out = '<span style="color: red;">' . $out . '</span>';
                 else if($balance > 0)
                     $out = '<span style="color: green;">' . $out . '</span>';
                 break;
             case BALANCE_FORMAT_LABEL:
                 // TODO: may want to add horizontal class to labels
-                if($balance < 0)
+                if($neutral)
+                    $out = '<div class="ui blue label">' . $out . '</div>';
+                else if($balance < 0)
                     $out = '<div class="ui red label">' . $out . '</div>';
                 else if($balance > 0)
                     $out = '<div class="ui green label">' . $out . '</div>';
                 else
                     $out = '<div class="ui label">' . $out . '</div>';
-                break;
-            case BALANCE_FORMAT_NEUTRAL_LABEL:
-                if($balance == 0)
-                    $out = '<div class="ui label">' . $out . '</div>';
-                else
-                    $out = '<div class="ui blue label">' . $out . '</div>';
                 break;
             default:
                 throw new \Exception("Invalid balance format type given");

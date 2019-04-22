@@ -209,11 +209,12 @@ class Mutation extends Model {
      * currency format.
      *
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     * @param bool [$neutral=false] Show a neutral balance, absolute and neutrally colored.
      *
      * @return string Formatted balance
      */
-    public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
-        return balance($this->amount, $this->currency->code, $format);
+    public function formatAmount($format = BALANCE_FORMAT_PLAIN, $neutral = false) {
+        return balance($this->amount, $this->currency->code, $format, null, $neutral);
     }
 
     /**

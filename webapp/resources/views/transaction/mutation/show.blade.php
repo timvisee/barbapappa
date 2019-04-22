@@ -17,7 +17,14 @@
             </tr>
             <tr>
                 <td>@lang('misc.amount')</td>
-                <td>{!! $mutation->formatAmount(BALANCE_FORMAT_COLOR) !!}</td>
+                <td>
+                    {!! $mutation->formatAmount(BALANCE_FORMAT_COLOR, true) !!}
+                    @if($mutation->amount >= 0)
+                        @lang('pages.transactions.toTransaction')
+                    @else
+                        @lang('pages.transactions.fromTransaction')
+                    @endif
+                </td>
             </tr>
             @if($transaction->owner_id != null && $transaction->owner_id != barauth()->getUser()->id)
                 <tr>

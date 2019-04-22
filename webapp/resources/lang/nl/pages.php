@@ -196,6 +196,8 @@ return [
         'details' => 'Transactie details',
         'last#' => '{0} Laatste transacties|{1} Laatste transactie|[2,*] Laatste :count transacties',
         'backToTransaction' => 'Terug naar transactie',
+        'toTransaction' => 'naar transactie',
+        'fromTransaction' => 'van transactie',
         'state' => [
             'pending' => 'In afwachting',
             'processing' => 'Bezig met verwerken',
