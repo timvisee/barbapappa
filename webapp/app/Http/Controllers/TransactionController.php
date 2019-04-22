@@ -71,9 +71,9 @@ class TransactionController extends Controller {
             if($mutation->mutationData->wallet->user_id == $user->id)
                 return true;
 
-        // TODO: allow management users in this economy
-
-        // Could not find link between transaction and authenticated user
-        return false;
+        // Allow permission if user is admin or community manager
+        // TODO: give current request as second parameter as well
+        // TODO: we must somehow give a reference to current community
+        return perms(CommunityRoles::presetManager());
     }
 }
