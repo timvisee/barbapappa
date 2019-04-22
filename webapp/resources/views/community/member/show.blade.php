@@ -28,12 +28,12 @@
             @endif
             <tr>
                 <td>@lang('pages.communityMembers.memberSince')</td>
-                <td>{{ $member->pivot->created_at }}</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $member->pivot->created_at])</td>
             </tr>
             @if($member->pivot->created_at != $member->pivot->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>
-                    <td>{{ $member->pivot->updated_at }}</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $member->pivot->updated_at])</td>
                 </tr>
             @endif
         </tbody>

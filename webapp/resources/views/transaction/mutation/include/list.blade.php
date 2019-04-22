@@ -20,7 +20,7 @@
                 {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, true); !!}
 
                 <span class="sub-label">
-                    {{ ($mutation->updated_at ?? $mutation->created_at)->diffForHumans() }}
+                    @include('includes.humanTimeDiff', ['time' => $mutation->updated_at ?? $mutation->created_at])
                 </span>
             </a>
         @endforeach

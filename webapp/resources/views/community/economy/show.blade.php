@@ -18,12 +18,12 @@
             </tr>
             <tr>
                 <td>@lang('misc.createdAt')</td>
-                <td>{{ $economy->created_at }}</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $economy->created_at])</td>
             </tr>
             @if($economy->created_at != $economy->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>
-                    <td>{{ $economy->updated_at }}</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $economy->updated_at])</td>
                 </tr>
             @endif
         </tbody>

@@ -19,7 +19,7 @@
                 {!! $transaction->formatCost(BALANCE_FORMAT_LABEL); !!}
 
                 <span class="sub-label">
-                    {{ ($transaction->updated_at ?? $transaction->created_at)->diffForHumans() }}
+                    @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at])
                 </span>
             </a>
         @endforeach

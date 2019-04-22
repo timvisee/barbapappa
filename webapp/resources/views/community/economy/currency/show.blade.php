@@ -25,12 +25,12 @@
             </tr>
             <tr>
                 <td>@lang('misc.createdAt')</td>
-                <td>{{ $currency->created_at }}</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $currency->created_at])</td>
             </tr>
             @if($currency->created_at != $currency->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>
-                    <td>{{ $currency->updated_at }}</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $currency->updated_at])</td>
                 </tr>
             @endif
         </tbody>
