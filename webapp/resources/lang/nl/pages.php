@@ -198,6 +198,8 @@ return [
         'backToTransaction' => 'Terug naar transactie',
         'toTransaction' => 'naar transactie',
         'fromTransaction' => 'van transactie',
+        'referencedTo#' => '{0} Gerefereerd aan geen transacties|{1} Gerefereerd aan transactie|[2,*] Gerefereerd aan :count transacties',
+        'referencedBy#' => '{0} Gerefereerd door geen transacties|{1} Gerefereerd door transactie|[2,*] Gerefereerd door :count transacties',
         'state' => [
             'pending' => 'In afwachting',
             'processing' => 'Bezig met verwerken',
@@ -212,8 +214,6 @@ return [
             'toWallet' => 'Storting naar portemonnee',
             'fromWallet' => 'Opname vanaf portemonnee',
         ],
-        'referencedTo#' => '{0} Gerefereerd aan geen transacties|{1} Gerefereerd aan transactie|[2,*] Gerefereerd aan :count transacties',
-        'referencedBy#' => '{0} Gerefereerd door geen transacties|{1} Gerefereerd door transactie|[2,*] Gerefereerd door :count transacties',
     ],
 
     /**
@@ -224,6 +224,8 @@ return [
         'details' => 'Mutatie details',
         'from#' => '{0} Van geen mutaties|{1} Van 1 mutatie|[2,*] Van :count mutatie',
         'to#' => '{0} Naar geen mutaties|{1} Naar 1 mutatie|[2,*] Naar :count mutatie',
+        'dependsOn#' => '{0} Afhankelijk van geen mutaties|{1} Afhankelijk van mutatie|[2,*] Afhankelijk van :count mutaties',
+        'dependentBy#' => '{0} Afhankelijk door geen mutatiese |{1} Afhankelijk door mutatie|[2,*] Afhankelijk door :count mutaties',
         'state' => [
             'pending' => 'In afwachting',
             'processing' => 'Bezig met verwerken',

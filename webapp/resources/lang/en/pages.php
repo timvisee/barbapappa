@@ -198,6 +198,8 @@ return [
         'backToTransaction' => 'Back to transaction',
         'toTransaction' => 'to transaction',
         'fromTransaction' => 'from transaction',
+        'referencedTo#' => '{0} Referenced to no transactions|{1} Referenced to transaction|[2,*] Referenced to :count transactions',
+        'referencedBy#' => '{0} Referenced by no transactions|{1} Referenced by transaction|[2,*] Referenced by :count transactions',
         'state' => [
             'pending' => 'Pending',
             'processing' => 'Processing',
@@ -212,8 +214,6 @@ return [
             'toWallet' => 'Deposit to wallet',
             'fromWallet' => 'Withdrawal from wallet',
         ],
-        'referencedTo#' => '{0} Referenced to no transactions|{1} Referenced to transaction|[2,*] Referenced to :count transactions',
-        'referencedBy#' => '{0} Referenced by no transactions|{1} Referenced by transaction|[2,*] Referenced by :count transactions',
     ],
 
     /**
@@ -224,6 +224,8 @@ return [
         'details' => 'Mutation details',
         'from#' => '{0} From no mutations|{1} From 1 mutation|[2,*] From :count mutations',
         'to#' => '{0} To no mutations|{1} To 1 mutation|[2,*] To :count mutations',
+        'dependsOn#' => '{0} Depends on no mutations|{1} Depends on mutation|[2,*] Depends on :count mutations',
+        'dependentBy#' => '{0} Dependent by no mutations|{1} Dependent by mutation|[2,*] Dependent by :count mutations',
         'state' => [
             'pending' => 'Pending',
             'processing' => 'Processing',

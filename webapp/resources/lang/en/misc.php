@@ -53,8 +53,6 @@ return [
     'in' => 'in',
     'for' => 'for',
     'amount' => 'Amount',
-    'dependsOn' => 'Depends on',
-    'dependents' => 'Dependents',
     'state' => 'State',
     'estimate' => 'Estimate',
     'initiatedBy' => 'Initiated by',

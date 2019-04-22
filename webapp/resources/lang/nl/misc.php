@@ -53,8 +53,6 @@ return [
     'in' => 'in',
     'for' => 'voor',
     'amount' => 'Hoeveelheid',
-    'dependsOn' => 'Afhankelijk van',
-    'dependents' => 'Afhankelijken',
     'state' => 'Staat',
     'estimate' => 'Schatting',
     'initiatedBy' => 'Geïnitieerd door',

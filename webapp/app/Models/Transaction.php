@@ -77,19 +77,39 @@ class Transaction extends Model {
     /**
      * Determine the amount of money it costs the user to make this transaction.
      *
-     * TODO: verify this statement is true
-     * If the user pays money, the returned value is positive. If the user
-     * receives/deposits money, the returned value is negative.
+     * If the user pays money, the returned value is negative. If the user
+     * receives/deposits money, the returned value is positive.
+     *
+     * The cost is based on wallet mutations. If no wallet mutations are
+     * avaialble, payment mutations are considered instead. If none are found,
+     * 0 is returned.
      *
      * @return The cost is returned as decimal value.
      */
     // TODO: rename this to gain?
     public function cost() {
-        return -$this
+        // Determine cost based on wallet
+        $cost = -$this
             ->mutations()
             ->where('type', Mutation::TYPE_WALLET)
             ->pluck('amount')
             ->sum();
+        if($cost != 0)
+            return $cost;
+
+        // Determine cost based on payments
+        $cost = -$this
+            ->mutations()
+            ->where('type', Mutation::TYPE_PAYMENT)
+            ->pluck('amount')
+            ->sum();
+        if($cost != 0)
+            return $cost;
+
+        // TODO: throw warning no cost was found based on wallet/payment mutations
+
+        // No cost could be determined
+        return 0;
     }
 
     /**

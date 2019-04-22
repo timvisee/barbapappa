@@ -78,12 +78,12 @@
         $dependGroups = [];
         if($dependOn != null)
             $dependGroups[] = [
-                'header' => __('misc.dependsOn') . ' (1)',
+                'header' => trans_choice('pages.mutations.dependsOn#', 1),
                 'mutations' => [$dependOn],
             ];
         if($dependents->isNotEmpty())
             $dependGroups[] = [
-                'header' => __('misc.dependents') . ' (' . count($dependents) . ')',
+                'header' => trans_choice('pages.mutations.dependentBy#', count($dependents)),
                 'mutations' => $dependents,
             ];
     @endphp
