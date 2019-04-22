@@ -171,6 +171,25 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                         });
                     });
                 });
+
+                // Economy products, require view perms
+                Route::prefix('/products')->group(function() {
+                    // Index
+                    Route::get('/', 'ProductController@index')->name('community.economy.product.index');
+
+                    // Create
+                    Route::get('/create', 'ProductController@create')->name('community.economy.product.create');
+                    Route::post('/create', 'ProductController@doCreate')->name('community.economy.product.doCreate');
+
+                    // Specific product
+                    Route::prefix('/{productId}')->group(function() {
+                        // Edit/delete
+                        Route::get('/edit', 'ProductController@edit')->name('community.economy.product.edit');
+                        Route::put('/edit', 'ProductController@doEdit')->name('community.economy.product.doEdit');
+                        Route::get('/delete', 'ProductController@delete')->name('community.economy.product.delete');
+                        Route::delete('/delete', 'ProductController@doDelete')->name('community.economy.product.doDelete');
+                    });
+                });
             });
         });
 
