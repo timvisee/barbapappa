@@ -32,6 +32,8 @@ class CreateProductTable extends Migration {
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');
+
+            // TODO: if custom product and user is deleted, delete product as well
         });
     }
 

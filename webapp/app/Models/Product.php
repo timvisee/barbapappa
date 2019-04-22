@@ -55,6 +55,15 @@ class Product extends Model {
     }
 
     /**
+     * Get a relation to the configured prices for this product.
+     *
+     * @return Relation to the configured prices for this product.
+     */
+    public function prices() {
+        return $this->hasMany(ProductPrice::class);
+    }
+
+    /**
      * Get the display name for this product.
      *
      * @return Product display name.
