@@ -19,7 +19,7 @@ class CreateProductTable extends Migration {
             // TODO: is a type field used for custom products?
             $table->integer('type')->unsigned()->nullable(false);
             $table->string('name')->nullable(false);
-            // TODO: category
+            // TODO: categories?
             $table->boolean('enabled')->default(true)->nullable(false);
             $table->boolean('archived')->default(false)->nullable(false);
             $table->timestamps();
