@@ -54,6 +54,16 @@ class Economy extends Model {
     }
 
     /**
+     * Get a relation to all the products that are part of this economy.
+     *
+     * @return The products.
+     */
+    public function products() {
+        // TODO: `with()` names and prices
+        return $this->hasMany(Product::class);
+    }
+
+    /**
      * Get the wallets created by users in this economy.
      *
      * @return The wallets.

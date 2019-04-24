@@ -164,6 +164,14 @@ return [
     ],
 
     /**
+     * Product pages.
+     */
+    'products' => [
+        'title' => 'Products',
+        'noProducts' => 'No products have been added to dis economy yet...',
+    ],
+
+    /**
      * Wallet pages.
      */
     'wallets' => [

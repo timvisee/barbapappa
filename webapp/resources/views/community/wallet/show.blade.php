@@ -2,11 +2,6 @@
 
 @section('title', $wallet->name)
 
-@php
-    use \App\Http\Controllers\EconomyController;
-    use \App\Models\Wallet;
-@endphp
-
 @section('content')
     <h2 class="ui header">
         @yield('title')
