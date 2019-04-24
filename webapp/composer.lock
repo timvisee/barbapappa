@@ -4,8 +4,51 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "232a7101ac58ebb247ac8c5ee5d596d0",
+    "content-hash": "f870a88a819f47009a119411c7f0910f",
     "packages": [
+        {
+            "name": "alfa6661/laravel-has-many-sync",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alfa6661/laravel-hasmany-sync.git",
+                "reference": "16aac13f31050d47a8adff761fd5f6ae314476bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alfa6661/laravel-hasmany-sync/zipball/16aac13f31050d47a8adff761fd5f6ae314476bb",
+                "reference": "16aac13f31050d47a8adff761fd5f6ae314476bb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Alfa6661\\EloquentHasManySync\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Alfa6661\\EloquentHasManySync\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alfa Adhitya",
+                    "email": "alfa2159@gmail.com"
+                }
+            ],
+            "description": "Laravel has many sync",
+            "time": "2018-08-13T09:35:37+00:00"
+        },
         {
             "name": "barryvdh/laravel-debugbar",
             "version": "v2.4.3",

@@ -226,6 +226,11 @@ return [
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
         /**
+         * Eloquent HasMany Sync
+         */
+        Alfa6661\EloquentHasManySync\ServiceProvider::class,
+
+        /**
          * Custom service providers for BARbapAPPa.
          */
         App\Providers\LanguageManagerServiceProvider::class,
