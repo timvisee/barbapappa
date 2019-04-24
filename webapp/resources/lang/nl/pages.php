@@ -169,6 +169,10 @@ return [
     'products' => [
         'title' => 'Producten',
         'noProducts' => 'Er zijn nog geen producten aan deze economie toegevoegd...',
+        'type' => [
+            'normal' => 'Normaal',
+            'custom' => 'Aangepast',
+        ],
     ],
 
     /**

@@ -169,6 +169,10 @@ return [
     'products' => [
         'title' => 'Products',
         'noProducts' => 'No products have been added to this economy yet...',
+        'type' => [
+            'normal' => 'Normal',
+            'custom' => 'Custom',
+        ],
     ],
 
     /**

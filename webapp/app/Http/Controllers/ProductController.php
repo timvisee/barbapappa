@@ -36,6 +36,25 @@ class ProductController extends Controller {
     }
 
     /**
+     * Show a product.
+     *
+     * @return Response
+     */
+    public function show($communityId, $economyId, $productId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->findOrFail($productId);
+
+        return view('community.economy.product.show')
+            ->with('economy', $economy)
+            ->with('product', $product);
+    }
+
+    /**
      * The permission required for viewing.
      * @return PermsConfig The permission configuration.
      */

@@ -71,4 +71,22 @@ class Product extends Model {
     public function displayName() {
         return $this->name;
     }
+
+    /**
+     * Get the display name for the product type.
+     *
+     * @return Type display name.
+     */
+    public function typeName() {
+        // Get the type key here
+        $key = [
+            Self::TYPE_NORMAL => 'normal',
+            Self::TYPE_CUSTOM => 'custom',
+        ][$this->type];
+        if(empty($key))
+            throw new \Exception("Unknown product type, cannot get type name");
+
+        // Translate and return
+        return __('pages.products.type.' . $key);
+    }
 }

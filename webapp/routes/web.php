@@ -182,7 +182,11 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::post('/create', 'ProductController@doCreate')->name('community.economy.product.doCreate');
 
                     // Specific product
+                    // TODO: require permission middleware here!
                     Route::prefix('/{productId}')->group(function() {
+                        // Show
+                        Route::get('/', 'ProductController@show')->name('community.economy.product.show');
+
                         // Edit/delete
                         Route::get('/edit', 'ProductController@edit')->name('community.economy.product.edit');
                         Route::put('/edit', 'ProductController@doEdit')->name('community.economy.product.doEdit');
