@@ -22,7 +22,7 @@
 
         @if($joined)
             <a href="{{ route('community.wallet.list', [
-                        'communityId' => $community->id,
+                        'communityId' => $community->human_id,
                         'economyId' => $economy->id
                     ]) }}">
                 {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}

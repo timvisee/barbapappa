@@ -8,7 +8,7 @@
 
         <div class="sub header">
             in
-            <a href="{{ route('community.show', ['communityId' => $community->id]) }}">
+            <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}">
                 {{ $community->name }}
             </a>
         </div>

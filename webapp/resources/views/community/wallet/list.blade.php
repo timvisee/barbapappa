@@ -13,7 +13,7 @@
 
         <div class="sub header">
             @lang('misc.in')
-            <a href="{{ route('community.wallet.index', ['communityId' => $community->id]) }}">
+            <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}">
                 {{ $community->name }}
             </a>
             @lang('misc.for')
@@ -57,7 +57,7 @@
     </a>
 
     {{-- TODO: only show if there are other wallet economies --}}
-    <a href="{{ route('community.wallet.index', ['communityId' => $community->id]) }}"
+    <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}"
             class="ui button basic">
         @lang('pages.wallets.all')
     </a>

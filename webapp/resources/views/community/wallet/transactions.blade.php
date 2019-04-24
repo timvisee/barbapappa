@@ -8,7 +8,7 @@
         <div class="sub header">
             @lang('misc.in')
             <a href="{{ route('community.wallet.show', [
-                        'communityId' => $community->id,
+                        'communityId' => $community->human_id,
                         'economyId' => $economy->id,
                         'walletId' => $wallet->id,
                     ]) }}">
@@ -27,7 +27,7 @@
 
     <p>
         <a href="{{ route('community.wallet.show', [
-                    'communityId' => $community->id,
+                    'communityId' => $community->human_id,
                     'economyId' => $economy->id,
                     'walletId' => $wallet->id,
                 ]) }}"

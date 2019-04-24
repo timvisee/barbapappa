@@ -9,7 +9,7 @@
     <p>@lang('pages.currencies.deleteVoidNotice')</p>
 
     <a href="{{ route('community.economy.currency.edit', [
-        'communityId' => $community->id,
+        'communityId' => $community->human_id,
         'economyId' => $economy->id,
         'economyCurrencyId' => $currency->id
     ]) }}">

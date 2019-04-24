@@ -5,7 +5,7 @@
     @forelse($currencies as $currency)
         <a class="item"
                 href="{{ route('community.economy.currency.show', [
-                    'communityId' => $community->id,
+                    'communityId' => $community->human_id,
                     'economyId' => $economy->id,
                     'economyCurrencyId' => $currency->id
                 ]) }}">

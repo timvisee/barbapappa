@@ -13,11 +13,11 @@
 
         <div class="sub header">
             @lang('misc.in')
-            <a href="{{ route('community.wallet.index', ['communityId' => $community->id]) }}">
+            <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}">
                 {{ $community->name }}
             </a>
             @lang('misc.for')
-            <a href="{{ route('community.wallet.list', ['communityId' => $community->id, 'economyId' => $economy->id]) }}">
+            <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
                 {{ $economy->name }}
             </a>
         </div>
