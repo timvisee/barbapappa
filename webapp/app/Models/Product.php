@@ -26,6 +26,14 @@ class Product extends Model {
 
     protected $table = "products";
 
+    protected $fillable = [
+        'economy_id',
+        'type',
+        'name',
+        'enabled',
+        'archived',
+    ];
+
     /**
      * Normal persistent product type.
      */

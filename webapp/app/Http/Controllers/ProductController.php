@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
+use App\Models\Product;
 
 class ProductController extends Controller {
 
@@ -29,6 +30,57 @@ class ProductController extends Controller {
         return view('community.economy.product.index')
             ->with('economy', $economy)
             ->with('products', $products);
+    }
+
+    /**
+     * Product creation page.
+     *
+     * @return Response
+     */
+    public function create($communityId, $economyId) {
+        // Get the user, community, find the products
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        return view('community.economy.product.create')
+            ->with('economy', $economy);
+    }
+
+    /**
+     * Product create endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doCreate(Request $request, $communityId, $economyId) {
+        // Get the user, community, find the products
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
+
+        // Create the product
+        $bar = $economy->products()->create([
+            'economy_id' => $economy->id,
+            'type' => Product::TYPE_NORMAL,
+            'name' => $request->input('name'),
+            'enabled' => is_checked($request->input('enabled')),
+            'archived' => is_checked($request->input('archived')),
+        ]);
+
+        // Redirect the user to the product index
+        return redirect()
+            ->route('community.economy.product.index', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+            ])
+            ->with('success', __('pages.products.created'));
     }
 
     /**

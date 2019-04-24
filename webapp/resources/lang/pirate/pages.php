@@ -169,7 +169,9 @@ return [
     'products' => [
         'title' => 'Products',
         'noProducts' => 'No products have been added to dis economy yet...',
+        'newProduct' => 'New product',
         'editProduct' => 'Edit product',
+        'created' => 'The product be added.',
         'changed' => 'The product be changed.',
         'namePlaceholder' => 'Bear Beer',
         'enabledDescription' => 'Enabled, can be bought',

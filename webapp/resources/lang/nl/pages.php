@@ -169,7 +169,9 @@ return [
     'products' => [
         'title' => 'Producten',
         'noProducts' => 'Er zijn nog geen producten aan deze economie toegevoegd...',
+        'createProduct' => 'Nieuw product',
         'editProduct' => 'Product aanpassen',
+        'created' => 'Het product is aangemaakt.',
         'changed' => 'Product aanpassingen opgeslagen.',
         'namePlaceholder' => 'Luxe Sap',
         'enabledDescription' => 'Ingeschakeld, kan gekocht worden',
