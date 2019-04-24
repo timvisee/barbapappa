@@ -23,8 +23,44 @@
 
         <div class="ui divider"></div>
 
-        {{-- TODO: pricing --}}
-        {{-- <div class="ui divider"></div> --}}
+        <div class="ui message">
+            <div class="header">@lang('pages.products.prices')</div>
+            <p>@lang('pages.products.pricesDescription')</p>
+        </div>
+
+        @if($economy->currencies->isNotEmpty())
+            <div class="six fields">
+                @foreach($economy->currencies as $currency)
+                    @php
+                        $field = 'price_' . $currency->id;
+                        $value = $product
+                            ->prices
+                            ->whereStrict('currency_id', $currency->id)
+                            ->map(function($p) { return $p->price; })
+                            ->first();
+                    @endphp
+                    <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
+                        <label>{{ $currency->name }} ({{ __('general.optional') }}):</label>
+                        <div class="ui labeled input">
+                            <label for="{{ $field }}" class="ui label">{{ $currency->symbol }}</label>
+                            <input type="text" placeholder="1.23" id="{{ $field }}" name="{{ $field }}" value="{{ $value }}" />
+                        </div>
+                        {{ ErrorRenderer::inline($field) }}
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p><i>@lang('pages.currencies.noCurrencies')</i></p>
+        @endif
+
+        <a href="{{ route('community.economy.currency.index', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id,
+        ]) }}">
+            @lang('pages.currencies.manage')
+        </a>
+
+        <div class="ui divider"></div>
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
             <div class="ui checkbox">

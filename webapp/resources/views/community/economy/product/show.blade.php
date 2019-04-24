@@ -16,6 +16,21 @@
                 <td>{{ $product->name }}</td>
             </tr>
             <tr>
+                <td>@lang('pages.products.prices')</td>
+                <td>
+                    @if($product->prices->isNotEmpty())
+                        <div class="ui list">
+                            @foreach($product->prices as $price)
+                                <div class="item">{{ $price->formatPrice() }}</div>
+                            @endforeach
+                        </div>
+                    @else
+                        {{-- TODO: use style for this --}}
+                        <i style="color: red;">@lang('misc.none')</i>
+                    @endif
+                </td>
+            </tr>
+            <tr>
                 <td>@lang('misc.type')</td>
                 <td>{{ $product->typeName() }}</td>
             </tr>

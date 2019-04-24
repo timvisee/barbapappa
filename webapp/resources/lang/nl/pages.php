@@ -161,6 +161,7 @@ return [
         'allowWalletsDescription' => 'Met deze optie stel je in of barleden een nieuwe persoonlijke portemonnee aan kunnen maken voor deze valuta. Huidige portemonnees blijven altijd bestaan.',
         'noCurrenciesToAdd' => 'Er zijn geen valutas die je kunt toevoegen. Vraag de website administrator om een valuta te configureren.',
         'noMoreCurrenciesToAdd' => 'Er zijn geen andere valutas om toe te voegen.',
+        'manage' => 'Beheer economie valutas',
     ],
 
     /**
@@ -178,6 +179,7 @@ return [
         'namePlaceholder' => 'Luxe Sap',
         'enabledDescription' => 'Ingeschakeld, kan gekocht worden',
         'archivedDescription' => 'Gearchiveerd, verborgen van producten lijst',
+        'prices' => 'Prijzen',
         'type' => [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',

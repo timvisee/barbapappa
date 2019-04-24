@@ -161,6 +161,7 @@ return [
         'allowWalletsDescription' => 'With dis option ye specify whether bar mateies be create a new personal wallet for dis currency. Existing wallets always be kept afloat.',
         'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
         'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
+        'manage' => 'Manage booty currencies',
     ],
 
     /**
@@ -178,6 +179,7 @@ return [
         'namePlaceholder' => 'Bear Beer',
         'enabledDescription' => 'Enabled, can be bought',
         'archivedDescription' => 'Archived, hidden from products',
+        'prices' => 'Prices',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',

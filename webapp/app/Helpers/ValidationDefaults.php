@@ -82,6 +82,16 @@ class ValidationDefaults {
     const CODE = 'string|min:2|max:4096';
 
     /**
+     * A price value, with two optional decimal digits, may be zero.
+     */
+    const PRICE = 'regex:/^(\d{1,8}([,.]\d{1,2})?)?$/';
+
+    /**
+     * A price value, with two optional decimal digits, may be zero.
+     */
+    const PRICE_OPTIONAL = 'nullable|' . self::PRICE;
+
+    /**
      * Build the community slug validation configuration.
      *
      * @param int|null $community The community this configuration is built for.

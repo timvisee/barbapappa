@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Validator;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Product;
@@ -57,19 +58,43 @@ class ProductController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
-        // Validate
-        $this->validate($request, [
-            'name' => 'required|' . ValidationDefaults::NAME,
-        ]);
+        // Build validation rules, and validate
+        $rules = ['name' => 'required|' . ValidationDefaults::NAME];
+        $messages = [];
+        foreach($economy->currencies as $currency) {
+            $rules['price_' . $currency->id] = ValidationDefaults::PRICE_OPTIONAL;
+            $messages['price_' . $currency->id . '.regex'] = __('misc.invalidPrice');
+        }
+        $this->validate($request, $rules, $messages);
 
-        // Create the product
-        $bar = $economy->products()->create([
-            'economy_id' => $economy->id,
-            'type' => Product::TYPE_NORMAL,
-            'name' => $request->input('name'),
-            'enabled' => is_checked($request->input('enabled')),
-            'archived' => is_checked($request->input('archived')),
-        ]);
+        // Create product and set prices in transaction
+        DB::transaction(function() use($request, $economy) {
+            // Create the product
+            $product = $economy->products()->create([
+                'economy_id' => $economy->id,
+                'type' => Product::TYPE_NORMAL,
+                'name' => $request->input('name'),
+                'enabled' => is_checked($request->input('enabled')),
+                'archived' => is_checked($request->input('archived')),
+            ]);
+
+            // Create the product prices
+            $product->prices()->createMany(
+                $economy
+                    ->currencies
+                    ->filter(function($currency) use($request) {
+                        return $request->input('price_' . $currency->id) != null;
+                    })
+                    ->map(function($currency) use($request, $product) {
+                        return [
+                            'product_id' => $product->id,
+                            'currency_id' => $currency->id,
+                            'price' => str_replace(',', '.', $request->input('price_' . $currency->id)),
+                        ];
+                    })
+                    ->toArray()
+            );
+        });
 
         // Redirect the user to the product index
         return redirect()
@@ -128,18 +153,45 @@ class ProductController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->findOrFail($productId);
 
-        // Validate
-        $this->validate($request, [
-            'name' => 'required|' . ValidationDefaults::NAME,
-        ]);
+        // Build validation rules, and validate
+        $rules = ['name' => 'required|' . ValidationDefaults::NAME];
+        $messages = [];
+        foreach($economy->currencies as $currency) {
+            $rules['price_' . $currency->id] = ValidationDefaults::PRICE_OPTIONAL;
+            $messages['price_' . $currency->id . '.regex'] = __('misc.invalidPrice');
+        }
+        $this->validate($request, $rules, $messages);
 
-        // Change properties
-        $product->name = $request->input('name');
-        $product->enabled = is_checked($request->input('enabled'));
-        $product->archived = is_checked($request->input('archived'));
+        // Change product properties and sync prices in transaction
+        DB::transaction(function() use($request, $product, $economy) {
+            // Change properties
+            $product->name = $request->input('name');
+            $product->enabled = is_checked($request->input('enabled'));
+            $product->archived = is_checked($request->input('archived'));
+            $product->save();
 
-        // Save the product
-        $product->save();
+            // Sync product prices
+            $product->prices()->sync(
+                $economy
+                    ->currencies
+                    ->filter(function($currency) use($request) {
+                        return $request->input('price_' . $currency->id) != null;
+                    })
+                    ->map(function($currency) use($request, $product) {
+                        return [
+                            'id' => $product
+                                ->prices
+                                ->filter(function($p) use($currency) { return $p->currency_id == $currency->id; })
+                                ->map(function($p) { return $p->id; })
+                                ->first(),
+                            'product_id' => $product->id,
+                            'currency_id' => $currency->id,
+                            'price' => str_replace(',', '.', $request->input('price_' . $currency->id)),
+                        ];
+                    })
+                    ->toArray()
+            );
+        });
 
         // Redirect the user to the account overview page
         return redirect()

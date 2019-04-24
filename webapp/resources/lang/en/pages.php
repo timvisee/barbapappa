@@ -161,6 +161,7 @@ return [
         'allowWalletsDescription' => 'With this option you can specify whether bar members can create a new personal wallet for this currency. Existing wallets will always be kept.',
         'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
         'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
+        'manage' => 'Manage economy currencies',
     ],
 
     /**
@@ -178,6 +179,8 @@ return [
         'namePlaceholder' => 'Fancy Juice',
         'enabledDescription' => 'Enabled, can be bought',
         'archivedDescription' => 'Archived, hidden from products',
+        'prices' => 'Prices',
+        'pricesDescription' => 'Configure prices for this product in the fields below for currencies you want to support.',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',
