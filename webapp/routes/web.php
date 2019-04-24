@@ -72,7 +72,7 @@ Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(f
 
 // Profile routes
 Route::prefix('/profile')->middleware(['auth', 'selectUser'])->group(function() {
-    Route::get('/{userId}/edit', 10'ProfileController@edit')->name('profile.edit');
+    Route::get('/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
 

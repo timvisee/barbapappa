@@ -169,6 +169,11 @@ return [
     'products' => [
         'title' => 'Products',
         'noProducts' => 'No products have been added to dis economy yet...',
+        'editProduct' => 'Edit product',
+        'changed' => 'The product be changed.',
+        'namePlaceholder' => 'Bear Beer',
+        'enabledDescription' => 'Enabled, can be bought',
+        'archivedDescription' => 'Archived, hidden from products',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',

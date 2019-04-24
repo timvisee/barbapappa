@@ -169,6 +169,11 @@ return [
     'products' => [
         'title' => 'Products',
         'noProducts' => 'No products have been added to this economy yet...',
+        'editProduct' => 'Edit product',
+        'changed' => 'The product has been changed.',
+        'namePlaceholder' => 'Fancy Juice',
+        'enabledDescription' => 'Enabled, can be bought',
+        'archivedDescription' => 'Archived, hidden from products',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',
