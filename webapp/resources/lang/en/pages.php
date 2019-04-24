@@ -173,6 +173,8 @@ return [
         'editProduct' => 'Edit product',
         'created' => 'The product has been added.',
         'changed' => 'The product has been changed.',
+        'deleteQuestion' => 'You\'re about to delete this product. Are you sure you want to continue?',
+        'deleted' => 'The product has been removed.',
         'namePlaceholder' => 'Fancy Juice',
         'enabledDescription' => 'Enabled, can be bought',
         'archivedDescription' => 'Archived, hidden from products',

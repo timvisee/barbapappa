@@ -173,6 +173,8 @@ return [
         'editProduct' => 'Product aanpassen',
         'created' => 'Het product is aangemaakt.',
         'changed' => 'Product aanpassingen opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt dit product te verwijderen. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'Het product is verwijderd.',
         'namePlaceholder' => 'Luxe Sap',
         'enabledDescription' => 'Ingeschakeld, kan gekocht worden',
         'archivedDescription' => 'Gearchiveerd, verborgen van producten lijst',

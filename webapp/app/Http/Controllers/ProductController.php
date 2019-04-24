@@ -11,9 +11,6 @@ use App\Models\Product;
 
 class ProductController extends Controller {
 
-    // TODO: action: delete
-    // TODO: action: doDelete
-
     /**
      * Products index page.
      * This shows the list of products in the current economy.
@@ -152,6 +149,55 @@ class ProductController extends Controller {
                 'productId' => $product->id,
             ])
             ->with('success', __('pages.products.changed'));
+    }
+
+    /**
+     * Page for confirming the deletion of the product.
+     *
+     * @return Response
+     */
+    public function delete($communityId, $economyId, $productId) {
+        // TODO: suggest to archive instead!
+
+        // Get the user, community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->findOrFail($productId);
+
+        // TODO: ensure there are no other constraints that prevent deleting the
+        // product
+
+        return view('community.economy.product.delete')
+            ->with('economy', $economy)
+            ->with('product', $product);
+    }
+
+    /**
+     * Delete a product.
+     *
+     * @return Response
+     */
+    public function doDelete($communityId, $economyId, $productId) {
+        // Get the user, community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->findOrFail($productId);
+
+        // TODO: ensure there are no other constraints that prevent deleting the
+        // product
+
+        // Delete the product
+        $product->delete();
+
+        // Redirect to the product index
+        return redirect()
+            ->route('community.economy.product.index', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id
+            ])
+            ->with('success', __('pages.products.deleted'));
     }
 
     /**
