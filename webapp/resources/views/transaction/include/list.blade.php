@@ -10,7 +10,8 @@
         @endif
 
         {{-- Transactions --}}
-        @forelse($group['transactions'] as $transaction)
+        {{-- TODO: show empty message if no transactions --}}
+        @foreach($group['transactions'] as $transaction)
             <a class="item"
                     href="{{ route('transaction.show', [
                         'transactionId' => $transaction->id,
@@ -19,7 +20,7 @@
                 {!! $transaction->formatCost(BALANCE_FORMAT_LABEL); !!}
 
                 <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at])
+                    @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at, 'short' => true])
                 </span>
             </a>
         @endforeach

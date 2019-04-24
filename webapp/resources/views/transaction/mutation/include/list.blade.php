@@ -10,7 +10,8 @@
         @endif
 
         {{-- Mutations --}}
-        @forelse($group['mutations'] as $mutation)
+        {{-- TODO: show empty message if no transactions --}}
+        @foreach($group['mutations'] as $mutation)
             <a class="item"
                     href="{{ route('transaction.mutation.show', [
                         'transactionId' => $mutation->transaction_id,
@@ -20,7 +21,7 @@
                 {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, true); !!}
 
                 <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $mutation->updated_at ?? $mutation->created_at])
+                    @include('includes.humanTimeDiff', ['time' => $mutation->updated_at ?? $mutation->created_at, 'short' => true])
                 </span>
             </a>
         @endforeach
