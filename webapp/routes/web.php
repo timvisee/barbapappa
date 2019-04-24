@@ -1,14 +1,15 @@
 <?php
 
-use App\Perms\AppRoles;
-use App\Perms\BarRoles;
-use App\Perms\CommunityRoles;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyCurrencyController;
+use App\Http\Controllers\ProductController;
+use App\Perms\AppRoles;
+use App\Perms\BarRoles;
+use App\Perms\CommunityRoles;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,7 +72,7 @@ Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(f
 
 // Profile routes
 Route::prefix('/profile')->middleware(['auth', 'selectUser'])->group(function() {
-    Route::get('/{userId}/edit', 'ProfileController@edit')->name('profile.edit');
+    Route::get('/{userId}/edit', 10'ProfileController@edit')->name('profile.edit');
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
 
@@ -173,25 +174,28 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 });
 
                 // Economy products, require view perms
-                Route::prefix('/products')->group(function() {
+                Route::prefix('/products')->middleware(ProductController::permsView()->middleware())->group(function() {
                     // Index
                     Route::get('/', 'ProductController@index')->name('community.economy.product.index');
 
-                    // Create
-                    Route::get('/create', 'ProductController@create')->name('community.economy.product.create');
-                    Route::post('/create', 'ProductController@doCreate')->name('community.economy.product.doCreate');
+                    // Create, require manage perms
+                    Route::middleware(ProductController::permsManage()->middleware())->group(function() {
+                        Route::get('/create', 'ProductController@create')->name('community.economy.product.create');
+                        Route::post('/create', 'ProductController@doCreate')->name('community.economy.product.doCreate');
+                    });
 
-                    // Specific product
-                    // TODO: require permission middleware here!
+                    // Specific
                     Route::prefix('/{productId}')->group(function() {
                         // Show
                         Route::get('/', 'ProductController@show')->name('community.economy.product.show');
 
-                        // Edit/delete
-                        Route::get('/edit', 'ProductController@edit')->name('community.economy.product.edit');
-                        Route::put('/edit', 'ProductController@doEdit')->name('community.economy.product.doEdit');
-                        Route::get('/delete', 'ProductController@delete')->name('community.economy.product.delete');
-                        Route::delete('/delete', 'ProductController@doDelete')->name('community.economy.product.doDelete');
+                        // Edit/delete, require manager perms
+                        Route::middleware(ProductController::permsManage()->middleware())->group(function() {
+                            Route::get('/edit', 'ProductController@edit')->name('community.economy.product.edit');
+                            Route::put('/edit', 'ProductController@doEdit')->name('community.economy.product.doEdit');
+                            Route::get('/delete', 'ProductController@delete')->name('community.economy.product.delete');
+                            Route::delete('/delete', 'ProductController@doDelete')->name('community.economy.product.doDelete');
+                        });
                     });
                 });
             });

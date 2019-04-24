@@ -8,8 +8,6 @@ use Illuminate\Http\Response;
 
 class ProductController extends Controller {
 
-    // TODO: action: index
-    // TODO: action: show
     // TODO: action: edit
     // TODO: action: doEdit
     // TODO: action: delete
@@ -22,8 +20,6 @@ class ProductController extends Controller {
      * @return Response
      */
     public function index($communityId, $economyId) {
-        // TODO: do some permission checking?
-
         // Get the user, community, find the economy and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -41,8 +37,6 @@ class ProductController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $productId) {
-        // TODO: do some permission checking?
-
         // Get the user, community, find the economy and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
