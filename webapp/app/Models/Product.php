@@ -63,6 +63,15 @@ class Product extends Model {
     }
 
     /**
+     * Get a relation to the configured localized names for this product.
+     *
+     * @return Relation to the configured localized names for this product.
+     */
+    public function names() {
+        return $this->hasMany(ProductName::class);
+    }
+
+    /**
      * Get a relation to the configured prices for this product.
      *
      * @return Relation to the configured prices for this product.
