@@ -86,7 +86,12 @@ class Product extends Model {
      * @return Product display name.
      */
     public function displayName() {
-        return $this->name;
+        return $this
+            ->names
+            ->whereStrict('locale', langManager()->getLocaleSafe())
+            ->map(function($n) { return $n->name; })
+            ->first()
+            ?? $this->name;
     }
 
     /**

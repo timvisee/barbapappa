@@ -59,8 +59,7 @@ class Economy extends Model {
      * @return The products.
      */
     public function products() {
-        // TODO: eager load names and prices by default
-        return $this->hasMany(Product::class);
+        return $this->hasMany(Product::class)->with('names')->with('prices');
     }
 
     /**

@@ -13,7 +13,17 @@
         <tbody>
             <tr>
                 <td>@lang('misc.name')</td>
-                <td>{{ $product->name }}</td>
+                <td>
+                    <div class="ui list">
+                        <div class="item">{{ $product->name }}</div>
+                        @foreach($product->names as $name)
+                            <div class="item">
+                                <i>{{ $name->languageName() }}:</i>
+                                {{ $name->name }}
+                            </div>
+                        @endforeach
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td>@lang('pages.products.prices')</td>
