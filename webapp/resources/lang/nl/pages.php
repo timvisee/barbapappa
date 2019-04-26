@@ -180,6 +180,9 @@ return [
         'enabledDescription' => 'Ingeschakeld, kan gekocht worden',
         'archivedDescription' => 'Gearchiveerd, verborgen van producten lijst',
         'prices' => 'Prijzen',
+        'pricesDescription' => 'Configureer de prijzen voor dit product in de velden hieronder voor de valutas die je wilt ondersteunen.',
+        'localizedNames' => 'Gelokaliseerde namen',
+        'localizedNamesDescription' => 'Configureer de gelokaliseerde namen voor dit product in de velden hieronder als het verschilt met de hoofdnaam.',
         'type' => [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',

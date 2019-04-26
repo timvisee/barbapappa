@@ -180,6 +180,9 @@ return [
         'enabledDescription' => 'Enabled, can be bought',
         'archivedDescription' => 'Archived, hidden from products',
         'prices' => 'Prices',
+        'pricesDescription' => 'Configure prices for dis product in th\' fields below for booties ye want to support.',
+        'localizedNames' => 'Localized names',
+        'localizedNamesDescription' => 'Configure ',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',

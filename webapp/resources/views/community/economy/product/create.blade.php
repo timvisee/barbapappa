@@ -23,6 +23,30 @@
         <div class="ui divider"></div>
 
         <div class="ui message">
+            <div class="header">@lang('pages.products.localizedNames')</div>
+            <p>@lang('pages.products.localizedNamesDescription')</p>
+        </div>
+
+        <div class="three fields">
+            @foreach($locales as $locale)
+                @php
+                    $field = 'name_' . $locale;
+                @endphp
+                <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
+                    <label>@lang('lang.name', [], $locale) ({{ __('general.optional') }}):</label>
+                    <div class="ui labeled input">
+                        <input type="text"
+                            placeholder="@lang('pages.products.namePlaceholder', [], $locale)"
+                            id="{{ $field }}" name="{{ $field }}" />
+                    </div>
+                    {{ ErrorRenderer::inline($field) }}
+                </div>
+            @endforeach
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div class="ui message">
             <div class="header">@lang('pages.products.prices')</div>
             <p>@lang('pages.products.pricesDescription')</p>
         </div>

@@ -181,6 +181,8 @@ return [
         'archivedDescription' => 'Archived, hidden from products',
         'prices' => 'Prices',
         'pricesDescription' => 'Configure prices for this product in the fields below for currencies you want to support.',
+        'localizedNames' => 'Localized names',
+        'localizedNamesDescription' => 'Configure localized names for this product in the fields below if it differs from the main name.',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',
