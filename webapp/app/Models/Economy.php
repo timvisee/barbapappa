@@ -49,8 +49,7 @@ class Economy extends Model {
      * @return List of supported currencies.
      */
     public function currencies() {
-        // TODO: eager load by default, in the economy currency class itself
-        return $this->hasMany('App\Models\EconomyCurrency')->with('currency');
+        return $this->hasMany('App\Models\EconomyCurrency');
     }
 
     /**
@@ -59,7 +58,7 @@ class Economy extends Model {
      * @return The products.
      */
     public function products() {
-        return $this->hasMany(Product::class)->with('names')->with('prices');
+        return $this->hasMany(Product::class);
     }
 
     /**
@@ -80,18 +79,18 @@ class Economy extends Model {
         return $this->wallets()->where('user_id', barauth()->getUser()->id);
     }
 
-    /**
-     * Get all the transactions that took place in this economy.
-     *
-     * TODO: filter by user
-     *
-     * @return The transactions.
-     */
-    public function transactions() {
-        // TODO: return proper selection
-        // return $this->hasMany('App\Models\Transaction');
-        return Transaction::where('id', '!=', -1);
-    }
+    // /**
+    //  * Get all the transactions that took place in this economy.
+    //  *
+    //  * TODO: filter by user
+    //  *
+    //  * @return The transactions.
+    //  */
+    // public function transactions() {
+    //     // TODO: return proper selection
+    //     return $this->hasMany('App\Models\Transaction');
+    //     // return Transaction::where('id', '!=', -1);
+    // }
 
     /**
      * Get the last few transactions that took place in this economy.

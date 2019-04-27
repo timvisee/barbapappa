@@ -41,6 +41,8 @@ class EconomyCurrency extends Model {
         'product_price_default',
     ];
 
+    protected $with = ['currency'];
+
     public static function boot() {
         parent::boot();
         static::addGlobalScope(new EnabledScope);
