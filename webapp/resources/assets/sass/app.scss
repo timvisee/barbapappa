@@ -194,8 +194,13 @@ ul.ui-listview.center > li > a.ui-btn {
   overflow: hidden;
 }
 
+// A subtle gray label
+.subtle,
 .menu.fluid .sub-label {
     color: gray;
+}
+
+.menu.fluid .sub-label {
     float: right;
     margin-left: 12px;
     display: block;

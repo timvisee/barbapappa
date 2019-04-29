@@ -2,6 +2,8 @@
 
 @php
     use \App\Models\MutationWallet;
+    use \App\Models\MutationProduct;
+    use \App\Models\MutationPayment;
 @endphp
 
 @section('title', __('pages.mutations.details'))
@@ -63,6 +65,26 @@
                     @lang('pages.wallets.view')
                 </a>
             </p>
+        @elseif($data instanceof MutationProduct)
+            <div class="ui top vertical menu fluid">
+                <h5 class="ui item header">Product</h5>
+
+                <a class="item"
+                        href="{{ route('transaction.mutation.show', [
+                            'transactionId' => $mutation->transaction_id,
+                            'mutationId' => $mutation->id,
+                        ]) }}">
+                    @if($data->quantity != 1)
+                        <span class="subtle">{{ $data->quantity }}×</span>
+                    @endif
+                    {{ $data->product->displayName() }}
+                    <span class="subtle">
+                        @ {{ $data->bar->name }}
+                    </span>
+
+                    {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, true) !!}
+                </a>
+            </div>
         @else
             <p>
                 TODO: show mutation type specific data, not yet implemented
