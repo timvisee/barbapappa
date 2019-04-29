@@ -32,6 +32,8 @@ class MutationProduct extends Model {
 
     protected $table = "mutations_product";
 
+    protected $with = ['product'];
+
     /**
      * Get the main mutation this product mutation data belongs to.
      *

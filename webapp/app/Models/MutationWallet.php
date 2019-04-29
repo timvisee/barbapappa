@@ -30,6 +30,8 @@ class MutationWallet extends Model {
 
     protected $table = "mutations_wallet";
 
+    protected $with = ['wallet'];
+
     /**
      * Get the main mutation this wallet mutation data belongs to.
      *

@@ -23,6 +23,8 @@ class Transaction extends Model {
 
     protected $table = "transactions";
 
+    protected $with = ['mutations'];
+
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
     const STATE_SUCCESS = 3;

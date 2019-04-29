@@ -160,8 +160,14 @@ class Mutation extends Model {
                 return __('pages.mutations.types.wallet' . $dir);
 
         case Self::TYPE_PRODUCT:
-            // TODO: describe mutation in detail here
-            return __('pages.mutations.types.product' . $dir);
+            if($detail) {
+                // Build a list of products with quantities if not 1
+                $products[] = ($this->mutationData->quantity != 1 ? $this->mutationData->quantity . 'x ' : '') . $this->mutationData->product->displayName();
+
+                // Return the description string including the product names
+                return __('pages.mutations.types.product' . $dir . 'Detail', ['products' => implode(', ', $products)]);
+            } else
+                return __('pages.mutations.types.product' . $dir);
 
         case Self::TYPE_PAYMENT:
             // TODO: describe mutation in detail here
