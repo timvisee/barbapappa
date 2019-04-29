@@ -69,10 +69,10 @@
             <div class="ui top vertical menu fluid">
                 <h5 class="ui item header">Product</h5>
 
+                {{-- TODO: link product item to public product page instead --}}
                 <a class="item"
-                        href="{{ route('transaction.mutation.show', [
-                            'transactionId' => $mutation->transaction_id,
-                            'mutationId' => $mutation->id,
+                        href="{{ route('bar.show', [
+                            'barId' => $mutation->mutationData->bar->human_id,
                         ]) }}">
                     @if($data->quantity != 1)
                         <span class="subtle">{{ $data->quantity }}×</span>

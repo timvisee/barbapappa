@@ -42,11 +42,33 @@
     @endif
 
     <div class="ui vertical menu fluid">
-        <div class="item">Product 1</div>
-        <div class="item">Product 2</div>
-        <div class="item">Product 3</div>
-        <div class="item">Product 4</div>
-        <div class="item">Product 5</div>
+        {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
+            <div class="item">
+                <div class="ui transparent icon input">
+                    {{ Form::text('search', Request::input('search'), [
+                        'placeholder' => 'Search products...'
+                    ]) }}
+                    {{-- TODO: remove icon class? --}}
+                    <i class="icon glyphicons glyphicons-search link"></i>
+                </div>
+            </div>
+        {!! Form::close() !!}
+
+        @forelse($bar->quickBuyProducts() as $product)
+            <a href="#" class="item">
+                {{ $product->displayName() }}
+
+                <span class="sub-label">
+                    bought {{ $product->count }}×
+                </span>
+            </a>
+        @empty
+            <i>No products...</i>
+        @endforelse
+
+        <a href="#" class="ui bottom attached button">
+            Show all
+        </a>
     </div>
 
     <br />

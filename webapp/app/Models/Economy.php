@@ -31,7 +31,7 @@ class Economy extends Model {
      * @return The community.
      */
     public function community() {
-        return $this->belongsTo('App\Models\Community');
+        return $this->belongsTo(Community::class);
     }
 
     /**
@@ -40,7 +40,7 @@ class Economy extends Model {
      * @return The bars.
      */
     public function bars() {
-        return $this->hasMany('App\Models\Bar');
+        return $this->hasMany(Bar::class);
     }
 
     /**
@@ -49,7 +49,7 @@ class Economy extends Model {
      * @return List of supported currencies.
      */
     public function currencies() {
-        return $this->hasMany('App\Models\EconomyCurrency');
+        return $this->hasMany(EconomyCurrency::class);
     }
 
     /**
@@ -67,7 +67,7 @@ class Economy extends Model {
      * @return The wallets.
      */
     public function wallets() {
-        return $this->hasMany('App\Models\Wallet');
+        return $this->hasMany(Wallet::class);
     }
 
     /**
@@ -82,30 +82,40 @@ class Economy extends Model {
     // /**
     //  * Get all the transactions that took place in this economy.
     //  *
-    //  * TODO: filter by user
+    //  * TODO: filter by user?
     //  *
     //  * @return The transactions.
     //  */
     // public function transactions() {
     //     // TODO: return proper selection
-    //     return $this->hasMany('App\Models\Transaction');
+    //     return $this->hasMany(Transaction::class);
     //     // return Transaction::where('id', '!=', -1);
     // }
 
+    // /**
+    //  * Get the last few transactions that took place in this economy.
+    //  *
+    //  * TODO: filter by user
+    //  *
+    //  * @param [$limit=5] The number of last transactions to return at max.
+    //  *
+    //  * @return The last transactions.
+    //  */
+    // public function lastTransactions($limit = 5) {
+    //     return $this
+    //         ->transactions()
+    //         ->orderBy('created_at', 'DESC')
+    //         ->limit($limit);
+    // }
+
     /**
-     * Get the last few transactions that took place in this economy.
+     * Get a relation to all the transaction mutations that took place in this
+     * economy.
      *
-     * TODO: filter by user
-     *
-     * @param [$limit=5] The number of last transactions to return at max.
-     *
-     * @return The last transactions.
+     * @return A relation to all economy mutations.
      */
-    public function lastTransactions($limit = 5) {
-        return $this
-            ->transactions()
-            ->orderBy('created_at', 'DESC')
-            ->limit($limit);
+    public function mutations() {
+        return $this->hasMany(Mutation::class);
     }
 
     /**
