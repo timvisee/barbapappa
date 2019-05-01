@@ -289,4 +289,24 @@ class Bar extends Model {
 
         return $products;
     }
+
+    /**
+     * Do a simple product search in this bar based on the given query.
+     *
+     * If the given query is empty or null, all products are returned.
+     *
+     * @param string|null [$query=null] The query string.
+     *
+     * @return array A list of products matching the query.
+     */
+    public function searchProducts($query = null) {
+        $products = $this
+            ->economy
+            ->products();
+
+        if(!empty($query))
+            $products = $products->where('name', 'LIKE', '%' . escape_like($query) . '%');
+
+        return $products->get();
+    }
 }

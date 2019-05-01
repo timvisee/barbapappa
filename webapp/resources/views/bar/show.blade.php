@@ -45,7 +45,7 @@
         {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
             <div class="item">
                 <div class="ui transparent icon input">
-                    {{ Form::text('search', Request::input('search'), [
+                    {{ Form::text('q', Request::input('q'), [
                         'placeholder' => 'Search products...'
                     ]) }}
                     {{-- TODO: remove icon class? --}}
@@ -54,7 +54,7 @@
             </div>
         {!! Form::close() !!}
 
-        @forelse($bar->quickBuyProducts() as $product)
+        @forelse($products as $product)
             <a href="#" class="item">
                 {{ $product->displayName() }}
 
@@ -63,7 +63,7 @@
                 </span>
             </a>
         @empty
-            <i>No products...</i>
+            <i class="item">No products...</i>
         @endforelse
 
         <a href="#" class="ui bottom attached button">

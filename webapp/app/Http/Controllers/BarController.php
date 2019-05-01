@@ -98,10 +98,21 @@ class BarController extends Controller {
             $member->pivot->save();
         }
 
+        // Build a list of products
+        $products = [];
+
+        // Search, or show top products
+        $search = \Request::get('q');
+        if(!empty($search))
+            $products = $bar->searchProducts($search);
+        else
+            $products = $bar->quickBuyProducts();
+
         // Show the bar page
         return view('bar.show')
             ->with('economy', $bar->economy)
-            ->with('joined', $bar->isJoined($user));
+            ->with('joined', $bar->isJoined($user))
+            ->with('products', $products);
     }
 
     /**
