@@ -54,6 +54,17 @@ class Bar extends Model {
     ];
 
     /**
+     * The limit of quick buy products to list based on the top bought products
+     * by the current user.
+     */
+    const QUICK_BUY_TOP_LIMIT = 5;
+
+    /**
+     * The total limit of quick buy products to list.
+     */
+    const QUICK_BUY_TOTAL_LIMIT = 8;
+
+    /**
      * A scope for only showing bars that have been defined as visible by the
      * owner.
      */
@@ -231,18 +242,18 @@ class Bar extends Model {
             ->pluck('id');
 
         // Get top 5 user bought products in last 100 mutations
-        $products = $this->selectTopProducts($mutation_ids, null, 5);
+        $products = $this->selectTopProducts($mutation_ids, null, Self::QUICK_BUY_TOP_LIMIT);
 
         // Add products last bought by user not in list already to total of 8
         $products = $products->merge(
             $this->selectLastProducts(
                 $mutation_ids,
                 $products->pluck('id'),
-                8 - $products->count()
+                Self::QUICK_BUY_TOTAL_LIMIT - $products->count()
             )
         );
 
-        if($products->count() < 8) {
+        if($products->count() < Self::QUICK_BUY_TOTAL_LIMIT) {
             // Get the last 100 product mutation IDs for any user
             $mutation_ids = $this
                 ->economy
@@ -259,13 +270,13 @@ class Bar extends Model {
                 $this->selectTopProducts(
                     $mutation_ids,
                     $products->pluck('id'),
-                    8 - $products->count()
+                    Self::QUICK_BUY_TOTAL_LIMIT - $products->count()
                 )
             );
         }
 
         // Fill with random products
-        if($products->count() < 8) {
+        if($products->count() < Self::QUICK_BUY_TOTAL_LIMIT) {
             // Add top products by any user in last 100 mutations not already in list to total of 8
             $products = $products->merge(
                 $this->economy
