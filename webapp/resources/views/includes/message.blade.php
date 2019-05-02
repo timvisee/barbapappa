@@ -1,22 +1,34 @@
 {{ ErrorRenderer::alert(null, null, true) }}
 
-@if(session('error'))
+@if(session('error') || session('errorHtml'))
     <div class="ui error message">
         <span class="halflings halflings-exclamation-sign icon"></span>
-        {{ session('error') }}
+        @if(session('errorHtml'))
+            {!! session('errorHtml') !!}
+        @else
+            {{ session('error') }}
+        @endif
     </div>
 @endif
 
-@if(session('success'))
+@if(session('success') || session('successHtml'))
     <div class="ui success message">
         <span class="halflings halflings-ok-sign icon"></span>
-        {{ session('success') }}
+        @if(session('successHtml'))
+            {!! session('successHtml') !!}
+        @else
+            {{ session('success') }}
+        @endif
     </div>
 @endif
 
-@if(session('info'))
+@if(session('info') || session('infoHtml'))
     <div class="ui info message">
         <span class="halflings halflings-info-sign icon"></span>
-        {{ session('info') }}
+        @if(session('infoHtml'))
+            {!! session('infoHtml') !!}
+        @else
+            {{ session('info') }}
+        @endif
     </div>
 @endif
