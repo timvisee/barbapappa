@@ -55,7 +55,10 @@
         {!! Form::close() !!}
 
         @forelse($products as $product)
-            <a href="#" class="item">
+            <a href="{{ route('bar.quickBuy', [
+                        'barId' => $bar->human_id,
+                        'productId' => $product->id,
+                    ]) }}" class="item">
                 {{ $product->displayName() }}
 
                 <span class="sub-label">

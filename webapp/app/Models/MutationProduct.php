@@ -34,6 +34,13 @@ class MutationProduct extends Model {
 
     protected $with = ['product'];
 
+    protected $fillable = [
+        'mutation_id',
+        'product_id',
+        'bar_id',
+        'quantity',
+    ];
+
     /**
      * Get the main mutation this product mutation data belongs to.
      *

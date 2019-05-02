@@ -333,6 +333,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             Route::put('/', 'BarController@update')->name('bar.update');
         });
 
+        // Quick buy products
+        Route::get('/quick-buy/{productId}', 'BarController@quickBuy')->name('bar.quickBuy');
+
         // Bar members, require view perms
         Route::prefix('/members')->middleware(BarMemberController::permsView()->middleware())->group(function() {
             // Index

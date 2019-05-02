@@ -82,12 +82,21 @@ class Economy extends Model {
     }
 
     /**
-     * Get the wallets created by the current logged in user in this economy.
+     * Get a relation to the wallets created by the current logged in user in
+     * this economy.
      *
-     * @return The wallets.
+     * @param User|null [$user=null] The user, null to use the currently
+     *      authenticated user.
+     *
+     * @return A relation to the user wallets.
      */
-    public function userWallets() {
-        return $this->wallets()->where('user_id', barauth()->getUser()->id);
+    public function userWallets($user = null) {
+        // Use the currently authenticated user if null
+        if($user == null)
+            $user = barauth()->getUser();
+
+        // Get the wallets and return
+        return $this->wallets()->where('user_id', $user->id);
     }
 
     // /**

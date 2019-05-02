@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-
 use App\Helpers\ValidationDefaults;
+use App\Models\Mutation;
+use App\Models\MutationProduct;
+use App\Models\MutationWallet;
+use App\Models\Transaction;
 use App\Models\Bar;
 use App\Perms\BarRoles;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Validator;
 
 class BarController extends Controller {
 
@@ -276,6 +280,31 @@ class BarController extends Controller {
     }
 
     /**
+     * Quick buy a product.
+     *
+     * @return Response
+     */
+    // TODO: use POST request!
+    public function quickBuy($barId, $productId) {
+        // Get the bar
+        $bar = \Request::get('bar');
+        $product = $bar->economy->products()->findOrFail($productId);
+
+        // Quick buy the product, format the price
+        $details = $this->quickBuyProduct($bar, $product);
+        $cost = balance($details['price'], $details['currency']->code);
+
+        // Build a success message
+        // TODO: translate this message, use dynamic content
+        $msg = 'Bought ' . $product->displayName() . ' for ' . $cost . '. <a href="#">Undo</a>';
+
+        // Redirect back to the bar
+        return redirect()
+            ->route('bar.show', ['barId' => $bar->human_id])
+            ->with('successHtml', $msg);
+    }
+
+    /**
      * The permission required for managing such as editing and deleting.
      * @return PermsConfig The permission configuration.
      */
@@ -289,5 +318,85 @@ class BarController extends Controller {
      */
     public static function permsCreate() {
         return CommunityController::permsManage();
+    }
+
+    // TODO: describe
+    // TODO: returns [transaction, currency, price]
+    function quickBuyProduct(Bar $bar, $product) {
+        // Get some parameters
+        $user = barauth()->getUser();
+        $wallet = $user->getPrimaryWallet($bar->economy);
+        $currency = $wallet->currency;
+
+        // Find a matching price
+        $price = $product
+            ->prices()
+            ->where('currency_id', $currency->id)
+            ->firstOrFail()
+            ->price;
+
+        // TODO: normalize the price
+        // TODO: assert the user is not null
+        // TODO: assert the wallet currency is valid
+
+        // Start a database transaction for the product transaction
+        // TODO: create a nice generic builder for the actions below
+        $out = null;
+        DB::transaction(function() use($bar, $product, $user, $wallet, $currency, $price, &$out) {
+            // Create the transaction
+            $transaction = Transaction::create([
+                'state' => Transaction::STATE_SUCCESS,
+                'owner_id' => $user->id,
+            ]);
+
+            // Create the base mutations for the wallet and product changes
+            list($mut_wallet, $mut_product) = $transaction
+                ->mutations()
+                ->createMany([
+                    [
+                        'economy_id' => $bar->economy_id,
+                        'type' => Mutation::TYPE_WALLET,
+                        'amount' => $price,
+                        'currency_id' => $currency->id,
+                        'state' => Mutation::STATE_SUCCESS,
+                        'owner_id' => $user->id,
+                    ], [
+                        'economy_id' => $bar->economy_id,
+                        'type' => Mutation::TYPE_PRODUCT,
+                        'amount' => -$price,
+                        'currency_id' => $currency->id,
+                        'state' => Mutation::STATE_SUCCESS,
+                        'owner_id' => $user->id,
+                    ],
+                ]);
+
+            // Create specific data for wallet mutation
+            MutationWallet::create([
+                'mutation_id' => $mut_wallet->id,
+                'wallet_id' => $wallet->id,
+            ]);
+
+            // Create specific data for product mutation
+            MutationProduct::create([
+                'mutation_id' => $mut_product->id,
+                'product_id' => $product->id,
+                'bar_id' => $bar->id,
+                'quantity' => 1,
+            ]);
+
+            // Update the wallet balance
+            // TODO: create a function for this on the wallet model with some checks!
+            $wallet->decrement('balance', $price);
+
+            // Return the transaction
+            $out = $transaction;
+        });
+
+        // Return the transaction details
+        return [
+            'transaction' => $out,
+            'currency' => $currency,
+            'price' => $price,
+        ];
     }
 }

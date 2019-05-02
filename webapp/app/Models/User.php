@@ -277,4 +277,22 @@ class User extends Model {
             }
         }
     }
+
+    /**
+     * Get the primary wallet for this user in the given economy.
+     * If the user has no wallet in the given community, null is returned.
+     *
+     * @param Economy $economy The wallet economy.
+     *
+     * @return Wallet|null The primary wallet, or null if there is none.
+     */
+    public function getPrimaryWallet(Economy $economy) {
+        // TODO: put logic here to determine what the primary wallet of the user is
+
+        // Get the wallet with the biggest balance
+        return $economy->userWallets($this)
+            ->orderBy('balance', 'DESC')
+            ->limit(1)
+            ->first();
+    }
 }

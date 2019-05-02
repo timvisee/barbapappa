@@ -32,6 +32,11 @@ class MutationWallet extends Model {
 
     protected $with = ['wallet'];
 
+    protected $fillable = [
+        'mutation_id',
+        'wallet_id',
+    ];
+
     /**
      * Get the main mutation this wallet mutation data belongs to.
      *

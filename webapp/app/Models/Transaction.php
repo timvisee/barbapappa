@@ -25,6 +25,8 @@ class Transaction extends Model {
 
     protected $with = ['mutations'];
 
+    protected $fillable = ['state', 'owner_id'];
+
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
     const STATE_SUCCESS = 3;

@@ -35,6 +35,15 @@ class Mutation extends Model {
 
     protected $table = "mutations";
 
+    protected $fillable = [
+        'economy_id',
+        'type',
+        'amount',
+        'currency_id',
+        'state',
+        'owner_id',
+    ];
+
     const TYPE_MAGIC = 1;
     const TYPE_WALLET = 2;
     const TYPE_PRODUCT = 3;

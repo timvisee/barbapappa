@@ -14,7 +14,7 @@ class CreateMutationProductTable extends Migration {
     public function up() {
         Schema::create('mutations_product', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('mutation_id')->unsigned();
+            $table->integer('mutation_id')->unsigned()->nullable(false);
             $table->integer('product_id')->unsigned()->nullable(true);
             $table->integer('bar_id')->unsigned()->nullable(true);
             $table->integer('quantity')->unsigned()->nullable(false)->default(1);
