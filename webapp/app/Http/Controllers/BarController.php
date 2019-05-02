@@ -104,9 +104,9 @@ class BarController extends Controller {
         // Search, or show top products
         $search = \Request::get('q');
         if(!empty($search))
-            $products = $bar->searchProducts($search);
+            $products = $bar->economy->searchProducts($search);
         else
-            $products = $bar->quickBuyProducts();
+            $products = $bar->economy->quickBuyProducts();
 
         // Show the bar page
         return view('bar.show')

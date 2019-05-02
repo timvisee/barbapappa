@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Economy model.
@@ -24,6 +24,17 @@ use App\Utils\EmailRecipient;
 class Economy extends Model {
 
     protected $fillable = ['name'];
+
+    /**
+     * The limit of quick buy products to list based on the top bought products
+     * by the current user.
+     */
+    const QUICK_BUY_TOP_LIMIT = 5;
+
+    /**
+     * The total limit of quick buy products to list.
+     */
+    const QUICK_BUY_TOTAL_LIMIT = 8;
 
     /**
      * Get the community this economy is part of.
@@ -189,5 +200,168 @@ class Economy extends Model {
 
         // Format the balance
         return balance($balance, $currency, $format, $prefix);
+    }
+
+    /**
+     * Select the top products that were bought in any of the mutations in the
+     * given list. Some products may be excluded. The limit of the products to
+     * the return should be given.
+     *
+     * @param array|null [$mutation_ids=null] A list of IDs of mutations to
+     *      search in.
+     * @param array|null [$exclude_product_ids=null] A list of product IDs to
+     *      exclude from the search.
+     * @param int $limit The maximum number of products to return.
+     *
+     * @return array An array of product models that were found.
+     */
+    function selectTopProducts($mutation_ids = null, $exclude_product_ids = null, $limit = 0) {
+        // Return nothing if limit is zero
+        if($limit <= 0)
+            return collect();
+
+        // Build a sub query for selecting the last 100 product mutations
+        $lastProducts = MutationProduct::select('product_id', 'quantity');
+        if($mutation_ids != null)
+            $lastProducts = $lastProducts->whereIn('mutation_id', $mutation_ids);
+        if($exclude_product_ids != null)
+            $lastProducts = $lastProducts->whereNotIn('product_id', $exclude_product_ids);
+        $lastProducts = $lastProducts
+            ->orderBy('created_at', 'DESC')
+            ->limit(100);
+
+        // Build a query for counting how often products were bought
+        $productCounts = DB::table(DB::raw("({$lastProducts->toSql()}) AS m"))
+            ->mergeBindings($lastProducts->getQuery())
+            ->select(DB::raw('SUM(quantity)'))
+            ->whereRaw('m.product_id = products.id');
+
+        // Select the top bought products
+        $products = Product::select('*')
+            ->selectSub($productCounts, 'count')
+            ->orderBy('count', 'DESC')
+            // TODO: ->havingRaw('count > 0'), replace collection filter below
+            ->limit($limit);
+
+        // Filter products not being bought ever
+        return $products
+            ->get()
+            ->filter(function($p) {
+                return $p->count > 0;
+            });
+    }
+
+    /**
+     * Select the last products that were bought in any of the mutations in the
+     * given list. Some products may be excluded. The limit of the products to
+     * the return should be given.
+     *
+     * @param array $mutation_ids A list of IDs of mutations to search in.
+     * @param array $exclude_product_ids A list of product IDs to exclude from
+     *      the search.
+     * @param int $limit The maximum number of products to return.
+     *
+     * @return array An array of product models that were found.
+     */
+    function selectLastProducts($mutation_ids, $exclude_product_ids, $limit) {
+        // Return nothing if limit is zero
+        if($limit <= 0)
+            return collect();
+
+        // TODO: use join to limit economy instead
+
+        return MutationProduct::whereIn('mutation_id', $mutation_ids)
+            ->whereNotIn('product_id', $exclude_product_ids)
+            ->orderBy('created_at', 'DESC')
+            ->limit($limit)
+            ->with('product')
+            ->get()
+            ->pluck('product');
+    }
+
+    /**
+     * Build a list of products to show in the quick buy list.
+     * This list is personalized for the logged in user, and prefers products on
+     * top that the user often buys.
+     *
+     * TODO: better describe what really happens
+     *
+     * @return array A list of products.
+     */
+    public function quickBuyProducts() {
+        // Get the last 100 product mutation IDs for the current user
+        $mutation_ids = $this
+            ->mutations()
+            ->select('id')
+            ->where('owner_id', barauth()->getUser()->id)
+            ->where('type', Mutation::TYPE_PRODUCT)
+            ->orderBy('created_at', 'DESC')
+            ->limit(100)
+            ->get()
+            ->pluck('id');
+
+        // Get top 5 user bought products in last 100 mutations
+        $products = $this->selectTopProducts($mutation_ids, null, Self::QUICK_BUY_TOP_LIMIT);
+
+        // Add products last bought by user not in list already to total of 8
+        $products = $products->merge(
+            $this->selectLastProducts(
+                $mutation_ids,
+                $products->pluck('id'),
+                Self::QUICK_BUY_TOTAL_LIMIT - $products->count()
+            )
+        );
+
+        if($products->count() < Self::QUICK_BUY_TOTAL_LIMIT) {
+            // Get the last 100 product mutation IDs for any user
+            $mutation_ids = $this
+                ->mutations()
+                ->select('id')
+                ->where('type', Mutation::TYPE_PRODUCT)
+                ->orderBy('created_at', 'DESC')
+                ->limit(100)
+                ->get()
+                ->pluck('id');
+
+            // Add top products by any user in last 100 mutations not already in list to total of 8
+            $products = $products->merge(
+                $this->selectTopProducts(
+                    $mutation_ids,
+                    $products->pluck('id'),
+                    Self::QUICK_BUY_TOTAL_LIMIT - $products->count()
+                )
+            );
+        }
+
+        // Fill with random products
+        if($products->count() < Self::QUICK_BUY_TOTAL_LIMIT) {
+            // Add top products by any user in last 100 mutations not already in list to total of 8
+            $products = $products->merge(
+                $this->products()
+                    ->whereNotIn('id', $products->pluck('id'))
+                    ->limit(8 - $products->count())
+                    ->get()
+            );
+        }
+
+        return $products;
+    }
+
+    /**
+     * Do a simple product search in this economy based on the given query.
+     *
+     * If the given query is empty or null, all products are returned.
+     *
+     * @param string|null [$query=null] The query string.
+     *
+     * @return array A list of products matching the query.
+     */
+    public function searchProducts($query = null) {
+        $products = $this->products();
+
+        if(!empty($query))
+            $products = $products->where('name', 'LIKE', '%' . escape_like($query) . '%');
+
+        return $products->get();
     }
 }
