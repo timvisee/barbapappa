@@ -61,9 +61,11 @@
                     ]) }}" class="item">
                 {{ $product->displayName() }}
 
-                <span class="sub-label">
-                    bought {{ $product->count }}×
-                </span>
+                {{-- TODO: price causes extra query, why? --}}
+                {{-- TODO: create price render function on product, pick proper currency --}}
+                @if($product->prices->first())
+                    {!!  $product->prices->first()->formatPrice(BALANCE_FORMAT_LABEL) !!}
+                @endif
             </a>
         @empty
             <i class="item">No products...</i>

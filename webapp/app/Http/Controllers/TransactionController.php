@@ -86,7 +86,7 @@ class TransactionController extends Controller {
         // Redirect back to the bar
         return redirect()
             // TODO: redirect to better page!
-            ->route('dashboard')
+            ->route('last')
             ->with('success', __('pages.transactions.undone'));
     }
 
