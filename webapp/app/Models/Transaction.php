@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Transaction model.
@@ -218,10 +219,15 @@ class Transaction extends Model {
      * Undo the transaction.
      * This deletes the model on success.
      *
-     * @throws \Exception Throws if we cannot undo right now.
+     * A database transaction must be active.
+     *
+     * @throws \Exception Throws if we cannot undo right now or if not in a
+     *      database transaction.
      */
     public function undo() {
-        // TODO: make sure we're in a database transaction
+        // Assert we have an active database transaction
+        if(DB::transactionLevel() <= 0)
+            throw new \Exception("Transaction can only be undone when database transaction is active");
 
         // Assert we can undo
         if(!$this->canUndo())

@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Scopes\EnabledScope;
 use App\Utils\EmailRecipient;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Mutation model.
@@ -256,13 +256,18 @@ class Mutation extends Model {
      * Undo the mutation.
      * This deletes the mutation model if $delete is true.
      *
+     * A database transaction must be active.
+     *
      * @param bool [$delete=false] True to delete the mutation model, false to
      *      leave it.
      *
-     * @throws \Exception Throws if we cannot undo right now.
+     * @throws \Exception Throws if we cannot undo right now or if not in a
+     *      transaction.
      */
     public function undo($delete = false) {
-        // TODO: make sure we're in a database transaction
+        // Assert we have an active database transaction
+        if(DB::transactionLevel() <= 0)
+            throw new \Exception("Mutation can only be undone when database transaction is active");
 
         // Assert we can undo
         if(!$this->canUndo())

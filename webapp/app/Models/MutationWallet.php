@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Scopes\EnabledScope;
 use App\Utils\EmailRecipient;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 // TODO: update parent mutation change time, if this model changes
 
@@ -59,10 +59,15 @@ class MutationWallet extends Model {
      * Undo the product mutation.
      * This does not delete the mutation model.
      *
-     * @throws \Exception Throws if we cannot undo right now.
+     * A database transaction must be active.
+     *
+     * @throws \Exception Throws if we cannot undo right now or if not in a
+     *      transaction.
      */
     public function undo() {
-        // TODO: ensure we're in a database transaction
+        // Assert we have an active database transaction
+        if(DB::transactionLevel() <= 0)
+            throw new \Exception("Mutation can only be undone when database transaction is active");
 
         // Determine whether we need to deposit or withdraw from the wallet
         $amount = $this->mutation->amount;
