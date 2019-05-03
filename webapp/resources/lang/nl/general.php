@@ -14,6 +14,7 @@ return [
     'yesContinue' => 'Ja, ga door',
     'yesRemove' => 'Ja, verwijder',
     'yesDelete' => 'Ja, verwijder',
+    'yesUndo' => 'Ja, ongedaan maken',
     'no' => 'Nee',
     'noGoBack' => 'Nee, ga terug',
     'goBack' => 'Ga terug',

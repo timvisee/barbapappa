@@ -38,6 +38,13 @@
         </tbody>
     </table>
 
+    @if($transaction->canUndo())
+        <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id]) }}"
+                class="ui button basic">
+            @lang('misc.undo')
+        </a>
+    @endif
+
     {{-- TODO: some action buttons --}}
     {{-- <p> --}}
     {{--     <div class="ui buttons"> --}}

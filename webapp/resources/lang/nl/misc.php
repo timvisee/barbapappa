@@ -17,6 +17,7 @@ return [
     'rename' => 'Hernoemen',
     'delete' => 'Verwijderen',
     'remove' => 'Verwijderen',
+    'undo' => 'Ongedaan maken',
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',
     'pleaseSpecify' => 'Te specificeren',
@@ -62,6 +63,6 @@ return [
     'initiatedBy' => 'Geïnitieerd door',
     'invalidPrice' => 'Ongeldige prijs',
 
-    'cannotBeUndone' => 'Deze operatie kan niet ongedaan gemaakt worden.',
+    'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',
 ];

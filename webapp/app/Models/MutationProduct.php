@@ -67,4 +67,12 @@ class MutationProduct extends Model {
     public function bar() {
         return $this->belongsTo('App\Models\Bar');
     }
+
+    /**
+     * Undo the product mutation.
+     * This does not delete the mutation model.
+     *
+     * @throws \Exception Throws if we cannot undo right now.
+     */
+    public function undo() {}
 }

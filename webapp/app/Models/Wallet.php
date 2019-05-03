@@ -168,4 +168,40 @@ class Wallet extends Model {
             'walletId' => $this->id,
         ]);
     }
+
+    /**
+     * Withdraw the given amount from the wallet.
+     *
+     * @param number $amount The amount to withdraw from this wallet.
+     *
+     * @throws \Exception Throws an exception if the amount is negative or zero.
+     */
+    public function withdraw($amount) {
+        // Assert the amount is positive
+        if($amount <= 0)
+            throw new \Exception("Failed to withdraw from wallet, amount is <= 0");
+
+        // TODO: assert we're in a transaction
+
+        // Decrease the balance
+        $this->decrement('balance', $amount);
+    }
+
+    /**
+     * Deposit the given amount to the wallet.
+     *
+     * @param number $amount The amount to deposit to this wallet.
+     *
+     * @throws \Exception Throws an exception if the amount is negative or zero.
+     */
+    public function deposit($amount) {
+        // Assert the amount is positive
+        if($amount <= 0)
+            throw new \Exception("Failed to deposit to wallet, amount is <= 0");
+
+        // TODO: assert we're in a transaction
+
+        // Increase the balance
+        $this->increment('balance', $amount);
+    }
 }

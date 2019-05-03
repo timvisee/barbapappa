@@ -54,4 +54,25 @@ class MutationWallet extends Model {
     public function wallet() {
         return $this->belongsTo('App\Models\Wallet');
     }
+
+    /**
+     * Undo the product mutation.
+     * This does not delete the mutation model.
+     *
+     * @throws \Exception Throws if we cannot undo right now.
+     */
+    public function undo() {
+        // TODO: ensure we're in a database transaction
+
+        // Determine whether we need to deposit or withdraw from the wallet
+        $amount = $this->mutation->amount;
+        $deposit = $amount >= 0;
+        $amount = abs($amount);
+
+        // Deposit/withdraw from the wallet balance
+        if($deposit)
+            $this->wallet->deposit($amount);
+        else
+            $this->wallet->withdraw($amount);
+    }
 }

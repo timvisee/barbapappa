@@ -17,6 +17,7 @@ return [
     'rename' => 'Rename',
     'delete' => 'Abandon',
     'remove' => 'Abandon',
+    'undo' => 'Undo',
     'saveChanges' => 'Stow changes',
     'unspecified' => 'Unspecified',
     'pleaseSpecify' => 'Please specify',
@@ -62,6 +63,6 @@ return [
     'initiatedBy' => 'Initiated by',
     'invalidPrice' => 'Invalid price',
 
-    'cannotBeUndone' => 'Th\' operation nay be undone.',
+    'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',
 ];

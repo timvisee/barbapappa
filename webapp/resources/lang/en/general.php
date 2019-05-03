@@ -14,6 +14,7 @@ return [
     'yesContinue' => 'Yes, continue',
     'yesRemove' => 'Yes, remove',
     'yesDelete' => 'Yes, delete',
+    'yesUndo' => 'Yes, undo',
     'no' => 'No',
     'noGoBack' => 'No, go back',
     'goBack' => 'Go back',

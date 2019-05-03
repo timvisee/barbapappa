@@ -33,6 +33,12 @@ class Transaction extends Model {
     const STATE_FAILED = 4;
 
     /**
+     * The maximum allowed lifetime in seconds of a transaction that still
+     * allows undoing.
+     */
+    const UNDO_MAX_LIFETIME = 15 * 60;
+
+    /**
      * Get the mutations that are part of this transaction.
      * Ordered by their amount, positive (incomming) first, negative (outgoing) last.
      *
@@ -206,5 +212,53 @@ class Transaction extends Model {
 
         // Translate and return
         return __('pages.mutations.state.' . $key);
+    }
+
+    /**
+     * Undo the transaction.
+     * This deletes the model on success.
+     *
+     * @throws \Exception Throws if we cannot undo right now.
+     */
+    public function undo() {
+        // TODO: make sure we're in a database transaction
+
+        // Assert we can undo
+        if(!$this->canUndo())
+            throw new \Exception("Attempting to undo transaction while this is not allowed");
+
+        // Undo all mutations without deleting them
+        $this->mutations->each(function($m) {
+            $m->undo(false);
+        });
+
+        // Delete this transaction
+        $this->delete();
+    }
+
+    /**
+     * This method checks whether a user can undo this transaction.
+     * This depends on the transaction lifetime, and contained mutations types.
+     *
+     * This check is expensive.
+     *
+     * @return bool True if it can be undone, false if not.
+     */
+    public function canUndo() {
+        // TODO: has permission?
+
+        // All mutations must be undoable
+        $canUndo = $this->mutations->every(function($m) {
+            return $m->canUndo();
+        });
+        if(!$canUndo)
+            return false;
+
+        // Assert the max lifetime for undoing, return result
+        return !$this
+            ->created_at
+            ->copy()
+            ->addSeconds(Self::UNDO_MAX_LIFETIME)
+            ->isPast();
     }
 }

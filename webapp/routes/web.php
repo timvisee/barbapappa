@@ -377,6 +377,10 @@ Route::prefix('/transactions')->group(function() {
         //     Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
         // });
 
+        // Undo
+        Route::get('/undo', 'TransactionController@undo')->name('transaction.undo');
+        Route::delete('/undo', 'TransactionController@doUndo')->name('transaction.doUndo');
+
         // Transaction mutations
         // TODO: add a permission check
         // Route::prefix('/mutations')->middleware(MutationController::permsView()->middleware())->group(function() {

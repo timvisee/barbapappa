@@ -226,6 +226,10 @@ return [
         'fromTransaction' => 'van transactie',
         'referencedTo#' => '{0} Gerefereerd aan geen transacties|{1} Gerefereerd aan transactie|[2,*] Gerefereerd aan :count transacties',
         'referencedBy#' => '{0} Gerefereerd door geen transacties|{1} Gerefereerd door transactie|[2,*] Gerefereerd door :count transacties',
+        'cannotUndo' => 'Deze transactie kan niet ongedaan gemaakt worden.',
+        'undone' => 'De transactie is ongedaan gemaakt.',
+        'undoTransaction' => 'Transactie ongedaan maken',
+        'undoQuestion' => 'Je staat op het punt deze transactie ongedaan te maken. Weet je zeker dat je door wilt gaan?',
         'state' => [
             'pending' => 'In afwachting',
             'processing' => 'Bezig met verwerken',
@@ -313,6 +317,7 @@ return [
         'updated' => 'De bar is aangepast.',
         'mustCreateEconomyFirst' => 'Voor een nieuwe bar moest je eerst een economie aanmaken.',
         'backToBar' => 'Terug naar bar',
+        'boughtProductForPrice' => ':product gekocht voor :price',
     ],
 
     /**

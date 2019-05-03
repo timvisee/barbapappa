@@ -251,4 +251,48 @@ class Mutation extends Model {
         // Translate and return
         return __('pages.mutations.state.' . $key);
     }
+
+    /**
+     * Undo the mutation.
+     * This deletes the mutation model if $delete is true.
+     *
+     * @param bool [$delete=false] True to delete the mutation model, false to
+     *      leave it.
+     *
+     * @throws \Exception Throws if we cannot undo right now.
+     */
+    public function undo($delete = false) {
+        // TODO: make sure we're in a database transaction
+
+        // Assert we can undo
+        if(!$this->canUndo())
+            throw new \Exception("Attempting to undo transaction mutation while this is not allowed");
+
+        // Undo on the mutation data
+        if($this->hasMutationData())
+            $this->mutationData->undo();
+
+        // Delete the model
+        if($delete)
+            $this->delete();
+    }
+
+    /**
+     * This method checks whether this mutation can be undone.
+     * This depends on the mutation type.
+     *
+     * Time is not considered here.
+     *
+     * @return bool True if it can be undone, false if not.
+     */
+    public function canUndo() {
+        switch($this->type) {
+        case Self::TYPE_MAGIC:
+        case Self::TYPE_WALLET:
+        case Self::TYPE_PRODUCT:
+            return true;
+        case Self::TYPE_PAYMENT:
+            return false;
+        }
+    }
 }

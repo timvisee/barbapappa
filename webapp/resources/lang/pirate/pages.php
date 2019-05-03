@@ -226,6 +226,10 @@ return [
         'fromTransaction' => 'from transaction',
         'referencedTo#' => '{0} Referenced to no transactions|{1} Referenced to transaction|[2,*] Referenced to :count transactions',
         'referencedBy#' => '{0} Referenced by no transactions|{1} Referenced by transaction|[2,*] Referenced by :count transactions',
+        'cannotUndo' => 'This transaction cannot be undone.',
+        'undone' => 'The transaction has been undone.',
+        'undoTransaction' => 'Undo transaction',
+        'undoQuestion' => 'Yer \'bout to undo this transaction. Ye be sure ye want to continue?',
         'state' => [
             'pending' => 'Pendin\'',
             'processing' => 'Processin\'',
@@ -313,6 +317,7 @@ return [
         'updated' => 'Th\' bar be updated.',
         'mustCreateEconomyFirst' => 'To create a bar, ye must create booty first.',
         'backToBar' => 'Back to bar',
+        'boughtProductForPrice' => 'Bought :product for :price',
     ],
 
     /**

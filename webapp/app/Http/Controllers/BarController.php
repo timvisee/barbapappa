@@ -292,11 +292,17 @@ class BarController extends Controller {
 
         // Quick buy the product, format the price
         $details = $this->quickBuyProduct($bar, $product);
+        $transaction = $details['transaction'];
         $cost = balance($details['price'], $details['currency']->code);
 
         // Build a success message
-        // TODO: translate this message, use dynamic content
-        $msg = 'Bought ' . $product->displayName() . ' for ' . $cost . '. <a href="#">Undo</a>';
+        $msg = __('pages.bar.boughtProductForPrice', [
+            'product' => $product->displayName(),
+            'price' => $cost,
+        ]) . '.';
+        $msg .= ' <a href="' . route('transaction.undo', [
+            'transactionId' => $transaction->id
+        ]) . '">' . __('misc.undo') . '</a>';
 
         // Redirect back to the bar
         return redirect()
@@ -385,8 +391,7 @@ class BarController extends Controller {
             ]);
 
             // Update the wallet balance
-            // TODO: create a function for this on the wallet model with some checks!
-            $wallet->decrement('balance', $price);
+            $wallet->withdraw($price);
 
             // Return the transaction
             $out = $transaction;
