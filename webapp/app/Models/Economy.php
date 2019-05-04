@@ -90,6 +90,7 @@ class Economy extends Model {
      *
      * @return A relation to the user wallets.
      */
+    // TODO: sort by relevance!
     public function userWallets($user = null) {
         // Use the currently authenticated user if null
         if($user == null)

@@ -107,4 +107,64 @@ class Product extends Model {
         // Translate and return
         return __('pages.products.type.' . $key);
     }
+
+    // TODO: define ordered list of currencies for the user
+
+    /**
+     * Get a price to show to the user for a product.
+     * This method takes an ordered list of possible currencies into account.
+     * The first currency in the list is preferred.
+     * If the product does not have any of the preferred currencies, null is
+     * returned.
+     *
+     * TODO: should we use currency IDs instead
+     * @param [EconomyCurrency] $currencies An ordered list of preferred currencies.
+     *
+     * @return ProductPrice|null The product price or null if none is found.
+     */
+    public function getPrice($currencies) {
+        // Get the available currencies
+        $prices = $this->prices;
+
+        // Try to find a matching price currency
+        foreach($currencies as $currency) {
+            // Find a price with a matching currency
+            $price = $prices
+                ->whereStrict('currency_id', $currency->id)
+                ->first();
+
+            // Return the price if one is found
+            if($price != null)
+                return $price;
+        }
+
+        // Nothing was found
+        return null;
+    }
+
+    /**
+     * Format the price for this product as a human readable text using the
+     * proper currency format.
+     *
+     * The price used is based on the `getPrice()` method. Therefore an ordered
+     * list of preferred currencies must be given.
+     *
+     * TODO: should we use currency IDs instead
+     * @param [EconomyCurrency] $currencies An ordered list of preferred currencies.
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     * @param boolean [$neutral=true] True to neutrally format.
+     *
+     * @return string|null Formatted price or null if no matching price is
+     *      found.
+     */
+    public function formatPrice($currencies, $format = BALANCE_FORMAT_PLAIN, $neutral = true) {
+        // Obtain the price
+        $price = $this->getPrice($currencies);
+        if($price == null)
+            return null;
+
+        // Render the price and return
+        // TODO: optimize this currency->currency chain
+        return balance($price->price, $price->currency->currency->code, $format, null, $neutral);
+    }
 }

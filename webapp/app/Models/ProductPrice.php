@@ -54,7 +54,7 @@ class ProductPrice extends Model {
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
      * @param boolean [$neutral=true] True to neutrally format.
      *
-     * @return string Formatted cost.
+     * @return string Formatted price.
      */
     public function formatPrice($format = BALANCE_FORMAT_PLAIN, $neutral = true) {
         // TODO: optimize this currency->currency chain

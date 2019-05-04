@@ -102,10 +102,14 @@ class BarController extends Controller {
             $member->pivot->save();
         }
 
+        // Build a list of preferred currencies for the user
+        $currencies = $this->userCurrencies($bar, $user);
+
         // Build a list of products
         $products = [];
 
         // Search, or show top products
+        // TODO: do not show products not having a price in one of $currencies
         $search = \Request::get('q');
         if(!empty($search))
             $products = $bar->economy->searchProducts($search);
@@ -116,7 +120,8 @@ class BarController extends Controller {
         return view('bar.show')
             ->with('economy', $bar->economy)
             ->with('joined', $bar->isJoined($user))
-            ->with('products', $products);
+            ->with('products', $products)
+            ->with('currencies', $currencies);
     }
 
     /**
@@ -403,5 +408,56 @@ class BarController extends Controller {
             'currency' => $currency,
             'price' => $price,
         ];
+    }
+
+    /**
+     * Build a list of preferred currencies for the given user.
+     * The first currency in the returned list is the most preferred currency.
+     *
+     * Products may be bought using any of these currencies.
+     * The list may be used to determine what product price to show if multiple
+     * prices are available in different currencies.
+     *
+     * @param Bar $bar The bar the user is in.
+     * @param User $user|null The user or null for the current user.
+     *
+     * @return [EconomyCurrency] A list of preferred currencies.
+     */
+    // TODO: move this function to some other class, user class?
+    function userCurrencies($bar, $user) {
+        // TODO: optimize queries here!
+
+        // Select the user
+        if($user === null)
+            $user = barauth()->getUser();
+
+        // Get the user wallets, sort by preferred
+        $wallets = $bar->economy->userWallets($user)->get();
+        $currencies = $wallets
+            ->map(function($w) use($bar) {
+                return $bar
+                    ->economy
+                    ->currencies()
+                    ->where('currency_id', $w->currency_id)
+                    ->first();
+            })
+            ->filter(function($c) {
+                return $c != null && $c->enabled;
+            })
+            ->unique('id');
+
+        // Add other available currencies to list user has no wallet for yet
+        // TODO: somehow sort this by relevance
+        $barCurrencies = $bar
+            ->economy
+            ->currencies()
+            ->where('enabled', true)
+            ->where('allow_wallet', true)
+            ->whereNotIn('id', $currencies->pluck('id'))
+            ->get();
+        $currencies = $currencies->merge($barCurrencies);
+
+        // Return the list of currencies
+        return $currencies;
     }
 }
