@@ -5,6 +5,7 @@
 @php
     use \App\Http\Controllers\CommunityMemberController;
     use \App\Perms\CommunityRoles;
+    use \Carbon\Carbon;
 @endphp
 
 @section('content')
@@ -23,7 +24,7 @@
             @if($member->pivot->visited_at != null)
                 <tr>
                     <td>@lang('pages.communityMembers.lastVisit')</td>
-                    <td>{{ $member->pivot->visited_at }}</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => new Carbon($member->pivot->visited_at)])</td>
                 </tr>
             @endif
             <tr>
