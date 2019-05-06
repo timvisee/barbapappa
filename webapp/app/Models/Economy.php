@@ -87,17 +87,30 @@ class Economy extends Model {
      *
      * @param User|null [$user=null] The user, null to use the currently
      *      authenticated user.
+     * @param bool [$sort=true] True to sort by relevance, yielding the most
+     *      relevant wallet first.
      *
      * @return A relation to the user wallets.
      */
-    // TODO: sort by relevance!
-    public function userWallets($user = null) {
+    public function userWallets($user = null, $sort = true) {
         // Use the currently authenticated user if null
         if($user == null)
             $user = barauth()->getUser();
 
+        // TODO: put primary wallet first
+        // TODO: properly sort here!
+
         // Get the wallets and return
-        return $this->wallets()->where('user_id', $user->id);
+        $query = $this
+            ->wallets()
+            ->where('user_id', $user->id);
+
+        // Sort by balance for now
+        if($sort)
+            $query = $query
+                ->orderBy('balance', 'DESC');
+
+        return $query;
     }
 
     // /**
