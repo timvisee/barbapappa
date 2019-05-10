@@ -289,11 +289,10 @@ class BarController extends Controller {
      *
      * @return Response
      */
-    // TODO: use POST request!
-    public function quickBuy($barId, $productId) {
+    public function quickBuy($barId) {
         // Get the bar
         $bar = \Request::get('bar');
-        $product = $bar->economy->products()->findOrFail($productId);
+        $product = $bar->economy->products()->findOrFail(\Request::input('product_id'));
 
         // Quick buy the product, format the price
         $details = $this->quickBuyProduct($bar, $product);

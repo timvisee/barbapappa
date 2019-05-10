@@ -55,13 +55,16 @@
         {!! Form::close() !!}
 
         @forelse($products as $product)
-            <a href="{{ route('bar.quickBuy', [
-                        'barId' => $bar->human_id,
-                        'productId' => $product->id,
-                    ]) }}" class="item">
-                {{ $product->displayName() }}
-                {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL) !!}
-            </a>
+            {!! Form::open(['action' => [
+                'BarController@quickBuy',
+                $bar->human_id,
+            ], 'method' => 'POST']) !!}
+                {!! Form::hidden('product_id', $product->id) !!}
+                <a href="#" onclick="event.preventDefault();this.parentNode.submit()" class="item">
+                    {{ $product->displayName() }}
+                    {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL) !!}
+                </a>
+            {!! Form::close() !!}
         @empty
             <i class="item">No products...</i>
         @endforelse
