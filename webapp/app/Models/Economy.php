@@ -412,18 +412,24 @@ class Economy extends Model {
      *
      * If the given query is empty or null, all products are returned.
      *
-     * @param string|null [$query=null] The query string.
+     * @param string|null [$search=null] The query string.
+     * @param [int]|null $currency_ids A list of EconomyCurrency IDs returned
+     *      products must have a price configured in in at least one of them.
      *
      * @return array A list of products matching the query.
      */
-    public function searchProducts($query = null) {
-        // TODO: only show products having allowed currencies
+    public function searchProducts($search = null, $currency_ids) {
+        // Get a relation to the products we should search
+        $products = $this
+            ->products()
+            ->withCurrency($currency_ids);
 
-        $products = $this->products();
+        // Define the query
+        // TODO: also search in transactions!
+        if(!empty($search))
+            $products = $products->where('name', 'LIKE', '%' . escape_like($search) . '%');
 
-        if(!empty($query))
-            $products = $products->where('name', 'LIKE', '%' . escape_like($query) . '%');
-
+        // Fetch the products and return
         return $products->get();
     }
 }

@@ -104,6 +104,7 @@ class BarController extends Controller {
 
         // Build a list of preferred currencies for the user
         $currencies = $this->userCurrencies($bar, $user);
+        $currency_ids = $currencies->pluck('id');
 
         // Build a list of products
         $products = [];
@@ -111,9 +112,9 @@ class BarController extends Controller {
         // Search, or show top products
         $search = \Request::get('q');
         if(!empty($search))
-            $products = $bar->economy->searchProducts($search);
+            $products = $bar->economy->searchProducts($search, $currency_ids);
         else
-            $products = $bar->economy->quickBuyProducts($currencies->pluck('id'));
+            $products = $bar->economy->quickBuyProducts($currency_ids);
 
         // Show the bar page
         return view('bar.show')
