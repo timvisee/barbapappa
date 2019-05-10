@@ -41,6 +41,33 @@ class Product extends Model {
     const TYPE_CUSTOM = 2;
 
     /**
+     * Scope a query to only include products having a price in any of the given
+     * currencies.
+     *
+     * The currencies must be a single, or a list of EconomyCurrency IDs.
+     * If null is given, this scope will not filter.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param [int]|null $currency_ids A list of `EconomyCurrency` IDs.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithCurrency($query, $currency_ids) {
+        // Do not filter if null
+        if($currency_ids === null)
+            return $query;
+
+        // Filter, make sure the product has any of the currency prices set
+        return $query
+            ->whereExists(function($query) use($currency_ids) {
+                $query->selectRaw('1')
+                    ->from('product_prices')
+                    ->whereRaw('products.id = product_prices.product_id')
+                    ->whereIn('currency_id', $currency_ids);
+            });
+    }
+
+    /**
      * Get the relation to the economy this product is part of.
      *
      * @return Relation to the economy this product is part of.

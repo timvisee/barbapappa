@@ -109,12 +109,11 @@ class BarController extends Controller {
         $products = [];
 
         // Search, or show top products
-        // TODO: do not show products not having a price in one of $currencies
         $search = \Request::get('q');
         if(!empty($search))
             $products = $bar->economy->searchProducts($search);
         else
-            $products = $bar->economy->quickBuyProducts();
+            $products = $bar->economy->quickBuyProducts($currencies->pluck('id'));
 
         // Show the bar page
         return view('bar.show')
@@ -447,7 +446,7 @@ class BarController extends Controller {
             ->unique('id');
 
         // Add other available currencies to list user has no wallet for yet
-        // TODO: somehow sort this by relevance
+        // TODO: somehow sort this by relevance, or let bar owners sort
         $barCurrencies = $bar
             ->economy
             ->currencies()
