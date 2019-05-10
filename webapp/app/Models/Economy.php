@@ -265,7 +265,7 @@ class Economy extends Model {
         // Select the top bought products
         $products = Product::select('*')
             ->selectSub($productCounts, 'count')
-            ->withCurrency($currency_ids)
+            ->havingCurrency($currency_ids)
             ->orderBy('count', 'DESC')
             // TODO: ->havingRaw('count > 0'), replace collection filter below
             ->limit($limit);
@@ -314,7 +314,7 @@ class Economy extends Model {
 
         // Find all corresponding products that have a price in allowed currency
         $products = Product::whereIn('id', $product_ids)
-            ->withCurrency($currency_ids)
+            ->havingCurrency($currency_ids)
             ->get();
 
         // Rebuild the list of products in order, based on ID list order
@@ -397,7 +397,7 @@ class Economy extends Model {
             // Add top products by any user in last 100 mutations not already in list to total of 8
             $products = $products->merge(
                 $this->products()
-                    ->withCurrency($currency_ids)
+                    ->havingCurrency($currency_ids)
                     ->whereNotIn('id', $products->pluck('id'))
                     ->limit(8 - $products->count())
                     ->get()
@@ -422,7 +422,7 @@ class Economy extends Model {
         // Get a relation to the products we should search
         $products = $this
             ->products()
-            ->withCurrency($currency_ids);
+            ->havingCurrency($currency_ids);
 
         // Define the query
         // TODO: also search in transactions!

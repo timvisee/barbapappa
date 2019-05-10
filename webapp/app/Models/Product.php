@@ -52,7 +52,7 @@ class Product extends Model {
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithCurrency($query, $currency_ids) {
+    public function scopeHavingCurrency($query, $currency_ids) {
         // Do not filter if null
         if($currency_ids === null)
             return $query;
