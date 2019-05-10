@@ -425,9 +425,15 @@ class Economy extends Model {
             ->havingCurrency($currency_ids);
 
         // Define the query
-        // TODO: also search in transactions!
         if(!empty($search))
-            $products = $products->where('name', 'LIKE', '%' . escape_like($search) . '%');
+            $products = $products
+                ->where('name', 'LIKE', '%' . escape_like($search) . '%')
+                ->orWhereExists(function($query) use($search) {
+                    $query->selectRaw('1')
+                        ->from('product_names')
+                        ->whereRaw('products.id = product_names.product_id')
+                        ->where('name', 'LIKE', '%' . escape_like($search) . '%');
+                });
 
         // Fetch the products and return
         return $products->get();
