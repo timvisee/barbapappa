@@ -84,7 +84,7 @@ class ValidationDefaults {
     /**
      * A price value, with two optional decimal digits, may be zero.
      */
-    const PRICE = 'regex:/^(\d{1,8}([,.]\d{1,2})?)?$/';
+    const PRICE = 'regex:/^(\d{0,8}([,.]\d{1,2})?)?$/';
 
     /**
      * Build the community slug validation configuration.
