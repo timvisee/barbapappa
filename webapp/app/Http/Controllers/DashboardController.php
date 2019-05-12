@@ -17,7 +17,7 @@ class DashboardController extends Controller {
         // Get a list of communities and bars
         $communities = $user
             ->communities(['visited_at'], false)
-            ->lates('pivot_visited_at')
+            ->latest('pivot_visited_at')
             ->get();
         $bars = $user
             ->bars(['visited_at'], false)
