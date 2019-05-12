@@ -4,7 +4,6 @@ sudo: false
 
 # Test common PHP versions
 php:
-  - 7.1
   - 7.2
 
 # Set up the environment, install dependencies and seed the database
