@@ -17,11 +17,11 @@ class DashboardController extends Controller {
         // Get a list of communities and bars
         $communities = $user
             ->communities(['visited_at'], false)
-            ->orderBy('pivot_visited_at', 'desc')
+            ->lates('pivot_visited_at')
             ->get();
         $bars = $user
             ->bars(['visited_at'], false)
-            ->orderBy('pivot_visited_at', 'desc')
+            ->latest('pivot_visited_at')
             ->get();
 
         // Show the dashboard

@@ -122,7 +122,7 @@ class Wallet extends Model {
                 $this->mutations(),
                 (new \App\Models\Mutation)->transaction()
             )
-            ->orderBy('created_at', 'DESC');
+            ->latest();
     }
 
     /**
@@ -138,7 +138,7 @@ class Wallet extends Model {
     public function lastTransactions($limit = 5) {
         return $this
             ->transactions()
-            // ->orderBy('created_at', 'DESC')
+            // ->latest()
             ->limit($limit);
     }
 

@@ -32,7 +32,7 @@ class PostsController extends Controller
 //        $posts = Post::all();
 //        $posts = Post::orderBy('title', 'asc')->get();
 
-        $posts = Post::orderBy('created_at', 'asc')->paginate(1);
+        $posts = Post::oldest()->paginate(1);
 
         return view('model.post.index')->with('posts', $posts);
     }

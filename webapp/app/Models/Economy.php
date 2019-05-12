@@ -138,7 +138,7 @@ class Economy extends Model {
     // public function lastTransactions($limit = 5) {
     //     return $this
     //         ->transactions()
-    //         ->orderBy('created_at', 'DESC')
+    //         ->latest()
     //         ->limit($limit);
     // }
 
@@ -253,7 +253,7 @@ class Economy extends Model {
         if($exclude_product_ids != null)
             $lastProducts = $lastProducts->whereNotIn('product_id', $exclude_product_ids);
         $lastProducts = $lastProducts
-            ->orderBy('created_at', 'DESC')
+            ->latest()
             ->limit(100);
 
         // Build a query for counting how often products were bought
@@ -307,7 +307,7 @@ class Economy extends Model {
             ->distinct()
             ->whereIn('mutation_id', $mutation_ids)
             ->whereNotIn('product_id', $exclude_product_ids)
-            ->orderBy('created_at', 'DESC')
+            ->latest()
             ->limit($limit)
             ->get()
             ->pluck('product_id');
@@ -346,7 +346,7 @@ class Economy extends Model {
             ->select('id')
             ->where('owner_id', barauth()->getUser()->id)
             ->where('type', Mutation::TYPE_PRODUCT)
-            ->orderBy('created_at', 'DESC')
+            ->latest()
             ->limit(100)
             ->get()
             ->pluck('id');
@@ -376,7 +376,7 @@ class Economy extends Model {
                 ->mutations()
                 ->select('id')
                 ->where('type', Mutation::TYPE_PRODUCT)
-                ->orderBy('created_at', 'DESC')
+                ->latest()
                 ->limit(100)
                 ->get()
                 ->pluck('id');

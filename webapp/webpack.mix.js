@@ -20,10 +20,10 @@ mix.copyDirectory(
 
 // Compile application assets
 mix.js(
-    'resources/assets/js/app.js',
+    'resources/js/app.js',
     'public/js',
 ).sass(
-    'resources/assets/sass/app.scss',
+    'resources/sass/app.scss',
     'public/css',
 );
 

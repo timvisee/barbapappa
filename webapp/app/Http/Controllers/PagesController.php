@@ -87,7 +87,7 @@ class PagesController extends Controller {
             \DB::table('bar_user')
                 ->where('user_id', barauth()->getSessionUser()->id)
                 ->whereNotNull('visited_at')
-                ->orderBy('visited_at', 'desc')
+                ->latest('visited_at')
                 ->pluck('bar_id')
                 ->first()
         );
