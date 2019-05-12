@@ -359,34 +359,38 @@ class BarController extends Controller {
                 'owner_id' => $user->id,
             ]);
 
-            // Create the base mutations for the wallet and product changes
-            list($mut_wallet, $mut_product) = $transaction
-                ->mutations()
-                ->createMany([
-                    [
+            // Determine whether the product was free
+            $free = $price == 0;
+
+            // Create the wallet mutation unless product is free
+            if(!$free) {
+                $mut_wallet = $transaction
+                    ->mutations()
+                    ->create([
                         'economy_id' => $bar->economy_id,
                         'type' => Mutation::TYPE_WALLET,
                         'amount' => $price,
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
                         'owner_id' => $user->id,
-                    ], [
-                        'economy_id' => $bar->economy_id,
-                        'type' => Mutation::TYPE_PRODUCT,
-                        'amount' => -$price,
-                        'currency_id' => $currency->id,
-                        'state' => Mutation::STATE_SUCCESS,
-                        'owner_id' => $user->id,
-                    ],
+                    ]);
+                MutationWallet::create([
+                    'mutation_id' => $mut_wallet->id,
+                    'wallet_id' => $wallet->id,
                 ]);
+            }
 
-            // Create specific data for wallet mutation
-            MutationWallet::create([
-                'mutation_id' => $mut_wallet->id,
-                'wallet_id' => $wallet->id,
-            ]);
-
-            // Create specific data for product mutation
+            // Create the product mutation
+            $mut_product = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $bar->economy_id,
+                    'type' => Mutation::TYPE_PRODUCT,
+                    'amount' => -$price,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_SUCCESS,
+                    'owner_id' => $user->id,
+                ]);
             MutationProduct::create([
                 'mutation_id' => $mut_product->id,
                 'product_id' => $product->id,
@@ -395,7 +399,8 @@ class BarController extends Controller {
             ]);
 
             // Update the wallet balance
-            $wallet->withdraw($price);
+            if(!$free)
+                $wallet->withdraw($price);
 
             // Return the transaction
             $out = $transaction;

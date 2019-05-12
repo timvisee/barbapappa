@@ -32,7 +32,7 @@ class TransactionController extends Controller {
         // Get the related mutations, partition into from/to
         $mutations = $transaction->mutations()->get();
         list($fromMutations, $toMutations) = $mutations->partition(function($m) {
-            return $m->amount >= 0;
+            return $m->amount > 0;
         });
 
         return view('transaction.show')
