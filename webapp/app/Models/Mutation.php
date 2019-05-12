@@ -161,7 +161,7 @@ class Mutation extends Model {
                 // Get the wallet, it's name and build a link to it
                 $wallet = $this->mutationData->wallet;
                 $name = $wallet->name;
-                $link = '<a href="' . $wallet->getUrlShow() . '">' . htmlspecialchars($name) . "</a>";
+                $link = '<a href="' . $wallet->getUrlShow() . '">' . e($name) . "</a>";
 
                 // Return the description string including the wallet name/link
                 return __('pages.mutations.types.wallet' . $dir . 'Detail', ['wallet' => $link]);
