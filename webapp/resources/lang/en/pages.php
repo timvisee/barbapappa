@@ -201,7 +201,7 @@ return [
         '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
         'economySelectDescription' => 'Wallets in this community are grouped by economy.<br>Select the economy to manage your wallets in it.',
         'noWallets' => 'You don\'t have any wallets yet...',
-        'namePlaceholder' => 'My wallet',
+        'namePlaceholder' => 'My personal wallet',
         'createWallet' => 'Create wallet',
         'walletCreated' => 'The wallet has been created.',
         'walletUpdated' => 'Wallet changes saved.',

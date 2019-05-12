@@ -201,7 +201,7 @@ return [
         '#wallets' => '{0} Geen portemonnees|{1} 1 portemonnee|[2,*] :count portemonnees',
         'economySelectDescription' => 'Portemonnees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economie om je portemonnees te beheren.',
         'noWallets' => 'Je hebt nog geen portemonnees...',
-        'namePlaceholder' => 'Mijn portemonnee',
+        'namePlaceholder' => 'Mijn persoonlijke portefeuille',
         'createWallet' => 'Portemonnee aanmaken',
         'walletCreated' => 'De portemonnee is aangemaakt.',
         'walletUpdated' => 'Portemonnee aanpassingen opgeslagen.',

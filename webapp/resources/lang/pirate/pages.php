@@ -201,7 +201,7 @@ return [
         '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
         'economySelectDescription' => 'Wallets in dis community be grouped by booty.<br>Select \'the booty to manage yer wallets.',
         'noWallets' => 'Yer nay be any wallets yet...',
-        'namePlaceholder' => 'My wallet',
+        'namePlaceholder' => 'My personal wallet',
         'createWallet' => 'Create wallet',
         'walletCreated' => 'Th\' wallet be created.',
         'walletUpdated' => 'Wallet changes saved.',

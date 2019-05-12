@@ -44,7 +44,7 @@ class Wallet extends Model {
      * @return The user.
      */
     public function user() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -53,7 +53,7 @@ class Wallet extends Model {
      * @return The economy.
      */
     public function economy() {
-        return $this->belongsTo('App\Models\Economy');
+        return $this->belongsTo(Economy::class);
     }
 
     /**
@@ -65,7 +65,23 @@ class Wallet extends Model {
      * @return The currency.
      */
     public function currency() {
-        return $this->belongsTo('App\Models\Currency');
+        return $this->belongsTo(Currency::class);
+    }
+
+    /**
+     * Get a relation to the economy currency used in this wallet.
+     *
+     * @return A relation to the economy currency.
+     */
+    public function economyCurrency() {
+        return $this->hasOneThrough(
+            EconomyCurrency::class,
+            Currency::class,
+            'id',
+            'currency_id',
+            'currency_id',
+            'id'
+        );
     }
 
     // TODO: is this replaced by the `mutations` function?

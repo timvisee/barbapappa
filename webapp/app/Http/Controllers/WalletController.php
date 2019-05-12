@@ -121,6 +121,7 @@ class WalletController extends Controller {
         $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
 
         // Create the wallet
+        // TODO: create wallet through model!
         $wallet = $user->wallets()->create([
             'economy_id' => $economyId,
             'name' => $request->input('name'),

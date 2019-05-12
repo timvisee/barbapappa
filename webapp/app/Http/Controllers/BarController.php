@@ -337,19 +337,28 @@ class BarController extends Controller {
     function quickBuyProduct(Bar $bar, $product) {
         // Get some parameters
         $user = barauth()->getUser();
-        $wallet = $user->getPrimaryWallet($bar->economy);
-        $currency = $wallet->currency;
 
-        // Find a matching price
+        // Build a list of preferred currencies for the user, filter currencies
+        // with no price
+        $currencies = $this->userCurrencies($bar, $user)
+            ->filter(function($currency) use($product) {
+                return $product->prices->contains('currency_id', $currency->id);
+            });
+        if($currencies->isEmpty())
+            throw new \Exception("Could not quick buy product, no supported currencies");
+        $currency_ids = $currencies->pluck('id');
+
+        // Get or create a wallet for the user, get the price
+        $wallet = $user->getOrCreateWallet($bar->economy, $currencies);
+        $currency = $wallet->currency;
         $price = $product
-            ->prices()
-            ->where('currency_id', $currency->id)
-            ->firstOrFail()
+            ->prices
+            ->whereStrict('currency_id', $wallet->economyCurrency->id)
+            ->first()
             ->price;
 
-        // TODO: normalize the price
-        // TODO: assert the user is not null
-        // TODO: assert the wallet currency is valid
+        // TODO: normalize the price?
+        // TODO: notify user if wallet is created?
 
         // Start a database transaction for the product transaction
         // TODO: create a nice generic builder for the actions below

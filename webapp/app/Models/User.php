@@ -287,12 +287,70 @@ class User extends Model {
      * @return Wallet|null The primary wallet, or null if there is none.
      */
     public function getPrimaryWallet(Economy $economy) {
-        // TODO: put logic here to determine what the primary wallet of the user is
+        // TODO: put logic here to determine what the primary wallet of the user
+        //       is, or is the user wallet list already sorted?
 
         // Get the wallet with the biggest balance
-        return $economy->userWallets($this)
-            ->orderBy('balance', 'DESC')
-            ->limit(1)
+        return $economy->userWallets($this)->first();
+    }
+
+    /**
+     * Get a wallet for this user in the given economy, that uses any of the
+     * given currencies. This attempts to find a wallet for each currency in
+     * order, and returns it if one is found.
+     *
+     * If no wallet is found, one will be created automatically using the first
+     * currency that allows this.
+     * Null is only returned if no wallet could be created.
+     *
+     * @param Economy $economy The wallet economy.
+     * @param [EconomyCurrency] $econ_currencies A list of EconomyCurrency IDs.
+     * @param bool [$error=true] True to throw an error if no wallet was found
+     *      or created. False to return null instead.
+     *
+     * @return Wallet|null The primary wallet, or null if there is none.
+     */
+    public function getOrCreateWallet(Economy $economy, $econ_currencies, $error = true) {
+        // A currency must be given
+        if($econ_currencies->isEmpty()) {
+            if($error)
+                throw new \Exception("Failed to get or create wallet, no currencies given");
+            return null;
+        }
+
+        // Get all user wallets
+        $wallets = $economy->userWallets($this)->get();
+
+        // Find and return an existing wallet for any of the currencies in order
+        $wallet = $econ_currencies
+            ->map(function($c) use($wallets) {
+                return $wallets->firstWhere('currency_id', $c->currency_id);
+            })
+            ->filter(function($w) {
+                return $w != null;
+            })
             ->first();
+        if($wallet != null)
+            return $wallet;
+
+        // Create a new wallet for the first currency that allows it
+        foreach($econ_currencies as $econ_currency) {
+            // Find the currency, skip if we cannot create a wallet for it
+            if(!$econ_currency->allow_wallet)
+                continue;
+
+            // Create and return a wallet
+            // TODO: create wallet through model!
+            return $this->wallets()->create([
+                'economy_id' => $economy->id,
+                'name' => __('pages.wallets.namePlaceholder'),
+                'currency_id' => $econ_currency->currency_id,
+            ]);
+        }
+
+        // Throw a error if no wallet could be found/created or return null
+        if($error)
+            throw new \Exception("Failed to get or create wallet for any of given currencies");
+        return null;
     }
 }
