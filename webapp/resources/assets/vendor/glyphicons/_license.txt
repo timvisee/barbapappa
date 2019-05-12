@@ -1,0 +1,63 @@
+-------------------------------------------
+THANK YOU FOR PURCHASING GLYPHICONS
+-------------------------------------------
+Your payment will help in the future development of new icons. If you would like to be among the first ones to hear about all the news, please, follow @GLYPHICONS on Twitter.
+
+
+
+-------------------------------------------
+LICENSE for GLYPHICONS PRO & GLYPHICONS ALL in version 1.9.2
+-------------------------------------------
+By downloading icons from GLYPHICONS.com, you agree to be bound by the terms of this agreement and licence terms. The price is final and for a PRO version also includes all future updates of GLYPHICONS, which means that no additional purchase is required.
+
+The icons may be used for both commercial and personal purposes such as mobile applications, web sites, web applications as well as for printing, info-graphics, etc. and of course PRO and ALL users do not have to indicate the name of the author. You do not need an extra license for every new project and this license is nonexclusive, non-sublicensable. 
+
+The license is non transferable and it is tied always only directly with one buyer (his email address). Buyer can be either a person (natural person) or a whole company (legal person). If you buy license as a company, you can lend icons to your official (contracted) employees during the time they work in your company, but you are responsible for their use. In other words you have to supervise that their use is not in any conflict with this license and that your employee is not leaking source files to the third party. You are responsible for any damages caused by your employees.
+
+Keep in mind, please, that it is not allowed to resell the icons as such because the icons are the property of the author. Reselling of the icons is prohibited and could be find illegal.
+
+Please, be aware that in case you would use icons as an icon font or all icons in vector format in your work for client/customer, you should include this license as a part of your product. How? You can simply save this license text somewhere visibly along with your files or add a link back to license page on www.glyphicons.com/license. Your customer should know, that if he would like to use GLYPHICONS as a part of their own (another) product, they have to buy their own license on GLYPHICONS.com. 
+
+It is strictly prohibited to bundle icons in any HTML themes, design frameworks, tools and offering them as a value inside your own product.
+ 
+What is ok to do:
+- use icons in your mobile or web app, web site, prints, etc.
+- change color or size of icons as you need
+- lend icons to your official (contracted) employees during the time they work in your company
+- use icons in multiple projects, anytime you want
+
+You must not:
+- include icons in any HTML theme, design frameworks or tools and offering them as a value inside your own product
+- resell icons or offer them for download anywhere, mainly on the internet
+- use icons as a part of any application where your customer is not a final customer/owner (e.g., design frameworks or tools)
+- include icons in open-source projects, since this license is not compatible with most of the open-source licenses
+
+All icons are provided "as they are" without a warranty of any kind, either expressed or implied. I am not liable for any damages or loss of profits (earnings) caused of any defects in this icon set. All logos and trademarks in social icons are the property of the respective trademark owners.®
+
+
+
+-------------------------------------------
+LICENSE FOR HALFLINGS IN BOOTSTRAP
+-------------------------------------------
+GLYPHICONS Halflings font is also released as an extension of a Bootstrap (www.getbootstrap.com) for free and it is released under the same license as Bootstrap. While you are not required to include attribution on your Bootstrap-based projects, I would certainly appreciate any form of support, even a nice Tweet is enough. Of course if you want, you can say thank you and support me by buying more icons on www.glyphicons.com.
+
+
+
+
+-------------------------------------------
+CONTACT
+-------------------------------------------
+Web: http://glyphicons.com/
+Email: glyphicons@gmail.com
+Twitter: http://twitter.com/glyphicons
+
+
+
+-------------------------------------------
+NOTE
+-------------------------------------------
+As I mentioned above, PRO and ALL users do not have to indicate the name of the author, but it always makes me happy when I see even a nice Tweet about @GLYPHICONS :) If you have any questions related to your order, I’m always just an email away: glyphicons@gmail.com
+
+Jan Kovařík
+
+

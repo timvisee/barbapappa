@@ -1,0 +1,25 @@
+#################
+## BARbapAPPa webapp
+#################
+
+/public/js
+/public/img
+/public/css
+/public/fonts
+/public/flags
+
+#################
+## Laravel
+#################
+
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+/.vagrant
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.env

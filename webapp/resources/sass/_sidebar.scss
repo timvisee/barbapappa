@@ -1,0 +1,12 @@
+// Flag icon in sidebar button
+.ui.sidebar a.item > span {
+  opacity: .5;
+  transition: opacity .1s ease;
+
+  float: right;
+  margin-right: -0.15rem;
+}
+
+.ui.sidebar a.item:hover > span {
+    opacity: 1;
+}

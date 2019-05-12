@@ -1,0 +1,88 @@
+[![Build Status on Travis CI](https://travis-ci.org/timvisee/barbapappa.svg?branch=master)](https://travis-ci.org/timvisee/barbapappa)
+
+# BARbapAPPa
+BARbapAPPa bar management application.
+
+## Installation
+This application requires some installation steps.
+
+### Initial setup
+The project can be installed and configured by running the following commands:
+```
+cd webapp
+
+# Install composer dependencies
+composer install # or update
+
+# Install npm dependencies
+npm install
+```
+
+### Environment file
+Create a file called `.env` based on the `.env.example` file and configure 
+your database and mail credentials.
+
+### Database
+To initialize the database with tables, the database migration might be invoked:
+`php ./artisan migrate`
+
+If the project is updated, the same command should be invoked as well to update the database structure.
+
+### Compiling resources
+Some resources are compiled, and need to be recompiled before they're used in the public application.
+Style sheets and client side JavaScript are such files.
+
+To recompile resources, run the following command: `npm run dev`
+
+### Worker
+This project makes use of workers to process tasks in the background.
+Emails are mostly being sent using these queues as it would otherwise drastically
+increase the response time of the web application.
+The worker for these queues needs to be started however.
+
+#### Starting the worker
+To start the worker, use the helper script: `./startWorker`  
+Or start it directly (not prioritised): `php ./artisan queue:work`
+
+#### Keep the worker running
+The worker must be kept running at all times.
+Check out the [Supervisor configuration](https://laravel.com/docs/5.4/queues#supervisor-configuration)
+in the Laravel documentation for more information.
+
+#### Restart the worker
+When the project is updated, the worker must be restarted using the helper script: `./restartWorker`  
+Or run the command directly: `php ./artisan queue:restart`
+
+This destroy the worker process.
+It should automatically restart again if the _Supervisor_ is configured correctly.
+
+## Development
+First make sure the project is successfully installed and configured.
+See the section above.
+
+When you've made changes to the project, make sure to:
+- Migrate the database
+- Recompile the resources
+- Restart the worker
+
+#### Compiled resources
+Some resources have to be compiled, see the _Compiled resources_ section above.
+
+To watch the resources and automatically recompile on change, use: `npm run watch`
+
+## Builds
+This project is currently automatically tested for each commit using CI services.
+
+|Service|Platforms|PHP|Branch|Build Status| |
+|---:|:---|:---|:---|:---:|:---|
+|Travis CI|Linux|7.2|master|[![Build status on Travis CI on master](https://travis-ci.org/timvisee/barbapappa.svg?branch=master)](https://travis-ci.org/timvisee/barbapappa)|[View Status](https://travis-ci.org/timvisee/barbapappa)|
+|Travis CI|Linux|7.2|last commit|[![Build status on Travis CI for last commit](https://travis-ci.org/timvisee/barbapappa.svg)](https://travis-ci.org/timvisee/barbapappa)|[View Status](https://travis-ci.org/timvisee/barbapappa)|
+
+Note: Tests are currently fairly basic, and should be improved at a later time.
+
+## About
+This project is currently developed and maintained by [Tim Visée](https://github.com/timvisee), [www.timvisee.com](https://timvisee.com/).
+
+## License
+This project is released under the GNU GPL-3.0 licence.
+Check out the [LICENSE](LICENSE) file for more information.

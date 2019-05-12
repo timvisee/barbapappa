@@ -1,0 +1,91 @@
+// Base toolbar
+.toolbar {
+  height: 50px;
+  box-sizing: border-box;
+
+  background: #e9e9e9;
+  border-bottom: 1px solid #ddd;
+
+  // Flex box the header
+  display: flex !important;
+  flex-direction: row;
+  flex-wrap: nowrap !important;
+  justify-content: space-between;
+  align-items: center !important;
+  align-content: space-between !important;
+  vertical-align: middle;
+}
+
+// Main toolbar bag
+.toolbar h1 {
+  order: 0;
+  flex-shrink: 1;
+  align-self: center;
+  margin: 0 6px !important;
+  padding: 0;
+  box-sizing: content-box;
+}
+
+// Toolbar button styles
+.toolbar a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: normal;
+  outline: 0;
+}
+
+// Nice background on link activation
+.toolbar a:active,
+.toolbar h1 a:active > img {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+// Toolbar logo link padding
+.toolbar h1 a img {
+  padding: 6px;
+  height: 21px;
+  display: block;
+}
+
+// Configure icon sizes
+.toolbar .left .glyphicons,
+.toolbar .left .halflings,
+.toolbar .right .glyphicons,
+.toolbar .right .halflings {
+  font-size: 17px;
+}
+
+// Toolbar bags at left and right
+@mixin toolbar-div-side {
+  flex-shrink: 0;
+  align-self: center;
+  display: inline;
+}
+
+.toolbar div.left {
+  order: -1;
+  @include toolbar-div-side;
+  margin-left: 12px;
+  text-align: left;
+}
+
+.toolbar div.right {
+  order: 1;
+  @include toolbar-div-side;
+  margin-right: 12px;
+  text-align: right;
+}
+
+// Message button specific styles
+a.toolbar-btn-message,
+a.toolbar-btn-message:visited {
+  color: inherit;
+}
+
+a.toolbar-btn-message:focus,
+a.toolbar-btn-message:active {
+  &:before {
+    content: "\E121";
+    background: rgba(0, 0, 0, 0.15);
+  }
+}

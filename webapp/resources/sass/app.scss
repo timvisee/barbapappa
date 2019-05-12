@@ -1,0 +1,209 @@
+// Variables
+@import "variables";
+
+// Utilities
+@import "utils/fluid-type";
+
+// Alerts
+@import "alert";
+
+// Toolbar
+@import "toolbar";
+
+// Sidebar
+@import "sidebar";
+
+// Glyphicons
+@import "glyphicons";
+
+// Sematic UI patches
+@import "semantic_ui_patches";
+
+// Spacers
+span.spacer {
+  margin: 0;
+  padding: 0;
+  display: block;
+  height: 1em;
+}
+
+span.spacer.x05 {
+  height: 0.5em;
+}
+
+span.spacer.x2 {
+  height: 2em;
+}
+
+span.spacer.x3 {
+  height: 3em;
+}
+
+span.spacer.x4 {
+  height: 4em;
+}
+
+span.spacer.x5 {
+  height: 5em;
+}
+
+.align-center {
+  text-align: center;
+}
+
+// Highlight box
+$highlight-dynamic-min-width: 100px;
+$highlight-dynamic-max-width: 600px;
+
+$page-divider-slot-color: #555555;
+$page-divider-slot-shadow: #222222;
+$page-divider-color: #D5D5D5;
+
+.highlight-box {
+  text-align: center;
+  margin: 1.5em 0;
+  padding: 0.5em 0.5em 0.3em;
+}
+
+.highlight-box i.attention-icon {
+  //text-shadow: 0 1px #111;
+  padding: 0.2em 0 0.25em;
+  font-size: 72px;
+  color: $page-divider-slot-color;
+  text-shadow: 0 1px $page-divider-slot-shadow;
+  @include fluid-type(font-size, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 32px, 96px);
+}
+
+.highlight-box img.logo {
+  max-width: 100%;
+  @include fluid-type(width, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 75px, 200px);
+  @include fluid-type(margin-top, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 5px, 25px);
+  @include fluid-type(margin-bottom, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 5px, 25px);
+}
+
+// Page
+.page {
+    margin-top: 1.5em;
+    margin-bottom: 2em;
+}
+
+// Page dividers
+.page-divider {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  align-content: space-between;
+}
+
+.page-divider .slot,
+.page-divider i.glyphicons,
+.page-divider i.halflings {
+  margin: 10px 15px;
+  order: 0;
+  flex-grow: 0;
+  display: inline-block;
+  color: $page-divider-slot-color;
+  text-shadow: 0 1px $page-divider-slot-shadow;
+}
+
+.page-divider i.glyphicons.scale,
+.page-divider i.halflings.scale {
+    @include fluid-type(font-size, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 16px, 48px);
+}
+
+@mixin page-divider-line {
+  height: 1px;
+  margin: 20px 0;
+  background-color: $page-divider-color;
+  display: inline-block;
+  flex-grow: 1;
+  content: '';
+}
+
+.page-divider span.line:nth-of-type(1) {
+    order: -1;
+    @include page-divider-line;
+}
+
+.page-divider span.line:nth-of-type(2) {
+    order: 1;
+    @include page-divider-line;
+}
+
+ul.ui-listview.center > li > a.ui-btn {
+  text-align: center;
+}
+
+// Flag icon modifiers
+.flag-icon.flag-icon-rounded {
+  border-radius: 0.15em;
+}
+
+// Custom pirate flag
+.flag-icon-pirate {
+  background-image: url(/img/flag/pirate_4x3.svg);
+}
+
+.flag-icon-pirate.flag-icon-squared {
+  background-image: url(/img/flag/pirate_1x1.svg);
+}
+
+// Flags on buttons
+.ui.button .icon .flag-icon {
+    display: inline-block;
+    height: 100%;
+}
+
+// Alt buttons inside sidebar menu items, used for logout button
+.sidebar .alt-button {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 40px;
+  height: 40px;
+
+  display: block;
+  padding: 13px 5px 13px 5px;
+  transition: background .1s ease, color .1s ease;
+  border-left: 1px solid rgba(255,255,255,.08);
+
+  .glyphicons {
+    width: 30px;
+    height: 14px;
+    margin: 0;
+  }
+
+  &:hover {
+    background: rgba(255,255,255,.08) !important;
+  }
+
+  &.logout {
+    background: darkred !important;
+    &:hover {
+        background: rgba(darkred,.8) !important;
+    }
+  }
+}
+
+.sidebar .has-alt-button {
+  padding-right: 50px !important;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+// A subtle gray label
+.subtle,
+.menu.fluid .sub-label {
+    color: gray;
+}
+
+.menu.fluid .sub-label {
+    float: right;
+    margin-left: 12px;
+    display: block;
+    font-size: smaller;
+    line-height: normal;
+}

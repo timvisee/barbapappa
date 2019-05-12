@@ -1,0 +1,25 @@
+// Icon rendering in paragraphs
+p .glyphicons {
+    display: inline;
+    vertical-align: middle;
+}
+
+// Icon rendering in sidebar link items
+.ui.sidebar .glyphicons {
+  display: inline-block;
+  margin: 0 .25rem 0 0;
+  width: 1.18em;
+  height: 1em;
+  text-align: center;
+  speak: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  font-size: 1em;
+  opacity: .9;
+  line-height: .15em;
+  float: right;
+}
+
