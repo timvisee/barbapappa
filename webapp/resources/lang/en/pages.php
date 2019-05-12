@@ -183,6 +183,7 @@ return [
         'pricesDescription' => 'Configure prices for this product in the fields below for currencies you want to support.',
         'localizedNames' => 'Localized names',
         'localizedNamesDescription' => 'Configure localized names for this product in the fields below if it differs from the main name.',
+        'search' => 'Search products',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',

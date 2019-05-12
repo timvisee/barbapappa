@@ -46,7 +46,7 @@
             <div class="item">
                 <div class="ui transparent icon input">
                     {{ Form::text('q', Request::input('q'), [
-                        'placeholder' => 'Search products...'
+                        'placeholder' => __('pages.products.search') . '...',
                     ]) }}
                     {{-- TODO: remove icon class? --}}
                     <i class="icon glyphicons glyphicons-search link"></i>
@@ -70,7 +70,7 @@
         @endforelse
 
         <a href="#" class="ui bottom attached button">
-            Show all
+            @lang('misc.showAll')
         </a>
     </div>
 

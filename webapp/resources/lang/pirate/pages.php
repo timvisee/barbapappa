@@ -183,6 +183,7 @@ return [
         'pricesDescription' => 'Configure prices for dis product in th\' fields below for booties ye want to support.',
         'localizedNames' => 'Localized names',
         'localizedNamesDescription' => 'Configure localized names for dis product in th\' fields below if be different from th\' main name.',
+        'search' => 'Search products',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',

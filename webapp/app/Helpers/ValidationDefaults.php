@@ -93,7 +93,7 @@ class ValidationDefaults {
      * @return string The validation configuration.
      */
     public static function communitySlug($community = null) {
-        // Buid the uniqueness rule, ignore the current if given
+        // Build the uniqueness rule, ignore the current if given
         $unique = Rule::unique('communities', 'slug');
         if(!empty($community))
             $unique = $unique->ignore($community->id);
@@ -108,7 +108,7 @@ class ValidationDefaults {
      * @return string The validation configuration.
      */
     public static function barSlug($bar = null) {
-        // Buid the uniqueness rule, ignore the current if given
+        // Build the uniqueness rule, ignore the current if given
         $unique = Rule::unique('bars', 'slug');
         if(!empty($bar))
             $unique = $unique->ignore($bar->id);

@@ -103,6 +103,8 @@ class BarController extends Controller {
         }
 
         // Build a list of preferred currencies for the user
+        // TODO: if there's only one currency, that is usable, use null to
+        //       greatly simplify product queries
         $currencies = $this->userCurrencies($bar, $user);
         $currency_ids = $currencies->pluck('id');
 
