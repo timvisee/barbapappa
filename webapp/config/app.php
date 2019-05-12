@@ -206,7 +206,7 @@ return [
         /**
          * Sentry
          */
-        Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
+        Sentry\Laravel\ServiceProvider::class,
 
         /**
          * Eloquent HasMany Sync
@@ -285,7 +285,7 @@ return [
         /**
          * Sentry
          */
-        'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
+        'Sentry' => Sentry\Laravel\Facade::class,
 
         /**
          * BARbapAPPa aliases.

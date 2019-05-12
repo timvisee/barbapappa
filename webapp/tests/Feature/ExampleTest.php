@@ -10,7 +10,7 @@ class ExampleTest extends TestCase {
     /**
      * Set up some used macro's for use in tests.
      */
-    protected function setUp() {
+    protected function setUp(): void {
         parent::setUp();
 
         // Make the test context available
