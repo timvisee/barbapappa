@@ -106,11 +106,8 @@ class BarController extends Controller {
         // Build a list of preferred currencies for the user
         // TODO: if there's only one currency, that is usable, use null to
         //       greatly simplify product queries
-        $currencies = $this->userCurrencies($bar, $user);
+        $currencies = Self::userCurrencies($bar, $user);
         $currency_ids = $currencies->pluck('id');
-
-        // Build a list of products
-        $products = [];
 
         // Search, or show top products
         $search = \Request::get('q');
@@ -317,22 +314,6 @@ class BarController extends Controller {
             ->with('successHtml', $msg);
     }
 
-    /**
-     * The permission required for managing such as editing and deleting.
-     * @return PermsConfig The permission configuration.
-     */
-    public static function permsManage() {
-        return BarRoles::presetAdmin();
-    }
-
-    /**
-     * The permission required creating a new bar.
-     * @return PermsConfig The permission configuration.
-     */
-    public static function permsCreate() {
-        return CommunityController::permsManage();
-    }
-
     // TODO: describe
     // TODO: merges with recent product transactions
     // TODO: returns [transaction, currency, price]
@@ -342,7 +323,7 @@ class BarController extends Controller {
 
         // Build a list of preferred currencies for the user, filter currencies
         // with no price
-        $currencies = $this->userCurrencies($bar, $user)
+        $currencies = Self::userCurrencies($bar, $user)
             ->filter(function($currency) use($product) {
                 return $product->prices->contains('currency_id', $currency->id);
             });
@@ -503,7 +484,7 @@ class BarController extends Controller {
      * @return [EconomyCurrency] A list of preferred currencies.
      */
     // TODO: move this function to some other class, user class?
-    function userCurrencies($bar, $user) {
+    static function userCurrencies($bar, $user) {
         // TODO: optimize queries here!
 
         // Select the user
@@ -538,5 +519,21 @@ class BarController extends Controller {
 
         // Return the list of currencies
         return $currencies;
+    }
+
+    /**
+     * The permission required for managing such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsManage() {
+        return BarRoles::presetAdmin();
+    }
+
+    /**
+     * The permission required creating a new bar.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsCreate() {
+        return CommunityController::permsManage();
     }
 }

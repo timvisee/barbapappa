@@ -69,6 +69,7 @@ class Economy extends Model {
      * @return The products.
      */
     public function products() {
+        // TODO: should we filter user made products by default?
         return $this->hasMany(Product::class);
     }
 

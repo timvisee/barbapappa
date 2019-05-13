@@ -319,6 +319,7 @@ return [
         'updated' => 'The bar has been updated.',
         'mustCreateEconomyFirst' => 'To create a bar, you must create an economy first.',
         'backToBar' => 'Back to bar',
+        'quickBuy' => 'Quick buy',
         'boughtProductForPrice' => 'Bought :product for :price',
     ],
 

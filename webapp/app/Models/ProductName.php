@@ -45,4 +45,14 @@ class ProductName extends Model {
     public function languageName() {
         return __('lang.name', [], $this->locale);
     }
+
+    /**
+     * Check whether the language this transalation is in is hidden for the
+     * current user.
+     *
+     * @return bool True if hidden, false if not.
+     */
+    public function isHiddenLanguage() {
+        return langManager()->isHiddenLocale($this->locale);
+    }
 }

@@ -37,6 +37,7 @@ return [
     'user' => 'User',
     'role' => 'Role',
     'createdAt' => 'Created at',
+    'availableSince' => 'Available since',
     'firstSeen' => 'First appearance',
     'lastChanged' => 'Last changed',
     'lastUpdated' => 'Last updated',

@@ -333,6 +333,12 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             Route::put('/', 'BarController@update')->name('bar.update');
         });
 
+        // Bar products
+        Route::prefix('/products')->group(function() {
+            Route::get('/', 'BarProductController@index')->name('bar.product.index');
+            Route::get('/{productId}', 'BarProductController@show')->name('bar.product.show');
+        });
+
         // Quick buy products
         Route::post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
 

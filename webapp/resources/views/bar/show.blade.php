@@ -69,7 +69,8 @@
             <i class="item">No products...</i>
         @endforelse
 
-        <a href="#" class="ui bottom attached button">
+        <a href="{{ route('bar.product.index', ['barId' => $bar->id]) }}"
+                class="ui bottom attached button">
             @lang('misc.showAll')
         </a>
     </div>

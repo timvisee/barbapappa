@@ -37,6 +37,7 @@ return [
     'user' => 'Gebruiker',
     'role' => 'Rol',
     'createdAt' => 'Gemaakt op',
+    'availableSince' => 'Beschikbaar sinds',
     'firstSeen' => 'Eerst gezien',
     'lastChanged' => 'Laatst aangepast',
     'lastUpdated' => 'Laatst bijgewerkt',

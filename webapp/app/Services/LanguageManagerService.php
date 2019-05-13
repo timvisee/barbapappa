@@ -252,11 +252,13 @@ class LanguageManagerService {
      * Check whether the given locale is hidden by default.
      *
      * @param string $locale Locale to check for.
+     * @param boolean [$hideCurrent=false] False to never hide it if it's the
+     *      current locale.
      *
      * @return boolean True if the given locale is hidden, false if not.
      */
-    public function isHiddenLocale($locale) {
-        return $locale == null || in_array($locale, config('app.hidden_locales'));
+    public function isHiddenLocale($locale, $hideCurrent = false) {
+        return $locale == null || (in_array($locale, config('app.hidden_locales')) && !$hideCurrent && $this->locale != $locale);
     }
 
     /**
@@ -268,14 +270,14 @@ class LanguageManagerService {
      *
      * If $hidden is set to true, all locales are returned.
      *
-     * @param bool $user=true True to get all locales visible to the user.
-     * @param bool $hidden=false True to get all locales, including all hidden ones.
+     * @param bool [$user=true] True to get all locales visible to the user.
+     * @param bool [$hidden=false] True to get all locales, including all hidden ones.
      *
      * @return array Available locale strings.
      */
     public function getLocales($user = true, $hidden = false) {
         return array_filter(config('app.locales'), function($locale) use($user, $hidden) {
-            return $hidden || ($user && $locale == $this->locale) || !$this->isHiddenLocale($locale);
+            return $hidden || !$this->isHiddenLocale($locale);
         });
     }
 
