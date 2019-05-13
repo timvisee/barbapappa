@@ -9,6 +9,7 @@ use App\Models\MutationWallet;
 use App\Models\Transaction;
 use App\Models\Bar;
 use App\Perms\BarRoles;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -333,6 +334,7 @@ class BarController extends Controller {
     }
 
     // TODO: describe
+    // TODO: merges with recent product transactions
     // TODO: returns [transaction, currency, price]
     function quickBuyProduct(Bar $bar, $product) {
         // Get some parameters
@@ -348,6 +350,35 @@ class BarController extends Controller {
             throw new \Exception("Could not quick buy product, no supported currencies");
         $currency_ids = $currencies->pluck('id');
 
+        // Find the most recent product transaction within the quick buy merge
+        // time
+        //
+        // It must be:
+        // - Recent, within configured time
+        // - Owned by the current user
+        // - Only contain (from) wallet and (to) product mutations
+        // - Product mutations must be in the current bar
+        $last_transaction = $user
+            ->transactions()
+            ->where('created_at', '>=', Carbon::now()->subSeconds(config('bar.quick_buy_merge_timeout')))
+            ->whereNotExists(function($query) use($bar) {
+                $query->selectRaw('1')
+                    ->fromRaw('mutations')
+                    ->leftJoin('mutations_product', 'mutations_product.mutation_id', '=', 'mutations.id')
+                    ->whereRaw('mutations.transaction_id = transactions.id')
+                    ->where(function($query) {
+                        $query->where('type', '<>', Mutation::TYPE_WALLET)
+                            ->orWhere('amount', '<=', 0);
+                    })
+                    ->where(function($query) use($bar) {
+                        $query->where('type', '<>', Mutation::TYPE_PRODUCT)
+                            ->orWhere('amount', '>', 0)
+                            ->orWhere('mutations_product.bar_id', '<>', $bar->id);
+                    });
+            })
+            ->latest()
+            ->first();
+
         // Get or create a wallet for the user, get the price
         $wallet = $user->getOrCreateWallet($bar->economy, $currencies);
         $currency = $wallet->currency;
@@ -357,15 +388,14 @@ class BarController extends Controller {
             ->first()
             ->price;
 
-        // TODO: normalize the price?
         // TODO: notify user if wallet is created?
 
         // Start a database transaction for the product transaction
         // TODO: create a nice generic builder for the actions below
         $out = null;
-        DB::transaction(function() use($bar, $product, $user, $wallet, $currency, $price, &$out) {
-            // Create the transaction
-            $transaction = Transaction::create([
+        DB::transaction(function() use($bar, $product, $user, $wallet, $currency, $price, $last_transaction, &$out) {
+            // Create the transaction or use last transaction
+            $transaction = $last_transaction ?? Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
                 'owner_id' => $user->id,
             ]);
@@ -375,39 +405,73 @@ class BarController extends Controller {
 
             // Create the wallet mutation unless product is free
             if(!$free) {
-                $mut_wallet = $transaction
+                // Find an mutation for the wallet in this transaction
+                $mut_wallet = $last_transaction == null ? null : $transaction
+                    ->mutations()
+                    ->where('type', Mutation::TYPE_WALLET)
+                    ->whereExists(function($query) use($wallet) {
+                        $query->selectRaw('1')
+                            ->from('mutations_wallet')
+                            ->whereRaw('mutations.id = mutations_wallet.mutation_id')
+                            ->where('wallet_id', $wallet->id);
+                    })
+                    ->first();
+
+                // Create a new wallet mutation or update the existing
+                if($mut_wallet == null) {
+                    $mut_wallet = $transaction
+                        ->mutations()
+                        ->create([
+                            'economy_id' => $bar->economy_id,
+                            'type' => Mutation::TYPE_WALLET,
+                            'amount' => $price,
+                            'currency_id' => $currency->id,
+                            'state' => Mutation::STATE_SUCCESS,
+                            'owner_id' => $user->id,
+                        ]);
+                    MutationWallet::create([
+                        'mutation_id' => $mut_wallet->id,
+                        'wallet_id' => $wallet->id,
+                    ]);
+                } else
+                    $mut_wallet->incrementAmount($price);
+            }
+
+            // Find an mutation for the product in this transaction
+            $mut_product = $last_transaction == null ? null : $transaction
+                ->mutations()
+                ->where('type', Mutation::TYPE_PRODUCT)
+                ->whereExists(function($query) use($product) {
+                    $query->selectRaw('1')
+                        ->from('mutations_product')
+                        ->whereRaw('mutations.id = mutations_product.mutation_id')
+                        ->where('product_id', $product->id);
+                })
+                ->first();
+
+            // Create a new product mutation or update the existing one
+            if($mut_product == null) {
+                // Create the product mutation
+                $mut_product = $transaction
                     ->mutations()
                     ->create([
                         'economy_id' => $bar->economy_id,
-                        'type' => Mutation::TYPE_WALLET,
-                        'amount' => $price,
+                        'type' => Mutation::TYPE_PRODUCT,
+                        'amount' => -$price,
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
                         'owner_id' => $user->id,
                     ]);
-                MutationWallet::create([
-                    'mutation_id' => $mut_wallet->id,
-                    'wallet_id' => $wallet->id,
+                MutationProduct::create([
+                    'mutation_id' => $mut_product->id,
+                    'product_id' => $product->id,
+                    'bar_id' => $bar->id,
+                    'quantity' => 1,
                 ]);
+            } else {
+                $mut_product->decrementAmount($price);
+                $mut_product->mutationData()->increment('quantity');
             }
-
-            // Create the product mutation
-            $mut_product = $transaction
-                ->mutations()
-                ->create([
-                    'economy_id' => $bar->economy_id,
-                    'type' => Mutation::TYPE_PRODUCT,
-                    'amount' => -$price,
-                    'currency_id' => $currency->id,
-                    'state' => Mutation::STATE_SUCCESS,
-                    'owner_id' => $user->id,
-                ]);
-            MutationProduct::create([
-                'mutation_id' => $mut_product->id,
-                'product_id' => $product->id,
-                'bar_id' => $bar->id,
-                'quantity' => 1,
-            ]);
 
             // Update the wallet balance
             if(!$free)

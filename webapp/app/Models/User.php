@@ -155,7 +155,16 @@ class User extends Model {
      * @return The wallets.
      */
     public function wallets() {
-        return $this->hasMany('App\Models\Wallet');
+        return $this->hasMany(Wallet::class);
+    }
+
+    /**
+     * Get a relation to all transactions this user owns.
+     *
+     * @return Relation to all transactions this user owns.
+     */
+    public function transactions() {
+        return $this->hasMany(Transaction::class, 'owner_id');
     }
 
     /**

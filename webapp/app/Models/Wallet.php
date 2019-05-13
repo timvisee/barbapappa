@@ -199,7 +199,7 @@ class Wallet extends Model {
 
         // TODO: assert we're in a transaction
 
-        // Decrease the balance
+        // Decrement the balance
         $this->decrement('balance', $amount);
     }
 
@@ -217,7 +217,7 @@ class Wallet extends Model {
 
         // TODO: assert we're in a transaction
 
-        // Increase the balance
+        // Increment the balance
         $this->increment('balance', $amount);
     }
 }

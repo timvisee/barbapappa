@@ -141,6 +141,7 @@ class Transaction extends Model {
         $suffix = $details ? ' (' . strtolower(__('misc.estimate')) . ')' : '';
 
         // Collect all mutation types, separate by deposit/withdraw
+        // TODO: create method for this, also used somewhere else! (search partition)
         list($to, $from) = $this
             ->mutations
             ->map(function($m) {
