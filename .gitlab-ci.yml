@@ -60,7 +60,7 @@ before_script:
 test:
   artifacts:
     paths:
-      - webapp/coverage/
+      - coverage/
   script:
     # Run PHPUnit tests
     - php vendor/bin/phpunit --coverage-text --colors=never

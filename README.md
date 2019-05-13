@@ -87,4 +87,4 @@ This project is released under the GNU GPL-3.0 licence.
 Check out the [LICENSE](LICENSE) file for more information.
 
 [pipeline-badge]: https://gitlab.com/timvisee/barbapappa/badges/master/pipeline.svg
-[pipeline-link]: https://gitlab.com/timvisee/barbapappa/commits/master
+[pipeline-link]: https://gitlab.com/timvisee/barbapappa/pipelines
