@@ -1,4 +1,4 @@
-[![Build Status on Travis CI](https://travis-ci.org/timvisee/barbapappa.svg?branch=master)](https://travis-ci.org/timvisee/barbapappa)
+[![Pipeline status on GitLab CI][pipeline-badge]][pipeline-link]
 
 # BARbapAPPa
 BARbapAPPa bar management application.
@@ -75,8 +75,7 @@ This project is currently automatically tested for each commit using CI services
 
 |Service|Platforms|PHP|Branch|Build Status| |
 |---:|:---|:---|:---|:---:|:---|
-|Travis CI|Linux|7.2|master|[![Build status on Travis CI on master](https://travis-ci.org/timvisee/barbapappa.svg?branch=master)](https://travis-ci.org/timvisee/barbapappa)|[View Status](https://travis-ci.org/timvisee/barbapappa)|
-|Travis CI|Linux|7.2|last commit|[![Build status on Travis CI for last commit](https://travis-ci.org/timvisee/barbapappa.svg)](https://travis-ci.org/timvisee/barbapappa)|[View Status](https://travis-ci.org/timvisee/barbapappa)|
+|GitLab CI|Linux|7.2|master|[![Pipeline status on Travis CI on master][pipeline-badge]][pipeline-link]|[View Status][pipeline-link]|
 
 Note: Tests are currently fairly basic, and should be improved at a later time.
 
@@ -86,3 +85,6 @@ This project is currently developed and maintained by [Tim Visée](https://githu
 ## License
 This project is released under the GNU GPL-3.0 licence.
 Check out the [LICENSE](LICENSE) file for more information.
+
+[pipeline-badge]: https://gitlab.com/timvisee/barbapappa/badges/master/pipeline.svg
+[pipeline-link]: https://gitlab.com/timvisee/barbapappa/commits/master

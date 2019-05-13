@@ -1,7 +1,7 @@
 image: php:7.2
 
 services:
-  - mysql:latest
+  - mariadb:latest
 
 variables:
   MYSQL_DATABASE: barapp
@@ -12,20 +12,29 @@ cache:
   - webapp/vendor/
   - webapp/node_modules/
 
+# Prepare host, configure and install application, set up database
 before_script:
   # Prepare host
   - apt-get update -yqq
+  - |
+    apt-get install git curl gnupg libcurl4-gnutls-dev libicu-dev \
+        libmcrypt-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev \
+        libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev \
+        libldap2-dev unixodbc-dev libpq-dev libsqlite3-dev libaspell-dev \
+        libsnmp-dev libpcre3-dev libtidy-dev -yqq
 
-  # Install node
-  - apt-get install gnupg git nodejs libcurl4-gnutls-dev libicu-dev libmcrypt-dev libvpx-dev libjpeg-dev libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev libgmp3-dev libldap2-dev unixodbc-dev libpq-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev -yqq
-  - curl -sL https://deb.nodesource.com/setup_8.x | bash -
+  # Install NVM, set up node with npm
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+  - . /root/.nvm/nvm.sh
+  - nvm install lts/carbon
+  - nvm use lts/carbon
 
-  # Install php extensions, install/enable Xdebug
+  # Install PHP extensions, install/enable Xdebug
   - docker-php-ext-install mbstring pdo_mysql curl json intl gd xml zip bz2 opcache
   - pecl install xdebug
   - docker-php-ext-enable xdebug
 
-  # Change into webapp, set up .env file
+  # Change into webapp directory, set up .env file
   - cd webapp/
   - cp .env.gitlab-ci .env
 
@@ -33,7 +42,7 @@ before_script:
   - curl -sS https://getcomposer.org/installer | php
   - php composer.phar install
 
-  # Install node dependencies and run development script
+  # Install and build frontend dependencies
   - npm install
   - npm run dev
 
@@ -47,7 +56,11 @@ before_script:
   - php artisan currency:manage add USD
   - php artisan currency:update
 
+# PHPUnit test job
 test:
+  artifacts:
+    paths:
+      - webapp/coverage/
   script:
-  # Run PHPUnit tests
-  - php vendor/bin/phpunit --coverage-text --colors=never
+    # Run PHPUnit tests
+    - php vendor/bin/phpunit --coverage-text --colors=never
