@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 {{-- TODO: translate --}}
-@section('title', 'Alle producten')
+@section('title', __('pages.products.all'))
 
 @php
     use \App\Http\Controllers\BarController;
-    use \App\Http\Controllers\BarMemberController;
+    use \App\Http\Controllers\CommunityController;
 @endphp
 
 @section('content')
@@ -21,7 +21,7 @@
     </h2>
 
     <div class="ui vertical menu fluid">
-        {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
+        {!! Form::open(['action' => ['BarProductController@index', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
             <div class="item">
                 <div class="ui transparent icon input">
                     {{ Form::text('q', Request::input('q'), [
@@ -47,5 +47,20 @@
         @endforelse
     </div>
 
-    {{-- TODO: show buttons for managers to edit products --}}
+    <p>
+        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+                class="ui button basic">
+            @lang('pages.bar.backToBar')
+        </a>
+
+        @if(perms(CommunityController::permsManage()))
+            <a href="{{ route('community.economy.product.index', [
+                'communityId' => $bar->community_id,
+                'economyId' => $bar->economy_id,
+            ]) }}"
+                    class="ui button basic">
+                @lang('pages.products.manageProducts')
+            </a>
+        @endif
+    </p>
 @endsection

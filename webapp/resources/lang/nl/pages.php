@@ -169,8 +169,11 @@ return [
      */
     'products' => [
         'title' => 'Producten',
+        'all' => 'Alle producten',
         'noProducts' => 'Geen producten...',
         'noProductsInEconomy' => 'Er zijn nog geen producten aan deze economie toegevoegd...',
+        'manageProduct' => 'Beheer product',
+        'manageProducts' => 'Beheer producten',
         'createProduct' => 'Nieuw product',
         'editProduct' => 'Product aanpassen',
         'created' => 'Het product is aangemaakt.',
@@ -185,6 +188,7 @@ return [
         'localizedNames' => 'Gelokaliseerde namen',
         'localizedNamesDescription' => 'Configureer de gelokaliseerde namen voor dit product in de velden hieronder als het verschilt met de hoofdnaam.',
         'search' => 'Zoek producten',
+        'backToProducts' => 'Terug naar producten',
         'type' => [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',

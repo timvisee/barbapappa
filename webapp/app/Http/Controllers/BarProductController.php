@@ -35,7 +35,7 @@ class BarProductController extends Controller {
         // Search, or show top products
         $search = \Request::get('q');
         if(!empty($search))
-            $products = $bar->economy->searchProducts($search, $currency_ids);
+            $products = $bar->economy->searchProducts($search, null);
         else
             $products = $bar->economy->products->sortBy(function($p) {
                 return $p->displayName();

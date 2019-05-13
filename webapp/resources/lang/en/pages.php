@@ -169,8 +169,11 @@ return [
      */
     'products' => [
         'title' => 'Products',
+        'all' => 'All products',
         'noProducts' => 'No products...',
         'noProductsInEconomy' => 'No products have been added to this economy yet...',
+        'manageProduct' => 'Manage product',
+        'manageProducts' => 'Manage products',
         'newProduct' => 'New product',
         'editProduct' => 'Edit product',
         'created' => 'The product has been added.',
@@ -185,6 +188,7 @@ return [
         'localizedNames' => 'Localized names',
         'localizedNamesDescription' => 'Configure localized names for this product in the fields below if it differs from the main name.',
         'search' => 'Search products',
+        'backToProducts' => 'Back to products',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',
