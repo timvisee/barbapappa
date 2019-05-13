@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
-{{-- TODO: translate --}}
-@section('title', __('pages.products.all'))
+@section('title', __('pages.products.' . (empty(Request::input('q')) ? 'all' : 'search')))
 
 @php
     use \App\Http\Controllers\BarController;
@@ -10,7 +9,7 @@
 
 @section('content')
     <h2 class="ui header">
-        @yield('title')
+        @yield('title') ({{ $products->count() }})
 
         <div class="sub header">
             in
@@ -35,7 +34,7 @@
 
         @forelse($products as $product)
             <a href="{{ route('bar.product.show', [
-                        'barId' => $bar->id,
+                        'barId' => $bar->human_id,
                         'productId' => $product->id,
                     ]) }}"
                 class="item">
