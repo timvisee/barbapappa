@@ -8,7 +8,7 @@
 
     <p><i>@lang('pages.privacy.onlyEnglishNote')</i></p>
 
-    <div class="ui piled segment">@include('pages.includes.privacyPolicy')</div>
+    <div class="ui tall stacked segment">@include('pages.includes.privacyPolicy')</div>
 
     <h3 class="ui header">@lang('pages.privacy.questions')</h3>
     <p>@lang('pages.privacy.questionsDescription')</p>

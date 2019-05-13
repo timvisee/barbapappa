@@ -27,7 +27,7 @@
                 </span>
             </a>
         @empty
-            <i class="item">@lang('pages.products.noProducts')</i>
+            <i class="item">@lang('pages.products.noProductsInEconomy')</i>
         @endforelse
     @endforeach
 

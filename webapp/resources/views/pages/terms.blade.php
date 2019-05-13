@@ -8,7 +8,7 @@
 
     <p><i>@lang('pages.terms.onlyEnglishNote')</i></p>
 
-    <div class="ui piled segment">@include('pages.includes.termsOfService')</div>
+    <div class="ui tall stacked segment">@include('pages.includes.termsOfService')</div>
 
     <h3 class="ui header">@lang('pages.terms.questions')</h3>
     <p>@lang('pages.terms.questionsDescription')</p>

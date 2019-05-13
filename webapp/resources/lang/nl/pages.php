@@ -169,7 +169,8 @@ return [
      */
     'products' => [
         'title' => 'Producten',
-        'noProducts' => 'Er zijn nog geen producten aan deze economie toegevoegd...',
+        'noProducts' => 'Geen producten...',
+        'noProductsInEconomy' => 'Er zijn nog geen producten aan deze economie toegevoegd...',
         'createProduct' => 'Nieuw product',
         'editProduct' => 'Product aanpassen',
         'created' => 'Het product is aangemaakt.',
@@ -390,7 +391,6 @@ return [
         'title' => 'Voorwaarden',
         'description' => 'Wanneer je onze service gebruikt, ga je akkoord met onze servicevoowaarden (Terms of Service) zoals hieronder getoond.',
         'onlyEnglishNote' => 'De servicevoorwaarden (Terms of Service) zijn alleen beschikbaar in het Engels, maar zijn actief voor alle gebruikstalen.',
-        'questions' => 'Questions?',
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over onze servicevoorwaarden (Terms of Service), neem gerust contact met ons op.',
     ],
@@ -400,12 +400,12 @@ return [
      */
     'license' => [
         'title' => 'Licentie',
-        'description' => 'Het BARbapAPPa software project is uitgebracht onder de GNU GPL-3.0 licentie (License). Deze licentie beschrijft wat wel en niet is toegestaan met de broncode van dit project.<br />Lees de volledige licentie hieronder, of check de licentie TL;DR voor een snel overzicht.',
+        'description' => 'Het BARbapAPPa software project is uitgebracht onder de GNU GPL-3.0 licentie (License). Deze licentie beschrijft wat wel en niet is toegestaan met de broncode van dit project.<br />Lees de volledige licentie hieronder, of check de licentie samenvatting voor een snel overzicht.',
         'onlyEnglishNote' => 'De licentie (License) is alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
         'questions' => 'Vragen?',
-        'questionsDescription' => 'Als je verdere vragen hebt over de gebruikte licentie (License), neem gerust contact met ons op. Je kunt de licentie ook bekijken in ruuw formaat leesbaar op elk willekeurig apparaat.',
-        'rawLicense' => 'Licentie in ruwe tekst',
-        'licenseTldr' => 'Licentie TL;DR (Engels)',
+        'questionsDescription' => 'Als je verdere vragen hebt over de gebruikte licentie (License), neem gerust contact met ons op. Je kunt de licentie ook bekijken in platte text leesbaar op elk willekeurig apparaat.',
+        'plainTextLicense' => 'Licentie in platte text',
+        'licenseSummary' => 'Licentie samenvatting (Engels)',
     ],
 
     /**

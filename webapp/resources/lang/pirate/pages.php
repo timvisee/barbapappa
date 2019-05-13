@@ -169,7 +169,8 @@ return [
      */
     'products' => [
         'title' => 'Products',
-        'noProducts' => 'No products have been added to dis economy yet...',
+        'noProducts' => 'Nay products...',
+        'noProductsInEconomy' => 'Nay products have been added to dis economy yet...',
         'newProduct' => 'New product',
         'editProduct' => 'Edit product',
         'created' => 'The product be added.',
@@ -399,12 +400,12 @@ return [
      */
     'license' => [
         'title' => 'License',
-        'description' => 'Th\' ARRbapAPPa software project be released under th\' GNU GPL-3.0 license. Dis license maps what ye are and nay be allowed to do with th\' source code of dis project.<br />Read th\' full license below, o\' check out th\' TL;DR for dis license as quick summary.',
+        'description' => 'Th\' ARRbapAPPa software project be released under th\' GNU GPL-3.0 license. Dis license maps what ye are and nay be allowed to do with th\' source code of dis project.<br />Read th\' full license below, o\' check out th\' summary for dis license as quick summary.',
         'onlyEnglishNote' => 'Note th\' license only be available in landlubber English, although it applies to our seas in any speak.',
         'questions' => 'Questions?',
-        'questionsDescription' => 'If ye have any further questions about our license, be sure to ship us a bottle message. Ye can also check th\' raw license readable on any ship.',
-        'rawLicense' => 'Raw license',
-        'licenseTldr' => 'License TL;DR',
+        'questionsDescription' => 'If ye have any further questions about our license, be sure to ship us a bottle message. Ye can also check th\' plain text license readable on any ship.',
+        'plainTextLicense' => 'Plain text license',
+        'licenseSummary' => 'License summary',
     ],
 
     /**
