@@ -138,6 +138,7 @@ class Wallet extends Model {
                 $this->mutations(),
                 (new \App\Models\Mutation)->transaction()
             )
+            ->distinct()
             ->latest();
     }
 
@@ -154,7 +155,6 @@ class Wallet extends Model {
     public function lastTransactions($limit = 5) {
         return $this
             ->transactions()
-            // ->latest()
             ->limit($limit);
     }
 
@@ -188,6 +188,9 @@ class Wallet extends Model {
     /**
      * Withdraw the given amount from the wallet.
      *
+     * Wallet balance should always be modified using the `withdraw` and
+     * `deposit` functions to ensure integrety.
+     *
      * @param number $amount The amount to withdraw from this wallet.
      *
      * @throws \Exception Throws an exception if the amount is negative or zero.
@@ -205,6 +208,9 @@ class Wallet extends Model {
 
     /**
      * Deposit the given amount to the wallet.
+     *
+     * Wallet balance should always be modified using the `withdraw` and
+     * `deposit` functions to ensure integrety.
      *
      * @param number $amount The amount to deposit to this wallet.
      *

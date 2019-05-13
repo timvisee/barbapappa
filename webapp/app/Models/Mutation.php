@@ -302,27 +302,10 @@ class Mutation extends Model {
     }
 
     /**
-     * Decrement the given amount from the mutation amount.
-     *
-     * @param number $amount The value to decrement the mutation amount with.
-     *
-     * @throws \Exception Throws an exception if the amount is negative.
-     */
-    public function decrementAmount($amount) {
-        // Assert the amount is positive
-        if($amount == 0)
-            return;
-        if($amount < 0)
-            throw new \Exception("Failed to decrement mutation amount, amount is < 0");
-
-        // TODO: assert we're in a transaction
-
-        // Decrement the amount
-        $this->decrement('amount', $amount);
-    }
-
-    /**
      * Increment the given amount to the mutation amount.
+     *
+     * Mutation amounts should always be modified using the `incrementAmount`
+     * and `decrementAMount` functions to ensure integrety.
      *
      * @param number $amount The amount to increment the mutation amount with.
      *
@@ -339,5 +322,28 @@ class Mutation extends Model {
 
         // Increment the amount
         $this->increment('amount', $amount);
+    }
+
+    /**
+     * Decrement the given amount from the mutation amount.
+     *
+     * Mutation amounts should always be modified using the `incrementAmount`
+     * and `decrementAMount` functions to ensure integrety.
+     *
+     * @param number $amount The value to decrement the mutation amount with.
+     *
+     * @throws \Exception Throws an exception if the amount is negative.
+     */
+    public function decrementAmount($amount) {
+        // Assert the amount is positive
+        if($amount == 0)
+            return;
+        if($amount < 0)
+            throw new \Exception("Failed to decrement mutation amount, amount is < 0");
+
+        // TODO: assert we're in a transaction
+
+        // Decrement the amount
+        $this->decrement('amount', $amount);
     }
 }
