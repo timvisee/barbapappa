@@ -90,7 +90,7 @@ class ValidationDefaults {
      * A price value, with two optional decimal digits, may only be positive.
      */
     const PRICE_POSITIVE = 'regex:/^('
-            . '[0-9]{0,7}[1-9]([,.]\d{1,2})?|'
+            . '[1-9][0-9]{0,7}([,.]\d{1,2})?|'
             . '\d{0,8}[,.][0-9]?[1-9]'
         . ')?$/';
 

@@ -316,7 +316,7 @@ class WalletController extends Controller {
         $toWallet = $request->input('to_wallet');
 
         // Start a database transaction for the wallet transaction
-        DB::transaction(function() use($user, $economy, $currency, $amount, $wallet, $toWallet) {
+        DB::transaction(function() use($user, $economy, $currency, $amount, $wallet, &$toWallet, $toWallets) {
             // Create a new wallet or select an existing wallet
             if($toWallet == 'new')
                 $toWallet = $user->createWallet($economy, $currency->id);

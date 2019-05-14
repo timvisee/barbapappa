@@ -191,6 +191,8 @@ class Wallet extends Model {
      * Wallet balance should always be modified using the `withdraw` and
      * `deposit` functions to ensure integrety.
      *
+     * This does not create a corresponding transaction or mutation.
+     *
      * @param number $amount The amount to withdraw from this wallet.
      *
      * @throws \Exception Throws an exception if the amount is negative or zero.
@@ -212,6 +214,8 @@ class Wallet extends Model {
      * Wallet balance should always be modified using the `withdraw` and
      * `deposit` functions to ensure integrety.
      *
+     * This does not create a corresponding transaction or mutation.
+     *
      * @param number $amount The amount to deposit to this wallet.
      *
      * @throws \Exception Throws an exception if the amount is negative or zero.
@@ -230,7 +234,7 @@ class Wallet extends Model {
     /**
      * Transfer the given amount to the given wallet.
      *
-     * This does not create a corresponding transaction.
+     * This does not create a corresponding transaction or mutation.
      *
      * @param number $amount The amount to transfer to the given wallet.
      * @param Wallet $wallet The wallet to transfer to.
