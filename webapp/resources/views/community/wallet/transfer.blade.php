@@ -84,7 +84,7 @@
                 @foreach($toWallets as $toWallet)
                     <div class="item" data-value="{{ $toWallet->id }}">{{ $toWallet->name }}</div>
                 @endforeach
-                <div class="item" data-value="new"><i>Create new wallet</i></div>
+                <div class="item" data-value="new"><i>@lang('pages.wallets.createWallet')</i></div>
             </div>
         </div>
 

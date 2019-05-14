@@ -7,6 +7,7 @@ use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -349,17 +350,31 @@ class User extends Model {
                 continue;
 
             // Create and return a wallet
-            // TODO: create wallet through model!
-            return $this->wallets()->create([
-                'economy_id' => $economy->id,
-                'name' => __('pages.wallets.namePlaceholder'),
-                'currency_id' => $econ_currency->currency_id,
-            ]);
+            return $this->createWallet($economy, $econ_currency->currency_id);
         }
 
         // Throw a error if no wallet could be found/created or return null
         if($error)
             throw new \Exception("Failed to get or create wallet for any of given currencies");
         return null;
+    }
+
+    /**
+     * Create a new wallet for the user.
+     *
+     * @param Economy $economy The economy to create the wallet in.
+     * @param int $currency_id The ID of the currency this wallet uses.
+     * @param string|null [$name=null] The name of the wallet, or null to use
+     *      the default.
+     *
+     * @return Wallet The created wallet.
+     */
+    // TODO: move this somewhere else?
+    public function createWallet(Economy $economy, int $currency_id, $name = null) {
+        return $this->wallets()->create([
+            'economy_id' => $economy->id,
+            'name' => $name ?? __('pages.wallets.namePlaceholder'),
+            'currency_id' => $currency_id,
+        ]);
     }
 }

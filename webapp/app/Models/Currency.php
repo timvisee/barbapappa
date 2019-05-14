@@ -79,4 +79,16 @@ class Currency extends Model {
     public function wallets() {
         return $this->hasMany('App\Models\Wallet');
     }
+
+    /**
+     * Format the given amount as human readable text using the proper currency
+     * format.
+     *
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     *
+     * @return string Formatted amount.
+     */
+    public function formatAmount($amount, $format = BALANCE_FORMAT_PLAIN) {
+        return balance($amount, $this->code, $format);
+    }
 }

@@ -223,6 +223,7 @@ return [
         'transferToUser' => 'Transfer to user',
         'toSelf' => 'To wallet',
         'toUser' => 'To user',
+        'successfullyTransferredAmount' => 'Successfully transfered :amount to :wallet',
         'backToWallet' => 'Back to wallet',
         'walletTransactions' => 'Wallet transactions',
     ],
