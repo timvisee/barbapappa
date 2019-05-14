@@ -74,6 +74,14 @@ $page-divider-color: #D5D5D5;
   @include fluid-type(font-size, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 32px, 96px);
 }
 
+.highlight-box i.arrow-icon {
+  padding: 0;
+  font-size: 3em !important;
+  color: $page-divider-slot-color;
+  text-shadow: 0 1px $page-divider-slot-shadow;
+  @include fluid-type(font-size, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 32px, 96px);
+}
+
 .highlight-box img.logo {
   max-width: 100%;
   @include fluid-type(width, $highlight-dynamic-min-width, $highlight-dynamic-max-width, 75px, 200px);

@@ -247,6 +247,68 @@ class WalletController extends Controller {
     }
 
     /**
+     * Show the wallet transfer page.
+     *
+     * @return Response
+     */
+    public function transfer($communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+        $toWallets = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->where('currency_id', $wallet->currency_id)
+            ->where('id', '<>', $walletId)
+            ->get();
+
+        return view('community.wallet.transfer')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet)
+            ->with('toWallets', $toWallets)
+            ->with('currency', $wallet->currency);
+    }
+
+    /**
+     * Do the wallet transfer.
+     *
+     * @return Response
+     */
+    public function doTransfer($communityId, $economyId, $walletId) {
+        // TODO: not yet implemented
+        return $this->transfer($communityId, $economyId, $walletId);
+    }
+
+    /**
+     * Show the wallet transfer page.
+     *
+     * @return Response
+     */
+    public function transferUser($communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+
+        return view('community.wallet.transferUser')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet);
+    }
+
+    /**
      * Show user wallet transactions.
      *
      * @return Response

@@ -57,6 +57,7 @@ return [
     'for' => 'for',
     'none' => 'None',
     'amount' => 'Amount',
+    'amountInCurrency' => 'Amount in :currency',
     'state' => 'State',
     'type' => 'Type',
     'estimate' => 'Estimate',
