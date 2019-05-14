@@ -11,6 +11,8 @@ use App\Models\Community;
 use App\Perms\AppRoles;
 use App\Perms\CommunityRoles;
 
+// TODO: using barauth()->getSessionUser() in some places, shouldn't this be getUser() ?
+
 class CommunityController extends Controller {
 
     /**
@@ -57,6 +59,10 @@ class CommunityController extends Controller {
         $community->visible = is_checked($request->input('visible'));
         $community->public = is_checked($request->input('public'));
         $community->save();
+
+        // Automatically join if checked
+        if(is_checked($request->input('join')))
+            $community->join(barauth()->getUser());
 
         // Redirect the user to the community page
         return redirect()
