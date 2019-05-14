@@ -370,7 +370,7 @@ class WalletController extends Controller {
             ->route('community.wallet.show', [
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id,
-                'walletId' => $wallet->id,
+                'walletId' => $toWallet->id,
             ])
             ->with('success', __('pages.wallets.successfullyTransferredAmount', [
                 'amount' => $wallet->currency->formatAmount($amount),
