@@ -87,6 +87,14 @@ class ValidationDefaults {
     const PRICE = 'regex:/^(\d{0,8}([,.]\d{1,2})?)?$/';
 
     /**
+     * A price value, with two optional decimal digits, may only be positive.
+     */
+    const PRICE_POSITIVE = 'regex:/^('
+            . '[1-9][0-9]{0,7}([,.]\d{1,2})?|'
+            . '\d{0,8}[,.][0-9]?[1-9]'
+        . ')?$/';
+
+    /**
      * Build the community slug validation configuration.
      *
      * @param int|null $community The community this configuration is built for.

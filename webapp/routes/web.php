@@ -229,6 +229,11 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     // Transactions
                     Route::get('/transactions', 'WalletController@transactions')->name('community.wallet.transactions');
 
+                    // Transfer pages
+                    Route::get('/transfer', 'WalletController@transfer')->name('community.wallet.transfer');
+                    Route::post('/transfer', 'WalletController@doTransfer')->name('community.wallet.doTransfer');
+                    Route::get('/transfer/user', 'WalletController@transferUser')->name('community.wallet.transfer.user');
+
                     // // Supported economy currencies
                     // Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
                     //     // Index

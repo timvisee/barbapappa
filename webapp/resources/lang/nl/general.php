@@ -21,4 +21,6 @@ return [
     'or' => 'of',
     'optional' => 'Optioneel',
     'cancel' => 'Annuleren',
+
+    'notYetImplemented' => 'Nog niet geimplementeerd.',
 ];

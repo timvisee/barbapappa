@@ -52,6 +52,10 @@
                 @lang('misc.delete')
             </a>
         </div>
+        <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                class="ui button basic">
+            @lang('pages.wallets.transfer')
+        </a>
     </p>
 
     {{-- Transaction list --}}

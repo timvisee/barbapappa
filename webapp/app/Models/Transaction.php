@@ -109,6 +109,30 @@ class Transaction extends Model {
         if($cost != 0)
             return $cost;
 
+        // Find total transaction value based on wallets
+        list($pos, $neg) = $this
+            ->mutations()
+            ->where('type', Mutation::TYPE_WALLET)
+            ->pluck('amount')
+            ->partition(function($amount) {
+                return $amount >= 0;
+            });
+        $cost = max($pos->sum(), abs($neg->sum()));
+        if($cost != 0)
+            return $cost;
+
+        // Find total transaction value based on payments
+        list($pos, $neg) = $this
+            ->mutations()
+            ->where('type', Mutation::TYPE_PRODUCT)
+            ->pluck('amount')
+            ->partition(function($amount) {
+                return $amount >= 0;
+            });
+        $cost = max($pos->sum(), abs($neg->sum()));
+        if($cost != 0)
+            return $cost;
+
         // TODO: throw warning no cost was found based on wallet/payment mutations
 
         // No cost could be determined

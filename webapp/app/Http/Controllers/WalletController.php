@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-
 use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
 use App\Models\EconomyCurrency;
+use App\Models\Mutation;
+use App\Models\MutationWallet;
+use App\Models\Transaction;
 use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\CommunityRoles;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
+use Validator;
 
 class WalletController extends Controller {
 
@@ -244,6 +248,156 @@ class WalletController extends Controller {
         return redirect()
             ->route('community.wallet.list', ['communityId' => $communityId, 'economyId' => $economy->id])
             ->with('success', __('pages.wallets.walletDeleted'));
+    }
+
+    /**
+     * Show the wallet transfer page.
+     *
+     * @return Response
+     */
+    public function transfer($communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+        $toWallets = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->where('currency_id', $wallet->currency_id)
+            ->where('id', '<>', $walletId)
+            ->get();
+
+        return view('community.wallet.transfer')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet)
+            ->with('toWallets', $toWallets)
+            ->with('currency', $wallet->currency);
+    }
+
+    /**
+     * Do the wallet transfer.
+     *
+     * @return Response
+     */
+    public function doTransfer(Request $request, $communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+        $toWallets = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->where('currency_id', $wallet->currency_id)
+            ->where('id', '<>', $walletId)
+            ->get();
+        $currency = $wallet->currency;
+
+        // Validate
+        $this->validate($request, [
+            'amount' => ['required', ValidationDefaults::PRICE_POSITIVE],
+            'to_wallet' => [
+                'required',
+                Rule::in($toWallets->pluck('id')->push('new')),
+            ],
+        ]);
+        $amount = $request->input('amount');
+        $toWallet = $request->input('to_wallet');
+
+        // Start a database transaction for the wallet transaction
+        DB::transaction(function() use($user, $economy, $currency, $amount, $wallet, &$toWallet, $toWallets) {
+            // Create a new wallet or select an existing wallet
+            if($toWallet == 'new')
+                $toWallet = $user->createWallet($economy, $currency->id);
+            else
+                $toWallet = $toWallets->firstWhere('id', $toWallet);
+
+            // Create the transaction
+            $transaction = Transaction::create([
+                'state' => Transaction::STATE_SUCCESS,
+                'owner_id' => $user->id,
+            ]);
+
+            // Create the from wallet mutation
+            $mut_wallet = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $economy->id,
+                    'type' => Mutation::TYPE_WALLET,
+                    'amount' => $amount,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_SUCCESS,
+                    'owner_id' => $user->id,
+                ]);
+            MutationWallet::create([
+                'mutation_id' => $mut_wallet->id,
+                'wallet_id' => $wallet->id,
+            ]);
+
+            // Create the to wallet mutation
+            $mut_wallet = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $economy->id,
+                    'type' => Mutation::TYPE_WALLET,
+                    'amount' => -$amount,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_SUCCESS,
+                    'owner_id' => $user->id,
+                ]);
+            MutationWallet::create([
+                'mutation_id' => $mut_wallet->id,
+                'wallet_id' => $toWallet->id,
+            ]);
+
+            // Transfer the money
+            $wallet->transfer($amount, $toWallet);
+        });
+
+        // Redirect back to the wallet page with a success message
+        return redirect()
+            ->route('community.wallet.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'walletId' => $wallet->id,
+            ])
+            ->with('success', __('pages.wallets.successfullyTransferredAmount', [
+                'amount' => $wallet->currency->formatAmount($amount),
+                'wallet' => $toWallet->name,
+            ]));
+    }
+
+    /**
+     * Show the wallet transfer page.
+     *
+     * @return Response
+     */
+    public function transferUser($communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+
+        return view('community.wallet.transferUser')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet);
     }
 
     /**

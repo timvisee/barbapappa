@@ -167,7 +167,7 @@ class Wallet extends Model {
      * @return string Formatted balance
      */
     public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
-        return balance($this->balance, $this->currency->code, $format);
+        return $this->currency->formatAmount($this->balance, $format);
     }
 
     /**
@@ -191,6 +191,8 @@ class Wallet extends Model {
      * Wallet balance should always be modified using the `withdraw` and
      * `deposit` functions to ensure integrety.
      *
+     * This does not create a corresponding transaction or mutation.
+     *
      * @param number $amount The amount to withdraw from this wallet.
      *
      * @throws \Exception Throws an exception if the amount is negative or zero.
@@ -212,6 +214,8 @@ class Wallet extends Model {
      * Wallet balance should always be modified using the `withdraw` and
      * `deposit` functions to ensure integrety.
      *
+     * This does not create a corresponding transaction or mutation.
+     *
      * @param number $amount The amount to deposit to this wallet.
      *
      * @throws \Exception Throws an exception if the amount is negative or zero.
@@ -225,5 +229,36 @@ class Wallet extends Model {
 
         // Increment the balance
         $this->increment('balance', $amount);
+    }
+
+    /**
+     * Transfer the given amount to the given wallet.
+     *
+     * This does not create a corresponding transaction or mutation.
+     *
+     * @param number $amount The amount to transfer to the given wallet.
+     * @param Wallet $wallet The wallet to transfer to.
+     * @param boolean [$sameEconomy=true] True to require the wallets are in the
+     *      same economy.
+     *
+     * @throws \Exception Throws an exception if the given amount is negative or
+     * zero.
+     */
+    public function transfer($amount, $wallet, $sameEconomy = true) {
+        // Assert the amount is positive
+        if($amount <= 0)
+            throw new \Exception("Failed to transfer money to wallet, amount is <= 0");
+
+        // TODO: assert we're in a transaction
+
+        // Verify the currency and economy
+        if($this->currency_id != $wallet->currency_id)
+            throw new \Exception("Failed to transfer money to wallet, currencies differ");
+        if($sameEconomy && $this->economy_id != $wallet->economy_id)
+            throw new \Exception("Failed to transfer money to wallet, economies differ");
+
+        // Increment the balance
+        $this->withdraw($amount);
+        $wallet->deposit($amount);
     }
 }
