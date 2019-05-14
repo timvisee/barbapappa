@@ -98,6 +98,16 @@
             {{ ErrorRenderer::inline('public') }}
         </div>
 
+        <div class="ui divider"></div>
+
+        <div class="inline field">
+            <div class="ui toggle checkbox">
+                <input type="checkbox" name="join" tabindex="0" class="hidden" checked="checked">
+                {{ Form::label('join', __('pages.bar.joinAfterCreate')) }}
+            </div>
+            {{ ErrorRenderer::inline('join') }}
+        </div>
+
         <br />
 
         <button class="ui button primary" type="submit">@lang('misc.create')</button>

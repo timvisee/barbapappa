@@ -78,6 +78,10 @@ class BarController extends Controller {
             'public' => is_checked($request->input('public')),
         ]);
 
+        // Automatically join if checked
+        if(is_checked($request->input('join')))
+            $bar->join(barauth()->getUser());
+
         // Redirect the user to the account overview page
         return redirect()
             ->route('bar.show', ['barId' => $bar->human_id])
