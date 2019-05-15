@@ -145,7 +145,7 @@ class BarController extends Controller {
         // Show the bar page
         return view('bar.info')
             ->with('economy', $bar->economy)
-            ->with('page', last(explode('.', \Request::route()->getName('bar.info'))))
+            ->with('page', last(explode('.', \Request::route()->getName())))
             ->with('joined', $bar->isJoined($user));
     }
 

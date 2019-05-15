@@ -117,4 +117,24 @@ class Community extends Model {
 
         return $query;
     }
+
+    /**
+     * Count the members this community has.
+     *
+     * @return int Member count.
+     */
+    public function memberCount() {
+        return $this->users([], false)->count();
+    }
+
+    /**
+     * Get the localized community description.
+     *
+     * @return string|null Localized community description, or null if none is
+     * configured.
+     */
+    public function description() {
+        // TODO: implement this!
+        return null;
+    }
 }

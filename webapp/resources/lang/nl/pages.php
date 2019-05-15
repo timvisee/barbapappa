@@ -105,6 +105,8 @@ return [
         'economy' => 'Economie',
         'goTo' => 'Ga naar groep',
         'backToCommunity' => 'Terug naar groep',
+        'noDescription' => 'Deze groep heeft geen beschrijving',
+        'communityInfo' => 'Groep informatie',
     ],
 
     /**

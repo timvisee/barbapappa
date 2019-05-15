@@ -105,6 +105,8 @@ return [
         'economy' => 'Booty',
         'goTo' => 'Go to crew',
         'backToCommunity' => 'Back to crew',
+        'noDescription' => 'Dis crew be nay description',
+        'communityInfo' => 'Crew info',
     ],
 
     /**

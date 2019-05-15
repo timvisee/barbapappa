@@ -105,6 +105,8 @@ return [
         'economy' => 'Economy',
         'goTo' => 'Go to community',
         'backToCommunity' => 'Back to community',
+        'noDescription' => 'This community has no description',
+        'communityInfo' => 'Community info',
     ],
 
     /**

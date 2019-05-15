@@ -62,6 +62,20 @@ class CommunityRoles {
     }
 
     /**
+     * A preset for community users.
+     * This includes application administrators.
+     *
+     * @return Config The permission configuration.
+     */
+    public static function presetUser() {
+        return isset(Self::$presetCache[Self::USER]) ?
+            Self::$presetCache[Self::USER] :
+            Self::$presetCache[Self::USER] = AppRoles::presetAdmin()
+                ->or()
+                ->raw(Self::SCOPE, Self::USER);
+    }
+
+    /**
      * A preset for community managers.
      * This includes application administrators.
      *

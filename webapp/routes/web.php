@@ -88,8 +88,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
     // Specific
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
-        // Show
+        // Show, info
         Route::get('/', 'CommunityController@show')->name('community.show');
+        Route::get('/info', 'CommunityController@info')->name('community.info');
 
         // Join/leave
         Route::get('/join', 'CommunityController@join')->name('community.join');
