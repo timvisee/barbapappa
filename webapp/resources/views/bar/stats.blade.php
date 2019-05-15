@@ -3,7 +3,6 @@
 @section('title', __('pages.stats.barStats'))
 
 @php
-    use \Carbon\Carbon;
     use \App\Http\Controllers\BarMemberController;
 @endphp
 

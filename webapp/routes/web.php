@@ -92,6 +92,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
         Route::get('/', 'CommunityController@show')->name('community.show');
         Route::get('/info', 'CommunityController@info')->name('community.info');
 
+        // Stats
+        Route::get('/stats', 'CommunityController@stats')->middleware(CommunityController::permsUser()->middleware())->name('community.stats');
+
         // Join/leave
         Route::get('/join', 'CommunityController@join')->name('community.join');
         Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');

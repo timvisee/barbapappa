@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
+use App\Models\Bar;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
-use App\Models\Bar;
 use App\Perms\BarRoles;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
