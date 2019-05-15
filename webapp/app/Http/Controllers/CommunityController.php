@@ -87,6 +87,7 @@ class CommunityController extends Controller {
             ->first();
         if($member != null) {
             $member->pivot->visited_at = new \DateTime();
+            $member->pivot->timestamps = false;
             $member->pivot->save();
         }
 
