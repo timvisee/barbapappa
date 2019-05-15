@@ -94,17 +94,20 @@ class BarController extends Controller {
      * @return Response
      */
     public function show($barId) {
+        // Show info page if user does not have user role
+        if(!perms(Self::permsUser()))
+            return $this->info($barId);
+
         // Get the bar and session user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
 
         // Update the visit time for this member
-        $member = $bar->users(['visited_at'], true)
+        $member = $bar->users(['visited_at'], false)
             ->where('user_id', $user->id)
             ->first();
         if($member != null) {
             $member->pivot->visited_at = new \DateTime();
-            $member->pivot->timestamps = false;
             $member->pivot->save();
         }
 
@@ -127,6 +130,23 @@ class BarController extends Controller {
             ->with('joined', $bar->isJoined($user))
             ->with('products', $products)
             ->with('currencies', $currencies);
+    }
+
+    /**
+     * Bar info page.
+     *
+     * @return Response
+     */
+    public function info($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Show the bar page
+        return view('bar.info')
+            ->with('economy', $bar->economy)
+            ->with('page', last(explode('.', \Request::route()->getName('bar.info'))))
+            ->with('joined', $bar->isJoined($user));
     }
 
     /**
@@ -524,6 +544,15 @@ class BarController extends Controller {
 
         // Return the list of currencies
         return $currencies;
+    }
+
+    /**
+     * The permission required for basic user interaction such as viewing and
+     * buying products.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsUser() {
+        return BarRoles::presetUser();
     }
 
     /**

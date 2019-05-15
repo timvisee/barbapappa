@@ -82,12 +82,11 @@ class CommunityController extends Controller {
         $user = barauth()->getSessionUser();
 
         // Update the visit time for this member
-        $member = $community->users(['visited_at'], true)
+        $member = $community->users(['visited_at'], false)
             ->where('user_id', $user->id)
             ->first();
         if($member != null) {
             $member->pivot->visited_at = new \DateTime();
-            $member->pivot->timestamps = false;
             $member->pivot->save();
         }
 

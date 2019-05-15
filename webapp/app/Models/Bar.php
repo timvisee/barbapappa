@@ -100,6 +100,7 @@ class Bar extends Model {
      *
      * @return List of joined users.
      */
+    // TODO: rename this to members?
     public function users($pivotColumns = [], $withTimestamps = true) {
         // Query relation
         $query = $this->belongsToMany(
@@ -121,6 +122,15 @@ class Bar extends Model {
     }
 
     /**
+     * Count the members this bar has.
+     *
+     * @return int Member count.
+     */
+    public function memberCount() {
+        return $this->users([], false)->count();
+    }
+
+    /**
      * Get a relation to all product mutations of products that were bought at
      * this bar.
      *
@@ -128,5 +138,16 @@ class Bar extends Model {
      */
     public function productMutations() {
         return $this->hasMany(MutationProduct::class);
+    }
+
+    /**
+     * Get the localized bar description.
+     *
+     * @return string|null Localized bar description, or null if none is
+     * configured.
+     */
+    public function description() {
+        // TODO: implement this!
+        return null;
     }
 }

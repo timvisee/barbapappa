@@ -334,6 +334,7 @@ return [
         'backToBar' => 'Back to bar',
         'quickBuy' => 'Quick buy',
         'boughtProductForPrice' => 'Bought :product for :price',
+        'noDescription' => 'This bar has no description',
     ],
 
     /**

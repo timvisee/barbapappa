@@ -62,6 +62,20 @@ class BarRoles {
     }
 
     /**
+     * A preset for bar users.
+     * This includes application, community and bar managers.
+     *
+     * @return Config The permission configuration.
+     */
+    public static function presetUser() {
+        return isset(Self::$presetCache[Self::USER]) ?
+            Self::$presetCache[Self::USER] :
+            Self::$presetCache[Self::USER] = CommunityRoles::presetManager()
+                ->or()
+                ->raw(Self::SCOPE, Self::USER);
+    }
+
+    /**
      * A preset for bar managers.
      * This includes application and communtiy administrators.
      *

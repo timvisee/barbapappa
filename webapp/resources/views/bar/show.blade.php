@@ -8,38 +8,8 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @if($joined)
-            <a href="{{ route('bar.leave', ['barId' => $bar->human_id]) }}"
-                    class="ui right pointing label green joined-label-popup"
-                    data-title="@lang('pages.bar.joined')"
-                    data-content="@lang('pages.bar.joinedClickToLeave')">
-                <span class="halflings halflings-ok"></span>
-            </a>
-        @endif
-
-        @yield('title')
-
-        @if($joined)
-            <a href="{{ route('community.wallet.list', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id
-                    ]) }}">
-                {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}
-            </a>
-        @endif
-    </h2>
-
-    @unless($joined)
-        <div class="ui info message visible">
-            <div class="header">@lang('pages.bar.notJoined')</div>
-            <p>@lang('pages.bar.hintJoin')</p>
-            <a href="{{ route('bar.join', ['barId' => $bar->human_id]) }}"
-                    class="ui button small positive basic">
-                @lang('pages.bar.join')
-            </a>
-        </div>
-    @endif
+    @include('bar.include.barHeader')
+    @include('bar.include.joinBanner')
 
     <div class="ui vertical menu fluid">
         {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
@@ -89,10 +59,12 @@
         </a>
     @endif
 
-    <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
-            class="ui button basic">
-        @lang('pages.wallets.yourWallets')
-    </a>
+    @if($joined)
+        <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
+                class="ui button basic">
+            @lang('pages.wallets.yourWallets')
+        </a>
+    @endif
 
     @if(perms(BarController::permsManage()))
         <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}"

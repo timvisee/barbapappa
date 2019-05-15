@@ -334,6 +334,7 @@ return [
         'backToBar' => 'Terug naar bar',
         'quickBuy' => 'Direct kopen',
         'boughtProductForPrice' => ':product gekocht voor :price',
+        'noDescription' => 'Deze bar heeft geen beschrijving',
     ],
 
     /**

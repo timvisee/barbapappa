@@ -41,6 +41,7 @@ return [
     'firstSeen' => 'First appearance',
     'lastChanged' => 'Last changed',
     'lastUpdated' => 'Last updated',
+    'active' => 'Active',
     'slug' => 'Slug',
     'currency' => 'Currency',
     'currencies' => 'Currencies',
@@ -64,6 +65,7 @@ return [
     'createdBy' => 'Created by',
     'initiatedBy' => 'Initiated by',
     'invalidPrice' => 'Invalid price',
+    'members' => 'Members',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'viewingAccountOf' => 'You\'re viewing the account of',
