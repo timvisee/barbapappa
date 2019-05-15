@@ -110,7 +110,7 @@ class PermissionManager {
      */
     private function evaluateScopeApp($role) {
         // A role must be specified
-        if(empty($role))
+        if(empty($role) && $role !== "0" && $role !== 0)
             throw new \Exception("Unable to evaluate role, none specified");
         if(!is_numeric($role))
             throw new \Exception("Invalid required role specified, not an integer");
@@ -138,7 +138,7 @@ class PermissionManager {
      */
     private function evaluateScopeCommunity($role, Request $request) {
         // A role must be specified
-        if(empty($role))
+        if(empty($role) && $role !== "0" && $role !== 0)
             throw new \Exception("Unable to evaluate role, none specified");
         if(!is_numeric($role))
             throw new \Exception("Invalid required role specified, not an integer");
@@ -182,7 +182,7 @@ class PermissionManager {
      */
     private function evaluateScopeBar($role, Request $request) {
         // A role must be specified
-        if(empty($role))
+        if(empty($role) && $role !== "0" && $role !== 0)
             throw new \Exception("Unable to evaluate role, none specified");
         if(!is_numeric($role))
             throw new \Exception("Invalid required role specified, not an integer");
