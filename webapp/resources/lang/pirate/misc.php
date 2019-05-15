@@ -42,6 +42,7 @@ return [
     'lastChanged' => 'Last changed',
     'lastUpdated' => 'Last updated',
     'active' => 'Active',
+    'available' => 'Available',
     'slug' => 'Slug',
     'currency' => 'Currency',
     'currencies' => 'Currencies',
@@ -66,6 +67,10 @@ return [
     'initiatedBy' => 'Initiated by',
     'invalidPrice' => 'Invalid price',
     'members' => 'Mateies',
+    'enrolled' => 'Joined',
+    'sold' => 'Sold',
+    'bar' => 'Bar',
+    'community' => 'Crew',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',

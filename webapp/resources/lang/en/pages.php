@@ -9,7 +9,9 @@ return [
     'dashboard' => 'Dashboard',
     'yourPersonalDashboard' => 'Your personal dashboard',
     'emailPreferences' => 'Email preferences',
+    // TODO: move to misc?
     'communities' => 'Communities',
+    // TODO: move to misc?
     'bars' => 'Bars',
     'account' => 'Account',
     'yourAccount' => 'Your account',
@@ -338,6 +340,21 @@ return [
         'boughtProductForPrice' => 'Bought :product for :price',
         'noDescription' => 'This bar has no description',
         'barInfo' => 'Bar info',
+    ],
+
+    /**
+     * Community/bar statistics pages.
+     */
+    'stats' => [
+        'title' => 'Statistics',
+        'barStats' => 'Bar statistics',
+        'communityStats' => 'Community statistics',
+        'activeLastHour' => 'Active last hour',
+        'activeLastDay' => 'Active last day',
+        'activeLastMonth' => 'Active last month',
+        'productsLastHour' => 'Products last hour',
+        'productsLastDay' => 'Products last day',
+        'productsLastMonth' => 'Products last month',
     ],
 
     /**

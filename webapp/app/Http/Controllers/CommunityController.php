@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
-use Illuminate\Http\Response;
-use Illuminate\Http\Request;
-
 use App\Helpers\ValidationDefaults;
 use App\Models\Community;
 use App\Perms\AppRoles;
 use App\Perms\CommunityRoles;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Validator;
 
 // TODO: using barauth()->getSessionUser() in some places, shouldn't this be getUser() ?
 
@@ -112,6 +112,37 @@ class CommunityController extends Controller {
             ->with('joined', $community->isJoined($user))
             ->with('page', last(explode('.', \Request::route()->getName())))
             ->with('bars', $community->bars()->visible()->get());
+    }
+
+    /**
+     * Community stats page.
+     *
+     * @return Response
+     */
+    public function stats($communityId) {
+        // Get the community and session user
+        $community = \Request::get('community');
+        $user = barauth()->getSessionUser();
+
+        // Gather some stats
+        $memberCountHour = $community
+            ->users()
+            ->wherePivot('visited_at', '>=', Carbon::now()->subHour())
+            ->count();
+        $memberCountDay = $community
+            ->users()
+            ->wherePivot('visited_at', '>=', Carbon::now()->subDay())
+            ->count();
+        $memberCountMonth = $community
+            ->users()
+            ->wherePivot('visited_at', '>=', Carbon::now()->subMonth())
+            ->count();
+
+        // Show the community page
+        return view('community.stats')
+            ->with('memberCountHour', $memberCountHour)
+            ->with('memberCountDay', $memberCountDay)
+            ->with('memberCountMonth', $memberCountMonth);
     }
 
     /**

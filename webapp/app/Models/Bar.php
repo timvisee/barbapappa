@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Mail;
 class Bar extends Model {
 
     use HasPassword, HasSlug, Joinable;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     /**
      * The attributes that should be hidden for arrays.
@@ -98,10 +99,10 @@ class Bar extends Model {
      * @param array [$pivotColumns] An array of pivot columns to include.
      * @param boolean [$withTimestamps=true] True to include timestamp columns.
      *
-     * @return List of joined users.
+     * @return Query for list of joined users.
      */
     // TODO: rename this to members?
-    public function users($pivotColumns = [], $withTimestamps = true) {
+    public function users($pivotColumns = ['role'], $withTimestamps = true) {
         // Query relation
         $query = $this->belongsToMany(
                 User::class,
@@ -128,6 +129,30 @@ class Bar extends Model {
      */
     public function memberCount() {
         return $this->users([], false)->count();
+    }
+
+    /**
+     * Get a relation to all transactions this bar was a part of.
+     * This would include transactions which cover a product bought in this bar.
+     *
+     * @return Relation to the transactions for this bar.
+     */
+    public function transactions() {
+        return $this
+            ->hasManyDeep(
+                Transaction::class,
+                [MutationProduct::class, Mutation::class],
+                [
+                    'bar_id',
+                    'id',
+                    'id',
+                ],
+                [
+                    'id',
+                    'mutation_id',
+                    'transaction_id',
+                ]
+            );
     }
 
     /**

@@ -57,6 +57,11 @@
                 class="ui button basic">
             @lang('pages.bar.barInfo')
         </a>
+
+        <a href="{{ route('bar.stats', ['barId' => $bar->human_id]) }}"
+                class="ui button basic">
+            @lang('pages.stats.title')
+        </a>
     @endif
 
     @if(perms(BarMemberController::permsView()))

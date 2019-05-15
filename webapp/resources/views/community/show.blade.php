@@ -23,6 +23,11 @@
                 class="ui button basic">
             @lang('pages.community.communityInfo')
         </a>
+
+        <a href="{{ route('community.stats', ['community' => $community->human_id]) }}"
+                class="ui button basic">
+            @lang('pages.stats.title')
+        </a>
     @endif
 
     @if(perms(CommunityMemberController::permsView()))

@@ -108,8 +108,8 @@ class Wallet extends Model {
      */
     public function mutations() {
         return $this->hasManyDeep(
-            'App\Models\Mutation',
-            ['App\Models\MutationWallet'],
+            Mutation::class,
+            [MutationWallet::class],
             [
                 'wallet_id',
                 'id',

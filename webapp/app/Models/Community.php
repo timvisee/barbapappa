@@ -96,8 +96,9 @@ class Community extends Model {
      * @param array [$pivotColumns] An array of pivot columns to include.
      * @param boolean [$withTimestamps=true] True to include timestamp columns.
      *
-     * @return List of joined users.
+     * @return Query for list of joined users.
      */
+    // TODO: rename this to members?
     public function users($pivotColumns = ['role'], $withTimestamps = true) {
         // Query relation
         $query = $this->belongsToMany(
