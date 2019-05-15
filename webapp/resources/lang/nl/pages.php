@@ -9,7 +9,9 @@ return [
     'dashboard' => 'Dashboard',
     'yourPersonalDashboard' => 'Je persoonlijke dashboard',
     'emailPreferences' => 'E-mailvoorkeuren',
+    // TODO: move to misc?
     'communities' => 'Groepen',
+    // TODO: move to misc?
     'bars' => 'Bars',
     'account' => 'Account',
     'yourAccount' => 'Jouw account',
@@ -338,6 +340,21 @@ return [
         'boughtProductForPrice' => ':product gekocht voor :price',
         'noDescription' => 'Deze bar heeft geen beschrijving',
         'barInfo' => 'Bar informatie',
+    ],
+
+    /**
+     * Community/bar statistics pages.
+     */
+    'stats' => [
+        'title' => 'Statistieken',
+        'barStats' => 'Bar statistieken',
+        'communityStats' => 'Groep statistieken',
+        'activeLastHour' => 'Actief laatste uur',
+        'activeLastDay' => 'Actief laatste day',
+        'activeLastMonth' => 'Actief laatste maand',
+        'productsLastHour' => 'Producten laatste uur',
+        'productsLastDay' => 'Producten laatste day',
+        'productsLastMonth' => 'Producten laatste maand',
     ],
 
     /**

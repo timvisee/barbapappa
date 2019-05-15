@@ -328,6 +328,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
         Route::get('/info', 'BarController@info')->name('bar.info');
 
+        // Stats
+        Route::get('/stats', 'BarController@stats')->middleware(BarController::permsUser()->middleware())->name('bar.stats');
+
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');
         Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');

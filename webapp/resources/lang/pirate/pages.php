@@ -9,7 +9,9 @@ return [
     'dashboard' => 'Home port',
     'yourPersonalDashboard' => 'Ye home port',
     'emailPreferences' => 'E-bottle preferences',
+    // TODO: move to misc?
     'communities' => 'Crews',
+    // TODO: move to misc?
     'bars' => 'Bars',
     'account' => 'Ye ship',
     'yourAccount' => 'Ye ship',
@@ -338,6 +340,21 @@ return [
         'boughtProductForPrice' => 'Bought :product for :price',
         'noDescription' => 'Dis bar be nay description',
         'barInfo' => 'Bar info',
+    ],
+
+    /**
+     * Community/bar statistics pages.
+     */
+    'stats' => [
+        'title' => 'Statistics',
+        'barStats' => 'Bar statistics',
+        'communityStats' => 'Crew statistics',
+        'activeLastHour' => 'Active last hour',
+        'activeLastDay' => 'Active last day',
+        'activeLastMonth' => 'Active last month',
+        'productsLastHour' => 'Products last hour',
+        'productsLastDay' => 'Products last day',
+        'productsLastMonth' => 'Products last month',
     ],
 
     /**

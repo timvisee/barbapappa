@@ -150,6 +150,59 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar stats page.
+     *
+     * @return Response
+     */
+    public function stats($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Gather some stats
+        $memberCountHour = $bar
+            ->users()
+            ->wherePivot('visited_at', '>=', Carbon::now()->subHour())
+            ->count();
+        $memberCountDay = $bar
+            ->users()
+            ->wherePivot('visited_at', '>=', Carbon::now()->subDay())
+            ->count();
+        $memberCountMonth = $bar
+            ->users()
+            ->wherePivot('visited_at', '>=', Carbon::now()->subMonth())
+            ->count();
+        $productCount = $bar->economy->products()->count();
+        // TODO: only count products with mutation having success state
+        $soldProductCount = $bar->productMutations()->sum('quantity');
+        $transactionCount = $bar->transactions()->count();
+        $soldProductCountHour = $bar
+            ->productMutations()
+            ->where('created_at', '>=', Carbon::now()->subHour())
+            ->sum('quantity');
+        $soldProductCountDay = $bar
+            ->productMutations()
+            ->where('created_at', '>=', Carbon::now()->subDay())
+            ->sum('quantity');
+        $soldProductCountMonth = $bar
+            ->productMutations()
+            ->where('created_at', '>=', Carbon::now()->subMonth())
+            ->sum('quantity');
+
+        // Show the bar page
+        return view('bar.stats')
+            ->with('memberCountHour', $memberCountHour)
+            ->with('memberCountDay', $memberCountDay)
+            ->with('memberCountMonth', $memberCountMonth)
+            ->with('productCount', $productCount)
+            ->with('soldProductCount', $soldProductCount)
+            ->with('transactionCount', $transactionCount)
+            ->with('soldProductCountHour', $soldProductCountHour)
+            ->with('soldProductCountDay', $soldProductCountDay)
+            ->with('soldProductCountMonth', $soldProductCountMonth);
+    }
+
+    /**
      * Bar edit page.
      *
      * @return Response
