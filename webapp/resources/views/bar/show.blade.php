@@ -52,6 +52,13 @@
         @lang('pages.community.viewCommunity')
     </a>
 
+    @if(perms(BarController::permsUser()))
+        <a href="{{ route('bar.info', ['barId' => $bar->human_id]) }}"
+                class="ui button basic">
+            @lang('pages.bar.barInfo')
+        </a>
+    @endif
+
     @if(perms(BarMemberController::permsView()))
         <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">

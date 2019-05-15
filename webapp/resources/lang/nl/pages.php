@@ -335,6 +335,7 @@ return [
         'quickBuy' => 'Direct kopen',
         'boughtProductForPrice' => ':product gekocht voor :price',
         'noDescription' => 'Deze bar heeft geen beschrijving',
+        'barInfo' => 'Bar informatie',
     ],
 
     /**

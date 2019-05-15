@@ -335,6 +335,7 @@ return [
         'quickBuy' => 'Quick buy',
         'boughtProductForPrice' => 'Bought :product for :price',
         'noDescription' => 'This bar has no description',
+        'barInfo' => 'Bar info',
     ],
 
     /**

@@ -2,20 +2,36 @@
 
 @section('title', $bar->name)
 
+@php
+    use \App\Http\Controllers\BarMemberController;
+@endphp
+
 @section('content')
     @include('bar.include.barHeader')
 
     <div class="ui divider hidden"></div>
 
     <div class="ui two small statistics">
-        <div class="statistic">
-            <div class="value">
-                {{ $bar->memberCount() }}
+        @if(perms(BarMemberController::permsView()))
+            <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
+                    class="statistic">
+                <div class="value">
+                    {{ $bar->memberCount() }}
+                </div>
+                <div class="label">
+                    @lang('misc.members')
+                </div>
+            </a>
+        @else
+            <div class="statistic">
+                <div class="value">
+                    {{ $bar->memberCount() }}
+                </div>
+                <div class="label">
+                    @lang('misc.members')
+                </div>
             </div>
-            <div class="label">
-                @lang('misc.members')
-            </div>
-        </div>
+        @endif
         <div class="statistic">
             <div class="value">
                 @include('includes.humanTimeDiff', ['time' => $bar->created_at, 'short' => true, 'absolute' => true])
