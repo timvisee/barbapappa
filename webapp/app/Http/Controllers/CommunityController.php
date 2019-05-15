@@ -70,29 +70,47 @@ class CommunityController extends Controller {
             ->with('success', __('pages.community.created'));
     }
 
-
     /**
      * Community show page.
      *
      * @return Response
      */
     public function show($communityId) {
+        // Show info page if user does not have user role
+        if(!perms(Self::permsUser()))
+            return $this->info($communityId);
+
         // Get the community and session user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
 
         // Update the visit time for this member
-        $member = $community->users(['visited_at'], true)
+        $member = $community->users(['visited_at'], false)
             ->where('user_id', $user->id)
             ->first();
         if($member != null) {
             $member->pivot->visited_at = new \DateTime();
-            $member->pivot->timestamps = false;
             $member->pivot->save();
         }
 
         return view('community.show')
             ->with('joined', $community->isJoined($user))
+            ->with('bars', $community->bars()->visible()->get());
+    }
+
+    /**
+     * Community info page.
+     *
+     * @return Response
+     */
+    public function info($communityId) {
+        // Get the community and session user
+        $community = \Request::get('community');
+        $user = barauth()->getSessionUser();
+
+        return view('community.info')
+            ->with('joined', $community->isJoined($user))
+            ->with('page', last(explode('.', \Request::route()->getName())))
             ->with('bars', $community->bars()->visible()->get());
     }
 
@@ -237,6 +255,14 @@ class CommunityController extends Controller {
         return redirect()
             ->route('community.show', ['communityId' => $communityId])
             ->with('success', __('pages.community.leftThisCommunity'));
+    }
+
+    /**
+     * The permission required basic user actions.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsUser() {
+        return CommunityRoles::presetUser();
     }
 
     /**

@@ -105,6 +105,8 @@ return [
         'economy' => 'Economie',
         'goTo' => 'Ga naar groep',
         'backToCommunity' => 'Terug naar groep',
+        'noDescription' => 'Deze groep heeft geen beschrijving',
+        'communityInfo' => 'Groep informatie',
     ],
 
     /**
@@ -334,6 +336,8 @@ return [
         'backToBar' => 'Terug naar bar',
         'quickBuy' => 'Direct kopen',
         'boughtProductForPrice' => ':product gekocht voor :price',
+        'noDescription' => 'Deze bar heeft geen beschrijving',
+        'barInfo' => 'Bar informatie',
     ],
 
     /**

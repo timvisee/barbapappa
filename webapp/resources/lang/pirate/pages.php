@@ -105,6 +105,8 @@ return [
         'economy' => 'Booty',
         'goTo' => 'Go to crew',
         'backToCommunity' => 'Back to crew',
+        'noDescription' => 'Dis crew be nay description',
+        'communityInfo' => 'Crew info',
     ],
 
     /**
@@ -334,6 +336,8 @@ return [
         'backToBar' => 'Back to bar',
         'quickBuy' => 'Quick buy',
         'boughtProductForPrice' => 'Bought :product for :price',
+        'noDescription' => 'Dis bar be nay description',
+        'barInfo' => 'Bar info',
     ],
 
     /**

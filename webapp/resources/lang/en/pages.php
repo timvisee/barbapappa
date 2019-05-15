@@ -105,6 +105,8 @@ return [
         'economy' => 'Economy',
         'goTo' => 'Go to community',
         'backToCommunity' => 'Back to community',
+        'noDescription' => 'This community has no description',
+        'communityInfo' => 'Community info',
     ],
 
     /**
@@ -334,6 +336,8 @@ return [
         'backToBar' => 'Back to bar',
         'quickBuy' => 'Quick buy',
         'boughtProductForPrice' => 'Bought :product for :price',
+        'noDescription' => 'This bar has no description',
+        'barInfo' => 'Bar info',
     ],
 
     /**

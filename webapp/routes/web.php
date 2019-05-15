@@ -88,8 +88,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
     // Specific
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
-        // Show
+        // Show, info
         Route::get('/', 'CommunityController@show')->name('community.show');
+        Route::get('/info', 'CommunityController@info')->name('community.info');
 
         // Join/leave
         Route::get('/join', 'CommunityController@join')->name('community.join');
@@ -323,8 +324,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 
     // Specific
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
-        // Show
+        // Show, info
         Route::get('/', 'BarController@show')->name('bar.show');
+        Route::get('/info', 'BarController@info')->name('bar.info');
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');

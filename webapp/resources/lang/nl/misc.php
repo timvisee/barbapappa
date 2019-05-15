@@ -41,6 +41,7 @@ return [
     'firstSeen' => 'Eerst gezien',
     'lastChanged' => 'Laatst aangepast',
     'lastUpdated' => 'Laatst bijgewerkt',
+    'active' => 'Actief',
     'slug' => 'URL-pad',
     'currency' => 'Valuta',
     'currencies' => 'Valuta\'s',
@@ -64,6 +65,7 @@ return [
     'createdBy' => 'Gemaakt door',
     'initiatedBy' => 'Geïnitieerd door',
     'invalidPrice' => 'Ongeldige prijs',
+    'members' => 'Leden',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',
