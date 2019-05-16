@@ -141,8 +141,8 @@ return [
         'economyDeleted' => 'The economy has been removed.',
         'economyUpdated' => 'Economy changes saved.',
         'namePlaceholder' => 'Main economy',
-        'all' => 'All economies',
         'backToEconomy' => 'Back to economy',
+        'backToEconomies' => 'Back to economies',
     ],
 
     /**
@@ -167,7 +167,7 @@ return [
         'allowWalletsDescription' => 'With this option you can specify whether bar members can create a new personal wallet for this currency. Existing wallets will always be kept.',
         'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
         'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
-        'manage' => 'Manage economy currencies',
+        'manage' => 'Manage currencies',
     ],
 
     /**
@@ -211,7 +211,7 @@ return [
         'walletEconomies' => 'Wallet economies',
         'yourWallets' => 'Your wallets',
         '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
-        'economySelectDescription' => 'Wallets in this community are grouped by economy.<br>Select the economy to manage your wallets in it.',
+        'economySelectDescription' => 'Wallets in this community are divided by economy.<br>Select the economy to manage your wallets in it.',
         'noWallets' => 'You don\'t have any wallets yet...',
         'namePlaceholder' => 'My personal wallet',
         'createWallet' => 'Create wallet',

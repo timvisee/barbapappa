@@ -5,6 +5,29 @@
 @php
     use \App\Http\Controllers\EconomyController;
     use \App\Http\Controllers\EconomyCurrencyController;
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.economies.backToEconomies'),
+        'link' => route('community.economy.index', ['communityId' => $community->human_id]),
+        'icon' => 'undo',
+    ];
+    $menulinks[] = [
+        'name' => __('pages.currencies.manage'),
+        'link' => route('community.economy.currency.index', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id
+        ]),
+        'icon' => 'currency-conversion',
+    ];
+    $menulinks[] = [
+        'name' => __('pages.products.manageProducts'),
+        'link' => route('community.economy.product.index', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id
+        ]),
+        'icon' => 'shopping-bag',
+    ];
 @endphp
 
 @section('content')
@@ -42,6 +65,14 @@
                 </a>
             </div>
         @endif
+
+        <a href="{{ route('community.economy.product.index', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id
+                ]) }}"
+                class="ui button basic">
+            @lang('pages.products.manageProducts')
+        </a>
     </p>
 
     @if(perms(EconomyCurrencyController::permsView()))
@@ -51,7 +82,7 @@
             'header' => __('misc.currencies') . ' (' .  $currencies->count() . ')',
             'currencies' => $currencies,
             'button' => [
-                'label' => __('misc.manage'),
+                'label' => __('pages.currencies.manage'),
                 'link' => route('community.economy.currency.index', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id
@@ -65,7 +96,7 @@
     <p>
         <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}"
                 class="ui button basic">
-            @lang('pages.economies.all')
+            @lang('pages.economies.backToEconomies')
         </a>
     </p>
 @endsection

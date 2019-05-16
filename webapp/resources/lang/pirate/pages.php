@@ -141,8 +141,8 @@ return [
         'economyDeleted' => 'Th\' booty be sunk.',
         'economyUpdated' => 'Booty changes saved.',
         'namePlaceholder' => 'Our booty',
-        'all' => 'All booties',
         'backToEconomy' => 'Back to booty',
+        'backToEconomies' => 'Back to booties',
     ],
 
     /**
@@ -167,7 +167,7 @@ return [
         'allowWalletsDescription' => 'With dis option ye specify whether bar mateies be create a new personal wallet for dis currency. Existing wallets always be kept afloat.',
         'noCurrenciesToAdd' => 'There are no currencies you can add. Ask the site administrator to configure a currency.',
         'noMoreCurrenciesToAdd' => 'There are no other currencies you can add.',
-        'manage' => 'Manage booty currencies',
+        'manage' => 'Manage currencies',
     ],
 
     /**
@@ -211,7 +211,7 @@ return [
         'walletEconomies' => 'Wallet booties',
         'yourWallets' => 'Yer wallets',
         '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
-        'economySelectDescription' => 'Wallets in dis community be grouped by booty.<br>Select \'the booty to manage yer wallets.',
+        'economySelectDescription' => 'Wallets in dis community be divided by booty.<br>Select \'the booty to manage yer wallets.',
         'noWallets' => 'Yer nay be any wallets yet...',
         'namePlaceholder' => 'My personal wallet',
         'createWallet' => 'Create wallet',
