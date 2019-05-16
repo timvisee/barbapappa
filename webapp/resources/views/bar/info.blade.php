@@ -47,7 +47,7 @@
     <div class="ui segment">
         <p>
             @if(!empty($description = $bar->description()))
-                {{ $description }}
+                {!! nl2br(e($description)) !!}
             @else
                 <i>@lang('pages.bar.noDescription')...</i>
             @endif

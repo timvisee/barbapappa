@@ -16,6 +16,7 @@ class CreateCommunityTable extends Migration {
             $table->increments('id')->unsigned();
             $table->string('name', 255);
             $table->string('slug', 64)->index()->unique()->nullable(true)->default(null);
+            $table->string('description', 2048)->nullable(true)->default(null);
             $table->boolean('visible');
             $table->boolean('public');
             $table->string('password', 4096)->nullable()->default(null);

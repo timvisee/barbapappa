@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Mail;
  *
  * @property int id
  * @property string name
+ * @property string|null slug
+ * @property string|null description
  * @property bool visible
  * @property bool public
  * @property string|null password
@@ -38,7 +40,7 @@ class Community extends Model {
      * @var array
      */
     protected $hidden = [
-        'password'
+        'password',
     ];
 
     /**
@@ -69,7 +71,7 @@ class Community extends Model {
      * @return List of economies.
      */
     public function economies() {
-        return $this->hasMany('App\Models\Economy');
+        return $this->hasMany(Economy::class);
     }
 
     /**
@@ -78,7 +80,7 @@ class Community extends Model {
      * @return List of bars.
      */
     public function bars() {
-        return $this->hasMany('App\Models\Bar');
+        return $this->hasMany(Bar::class);
     }
 
     /**
@@ -87,7 +89,7 @@ class Community extends Model {
      * @return The wallets.
      */
     public function wallets() {
-        return $this->hasManyThrough('App\Models\Wallet', 'App\Models\Economy');
+        return $this->hasManyThrough(Wallet::class, Economy::class);
     }
 
     /**
@@ -102,7 +104,7 @@ class Community extends Model {
     public function users($pivotColumns = ['role'], $withTimestamps = true) {
         // Query relation
         $query = $this->belongsToMany(
-                'App\Models\User',
+                User::class,
                 'community_user',
                 'community_id',
                 'user_id'
@@ -135,7 +137,7 @@ class Community extends Model {
      * configured.
      */
     public function description() {
-        // TODO: implement this!
-        return null;
+        // TODO: placeholder for when localized descriptions are available
+        return $this->description;
     }
 }

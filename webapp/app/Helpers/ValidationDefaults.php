@@ -82,6 +82,11 @@ class ValidationDefaults {
     const CODE = 'string|min:2|max:4096';
 
     /**
+     * A description.
+     */
+    const DESCRIPTION = 'string|max:2048';
+
+    /**
      * A price value, with two optional decimal digits, may be zero.
      */
     const PRICE = 'regex:/^(\d{0,8}([,.]\d{1,2})?)?$/';
