@@ -196,6 +196,7 @@ return [
         'localizedNamesDescription' => 'Configure localized names for dis product in th\' fields below if be different from th\' main name.',
         'search' => 'Search products',
         'backToProducts' => 'Back to products',
+        'viewProduct' => 'View product',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',
@@ -342,6 +343,7 @@ return [
         'boughtProductForPrice' => 'Bought :product for :price',
         'noDescription' => 'Dis bar be nay description',
         'barInfo' => 'Bar info',
+        'viewBar' => 'View bar',
     ],
 
     /**

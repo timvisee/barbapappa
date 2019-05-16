@@ -196,6 +196,7 @@ return [
         'localizedNamesDescription' => 'Configureer de gelokaliseerde namen voor dit product in de velden hieronder als het verschilt met de hoofdnaam.',
         'search' => 'Zoek producten',
         'backToProducts' => 'Terug naar producten',
+        'viewProduct' => 'Product bekijken',
         'type' => [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',
@@ -342,6 +343,7 @@ return [
         'boughtProductForPrice' => ':product gekocht voor :price',
         'noDescription' => 'Deze bar heeft geen beschrijving',
         'barInfo' => 'Bar informatie',
+        'viewBar' => 'Bar bekijken',
     ],
 
     /**
