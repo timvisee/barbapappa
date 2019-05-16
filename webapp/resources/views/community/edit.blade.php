@@ -84,7 +84,7 @@
         <br />
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
-        <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
+        <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}"
                 class="ui button basic">
             @lang('general.cancel')
         </a>

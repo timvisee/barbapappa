@@ -80,6 +80,7 @@ return [
         'viewCommunities' => 'View communities',
         'createCommunity' => 'Create community',
         'editCommunity' => 'Edit community',
+        'deleteCommunity' => 'Delete community',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',

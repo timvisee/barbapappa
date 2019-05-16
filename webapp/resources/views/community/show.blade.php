@@ -11,7 +11,7 @@
     // Define menulinks
     if(perms(CommunityController::permsUser())) {
         $menulinks[] = [
-            'name' => __('pages.community.communityInfo'),
+            'name' => __('misc.information'),
             'link' => route('community.info', ['communityId' => $community->human_id]),
             'icon' => 'info-sign',
         ];
@@ -22,20 +22,6 @@
         ];
     }
 
-    if(perms(CommunityMemberController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.communityMembers.title'),
-            'link' => route('community.member.index', ['communityId' => $community->human_id]),
-            'icon' => 'user-structure',
-        ];
-
-    if(perms(EconomyController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.economies.title'),
-            'link' => route('community.economy.index', ['communityId' => $community->human_id]),
-            'icon' => 'money',
-        ];
-
     if($joined)
         $menulinks[] = [
             'name' => __('pages.wallets.yourWallets'),
@@ -45,16 +31,9 @@
 
     if(perms(CommunityController::permsManage()))
         $menulinks[] = [
-            'name' => __('pages.community.editCommunity'),
-            'link' => route('community.edit', ['communityId' => $community->human_id]),
+            'name' => 'Manage', // __('pages.bar.createBar'),
+            'link' => route('community.manage', ['communityId' => $community->human_id]),
             'icon' => 'edit',
-        ];
-
-    if(perms(BarController::permsCreate()))
-        $menulinks[] = [
-            'name' => __('pages.bar.createBar'),
-            'link' => route('bar.create', ['communityId' => $community->human_id]),
-            'icon' => 'plus',
         ];
 @endphp
 
@@ -64,11 +43,4 @@
 
     <h3 class="ui header">@lang('pages.bars')</h3>
     @include('bar.include.list')
-
-    @if(perms(BarController::permsCreate()))
-        <a href="{{ route('bar.create', ['communityId' => $community->human_id]) }}"
-                class="ui button basic">
-            @lang('pages.bar.createBar')
-        </a>
-    @endif
 @endsection

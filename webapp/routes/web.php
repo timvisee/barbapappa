@@ -107,6 +107,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             Route::put('/', 'CommunityController@update')->name('community.update');
         });
 
+        // Management page
+        // TODO: assing proper permission here, allow management role
+        Route::get('/manage', 'CommunityController@manage')->middleware(CommunityController::permsManage()->middleware())->name('community.manage');
+
         // Community members, require view perms
         Route::prefix('/members')->middleware(CommunityMemberController::permsView()->middleware())->group(function() {
             // Index
@@ -339,6 +343,11 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');
         Route::get('/leave', 'BarController@leave')->name('bar.leave');
         Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
+
+        // Management page
+        // TODO: link to proper action
+        // TODO: assing proper permission here, allow management role
+        Route::get('/manage', 'BarController@show')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
         // Edit, require manage perms
         Route::middleware(BarController::permsManage()->middleware())->group(function() {

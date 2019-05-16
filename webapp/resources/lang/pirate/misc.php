@@ -55,6 +55,7 @@ return [
     'archived' => 'Archived',
     'showAll' => 'Show \'ll',
     'manage' => 'Manage',
+    'managementHub' => 'Captains hut',
     'in' => 'in',
     'for' => 'for',
     'none' => 'None',

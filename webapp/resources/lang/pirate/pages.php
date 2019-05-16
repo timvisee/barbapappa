@@ -80,6 +80,7 @@ return [
         'viewCommunities' => 'View crews',
         'createCommunity' => 'Create crew',
         'editCommunity' => 'Edit crew',
+        'deleteCommunity' => 'Sink crew',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
         'joined' => 'Joined',

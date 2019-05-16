@@ -80,6 +80,7 @@ return [
         'viewCommunities' => 'Bekijk groepen',
         'createCommunity' => 'Groep aanmaken',
         'editCommunity' => 'Groep aanpassen',
+        'deleteCommunity' => 'Groep verwijderen',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
         'joined' => 'Ingeschreven',

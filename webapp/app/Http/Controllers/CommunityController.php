@@ -148,6 +148,20 @@ class CommunityController extends Controller {
     }
 
     /**
+     * Community management hub.
+     *
+     * @return Response
+     */
+    public function manage($communityId) {
+        // Get the community and session user
+        $community = \Request::get('community');
+        $user = barauth()->getSessionUser();
+
+        return view('community.manage')
+            ->with('bars', $community->bars()->get());
+    }
+
+    /**
      * Community edit page.
      *
      * @return Response
@@ -190,7 +204,7 @@ class CommunityController extends Controller {
 
         // Redirect the user to the community page
         return redirect()
-            ->route('community.show', ['communityId' => $community->human_id])
+            ->route('community.manage', ['communityId' => $community->human_id])
             ->with('success', __('pages.community.updated'));
     }
 

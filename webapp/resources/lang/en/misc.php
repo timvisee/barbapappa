@@ -55,6 +55,7 @@ return [
     'archived' => 'Archived',
     'showAll' => 'Show all',
     'manage' => 'Manage',
+    'managementHub' => 'Management hub',
     'in' => 'in',
     'for' => 'for',
     'none' => 'None',

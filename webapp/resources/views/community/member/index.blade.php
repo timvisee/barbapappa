@@ -11,7 +11,7 @@
     // Define menulinks
     $menulinks[] = [
         'name' => __('pages.community.backToCommunity'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
+        'link' => route('community.manage', ['communityId' => $community->human_id]),
         'icon' => 'undo',
     ];
 @endphp
@@ -44,7 +44,7 @@
         @endforelse
     </div>
 
-    <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
+    <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}"
             class="ui button basic">
         @lang('pages.community.backToCommunity')
     </a>

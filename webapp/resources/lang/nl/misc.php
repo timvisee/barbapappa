@@ -55,6 +55,7 @@ return [
     'archived' => 'Gearchiveerd',
     'showAll' => 'Bekijk alles',
     'manage' => 'Beheren',
+    'managementHub' => 'Beheer hub',
     'in' => 'in',
     'for' => 'voor',
     'none' => 'Geen',

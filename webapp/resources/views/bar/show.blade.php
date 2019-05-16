@@ -9,7 +9,7 @@
     // Define menulinks
     if(perms(BarController::permsUser())) {
         $menulinks[] = [
-            'name' => __('pages.bar.barInfo'),
+            'name' => __('misc.information'),
             'link' => route('bar.info', ['barId' => $bar->human_id]),
             'icon' => 'info-sign',
         ];
@@ -22,7 +22,7 @@
 
     if(perms(BarMemberController::permsView()))
         $menulinks[] = [
-            'name' => __('pages.barMembers.title'),
+            'name' => __('misc.members'),
             'link' => route('bar.member.index', ['barId' => $bar->human_id]),
             'icon' => 'user-structure',
         ];
