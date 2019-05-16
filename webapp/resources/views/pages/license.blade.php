@@ -2,6 +2,20 @@
 
 @section('title', __('pages.license.title'))
 
+@php
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.license.licenseSummary'),
+        'link' => "https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)",
+        'icon' => 'log-book',
+    ];
+    $menulinks[] = [
+        'name' => __('pages.license.plainTextLicense'),
+        'link' => route('license.raw'),
+        'icon' => 'text-underline',
+    ];
+@endphp
+
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.license.description')</p>
