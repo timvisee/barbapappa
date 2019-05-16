@@ -266,7 +266,7 @@ class BarController extends Controller {
 
         // Redirect the user to the account overview page
         return redirect()
-            ->route('bar.show', ['barId' => $bar->human_id])
+            ->route('bar.manage', ['barId' => $bar->human_id])
             ->with('success', __('pages.bar.updated'));
     }
 

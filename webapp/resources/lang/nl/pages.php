@@ -146,6 +146,7 @@ return [
         'namePlaceholder' => 'Hoofdeconomie',
         'backToEconomy' => 'Terug naar economie',
         'backToEconomies' => 'Terug naar economieën',
+        'inEconomy' => 'in economie',
     ],
 
     /**

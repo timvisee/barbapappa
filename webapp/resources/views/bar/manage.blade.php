@@ -6,6 +6,8 @@
     use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\BarMemberController;
     use \App\Http\Controllers\CommunityController;
+    use \App\Http\Controllers\EconomyController;
+    use \App\Http\Controllers\ProductController;
 
     // Define menulinks
     if(perms(BarController::permsAdminister()))
@@ -28,6 +30,26 @@
             'name' => __('misc.members'),
             'link' => route('bar.member.index', ['barId' => $bar->human_id]),
             'icon' => 'user-structure',
+        ];
+
+    if(perms(EconomyController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.community.economy'),
+            'link' => route('community.economy.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $bar->economy_id
+                ]),
+            'icon' => 'money',
+        ];
+
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.products.title'),
+            'link' => route('community.economy.product.index', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $bar->economy_id
+                ]),
+            'icon' => 'shopping',
         ];
 
     if(perms(CommunityController::permsManage()))
@@ -87,6 +109,34 @@
             </a>
         @else
             <div class="item disabled">@lang('misc.members')</div>
+        @endif
+        @if(perms(EconomyController::permsView()))
+            <a href="{{ route('community.economy.show', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $bar->economy_id
+                    ]) }}" class="item">
+                @lang('pages.community.economy')
+                <span class="subtle">@lang('pages.community.inCommunity')</span>
+            </a>
+        @else
+            <div class="item disabled">
+                @lang('pages.products.title')
+                <span class="subtle">@lang('pages.economies.inEconomy')</span>
+            </div>
+        @endif
+        @if(perms(ProductController::permsView()))
+            <a href="{{ route('community.economy.product.index', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $bar->economy_id
+                    ]) }}" class="item">
+                @lang('pages.products.title')
+                <span class="subtle">@lang('pages.economies.inEconomy')</span>
+            </a>
+        @else
+            <div class="item disabled">
+                @lang('pages.products.title')
+                <span class="subtle">@lang('pages.economies.inEconomy')</span>
+            </div>
         @endif
     </div>
 

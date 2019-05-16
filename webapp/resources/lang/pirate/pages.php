@@ -146,6 +146,7 @@ return [
         'namePlaceholder' => 'Our booty',
         'backToEconomy' => 'Back to booty',
         'backToEconomies' => 'Back to booties',
+        'inEconomy' => 'in booty',
     ],
 
     /**

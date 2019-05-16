@@ -146,6 +146,7 @@ return [
         'namePlaceholder' => 'Main economy',
         'backToEconomy' => 'Back to economy',
         'backToEconomies' => 'Back to economies',
+        'inEconomy' => 'in economy',
     ],
 
     /**
