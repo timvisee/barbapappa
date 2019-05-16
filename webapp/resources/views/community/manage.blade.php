@@ -80,7 +80,7 @@
 
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">
-            Assets
+            <h5 class="ui item header">@lang('misc.assets')</h5>
         </h5>
         @if(perms(EconomyController::permsView()))
             <a href="{{ route('community.economy.index', ['communityId' => $community->human_id]) }}" class="item">

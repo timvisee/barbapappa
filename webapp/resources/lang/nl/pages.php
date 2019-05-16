@@ -111,6 +111,8 @@ return [
         'backToCommunity' => 'Terug naar groep',
         'noDescription' => 'Deze groep heeft geen beschrijving',
         'communityInfo' => 'Groep informatie',
+        'manageCommunity' => 'Groep beheren',
+        'inCommunity' => 'in groep',
     ],
 
     /**
@@ -310,6 +312,7 @@ return [
         // TODO: remove duplicates
         'createBar' => 'Bar aanmaken',
         'editBar' => 'Bar aanpassen',
+        'deleteBar' => 'Bar verwijderen',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
         'joined' => 'Ingeschreven',

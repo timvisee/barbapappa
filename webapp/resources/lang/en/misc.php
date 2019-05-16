@@ -72,6 +72,7 @@ return [
     'sold' => 'Sold',
     'bar' => 'Bar',
     'community' => 'Community',
+    'assets' => 'Assets',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'viewingAccountOf' => 'You\'re viewing the account of',

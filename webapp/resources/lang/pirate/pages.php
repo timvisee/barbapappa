@@ -111,6 +111,8 @@ return [
         'backToCommunity' => 'Back to crew',
         'noDescription' => 'Dis crew be nay description',
         'communityInfo' => 'Crew info',
+        'manageCommunity' => 'Manage crew',
+        'inCommunity' => 'in crew',
     ],
 
     /**
@@ -310,6 +312,7 @@ return [
         // TODO: remove duplicates
         'createBar' => 'Create bar',
         'editBar' => 'Edit bar',
+        'deleteBar' => 'Delete bar',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
         'joined' => 'Joined',

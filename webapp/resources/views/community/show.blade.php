@@ -31,7 +31,7 @@
 
     if(perms(CommunityController::permsManage()))
         $menulinks[] = [
-            'name' => 'Manage', // __('pages.bar.createBar'),
+            'name' => __('misc.manage'),
             'link' => route('community.manage', ['communityId' => $community->human_id]),
             'icon' => 'edit',
         ];

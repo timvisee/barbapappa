@@ -205,6 +205,21 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar management page.
+     *
+     * @return Response
+     */
+    public function manage($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Show the bar management page
+        return view('bar.manage')
+            ->with('economy', $bar->economy);
+    }
+
+    /**
      * Bar edit page.
      *
      * @return Response

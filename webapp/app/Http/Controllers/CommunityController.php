@@ -157,6 +157,7 @@ class CommunityController extends Controller {
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
 
+        // Show the community management page
         return view('community.manage')
             ->with('bars', $community->bars()->get());
     }

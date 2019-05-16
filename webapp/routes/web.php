@@ -347,7 +347,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         // Management page
         // TODO: link to proper action
         // TODO: assing proper permission here, allow management role
-        Route::get('/manage', 'BarController@show')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
+        Route::get('/manage', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
         // Edit, require manage perms
         Route::prefix('/edit')->middleware(BarController::permsAdminister()->middleware())->group(function() {

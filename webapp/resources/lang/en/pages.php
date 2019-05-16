@@ -111,6 +111,8 @@ return [
         'backToCommunity' => 'Back to community',
         'noDescription' => 'This community has no description',
         'communityInfo' => 'Community info',
+        'manageCommunity' => 'Manage community',
+        'inCommunity' => 'in community',
     ],
 
     /**
@@ -310,6 +312,7 @@ return [
         // TODO: remove duplicates
         'createBar' => 'Create bar',
         'editBar' => 'Edit bar',
+        'deleteBar' => 'Delete bar',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',

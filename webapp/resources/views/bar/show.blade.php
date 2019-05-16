@@ -20,13 +20,6 @@
             'icon' => 'stats',
         ];
 
-    if(perms(BarMemberController::permsView()))
-        $menulinks[] = [
-            'name' => __('misc.members'),
-            'link' => route('bar.member.index', ['barId' => $bar->human_id]),
-            'icon' => 'user-structure',
-        ];
-
     if($joined)
         $menulinks[] = [
             'name' => __('pages.wallets.yourWallets'),
@@ -36,8 +29,8 @@
 
     if(perms(BarController::permsManage()))
         $menulinks[] = [
-            'name' => __('pages.bar.editBar'),
-            'link' => route('bar.edit', ['barId' => $bar->human_id]),
+            'name' => __('misc.manage'),
+            'link' => route('bar.manage', ['barId' => $bar->human_id]),
             'icon' => 'edit',
         ];
 

@@ -44,7 +44,7 @@
         @endforelse
     </div>
 
-    <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+    <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
             class="ui button basic">
         @lang('pages.bar.backToBar')
     </a>

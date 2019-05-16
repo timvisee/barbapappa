@@ -72,6 +72,7 @@ return [
     'sold' => 'Verkocht',
     'bar' => 'Bar',
     'community' => 'Groep',
+    'assets' => 'Middelen',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',
