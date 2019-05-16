@@ -4,6 +4,13 @@
     use \App\Models\MutationWallet;
     use \App\Models\MutationProduct;
     use \App\Models\MutationPayment;
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.transactions.backToTransaction'),
+        'link' => route('transaction.show', ['transactionId' => $transaction->id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('title', __('pages.mutations.details'))
@@ -58,6 +65,15 @@
             $data = $mutation->mutationData()->firstOrFail();
         @endphp
         @if($data instanceof MutationWallet)
+            @php
+                // Extend page links
+                $menulinks[] = [
+                    'name' => __('pages.wallets.view'),
+                    'link' => $data->wallet->getUrlShow(),
+                    'icon' => 'wallet',
+                ];
+            @endphp
+
             <p>
                 {{-- TODO: inefficient querying here, improve this! --}}
                 <a href="{{ $data->wallet->getUrlShow() }}"
@@ -66,13 +82,33 @@
                 </a>
             </p>
         @elseif($data instanceof MutationProduct)
+            @php
+                // Extend page links
+                $menulinks[] = [
+                    'name' => __('pages.products.viewProduct'),
+                    'link' => route('bar.product.show', [
+                            'barId' => $mutation->mutationData->bar->human_id,
+                            'productId' => $mutation->mutationData->product_id,
+                        ]),
+                    'icon' => 'shopping-bag',
+                ];
+                $menulinks[] = [
+                    'name' => __('pages.bar.viewBar'),
+                    'link' => route('bar.show', [
+                            'barId' => $mutation->mutationData->bar->human_id,
+                        ]),
+                    'icon' => 'beer',
+                ];
+            @endphp
+
             <div class="ui top vertical menu fluid">
                 <h5 class="ui item header">Product</h5>
 
                 {{-- TODO: link product item to public product page instead --}}
                 <a class="item"
-                        href="{{ route('bar.show', [
+                        href="{{ route('bar.product.show', [
                             'barId' => $mutation->mutationData->bar->human_id,
+                            'productId' => $mutation->mutationData->product_id,
                         ]) }}">
                     @if($data->quantity != 1)
                         <span class="subtle">{{ $data->quantity }}×</span>
@@ -115,12 +151,8 @@
         ])
     @endif
 
-    <p>
-        <a href="{{ route('transaction.show', ['transactionId' => $transaction->id]) }}"
-                class="ui button basic">
-            @lang('pages.transactions.backToTransaction')
-        </a>
-    </p>
-
-    <br />
+    <a href="{{ route('transaction.show', ['transactionId' => $transaction->id]) }}"
+            class="ui button basic">
+        @lang('pages.transactions.backToTransaction')
+    </a>
 @endsection

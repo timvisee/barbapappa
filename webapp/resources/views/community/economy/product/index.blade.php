@@ -4,6 +4,13 @@
 
 @php
     use \App\Http\Controllers\ProductController;
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.economies.backToEconomy'),
+        'link' => route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('content')
@@ -42,13 +49,5 @@
                 class="ui button basic">
             @lang('pages.economies.backToEconomy')
         </a>
-        {{-- <a href="{{ route('community.wallet.show', [ --}}
-        {{--             'communityId' => $community->human_id, --}}
-        {{--             'economyId' => $economy->id, --}}
-        {{--             'walletId' => $wallet->id, --}}
-        {{--         ]) }}" --}}
-        {{--         class="ui button basic"> --}}
-        {{--     @lang('pages.wallets.backToWallet') --}}
-        {{-- </a> --}}
     </p>
 @endsection

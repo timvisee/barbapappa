@@ -7,6 +7,13 @@
 
     // Get all bar members
     $members = $bar->users(['role'])->get();
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.bar.backToBar'),
+        'link' => route('bar.show', ['barId' => $bar->human_id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('content')

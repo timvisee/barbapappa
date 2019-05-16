@@ -141,8 +141,8 @@ return [
         'economyDeleted' => 'De economie is verwijderd.',
         'economyUpdated' => 'Economie aanpassingen opgeslagen.',
         'namePlaceholder' => 'Hoofdeconomie',
-        'all' => 'Alle economieën',
         'backToEconomy' => 'Terug naar economie',
+        'backToEconomies' => 'Terug naar economieën',
     ],
 
     /**
@@ -167,7 +167,7 @@ return [
         'allowWalletsDescription' => 'Met deze optie stel je in of barleden een nieuwe persoonlijke portemonnee aan kunnen maken voor deze valuta. Huidige portemonnees blijven altijd bestaan.',
         'noCurrenciesToAdd' => 'Er zijn geen valutas die je kunt toevoegen. Vraag de website administrator om een valuta te configureren.',
         'noMoreCurrenciesToAdd' => 'Er zijn geen andere valutas om toe te voegen.',
-        'manage' => 'Beheer economie valutas',
+        'manage' => 'Beheer valutas',
     ],
 
     /**
@@ -196,6 +196,7 @@ return [
         'localizedNamesDescription' => 'Configureer de gelokaliseerde namen voor dit product in de velden hieronder als het verschilt met de hoofdnaam.',
         'search' => 'Zoek producten',
         'backToProducts' => 'Terug naar producten',
+        'viewProduct' => 'Product bekijken',
         'type' => [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',
@@ -211,7 +212,7 @@ return [
         'walletEconomies' => 'Portemonee economieën',
         'yourWallets' => 'Jouw portemonnees',
         '#wallets' => '{0} Geen portemonnees|{1} 1 portemonnee|[2,*] :count portemonnees',
-        'economySelectDescription' => 'Portemonnees voor deze groep zijn gegroepeerd per economie.<br>Selecteer een economie om je portemonnees te beheren.',
+        'economySelectDescription' => 'Portemonnees voor deze groep zijn onderverdeeld per economie.<br>Selecteer een economie om je portemonnees te beheren.',
         'noWallets' => 'Je hebt nog geen portemonnees...',
         'namePlaceholder' => 'Mijn persoonlijke portefeuille',
         'createWallet' => 'Portemonnee aanmaken',
@@ -342,6 +343,7 @@ return [
         'boughtProductForPrice' => ':product gekocht voor :price',
         'noDescription' => 'Deze bar heeft geen beschrijving',
         'barInfo' => 'Bar informatie',
+        'viewBar' => 'Bar bekijken',
     ],
 
     /**

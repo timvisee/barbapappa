@@ -2,6 +2,27 @@
 
 @section('title', __('pages.noPermission.title'))
 
+@php
+    // Get the home route name to use based on the session
+    $homeRoute = barauth()->isAuth() ? 'dashboard' : 'index';
+
+    // Determine whether we have a previous URL
+    $hasPrevious = url()->previous() != url()->current();
+
+    // Define menulinks
+    if($hasPrevious)
+        $menulinks[] = [
+            'name' => __('general.goBack'),
+            'link' => url()->previous(),
+            'icon' => 'undo',
+        ];
+    $menulinks[] = [
+        'name' => __('pages.' . $homeRoute),
+        'link' => route($homeRoute),
+        'icon' => 'text-underline',
+    ];
+@endphp
+
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
@@ -19,14 +40,6 @@
     @endif
 
     <br />
-
-    @php
-        // Get the home route name to use based on the session
-        $homeRoute = barauth()->isAuth() ? 'dashboard' : 'index';
-
-        // Determine whether we have a previous URL
-        $hasPrevious = url()->previous() != url()->current();
-    @endphp
 
     @unless(barauth()->isAuth())
         {{-- TODO: redirect to this page after login --}}

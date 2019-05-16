@@ -2,6 +2,29 @@
 
 @section('title', $wallet->name)
 
+@php
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('general.goBack'),
+        'link' => route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
+        'icon' => 'undo',
+    ];
+    $menulinks[] = [
+        'name' => __('pages.transactions.title'),
+        'link' => route('community.wallet.transactions', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'walletId' => $wallet->id
+            ]),
+        'icon' => 'fees-payments',
+    ];
+    $menulinks[] = [
+        'name' => __('pages.wallets.transfer'),
+        'link' => route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]),
+        'icon' => 'transfer',
+    ];
+@endphp
+
 @section('content')
     <h2 class="ui header">
         @yield('title')

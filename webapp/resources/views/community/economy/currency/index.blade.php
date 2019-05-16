@@ -4,6 +4,13 @@
 
 @php
     use \App\Http\Controllers\EconomyCurrencyController;
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.economies.backToEconomy'),
+        'link' => route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('content')

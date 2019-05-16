@@ -5,6 +5,23 @@
 @php
     use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\CommunityController;
+
+    // Define menulinks
+    if(perms(CommunityController::permsManage()))
+        $menulinks[] = [
+            'name' => __('pages.products.manageProducts'),
+            'link' => route('community.economy.product.index', [
+                    'communityId' => $bar->community_id,
+                    'economyId' => $bar->economy_id,
+                ]),
+            'icon' => 'edit',
+        ];
+
+    $menulinks[] = [
+        'name' => __('pages.bar.backToBar'),
+        'link' => route('bar.show', ['barId' => $bar->human_id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('content')
@@ -51,15 +68,5 @@
                 class="ui button basic">
             @lang('pages.bar.backToBar')
         </a>
-
-        @if(perms(CommunityController::permsManage()))
-            <a href="{{ route('community.economy.product.index', [
-                'communityId' => $bar->community_id,
-                'economyId' => $bar->economy_id,
-            ]) }}"
-                    class="ui button basic">
-                @lang('pages.products.manageProducts')
-            </a>
-        @endif
     </p>
 @endsection

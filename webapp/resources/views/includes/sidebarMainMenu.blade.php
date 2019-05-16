@@ -18,18 +18,6 @@
             <i class="glyphicons glyphicons-dashboard"></i>
             @lang('pages.dashboard')
         </a>
-        <a href="{{ route('community.overview') }}" class="item">
-            <i class="glyphicons glyphicons-group"></i>
-            @lang('pages.communities')
-        </a>
-        <a href="{{ route('bar.overview') }}" class="item">
-            <i class="glyphicons glyphicons-beer"></i>
-            @lang('pages.bars')
-        </a>
-        <a href="{{ route('account') }}" class="item">
-            <i class="glyphicons glyphicons-user"></i>
-            @lang('pages.account')
-        </a>
     @else
         <a href="{{ route('index') }}" class="item">
             <i class="glyphicons glyphicons-dashboard"></i>
@@ -45,6 +33,37 @@
         </a>
     @endif
 
+    {{-- Page specific links --}}
+    @if(!empty($menulinks))
+        <div class="item">
+            <div class="header">@yield('title')</div>
+            <div class="menu">
+                @foreach($menulinks as $menulink)
+                    <a href="{{ $menulink['link'] }}" class="item">
+                        <i class="glyphicons glyphicons-{{ $menulink['icon'] ?? 'chevron-right' }}"></i>
+                        {{ $menulink['name'] }}
+                    </a>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if(barauth()->isAuth())
+        <a href="{{ route('community.overview') }}" class="item">
+            <i class="glyphicons glyphicons-group"></i>
+            @lang('pages.communities')
+        </a>
+        <a href="{{ route('bar.overview') }}" class="item">
+            <i class="glyphicons glyphicons-beer"></i>
+            @lang('pages.bars')
+        </a>
+        <a href="{{ route('account') }}" class="item">
+            <i class="glyphicons glyphicons-user"></i>
+            @lang('pages.account')
+        </a>
+    @endif
+
+    {{-- Generic information links --}}
     <div class="item">
         <div class="header">@lang('misc.information')</div>
         <div class="menu">

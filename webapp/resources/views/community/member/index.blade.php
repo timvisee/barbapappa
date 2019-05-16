@@ -7,6 +7,13 @@
 
     // Get all community members
     $members = $community->users(['role'])->get();
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.community.backToCommunity'),
+        'link' => route('community.show', ['communityId' => $community->human_id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('content')

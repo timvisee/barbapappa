@@ -2,6 +2,20 @@
 
 @section('title', __('pages.wallets.yourWallets'))
 
+@php
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.community.goTo'),
+        'link' => route('community.show', ['communityId' => $community->human_id]),
+        'icon' => 'undo',
+    ];
+    $menulinks[] = [
+        'name' => __('pages.wallets.all'),
+        'link' => route('community.wallet.index', ['communityId' => $community->human_id]),
+        'icon' => 'wallet',
+    ];
+@endphp
+
 @section('content')
     <h2 class="ui header">
         @yield('title') ({{ count($wallets) }})
@@ -49,12 +63,6 @@
     <a href="{{ route('community.wallet.create', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
             class="ui button basic positive">
         @lang('misc.create')
-    </a>
-
-    {{-- TODO: only show if there are other wallet economies --}}
-    <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}"
-            class="ui button basic">
-        @lang('pages.wallets.all')
     </a>
 
     <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"

@@ -6,6 +6,13 @@
     use \App\Http\Controllers\CommunityMemberController;
     use \App\Perms\CommunityRoles;
     use \Carbon\Carbon;
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('general.goBack'),
+        'link' => route('community.member.index', ['communityId' => $community->human_id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('content')

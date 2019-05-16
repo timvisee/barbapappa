@@ -5,7 +5,15 @@
 @php
     use \App\Http\Controllers\EconomyController;
 
+    // Get a list of economies
     $economies = $community->economies()->get();
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.community.goTo'),
+        'link' => route('community.show', ['communityId' => $community->human_id]),
+        'icon' => 'group',
+    ];
 @endphp
 
 @section('content')

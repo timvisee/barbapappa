@@ -4,6 +4,14 @@
 
 @php
     use \App\Http\Controllers\CommunityController;
+
+    // Define menulinks
+    if(perms(CommunityController::permsCreate()))
+        $menulinks[] = [
+            'name' => __('pages.community.createCommunity'),
+            'link' => route('community.create'),
+            'icon' => 'plus',
+        ];
 @endphp
 
 @section('content')

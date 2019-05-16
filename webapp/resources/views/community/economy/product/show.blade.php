@@ -4,6 +4,13 @@
 
 @php
     use \App\Http\Controllers\ProductController;
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('general.goBack'),
+        'link' => route('community.economy.product.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('content')
