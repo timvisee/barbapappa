@@ -5,6 +5,47 @@
 @php
     use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\BarMemberController;
+
+    // Define menulinks
+    if(perms(BarController::permsUser())) {
+        $menulinks[] = [
+            'name' => __('pages.bar.barInfo'),
+            'link' => route('bar.info', ['barId' => $bar->human_id]),
+            'icon' => 'info-sign',
+        ];
+        $menulinks[] = [
+            'name' => __('pages.stats.title'),
+            'link' => route('bar.stats', ['barId' => $bar->human_id]),
+            'icon' => 'stats',
+        ];
+    }
+
+    if(perms(BarMemberController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.barMembers.title'),
+            'link' => route('bar.member.index', ['barId' => $bar->human_id]),
+            'icon' => 'user-structure',
+        ];
+
+    if($joined)
+        $menulinks[] = [
+            'name' => __('pages.wallets.yourWallets'),
+            'link' => route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]),
+            'icon' => 'wallet',
+        ];
+
+    if(perms(BarController::permsManage()))
+        $menulinks[] = [
+            'name' => __('pages.bar.editBar'),
+            'link' => route('bar.edit', ['barId' => $bar->human_id]),
+            'icon' => 'edit',
+        ];
+
+    $menulinks[] = [
+        'name' => __('pages.community.viewCommunity'),
+        'link' => route('community.show', ['communityId' => $community->human_id]),
+        'icon' => 'group',
+    ];
 @endphp
 
 @section('content')
@@ -44,44 +85,4 @@
             @lang('misc.showAll')
         </a>
     </div>
-
-    <br />
-
-    <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
-            class="ui button basic">
-        @lang('pages.community.viewCommunity')
-    </a>
-
-    @if(perms(BarController::permsUser()))
-        <a href="{{ route('bar.info', ['barId' => $bar->human_id]) }}"
-                class="ui button basic">
-            @lang('pages.bar.barInfo')
-        </a>
-
-        <a href="{{ route('bar.stats', ['barId' => $bar->human_id]) }}"
-                class="ui button basic">
-            @lang('pages.stats.title')
-        </a>
-    @endif
-
-    @if(perms(BarMemberController::permsView()))
-        <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
-                class="ui button basic">
-            @lang('pages.barMembers.title')
-        </a>
-    @endif
-
-    @if($joined)
-        <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
-                class="ui button basic">
-            @lang('pages.wallets.yourWallets')
-        </a>
-    @endif
-
-    @if(perms(BarController::permsManage()))
-        <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}"
-                class="ui button basic">
-            @lang('pages.bar.editBar')
-        </a>
-    @endif
 @endsection

@@ -3,6 +3,7 @@
 @section('title', __('pages.yourAccount'))
 
 @php
+    // Define menulinks
     $menulinks[] = [
         'name' => __('pages.editProfile.name'),
         'link' => route('profile.edit', ['userId' => $user->id]),

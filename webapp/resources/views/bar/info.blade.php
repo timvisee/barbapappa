@@ -4,6 +4,20 @@
 
 @php
     use \App\Http\Controllers\BarMemberController;
+
+    // Define menulinks
+    if($page == 'info')
+        $menulinks[] = [
+            'name' => __('pages.bar.backToBar'),
+            'link' => route('bar.show', ['barId' => $bar->human_id]),
+            'icon' => 'undo',
+        ];
+
+    $menulinks[] = [
+        'name' => __('pages.community.viewCommunity'),
+        'link' => route('community.show', ['communityId' => $community->human_id]),
+        'icon' => 'group',
+    ];
 @endphp
 
 @section('content')
@@ -55,18 +69,4 @@
     </div>
 
     @include('bar.include.joinBanner')
-
-    <p>
-        @if($page == 'info')
-            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
-                    class="ui button basic">
-                @lang('pages.bar.backToBar')
-            </a>
-        @endif
-
-        <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
-                class="ui button basic">
-            @lang('pages.community.viewCommunity')
-        </a>
-    </p>
 @endsection

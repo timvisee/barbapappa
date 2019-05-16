@@ -4,6 +4,24 @@
 
 @php
     use \App\Http\Controllers\CommunityController;
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.products.backToProducts'),
+        'link' => route('bar.product.index', ['barId' => $bar->human_id]),
+        'icon' => 'undo',
+    ];
+
+    if(perms(CommunityController::permsManage()))
+        $menulinks[] = [
+            'name' => __('pages.products.manageProduct'),
+            'link' => route('community.economy.product.show', [
+                'communityId' => $bar->community_id,
+                'economyId' => $bar->economy_id,
+                'productId' => $product->id,
+            ]),
+            'icon' => 'edit',
+        ];
 @endphp
 
 @section('content')
@@ -84,44 +102,8 @@
         </p>
     @endif
 
-    </p>
-        {{-- @if(perms(CommunityController::permsManage())) --}}
-        {{--     <p> --}}
-        {{--         <div class="ui buttons"> --}}
-        {{--             <a href="{{ route('community.economy.product.edit', [ --}}
-        {{--                 'communityId' => $community->human_id, --}}
-        {{--                 'economyId' => $economy->id, --}}
-        {{--                 'productId' => $product->id --}}
-        {{--             ]) }}" --}}
-        {{--                     class="ui button secondary"> --}}
-        {{--                 @lang('misc.edit') --}}
-        {{--             </a> --}}
-        {{--             <a href="{{ route('community.economy.product.delete', [ --}}
-        {{--                 'communityId' => $community->human_id, --}}
-        {{--                 'economyId' => $economy->id, --}}
-        {{--                 'productId' => $product->id --}}
-        {{--             ]) }}" --}}
-        {{--                     class="ui button negative"> --}}
-        {{--                 @lang('misc.delete') --}}
-        {{--             </a> --}}
-        {{--         </div> --}}
-        {{--     </p> --}}
-        {{-- @endif --}}
-
-        <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
-                class="ui button basic">
-            @lang('pages.products.backToProducts')
-        </a>
-
-        @if(perms(CommunityController::permsManage()))
-            <a href="{{ route('community.economy.product.show', [
-                'communityId' => $bar->community_id,
-                'economyId' => $bar->economy_id,
-                'productId' => $product->id,
-            ]) }}"
-                    class="ui button basic">
-                @lang('pages.products.manageProduct')
-            </a>
-        @endif
-    </p>
+    <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
+            class="ui button basic">
+        @lang('pages.products.backToProducts')
+    </a>
 @endsection

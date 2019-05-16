@@ -4,6 +4,13 @@
 
 @php
     use \App\Http\Controllers\BarMemberController;
+
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.bar.backToBar'),
+        'link' => route('bar.show', ['barId' => $bar->human_id]),
+        'icon' => 'undo',
+    ];
 @endphp
 
 @section('content')

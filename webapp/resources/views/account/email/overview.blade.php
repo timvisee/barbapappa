@@ -3,6 +3,7 @@
 @section('title', __('pages.accountPage.email.yourEmails'))
 
 @php
+    // Define menulinks
     $menulinks[] = [
         'name' => __('pages.accountPage.backToAccount'),
         'link' => route('account', ['userId' => $user->id]),
