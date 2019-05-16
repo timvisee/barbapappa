@@ -55,6 +55,7 @@ return [
     'archived' => 'Gearchiveerd',
     'showAll' => 'Bekijk alles',
     'manage' => 'Beheren',
+    'managementHub' => 'Beheer hub',
     'in' => 'in',
     'for' => 'voor',
     'none' => 'Geen',
@@ -71,6 +72,7 @@ return [
     'sold' => 'Verkocht',
     'bar' => 'Bar',
     'community' => 'Groep',
+    'assets' => 'Middelen',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'viewingAccountOf' => 'Je bekijkt het account van',

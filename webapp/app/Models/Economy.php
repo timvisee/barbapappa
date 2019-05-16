@@ -329,11 +329,10 @@ class Economy extends Model {
     }
 
     /**
-     * Build a list of products to show in the quick buy list.
-     * This list is personalized for the logged in user, and prefers products on
-     * top that the user often buys.
+     * Create a list of products personalized for the authenticated in user by
+     * estimating their preference, based on buy history inside this economy.
      *
-     * TODO: better describe what really happens
+     * TODO: define in detail what steps are taken to generate this list
      *
      * @param [int]|null $currency_ids A list of EconomyCurrency IDs returned
      *      products must have a price configured in in at least one of them.

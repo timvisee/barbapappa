@@ -102,10 +102,14 @@ Route::prefix('/c')->middleware('auth')->group(function() {
         Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
 
         // Edit, require manage perms
-        Route::middleware(CommunityController::permsManage()->middleware())->group(function() {
-            Route::get('/edit', 'CommunityController@edit')->name('community.edit');
-            Route::put('/', 'CommunityController@update')->name('community.update');
+        Route::prefix('/edit')->middleware(CommunityController::permsAdminister()->middleware())->group(function() {
+            Route::get('/', 'CommunityController@edit')->name('community.edit');
+            Route::put('/', 'CommunityController@doEdit')->name('community.doEdit');
         });
+
+        // Management page
+        // TODO: assing proper permission here, allow management role
+        Route::get('/manage', 'CommunityController@manage')->middleware(CommunityController::permsManage()->middleware())->name('community.manage');
 
         // Community members, require view perms
         Route::prefix('/members')->middleware(CommunityMemberController::permsView()->middleware())->group(function() {
@@ -340,20 +344,25 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::get('/leave', 'BarController@leave')->name('bar.leave');
         Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
 
+        // Management page
+        // TODO: link to proper action
+        // TODO: assing proper permission here, allow management role
+        Route::get('/manage', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
+
         // Edit, require manage perms
-        Route::middleware(BarController::permsManage()->middleware())->group(function() {
-            Route::get('/edit', 'BarController@edit')->name('bar.edit');
-            Route::put('/', 'BarController@update')->name('bar.update');
+        Route::prefix('/edit')->middleware(BarController::permsAdminister()->middleware())->group(function() {
+            Route::get('/', 'BarController@edit')->name('bar.edit');
+            Route::put('/', 'BarController@doEdit')->name('bar.doEdit');
         });
 
         // Bar products
-        Route::prefix('/products')->group(function() {
+        Route::prefix('/products')->middleware(BarController::permsUser()->middleware())->group(function() {
             Route::get('/', 'BarProductController@index')->name('bar.product.index');
             Route::get('/{productId}', 'BarProductController@show')->name('bar.product.show');
         });
 
         // Quick buy products
-        Route::post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
+        Route::post('/quick-buy', 'BarController@quickBuy')->middleware(BarController::permsUser()->middleware())->name('bar.quickBuy');
 
         // Bar members, require view perms
         Route::prefix('/members')->middleware(BarMemberController::permsView()->middleware())->group(function() {

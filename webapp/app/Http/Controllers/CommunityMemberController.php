@@ -120,7 +120,7 @@ class CommunityMemberController extends Controller {
      * @return PermsConfig The permission configuration.
      */
     public static function permsView() {
-        return CommunityRoles::presetManager();
+        return CommunityController::permsManage();
     }
 
     /**
@@ -128,6 +128,7 @@ class CommunityMemberController extends Controller {
      * @return PermsConfig The permission configuration.
      */
     public static function permsManage() {
-        return CommunityRoles::presetAdmin();
+        // TODO: community managers should be able to change some settings?
+        return CommunityController::permsAdminister();
     }
 }

@@ -80,6 +80,7 @@ return [
         'viewCommunities' => 'Bekijk groepen',
         'createCommunity' => 'Groep aanmaken',
         'editCommunity' => 'Groep aanpassen',
+        'deleteCommunity' => 'Groep verwijderen',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
         'joined' => 'Ingeschreven',
@@ -110,6 +111,8 @@ return [
         'backToCommunity' => 'Terug naar groep',
         'noDescription' => 'Deze groep heeft geen beschrijving',
         'communityInfo' => 'Groep informatie',
+        'manageCommunity' => 'Groep beheren',
+        'inCommunity' => 'in groep',
     ],
 
     /**
@@ -143,6 +146,7 @@ return [
         'namePlaceholder' => 'Hoofdeconomie',
         'backToEconomy' => 'Terug naar economie',
         'backToEconomies' => 'Terug naar economieën',
+        'inEconomy' => 'in economie',
     ],
 
     /**
@@ -309,6 +313,7 @@ return [
         // TODO: remove duplicates
         'createBar' => 'Bar aanmaken',
         'editBar' => 'Bar aanpassen',
+        'deleteBar' => 'Bar verwijderen',
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
         'joined' => 'Ingeschreven',

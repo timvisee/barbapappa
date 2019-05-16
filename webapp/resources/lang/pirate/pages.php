@@ -80,6 +80,7 @@ return [
         'viewCommunities' => 'View crews',
         'createCommunity' => 'Create crew',
         'editCommunity' => 'Edit crew',
+        'deleteCommunity' => 'Sink crew',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
         'joined' => 'Joined',
@@ -110,6 +111,8 @@ return [
         'backToCommunity' => 'Back to crew',
         'noDescription' => 'Dis crew be nay description',
         'communityInfo' => 'Crew info',
+        'manageCommunity' => 'Manage crew',
+        'inCommunity' => 'in crew',
     ],
 
     /**
@@ -143,6 +146,7 @@ return [
         'namePlaceholder' => 'Our booty',
         'backToEconomy' => 'Back to booty',
         'backToEconomies' => 'Back to booties',
+        'inEconomy' => 'in booty',
     ],
 
     /**
@@ -309,6 +313,7 @@ return [
         // TODO: remove duplicates
         'createBar' => 'Create bar',
         'editBar' => 'Edit bar',
+        'deleteBar' => 'Delete bar',
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
         'joined' => 'Joined',

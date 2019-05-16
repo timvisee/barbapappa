@@ -148,6 +148,21 @@ class CommunityController extends Controller {
     }
 
     /**
+     * Community management hub.
+     *
+     * @return Response
+     */
+    public function manage($communityId) {
+        // Get the community and session user
+        $community = \Request::get('community');
+        $user = barauth()->getSessionUser();
+
+        // Show the community management page
+        return view('community.manage')
+            ->with('bars', $community->bars()->get());
+    }
+
+    /**
      * Community edit page.
      *
      * @return Response
@@ -163,7 +178,7 @@ class CommunityController extends Controller {
      *
      * @return Response
      */
-    public function update(Request $request) {
+    public function doEdit(Request $request) {
         // Get the community
         $community = \Request::get('community');
 
@@ -190,7 +205,7 @@ class CommunityController extends Controller {
 
         // Redirect the user to the community page
         return redirect()
-            ->route('community.show', ['communityId' => $community->human_id])
+            ->route('community.manage', ['communityId' => $community->human_id])
             ->with('success', __('pages.community.updated'));
     }
 
@@ -301,15 +316,31 @@ class CommunityController extends Controller {
     }
 
     /**
-     * The permission required for managing such as editing and deleting.
+     * The permission required for basic community management.
+     * This allows economy and member management.
+     *
+     * Editing the community itself and setting permissive user roles it not
+     * allowed.
+     *
      * @return PermsConfig The permission configuration.
      */
     public static function permsManage() {
+        return CommunityRoles::presetManager();
+    }
+
+    /**
+     * The permission required for complete community administration.
+     * This allows managing anything within this community.
+     *
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsAdminister() {
         return CommunityRoles::presetAdmin();
     }
 
     /**
      * The permission required for creating a new community.
+     *
      * @return PermsConfig The permission configuration.
      */
     public static function permsCreate() {

@@ -55,6 +55,7 @@ return [
     'archived' => 'Archived',
     'showAll' => 'Show \'ll',
     'manage' => 'Manage',
+    'managementHub' => 'Captains hut',
     'in' => 'in',
     'for' => 'for',
     'none' => 'None',
@@ -71,6 +72,7 @@ return [
     'sold' => 'Sold',
     'bar' => 'Bar',
     'community' => 'Crew',
+    'assets' => 'Assets',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',

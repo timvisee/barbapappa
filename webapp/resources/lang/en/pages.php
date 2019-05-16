@@ -80,6 +80,7 @@ return [
         'viewCommunities' => 'View communities',
         'createCommunity' => 'Create community',
         'editCommunity' => 'Edit community',
+        'deleteCommunity' => 'Delete community',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',
@@ -110,6 +111,8 @@ return [
         'backToCommunity' => 'Back to community',
         'noDescription' => 'This community has no description',
         'communityInfo' => 'Community info',
+        'manageCommunity' => 'Manage community',
+        'inCommunity' => 'in community',
     ],
 
     /**
@@ -143,6 +146,7 @@ return [
         'namePlaceholder' => 'Main economy',
         'backToEconomy' => 'Back to economy',
         'backToEconomies' => 'Back to economies',
+        'inEconomy' => 'in economy',
     ],
 
     /**
@@ -309,6 +313,7 @@ return [
         // TODO: remove duplicates
         'createBar' => 'Create bar',
         'editBar' => 'Edit bar',
+        'deleteBar' => 'Delete bar',
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',

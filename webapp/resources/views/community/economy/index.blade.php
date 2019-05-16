@@ -10,14 +10,23 @@
 
     // Define menulinks
     $menulinks[] = [
-        'name' => __('pages.community.goTo'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
+        'name' => __('pages.community.backToCommunity'),
+        'link' => route('community.manage', ['communityId' => $community->human_id]),
         'icon' => 'group',
     ];
 @endphp
 
 @section('content')
-    <h2 class="ui header">@yield('title') ({{ count($economies) }})</h2>
+    <h2 class="ui header">
+        @yield('title') ({{ count($economies) }})
+
+        <div class="sub header">
+            @lang('misc.in')
+            <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}">
+                {{ $community->name }}
+            </a>
+        </div>
+    </h2>
     <p>@lang('pages.economies.description')</p>
 
     <div class="ui vertical menu fluid">
@@ -48,8 +57,8 @@
         </a>
     @endif
 
-    <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
+    <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}"
             class="ui button basic">
-        @lang('pages.community.goTo')
+        @lang('pages.community.backToCommunity')
     </a>
 @endsection

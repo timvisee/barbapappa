@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
-use App\Perms\BarRoles;
 use App\Perms\Builder\Config as PermsConfig;
 
 class BarMemberController extends Controller {
@@ -126,7 +125,7 @@ class BarMemberController extends Controller {
      * @return PermsConfig The permission configuration.
      */
     public static function permsView() {
-        return BarRoles::presetManager();
+        return BarController::permsManage();
     }
 
     /**
@@ -134,6 +133,6 @@ class BarMemberController extends Controller {
      * @return PermsConfig The permission configuration.
      */
     public static function permsManage() {
-        return BarRoles::presetAdmin();
+        return BarController::permsAdminister();
     }
 }

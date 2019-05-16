@@ -55,6 +55,7 @@ return [
     'archived' => 'Archived',
     'showAll' => 'Show all',
     'manage' => 'Manage',
+    'managementHub' => 'Management hub',
     'in' => 'in',
     'for' => 'for',
     'none' => 'None',
@@ -71,6 +72,7 @@ return [
     'sold' => 'Sold',
     'bar' => 'Bar',
     'community' => 'Community',
+    'assets' => 'Assets',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'viewingAccountOf' => 'You\'re viewing the account of',

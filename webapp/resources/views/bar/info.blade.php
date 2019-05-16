@@ -69,4 +69,13 @@
     </div>
 
     @include('bar.include.joinBanner')
+
+    @if($page == 'info')
+        <p>
+            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+                    class="ui button basic">
+                @lang('pages.bar.backToBar')
+            </a>
+        </p>
+    @endif
 @endsection

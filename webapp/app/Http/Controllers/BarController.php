@@ -205,6 +205,21 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar management page.
+     *
+     * @return Response
+     */
+    public function manage($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Show the bar management page
+        return view('bar.manage')
+            ->with('economy', $bar->economy);
+    }
+
+    /**
      * Bar edit page.
      *
      * @return Response
@@ -220,7 +235,7 @@ class BarController extends Controller {
      *
      * @return Response
      */
-    public function update(Request $request) {
+    public function doEdit(Request $request) {
         // Get the community, bar and session user
         $community = \Request::get('community');
         $bar = \Request::get('bar');
@@ -251,7 +266,7 @@ class BarController extends Controller {
 
         // Redirect the user to the account overview page
         return redirect()
-            ->route('bar.show', ['barId' => $bar->human_id])
+            ->route('bar.manage', ['barId' => $bar->human_id])
             ->with('success', __('pages.bar.updated'));
     }
 
@@ -613,18 +628,36 @@ class BarController extends Controller {
     }
 
     /**
-     * The permission required for managing such as editing and deleting.
+     * The permission required for basic bar management.
+     * This allows viewing of management pages with limited changes.
+     *
+     * Editing the bar itself and setting permissive user roles it not
+     * allowed.
+     *
      * @return PermsConfig The permission configuration.
      */
     public static function permsManage() {
+        // TODO: does this include community roles?
+        return BarRoles::presetManager();
+    }
+
+    /**
+     * The permission required for complete bar administration.
+     * This allows managing anything within this bar.
+     *
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsAdminister() {
+        // TODO: does this include community roles?
         return BarRoles::presetAdmin();
     }
 
     /**
      * The permission required creating a new bar.
+     *
      * @return PermsConfig The permission configuration.
      */
     public static function permsCreate() {
-        return CommunityController::permsManage();
+        return CommunityController::permsAdminister();
     }
 }

@@ -7,24 +7,17 @@
     use \App\Http\Controllers\BarMemberController;
 
     // Define menulinks
-    if(perms(BarController::permsUser())) {
-        $menulinks[] = [
-            'name' => __('pages.bar.barInfo'),
-            'link' => route('bar.info', ['barId' => $bar->human_id]),
-            'icon' => 'info-sign',
-        ];
+    $menulinks[] = [
+        'name' => __('misc.information'),
+        'link' => route('bar.info', ['barId' => $bar->human_id]),
+        'icon' => 'info-sign',
+    ];
+
+    if(perms(BarController::permsUser()))
         $menulinks[] = [
             'name' => __('pages.stats.title'),
             'link' => route('bar.stats', ['barId' => $bar->human_id]),
             'icon' => 'stats',
-        ];
-    }
-
-    if(perms(BarMemberController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.barMembers.title'),
-            'link' => route('bar.member.index', ['barId' => $bar->human_id]),
-            'icon' => 'user-structure',
         ];
 
     if($joined)
@@ -36,8 +29,8 @@
 
     if(perms(BarController::permsManage()))
         $menulinks[] = [
-            'name' => __('pages.bar.editBar'),
-            'link' => route('bar.edit', ['barId' => $bar->human_id]),
+            'name' => __('misc.manage'),
+            'link' => route('bar.manage', ['barId' => $bar->human_id]),
             'icon' => 'edit',
         ];
 
