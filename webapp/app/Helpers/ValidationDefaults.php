@@ -195,7 +195,7 @@ class ValidationDefaults {
      * @return string The validation configuration.
      */
     public static function appRoles() {
-        return Rule::in(implode(',', AppRoles::ids()));
+        return Rule::in(AppRoles::ids());
     }
 
     /**
@@ -204,7 +204,7 @@ class ValidationDefaults {
      * @return string The validation configuration.
      */
     public static function communityRoles() {
-        return Rule::in(implode(',', CommunityRoles::ids()));
+        return Rule::in(CommunityRoles::ids());
     }
 
     /**
@@ -213,6 +213,6 @@ class ValidationDefaults {
      * @return string The validation configuration.
      */
     public static function barRoles() {
-        return Rule::in(implode(',', BarRoles::ids()));
+        return Rule::in(BarRoles::ids());
     }
 }
