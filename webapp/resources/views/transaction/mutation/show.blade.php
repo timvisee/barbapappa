@@ -106,8 +106,9 @@
 
                 {{-- TODO: link product item to public product page instead --}}
                 <a class="item"
-                        href="{{ route('bar.show', [
+                        href="{{ route('bar.product.show', [
                             'barId' => $mutation->mutationData->bar->human_id,
+                            'productId' => $mutation->mutationData->product_id,
                         ]) }}">
                     @if($data->quantity != 1)
                         <span class="subtle">{{ $data->quantity }}×</span>
