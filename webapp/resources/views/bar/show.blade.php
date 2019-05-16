@@ -36,7 +36,7 @@
                 </a>
             {!! Form::close() !!}
         @empty
-            <i class="item">No products...</i>
+            <i class="item">@lang('pages.products.noProducts')</i>
         @endforelse
 
         <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"

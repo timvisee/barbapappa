@@ -42,7 +42,7 @@
                 {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL) !!}
             </a>
         @empty
-            <i class="item">No products...</i>
+            <i class="item">@lang('pages.products.noProducts')</i>
         @endforelse
     </div>
 
