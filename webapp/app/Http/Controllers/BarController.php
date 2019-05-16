@@ -625,6 +625,6 @@ class BarController extends Controller {
      * @return PermsConfig The permission configuration.
      */
     public static function permsCreate() {
-        return CommunityController::permsManage();
+        return CommunityController::permsAdminister();
     }
 }

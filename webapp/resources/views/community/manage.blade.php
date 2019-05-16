@@ -9,7 +9,7 @@
     use \App\Http\Controllers\EconomyController;
 
     // Define menulinks
-    if(perms(CommunityController::permsUser()))
+    if(perms(CommunityController::permsAdminister()))
         $menulinks[] = [
             'name' => __('pages.community.editCommunity'),
             'link' => route('community.edit', ['communityId' => $community->human_id]),
@@ -58,7 +58,7 @@
 
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.community')</h5>
-        @if(perms(CommunityController::permsManage()))
+        @if(perms(CommunityController::permsAdminister()))
             <a href="{{ route('community.edit', ['communityId' =>
             $community->human_id]) }}" class="item">
                 @lang('pages.community.editCommunity')
@@ -66,8 +66,16 @@
         @else
             <div class="item disabled">@lang('pages.community.editCommunity')</div>
         @endif
-        {{-- TODO: add delete button to page links as well --}}
-        <div class="item disabled">@lang('pages.community.deleteCommunity')</div>
+        @if(perms(CommunityController::permsAdminister()))
+            {{-- TODO: add delete button to page links as well --}}
+            {{-- <a href="{{ route('community.delete', ['communityId' => --}}
+            {{-- $community->human_id]) }}" class="item"> --}}
+            {{--     @lang('pages.community.deleteCommunity') --}}
+            {{-- </a> --}}
+            <div class="item disabled">@lang('pages.community.deleteCommunity')</div>
+        @else
+            <div class="item disabled">@lang('pages.community.deleteCommunity')</div>
+        @endif
     </div>
 
     <div class="ui vertical menu fluid">
@@ -93,7 +101,6 @@
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('pages.bars') ({{ $bars->count() }})</h5>
         @foreach($bars as $bar)
-            {{-- TODO: do permission check, can user edit? --}}
             <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}" class="item">
                 {{ $bar->name }}
             </a>

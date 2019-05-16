@@ -102,9 +102,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
         Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
 
         // Edit, require manage perms
-        Route::middleware(CommunityController::permsManage()->middleware())->group(function() {
-            Route::get('/edit', 'CommunityController@edit')->name('community.edit');
-            Route::put('/', 'CommunityController@update')->name('community.update');
+        Route::prefix('/edit')->middleware(CommunityController::permsAdminister()->middleware())->group(function() {
+            Route::get('/', 'CommunityController@edit')->name('community.edit');
+            Route::put('/', 'CommunityController@doEdit')->name('community.doEdit');
         });
 
         // Management page

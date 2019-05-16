@@ -120,9 +120,7 @@ class CommunityMemberController extends Controller {
      * @return PermsConfig The permission configuration.
      */
     public static function permsView() {
-        // TODO: if changing this to user, navigate back button from members to
-        // main community page
-        return CommunityRoles::presetManager();
+        return CommunityController::permsManage();
     }
 
     /**
@@ -130,6 +128,7 @@ class CommunityMemberController extends Controller {
      * @return PermsConfig The permission configuration.
      */
     public static function permsManage() {
-        return CommunityRoles::presetAdmin();
+        // TODO: community managers should be able to change some settings?
+        return CommunityController::permsAdminister();
     }
 }
