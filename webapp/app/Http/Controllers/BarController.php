@@ -175,7 +175,7 @@ class BarController extends Controller {
         $productCount = $bar->economy->products()->count();
         // TODO: only count products with mutation having success state
         $soldProductCount = $bar->productMutations()->sum('quantity');
-        $transactionCount = $bar->transactions()->count();
+        $transactionCount = $bar->transactionCount();
         $soldProductCountHour = $bar
             ->productMutations()
             ->where('created_at', '>=', Carbon::now()->subHour())

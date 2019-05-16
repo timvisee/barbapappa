@@ -350,10 +350,10 @@ return [
         'barStats' => 'Bar statistieken',
         'communityStats' => 'Groep statistieken',
         'activeLastHour' => 'Actief laatste uur',
-        'activeLastDay' => 'Actief laatste day',
+        'activeLastDay' => 'Actief laatste dag',
         'activeLastMonth' => 'Actief laatste maand',
         'productsLastHour' => 'Producten laatste uur',
-        'productsLastDay' => 'Producten laatste day',
+        'productsLastDay' => 'Producten laatste dag',
         'productsLastMonth' => 'Producten laatste maand',
     ],
 
