@@ -9,18 +9,18 @@
     use \App\Http\Controllers\EconomyController;
 
     // Define menulinks
-    if(perms(CommunityController::permsUser())) {
-        $menulinks[] = [
-            'name' => __('misc.information'),
-            'link' => route('community.info', ['communityId' => $community->human_id]),
-            'icon' => 'info-sign',
-        ];
+    $menulinks[] = [
+        'name' => __('misc.information'),
+        'link' => route('community.info', ['communityId' => $community->human_id]),
+        'icon' => 'info-sign',
+    ];
+
+    if(perms(CommunityController::permsUser()))
         $menulinks[] = [
             'name' => __('pages.stats.title'),
             'link' => route('community.stats', ['communityId' => $community->human_id]),
             'icon' => 'stats',
         ];
-    }
 
     if($joined)
         $menulinks[] = [

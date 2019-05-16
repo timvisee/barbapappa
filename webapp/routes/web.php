@@ -350,19 +350,19 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::get('/manage', 'BarController@show')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
         // Edit, require manage perms
-        Route::middleware(BarController::permsManage()->middleware())->group(function() {
-            Route::get('/edit', 'BarController@edit')->name('bar.edit');
-            Route::put('/', 'BarController@update')->name('bar.update');
+        Route::prefix('/edit')->middleware(BarController::permsAdminister()->middleware())->group(function() {
+            Route::get('/', 'BarController@edit')->name('bar.edit');
+            Route::put('/', 'BarController@doEdit')->name('bar.doEdit');
         });
 
         // Bar products
-        Route::prefix('/products')->group(function() {
+        Route::prefix('/products')->middleware(BarController::permsUser()->middleware())->group(function() {
             Route::get('/', 'BarProductController@index')->name('bar.product.index');
             Route::get('/{productId}', 'BarProductController@show')->name('bar.product.show');
         });
 
         // Quick buy products
-        Route::post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
+        Route::post('/quick-buy', 'BarController@quickBuy')->middleware(BarController::permsUser()->middleware())->name('bar.quickBuy');
 
         // Bar members, require view perms
         Route::prefix('/members')->middleware(BarMemberController::permsView()->middleware())->group(function() {

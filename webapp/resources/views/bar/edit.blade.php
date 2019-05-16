@@ -5,7 +5,7 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    {!! Form::open(['action' => ['BarController@update', $bar->human_id], 'method' => 'PUT', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['BarController@doEdit', $bar->human_id], 'method' => 'PUT', 'class' => 'ui form']) !!}
 
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}

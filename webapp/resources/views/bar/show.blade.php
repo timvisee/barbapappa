@@ -7,18 +7,18 @@
     use \App\Http\Controllers\BarMemberController;
 
     // Define menulinks
-    if(perms(BarController::permsUser())) {
-        $menulinks[] = [
-            'name' => __('misc.information'),
-            'link' => route('bar.info', ['barId' => $bar->human_id]),
-            'icon' => 'info-sign',
-        ];
+    $menulinks[] = [
+        'name' => __('misc.information'),
+        'link' => route('bar.info', ['barId' => $bar->human_id]),
+        'icon' => 'info-sign',
+    ];
+
+    if(perms(BarController::permsUser()))
         $menulinks[] = [
             'name' => __('pages.stats.title'),
             'link' => route('bar.stats', ['barId' => $bar->human_id]),
             'icon' => 'stats',
         ];
-    }
 
     if(perms(BarMemberController::permsView()))
         $menulinks[] = [
