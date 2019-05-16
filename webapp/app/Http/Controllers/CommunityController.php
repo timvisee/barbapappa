@@ -46,6 +46,7 @@ class CommunityController extends Controller {
         $this->validate($request, [
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::communitySlug(),
+            'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
         ], [
             'slug.regex' => __('pages.community.slugFieldRegexError'),
@@ -55,6 +56,7 @@ class CommunityController extends Controller {
         $community = new Community();
         $community->name = $request->input('name');
         $community->slug = $request->has('slug') ? $request->input('slug') : null;
+        $community->description = $request->input('description');
         $community->password = $request->has('password') ? $request->input('password') : null;
         $community->visible = is_checked($request->input('visible'));
         $community->public = is_checked($request->input('public'));
@@ -169,6 +171,7 @@ class CommunityController extends Controller {
         $this->validate($request, [
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::communitySlug($community),
+            'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
         ], [
             'slug.regex' => __('pages.community.slugFieldRegexError'),
@@ -177,6 +180,7 @@ class CommunityController extends Controller {
         // Change the name properties
         $community->name = $request->input('name');
         $community->slug = $request->has('slug') ? $request->input('slug') : null;
+        $community->description = $request->input('description');
         $community->password = $request->has('password') ? $request->input('password') : null;
         $community->visible = is_checked($request->input('visible'));
         $community->public = is_checked($request->input('public'));

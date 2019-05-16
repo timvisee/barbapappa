@@ -22,11 +22,11 @@ use Illuminate\Support\Facades\Mail;
  * @property int id
  * @property int community_id
  * @property int economy_id
- * @property string name
+ * @property string|null slug
+ * @property string|null description
  * @property bool visible
  * @property bool public
  * @property string|null password
- * @property string|null slug
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -41,7 +41,7 @@ class Bar extends Model {
      * @var array
      */
     protected $hidden = [
-        'password'
+        'password',
     ];
 
     protected $fillable = [
@@ -185,7 +185,7 @@ class Bar extends Model {
      * configured.
      */
     public function description() {
-        // TODO: implement this!
-        return null;
+        // TODO: placeholder for when localized descriptions are available
+        return $this->description;
     }
 }

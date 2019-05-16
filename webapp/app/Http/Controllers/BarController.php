@@ -63,6 +63,7 @@ class BarController extends Controller {
             'economy' => ['required', ValidationDefaults::communityEconomy($community)],
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::barSlug(),
+            'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
         ], [
             'slug.regex' => __('pages.bar.slugFieldRegexError'),
@@ -73,6 +74,7 @@ class BarController extends Controller {
             'economy_id' => $request->input('economy'),
             'name' => $request->input('name'),
             'slug' => $request->has('slug') ? $request->input('slug') : null,
+            'description' => $request->input('slug'),
             'password' => $request->has('password') ? $request->input('password') : null,
             'visible' => is_checked($request->input('visible')),
             'public' => is_checked($request->input('public')),
@@ -229,6 +231,7 @@ class BarController extends Controller {
             'economy' => ['required', ValidationDefaults::communityEconomy($community)],
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::barSlug($bar),
+            'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
         ], [
             'slug.regex' => __('pages.bar.slugFieldRegexError'),
@@ -238,6 +241,7 @@ class BarController extends Controller {
         $bar->economy_id = $request->input('economy');
         $bar->name = $request->input('name');
         $bar->slug = $request->has('slug') ? $request->input('slug') : null;
+        $bar->description = $request->input('description');
         $bar->password = $request->has('password') ? $request->input('password') : null;
         $bar->visible = is_checked($request->input('visible'));
         $bar->public = is_checked($request->input('public'));

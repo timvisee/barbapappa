@@ -13,6 +13,12 @@
             {{ ErrorRenderer::inline('name') }}
         </div>
 
+        <div class="field {{ ErrorRenderer::hasError('description') ? 'error' : '' }}">
+            {{ Form::label('description', __('misc.description') . ' (' .  __('misc.public') . ', ' .  __('general.optional') . '):') }}
+            {{ Form::textarea('description', '', ['placeholder' => __('pages.bar.descriptionPlaceholder')]) }}
+            {{ ErrorRenderer::inline('description') }}
+        </div>
+
         <div class="ui divider"></div>
 
         <div class="ui message">
