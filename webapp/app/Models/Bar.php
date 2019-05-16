@@ -152,7 +152,20 @@ class Bar extends Model {
                     'mutation_id',
                     'transaction_id',
                 ]
-            );
+            )
+            ->distinct();
+    }
+
+    /**
+     * Count the number of transactions that were part of this bar.
+     * This method ensures coutned transactions are distinct.
+     *
+     * See `Self::transactions()` for more details.
+     *
+     * @return int Number of unique transactions.
+     */
+    public function transactionCount() {
+        return $this->transactions()->count('transactions.id');
     }
 
     /**
