@@ -2,6 +2,14 @@
 
 @section('title', __('pages.accountPage.email.yourEmails'))
 
+@php
+    $menulinks[] = [
+        'name' => __('pages.accountPage.backToAccount'),
+        'link' => route('account', ['userId' => $user->id]),
+        'icon' => 'undo',
+    ];
+@endphp
+
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.accountPage.email.description')</p>
