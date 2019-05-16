@@ -82,7 +82,7 @@ class BarController extends Controller {
 
         // Automatically join if checked
         if(is_checked($request->input('join')))
-            $bar->join(barauth()->getUser());
+            $bar->join(barauth()->getUser(), BarRoles::ADMIN);
 
         // Redirect the user to the account overview page
         return redirect()
