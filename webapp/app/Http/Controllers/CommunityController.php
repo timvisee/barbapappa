@@ -64,7 +64,7 @@ class CommunityController extends Controller {
 
         // Automatically join if checked
         if(is_checked($request->input('join')))
-            $community->join(barauth()->getUser());
+            $community->join(barauth()->getUser(), CommunityRoles::ADMIN);
 
         // Redirect the user to the community page
         return redirect()

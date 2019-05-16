@@ -10,7 +10,7 @@ use App\Models\User;
  * Implementing this requires a manyToMany relationship available through
  * `users()`.
  *
- * TODO: force that this is implemented on Eloquent models
+ * TODO: only allow implementing on Eloquent models
  */
 trait Joinable {
 
@@ -19,9 +19,17 @@ trait Joinable {
      * Note: this throws an error if the user has already joined.
      *
      * @param User $user The user to join.
+     * @param int|null [$role=null] An optional role value to assign to the
+     *      user.
      */
-    public function join(User $user) {
-        $this->users()->attach($user);
+    public function join(User $user, $role = null) {
+        // Build additional data object
+        $data = [];
+        if($role !== null)
+            $data['role'] = $role;
+
+        // Attach
+        $this->users()->attach($user, $data);
     }
 
     /**
