@@ -15,7 +15,7 @@
 
         <div class="field {{ ErrorRenderer::hasError('description') ? 'error' : '' }}">
             {{ Form::label('description', __('misc.description') . ' (' .  __('misc.public') . ', ' .  __('general.optional') . '):') }}
-            {{ Form::textarea('description', '', ['placeholder' => __('pages.bar.descriptionPlaceholder')]) }}
+            {{ Form::textarea('description', '', ['placeholder' => __('pages.bar.descriptionPlaceholder'), 'rows' => 3]) }}
             {{ ErrorRenderer::inline('description') }}
         </div>
 
