@@ -23,7 +23,7 @@ return [
     /**
      * Application source location.
      */
-    'source' => 'https://gitlab.com/timvisee/ffsend',
+    'source' => 'https://gitlab.com/timvisee/barbapappa',
 
     /*
     |--------------------------------------------------------------------------
