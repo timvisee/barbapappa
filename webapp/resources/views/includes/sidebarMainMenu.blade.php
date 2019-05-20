@@ -98,4 +98,17 @@
             </a>
         </div>
     </div>
+
+    {{-- Pirate language easter egg --}}
+    @if(rand_float() <= (float) config('app.pirate_chance'))
+        <a href="{{ route('language', ['locale' => 'pirate']) }}"
+                title="Yarrrr!"
+                class="pirate popup"
+                data-content="Yarrrr!"
+                data-offset="-16"
+                data-variation="inverted">
+            <img src="{{ asset('img/pirate.png') }}" />
+        </a>
+    @endif
+
 </div>
