@@ -18,12 +18,16 @@
     @endif
 
     {{-- User bar list --}}
-    @include('bar.include.list', [
-        'header' => __('pages.bar.yourBars') . ' (' . count($bars) . ')',
-    ])
+    @if($bars->isNotEmpty())
+        @include('bar.include.list', [
+            'header' => __('pages.bar.yourBars') . ' (' . count($bars) . ')',
+        ])
+    @endif
 
     {{-- User community list --}}
-    @include('community.include.list', [
-        'header' => __('pages.community.yourCommunities') . ' (' .  count($communities) . ')',
-    ])
+    @if($communities->isNotEmpty())
+        @include('community.include.list', [
+            'header' => __('pages.community.yourCommunities') . ' (' .  count($communities) . ')',
+        ])
+    @endif
 @endsection
