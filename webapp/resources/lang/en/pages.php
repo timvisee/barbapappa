@@ -5,7 +5,7 @@
  */
 return [
     'pages' => 'Pages',
-    'index' => 'Main page',
+    'index' => 'Home page',
     'emailPreferences' => 'Email preferences',
     // TODO: move to misc?
     'communities' => 'Communities',
