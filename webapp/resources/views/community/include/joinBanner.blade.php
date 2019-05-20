@@ -1,4 +1,4 @@
-@unless($joined)
+@if(!$joined && $community->self_enroll)
     {{-- TODO: fix this doing nothing due to variable scoping --}}
     @php
         // Extend menu links
