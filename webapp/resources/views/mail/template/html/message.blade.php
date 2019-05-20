@@ -15,8 +15,7 @@
     {!! $slot !!}
 
     @component('mail::text')
-        {{ trans_random('mail.signature.caption') }}<br>
-        @lang('mail.signature.name', ['app' => config('app.name')])
+        @lang('mail.signature.signoff', ['app' => config('app.name')])
     @endcomponent
 
 @endcomponent
