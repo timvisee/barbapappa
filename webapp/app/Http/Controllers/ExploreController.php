@@ -15,7 +15,7 @@ class ExploreController extends Controller {
      */
     public function communities() {
         return view('explore.community')
-            ->with('communities', Community::visible()->get());
+            ->with('communities', Community::showExplore()->get());
     }
 
     /**
@@ -25,6 +25,6 @@ class ExploreController extends Controller {
      */
     public function bars() {
         return view('explore.bar')
-            ->with('bars', Bar::visible()->get());
+            ->with('bars', Bar::showExplore()->get());
     }
 }

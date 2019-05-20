@@ -44,11 +44,13 @@ class Community extends Model {
     ];
 
     /**
-     * A scope for only showing communities that have been defined as visible by
-     * the owner.
+     * A scope for communities to publicly show in the explore list.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    // TODO: update this
-    public function scopeVisible($query) {
+    public function scopeShowExplore($query) {
         $query->where('show_explore', true);
     }
 

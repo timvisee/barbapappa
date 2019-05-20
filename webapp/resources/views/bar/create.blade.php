@@ -49,7 +49,7 @@
 
         <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
             {{ Form::label('password', __('misc.code') . ' (' .  __('general.optional') . '):') }}
-            {{ Form::text('password', '', ['placeholder' => __('misc.codePlaceholder')]) }}
+            {{ Form::text('password', $community->password, ['placeholder' => __('misc.codePlaceholder')]) }}
             {{ ErrorRenderer::inline('password') }}
         </div>
 

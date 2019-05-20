@@ -41,6 +41,7 @@
     @include('community.include.communityHeader')
     @include('community.include.joinBanner')
 
-    <h3 class="ui header">@lang('pages.bars')</h3>
-    @include('bar.include.list')
+    @include('bar.include.list', [
+        'header' => __('pages.bars') . ' (' . count($bars) . ')',
+    ])
 @endsection

@@ -87,7 +87,7 @@ class CommunityController extends Controller {
 
         return view('community.show')
             ->with('joined', $community->isJoined($user))
-            ->with('bars', $community->bars()->visible()->get());
+            ->with('bars', $community->bars()->showCommunity()->get());
     }
 
     /**
@@ -102,8 +102,7 @@ class CommunityController extends Controller {
 
         return view('community.info')
             ->with('joined', $community->isJoined($user))
-            ->with('page', last(explode('.', \Request::route()->getName())))
-            ->with('bars', $community->bars()->visible()->get());
+            ->with('page', last(explode('.', \Request::route()->getName())));
     }
 
     /**

@@ -56,12 +56,26 @@ class Bar extends Model {
     ];
 
     /**
-     * A scope for only showing bars that have been defined as visible by the
-     * owner.
+     * A scope for bars to publicly show in the explore list.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    // TODO: update this
-    public function scopeVisible($query) {
+    public function scopeShowExplore($query) {
         $query->where('show_explore', true);
+    }
+
+    /**
+     * A scope for bars to show in the bar list of their community page for
+     * users enrolled in that community.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeShowCommunity($query) {
+        $query->where('show_community', true);
     }
 
     /**
