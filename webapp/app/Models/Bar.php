@@ -24,8 +24,9 @@ use Illuminate\Support\Facades\Mail;
  * @property int economy_id
  * @property string|null slug
  * @property string|null description
- * @property bool visible
- * @property bool public
+ * @property bool show_explore
+ * @property bool show_community
+ * @property bool self_enroll
  * @property string|null password
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -49,16 +50,18 @@ class Bar extends Model {
         'name',
         'slug',
         'password',
-        'visible',
-        'public',
+        'show_explore',
+        'show_community',
+        'self_enroll',
     ];
 
     /**
      * A scope for only showing bars that have been defined as visible by the
      * owner.
      */
+    // TODO: update this
     public function scopeVisible($query) {
-        $query->where('visible', true);
+        $query->where('show_explore', true);
     }
 
     /**

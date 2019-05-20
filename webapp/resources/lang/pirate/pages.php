@@ -27,7 +27,7 @@ return [
         'title' => 'Home port',
         'yourPersonalDashboard' => 'Ye home port',
         'noBarsOrCommunities' => 'No bars \'o crews',
-        'nothingHereNoMemberUseExploreButtons' => 'There be nothing to show here \'cause ye be no member of any bar \'o crew. Find yer using th\' buttons.',
+        'nothingHereNoMemberUseExploreButtons' => 'There be nothing to show here \'cause ye be no matey of any bar \'o crew. Find yer using th\' buttons.',
     ],
 
     /**
