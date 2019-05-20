@@ -16,16 +16,6 @@ use Validator;
 class CommunityController extends Controller {
 
     /**
-     * Community overview page.
-     *
-     * @return Response
-     */
-    public function overview() {
-        return view('community.overview')
-            ->with('communities', Community::visible()->get());
-    }
-
-    /**
      * Community create page.
      *
      * @return Response

@@ -2,7 +2,7 @@
 
 My balance: €123,00
 
-@lang('pages.dashboard'): {{ route('dashboard') }}
+@lang('pages.dashboard.title'): {{ route('dashboard') }}
 @lang('pages.yourAccount'): {{ route('account') }}
 
 @lang('pages.terms.title'): {{ route('terms') }}

@@ -61,7 +61,7 @@ $message = Array(
                                     align="center" bgcolor="#3b5998" valign="top">
                                     <a href="{{ route('dashboard') }}"
                                        style="color: #FFF; text-decoration: none; font-weight: normal; font-family: Helvetica, Arial, sans-serif; font-size: 12px;">
-                                        @lang('pages.dashboard')
+                                        @lang('pages.dashboard.title')
                                     </a>
                                 </td>
                             </tr>

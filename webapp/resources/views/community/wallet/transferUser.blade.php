@@ -15,8 +15,7 @@
             'walletId' => $wallet->id
         ]) }}"
             class="item">@lang('pages.wallets.toSelf')</a>
-        <a href="{{ route(
-            'community.wallet.transfer.user',
+        <a href="{{ route('community.wallet.transfer.user',
             ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]
         ) }}"
             class="item active">@lang('pages.wallets.toUser')</a>

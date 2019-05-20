@@ -76,9 +76,16 @@ Route::prefix('/profile')->middleware(['auth', 'selectUser'])->group(function() 
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
 
+// Explore routes
+Route::prefix('/explore')->middleware('auth')->group(function() {
+    Route::get('/', 'ExploreController@communities')->name('explore.community');
+    Route::get('/bars', 'ExploreController@bars')->name('explore.bar');
+});
+
 // Community routes
 Route::prefix('/c')->middleware('auth')->group(function() {
-    Route::get('/', 'CommunityController@overview')->name('community.overview');
+    // Redirect to explore
+    Route::redirect('/', '/explore');
 
     // Require app administrator to create a community
     Route::middleware(CommunityController::permsCreate()->middleware())->group(function() {
@@ -321,7 +328,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
 // Bar routes
 Route::prefix('/b')->middleware('auth')->group(function() {
-    Route::get('/', 'BarController@overview')->name('bar.overview');
+    // Redirect to explore
+    Route::redirect('/', '/explore/bars');
 
     // Require app administrator to create a bar
     Route::middleware(['selectCommunity', BarController::permsCreate()->middleware()])->group(function() {

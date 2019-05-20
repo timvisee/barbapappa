@@ -6,8 +6,6 @@
 return [
     'pages' => 'Pages',
     'index' => 'Main page',
-    'dashboard' => 'Dashboard',
-    'yourPersonalDashboard' => 'Your personal dashboard',
     'emailPreferences' => 'Email preferences',
     // TODO: move to misc?
     'communities' => 'Communities',
@@ -21,6 +19,16 @@ return [
     'about' => 'About',
     'contact' => 'Contact',
     'contactUs' => 'Contact us',
+
+    /**
+     * Dashboard page.
+     */
+    'dashboard' => [
+        'title' => 'Dashboard',
+        'yourPersonalDashboard' => 'Your personal dashboard',
+        'noBarsOrCommunities' => 'No bars or communities',
+        'nothingHereNoMemberUseExploreButtons' => 'There\'s nothing to show here because you aren\'t a member of any bar or community yet. Find yours using the following buttons.',
+    ],
 
     /**
      * Last page.
@@ -68,6 +76,15 @@ return [
             'added' => 'Email address added. A verification email has been sent.',
         ],
         'backToAccount' => 'Back to account',
+    ],
+
+    /**
+     * Explore pages.
+     */
+    'explore' => [
+        'title' => 'Explore',
+        'exploreBars' => 'Explore bars',
+        'exploreCommunities' => 'Explore communities',
     ],
 
     /**

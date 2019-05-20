@@ -6,8 +6,6 @@
 return [
     'pages' => 'Parchments',
     'index' => 'Home port',
-    'dashboard' => 'Home port',
-    'yourPersonalDashboard' => 'Ye home port',
     'emailPreferences' => 'E-bottle preferences',
     // TODO: move to misc?
     'communities' => 'Crews',
@@ -21,6 +19,16 @@ return [
     'about' => '\'bout',
     'contact' => 'Contact',
     'contactUs' => 'Contact us',
+
+    /**
+     * Dashboard page.
+     */
+    'dashboard' => [
+        'title' => 'Home port',
+        'yourPersonalDashboard' => 'Ye home port',
+        'noBarsOrCommunities' => 'No bars \'o crews',
+        'nothingHereNoMemberUseExploreButtons' => 'There be nothing to show here \'cause ye be no member of any bar \'o crew. Find yer using th\' buttons.',
+    ],
 
     /**
      * Last page.
@@ -68,6 +76,15 @@ return [
             'added' => 'E-bottle coordinate added. \'ll verification be sent.',
         ],
         'backToAccount' => 'Back to account',
+    ],
+
+    /**
+     * Explore pages.
+     */
+    'explore' => [
+        'title' => 'Explore',
+        'exploreBars' => 'Explore bars',
+        'exploreCommunities' => 'Explore crews',
     ],
 
     /**

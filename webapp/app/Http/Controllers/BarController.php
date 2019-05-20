@@ -18,16 +18,6 @@ use Validator;
 class BarController extends Controller {
 
     /**
-     * Bar overview page.
-     *
-     * @return Response
-     */
-    public function overview() {
-        return view('bar.overview')
-            ->with('bars', Bar::visible()->get());
-    }
-
-    /**
      * Bar creation page.
      *
      * @return Response
