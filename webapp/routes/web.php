@@ -93,20 +93,23 @@ Route::prefix('/c')->middleware('auth')->group(function() {
         Route::post('/', 'CommunityController@doCreate')->name('community.doCreate');
     });
 
-    // Specific
+    // Community specific, public
     Route::prefix('/{communityId}')->middleware(['selectCommunity'])->group(function() {
         // Show, info
         Route::get('/', 'CommunityController@show')->name('community.show');
         Route::get('/info', 'CommunityController@info')->name('community.info');
-
-        // Stats
-        Route::get('/stats', 'CommunityController@stats')->middleware(CommunityController::permsUser()->middleware())->name('community.stats');
 
         // Join/leave
         Route::get('/join', 'CommunityController@join')->name('community.join');
         Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');
         Route::get('/leave', 'CommunityController@leave')->name('community.leave');
         Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
+    });
+
+    // Community specific, members
+    Route::prefix('/{communityId}')->middleware(['selectCommunity', CommunityController::permsUser()->middleware()])->group(function() {
+        // Stats
+        Route::get('/stats', 'CommunityController@stats')->name('community.stats');
 
         // Edit, require manage perms
         Route::prefix('/edit')->middleware(CommunityController::permsAdminister()->middleware())->group(function() {
@@ -337,20 +340,23 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::post('/create/{communityId}', 'BarController@doCreate')->name('bar.doCreate');
     });
 
-    // Specific
+    // Bar specific, public
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         // Show, info
         Route::get('/', 'BarController@show')->name('bar.show');
         Route::get('/info', 'BarController@info')->name('bar.info');
-
-        // Stats
-        Route::get('/stats', 'BarController@stats')->middleware(BarController::permsUser()->middleware())->name('bar.stats');
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');
         Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');
         Route::get('/leave', 'BarController@leave')->name('bar.leave');
         Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
+    });
+
+    // Bar specific, members
+    Route::prefix('/{barId}')->middleware(['selectBar', BarController::permsUser()->middleware()])->group(function() {
+        // Stats
+        Route::get('/stats', 'BarController@stats')->name('bar.stats');
 
         // Management page
         // TODO: link to proper action
@@ -364,13 +370,13 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         });
 
         // Bar products
-        Route::prefix('/products')->middleware(BarController::permsUser()->middleware())->group(function() {
+        Route::prefix('/products')->group(function() {
             Route::get('/', 'BarProductController@index')->name('bar.product.index');
             Route::get('/{productId}', 'BarProductController@show')->name('bar.product.show');
         });
 
         // Quick buy products
-        Route::post('/quick-buy', 'BarController@quickBuy')->middleware(BarController::permsUser()->middleware())->name('bar.quickBuy');
+        Route::post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
 
         // Bar members, require view perms
         Route::prefix('/members')->middleware(BarMemberController::permsView()->middleware())->group(function() {
