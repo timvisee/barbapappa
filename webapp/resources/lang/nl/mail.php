@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Groet,|Groeten,|Dank,',
-        'name' => 'Het :app team',
+        'signoff' => '~ A :app robot',
     ],
 
     /**
