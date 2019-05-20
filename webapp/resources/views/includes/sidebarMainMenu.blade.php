@@ -16,12 +16,12 @@
         </a>
         <a href="{{ route('dashboard') }}" class="item">
             <i class="glyphicons glyphicons-dashboard"></i>
-            @lang('pages.dashboard')
+            @lang('pages.dashboard.title')
         </a>
     @else
         <a href="{{ route('index') }}" class="item">
             <i class="glyphicons glyphicons-dashboard"></i>
-            @lang('pages.dashboard')
+            @lang('pages.dashboard.title')
         </a>
         <a href="{{ route('login') }}" class="item">
             <i class="glyphicons glyphicons-user"></i>

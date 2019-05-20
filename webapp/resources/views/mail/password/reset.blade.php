@@ -13,7 +13,7 @@
 @endcomponent
 
 @component('mail::button', ['url' => route('dashboard')])
-@lang('pages.yourPersonalDashboard')
+@lang('pages.dashboard.yourPersonalDashboard')
 @endcomponent
 
 <br>

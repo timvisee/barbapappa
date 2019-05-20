@@ -9,9 +9,10 @@
     <h1>
         @php
             $homeRoute = barauth()->isAuth() ? 'dashboard' : 'index';
+            $homeRouteName = 'pages' . (barauth()->isAuth() ? 'dashboard.title' : 'index');
         @endphp
 
-        <a href="{{ route($homeRoute) }}" title="@lang('pages.' . $homeRoute)">
+        <a href="{{ route($homeRoute) }}" title="@lang($homeRouteName)">
             {{ logo()->element(false) }}
         </a>
     </h1>

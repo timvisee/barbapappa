@@ -6,8 +6,6 @@
 return [
     'pages' => 'Pagina\'s',
     'index' => 'Hoofdpagina',
-    'dashboard' => 'Dashboard',
-    'yourPersonalDashboard' => 'Je persoonlijke dashboard',
     'emailPreferences' => 'E-mailvoorkeuren',
     // TODO: move to misc?
     'communities' => 'Groepen',
@@ -21,6 +19,16 @@ return [
     'about' => 'Over',
     'contact' => 'Contact',
     'contactUs' => 'Neem contact op',
+
+    /**
+     * Dashboard page.
+     */
+    'dashboard' => [
+        'title' => 'Dashboard',
+        'yourPersonalDashboard' => 'Je persoonlijke dashboard',
+        'noBarsOrCommunities' => 'Geen bars of groepen',
+        'nothingHereNoMemberUseExploreButtons' => 'Er is hier niks om te zien omdat je nog geen lid bent van een bar of groep. Vind de jouwe met de onderstaande knoppen.',
+    ],
 
     /**
      * Last page.

@@ -24,7 +24,9 @@
     <div class="ui info message visible">
         <div class="header">@lang('pages.bar.searchByCommunity')</div>
         <p>@lang('pages.bar.searchByCommunityDescription')</p>
-        <a href="{{ route('explore.community') }}" class="ui button basic">@lang('pages.community.viewCommunities')</a>
+        <a href="{{ route('explore.community') }}" class="ui button basic">
+            @lang('pages.explore.exploreCommunities')
+        </a>
     </div>
 
     @include('bar.include.list')

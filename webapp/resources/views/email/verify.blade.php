@@ -19,7 +19,9 @@
 
         <div>
             <button class="ui button primary" type="submit">@lang('misc.verify')</button>
-            <a href="{{ route('dashboard') }}" class="ui button basic">@lang('pages.dashboard')</a>
+            <a href="{{ route('dashboard') }}" class="ui button basic">
+                @lang('pages.dashboard.title')
+            </a>
         </div>
 
     {!! Form::close() !!}
