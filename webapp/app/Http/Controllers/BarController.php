@@ -66,8 +66,9 @@ class BarController extends Controller {
             'slug' => $request->has('slug') ? $request->input('slug') : null,
             'description' => $request->input('slug'),
             'password' => $request->has('password') ? $request->input('password') : null,
-            'visible' => is_checked($request->input('visible')),
-            'public' => is_checked($request->input('public')),
+            'show_explore' => is_checked($request->input('show_explore')),
+            'show_community' => is_checked($request->input('show_community')),
+            'self_enroll' => is_checked($request->input('self_enroll')),
         ]);
 
         // Automatically join if checked
@@ -248,8 +249,9 @@ class BarController extends Controller {
         $bar->slug = $request->has('slug') ? $request->input('slug') : null;
         $bar->description = $request->input('description');
         $bar->password = $request->has('password') ? $request->input('password') : null;
-        $bar->visible = is_checked($request->input('visible'));
-        $bar->public = is_checked($request->input('public'));
+        $bar->show_explore = is_checked($request->input('show_explore'));
+        $bar->show_community = is_checked($request->input('show_community'));
+        $bar->self_enroll = is_checked($request->input('self_enroll'));
 
         // Save the bar
         $bar->save();
