@@ -79,30 +79,43 @@
 
         <div class="ui divider"></div>
 
-        <div class="inline field {{ ErrorRenderer::hasError('visible') ? 'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('show_explore') ? 'error' : '' }}">
             <div class="ui checkbox">
                 <input type="checkbox"
-                        name="visible"
+                        name="show_explore"
                         tabindex="0"
                         class="hidden"
-                        {{ $bar->visible ? 'checked="checked"' : '' }}>
-                {{ Form::label('visible', __('pages.bar.visibleDescription')) }}
+                        {{ $bar->show_explore ? 'checked="checked"' : '' }}>
+                {{ Form::label('show_explore', __('pages.bar.showExploreDescription')) }}
             </div>
             <br />
-            {{ ErrorRenderer::inline('visible') }}
+            {{ ErrorRenderer::inline('show_explore') }}
         </div>
 
-        <div class="inline field {{ ErrorRenderer::hasError('public') ? 'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('show_community') ? 'error' : '' }}">
             <div class="ui checkbox">
                 <input type="checkbox"
-                        name="public"
+                        name="show_community"
                         tabindex="0"
                         class="hidden"
-                        {{ $bar->public ? 'checked="checked"' : '' }}>
-                {{ Form::label('public', __('pages.bar.publicDescription')) }}
+                        {{ $bar->show_community ? 'checked="checked"' : '' }}>
+                {{ Form::label('show_community', __('pages.bar.showCommunityDescription')) }}
             </div>
             <br />
-            {{ ErrorRenderer::inline('public') }}
+            {{ ErrorRenderer::inline('show_community') }}
+        </div>
+
+        <div class="inline field {{ ErrorRenderer::hasError('self_enroll') ? 'error' : '' }}">
+            <div class="ui checkbox">
+                <input type="checkbox"
+                        name="self_enroll"
+                        tabindex="0"
+                        class="hidden"
+                        {{ $bar->self_enroll ? 'checked="checked"' : '' }}>
+                {{ Form::label('self_enroll', __('pages.bar.selfEnrollDescription')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('self_enroll') }}
         </div>
 
         <br />

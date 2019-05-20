@@ -48,8 +48,8 @@ class CommunityController extends Controller {
         $community->slug = $request->has('slug') ? $request->input('slug') : null;
         $community->description = $request->input('description');
         $community->password = $request->has('password') ? $request->input('password') : null;
-        $community->visible = is_checked($request->input('visible'));
-        $community->public = is_checked($request->input('public'));
+        $community->show_explore = is_checked($request->input('show_explore'));
+        $community->self_enroll = is_checked($request->input('self_enroll'));
         $community->save();
 
         // Automatically join if checked
@@ -87,7 +87,7 @@ class CommunityController extends Controller {
 
         return view('community.show')
             ->with('joined', $community->isJoined($user))
-            ->with('bars', $community->bars()->visible()->get());
+            ->with('bars', $community->bars()->showCommunity()->get());
     }
 
     /**
@@ -102,8 +102,7 @@ class CommunityController extends Controller {
 
         return view('community.info')
             ->with('joined', $community->isJoined($user))
-            ->with('page', last(explode('.', \Request::route()->getName())))
-            ->with('bars', $community->bars()->visible()->get());
+            ->with('page', last(explode('.', \Request::route()->getName())));
     }
 
     /**
@@ -187,8 +186,8 @@ class CommunityController extends Controller {
         $community->slug = $request->has('slug') ? $request->input('slug') : null;
         $community->description = $request->input('description');
         $community->password = $request->has('password') ? $request->input('password') : null;
-        $community->visible = is_checked($request->input('visible'));
-        $community->public = is_checked($request->input('public'));
+        $community->show_explore = is_checked($request->input('show_explore'));
+        $community->self_enroll = is_checked($request->input('self_enroll'));
 
         // Save the community
         $community->save();
@@ -214,6 +213,12 @@ class CommunityController extends Controller {
             return redirect()
                 ->route('community.show', ['communityId' => $communityId]);
 
+        // Self enroll must be enabled
+        if(!$community->self_enroll)
+            return redirect()
+                ->route('community.show', ['communityId' => $communityId])
+                ->with('error', __('pages.community.cannotSelfEnroll'));
+
         // Show the community join confirm page
         return view('community.join');
     }
@@ -227,6 +232,12 @@ class CommunityController extends Controller {
         // Get the community and user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
+
+        // Self enroll must be enabled
+        if(!$community->self_enroll)
+            return redirect()
+                ->route('community.show', ['communityId' => $communityId])
+                ->with('error', __('pages.community.cannotSelfEnroll'));
 
         // Handle the password if required
         if($community->needsPassword($user)) {

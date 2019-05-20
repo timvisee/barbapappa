@@ -5,6 +5,7 @@
 @php
     // Get the home route name to use based on the session
     $homeRoute = barauth()->isAuth() ? 'dashboard' : 'index';
+    $homeRouteName = __('pages.' . (barauth()->isAuth() ? 'dashboard.title' : 'index'));
 
     // Determine whether we have a previous URL
     $hasPrevious = url()->previous() != url()->current();
@@ -17,7 +18,7 @@
             'icon' => 'undo',
         ];
     $menulinks[] = [
-        'name' => __('pages.' . $homeRoute),
+        'name' => $homeRouteName,
         'link' => route($homeRoute),
         'icon' => 'text-underline',
     ];
@@ -60,7 +61,7 @@
 
     <a class="ui button {{ barauth()->isAuth() && !$hasPrevious ? 'primary' : 'basic' }}"
             href="{{ route($homeRoute) }}"
-            title="@lang('pages.' . $homeRoute)">
-        @lang('pages.' . $homeRoute)
+            title="{{ $homeRouteName }}">
+        {{ $homeRouteName }}
     </a>
 @endsection

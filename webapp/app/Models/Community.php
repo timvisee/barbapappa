@@ -24,8 +24,8 @@ use Illuminate\Support\Facades\Mail;
  * @property string name
  * @property string|null slug
  * @property string|null description
- * @property bool visible
- * @property bool public
+ * @property bool show_explore
+ * @property bool self_enroll
  * @property string|null password
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -44,11 +44,14 @@ class Community extends Model {
     ];
 
     /**
-     * A scope for only showing communities that have been defined as visible by
-     * the owner.
+     * A scope for communities to publicly show in the explore list.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisible($query) {
-        $query->where('visible', true);
+    public function scopeShowExplore($query) {
+        $query->where('show_explore', true);
     }
 
     /**

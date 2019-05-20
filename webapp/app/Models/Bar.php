@@ -24,8 +24,9 @@ use Illuminate\Support\Facades\Mail;
  * @property int economy_id
  * @property string|null slug
  * @property string|null description
- * @property bool visible
- * @property bool public
+ * @property bool show_explore
+ * @property bool show_community
+ * @property bool self_enroll
  * @property string|null password
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -49,16 +50,32 @@ class Bar extends Model {
         'name',
         'slug',
         'password',
-        'visible',
-        'public',
+        'show_explore',
+        'show_community',
+        'self_enroll',
     ];
 
     /**
-     * A scope for only showing bars that have been defined as visible by the
-     * owner.
+     * A scope for bars to publicly show in the explore list.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeVisible($query) {
-        $query->where('visible', true);
+    public function scopeShowExplore($query) {
+        $query->where('show_explore', true);
+    }
+
+    /**
+     * A scope for bars to show in the bar list of their community page for
+     * users enrolled in that community.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeShowCommunity($query) {
+        $query->where('show_community', true);
     }
 
     /**
