@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use \App\Models\Bar;
+use App\Models\Bar;
+use Illuminate\Http\Request;
 
 class PagesController extends Controller {
 
@@ -107,7 +108,7 @@ class PagesController extends Controller {
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function language($locale = null) {
+    public function language(Request $request, $locale = null) {
         // Get the language manager
         $langManager = langManager();
 
@@ -121,7 +122,7 @@ class PagesController extends Controller {
 
             // Redirect to the dashboard
             return redirect()
-                ->intended(route('index'))
+                ->intended($request->query('redirect') ?? route('index'))
                 ->with('success', __('lang.selectedLanguage'));
 
         } else if(!empty($locale))
