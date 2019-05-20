@@ -52,8 +52,8 @@ $factory->define(Email::class, function(Faker\Generator $faker) {
 $factory->define(Community::class, function(Faker\Generator $faker) {
     return [
         'name' => $faker->company,
-        'visible' => $faker->boolean,
-        'public' => $faker->boolean,
+        'show_explore' => $faker->boolean,
+        'self_enroll' => $faker->boolean,
         'password' => rand(0, 1) == 0 ? $faker->numberBetween(1000, 9999) : null,
     ];
 });
@@ -73,8 +73,9 @@ $factory->define(Economy::class, function(Faker\Generator $faker) {
 $factory->define(Bar::class, function(Faker\Generator $faker) {
     return [
         'name' => $faker->company,
-        'visible' => $faker->boolean,
-        'public' => $faker->boolean,
+        'show_explore' => $faker->boolean,
+        'show_community' => $faker->boolean,
+        'self_enroll' => $faker->boolean,
         'password' => rand(0, 1) == 0 ? $faker->numberBetween(1000, 9999) : null,
         'slug' => rand(0, 1) == 0 ? $faker->userName : null,
     ];
