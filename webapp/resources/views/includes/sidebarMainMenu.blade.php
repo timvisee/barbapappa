@@ -49,13 +49,9 @@
     @endif
 
     @if(barauth()->isAuth())
-        <a href="{{ route('community.overview') }}" class="item">
-            <i class="glyphicons glyphicons-group"></i>
-            @lang('pages.communities')
-        </a>
-        <a href="{{ route('bar.overview') }}" class="item">
-            <i class="glyphicons glyphicons-beer"></i>
-            @lang('pages.bars')
+        <a href="{{ route('explore.community') }}" class="item">
+            <i class="glyphicons glyphicons-search"></i>
+            @lang('pages.explore.title')
         </a>
         <a href="{{ route('account') }}" class="item">
             <i class="glyphicons glyphicons-user"></i>

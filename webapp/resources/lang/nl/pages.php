@@ -71,6 +71,15 @@ return [
     ],
 
     /**
+     * Explore pages.
+     */
+    'explore' => [
+        'title' => 'Ontdek',
+        'exploreBars' => 'Ontdek bars',
+        'exploreCommunities' => 'Ontdek groepen',
+    ],
+
+    /**
      * Community pages.
      */
     'community' => [

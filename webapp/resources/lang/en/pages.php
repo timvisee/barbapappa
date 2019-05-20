@@ -71,6 +71,15 @@ return [
     ],
 
     /**
+     * Explore pages.
+     */
+    'explore' => [
+        'title' => 'Explore',
+        'exploreBars' => 'Explore bars',
+        'exploreCommunities' => 'Explore communities',
+    ],
+
+    /**
      * Community pages.
      */
     'community' => [

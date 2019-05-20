@@ -76,6 +76,12 @@ Route::prefix('/profile')->middleware(['auth', 'selectUser'])->group(function() 
     Route::put('/{userId}', 'ProfileController@update')->name('profile.update');
 });
 
+// Explore routes
+Route::prefix('/explore')->middleware('auth')->group(function() {
+    Route::get('/', 'ExploreController@communities')->name('explore.community');
+    Route::get('/bars', 'ExploreController@bars')->name('explore.bar');
+});
+
 // Community routes
 Route::prefix('/c')->middleware('auth')->group(function() {
     Route::get('/', 'CommunityController@overview')->name('community.overview');
