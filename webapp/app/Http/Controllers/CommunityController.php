@@ -48,8 +48,8 @@ class CommunityController extends Controller {
         $community->slug = $request->has('slug') ? $request->input('slug') : null;
         $community->description = $request->input('description');
         $community->password = $request->has('password') ? $request->input('password') : null;
-        $community->visible = is_checked($request->input('visible'));
-        $community->public = is_checked($request->input('public'));
+        $community->show_explore = is_checked($request->input('show_explore'));
+        $community->self_enroll = is_checked($request->input('self_enroll'));
         $community->save();
 
         // Automatically join if checked
@@ -187,8 +187,8 @@ class CommunityController extends Controller {
         $community->slug = $request->has('slug') ? $request->input('slug') : null;
         $community->description = $request->input('description');
         $community->password = $request->has('password') ? $request->input('password') : null;
-        $community->visible = is_checked($request->input('visible'));
-        $community->public = is_checked($request->input('public'));
+        $community->show_explore = is_checked($request->input('show_explore'));
+        $community->self_enroll = is_checked($request->input('self_enroll'));
 
         // Save the community
         $community->save();

@@ -55,29 +55,30 @@
 
         <div class="ui divider"></div>
 
-        <div class="inline field {{ ErrorRenderer::hasError('visible') ? 'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('show_explore') ? 'error' : '' }}">
             <div class="ui checkbox">
                 <input type="checkbox"
-                        name="visible"
+                        name="show_explore"
                         tabindex="0"
                         class="hidden"
                         checked="checked">
-                {{ Form::label('visible', __('pages.community.visibleDescription')) }}
+                {{ Form::label('show_explore', __('pages.community.showExploreDescription')) }}
             </div>
             <br />
-            {{ ErrorRenderer::inline('visible') }}
+            {{ ErrorRenderer::inline('show_explore') }}
         </div>
 
-        <div class="inline field {{ ErrorRenderer::hasError('public') ? 'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('self_enroll') ? 'error' : '' }}">
             <div class="ui checkbox">
                 <input type="checkbox"
-                        name="public"
+                        name="self_enroll"
                         tabindex="0"
-                        class="hidden">
-                {{ Form::label('public', __('pages.community.publicDescription')) }}
+                        class="hidden"
+                        checked="checked">
+                {{ Form::label('self_enroll', __('pages.community.selfEnrollDescription')) }}
             </div>
             <br />
-            {{ ErrorRenderer::inline('public') }}
+            {{ ErrorRenderer::inline('self_enroll') }}
         </div>
 
         <div class="ui divider"></div>
