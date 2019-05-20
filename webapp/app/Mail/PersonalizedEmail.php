@@ -25,21 +25,28 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
     public $recipient;
 
     /**
-     * The subject of the message.
+     * The language key for the subject of the message.
      * @var string
      */
-    public $subject = null;
+    public $subjectKey = null;
+
+    /**
+     * The language values for the subject of the message.
+     * @var string
+     */
+    public $subjectValues = null;
 
     /**
      * Constructor.
      *
      * @param EmailRecipient $recipient Email recipient.
      * @param string $subjectKey Message subject language key.
-     * @param array $replace Fields to replace in the subject language value.
+     * @param array $subjectValues Fields to replace in the subject language value.
      */
-    public function __construct(EmailRecipient $recipient, $subjectKey, array $replace = []) {
+    public function __construct(EmailRecipient $recipient, $subjectKey, array $subjectValues = []) {
         $this->recipient = $recipient;
-        $this->subject = trans($subjectKey, $replace);
+        $this->subjectKey = $subjectKey;
+        $this->subjectValues = $subjectValues;
     }
 
     /**
@@ -54,11 +61,15 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         // Set the locale
         LangManager::setLocale($locale, false, false);
 
+        // Determine the subject
+        $subject = trans($this->subjectKey, $this->subjectValues);
+
         // Build the mailable
         return $this
             ->to($this->recipient)
-            ->subject($this->subject)
+            ->subject($subject)
             ->onQueue($this->getWorkerQueue())
+            ->with('subject', $subject)
             ->with('locale', $locale);
     }
 
