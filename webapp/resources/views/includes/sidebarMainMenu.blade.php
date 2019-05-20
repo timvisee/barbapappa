@@ -14,20 +14,24 @@
             <i class="glyphicons glyphicons-undo"></i>
             @lang('pages.last.title')
         </a>
-        <a href="{{ route('dashboard') }}" class="item">
+        <a href="{{ route('dashboard') }}"
+                class="item {{ Route::currentRouteName() == 'dashboard' ? ' active' : '' }}">
             <i class="glyphicons glyphicons-dashboard"></i>
             @lang('pages.dashboard.title')
         </a>
     @else
-        <a href="{{ route('index') }}" class="item">
-            <i class="glyphicons glyphicons-dashboard"></i>
-            @lang('pages.dashboard.title')
+        <a href="{{ route('index') }}"
+                class="item {{ Route::currentRouteName() == 'index' ? ' active' : '' }}">
+            <i class="glyphicons glyphicons-home"></i>
+            @lang('pages.index')
         </a>
-        <a href="{{ route('login') }}" class="item">
+        <a href="{{ route('login') }}"
+                class="item {{ Route::currentRouteName() == 'login' ? ' active' : '' }}">
             <i class="glyphicons glyphicons-user"></i>
             @lang('auth.login')
         </a>
-        <a href="{{ route('register') }}" class="item">
+        <a href="{{ route('register') }}"
+                class="item {{ Route::currentRouteName() == 'register' ? ' active' : '' }}">
             <i class="glyphicons glyphicons-user-asterisk"></i>
             @lang('auth.register')
         </a>
@@ -35,7 +39,7 @@
 
     {{-- Page specific links --}}
     @if(!empty($menulinks))
-        <div class="item">
+        <div class="item active">
             <div class="header">@yield('title')</div>
             <div class="menu">
                 @foreach($menulinks as $menulink)
@@ -63,15 +67,18 @@
     <div class="item">
         <div class="header">@lang('misc.information')</div>
         <div class="menu">
-            <a href="{{ route('about') }}" class="item">
+            <a href="{{ route('about') }}"
+                    class="item {{ Route::currentRouteName() == 'about' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-heart-empty"></i>
                 @lang('pages.about')
             </a>
-            <a href="{{ route('terms') }}" class="item">
+            <a href="{{ route('terms') }}"
+                    class="item {{ Route::currentRouteName() == 'terms' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-handshake"></i>
                 @lang('pages.terms.title')
             </a>
-            <a href="{{ route('privacy') }}" class="item">
+            <a href="{{ route('privacy') }}"
+                    class="item {{ Route::currentRouteName() == 'privacy' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-{{ (langManager()->getLocale() != 'pirate' ? 'fingerprint' : 'skull') }}"></i>
                 @lang('pages.privacy.title')
             </a>
@@ -79,11 +86,13 @@
                 <i class="glyphicons glyphicons-scale-classic"></i>
                 @lang('pages.license.title')
             </a>
-            <a href="{{ route('contact') }}" class="item">
+            <a href="{{ route('contact') }}"
+                    class="item {{ Route::currentRouteName() == 'contact' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-send"></i>
                 @lang('pages.contact')
             </a>
-            <a href="{{ route('language') }}" class="item">
+            <a href="{{ route('language') }}"
+                    class="item {{ Route::currentRouteName() == 'language' ? ' active' : '' }}">
                 @lang('lang.language')
                 {{ langManager()->renderFlag(null, true, true) }}
             </a>
