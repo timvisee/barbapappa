@@ -19,8 +19,6 @@
     @include('community.include.list')
 
     @if(perms(CommunityController::permsCreate()))
-        <br />
-
         <a href="{{ route('community.create') }}"
                 class="ui button basic">
             @lang('pages.community.createCommunity')

@@ -15,7 +15,7 @@
 
         <div class="field {{ ErrorRenderer::hasError('description') ? 'error' : '' }}">
             {{ Form::label('description', __('misc.description') . ' (' .  __('misc.public') . ', ' .  __('general.optional') . '):') }}
-            {{ Form::textarea('description', $bar->description, ['placeholder' => __('pages.bar.descriptionPlaceholder')]) }}
+            {{ Form::textarea('description', $bar->description, ['placeholder' => __('pages.bar.descriptionPlaceholder'), 'rows' => 3]) }}
             {{ ErrorRenderer::inline('description') }}
         </div>
 
@@ -108,7 +108,7 @@
         <br />
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
-        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+        <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('general.cancel')
         </a>
