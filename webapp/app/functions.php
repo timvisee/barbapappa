@@ -231,3 +231,14 @@ if(!function_exists('escape_like')) {
         );
     }
 }
+
+if(!function_exists('rand_float')) {
+    /**
+     * Generate a random float in [0.0, 1.0).
+     *
+     * @return Random float in [0.0, 1.0).
+     */
+    function rand_float() {
+        return mt_rand() / mt_getrandmax();
+    }
+}

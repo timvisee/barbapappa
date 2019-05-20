@@ -37,4 +37,10 @@ $(document).ready(function() {
         position: 'bottom left',
         transition: 'vertical flip',
     });
+
+    // Join label popup
+    $('.popup').popup({
+        position: 'top center',
+        transition: 'scale',
+    });
 });

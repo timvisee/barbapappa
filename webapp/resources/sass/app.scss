@@ -215,3 +215,77 @@ ul.ui-listview.center > li > a.ui-btn {
     font-size: smaller;
     line-height: normal;
 }
+
+// Pirate easter-egg in sidebar
+.pirate {
+    position: sticky;
+    left: 110px;
+    margin: 25px auto 90px auto;
+    display: inline-block;
+    animation: pirate 8s ease-in-out 1s both;
+}
+
+.pirate img {
+    width: 120px;
+    margin: 0 0 -65px 0;
+    position: relative;
+    animation: pirate-img 8s ease-in-out 1s both;
+}
+
+@keyframes pirate {
+    0% {
+        opacity: 0;
+        left: 0;
+        bottom: -45px;
+    }
+    25% {
+        opacity: 1;
+        bottom: 0;
+    }
+    85% {
+        opacity: 1;
+        bottom: 0;
+    }
+    99% {
+        opacity: 0;
+        left: 120px;
+        bottom: -45px;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        left: 120px;
+        bottom: -45px;
+        transform: scale(0);
+    }
+}
+
+@keyframes pirate-img {
+    0% {
+        bottom: -2px;
+    }
+    25% {
+        bottom: 5px;
+    }
+    35% {
+        bottom: -2px;
+    }
+    45% {
+        bottom: 5px;
+    }
+    55% {
+        bottom: -2px;
+    }
+    65% {
+        bottom: 5px;
+    }
+    75% {
+        bottom: -2px;
+    }
+    85% {
+        bottom: 5px;
+    }
+    100% {
+        bottom: -2px;
+    }
+}
