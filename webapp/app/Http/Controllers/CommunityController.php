@@ -213,6 +213,12 @@ class CommunityController extends Controller {
             return redirect()
                 ->route('community.show', ['communityId' => $communityId]);
 
+        // Self enroll must be enabled
+        if(!$community->self_enroll)
+            return redirect()
+                ->route('community.show', ['communityId' => $communityId])
+                ->with('error', __('pages.community.cannotSelfEnroll'));
+
         // Show the community join confirm page
         return view('community.join');
     }
@@ -226,6 +232,12 @@ class CommunityController extends Controller {
         // Get the community and user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
+
+        // Self enroll must be enabled
+        if(!$community->self_enroll)
+            return redirect()
+                ->route('community.show', ['communityId' => $communityId])
+                ->with('error', __('pages.community.cannotSelfEnroll'));
 
         // Handle the password if required
         if($community->needsPassword($user)) {

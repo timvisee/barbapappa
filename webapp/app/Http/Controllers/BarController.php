@@ -277,6 +277,12 @@ class BarController extends Controller {
             return redirect()
                 ->route('bar.show', ['barId' => $barId]);
 
+        // Self enroll must be enabled
+        if(!$bar->self_enroll)
+            return redirect()
+                ->route('bar.show', ['barId' => $barId])
+                ->with('error', __('pages.bar.cannotSelfEnroll'));
+
         // Redirect to the bar page
         return view('bar.join');
     }
@@ -291,6 +297,12 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
+
+        // Self enroll must be enabled
+        if(!$bar->self_enroll)
+            return redirect()
+                ->route('bar.show', ['barId' => $barId])
+                ->with('error', __('pages.bar.cannotSelfEnroll'));
 
         // Handle the password if required
         if($bar->needsPassword($user)) {
