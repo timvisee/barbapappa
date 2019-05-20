@@ -55,7 +55,7 @@ return [
             'description' => 'Deze pagina laat een overzicht van je e-mailaddressen zien.',
             'yourEmails' => 'Jouw e-mailadressen',
             'resendVerify' => 'Verificatie opnieuw versturen',
-            'verifySent' => 'Een nieuwe verificatie-e-mail zal binnenkort verzonden worden.',
+            'verifySent' => 'Een nieuwe verificatie-e-mail zal zo spoedig mogelijk verzonden worden.',
             'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',
             'cannotDeleteMustHaveOne' => 'Je kunt dit e-mailadres niet verwijderen, je moet tenminste één adres hebben.',
             'cannotDeleteMustHaveVerified' => 'Je kunt dit e-mailadres niet verwijderen, je moet tenminste één geverifiëerd adres hebben.',
