@@ -127,9 +127,14 @@
 
         <br />
 
-        <button class="ui button primary" type="submit">
-            @lang('misc.' . ($clone ? 'clone' : 'add'))
-        </button>
+        <div class="ui buttons">
+            <button class="ui button primary" type="submit" name="submit" value="">
+                @lang('misc.add')
+            </button>
+            <button class="ui button primary basic" type="submit" name="submit" value="clone">
+                @lang('misc.addAndClone')
+            </button>
+        </div>
         <a href="{{ route('community.economy.product.index', [
             'communityId' => $community->human_id,
             'economyId' => $economy->id,
