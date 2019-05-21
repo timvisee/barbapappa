@@ -35,16 +35,23 @@ class ProductController extends Controller {
      *
      * @return Response
      */
-    public function create($communityId, $economyId) {
+    public function create(Request $request, $communityId, $economyId) {
         // Get the user, community, find the products
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $locales = langManager()->getLocales(true, true);
 
+        // Check whether to clone a product
+        $cloneProductId = $request->query('productId');
+        $clone = strlen($cloneProductId) > 0;
+        $cloneProduct = $clone ? $economy->products()->findOrFail($cloneProductId) : null;
+
         return view('community.economy.product.create')
             ->with('economy', $economy)
-            ->with('locales', $locales);
+            ->with('locales', $locales)
+            ->with('clone', $clone)
+            ->with('cloneProduct', $cloneProduct);
     }
 
     /**

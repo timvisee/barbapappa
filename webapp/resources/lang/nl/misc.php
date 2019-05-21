@@ -12,6 +12,7 @@ return [
     'unverified' => 'Ongeverifiëerd',
     'noToken' => 'Geen token opgegeven.',
     'create' => 'Aanmaken',
+    'clone' => 'Dupliceren',
     'edit' => 'Aanpassen',
     'change' => 'Aanpassen',
     'rename' => 'Hernoemen',

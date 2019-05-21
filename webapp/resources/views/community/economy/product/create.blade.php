@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.products.createProduct'))
+@section('title', __('pages.products.' . ($clone ? 'clone' : 'new') . 'Product'))
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
@@ -16,7 +16,7 @@
     ]) !!}
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
-            {{ Form::text('name', '', ['placeholder' => __('pages.products.namePlaceholder')]) }}
+            {{ Form::text('name', $clone ? $cloneProduct->name : '', ['placeholder' => __('pages.products.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
         </div>
 
@@ -86,7 +86,7 @@
                         name="enabled"
                         tabindex="0"
                         class="hidden"
-                        checked="checked">
+                        {{ !$clone || $cloneProduct->enabled ?  'checked="checked"' : '' }}>
                 {{ Form::label('enabled', __('pages.products.enabledDescription')) }}
             </div>
             <br />
@@ -98,7 +98,8 @@
                 <input type="checkbox"
                         name="archived"
                         tabindex="0"
-                        class="hidden">
+                        class="hidden"
+                        {{ $clone && $cloneProduct->archived ?  'checked="checked"' : '' }}>
                 {{ Form::label('archived', __('pages.products.archivedDescription')) }}
             </div>
             <br />
@@ -107,7 +108,9 @@
 
         <br />
 
-        <button class="ui button primary" type="submit">@lang('misc.add')</button>
+        <button class="ui button primary" type="submit">
+            @lang('misc.' . ($clone ? 'clone' : 'add'))
+        </button>
         <a href="{{ route('community.economy.product.index', [
             'communityId' => $community->human_id,
             'economyId' => $economy->id,

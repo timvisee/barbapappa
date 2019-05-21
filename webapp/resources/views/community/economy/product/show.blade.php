@@ -93,18 +93,26 @@
         <p>
             <div class="ui buttons">
                 <a href="{{ route('community.economy.product.edit', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                    'productId' => $product->id
-                ]) }}"
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'productId' => $product->id,
+                        ]) }}"
                         class="ui button secondary">
                     @lang('misc.edit')
                 </a>
+                <a href="{{ route('community.economy.product.create', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'productId' => $product->id,
+                        ]) }}"
+                        class="ui button positive">
+                    @lang('misc.clone')
+                </a>
                 <a href="{{ route('community.economy.product.delete', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                    'productId' => $product->id
-                ]) }}"
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'productId' => $product->id,
+                        ]) }}"
                         class="ui button negative">
                     @lang('misc.delete')
                 </a>
