@@ -33,6 +33,14 @@
             @lang('pages.barMembers.incorrectMemberRoleWarning')
         </div>
 
+        {{-- Show warning for modifying own role --}}
+        @if($member->id == barauth()->getSessionUser()->id)
+            <div class="ui warning message visible">
+                <span class="halflings halflings-warning-sign"></span>
+                @lang('pages.barMembers.ownRoleDowngradeWarning')
+            </div>
+        @endif
+
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
         <a href="{{ route('bar.member.show', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
                 class="ui button basic">

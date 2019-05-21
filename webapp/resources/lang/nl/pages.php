@@ -146,6 +146,7 @@ return [
         'memberRemoved' => 'Het lid is verwijderd.',
         'memberUpdated' => 'Lid aanpassingen opgeslagen.',
         'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
+        'ownRoleDowngradeWarning' => 'Bij het verlagen van je eigen rol verlies je waarschijnlijk beheerstoegang tot deze groep. Wees erg voorzichtig.',
     ],
 
     /**
@@ -400,6 +401,7 @@ return [
         'memberRemoved' => 'Het lid is verwijderd.',
         'memberUpdated' => 'Lid aanpassingen opgeslagen.',
         'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
+        'ownRoleDowngradeWarning' => 'Bij het verlagen van je eigen rol verlies je waarschijnlijk beheerstoegang tot deze bar. Wees erg voorzichtig.',
     ],
 
     /**

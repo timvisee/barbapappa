@@ -28,10 +28,19 @@
             {{ ErrorRenderer::inline('role') }}
         </div>
 
+        {{-- Show warning for modifying roles in general --}}
         <div class="ui warning message visible">
             <span class="halflings halflings-warning-sign"></span>
             @lang('pages.communityMembers.incorrectMemberRoleWarning')
         </div>
+
+        {{-- Show warning for modifying own role --}}
+        @if($member->id == barauth()->getSessionUser()->id)
+            <div class="ui warning message visible">
+                <span class="halflings halflings-warning-sign"></span>
+                @lang('pages.communityMembers.ownRoleDowngradeWarning')
+            </div>
+        @endif
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
         <a href="{{ route('community.member.show', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"

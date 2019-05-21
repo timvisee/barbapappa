@@ -146,6 +146,7 @@ return [
         'memberRemoved' => 'Th\' matey be sunk.',
         'memberUpdated' => 'Matey changes saved.',
         'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a matey may introduce significant security issues.',
+        'ownRoleDowngradeWarning' => 'By downgrading yer own role ye might lose management access to dis crew. Be very careful.',
     ],
 
     /**
@@ -400,6 +401,7 @@ return [
         'memberRemoved' => 'Th\' matey be sunk.',
         'memberUpdated' => 'Matey changes saved.',
         'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a matey may introduce significant security issues.',
+        'ownRoleDowngradeWarning' => 'By downgrading yer own role ye might lose management access to dis bar. Be very careful.',
     ],
 
     /**
