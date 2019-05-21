@@ -31,13 +31,22 @@
             @foreach($locales as $locale)
                 @php
                     $field = 'name_' . $locale;
+                    $value = $clone ?
+                        $cloneProduct
+                            ->names
+                            ->whereStrict('locale', $locale)
+                            ->map(function($p) { return $p->name; })
+                            ->first()
+                        : null;
                 @endphp
                 <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
                     <label>@lang('lang.name', [], $locale) ({{ __('general.optional') }}):</label>
                     <div class="ui labeled input">
                         <input type="text"
                             placeholder="@lang('pages.products.namePlaceholder', [], $locale)"
-                            id="{{ $field }}" name="{{ $field }}" />
+                            id="{{ $field }}"
+                            name="{{ $field }}"
+                            {!! !empty($value) ? 'value="' . e($value) . '"' : '' !!} />
                     </div>
                     {{ ErrorRenderer::inline($field) }}
                 </div>
@@ -56,12 +65,22 @@
                 @foreach($economy->currencies as $currency)
                     @php
                         $field = 'price_' . $currency->id;
+                        $value = $clone ? $cloneProduct
+                                ->prices
+                                ->whereStrict('currency_id', $currency->id)
+                                ->map(function($p) { return $p->price; })
+                                ->first()
+                            : null;
                     @endphp
                     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
                         <label>{{ $currency->name }} ({{ __('general.optional') }}):</label>
                         <div class="ui labeled input">
                             <label for="{{ $field }}" class="ui label">{{ $currency->symbol }}</label>
-                            <input type="text" placeholder="1.23" id="{{ $field }}" name="{{ $field }}" />
+                            <input type="text"
+                                placeholder="1.23"
+                                id="{{ $field }}"
+                                name="{{ $field }}"
+                                {!! !empty($value) ? 'value="' . e($value) . '"' : '' !!} />
                         </div>
                         {{ ErrorRenderer::inline($field) }}
                     </div>
