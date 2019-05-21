@@ -35,9 +35,11 @@
 
         <div class="field {{ ErrorRenderer::hasError('slug') ? 'error' : '' }}">
             {{ Form::label('slug', __('misc.slug') . ' (' .  __('general.optional') . '):') }}
-            {{ Form::text('slug', $community->slug, ['placeholder' => __('pages.community.slugPlaceholder')]) }}
+            <div class="ui labeled input">
+                <label for="slug" class="ui label">/c/</label>
+                {{ Form::text('slug', $community->slug, ['placeholder' => __('pages.community.slugPlaceholder')]) }}
+            </div>
             {{ ErrorRenderer::inline('slug') }}
-            {{-- TODO: suggest a clickable slug based on the community name --}}
         </div>
 
         <div class="ui divider"></div>
