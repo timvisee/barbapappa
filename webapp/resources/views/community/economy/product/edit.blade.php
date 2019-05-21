@@ -42,8 +42,10 @@
                     <label>@lang('lang.name', [], $locale) ({{ __('general.optional') }}):</label>
                     <div class="ui labeled input">
                         <input type="text"
-                        placeholder="@lang('pages.products.namePlaceholder', [], $locale)"
-                        id="{{ $field }}" name="{{ $field }}" value="{{ $value }}" />
+                            placeholder="@lang('pages.products.namePlaceholder', [], $locale)"
+                            id="{{ $field }}"
+                            name="{{ $field }}"
+                            value="{{ $value }}" />
                     </div>
                     {{ ErrorRenderer::inline($field) }}
                 </div>

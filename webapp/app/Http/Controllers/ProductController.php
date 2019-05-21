@@ -35,16 +35,23 @@ class ProductController extends Controller {
      *
      * @return Response
      */
-    public function create($communityId, $economyId) {
+    public function create(Request $request, $communityId, $economyId) {
         // Get the user, community, find the products
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $locales = langManager()->getLocales(true, true);
 
+        // Check whether to clone a product
+        $cloneProductId = $request->query('productId');
+        $clone = strlen($cloneProductId) > 0;
+        $cloneProduct = $clone ? $economy->products()->findOrFail($cloneProductId) : null;
+
         return view('community.economy.product.create')
             ->with('economy', $economy)
-            ->with('locales', $locales);
+            ->with('locales', $locales)
+            ->with('clone', $clone)
+            ->with('cloneProduct', $cloneProduct);
     }
 
     /**
@@ -60,6 +67,7 @@ class ProductController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $locales = collect(langManager()->getLocales(true, true));
+        $clone = $request->input('submit') == 'clone';
 
         // Build validation rules, and validate
         $rules = ['name' => 'required|' . ValidationDefaults::NAME];
@@ -73,7 +81,8 @@ class ProductController extends Controller {
         $this->validate($request, $rules, $messages);
 
         // Create product and set prices in transaction
-        DB::transaction(function() use($request, $economy, $locales) {
+        $product = null;
+        DB::transaction(function() use($request, $economy, $locales, &$product) {
             // Create the product
             $product = $economy->products()->create([
                 'economy_id' => $economy->id,
@@ -117,13 +126,26 @@ class ProductController extends Controller {
             );
         });
 
-        // Redirect the user to the product index
-        return redirect()
-            ->route('community.economy.product.index', [
-                'communityId' => $community->human_id,
-                'economyId' => $economy->id,
-            ])
-            ->with('success', __('pages.products.created'));
+        // Build the response, redirect
+        $response = redirect();
+
+        // Got to product index, or create page if cloning
+        if(!$clone)
+            $response = $response
+                ->route('community.economy.product.index', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                ]);
+        else
+            $response = $response
+                ->route('community.economy.product.create', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'productId' => $product->id,
+                ]);
+
+        // Attach success message and return
+        return $response->with('success', __('pages.products.created'));
     }
 
     /**

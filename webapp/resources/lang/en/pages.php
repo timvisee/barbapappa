@@ -204,6 +204,7 @@ return [
         'manageProduct' => 'Manage product',
         'manageProducts' => 'Manage products',
         'newProduct' => 'New product',
+        'cloneProduct' => 'Clone product',
         'editProduct' => 'Edit product',
         'created' => 'The product has been added.',
         'changed' => 'The product has been changed.',
