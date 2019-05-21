@@ -42,6 +42,19 @@
             </div>
         @endif
 
+        {{-- Role change confirmation checkbox --}}
+        <div class="inline field {{ ErrorRenderer::hasError('confirm_role_change') ? 'error' : '' }}">
+            <div class="ui checkbox">
+                <input type="checkbox"
+                        name="confirm_role_change"
+                        tabindex="0"
+                        class="hidden">
+                {{ Form::label('confirm_role_change', __('pages.barMembers.confirmRoleChange')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('confirm_role_change') }}
+        </div>
+
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
         <a href="{{ route('community.member.show', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
                 class="ui button basic">

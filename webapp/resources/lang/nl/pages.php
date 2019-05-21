@@ -147,6 +147,7 @@ return [
         'memberUpdated' => 'Lid aanpassingen opgeslagen.',
         'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
         'ownRoleDowngradeWarning' => 'Bij het verlagen van je eigen rol verlies je waarschijnlijk beheerstoegang tot deze groep. Wees erg voorzichtig.',
+        'confirmRoleChange' => 'Bevestig rol aanpassing voor groepslid',
     ],
 
     /**
@@ -402,6 +403,7 @@ return [
         'memberUpdated' => 'Lid aanpassingen opgeslagen.',
         'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
         'ownRoleDowngradeWarning' => 'Bij het verlagen van je eigen rol verlies je waarschijnlijk beheerstoegang tot deze bar. Wees erg voorzichtig.',
+        'confirmRoleChange' => 'Bevestig rol aanpassing voor bar lid',
     ],
 
     /**

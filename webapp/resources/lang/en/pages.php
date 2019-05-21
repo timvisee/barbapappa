@@ -147,6 +147,7 @@ return [
         'memberUpdated' => 'Member changes saved.',
         'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
         'ownRoleDowngradeWarning' => 'By downgrading your own role you might lose management access to this community. Be very careful.',
+        'confirmRoleChange' => 'Confirm role change for community member',
     ],
 
     /**
@@ -402,6 +403,7 @@ return [
         'memberUpdated' => 'Member changes saved.',
         'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
         'ownRoleDowngradeWarning' => 'By downgrading your own role you might lose management access to this bar. Be very careful.',
+        'confirmRoleChange' => 'Confirm role change for bar member',
     ],
 
     /**

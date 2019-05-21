@@ -60,14 +60,18 @@ class CommunityMemberController extends Controller {
     public function doEdit(Request $request, $communityId, $memberId) {
         // TODO: do not allow role demotion if last admin
 
-        // Validate
-        $this->validate($request, [
-            'role' => 'required|' . ValidationDefaults::communityRoles(),
-        ]);
-
         // Get the community, find the member
         $community = \Request::get('community');
         $member = $community->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
+        $roleChanged = $request->input('role') != $member->pivot->role;
+
+        // Build validation rules, validate
+        $rules = [
+            'role' => 'required|' . ValidationDefaults::communityRoles(),
+        ];
+        if($roleChanged)
+            $rules['confirm_role_change'] = 'accepted';
+        $this->validate($request, $rules);
 
         // Set the role ID, save the member
         $member->pivot->role = $request->input('role');
