@@ -118,10 +118,14 @@ class CommunityMemberController extends Controller {
      *
      * @return Response
      */
-    public function doDelete($communityId, $memberId) {
+    public function doDelete(Request $request, $communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
         $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
+
+        // Validate confirmation when deleting authenticated member
+        if($member->id == barauth()->getSessionUser()->id)
+            $this->validate($request, ['confirm_self_delete' => 'accepted']);
 
         // Do some delete checks, return on early response
         if(($return = $this->checkDelete($community, $member)) != null)

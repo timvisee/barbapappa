@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
 use App\Perms\Builder\Config as PermsConfig;
+use App\Perms\BarRoles;
 
 class BarMemberController extends Controller {
 
@@ -120,12 +121,16 @@ class BarMemberController extends Controller {
      *
      * @return Response
      */
-    public function doDelete($barId, $memberId) {
+    public function doDelete(Request $request, $barId, $memberId) {
         // TODO: user must be community admin
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
+
+        // Validate confirmation when deleting authenticated member
+        if($member->id == barauth()->getSessionUser()->id)
+            $this->validate($request, ['confirm_self_delete' => 'accepted']);
 
         // Do some delete checks, return on early response
         if(($return = $this->checkDelete($bar, $member)) != null)
