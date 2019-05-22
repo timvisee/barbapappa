@@ -40,8 +40,6 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function edit($barId, $memberId) {
-        // TODO: do not allow role demotion if last admin
-
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
@@ -57,23 +55,38 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $barId, $memberId) {
-        // TODO: do not allow role demotion if last admin
-
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
-        $roleChanged = $request->input('role') != $member->pivot->role;
+        $curRole = $member->pivot->role;
+        $newRole = $request->input('role');
 
         // Build validation rules, validate
         $rules = [
             'role' => 'required|' . ValidationDefaults::barRoles(),
         ];
-        if($roleChanged)
+        if($newRole != $curRole)
             $rules['confirm_role_change'] = 'accepted';
         $this->validate($request, $rules);
 
+        // If manager or higher changed to lower role, and he was the last with
+        // that role or higher, do not allow the change
+        // TODO: allow demote if manager/admin inherited from community
+        if($newRole < $curRole && $curRole > BarRoles::USER) {
+            $hasOtherRanked = $bar
+                ->users(['role'], true)
+                ->where('user_id', '<>', $memberId)
+                ->where('bar_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+                    ->with('error', __('pages.barMembers.cannotDemoteLastManager'));
+        }
+
         // Set the role ID, save the member
-        $member->pivot->role = $request->input('role');
+        $member->pivot->role = $newRole;
         $member->pivot->save();
 
         // Redirect to the show view after editing

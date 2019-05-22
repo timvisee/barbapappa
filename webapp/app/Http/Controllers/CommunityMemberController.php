@@ -41,8 +41,6 @@ class CommunityMemberController extends Controller {
      * @return Response
      */
     public function edit($communityId, $memberId) {
-        // TODO: do not allow role demotion if last admin
-
         // Get the community, find the member
         $community = \Request::get('community');
         $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
@@ -58,23 +56,37 @@ class CommunityMemberController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $communityId, $memberId) {
-        // TODO: do not allow role demotion if last admin
-
         // Get the community, find the member
         $community = \Request::get('community');
         $member = $community->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
-        $roleChanged = $request->input('role') != $member->pivot->role;
+        $curRole = $member->pivot->role;
+        $newRole = $request->input('role');
 
         // Build validation rules, validate
         $rules = [
             'role' => 'required|' . ValidationDefaults::communityRoles(),
         ];
-        if($roleChanged)
+        if($newRole != $curRole)
             $rules['confirm_role_change'] = 'accepted';
         $this->validate($request, $rules);
 
+        // If manager or higher changed to lower role, and he was the last with
+        // that role or higher, do not allow the change
+        if($newRole < $curRole && $curRole > CommunityRoles::USER) {
+            $hasOtherRanked = $community
+                ->users(['role'], true)
+                ->where('user_id', '<>', $memberId)
+                ->where('community_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
+                    ->with('error', __('pages.communityMembers.cannotDemoteLastManager'));
+        }
+
         // Set the role ID, save the member
-        $member->pivot->role = $request->input('role');
+        $member->pivot->role = $newRole;
         $member->pivot->save();
 
         // Redirect to the show view after editing
