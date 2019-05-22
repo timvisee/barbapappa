@@ -102,11 +102,26 @@ class BarMemberController extends Controller {
      */
     public function delete($barId, $memberId) {
         // TODO: user must be community admin
-        // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $curRole = $member->pivot->role;
+
+        // Cannot delete last member with this (or higher) management role
+        // TODO: allow demote if manager/admin inherited from community
+        if($curRole > BarRoles::USER) {
+            $hasOtherRanked = $bar
+                ->users(['role'], true)
+                ->where('user_id', '<>', $memberId)
+                ->where('bar_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+                    ->with('error', __('pages.barMembers.cannotDeleteLastManager'));
+        }
 
         return view('bar.member.delete')
             ->with('member', $member);
@@ -119,14 +134,26 @@ class BarMemberController extends Controller {
      */
     public function doDelete($barId, $memberId) {
         // TODO: user must be community admin
-        // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $curRole = $member->pivot->role;
 
-        // TODO: do not allow deletion if admin
-        // TODO: do not allow deletion of self
+        // Cannot delete last member with this (or higher) management role
+        // TODO: allow demote if manager/admin inherited from community
+        if($curRole > BarRoles::USER) {
+            $hasOtherRanked = $bar
+                ->users(['role'], true)
+                ->where('user_id', '<>', $memberId)
+                ->where('bar_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+                    ->with('error', __('pages.barMembers.cannotDeleteLastManager'));
+        }
 
         // Delete the member
         $bar->leave($member);

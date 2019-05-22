@@ -148,7 +148,8 @@ return [
         'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a matey may introduce significant security issues.',
         'ownRoleDowngradeWarning' => 'By downgrading yer own role ye might lose management access to dis crew. Be very careful.',
         'confirmRoleChange' => 'Confirm role change for crew matey',
-        'cannotDemoteLastManager' => 'Ye nay demote th\' last crew matey wit\' a management role.',
+        'cannotDemoteLastManager' => 'Ye nay demote th\' last crew matey wit\' dis (or a more permissive) management role.',
+        'cannotDeleteLastManager' => 'Ye nay sink th\' last crew matey wit\' dis (or a more permissive) management role.',
     ],
 
     /**
@@ -405,7 +406,8 @@ return [
         'incorrectMemberRoleWarning' => 'Assigning n\' incorrect role that be too permissive to a matey may introduce significant security issues.',
         'ownRoleDowngradeWarning' => 'By downgrading yer own role ye might lose management access to dis bar. Be very careful.',
         'confirmRoleChange' => 'Confirm role change for bar matey',
-        'cannotDemoteLastManager' => 'Ye nay demote th\' last bar matey wit\' a management role.',
+        'cannotDemoteLastManager' => 'Ye nay demote th\' last bar matey wit\' dis (or a more permissive) management role.',
+        'cannotDeleteLastManager' => 'Ye nay sink th\' last bar matey wit\' dis (or a more permissive) management role.',
     ],
 
     /**

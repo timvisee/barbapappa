@@ -103,7 +103,22 @@ class CommunityMemberController extends Controller {
     public function delete($communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $curRole = $member->pivot->role;
+
+        // Cannot delete last member with this (or higher) management role
+        if($curRole > CommunityRoles::USER) {
+            $hasOtherRanked = $community
+                ->users(['role'], true)
+                ->where('user_id', '<>', $memberId)
+                ->where('community_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
+                    ->with('error', __('pages.communityMembers.cannotDeleteLastManager'));
+        }
 
         return view('community.member.delete')
             ->with('member', $member);
@@ -118,9 +133,21 @@ class CommunityMemberController extends Controller {
         // Get the community, find the member
         $community = \Request::get('community');
         $member = $community->users()->where('user_id', $memberId)->firstOrfail();
+        $curRole = $member->pivot->role;
 
-        // TODO: do not allow deletion if admin
-        // TODO: do not allow deletion of self
+        // Cannot delete last member with this (or higher) management role
+        if($curRole > CommunityRoles::USER) {
+            $hasOtherRanked = $community
+                ->users(['role'], true)
+                ->where('user_id', '<>', $memberId)
+                ->where('community_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
+                    ->with('error', __('pages.communityMembers.cannotDeleteLastManager'));
+        }
 
         // Delete the member
         $community->leave($member);

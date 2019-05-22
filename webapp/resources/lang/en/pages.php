@@ -148,7 +148,8 @@ return [
         'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
         'ownRoleDowngradeWarning' => 'By downgrading your own role you might lose management access to this community. Be very careful.',
         'confirmRoleChange' => 'Confirm role change for community member',
-        'cannotDemoteLastManager' => 'You cannot demote the last community member with a management role.',
+        'cannotDemoteLastManager' => 'You cannot demote the last community member with this (or a more permissive) management role.',
+        'cannotDeleteLastManager' => 'You cannot kick the last community member with this (or a more permissive) management role.',
     ],
 
     /**
@@ -405,7 +406,8 @@ return [
         'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
         'ownRoleDowngradeWarning' => 'By downgrading your own role you might lose management access to this bar. Be very careful.',
         'confirmRoleChange' => 'Confirm role change for bar member',
-        'cannotDemoteLastManager' => 'You cannot demote the last bar member with a management role.',
+        'cannotDemoteLastManager' => 'You cannot demote the last bar member with this (or a more permissive) management role.',
+        'cannotDeleteLastManager' => 'You cannot kick the last bar member with this (or a more permissive) management role.',
     ],
 
     /**
