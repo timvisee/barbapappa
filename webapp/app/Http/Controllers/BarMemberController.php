@@ -106,22 +106,10 @@ class BarMemberController extends Controller {
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
-        $curRole = $member->pivot->role;
 
-        // Cannot delete last member with this (or higher) management role
-        // TODO: allow demote if manager/admin inherited from community
-        if($curRole > BarRoles::USER) {
-            $hasOtherRanked = $bar
-                ->users(['role'], true)
-                ->where('user_id', '<>', $memberId)
-                ->where('bar_user.role', '>=', $curRole)
-                ->limit(1)
-                ->exists();
-            if(!$hasOtherRanked)
-                return redirect()
-                    ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
-                    ->with('error', __('pages.barMembers.cannotDeleteLastManager'));
-        }
+        // Do some delete checks, return on early response
+        if(($return = $this->checkDelete($bar, $member)) != null)
+            return $return;
 
         return view('bar.member.delete')
             ->with('member', $member);
@@ -138,22 +126,10 @@ class BarMemberController extends Controller {
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
-        $curRole = $member->pivot->role;
 
-        // Cannot delete last member with this (or higher) management role
-        // TODO: allow demote if manager/admin inherited from community
-        if($curRole > BarRoles::USER) {
-            $hasOtherRanked = $bar
-                ->users(['role'], true)
-                ->where('user_id', '<>', $memberId)
-                ->where('bar_user.role', '>=', $curRole)
-                ->limit(1)
-                ->exists();
-            if(!$hasOtherRanked)
-                return redirect()
-                    ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
-                    ->with('error', __('pages.barMembers.cannotDeleteLastManager'));
-        }
+        // Do some delete checks, return on early response
+        if(($return = $this->checkDelete($bar, $member)) != null)
+            return $return;
 
         // Delete the member
         $bar->leave($member);
@@ -162,6 +138,32 @@ class BarMemberController extends Controller {
         return redirect()
             ->route('bar.member.index', ['barId' => $barId])
             ->with('success', __('pages.barMembers.memberRemoved'));
+    }
+
+    /**
+     * Do some checks before deleting a member.
+     * Extracted into a separate method to prevent duplicate code.
+     *
+     * @return null|Response Null to do nothing, or an early response.
+     */
+    private function checkDelete($bar, $member) {
+        // Get the current role
+        $curRole = $member->pivot->role;
+
+        // Cannot delete last member with this (or higher) management role
+        // TODO: allow demote if manager/admin inherited from community
+        if($curRole > BarRoles::USER) {
+            $hasOtherRanked = $bar
+                ->users(['role'], true)
+                ->where('user_id', '<>', $member->id)
+                ->where('bar_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('bar.member.show', ['barId' => $bar->id, 'memberId' => $member->id])
+                    ->with('error', __('pages.barMembers.cannotDeleteLastManager'));
+        }
     }
 
     /**
