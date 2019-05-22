@@ -19,6 +19,7 @@ return [
     'change' => 'Change',
     'rename' => 'Rename',
     'delete' => 'Delete',
+    'permanentlyDelete' => 'Permanently delete',
     'trash' => 'Trash',
     'trashed' => 'Trashed',
     'remove' => 'Remove',

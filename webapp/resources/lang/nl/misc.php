@@ -19,6 +19,7 @@ return [
     'change' => 'Aanpassen',
     'rename' => 'Hernoemen',
     'delete' => 'Verwijderen',
+    'permanentlyDelete' => 'Permanent verwijderen',
     'trash' => 'Weggooien',
     'trashed' => 'Weggegooid',
     'remove' => 'Verwijderen',

@@ -336,8 +336,6 @@ class ProductController extends Controller {
      * @return Response
      */
     public function delete($communityId, $economyId, $productId) {
-        // TODO: delete trashed, and allow trashing?
-
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -357,20 +355,22 @@ class ProductController extends Controller {
      *
      * @return Response
      */
-    public function doDelete($communityId, $economyId, $productId) {
-        // TODO: delete trashed, and allow trashing?
-
+    public function doDelete(Request $request, $communityId, $economyId, $productId) {
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
+        $permanent = is_checked($request->input('permanent'));
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // product
 
-        // Delete the product
-        $product->delete();
+        // Delete, or soft delete
+        if(!$permanent)
+            $product->delete();
+        else
+            $product->forceDelete();
 
         // Redirect to the product index
         return redirect()
@@ -378,7 +378,7 @@ class ProductController extends Controller {
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id
             ])
-            ->with('success', __('pages.products.deleted'));
+            ->with('success', __('pages.products.' . ($permanent ? 'permanentlyDeleted' : 'deleted')));
     }
 
     /**

@@ -16,7 +16,7 @@
             'productId' => $product->id,
         ],
         'method' => 'PUT',
-        'class' => 'ui form'
+        'class' => 'ui form',
     ]) !!}
         <div class="ui buttons">
             <a href="{{ route('community.economy.product.show', [
