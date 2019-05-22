@@ -89,7 +89,6 @@ class ProductController extends Controller {
                 'type' => Product::TYPE_NORMAL,
                 'name' => $request->input('name'),
                 'enabled' => is_checked($request->input('enabled')),
-                'archived' => is_checked($request->input('archived')),
             ]);
 
             // Create the localized product names
@@ -215,7 +214,6 @@ class ProductController extends Controller {
             // Change properties
             $product->name = $request->input('name');
             $product->enabled = is_checked($request->input('enabled'));
-            $product->archived = is_checked($request->input('archived'));
             $product->save();
 
             // Sync localized product names

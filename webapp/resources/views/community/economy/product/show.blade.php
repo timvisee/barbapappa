@@ -72,10 +72,17 @@
                 <td>@lang('misc.enabled')</td>
                 <td>{{ yesno($product->enabled) }}</td>
             </tr>
-            <tr>
-                <td>@lang('misc.archived')</td>
-                <td>{{ yesno($product->archived) }}</td>
-            </tr>
+            @if($product->trashed())
+                <tr>
+                    <td>@lang('misc.trashed')</td>
+                    <td>
+                        {{-- TODO: use style for this --}}
+                        <span style="color: red;">
+                            @include('includes.humanTimeDiff', ['time' => $product->deleted_at])
+                        </span>
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td>@lang('misc.createdAt')</td>
                 <td>@include('includes.humanTimeDiff', ['time' => $product->created_at])</td>

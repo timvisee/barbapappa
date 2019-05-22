@@ -19,6 +19,8 @@ return [
     'change' => 'Aanpassen',
     'rename' => 'Hernoemen',
     'delete' => 'Verwijderen',
+    'trash' => 'Weggooien',
+    'trashed' => 'Weggegooid',
     'remove' => 'Verwijderen',
     'undo' => 'Ongedaan maken',
     'saveChanges' => 'Aanpassingen opslaan',

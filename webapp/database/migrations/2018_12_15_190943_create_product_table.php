@@ -21,7 +21,7 @@ class CreateProductTable extends Migration {
             $table->string('name')->nullable(false);
             // TODO: categories?
             $table->boolean('enabled')->default(true)->nullable(false);
-            $table->boolean('archived')->default(false)->nullable(false);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('economy_id')

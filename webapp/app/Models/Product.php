@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Product model.
@@ -18,15 +19,16 @@ use Illuminate\Database\Eloquent\Model;
  * @property int type
  * @property string name
  * @property bool enabled
- * @property bool archived
  * @property Carbon created_at
  * @property Carbon updated_at
  */
 class Product extends Model {
 
+    use SoftDeletes;
+
     protected $table = "products";
 
-    protected $fillable = ['economy_id', 'type', 'name', 'enabled', 'archived'];
+    protected $fillable = ['economy_id', 'type', 'name', 'enabled'];
 
     protected $with = ['names'];
 

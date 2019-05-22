@@ -19,6 +19,8 @@ return [
     'change' => 'Change',
     'rename' => 'Rename',
     'delete' => 'Delete',
+    'trash' => 'Trash',
+    'trashed' => 'Trashed',
     'remove' => 'Remove',
     'undo' => 'Undo',
     'saveChanges' => 'Save changes',
