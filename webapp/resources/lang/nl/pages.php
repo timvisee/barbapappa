@@ -205,7 +205,6 @@ return [
         'all' => 'Alle producten',
         'search' => 'Producten zoeken',
         'noProducts' => 'Geen producten...',
-        'noProductsInEconomy' => 'Er zijn nog geen producten aan deze economie toegevoegd...',
         'manageProduct' => 'Beheer product',
         'manageProducts' => 'Beheer producten',
         'newProduct' => 'Nieuw product',

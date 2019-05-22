@@ -18,18 +18,20 @@ class ProductController extends Controller {
      *
      * @return Response
      */
-    public function index($communityId, $economyId) {
+    public function index(Request $request, $communityId, $economyId) {
         // TODO: add some sort of toggle to view trashed
 
         // Get the user, community, find the products
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $products = $economy->products;
+        $trashed = is_checked($request->query('trashed'));
+        $products = $trashed ? $economy->products()->onlyTrashed()->get() : $economy->products;
 
         return view('community.economy.product.index')
             ->with('economy', $economy)
-            ->with('products', $products);
+            ->with('products', $products)
+            ->with('trashed', $trashed);
     }
 
     /**

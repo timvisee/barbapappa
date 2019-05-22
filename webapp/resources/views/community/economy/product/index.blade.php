@@ -28,11 +28,22 @@
         </div>
     </h2>
 
-    {{-- TODO: show product list here! --}}
+    {{-- Product list menu --}}
+    <div class="ui top menu fluid top attached">
+        <div class="vertically fitted item borderless">
+            <h5>@yield('title') ({{ $products->count() }})</h5>
+        </div>
+        <div class="right menu">
+            <a href="?trashed={{ !$trashed }}" class="item{{ $trashed ?  ' active' : '' }}">
+                @lang('misc.trashed')
+            </a>
+        </div>
+    </div>
+
     {{-- Product list --}}
     @include('community.economy.product.include.list', [
+        'class' => ['bottom' , 'attached'],
         'groups' => [[
-            {{-- 'header' => __('pages.wallets.walletTransactions') . ' (' .  count($products) . ')', --}}
             'products' => $products,
         ]],
     ])

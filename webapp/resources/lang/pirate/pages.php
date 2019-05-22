@@ -205,7 +205,6 @@ return [
         'all' => 'All products',
         'search' => 'Search products',
         'noProducts' => 'Nay products...',
-        'noProductsInEconomy' => 'Nay products have been added to dis economy yet...',
         'manageProduct' => 'Manage product',
         'manageProducts' => 'Manage products',
         'newProduct' => 'New product',
