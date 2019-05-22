@@ -171,7 +171,9 @@ class Mutation extends Model {
         case Self::TYPE_PRODUCT:
             if($detail) {
                 // Build a list of products with quantities if not 1
-                $products[] = ($this->mutationData->quantity != 1 ? $this->mutationData->quantity . 'x ' : '') . $this->mutationData->product->displayName();
+                $product = $this->mutationData->product()->withTrashed()->first();
+                $name = $product != null ? $product->displayName() : __('pages.products.unknownProduct');
+                $products[] = ($this->mutationData->quantity != 1 ? $this->mutationData->quantity . 'x ' : '') . $name;
 
                 // Return the description string including the product names
                 return __('pages.mutations.types.product' . $dir . 'Detail', ['products' => implode(', ', $products)]);

@@ -229,6 +229,7 @@ return [
         'search' => 'Search products',
         'backToProducts' => 'Back to products',
         'viewProduct' => 'View product',
+        'unknownProduct' => 'Unknown product',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',

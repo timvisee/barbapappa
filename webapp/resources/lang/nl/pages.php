@@ -229,6 +229,7 @@ return [
         'search' => 'Zoek producten',
         'backToProducts' => 'Terug naar producten',
         'viewProduct' => 'Product bekijken',
+        'unknownProduct' => 'Onbekend product',
         'type' => [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',

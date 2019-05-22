@@ -68,7 +68,12 @@
                     <td>{{ $product->user->name }}</td>
                 </tr>
             @endif
-            @if($product->trashed())
+            @if(!$product->trashed())
+                <tr>
+                    <td>@lang('misc.enabled')</td>
+                    <td>{{ yesno($product->enabled) }}</td>
+                </tr>
+            @else
                 <tr>
                     <td>@lang('misc.trashed')</td>
                     <td>

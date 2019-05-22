@@ -104,16 +104,25 @@
             <div class="ui top vertical menu fluid">
                 <h5 class="ui item header">Product</h5>
 
-                {{-- TODO: link product item to public product page instead --}}
-                <a class="item"
-                        href="{{ route('bar.product.show', [
+                @php
+                    // Get the product
+                    $product = $mutation
+                        ->mutationData
+                        ->product()
+                        ->withTrashed()
+                        ->first();
+                    $trashed = $product == null || $product->trashed();
+                @endphp
+
+                <a class="item disabled"
+                        href="{{ !$trashed ? route('bar.product.show', [
                             'barId' => $mutation->mutationData->bar->human_id,
                             'productId' => $mutation->mutationData->product_id,
-                        ]) }}">
+                        ]) : '#'}}">
                     @if($data->quantity != 1)
                         <span class="subtle">{{ $data->quantity }}×</span>
                     @endif
-                    {{ $data->product->displayName() }}
+                    {{ $product != null ? $product->displayName() : __('pages.products.unknownProduct') }}
                     <span class="subtle">
                         @ {{ $data->bar->name }}
                     </span>
