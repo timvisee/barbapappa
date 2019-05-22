@@ -1,6 +1,6 @@
 {{-- TODO: implement pagination --}}
 
-<div class="ui top vertical menu fluid">
+<div class="ui top vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
     @foreach($groups as $group)
         {{-- Header --}}
         @if(isset($group['header']))
@@ -27,7 +27,7 @@
                 </span>
             </a>
         @empty
-            <i class="item">@lang('pages.products.noProductsInEconomy')</i>
+            <i class="item">@lang('pages.products.noProducts')</i>
         @endforelse
     @endforeach
 

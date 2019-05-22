@@ -211,6 +211,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                         Route::middleware(ProductController::permsManage()->middleware())->group(function() {
                             Route::get('/edit', 'ProductController@edit')->name('community.economy.product.edit');
                             Route::put('/edit', 'ProductController@doEdit')->name('community.economy.product.doEdit');
+                            Route::get('/restore', 'ProductController@restore')->name('community.economy.product.restore');
+                            Route::put('/restore', 'ProductController@doRestore')->name('community.economy.product.doRestore');
                             Route::get('/delete', 'ProductController@delete')->name('community.economy.product.delete');
                             Route::delete('/delete', 'ProductController@doDelete')->name('community.economy.product.doDelete');
                         });

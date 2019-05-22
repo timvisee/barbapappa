@@ -106,19 +106,6 @@
             {{ ErrorRenderer::inline('enabled') }}
         </div>
 
-        <div class="inline field {{ ErrorRenderer::hasError('archived') ? 'error' : '' }}">
-            <div class="ui checkbox">
-                <input type="checkbox"
-                        name="archived"
-                        tabindex="0"
-                        class="hidden"
-                        {{ $product->archived ? 'checked="checked"' : '' }}>
-                {{ Form::label('archived', __('pages.products.archivedDescription')) }}
-            </div>
-            <br />
-            {{ ErrorRenderer::inline('archived') }}
-        </div>
-
         <br />
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>

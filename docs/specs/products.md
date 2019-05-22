@@ -33,7 +33,7 @@ but it will never show up as new available product in a bar.
 - `name`: base name of the product
 - `product_category_id`: optional reference to a product category
 - `enabled`: true if enabled and visible, false if not
-- `archived`: false if available, true if archived and hidden
+- `deleted_at`: time the product was trashed at
 - `created_at`: time the product was last created at
 - `updated_at`: time the product was last updated at
 

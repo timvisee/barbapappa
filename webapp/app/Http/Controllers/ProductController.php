@@ -18,16 +18,20 @@ class ProductController extends Controller {
      *
      * @return Response
      */
-    public function index($communityId, $economyId) {
+    public function index(Request $request, $communityId, $economyId) {
+        // TODO: add some sort of toggle to view trashed
+
         // Get the user, community, find the products
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $products = $economy->products;
+        $trashed = is_checked($request->query('trashed'));
+        $products = $trashed ? $economy->products()->onlyTrashed()->get() : $economy->products;
 
         return view('community.economy.product.index')
             ->with('economy', $economy)
-            ->with('products', $products);
+            ->with('products', $products)
+            ->with('trashed', $trashed);
     }
 
     /**
@@ -45,7 +49,7 @@ class ProductController extends Controller {
         // Check whether to clone a product
         $cloneProductId = $request->query('productId');
         $clone = strlen($cloneProductId) > 0;
-        $cloneProduct = $clone ? $economy->products()->findOrFail($cloneProductId) : null;
+        $cloneProduct = $clone ? $economy->products()->withTrashed()->findOrFail($cloneProductId) : null;
 
         return view('community.economy.product.create')
             ->with('economy', $economy)
@@ -89,7 +93,6 @@ class ProductController extends Controller {
                 'type' => Product::TYPE_NORMAL,
                 'name' => $request->input('name'),
                 'enabled' => is_checked($request->input('enabled')),
-                'archived' => is_checked($request->input('archived')),
             ]);
 
             // Create the localized product names
@@ -158,7 +161,7 @@ class ProductController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $product = $economy->products()->findOrFail($productId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
 
         return view('community.economy.product.show')
             ->with('economy', $economy)
@@ -171,6 +174,8 @@ class ProductController extends Controller {
      * @return Response
      */
     public function edit($communityId, $economyId, $productId) {
+        // TODO: with trashed?
+
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -192,6 +197,8 @@ class ProductController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $communityId, $economyId, $productId) {
+        // TODO: with trashed?
+
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -215,7 +222,6 @@ class ProductController extends Controller {
             // Change properties
             $product->name = $request->input('name');
             $product->enabled = is_checked($request->input('enabled'));
-            $product->archived = is_checked($request->input('archived'));
             $product->save();
 
             // Sync localized product names
@@ -273,18 +279,70 @@ class ProductController extends Controller {
     }
 
     /**
-     * Page for confirming the deletion of the product.
+     * Page for confirming restoring a product.
      *
      * @return Response
      */
-    public function delete($communityId, $economyId, $productId) {
-        // TODO: suggest to archive instead!
+    public function restore($communityId, $economyId, $productId) {
+        // Get the user, community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
+
+        // If already restored, redirect to the product
+        if(!$product->trashed())
+            return redirect()
+                ->route('community.economy.product.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'productId' => $product->id,
+                ])
+                ->with('success', __('pages.products.restored'));
+
+        return view('community.economy.product.restore')
+            ->with('economy', $economy)
+            ->with('product', $product);
+    }
+
+    /**
+     * Restore a product.
+     *
+     * @return Response
+     */
+    public function doRestore($communityId, $economyId, $productId) {
+        // TODO: delete trashed, and allow trashing?
 
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $product = $economy->products()->findOrFail($productId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
+
+        // Restore the product
+        $product->restore();
+
+        // Redirect to the product index
+        return redirect()
+            ->route('community.economy.product.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'productId' => $product->id,
+            ])
+            ->with('success', __('pages.products.restored'));
+    }
+
+    /**
+     * Page for confirming the deletion of the product.
+     *
+     * @return Response
+     */
+    public function delete($communityId, $economyId, $productId) {
+        // Get the user, community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // product
@@ -299,18 +357,22 @@ class ProductController extends Controller {
      *
      * @return Response
      */
-    public function doDelete($communityId, $economyId, $productId) {
+    public function doDelete(Request $request, $communityId, $economyId, $productId) {
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $product = $economy->products()->findOrFail($productId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
+        $permanent = is_checked($request->input('permanent'));
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // product
 
-        // Delete the product
-        $product->delete();
+        // Delete, or soft delete
+        if(!$permanent)
+            $product->delete();
+        else
+            $product->forceDelete();
 
         // Redirect to the product index
         return redirect()
@@ -318,7 +380,7 @@ class ProductController extends Controller {
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id
             ])
-            ->with('success', __('pages.products.deleted'));
+            ->with('success', __('pages.products.' . ($permanent ? 'permanentlyDeleted' : 'deleted')));
     }
 
     /**

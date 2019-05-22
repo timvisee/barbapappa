@@ -68,14 +68,22 @@
                     <td>{{ $product->user->name }}</td>
                 </tr>
             @endif
-            <tr>
-                <td>@lang('misc.enabled')</td>
-                <td>{{ yesno($product->enabled) }}</td>
-            </tr>
-            <tr>
-                <td>@lang('misc.archived')</td>
-                <td>{{ yesno($product->archived) }}</td>
-            </tr>
+            @if(!$product->trashed())
+                <tr>
+                    <td>@lang('misc.enabled')</td>
+                    <td>{{ yesno($product->enabled) }}</td>
+                </tr>
+            @else
+                <tr>
+                    <td>@lang('misc.trashed')</td>
+                    <td>
+                        {{-- TODO: use style for this --}}
+                        <span style="color: red;">
+                            @include('includes.humanTimeDiff', ['time' => $product->deleted_at])
+                        </span>
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td>@lang('misc.createdAt')</td>
                 <td>@include('includes.humanTimeDiff', ['time' => $product->created_at])</td>
@@ -92,14 +100,25 @@
     @if(perms(ProductController::permsManage()))
         <p>
             <div class="ui buttons">
-                <a href="{{ route('community.economy.product.edit', [
-                            'communityId' => $community->human_id,
-                            'economyId' => $economy->id,
-                            'productId' => $product->id,
-                        ]) }}"
-                        class="ui button secondary">
-                    @lang('misc.edit')
-                </a>
+                @if(!$product->trashed())
+                    <a href="{{ route('community.economy.product.edit', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'productId' => $product->id,
+                            ]) }}"
+                            class="ui button secondary">
+                        @lang('misc.edit')
+                    </a>
+                @else
+                    <a href="{{ route('community.economy.product.restore', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'productId' => $product->id,
+                            ]) }}"
+                            class="ui button primary">
+                        @lang('misc.restore')
+                    </a>
+                @endif
                 <a href="{{ route('community.economy.product.create', [
                             'communityId' => $community->human_id,
                             'economyId' => $economy->id,
