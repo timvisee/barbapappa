@@ -19,6 +19,8 @@ class ProductController extends Controller {
      * @return Response
      */
     public function index($communityId, $economyId) {
+        // TODO: add some sort of toggle to view trashed
+
         // Get the user, community, find the products
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -45,7 +47,7 @@ class ProductController extends Controller {
         // Check whether to clone a product
         $cloneProductId = $request->query('productId');
         $clone = strlen($cloneProductId) > 0;
-        $cloneProduct = $clone ? $economy->products()->findOrFail($cloneProductId) : null;
+        $cloneProduct = $clone ? $economy->products()->withTrashed()->findOrFail($cloneProductId) : null;
 
         return view('community.economy.product.create')
             ->with('economy', $economy)
@@ -157,7 +159,7 @@ class ProductController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $product = $economy->products()->findOrFail($productId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
 
         return view('community.economy.product.show')
             ->with('economy', $economy)
@@ -170,6 +172,8 @@ class ProductController extends Controller {
      * @return Response
      */
     public function edit($communityId, $economyId, $productId) {
+        // TODO: with trashed?
+
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -191,6 +195,8 @@ class ProductController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $communityId, $economyId, $productId) {
+        // TODO: with trashed?
+
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
@@ -276,13 +282,13 @@ class ProductController extends Controller {
      * @return Response
      */
     public function delete($communityId, $economyId, $productId) {
-        // TODO: suggest to archive instead!
+        // TODO: delete trashed, and allow trashing?
 
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $product = $economy->products()->findOrFail($productId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // product
@@ -298,11 +304,13 @@ class ProductController extends Controller {
      * @return Response
      */
     public function doDelete($communityId, $economyId, $productId) {
+        // TODO: delete trashed, and allow trashing?
+
         // Get the user, community, find the product
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $product = $economy->products()->findOrFail($productId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // product
