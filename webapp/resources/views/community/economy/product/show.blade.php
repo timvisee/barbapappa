@@ -99,14 +99,25 @@
     @if(perms(ProductController::permsManage()))
         <p>
             <div class="ui buttons">
-                <a href="{{ route('community.economy.product.edit', [
-                            'communityId' => $community->human_id,
-                            'economyId' => $economy->id,
-                            'productId' => $product->id,
-                        ]) }}"
-                        class="ui button secondary">
-                    @lang('misc.edit')
-                </a>
+                @if(!$product->trashed())
+                    <a href="{{ route('community.economy.product.edit', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'productId' => $product->id,
+                            ]) }}"
+                            class="ui button secondary">
+                        @lang('misc.edit')
+                    </a>
+                @else
+                    <a href="{{ route('community.economy.product.restore', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'productId' => $product->id,
+                            ]) }}"
+                            class="ui button primary">
+                        @lang('misc.restore')
+                    </a>
+                @endif
                 <a href="{{ route('community.economy.product.create', [
                             'communityId' => $community->human_id,
                             'economyId' => $economy->id,

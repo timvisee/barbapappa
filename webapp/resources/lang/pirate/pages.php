@@ -213,6 +213,8 @@ return [
         'editProduct' => 'Edit product',
         'created' => 'The product be added.',
         'changed' => 'The product be changed.',
+        'restoreQuestion' => 'Yer \'bout to afloat dis product to make it available again. Ye be sure ye want to continue?',
+        'restored' => 'The product be afloated.',
         'deleteQuestion' => 'Yer \'bout to sink dis product. Ye be sure ye want to continue?',
         'deleted' => 'The product be removed.',
         'namePlaceholder' => 'Bear Beer',

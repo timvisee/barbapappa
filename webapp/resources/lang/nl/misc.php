@@ -22,6 +22,7 @@ return [
     'trash' => 'Weggooien',
     'trashed' => 'Weggegooid',
     'remove' => 'Verwijderen',
+    'restore' => 'Herstellen',
     'undo' => 'Ongedaan maken',
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',

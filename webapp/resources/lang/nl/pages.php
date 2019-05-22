@@ -213,6 +213,8 @@ return [
         'editProduct' => 'Product aanpassen',
         'created' => 'Het product is aangemaakt.',
         'changed' => 'Product aanpassingen opgeslagen.',
+        'restoreQuestion' => 'Je staat op het punt dit product te herstellen om het weer beschikbaar te maken. Weet je zeker dat je door wilt gaan?',
+        'restored' => 'Het product is hersteld.',
         'deleteQuestion' => 'Je staat op het punt dit product te verwijderen. Weet je zeker dat je door wilt gaan?',
         'deleted' => 'Het product is verwijderd.',
         'namePlaceholder' => 'Luxe Sap',

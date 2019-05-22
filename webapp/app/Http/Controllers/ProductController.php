@@ -277,6 +277,60 @@ class ProductController extends Controller {
     }
 
     /**
+     * Page for confirming restoring a product.
+     *
+     * @return Response
+     */
+    public function restore($communityId, $economyId, $productId) {
+        // Get the user, community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
+
+        // If already restored, redirect to the product
+        if(!$product->trashed())
+            return redirect()
+                ->route('community.economy.product.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'productId' => $product->id,
+                ])
+                ->with('success', __('pages.products.restored'));
+
+        return view('community.economy.product.restore')
+            ->with('economy', $economy)
+            ->with('product', $product);
+    }
+
+    /**
+     * Restore a product.
+     *
+     * @return Response
+     */
+    public function doRestore($communityId, $economyId, $productId) {
+        // TODO: delete trashed, and allow trashing?
+
+        // Get the user, community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
+
+        // Restore the product
+        $product->restore();
+
+        // Redirect to the product index
+        return redirect()
+            ->route('community.economy.product.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'productId' => $product->id,
+            ])
+            ->with('success', __('pages.products.restored'));
+    }
+
+    /**
      * Page for confirming the deletion of the product.
      *
      * @return Response

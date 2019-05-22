@@ -213,6 +213,8 @@ return [
         'editProduct' => 'Edit product',
         'created' => 'The product has been added.',
         'changed' => 'The product has been changed.',
+        'restoreQuestion' => 'You\'re about to restore this product to make it available again. Are you sure you want to continue?',
+        'restored' => 'The product has been restored.',
         'deleteQuestion' => 'You\'re about to delete this product. Are you sure you want to continue?',
         'deleted' => 'The product has been removed.',
         'namePlaceholder' => 'Fancy Juice',
