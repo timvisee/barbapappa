@@ -8,6 +8,7 @@ use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
 use App\Perms\Builder\Config as PermsConfig;
+use App\Perms\BarRoles;
 
 class BarMemberController extends Controller {
 
@@ -40,8 +41,6 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function edit($barId, $memberId) {
-        // TODO: do not allow role demotion if last admin
-
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
@@ -57,19 +56,38 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request, $barId, $memberId) {
-        // TODO: do not allow role demotion if last admin
-
-        // Validate
-        $this->validate($request, [
-            'role' => 'required|' . ValidationDefaults::barRoles(),
-        ]);
-
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
+        $curRole = $member->pivot->role;
+        $newRole = $request->input('role');
+
+        // Build validation rules, validate
+        $rules = [
+            'role' => 'required|' . ValidationDefaults::barRoles(),
+        ];
+        if($newRole != $curRole)
+            $rules['confirm_role_change'] = 'accepted';
+        $this->validate($request, $rules);
+
+        // If manager or higher changed to lower role, and he was the last with
+        // that role or higher, do not allow the change
+        // TODO: allow demote if manager/admin inherited from community
+        if($newRole < $curRole && $curRole > BarRoles::USER) {
+            $hasOtherRanked = $bar
+                ->users(['role'], true)
+                ->where('user_id', '<>', $memberId)
+                ->where('bar_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+                    ->with('error', __('pages.barMembers.cannotDemoteLastManager'));
+        }
 
         // Set the role ID, save the member
-        $member->pivot->role = $request->input('role');
+        $member->pivot->role = $newRole;
         $member->pivot->save();
 
         // Redirect to the show view after editing
@@ -85,11 +103,14 @@ class BarMemberController extends Controller {
      */
     public function delete($barId, $memberId) {
         // TODO: user must be community admin
-        // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
+
+        // Do some delete checks, return on early response
+        if(($return = $this->checkDelete($bar, $member)) != null)
+            return $return;
 
         return view('bar.member.delete')
             ->with('member', $member);
@@ -100,16 +121,20 @@ class BarMemberController extends Controller {
      *
      * @return Response
      */
-    public function doDelete($barId, $memberId) {
+    public function doDelete(Request $request, $barId, $memberId) {
         // TODO: user must be community admin
-        // TODO: do not allow role demotion if last admin
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users()->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
-        // TODO: do not allow deletion if admin
-        // TODO: do not allow deletion of self
+        // Validate confirmation when deleting authenticated member
+        if($member->id == barauth()->getSessionUser()->id)
+            $this->validate($request, ['confirm_self_delete' => 'accepted']);
+
+        // Do some delete checks, return on early response
+        if(($return = $this->checkDelete($bar, $member)) != null)
+            return $return;
 
         // Delete the member
         $bar->leave($member);
@@ -118,6 +143,32 @@ class BarMemberController extends Controller {
         return redirect()
             ->route('bar.member.index', ['barId' => $barId])
             ->with('success', __('pages.barMembers.memberRemoved'));
+    }
+
+    /**
+     * Do some checks before deleting a member.
+     * Extracted into a separate method to prevent duplicate code.
+     *
+     * @return null|Response Null to do nothing, or an early response.
+     */
+    private function checkDelete($bar, $member) {
+        // Get the current role
+        $curRole = $member->pivot->role;
+
+        // Cannot delete last member with this (or higher) management role
+        // TODO: allow demote if manager/admin inherited from community
+        if($curRole > BarRoles::USER) {
+            $hasOtherRanked = $bar
+                ->users(['role'], true)
+                ->where('user_id', '<>', $member->id)
+                ->where('bar_user.role', '>=', $curRole)
+                ->limit(1)
+                ->exists();
+            if(!$hasOtherRanked)
+                return redirect()
+                    ->route('bar.member.show', ['barId' => $bar->id, 'memberId' => $member->id])
+                    ->with('error', __('pages.barMembers.cannotDeleteLastManager'));
+        }
     }
 
     /**

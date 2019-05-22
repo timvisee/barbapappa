@@ -28,9 +28,33 @@
             {{ ErrorRenderer::inline('role') }}
         </div>
 
-        <div class="ui warning message visible">
+        {{-- Show warning for modifying roles in general --}}
+        <div class="ui top attached warning message visible">
             <span class="halflings halflings-warning-sign"></span>
             @lang('pages.communityMembers.incorrectMemberRoleWarning')
+        </div>
+
+        {{-- Show warning for modifying own role --}}
+        @if($member->id == barauth()->getSessionUser()->id)
+            <div class="ui attached warning message visible">
+                <span class="halflings halflings-warning-sign"></span>
+                @lang('pages.communityMembers.ownRoleDowngradeWarning')
+            </div>
+        @endif
+
+        {{-- Role change confirmation checkbox --}}
+        <div class="ui bottom attached segment">
+            <div class="inline field {{ ErrorRenderer::hasError('confirm_role_change') ? 'error' : '' }}">
+                <div class="ui checkbox">
+                    <input type="checkbox"
+                            name="confirm_role_change"
+                            tabindex="0"
+                            class="hidden">
+                    {{ Form::label('confirm_role_change', __('pages.barMembers.confirmRoleChange')) }}
+                </div>
+                <br />
+                {{ ErrorRenderer::inline('confirm_role_change') }}
+            </div>
         </div>
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>

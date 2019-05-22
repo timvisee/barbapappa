@@ -146,6 +146,11 @@ return [
         'memberRemoved' => 'Het lid is verwijderd.',
         'memberUpdated' => 'Lid aanpassingen opgeslagen.',
         'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
+        'ownRoleDowngradeWarning' => 'Bij het verlagen van je eigen rol verlies je waarschijnlijk beheerstoegang tot deze groep.',
+        'confirmRoleChange' => 'Bevestig rol aanpassing voor groepslid',
+        'confirmSelfDelete' => 'Bevestig om jezelf als groepslid uit te schrijven, waardoor je je rol verliest',
+        'cannotDemoteLastManager' => 'Je kunt de rol voor het laatste groepslid met deze (of een meer permissieve) management rol niet degraderen.',
+        'cannotDeleteLastManager' => 'Je kunt het laatste groepslid met deze (of een meer permissieve) management rol niet uitschrijven.',
     ],
 
     /**
@@ -400,6 +405,11 @@ return [
         'memberRemoved' => 'Het lid is verwijderd.',
         'memberUpdated' => 'Lid aanpassingen opgeslagen.',
         'incorrectMemberRoleWarning' => 'Het toewijzen van de verkeerde rol aan een gebruiker kan voor serieuze beveiligingsproblemen zorgen.',
+        'ownRoleDowngradeWarning' => 'Bij het verlagen van je eigen rol verlies je waarschijnlijk beheerstoegang tot deze bar.',
+        'confirmRoleChange' => 'Bevestig rol aanpassing voor bar lid',
+        'confirmSelfDelete' => 'Bevestig om jezelf als bar lid uit te schrijven, waardoor je je rol verliest',
+        'cannotDemoteLastManager' => 'Je kunt de rol voor het laatste bar lid met deze (of een meer permissieve) management rol niet degraderen.',
+        'cannotDeleteLastManager' => 'Je kunt het laatste bar lid met deze (of een meer permissieve) management rol niet uitschrijven.',
     ],
 
     /**

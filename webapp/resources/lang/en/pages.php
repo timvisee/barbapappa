@@ -146,6 +146,11 @@ return [
         'memberRemoved' => 'The member has been removed.',
         'memberUpdated' => 'Member changes saved.',
         'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
+        'ownRoleDowngradeWarning' => 'By downgrading your own role you might lose management access to this community. Be very careful.',
+        'confirmRoleChange' => 'Confirm role change for community member',
+        'confirmSelfDelete' => 'Confirm to kick yourself as community member, you will lose your role',
+        'cannotDemoteLastManager' => 'You cannot demote the last community member with this (or a more permissive) management role.',
+        'cannotDeleteLastManager' => 'You cannot kick the last community member with this (or a more permissive) management role.',
     ],
 
     /**
@@ -400,6 +405,11 @@ return [
         'memberRemoved' => 'The member has been removed.',
         'memberUpdated' => 'Member changes saved.',
         'incorrectMemberRoleWarning' => 'Assigning an incorrect role that is too permissive to a member may introduce significant security issues.',
+        'ownRoleDowngradeWarning' => 'By downgrading your own role you might lose management access to this bar. Be very careful.',
+        'confirmRoleChange' => 'Confirm role change for bar member',
+        'confirmSelfDelete' => 'Confirm to kick yourself as bar member, you will lose your role',
+        'cannotDemoteLastManager' => 'You cannot demote the last bar member with this (or a more permissive) management role.',
+        'cannotDeleteLastManager' => 'You cannot kick the last bar member with this (or a more permissive) management role.',
     ],
 
     /**

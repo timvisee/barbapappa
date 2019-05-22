@@ -13,9 +13,24 @@
 
     {{-- TODO: toggle to also remove user from community bars --}}
 
-    <br />
-
     {!! Form::open(['action' => ['CommunityMemberController@doDelete', 'communityId' => $community->human_id, 'memberId' => $member->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
+        {{-- Self delete confirmation checkbox --}}
+        @if($member->id == barauth()->getSessionUser()->id)
+            <div class="field {{ ErrorRenderer::hasError('confirm_self_delete') ? 'error' : '' }}">
+                <div class="ui checkbox">
+                    <input type="checkbox"
+                            name="confirm_self_delete"
+                            tabindex="0"
+                            class="hidden">
+                    {{ Form::label('confirm_self_delete', __('pages.communityMembers.confirmSelfDelete')) }}
+                </div>
+                <br />
+                {{ ErrorRenderer::inline('confirm_self_delete') }}
+            </div>
+        @endif
+
+        <br />
+
         <div class="ui buttons">
             <a href="{{ route('community.member.show', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
                     class="ui button negative">
