@@ -55,15 +55,15 @@
     <div class="ui horizontal small statistics">
         <div class="statistic">
             <div class="value">{{ $memberCountHour }}</div>
-            <div class="label">@lang('pages.stats.activeLastHour')</div>
+            <div class="label">@lang('pages.stats.activePastHour')</div>
         </div>
         <div class="statistic">
             <div class="value">{{ $memberCountDay }}</div>
-            <div class="label">@lang('pages.stats.activeLastDay')</div>
+            <div class="label">@lang('pages.stats.activePastDay')</div>
         </div>
         <div class="statistic">
             <div class="value">{{ $memberCountMonth }}</div>
-            <div class="label">@lang('pages.stats.activeLastMonth')</div>
+            <div class="label">@lang('pages.stats.activePastMonth')</div>
         </div>
     </div>
 

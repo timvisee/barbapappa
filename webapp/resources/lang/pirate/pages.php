@@ -397,12 +397,12 @@ return [
         'title' => 'Statistics',
         'barStats' => 'Bar statistics',
         'communityStats' => 'Crew statistics',
-        'activeLastHour' => 'Active last hour',
-        'activeLastDay' => 'Active last day',
-        'activeLastMonth' => 'Active last month',
-        'productsLastHour' => 'Products last hour',
-        'productsLastDay' => 'Products last day',
-        'productsLastMonth' => 'Products last month',
+        'activePastHour' => 'Active past hour',
+        'activePastDay' => 'Active past day',
+        'activePastMonth' => 'Active past month',
+        'productsPastHour' => 'Products past hour',
+        'productsPastDay' => 'Products past day',
+        'productsPastMonth' => 'Products past month',
     ],
 
     /**

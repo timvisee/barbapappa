@@ -397,12 +397,12 @@ return [
         'title' => 'Statistieken',
         'barStats' => 'Bar statistieken',
         'communityStats' => 'Groep statistieken',
-        'activeLastHour' => 'Actief laatste uur',
-        'activeLastDay' => 'Actief laatste dag',
-        'activeLastMonth' => 'Actief laatste maand',
-        'productsLastHour' => 'Producten laatste uur',
-        'productsLastDay' => 'Producten laatste dag',
-        'productsLastMonth' => 'Producten laatste maand',
+        'activePastHour' => 'Actief afgelopen uur',
+        'activePastDay' => 'Actief afgelopen dag',
+        'activePastMonth' => 'Actief afgelopen maand',
+        'productsPastHour' => 'Producten afgelopen uur',
+        'productsPastDay' => 'Producten afgelopen dag',
+        'productsPastMonth' => 'Producten afgelopen maand',
     ],
 
     /**
