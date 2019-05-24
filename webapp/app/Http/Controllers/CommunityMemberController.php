@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
-use App\Perms\CommunityRoles;
+use App\Perms\Builder\Builder;
 use App\Perms\Builder\Config as PermsConfig;
+use App\Perms\CommunityRoles;
 
 class CommunityMemberController extends Controller {
 
@@ -45,6 +46,14 @@ class CommunityMemberController extends Controller {
         $community = \Request::get('community');
         $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
+        // Current role must be higher than user role
+        // TODO: this does not inherit from larger scopes right now
+        $config = Builder::build()->raw(CommunityRoles::SCOPE, $member->pivot->role);
+        if(!perms($config))
+            return redirect()
+                ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
+                ->with('error', __('pages.communityMembers.cannotEditMorePermissive'));
+
         // Show the edit view
         return view('community.member.edit')
             ->with('member', $member);
@@ -61,6 +70,14 @@ class CommunityMemberController extends Controller {
         $member = $community->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
         $curRole = $member->pivot->role;
         $newRole = $request->input('role');
+
+        // Current role must be higher than user role
+        // TODO: this does not inherit from larger scopes right now
+        $config = Builder::build()->raw(CommunityRoles::SCOPE, $curRole);
+        if(!perms($config))
+            return redirect()
+                ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
+                ->with('error', __('pages.communityMembers.cannotEditMorePermissive'));
 
         // Build validation rules, validate
         $rules = [
