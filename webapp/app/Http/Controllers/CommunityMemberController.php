@@ -85,6 +85,13 @@ class CommunityMemberController extends Controller {
             $rules['confirm_role_change'] = 'accepted';
         $this->validate($request, $rules);
 
+        // New role cannot be higher than what the user has (with inherited)
+        $config = Builder::build()->raw(CommunityRoles::SCOPE, $newRole)->inherit();
+        if(!perms($config))
+            return redirect()
+                ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
+                ->with('error', __('pages.communityMembers.cannotSetMorePermissive'));
+
         // If manager or higher changed to lower role, and he was the last with
         // that role or higher, do not allow the change
         if($newRole < $curRole && $curRole > CommunityRoles::USER) {

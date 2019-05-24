@@ -85,6 +85,13 @@ class BarMemberController extends Controller {
             $rules['confirm_role_change'] = 'accepted';
         $this->validate($request, $rules);
 
+        // New role cannot be higher than what the user has (with inherited)
+        $config = Builder::build()->raw(BarRoles::SCOPE, $newRole)->inherit();
+        if(!perms($config))
+            return redirect()
+                ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+                ->with('error', __('pages.barMembers.cannotSetMorePermissive'));
+
         // If manager or higher changed to lower role, and he was the last with
         // that role or higher, do not allow the change
         // TODO: allow demote if manager/admin inherited from community
