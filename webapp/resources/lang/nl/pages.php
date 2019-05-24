@@ -150,6 +150,7 @@ return [
         'confirmRoleChange' => 'Bevestig rol aanpassing voor groepslid',
         'confirmSelfDelete' => 'Bevestig om jezelf als groepslid uit te schrijven, waardoor je je rol verliest',
         'cannotDemoteLastManager' => 'Je kunt de rol voor het laatste groepslid met deze (of een meer permissieve) management rol niet degraderen.',
+        'cannotEditMorePermissive' => 'Je kunt een groepslid met een meer permissieve rol dan jezelf niet aanpassen.',
         'cannotDeleteLastManager' => 'Je kunt het laatste groepslid met deze (of een meer permissieve) management rol niet uitschrijven.',
     ],
 
@@ -414,6 +415,7 @@ return [
         'confirmRoleChange' => 'Bevestig rol aanpassing voor bar lid',
         'confirmSelfDelete' => 'Bevestig om jezelf als bar lid uit te schrijven, waardoor je je rol verliest',
         'cannotDemoteLastManager' => 'Je kunt de rol voor het laatste bar lid met deze (of een meer permissieve) management rol niet degraderen.',
+        'cannotEditMorePermissive' => 'Je kunt een bar lid met een meer permissieve rol dan jezelf niet aanpassen.',
         'cannotDeleteLastManager' => 'Je kunt het laatste bar lid met deze (of een meer permissieve) management rol niet uitschrijven.',
     ],
 

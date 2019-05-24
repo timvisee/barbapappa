@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
-use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\BarRoles;
+use App\Perms\Builder\Builder;
+use App\Perms\Builder\Config as PermsConfig;
 
 class BarMemberController extends Controller {
 
@@ -45,6 +46,13 @@ class BarMemberController extends Controller {
         $bar = \Request::get('bar');
         $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
+        // Current role must be higher than user role
+        $config = Builder::build()->raw(BarRoles::SCOPE, $member->pivot->role)->inherit();
+        if(!perms($config))
+            return redirect()
+                ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+                ->with('error', __('pages.barMembers.cannotEditMorePermissive'));
+
         // Show the edit view
         return view('bar.member.edit')
             ->with('member', $member);
@@ -61,6 +69,13 @@ class BarMemberController extends Controller {
         $member = $bar->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
         $curRole = $member->pivot->role;
         $newRole = $request->input('role');
+
+        // Current role must be higher than user role
+        $config = Builder::build()->raw(BarRoles::SCOPE, $curRole)->inherit();
+        if(!perms($config))
+            return redirect()
+                ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
+                ->with('error', __('pages.barMembers.cannotEditMorePermissive'));
 
         // Build validation rules, validate
         $rules = [
