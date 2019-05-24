@@ -250,6 +250,7 @@ return [
         'economySelectDescription' => 'Wallets in dis community be divided by booty.<br>Select \'the booty to manage yer wallets.',
         'noWallets' => 'Yer nay be any wallets yet...',
         'namePlaceholder' => 'My personal wallet',
+        'nameDefault' => 'My fresh wallet',
         'createWallet' => 'Create wallet',
         'walletCreated' => 'Th\' wallet be created.',
         'walletUpdated' => 'Wallet changes saved.',

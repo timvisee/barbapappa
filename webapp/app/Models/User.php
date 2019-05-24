@@ -373,7 +373,7 @@ class User extends Model {
     public function createWallet(Economy $economy, int $currency_id, $name = null) {
         return $this->wallets()->create([
             'economy_id' => $economy->id,
-            'name' => $name ?? __('pages.wallets.namePlaceholder'),
+            'name' => $name ?? __('pages.wallets.nameDefault'),
             'currency_id' => $currency_id,
         ]);
     }

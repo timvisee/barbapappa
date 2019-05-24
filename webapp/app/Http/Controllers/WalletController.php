@@ -314,11 +314,12 @@ class WalletController extends Controller {
         ]);
         $amount = $request->input('amount');
         $toWallet = $request->input('to_wallet');
+        $newWallet = $toWallet == 'new';
 
         // Start a database transaction for the wallet transaction
-        DB::transaction(function() use($user, $economy, $currency, $amount, $wallet, &$toWallet, $toWallets) {
+        DB::transaction(function() use($user, $economy, $currency, $amount, $wallet, $newWallet, &$toWallet, $toWallets) {
             // Create a new wallet or select an existing wallet
-            if($toWallet == 'new')
+            if($newWallet)
                 $toWallet = $user->createWallet($economy, $currency->id);
             else
                 $toWallet = $toWallets->firstWhere('id', $toWallet);
@@ -367,7 +368,7 @@ class WalletController extends Controller {
 
         // Redirect back to the wallet page with a success message
         return redirect()
-            ->route('community.wallet.show', [
+            ->route('community.wallet.' . ($newWallet ? 'edit' : 'show'), [
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id,
                 'walletId' => $toWallet->id,
