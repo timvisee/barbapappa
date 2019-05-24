@@ -149,9 +149,10 @@ return [
         'ownRoleDowngradeWarning' => 'By downgrading yer own role ye might lose management access to dis crew. Be very careful.',
         'confirmRoleChange' => 'Confirm role change for crew matey',
         'confirmSelfDelete' => 'Confirm to kick yerself as crew matey, ye be lose yer role',
-        'cannotDemoteLastManager' => 'Ye nay demote th\' last crew matey wit\' dis (or a more permissive) management role.',
-        'cannotEditMorePermissive' => 'You nay edit a crew matey with a more permissive role than yerself.',
-        'cannotDeleteLastManager' => 'Ye nay sink th\' last crew matey wit\' dis (or a more permissive) management role.',
+        'cannotDemoteLastManager' => 'Ye nay demote th\' last crew matey wit\' dis (or a moar permissive) management role.',
+        'cannotEditMorePermissive' => 'You nay edit a crew matey with a moar permissive role than yerself.',
+        'cannotSetMorePermissive' => 'You nay set a moar permissive role for a crew matey than yer current role.',
+        'cannotDeleteLastManager' => 'Ye nay sink th\' last crew matey wit\' dis (or a moar permissive) management role.',
     ],
 
     /**
@@ -414,9 +415,10 @@ return [
         'ownRoleDowngradeWarning' => 'By downgrading yer own role ye might lose management access to dis bar. Be very careful.',
         'confirmRoleChange' => 'Confirm role change for bar matey',
         'confirmSelfDelete' => 'Confirm to kick yerself as bar matey, ye be lose yer role',
-        'cannotDemoteLastManager' => 'Ye nay demote th\' last bar matey wit\' dis (or a more permissive) management role.',
-        'cannotEditMorePermissive' => 'You nay edit a bar matey with a more permissive role than yerself.',
-        'cannotDeleteLastManager' => 'Ye nay sink th\' last bar matey wit\' dis (or a more permissive) management role.',
+        'cannotDemoteLastManager' => 'Ye nay demote th\' last bar matey wit\' dis (or a moar permissive) management role.',
+        'cannotEditMorePermissive' => 'You nay edit a bar matey with a moar permissive role than yerself.',
+        'cannotSetMorePermissive' => 'You nay set a moar permissive role for a bar matey than yer current role.',
+        'cannotDeleteLastManager' => 'Ye nay sink th\' last bar matey wit\' dis (or a moar permissive) management role.',
     ],
 
     /**

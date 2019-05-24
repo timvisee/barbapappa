@@ -151,6 +151,7 @@ return [
         'confirmSelfDelete' => 'Confirm to kick yourself as community member, you will lose your role',
         'cannotDemoteLastManager' => 'You cannot demote the last community member with this (or a more permissive) management role.',
         'cannotEditMorePermissive' => 'You cannot edit a community member with a more permissive role than yourself.',
+        'cannotSetMorePermissive' => 'You cannot set a more permissive role for a community member than your current role.',
         'cannotDeleteLastManager' => 'You cannot kick the last community member with this (or a more permissive) management role.',
     ],
 
@@ -416,6 +417,7 @@ return [
         'confirmSelfDelete' => 'Confirm to kick yourself as bar member, you will lose your role',
         'cannotDemoteLastManager' => 'You cannot demote the last bar member with this (or a more permissive) management role.',
         'cannotEditMorePermissive' => 'You cannot edit a bar member with a more permissive role than yourself.',
+        'cannotSetMorePermissive' => 'You cannot set a more permissive role for a bar member than your current role.',
         'cannotDeleteLastManager' => 'You cannot kick the last bar member with this (or a more permissive) management role.',
     ],
 
