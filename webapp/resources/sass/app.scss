@@ -202,6 +202,16 @@ ul.ui-listview.center > li > a.ui-btn {
   overflow: hidden;
 }
 
+// Bar header
+.bar-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bar-header .balance {
+    margin-right: 0.5rem;
+}
+
 // A subtle gray label
 .subtle,
 .menu.fluid .sub-label {
