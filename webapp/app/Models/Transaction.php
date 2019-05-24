@@ -87,17 +87,28 @@ class Transaction extends Model {
      * avaialble, payment mutations are considered instead. If none are found,
      * 0 is returned.
      *
+     * @param Wallet|null [$perspective=null] An optional perspective we're
+     *      looking from. Provide the wallet if seeing this transaction for a
+     *      wallet.
+     *
      * @return The cost is returned as decimal value.
      */
     // TODO: rename this to gain?
-    public function cost() {
+    public function cost($perspective = null) {
         // Determine cost based on wallet
-        $cost = -$this
+        $query = $this
             ->mutations()
-            ->where('type', Mutation::TYPE_WALLET)
-            ->pluck('amount')
-            ->sum();
-        if($cost != 0)
+            ->where('type', Mutation::TYPE_WALLET);
+        if($perspective instanceof Wallet) {
+            $query = $query
+                ->whereExists(function($query) use($perspective) {
+                    $query->selectRaw('1')
+                        ->from('mutations_wallet')
+                        ->whereRaw('mutations.id = mutations_wallet.mutation_id')
+                        ->where('wallet_id', $perspective->id);
+                });
+        }
+        if(($cost = -$query->pluck('amount')->sum()) != 0)
             return $cost;
 
         // Determine cost based on payments
@@ -206,12 +217,15 @@ class Transaction extends Model {
      *
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
      * @param boolean [$invert=false] True to invert the cost value.
+     * @param Wallet|null [$perspective=null] An optional perspective we're
+     *      looking from. Provide the wallet if seeing this transaction for a
+     *      wallet.
      *
      * @return string Formatted cost.
      */
-    public function formatCost($format = BALANCE_FORMAT_PLAIN, $invert = false) {
+    public function formatCost($format = BALANCE_FORMAT_PLAIN, $invert = false, $perspective = null) {
         // Determine the cost
-        $cost = $this->cost();
+        $cost = $this->cost($perspective);
         if($invert)
             $cost *= -1;
 
