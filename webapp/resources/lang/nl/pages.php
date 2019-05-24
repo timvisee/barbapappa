@@ -250,6 +250,7 @@ return [
         'economySelectDescription' => 'Portemonnees voor deze groep zijn onderverdeeld per economie.<br>Selecteer een economie om je portemonnees te beheren.',
         'noWallets' => 'Je hebt nog geen portemonnees...',
         'namePlaceholder' => 'Mijn persoonlijke portefeuille',
+        'nameDefault' => 'Mijn nieuwe portefeuille',
         'createWallet' => 'Portemonnee aanmaken',
         'walletCreated' => 'De portemonnee is aangemaakt.',
         'walletUpdated' => 'Portemonnee aanpassingen opgeslagen.',

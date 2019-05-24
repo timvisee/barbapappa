@@ -250,6 +250,7 @@ return [
         'economySelectDescription' => 'Wallets in this community are divided by economy.<br>Select the economy to manage your wallets in it.',
         'noWallets' => 'You don\'t have any wallets yet...',
         'namePlaceholder' => 'My personal wallet',
+        'nameDefault' => 'My new wallet',
         'createWallet' => 'Create wallet',
         'walletCreated' => 'The wallet has been created.',
         'walletUpdated' => 'Wallet changes saved.',
