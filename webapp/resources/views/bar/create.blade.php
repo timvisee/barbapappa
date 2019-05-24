@@ -57,6 +57,11 @@
 
         <div class="ui divider"></div>
 
+        <div class="ui message">
+            <div class="header">@lang('pages.community.economy')</div>
+            <p>@lang('pages.bar.economyDescription')</p>
+        </div>
+
         <div class="field {{ ErrorRenderer::hasError('economy') ? 'error' : '' }}">
             {{ Form::label('economy', __('pages.community.economy')) }}
 

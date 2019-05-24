@@ -369,6 +369,7 @@ return [
         'slugPlaceholder' => 'viking',
         'slugFieldRegexError' => 'The slug must start with an alphabetical character.',
         'codeDescription' => 'With a bar code, you prevent random users from joining. To join the bar, users are required to enter the specified code.',
+        'economyDescription' => 'The economy defines what products, currencies and wallets are used in this bar. Be very careful with changing it after the bar is created, as this immediately affects the list of products, currencies and wallets used in this bar. Users probably don\'t expect this, and might find it hard to understand.',
         'showExploreDescription' => 'List on public \'Explore bars\' page',
         'showCommunityDescription' => 'List on community page for community members',
         'selfEnrollDescription' => 'Allow self enrollment (with code if specified)',
