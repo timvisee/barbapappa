@@ -572,6 +572,48 @@ class BarController extends Controller {
     }
 
     /**
+     * Page to delete the bar.
+     *
+     * @return Response
+     */
+    public function delete($barId) {
+        // Get the bar and authenticated user
+        $bar = \Request::get('bar');
+        $user = barauth()->getUser();
+
+        return view('bar.delete');
+    }
+
+    /**
+     * Delete the bar.
+     *
+     * @return Response
+     */
+    public function doDelete(Request $request, $barId) {
+        // Get the bar and authenticated user
+        $bar = \Request::get('bar');
+        $user = barauth()->getUser();
+
+        // Validate
+        $this->validate($request, [
+            'confirm_name' => 'same:confirm_name_base',
+            'confirm_delete' => 'accepted',
+        ], [
+            'confirm_name.same' => __('pages.bar.incorrectNameShouldBe', ['name' => $bar->name]),
+        ]);
+
+        // TODO: ensure deletion is allowed (and no users are using it)
+
+        // Delete the bar
+        $bar->delete();
+
+        // Redirect to the index page after deleting
+        return redirect()
+            ->route('community.show', ['communityId' => $bar->community->human_id])
+            ->with('success', __('pages.bar.deleted'));
+    }
+
+    /**
      * Build a list of preferred currencies for the given user.
      * The first currency in the returned list is the most preferred currency.
      *

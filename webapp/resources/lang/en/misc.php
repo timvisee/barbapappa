@@ -20,6 +20,7 @@ return [
     'rename' => 'Rename',
     'delete' => 'Delete',
     'permanentlyDelete' => 'Permanently delete',
+    'iUnderstandDelete' => 'I understand the consequences, continue to delete',
     'trash' => 'Trash',
     'trashed' => 'Trashed',
     'remove' => 'Remove',

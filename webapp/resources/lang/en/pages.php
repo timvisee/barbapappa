@@ -384,6 +384,10 @@ return [
         'noDescription' => 'This bar has no description',
         'barInfo' => 'Bar info',
         'viewBar' => 'View bar',
+        'deleted' => 'The bar has been deleted.',
+        'deleteQuestion' => 'You\'re about to permanently delete this bar. All members will lose access to it, and won\'t be possible to link product transactions to it anymore. The products and user wallets will remain as part of the economy that was used in this bar. Are you sure you want to continue?',
+        'exactBarNameVerify' => 'Exact name of bar to delete (Verification)',
+        'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
     ],
 
     /**
