@@ -47,8 +47,7 @@ class CommunityMemberController extends Controller {
         $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Current role must be higher than user role
-        // TODO: this does not inherit from larger scopes right now
-        $config = Builder::build()->raw(CommunityRoles::SCOPE, $member->pivot->role);
+        $config = Builder::build()->raw(CommunityRoles::SCOPE, $member->pivot->role)->inherit();
         if(!perms($config))
             return redirect()
                 ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])
@@ -72,8 +71,7 @@ class CommunityMemberController extends Controller {
         $newRole = $request->input('role');
 
         // Current role must be higher than user role
-        // TODO: this does not inherit from larger scopes right now
-        $config = Builder::build()->raw(CommunityRoles::SCOPE, $curRole);
+        $config = Builder::build()->raw(CommunityRoles::SCOPE, $curRole)->inherit();
         if(!perms($config))
             return redirect()
                 ->route('community.member.show', ['communityId' => $communityId, 'memberId' => $memberId])

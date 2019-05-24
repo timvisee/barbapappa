@@ -47,8 +47,7 @@ class BarMemberController extends Controller {
         $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Current role must be higher than user role
-        // TODO: this does not inherit from larger scopes right now
-        $config = Builder::build()->raw(BarRoles::SCOPE, $member->pivot->role);
+        $config = Builder::build()->raw(BarRoles::SCOPE, $member->pivot->role)->inherit();
         if(!perms($config))
             return redirect()
                 ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
@@ -72,8 +71,7 @@ class BarMemberController extends Controller {
         $newRole = $request->input('role');
 
         // Current role must be higher than user role
-        // TODO: this does not inherit from larger scopes right now
-        $config = Builder::build()->raw(BarRoles::SCOPE, $curRole);
+        $config = Builder::build()->raw(BarRoles::SCOPE, $curRole)->inherit();
         if(!perms($config))
             return redirect()
                 ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
