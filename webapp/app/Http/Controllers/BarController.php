@@ -589,10 +589,13 @@ class BarController extends Controller {
      *
      * @return Response
      */
-    public function doDelete($barId) {
+    public function doDelete(Request $request, $barId) {
         // Get the bar and authenticated user
         $bar = \Request::get('bar');
         $user = barauth()->getUser();
+
+        // Validate
+        $this->validate($request, ['confirm_delete' => 'accepted']);
 
         // TODO: ensure deletion is allowed (and no users are using it)
 

@@ -20,6 +20,7 @@ return [
     'rename' => 'Hernoemen',
     'delete' => 'Verwijderen',
     'permanentlyDelete' => 'Permanent verwijderen',
+    'iUnderstandDelete' => 'Ik begrijp de consequenties, doorgaan met verwijderen',
     'trash' => 'Weggooien',
     'trashed' => 'Weggegooid',
     'remove' => 'Verwijderen',
