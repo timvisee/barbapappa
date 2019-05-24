@@ -384,6 +384,8 @@ return [
         'noDescription' => 'Dis bar be nay description',
         'barInfo' => 'Bar info',
         'viewBar' => 'View bar',
+        'deleted' => 'Th\' bar be sunk.',
+        'deleteQuestion' => 'Yer \'bout to permanently sink dis bar. All mateies will lose access to it, and it nay be possible to link product transactions to it anymore. Th\' products and matey wallets will remain as part of th\' booty that be used in dis bar. Ye be sure ye want to continue?',
     ],
 
     /**

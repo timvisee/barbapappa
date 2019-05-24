@@ -10,20 +10,18 @@
     use \App\Http\Controllers\ProductController;
 
     // Define menulinks
-    if(perms(BarController::permsAdminister()))
+    if(perms(BarController::permsAdminister())) {
         $menulinks[] = [
             'name' => __('pages.bar.editBar'),
             'link' => route('bar.edit', ['barId' => $bar->human_id]),
             'icon' => 'edit',
         ];
-
-    // TODO: edit products
-    // if(perms(EconomyController::permsView()))
-    //     $menulinks[] = [
-    //         'name' => __('pages.economies.title'),
-    //         'link' => route('bar.economy.index', ['barId' => $bar->human_id]),
-    //         'icon' => 'money',
-    //     ];
+        $menulinks[] = [
+            'name' => __('pages.bar.deleteBar'),
+            'link' => route('bar.delete', ['barId' => $bar->human_id]),
+            'icon' => 'delete',
+        ];
+    }
 
     if(perms(BarMemberController::permsView()))
         $menulinks[] = [
@@ -49,7 +47,7 @@
                     'communityId' => $community->human_id,
                     'economyId' => $bar->economy_id
                 ]),
-            'icon' => 'shopping',
+            'icon' => 'shopping-bag',
         ];
 
     if(perms(CommunityController::permsManage()))
@@ -89,12 +87,9 @@
             <div class="item disabled">@lang('pages.bar.editBar')</div>
         @endif
         @if(perms(BarController::permsAdminister()))
-            {{-- TODO: add delete button to page links as well --}}
-            {{-- <a href="{{ route('bar.delete', ['barId' => --}}
-            {{-- $bar->human_id]) }}" class="item"> --}}
-            {{--     @lang('pages.bar.deleteBar') --}}
-            {{-- </a> --}}
-            <div class="item disabled">@lang('pages.bar.deleteBar')</div>
+            <a href="{{ route('bar.delete', ['barId' => $bar->human_id]) }}" class="item">
+                @lang('pages.bar.deleteBar')
+            </a>
         @else
             <div class="item disabled">@lang('pages.bar.deleteBar')</div>
         @endif

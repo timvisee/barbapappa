@@ -384,6 +384,8 @@ return [
         'noDescription' => 'Deze bar heeft geen beschrijving',
         'barInfo' => 'Bar informatie',
         'viewBar' => 'Bar bekijken',
+        'deleted' => 'De bar is verwijderd.',
+        'deleteQuestion' => 'Je staat op het punt deze bar permanent te verwijderen. Alle leden zullen toegang tot de bar verliezen, en product transacties zullen niet meer gelinkt kunnen worden aan deze bar. De producten en portemonnees van leden blijven bestaan als onderdeel van de economie die gebruikt werd binnen deze bar. Weet je zeker dat je door wilt gaan?',
     ],
 
     /**

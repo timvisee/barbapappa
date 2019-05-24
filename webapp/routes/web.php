@@ -7,9 +7,6 @@ use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyCurrencyController;
 use App\Http\Controllers\ProductController;
-use App\Perms\AppRoles;
-use App\Perms\BarRoles;
-use App\Perms\CommunityRoles;
 
 /*
 |--------------------------------------------------------------------------
@@ -366,9 +363,16 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::get('/manage', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
         // Edit, require manage perms
+        // TODO: require manager or admin?
         Route::prefix('/edit')->middleware(BarController::permsAdminister()->middleware())->group(function() {
             Route::get('/', 'BarController@edit')->name('bar.edit');
             Route::put('/', 'BarController@doEdit')->name('bar.doEdit');
+        });
+
+        // Delete, require administration perms
+        Route::prefix('/delete')->middleware(BarController::permsAdminister()->middleware())->group(function() {
+            Route::get('/', 'BarController@delete')->name('bar.delete');
+            Route::delete('/', 'BarController@doDelete')->name('bar.doDelete');
         });
 
         // Bar products
