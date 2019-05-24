@@ -595,7 +595,12 @@ class BarController extends Controller {
         $user = barauth()->getUser();
 
         // Validate
-        $this->validate($request, ['confirm_delete' => 'accepted']);
+        $this->validate($request, [
+            'confirm_name' => 'same:confirm_name_base',
+            'confirm_delete' => 'accepted',
+        ], [
+            'confirm_name.same' => __('pages.bar.incorrectNameShouldBe', ['name' => $bar->name]),
+        ]);
 
         // TODO: ensure deletion is allowed (and no users are using it)
 

@@ -12,7 +12,18 @@
     </div>
 
     {!! Form::open(['action' => ['BarController@doDelete', 'barId' => $bar->human_id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
-        {{-- Role change confirmation checkbox --}}
+        <div class="ui attached segment">
+            <div class="field {{ ErrorRenderer::hasError('confirm_name') ? 'error' : '' }}">
+                {{ Form::hidden('confirm_name_base', $bar->name) }}
+                {{ Form::label('confirm_name', __('pages.bar.exactBarNameVerify') . ':') }}
+                {{ Form::text('confirm_name', '', ['placeholder' => $bar->name]) }}
+                {{ ErrorRenderer::inline('confirm_name') }}
+                <br />
+                {{ ErrorRenderer::inline('confirm_name') }}
+            </div>
+        </div>
+
+        {{-- Delete confirmation checkbox --}}
         <div class="ui bottom attached segment">
             <div class="field {{ ErrorRenderer::hasError('confirm_delete') ? 'error' : '' }}">
                 <div class="ui checkbox">
