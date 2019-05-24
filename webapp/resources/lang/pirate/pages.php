@@ -369,6 +369,7 @@ return [
         'slugPlaceholder' => 'anne',
         'slugFieldRegexError' => 'Dis slug must start with n alphabetical character.',
         'codeDescription' => 'With a bar secret, ye prevent random pirates from joining. To join the bar, users be required to enter th\' secret.',
+        'economyDescription' => 'Th\' booty defines what products, currencies and wallets be used in dis bar. Be very careful wit\' changing it after th\' bar be created, as this immediately affects th\' list of products, currencies and wallets used in dis bar. Mateies probably don\'t expect dis, and might find it hard to understand.',
         'showExploreDescription' => 'List on public \'Explore bars\' page',
         'showCommunityDescription' => 'List on crew page for crew maties',
         'selfEnrollDescription' => 'Allow self enrollment (wit\' code if specified)',

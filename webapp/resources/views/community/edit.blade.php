@@ -29,7 +29,7 @@
                 @lang('pages.community.slugDescriptionExample')</br>
                 <u><code>{{ URL::to('/c/' . $community->id) }}</code></u>
                 <span class="glyphicons glyphicons-chevron-right"></span>
-                <u><code>{{ URL::to('/c/' . ($community->slug ? $community->slug : __('pages.community.slugPlaceholder'))) }}</code></u>.
+                <u><code>{{ URL::to('/c/' . ($community->slug ?? __('pages.community.slugPlaceholder'))) }}</code></u>.
             </p>
         </div>
 

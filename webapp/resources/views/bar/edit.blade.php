@@ -29,7 +29,7 @@
                 @lang('pages.bar.slugDescriptionExample')</br>
                 <u><code>{{ URL::to('/b/' . $bar->id) }}</code></u>
                 <span class="glyphicons glyphicons-chevron-right"></span>
-                <u><code>{{ URL::to('/b/' . ($bar->slug ? $bar->slug : __('pages.bar.slugPlaceholder'))) }}</code></u>.
+                <u><code>{{ URL::to('/b/' . ($bar->slug ?? __('pages.bar.slugPlaceholder'))) }}</code></u>.
             </p>
         </div>
 
@@ -56,6 +56,11 @@
         </div>
 
         <div class="ui divider"></div>
+
+        <div class="ui message">
+            <div class="header">@lang('pages.community.economy')</div>
+            <p>@lang('pages.bar.economyDescription')</p>
+        </div>
 
         <div class="field {{ ErrorRenderer::hasError('economy') ? 'error' : '' }}">
             {{ Form::label('economy', __('pages.community.economy')) }}
