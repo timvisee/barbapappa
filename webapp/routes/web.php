@@ -114,6 +114,12 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             Route::put('/', 'CommunityController@doEdit')->name('community.doEdit');
         });
 
+        // Delete, require administration perms
+        Route::prefix('/delete')->middleware(CommunityController::permsAdminister()->middleware())->group(function() {
+            Route::get('/', 'CommunityController@delete')->name('community.delete');
+            Route::delete('/', 'CommunityController@doDelete')->name('community.doDelete');
+        });
+
         // Management page
         // TODO: assing proper permission here, allow management role
         Route::get('/manage', 'CommunityController@manage')->middleware(CommunityController::permsManage()->middleware())->name('community.manage');

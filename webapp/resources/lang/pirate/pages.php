@@ -131,6 +131,10 @@ return [
         'communityInfo' => 'Crew info',
         'manageCommunity' => 'Manage crew',
         'inCommunity' => 'in crew',
+        'deleted' => 'Th\' crew be sunk.',
+        'deleteQuestion' => 'Yer \'bout to permanently sink dis crew. All mateies including yerself will lose access to it. All bars, booties, products and related entities that be used within dis crew will be deleted as well. Ye be sure ye want to continue?',
+        'exactCommunityNameVerify' => 'Exact name of crew to sink (Verification)',
+        'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
     ],
 
     /**
@@ -385,7 +389,7 @@ return [
         'barInfo' => 'Bar info',
         'viewBar' => 'View bar',
         'deleted' => 'Th\' bar be sunk.',
-        'deleteQuestion' => 'Yer \'bout to permanently sink dis bar. All mateies will lose access to it, and it nay be possible to link product transactions to it anymore. Th\' products and matey wallets will remain as part of th\' booty that be used in dis bar. Ye be sure ye want to continue?',
+        'deleteQuestion' => 'Yer \'bout to permanently sink dis bar. All mateies including yerself will lose access to it, and it nay be possible to link product transactions to it anymore. Th\' products and matey wallets will remain as part of th\' booty that be used in dis bar. Ye be sure ye want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
     ],

@@ -309,6 +309,50 @@ class CommunityController extends Controller {
     }
 
     /**
+     * Page to delete the community.
+     *
+     * @return Response
+     */
+    public function delete($communityId) {
+        // Get the community and authenticated user
+        $community = \Request::get('community');
+        $user = barauth()->getUser();
+
+        // TODO: require to remove all bars and economies first?
+
+        return view('community.delete');
+    }
+
+    /**
+     * Delete the community.
+     *
+     * @return Response
+     */
+    public function doDelete(Request $request, $communityId) {
+        // Get the community and authenticated user
+        $community = \Request::get('community');
+        $user = barauth()->getUser();
+
+        // Validate
+        $this->validate($request, [
+            'confirm_name' => 'same:confirm_name_base',
+            'confirm_delete' => 'accepted',
+        ], [
+            'confirm_name.same' => __('pages.community.incorrectNameShouldBe', ['name' => $community->name]),
+        ]);
+
+        // TODO: ensure deletion is allowed (and no users are using it)
+
+        // Delete the community
+        $community->delete();
+
+        // Redirect to the index page after deleting
+        return redirect()
+            ->route('dashboard')
+            ->with('success', __('pages.community.deleted'));
+    }
+
+    /**
      * The permission required basic user actions.
      * @return PermsConfig The permission configuration.
      */
