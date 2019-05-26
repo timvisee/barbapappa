@@ -132,9 +132,12 @@ return [
         'manageCommunity' => 'Manage community',
         'inCommunity' => 'in community',
         'deleted' => 'The community has been deleted.',
-        'deleteQuestion' => 'You\'re about to permanently delete this community. All members including yourself will lose access to it. All bars, economies, products and related entities that are used within this community will be deleted as well. Are you sure you want to continue?',
+        'deleteQuestion' => 'You\'re about to permanently delete this community. All members including yourself will lose access to it. All bars, economies, user wallets, products and related entities that are used within this community will be deleted as well. Are you sure you want to continue?',
         'exactCommunityNameVerify' => 'Exact name of community to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+
+        // TODO: temporary
+        'cannotDeleteDependentWallets' => 'This community cannot be deleted, as there are wallets within it that cannot be deleted.',
     ],
 
     /**

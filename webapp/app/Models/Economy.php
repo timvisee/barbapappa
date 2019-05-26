@@ -154,6 +154,26 @@ class Economy extends Model {
     }
 
     /**
+     * This method determines whether this economy can be deleted.
+     * This does not involve any permission checking. Instead, it ensures there
+     * are no dependencies such as user wallets blocking the safe deletion of
+     * this economy.
+     *
+     * Blocking entities:
+     * - user wallets
+     *
+     * @return boolean True if it can be deleted, false if not.
+     */
+    public function canDelete() {
+        // TODO: allow deleting wallets with 0 balance
+        // TODO: figure out a way to nicely format dependency errors because of
+        //       this on deletion pages.
+
+        // There must not be any wallets in this economy
+        return $this->wallets()->limit(1)->count() == 0;
+    }
+
+    /**
      * Go through all wallets of the current user in this economy, and calculate
      * the total balance.
      *

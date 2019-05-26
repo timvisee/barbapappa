@@ -132,9 +132,12 @@ return [
         'manageCommunity' => 'Manage crew',
         'inCommunity' => 'in crew',
         'deleted' => 'Th\' crew be sunk.',
-        'deleteQuestion' => 'Yer \'bout to permanently sink dis crew. All mateies including yerself will lose access to it. All bars, booties, products and related entities that be used within dis crew will be deleted as well. Ye be sure ye want to continue?',
+        'deleteQuestion' => 'Yer \'bout to permanently sink dis crew. All mateies including yerself will lose access to it. All bars, booties, matey wallets, products and related entities that be used within dis crew will be deleted as well. Ye be sure ye want to continue?',
         'exactCommunityNameVerify' => 'Exact name of crew to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+
+        // TODO: temporary
+        'cannotDeleteDependentWallets' => 'Dis community cannot be sunk, as there be wallets within it that cannot be sunk.',
     ],
 
     /**

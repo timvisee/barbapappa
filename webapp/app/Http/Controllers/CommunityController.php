@@ -318,7 +318,12 @@ class CommunityController extends Controller {
         $community = \Request::get('community');
         $user = barauth()->getUser();
 
+        // The community must be deletable
         // TODO: require to remove all bars and economies first?
+        if(!$community->canDelete())
+            return redirect()
+                ->route('community.manage', ['communityId' => $community->human_id])
+                ->with('error', __('pages.community.cannotDeleteDependentWallets'));
 
         return view('community.delete');
     }
@@ -341,7 +346,12 @@ class CommunityController extends Controller {
             'confirm_name.same' => __('pages.community.incorrectNameShouldBe', ['name' => $community->name]),
         ]);
 
-        // TODO: ensure deletion is allowed (and no users are using it)
+        // The community must be deletable
+        // TODO: require to remove all bars and economies first?
+        if(!$community->canDelete())
+            return redirect()
+                ->route('community.manage', ['communityId' => $community->human_id])
+                ->with('error', __('pages.community.cannotDeleteDependentWallets'));
 
         // Delete the community
         $community->delete();

@@ -132,9 +132,12 @@ return [
         'manageCommunity' => 'Groep beheren',
         'inCommunity' => 'in groep',
         'deleted' => 'De groep is verwijderd.',
-        'deleteQuestion' => 'Je staat op het punt deze groep permanent te verwijderen. Alle leden waaronder jezelf zullen toegang tot de groep verliezen. Alle bars, economieën, producten en gerelateerde entiteiten die worden gebruikt in deze groep zullen ook verwijderd worden. Weet je zeker dat je door wilt gaan?',
+        'deleteQuestion' => 'Je staat op het punt deze groep permanent te verwijderen. Alle leden waaronder jezelf zullen toegang tot de groep verliezen. Alle bars, economieën, lid portemonnees, producten en gerelateerde entiteiten die worden gebruikt in deze groep zullen ook verwijderd worden. Weet je zeker dat je door wilt gaan?',
         'exactCommunityNameVerify' => 'Exacte naam van groep om te verwijderen (Verificatie)',
         'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
+
+        // TODO: temporary
+        'cannotDeleteDependentWallets' => 'Deze groep kan niet verwijderd worden, omdat er nog lid portemonnees zijn die niet zomaar verwijderd kunnen worden.',
     ],
 
     /**
