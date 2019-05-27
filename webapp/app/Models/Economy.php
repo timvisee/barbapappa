@@ -250,6 +250,20 @@ class Economy extends Model {
     }
 
     /**
+     * Check whether the current authenticated user has any wallet with a
+     * non-zero balance.
+     *
+     * @return boolean True if the user has a wallet, false if not.
+     */
+    public function userHasBalance() {
+        return $this
+            ->userWallets()
+            ->where('balance', '<>', 0)
+            ->limit(1)
+            ->count() > 0;
+    }
+
+    /**
      * Calcualte and format the total balance for all the wallets in this
      * economy for the current user. See `$this->calcBalance()`.
      *

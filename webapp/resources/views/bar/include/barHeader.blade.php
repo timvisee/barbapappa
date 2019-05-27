@@ -12,7 +12,7 @@
         @yield('title')
     </div>
 
-    @if($joined)
+    @if($joined || $economy->userHasBalance())
         <div>
             <a href="{{ route('community.wallet.list', [
                         'communityId' => $community->human_id,
