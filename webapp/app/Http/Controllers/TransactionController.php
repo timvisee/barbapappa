@@ -20,8 +20,7 @@ class TransactionController extends Controller {
      * @return Response
      */
     public function show($transactionId) {
-        // Get the user, community, find the economy and transaction
-        $user = barauth()->getUser();
+        // Get the transaction
         $transaction = Transaction::findOrFail($transactionId);
 
         // Check permission
