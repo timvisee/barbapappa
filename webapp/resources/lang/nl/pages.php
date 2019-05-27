@@ -396,6 +396,12 @@ return [
         'deleteQuestion' => 'Je staat op het punt deze bar permanent te verwijderen. Alle leden waaronder jezelf zullen toegang tot de bar verliezen, en product transacties zullen niet meer gelinkt kunnen worden aan deze bar. De producten en portemonnees van leden blijven bestaan als onderdeel van de economie die gebruikt werd binnen deze bar. Weet je zeker dat je door wilt gaan?',
         'exactBarNameVerify' => 'Exacte naam van bar om te verwijderen (Verificatie)',
         'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
+        'poster' => [
+            'thisBarUses' => 'Deze bar gebruikt',
+            'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties',
+            'scanQr' => 'scan de QR code met je telefoon, wordt lid en doe een aankoop',
+            'orVisit' => 'Of bezoek',
+        ],
     ],
 
     /**

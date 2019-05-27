@@ -1,3 +1,5 @@
+{{-- View for a bar poster to render as PDF --}}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,14 +52,13 @@
     </style>
 </head>
 <body>
-    <h1>This bar uses</h1>
+    <h1>@lang('pages.bar.poster.thisBarUses')</h1>
 
     <img class="logo" src="{{ asset('img/logo/logo_nowrap_600dpi.png') }}" />
 
     <p class="description">
-        to digitally manage payments and inventory for consumptions
-        <br>
-        scan the QR code below to join and make a purcahse
+        @lang('pages.bar.poster.toDigitallyManage')<br>
+        @lang('pages.bar.poster.scanQr')
     </p>
 
     <img src="data:image/png;base64,{{ base64_encode(
@@ -71,12 +72,12 @@
     <div class="footer">
         <table>
             <tr>
-                <td class="left">Or visit:</td>
+                <td class="left">@lang('pages.bar.poster.orVisit'):</td>
                 <td class="right">{{ $bar_url }}</td>
             </tr>
             @if(!empty($code))
                 <tr>
-                    <td class="left">Code:</td>
+                    <td class="left">@lang('misc.code'):</td>
                     <td class="right">{{ $code }}</td>
                 </tr>
             @endif

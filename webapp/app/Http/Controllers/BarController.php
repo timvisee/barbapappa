@@ -243,12 +243,12 @@ class BarController extends Controller {
         $code = $bar->password;
 
         // Render the PDF and respond with it as download
-        $pdf = \PDF::loadView('bar.poster', [
-            'bar_url' => $barUrl,
-            'qr_url' => $qrUrl,
-            'code' => $code,
-        ]);
-        return $pdf->download('bar-poster-' . $bar->human_id . '.pdf');
+        return \PDF::loadView('bar.poster.pdf', [
+                'bar_url' => $barUrl,
+                'qr_url' => $qrUrl,
+                'code' => $code,
+            ])
+            ->download('bar-poster-' . $bar->human_id . '.pdf');
     }
 
     /**
