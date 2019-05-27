@@ -133,6 +133,7 @@ return [
         'inCommunity' => 'in community',
         'deleted' => 'The community has been deleted.',
         'deleteQuestion' => 'You\'re about to permanently delete this community. All members including yourself will lose access to it. All bars, economies, user wallets, products and related entities that are used within this community will be deleted as well. Are you sure you want to continue?',
+        'deleteBlocked' => 'You\'re about to permanently delete this community. You must delete the entities listed below first before you can continue with deleting this community.',
         'exactCommunityNameVerify' => 'Exact name of community to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
 

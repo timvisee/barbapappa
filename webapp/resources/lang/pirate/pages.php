@@ -133,6 +133,7 @@ return [
         'inCommunity' => 'in crew',
         'deleted' => 'Th\' crew be sunk.',
         'deleteQuestion' => 'Yer \'bout to permanently sink dis crew. All mateies including yerself will lose access to it. All bars, booties, matey wallets, products and related entities that be used within dis crew will be deleted as well. Ye be sure ye want to continue?',
+        'deleteBlocked' => 'Yer \'bout to permanently delete this crew. ye must delete th\' entities listed below first before ye be continue with deleting dis crew.',
         'exactCommunityNameVerify' => 'Exact name of crew to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
 

@@ -170,7 +170,29 @@ class Economy extends Model {
         //       this on deletion pages.
 
         // There must not be any wallets in this economy
-        return $this->wallets()->limit(1)->count() == 0;
+        return $this
+            ->wallets
+            ->every(function($w) {
+                return $w->canDelete();
+            });
+    }
+
+    /**
+     * List all entities that currently block this economy from being deleted.
+     *
+     * Blocking entities:
+     * - user wallets
+     *
+     * See `canDelete()` as well.
+     *
+     * @return array List of entities that block community deletion.
+     */
+    public function getDeleteBlockers() {
+        return $this
+            ->wallets
+            ->filter(function($w) {
+                return !$w->canDelete();
+            });
     }
 
     /**

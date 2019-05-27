@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Community;
+use App\Models\Economy;
 use App\Perms\AppRoles;
 use App\Perms\CommunityRoles;
 use Carbon\Carbon;
@@ -318,14 +319,13 @@ class CommunityController extends Controller {
         $community = \Request::get('community');
         $user = barauth()->getUser();
 
-        // The community must be deletable
-        // TODO: require to remove all bars and economies first?
-        if(!$community->canDelete())
-            return redirect()
-                ->route('community.manage', ['communityId' => $community->human_id])
-                ->with('error', __('pages.community.cannotDeleteDependentWallets'));
+        // List all blockers
+        $blockers = $community->getDeleteBlockers();
+        if($blockers->contains(function($b) { return !($b instanceof Economy); }))
+            throw new \Exception("Delete blocking entities contains unexpected types");
 
-        return view('community.delete');
+        return view('community.delete')
+            ->with('blockingEconomies', $blockers);
     }
 
     /**
@@ -347,11 +347,13 @@ class CommunityController extends Controller {
         ]);
 
         // The community must be deletable
-        // TODO: require to remove all bars and economies first?
         if(!$community->canDelete())
             return redirect()
                 ->route('community.manage', ['communityId' => $community->human_id])
                 ->with('error', __('pages.community.cannotDeleteDependentWallets'));
+
+        // Manually delete all user wallets in this economy
+        $community->wallets()->delete();
 
         // Delete the community
         $community->delete();

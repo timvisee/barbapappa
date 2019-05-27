@@ -154,6 +154,8 @@ class Community extends Model {
      * - economies
      * - bars (not yet implemented)
      *
+     * See `getDeleteBlockers` as well.
+     *
      * @return boolean True if it can be deleted, false if not.
      */
     public function canDelete() {
@@ -161,10 +163,25 @@ class Community extends Model {
         //       this on deletion pages.
 
         // All economies must be deletable
-        $canDelete = $this->economies->every(function($e) {
+        return $this->economies->every(function($e) {
             return $e->canDelete();
         });
+    }
 
-        return $canDelete;
+    /**
+     * List all entities that currently block this community from being deleted.
+     *
+     * Blocking entities:
+     * - economies
+     * - bars (not yet implemented)
+     *
+     * See `canDelete()` as well.
+     *
+     * @return array List of entities that block community deletion.
+     */
+    public function getDeleteBlockers() {
+        return $this->economies->filter(function($e) {
+            return !$e->canDelete();
+        });
     }
 }
