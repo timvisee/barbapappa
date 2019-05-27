@@ -15,6 +15,7 @@ return [
     'add' => 'Toevoegen',
     'clone' => 'Dupliceren',
     'addAndClone' => 'Toevoegen & Dupliceren',
+    'download' => 'Downloaden',
     'edit' => 'Aanpassen',
     'change' => 'Aanpassen',
     'rename' => 'Hernoemen',

@@ -211,6 +211,53 @@ class BarController extends Controller {
     }
 
     /**
+     * Page to generate a poster PDF for this bar, allowing some configuration.
+     *
+     * @return Response
+     */
+    public function generatePoster($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+
+        // Show the poster creation page
+        return view('bar.poster');
+    }
+
+    /**
+     * Generate the poster PDF, respond with it as a download.
+     *
+     * @return Response
+     */
+    public function doGeneratePoster(Request $request, $barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $withCode = !empty($bar->password) && is_checked($request->input('show_code'));
+
+        // Set the poster locale
+        \App::setLocale($request->input('language'));
+
+        // Configure some parameters
+        $code = $withCode ? $bar->password : null;
+        $plainUrl = preg_replace(
+            '/^https?:\/\//', '',
+            route('bar.show', ['barId' => $bar->human_id])
+        );
+        $qrData = ['barId' => $bar->human_id];
+        if($withCode)
+            $qrData['code'] = $code;
+        $qrUrl = route('bar.join', $qrData);
+
+        // Render the PDF and respond with it as download
+        return \PDF::loadView('poster.pdf', [
+                'type' => 'bar',
+                'plain_url' => $plainUrl,
+                'qr_url' => $qrUrl,
+                'code' => $code,
+            ])
+            ->download(strtolower(__('misc.bar')) . '-poster-' . $bar->human_id . '.pdf');
+    }
+
+    /**
      * Bar edit page.
      *
      * @return Response

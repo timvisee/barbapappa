@@ -36,6 +36,13 @@
             'icon' => 'user-structure',
         ];
 
+    if(perms(CommunityController::permsManage()))
+        $menulinks[] = [
+            'name' => __('pages.community.generatePoster'),
+            'link' => route('community.poster.generate', ['communityId' => $community->human_id]),
+            'icon' => 'qrcode',
+        ];
+
     if(perms(BarController::permsCreate()))
         $menulinks[] = [
             'name' => __('pages.bar.createBar'),
@@ -95,6 +102,13 @@
             </a>
         @else
             <div class="item disabled">@lang('misc.members')</div>
+        @endif
+        @if(perms(CommunityController::permsManage()))
+            <a href="{{ route('community.poster.generate', ['communityId' => $community->human_id]) }}" class="item">
+                @lang('pages.community.generatePoster')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.community.generatePoster')</div>
         @endif
     </div>
 

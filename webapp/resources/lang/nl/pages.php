@@ -137,6 +137,16 @@ return [
         'exactCommunityNameVerify' => 'Exacte naam van groep om te verwijderen (Verificatie)',
         'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
         'cannotDeleteDependents' => 'Deze groep kan niet verwijderd worden, omdat er nog entiteiten zijn die afhankelijk zijn en niet zomaar verwijderd kunnen worden.',
+        'generatePoster' => 'Creëer groepsposter',
+        'generatePosterDescription' => 'Creëer een poster voor deze groep om aan de muur te hangen. Bezoekers kunnen dan gemakklijk gebruik kunnen maken van :app en kunnen lid worden van deze groep door een QR code te scannen met hun mobiele telefoon.',
+        'showCodeOnPoster' => 'Toon code om lid te worden op de poster',
+        'posterBarPreferred' => 'Het is vaak de voorkeur om een poster voor een bar te maken in plaats van voor een groep, omdat gebruikers die lid worden van een groep geen toegang hebben tot het kopen van producten zonder eerst ook lid te worden van een bar. Bezoek de beheers hub van een specifieke bar om daar een poster voor te creëren.',
+        'poster' => [
+            'thisCommunityUses' => 'Deze groep gebruikt',
+            'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties',
+            'scanQr' => 'scan de QR code met je telefoon, wordt lid en doe een aankoop',
+            'orVisit' => 'Of bezoek',
+        ],
     ],
 
     /**
@@ -396,6 +406,15 @@ return [
         'deleteQuestion' => 'Je staat op het punt deze bar permanent te verwijderen. Alle leden waaronder jezelf zullen toegang tot de bar verliezen, en product transacties zullen niet meer gelinkt kunnen worden aan deze bar. De producten en portemonnees van leden blijven bestaan als onderdeel van de economie die gebruikt werd binnen deze bar. Weet je zeker dat je door wilt gaan?',
         'exactBarNameVerify' => 'Exacte naam van bar om te verwijderen (Verificatie)',
         'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
+        'generatePoster' => 'Creëer bar poster',
+        'generatePosterDescription' => 'Creëer een poster voor deze bar om aan de muur te hangen. Bezoekers kunnen dan gemakklijk gebruik kunnen maken van :app en kunnen lid worden van deze bar door een QR code te scannen met hun mobiele telefoon.',
+        'showCodeOnPoster' => 'Toon code om lid te worden op de poster',
+        'poster' => [
+            'thisBarUses' => 'Deze bar gebruikt',
+            'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties',
+            'scanQr' => 'scan de QR code met je telefoon, wordt lid en doe een aankoop',
+            'orVisit' => 'Of bezoek',
+        ],
     ],
 
     /**

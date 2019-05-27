@@ -15,6 +15,7 @@ return [
     'add' => 'Add',
     'clone' => 'Clone',
     'addAndClone' => 'Add \'n Clone',
+    'download' => 'Download',
     'edit' => 'Edit',
     'change' => 'Change',
     'rename' => 'Rename',

@@ -21,12 +21,12 @@
             </div>
         </div>
 
-        <?php
+        @php
             // Create a locales map for the selection box
             $locales = [];
             foreach(langManager()->getLocales(true, false) as $entry)
                 $locales[$entry] = __('lang.name', [], $entry);
-        ?>
+        @endphp
 
         <div class="field {{ ErrorRenderer::hasError('language') ? 'error' : '' }}">
             {{ Form::label('language', __('lang.language')) }}

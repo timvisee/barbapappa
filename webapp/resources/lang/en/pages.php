@@ -137,6 +137,16 @@ return [
         'exactCommunityNameVerify' => 'Exact name of community to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
         'cannotDeleteDependents' => 'This community cannot be deleted, as entities are depending on it which cannot just be deleted.',
+        'generatePoster' => 'Create community poster',
+        'generatePosterDescription' => 'Create a poster for this community to hang on a wall. Visitors will then be able to easily use :app and join this community by scanning a QR code with their mobile phone.',
+        'showCodeOnPoster' => 'Show code to join this community on the poster',
+        'posterBarPreferred' => 'It is usually preferred to generate a poster for a bar instead of a community, as users joining a community doesn\'t give them acces to purchasing products without joining a bar as well. Visit the management hub of a specific bar to create a poster for it.',
+        'poster' => [
+            'thisCommunityUses' => 'This community uses',
+            'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',
+            'scanQr' => 'scan the QR code with your phone to join and make a purchase',
+            'orVisit' => 'Or visit',
+        ],
     ],
 
     /**
@@ -396,6 +406,15 @@ return [
         'deleteQuestion' => 'You\'re about to permanently delete this bar. All members including yourself will lose access to it, and won\'t be possible to link product transactions to it anymore. The products and user wallets will remain as part of the economy that was used in this bar. Are you sure you want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+        'generatePoster' => 'Create bar poster',
+        'generatePosterDescription' => 'Create a poster for this bar to hang on a wall. Visitors will then be able to easily use :app and join this bar by scanning a QR code with their mobile phone.',
+        'showCodeOnPoster' => 'Show code to join this bar on the poster',
+        'poster' => [
+            'thisBarUses' => 'This bar uses',
+            'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',
+            'scanQr' => 'scan the QR code with your phone to join and make a purchase',
+            'orVisit' => 'Or visit',
+        ],
     ],
 
     /**

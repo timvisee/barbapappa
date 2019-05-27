@@ -214,17 +214,22 @@ return [
         Torann\Currency\CurrencyServiceProvider::class,
 
         /**
-         * Laravel DebugBar
+         * Laravel DebugBar.
          */
         Barryvdh\Debugbar\ServiceProvider::class,
 
         /**
-         * Sentry
+         * Laravel DomPDF.
+         */
+        Barryvdh\DomPDF\ServiceProvider::class,
+
+        /**
+         * Sentry.
          */
         Sentry\Laravel\ServiceProvider::class,
 
         /**
-         * Eloquent HasMany Sync
+         * Eloquent HasMany Sync.
          */
         Alfa6661\EloquentHasManySync\ServiceProvider::class,
 
@@ -262,7 +267,6 @@ return [
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
         'Crypt' => Illuminate\Support\Facades\Crypt::class,
         'DB' => Illuminate\Support\Facades\DB::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Eloquent' => Illuminate\Database\Eloquent\Model::class,
         'Event' => Illuminate\Support\Facades\Event::class,
         'File' => Illuminate\Support\Facades\File::class,
@@ -295,7 +299,17 @@ return [
         /**
          * Laravel currency.
          */
-        'Currency' => \torann\Currency\Facades\Currency::class,
+        'Currency' => torann\Currency\Facades\Currency::class,
+
+        /**
+         * Laravel DebugBar.
+         */
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+
+        /**
+         * Laravel DomPDF.
+         */
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
         /**
          * Sentry

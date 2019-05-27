@@ -137,6 +137,16 @@ return [
         'exactCommunityNameVerify' => 'Exact name of crew to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
         'cannotDeleteDependents' => 'Dis community cannot be sunk, as entities be depending on it which nay just be deleted.',
+        'generatePoster' => 'Create crew poster',
+        'generatePosterDescription' => 'Create a poster for dis crew to hang on a wall. Fellow mateies will then be able to easily use :app and join dis crew by scanning a QR code with their handheld phoning device.',
+        'showCodeOnPoster' => 'Show code to join dis crew on th\' poster',
+        'posterBarPreferred' => 'It be usually preferred to generate a poster for a bar instead of a crew, as mateies joining a crew doesn\'t give them acces to purchasing products without joining a bar as well. Visit the management hub of a specific bar to create a poster for it.',
+        'poster' => [
+            'thisCommunityUses' => 'Dis crew uses',
+            'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',
+            'scanQr' => 'scan the QR code below to join and make a purchase',
+            'orVisit' => 'Or see',
+        ],
     ],
 
     /**
@@ -396,6 +406,15 @@ return [
         'deleteQuestion' => 'Yer \'bout to permanently sink dis bar. All mateies including yerself will lose access to it, and it nay be possible to link product transactions to it anymore. Th\' products and matey wallets will remain as part of th\' booty that be used in dis bar. Ye be sure ye want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+        'generatePoster' => 'Create bar poster',
+        'generatePosterDescription' => 'Create a poster for dis bar to hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a QR code with their handheld phoning device.',
+        'showCodeOnPoster' => 'Show code to join dis bar on th\' poster',
+        'poster' => [
+            'thisBarUses' => 'Dis bar uses',
+            'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',
+            'scanQr' => 'scan the QR code below to join and make a purchase',
+            'orVisit' => 'Or see',
+        ],
     ],
 
     /**
