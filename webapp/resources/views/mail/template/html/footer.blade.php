@@ -4,7 +4,7 @@ $message = Array(
     'bottom' => Array(
         'balance' => 'Balance',
         'myBalance' => 'Your balance',
-        'balanceValue' => '&euro;1.23',
+        'balanceValue' => '€1.23',
     )
 );
 ?>

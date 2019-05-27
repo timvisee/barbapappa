@@ -19,8 +19,7 @@ class MutationController extends Controller {
      * @return Response
      */
     public function show($transactionId, $mutationId) {
-        // Get the user, community, find the economy and mutation
-        $user = barauth()->getUser();
+        // Get the transaction
         $transaction = Transaction::findOrFail($transactionId);
 
         // Check permission
@@ -28,7 +27,7 @@ class MutationController extends Controller {
         if(!Self::hasPermission($transaction))
             return response(view('noPermission'));
 
-        // Get the selected mutation
+        // Find the selected mutation
         $mutation = $transaction->mutations()->findOrFail($mutationId);
 
         return view('transaction.mutation.show')

@@ -148,9 +148,8 @@ class BarController extends Controller {
      * @return Response
      */
     public function stats($barId) {
-        // Get the bar and session user
+        // Get the bar
         $bar = \Request::get('bar');
-        $user = barauth()->getSessionUser();
 
         // Gather some stats
         $memberCountHour = $bar
@@ -201,9 +200,8 @@ class BarController extends Controller {
      * @return Response
      */
     public function manage($barId) {
-        // Get the bar and session user
+        // Get the bar
         $bar = \Request::get('bar');
-        $user = barauth()->getSessionUser();
 
         // Show the bar management page
         return view('bar.manage')
@@ -216,10 +214,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function generatePoster($barId) {
-        // Get the bar and session user
-        $bar = \Request::get('bar');
-
-        // Show the poster creation page
         return view('bar.poster');
     }
 
@@ -274,10 +268,9 @@ class BarController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request) {
-        // Get the community, bar and session user
+        // Get the community and bar
         $community = \Request::get('community');
         $bar = \Request::get('bar');
-        $user = barauth()->getSessionUser();
 
         // Validate
         $this->validate($request, [
@@ -624,10 +617,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function delete($barId) {
-        // Get the bar and authenticated user
-        $bar = \Request::get('bar');
-        $user = barauth()->getUser();
-
         return view('bar.delete');
     }
 
@@ -637,9 +626,8 @@ class BarController extends Controller {
      * @return Response
      */
     public function doDelete(Request $request, $barId) {
-        // Get the bar and authenticated user
+        // Get the bar
         $bar = \Request::get('bar');
-        $user = barauth()->getUser();
 
         // Validate
         $this->validate($request, [
@@ -648,8 +636,6 @@ class BarController extends Controller {
         ], [
             'confirm_name.same' => __('pages.bar.incorrectNameShouldBe', ['name' => $bar->name]),
         ]);
-
-        // TODO: ensure deletion is allowed (and no users are using it)
 
         // Delete the bar
         $bar->delete();

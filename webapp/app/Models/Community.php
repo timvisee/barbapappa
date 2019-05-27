@@ -13,6 +13,7 @@ use App\Utils\SlugUtils;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -159,9 +160,6 @@ class Community extends Model {
      * @return boolean True if it can be deleted, false if not.
      */
     public function canDelete() {
-        // TODO: figure out a way to nicely format dependency errors because of
-        //       this on deletion pages.
-
         // All economies must be deletable
         return $this->economies->every(function($e) {
             return $e->canDelete();
@@ -182,6 +180,28 @@ class Community extends Model {
     public function getDeleteBlockers() {
         return $this->economies->filter(function($e) {
             return !$e->canDelete();
+        });
+    }
+
+    /**
+     * Delete this community, and dependent entities that can be deleted.
+     *
+     * @throws \Exception Throws if this entity cannot be deleted due to
+     *      dependent entities. See `canDelete()`.
+     */
+    public function delete() {
+        // Ensure everything can be deleted
+        if(!$this->canDelete())
+            throw new \Exception('Cannot delete community, has dependent entities that cannot just be deleted');
+
+        // Start a transaction to delete this economy
+        $community = $this;
+        DB::transaction(function() use($community) {
+            // Delete all wallets
+            $community->wallets()->delete();
+
+            // Delete this community
+            parent::delete();
         });
     }
 }

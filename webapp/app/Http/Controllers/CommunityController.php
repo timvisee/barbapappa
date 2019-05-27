@@ -10,6 +10,7 @@ use App\Perms\CommunityRoles;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 // TODO: using barauth()->getSessionUser() in some places, shouldn't this be getUser() ?
@@ -112,9 +113,8 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function stats($communityId) {
-        // Get the community and session user
+        // Get the community
         $community = \Request::get('community');
-        $user = barauth()->getSessionUser();
 
         // Gather some stats
         $memberCountHour = $community
@@ -143,9 +143,8 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function manage($communityId) {
-        // Get the community and session user
+        // Get the community
         $community = \Request::get('community');
-        $user = barauth()->getSessionUser();
 
         // Show the community management page
         return view('community.manage')
@@ -158,10 +157,6 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function generatePoster($communityId) {
-        // Get the community and session user
-        $community = \Request::get('community');
-
-        // Show the poster creation page
         return view('community.poster');
     }
 
@@ -229,15 +224,13 @@ class CommunityController extends Controller {
             'slug.regex' => __('pages.community.slugFieldRegexError'),
         ]);
 
-        // Change the name properties
+        // Change the name properties and save
         $community->name = $request->input('name');
         $community->slug = $request->has('slug') ? $request->input('slug') : null;
         $community->description = $request->input('description');
         $community->password = $request->has('password') ? $request->input('password') : null;
         $community->show_explore = is_checked($request->input('show_explore'));
         $community->self_enroll = is_checked($request->input('self_enroll'));
-
-        // Save the community
         $community->save();
 
         // Redirect the user to the community page
@@ -362,9 +355,8 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function delete($communityId) {
-        // Get the community and authenticated user
+        // Get the community
         $community = \Request::get('community');
-        $user = barauth()->getUser();
 
         // List all blockers
         $blockers = $community->getDeleteBlockers();
@@ -381,9 +373,8 @@ class CommunityController extends Controller {
      * @return Response
      */
     public function doDelete(Request $request, $communityId) {
-        // Get the community and authenticated user
+        // Get the community
         $community = \Request::get('community');
-        $user = barauth()->getUser();
 
         // Validate
         $this->validate($request, [
@@ -398,9 +389,6 @@ class CommunityController extends Controller {
             return redirect()
                 ->route('community.manage', ['communityId' => $community->human_id])
                 ->with('error', __('pages.community.cannotDeleteDependents'));
-
-        // Manually delete all user wallets in this economy
-        $community->wallets()->delete();
 
         // Delete the community
         $community->delete();
