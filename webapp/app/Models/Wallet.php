@@ -261,4 +261,18 @@ class Wallet extends Model {
         $this->withdraw($amount);
         $wallet->deposit($amount);
     }
+
+    /**
+     * This method determines whether this wallet can be deleted.
+     * This does not involve any permission checking. Instead, it ensures there
+     * is no balance left in this wallet.
+     *
+     * Blocking:
+     * - non-zero wallet balance
+     *
+     * @return boolean True if it can be deleted, false if not.
+     */
+    public function canDelete() {
+        return $this->balance == 0;
+    }
 }

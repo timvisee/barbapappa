@@ -131,6 +131,14 @@ return [
         'communityInfo' => 'Community info',
         'manageCommunity' => 'Manage community',
         'inCommunity' => 'in community',
+        'deleted' => 'The community has been deleted.',
+        'deleteQuestion' => 'You\'re about to permanently delete this community. All members including yourself will lose access to it. All bars, economies, user wallets, products and related entities that are used within this community will be deleted as well. Are you sure you want to continue?',
+        'deleteBlocked' => 'You\'re about to permanently delete this community. You must delete the entities listed below first before you can continue with deleting this community.',
+        'exactCommunityNameVerify' => 'Exact name of community to delete (Verification)',
+        'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+
+        // TODO: temporary
+        'cannotDeleteDependentWallets' => 'This community cannot be deleted, as there are wallets within it that cannot be deleted.',
     ],
 
     /**
@@ -385,7 +393,7 @@ return [
         'barInfo' => 'Bar info',
         'viewBar' => 'View bar',
         'deleted' => 'The bar has been deleted.',
-        'deleteQuestion' => 'You\'re about to permanently delete this bar. All members will lose access to it, and won\'t be possible to link product transactions to it anymore. The products and user wallets will remain as part of the economy that was used in this bar. Are you sure you want to continue?',
+        'deleteQuestion' => 'You\'re about to permanently delete this bar. All members including yourself will lose access to it, and won\'t be possible to link product transactions to it anymore. The products and user wallets will remain as part of the economy that was used in this bar. Are you sure you want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
     ],

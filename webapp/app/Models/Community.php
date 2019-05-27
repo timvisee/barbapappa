@@ -143,4 +143,45 @@ class Community extends Model {
         // TODO: placeholder for when localized descriptions are available
         return $this->description;
     }
+
+    /**
+     * This method determines whether this community can be deleted.
+     * This does not involve any permission checking. Instead, it ensures there
+     * are no dependencies such as economies blocking the safe deletion of this
+     * community.
+     *
+     * Blocking entities:
+     * - economies
+     * - bars (not yet implemented)
+     *
+     * See `getDeleteBlockers` as well.
+     *
+     * @return boolean True if it can be deleted, false if not.
+     */
+    public function canDelete() {
+        // TODO: figure out a way to nicely format dependency errors because of
+        //       this on deletion pages.
+
+        // All economies must be deletable
+        return $this->economies->every(function($e) {
+            return $e->canDelete();
+        });
+    }
+
+    /**
+     * List all entities that currently block this community from being deleted.
+     *
+     * Blocking entities:
+     * - economies
+     * - bars (not yet implemented)
+     *
+     * See `canDelete()` as well.
+     *
+     * @return array List of entities that block community deletion.
+     */
+    public function getDeleteBlockers() {
+        return $this->economies->filter(function($e) {
+            return !$e->canDelete();
+        });
+    }
 }

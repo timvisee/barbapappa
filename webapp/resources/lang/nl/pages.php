@@ -131,6 +131,14 @@ return [
         'communityInfo' => 'Groep informatie',
         'manageCommunity' => 'Groep beheren',
         'inCommunity' => 'in groep',
+        'deleted' => 'De groep is verwijderd.',
+        'deleteQuestion' => 'Je staat op het punt deze groep permanent te verwijderen. Alle leden waaronder jezelf zullen toegang tot de groep verliezen. Alle bars, economieën, lid portemonnees, producten en gerelateerde entiteiten die worden gebruikt in deze groep zullen ook verwijderd worden. Weet je zeker dat je door wilt gaan?',
+        'deleteBlocked' => 'Je staat op het punt deze groep permanent te verwijderen. Verwijder eerst de entiteiten in de lijst hieronder voordat je verder kunt gaan met het verwijderen van deze groep.',
+        'exactCommunityNameVerify' => 'Exacte naam van groep om te verwijderen (Verificatie)',
+        'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
+
+        // TODO: temporary
+        'cannotDeleteDependentWallets' => 'Deze groep kan niet verwijderd worden, omdat er nog lid portemonnees zijn die niet zomaar verwijderd kunnen worden.',
     ],
 
     /**
@@ -385,7 +393,7 @@ return [
         'barInfo' => 'Bar informatie',
         'viewBar' => 'Bar bekijken',
         'deleted' => 'De bar is verwijderd.',
-        'deleteQuestion' => 'Je staat op het punt deze bar permanent te verwijderen. Alle leden zullen toegang tot de bar verliezen, en product transacties zullen niet meer gelinkt kunnen worden aan deze bar. De producten en portemonnees van leden blijven bestaan als onderdeel van de economie die gebruikt werd binnen deze bar. Weet je zeker dat je door wilt gaan?',
+        'deleteQuestion' => 'Je staat op het punt deze bar permanent te verwijderen. Alle leden waaronder jezelf zullen toegang tot de bar verliezen, en product transacties zullen niet meer gelinkt kunnen worden aan deze bar. De producten en portemonnees van leden blijven bestaan als onderdeel van de economie die gebruikt werd binnen deze bar. Weet je zeker dat je door wilt gaan?',
         'exactBarNameVerify' => 'Exacte naam van bar om te verwijderen (Verificatie)',
         'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
     ],

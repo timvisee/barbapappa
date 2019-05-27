@@ -9,12 +9,18 @@
     use \App\Http\Controllers\EconomyController;
 
     // Define menulinks
-    if(perms(CommunityController::permsAdminister()))
+    if(perms(CommunityController::permsAdminister())) {
         $menulinks[] = [
             'name' => __('pages.community.editCommunity'),
             'link' => route('community.edit', ['communityId' => $community->human_id]),
             'icon' => 'edit',
         ];
+        $menulinks[] = [
+            'name' => __('pages.community.deleteCommunity'),
+            'link' => route('community.delete', ['communityId' => $community->human_id]),
+            'icon' => 'delete',
+        ];
+    }
 
     if(perms(EconomyController::permsView()))
         $menulinks[] = [
@@ -59,20 +65,16 @@
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.community')</h5>
         @if(perms(CommunityController::permsAdminister()))
-            <a href="{{ route('community.edit', ['communityId' =>
-            $community->human_id]) }}" class="item">
+            <a href="{{ route('community.edit', ['communityId' => $community->human_id]) }}" class="item">
                 @lang('pages.community.editCommunity')
             </a>
         @else
             <div class="item disabled">@lang('pages.community.editCommunity')</div>
         @endif
         @if(perms(CommunityController::permsAdminister()))
-            {{-- TODO: add delete button to page links as well --}}
-            {{-- <a href="{{ route('community.delete', ['communityId' => --}}
-            {{-- $community->human_id]) }}" class="item"> --}}
-            {{--     @lang('pages.community.deleteCommunity') --}}
-            {{-- </a> --}}
-            <div class="item disabled">@lang('pages.community.deleteCommunity')</div>
+            <a href="{{ route('community.delete', ['communityId' => $community->human_id]) }}" class="item">
+                @lang('pages.community.deleteCommunity')
+            </a>
         @else
             <div class="item disabled">@lang('pages.community.deleteCommunity')</div>
         @endif

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Community;
+use App\Models\Economy;
 use App\Perms\AppRoles;
 use App\Perms\CommunityRoles;
 use Carbon\Carbon;
@@ -306,6 +307,61 @@ class CommunityController extends Controller {
         return redirect()
             ->route('community.show', ['communityId' => $communityId])
             ->with('success', __('pages.community.leftThisCommunity'));
+    }
+
+    /**
+     * Page to delete the community.
+     *
+     * @return Response
+     */
+    public function delete($communityId) {
+        // Get the community and authenticated user
+        $community = \Request::get('community');
+        $user = barauth()->getUser();
+
+        // List all blockers
+        $blockers = $community->getDeleteBlockers();
+        if($blockers->contains(function($b) { return !($b instanceof Economy); }))
+            throw new \Exception("Delete blocking entities contains unexpected types");
+
+        return view('community.delete')
+            ->with('blockingEconomies', $blockers);
+    }
+
+    /**
+     * Delete the community.
+     *
+     * @return Response
+     */
+    public function doDelete(Request $request, $communityId) {
+        // Get the community and authenticated user
+        $community = \Request::get('community');
+        $user = barauth()->getUser();
+
+        // Validate
+        $this->validate($request, [
+            'confirm_name' => 'same:confirm_name_base',
+            'confirm_delete' => 'accepted',
+        ], [
+            'confirm_name.same' => __('pages.community.incorrectNameShouldBe', ['name' => $community->name]),
+        ]);
+
+        // The community must be deletable
+        if(!$community->canDelete())
+            return redirect()
+                ->route('community.manage', ['communityId' => $community->human_id])
+                ->with('error', __('pages.community.cannotDeleteDependentWallets'));
+
+        // Manually delete all user wallets in this economy
+        $community->wallets()->delete();
+
+        // Delete the community
+        $community->delete();
+
+        // Redirect to the index page after deleting
+        return redirect()
+            ->route('dashboard')
+            ->with('success', __('pages.community.deleted'));
     }
 
     /**
