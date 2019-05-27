@@ -396,6 +396,9 @@ return [
         'deleteQuestion' => 'You\'re about to permanently delete this bar. All members including yourself will lose access to it, and won\'t be possible to link product transactions to it anymore. The products and user wallets will remain as part of the economy that was used in this bar. Are you sure you want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+        'generatePoster' => 'Create bar poster',
+        'generatePosterDescription' => 'Create a poster for this bar hang on a wall. Visitors will then be able to easily use :app and join this bar by scanning a QR code with their mobile phone.',
+        'showCodeOnPoster' => 'Show code to join this bar on the poster',
         'poster' => [
             'thisBarUses' => 'This bar uses',
             'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',

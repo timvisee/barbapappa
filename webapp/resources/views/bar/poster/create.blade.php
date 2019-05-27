@@ -1,25 +1,13 @@
 @extends('layouts.app')
 
-@section('title', __('pages.editProfile.name'))
+{{-- TODO: translate --}}
+@section('title', __('pages.bar.generatePoster'))
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
+    <p>@lang('pages.bar.generatePosterDescription', ['app' => config('app.name')])</p>
 
-    {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
-
-        <div class="two fields">
-            <div class="field {{ ErrorRenderer::hasError('first_name') ? 'error' : '' }}">
-                {{ Form::label('first_name', __('account.firstName') . ':') }}
-                {{ Form::text('first_name', $user->first_name, ['placeholder' => __('account.firstNamePlaceholder')]) }}
-                {{ ErrorRenderer::inline('first_name') }}
-            </div>
-
-            <div class="field {{ ErrorRenderer::hasError('last_name') ? 'error' : '' }}">
-                {{ Form::label('last_name', __('account.lastName') . ':') }}
-                {{ Form::text('last_name', $user->last_name, ['placeholder' => __('account.lastNamePlaceholder')]) }}
-                {{ ErrorRenderer::inline('last_name') }}
-            </div>
-        </div>
+    {!! Form::open(['action' => ['BarController@doGeneratePoster', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form', 'target' => '_blank']) !!}
 
         @php
             // Create a locales map for the selection box
@@ -49,10 +37,25 @@
             {{ ErrorRenderer::inline('language') }}
         </div>
 
-        <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
-        <a href="{{ route('account', ['userId' => $user->id]) }}"
+        <div class="inline field {{ ErrorRenderer::hasError('show_code') ?  'error' : '' }} {{ empty($bar->password) ? 'disabled' : '' }}">
+            <div class="ui toggle checkbox">
+                <input type="checkbox"
+                        name="show_code"
+                        tabindex="0"
+                        class="hidden"
+                        {{ !empty($bar->password) ? 'checked="checked"' : '' }}>
+                {{ Form::label('show_code', __('pages.bar.showCodeOnPoster')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('show_code') }}
+        </div>
+
+        <br />
+
+        <button class="ui button primary" type="submit">@lang('misc.create')</button>
+        <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
-            @lang('general.cancel')
+            @lang('pages.bar.backToBar')
         </a>
 
     {!! Form::close() !!}

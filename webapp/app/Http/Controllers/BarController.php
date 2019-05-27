@@ -219,8 +219,8 @@ class BarController extends Controller {
         // Get the bar and session user
         $bar = \Request::get('bar');
 
-        // TODO: return proper view here
-        return $this->doGeneratePoster($barId);
+        // Show the poster creation page
+        return view('bar.poster.create');
     }
 
     /**
@@ -228,19 +228,24 @@ class BarController extends Controller {
      *
      * @return Response
      */
-    public function doGeneratePoster($barId) {
+    public function doGeneratePoster(Request $request, $barId) {
         // Get the bar and session user
         $bar = \Request::get('bar');
+        $withCode = !empty($bar->password) && is_checked($request->input('show_code'));
 
-        // TODO: check form parameters, show password?
+        // Set the poster locale
+        \App::setLocale($request->input('language'));
 
         // Configure some parameters
+        $code = $withCode ? $bar->password : null;
         $barUrl = preg_replace(
             '/^https?:\/\//', '',
             route('bar.show', ['barId' => $bar->human_id])
         );
-        $qrUrl = route('bar.join', ['barId' => $bar->human_id, 'code' => $bar->password]);
-        $code = $bar->password;
+        $qrData = ['barId' => $bar->human_id];
+        if($withCode)
+            $qrData['code'] = $code;
+        $qrUrl = route('bar.join', $qrData);
 
         // Render the PDF and respond with it as download
         return \PDF::loadView('bar.poster.pdf', [

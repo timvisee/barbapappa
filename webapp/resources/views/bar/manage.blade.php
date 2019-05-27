@@ -50,6 +50,13 @@
             'icon' => 'shopping-bag',
         ];
 
+    if(perms(BarController::permsManage()))
+        $menulinks[] = [
+            'name' => __('pages.bar.generatePoster'),
+            'link' => route('bar.poster.generate', ['barId' => $bar->human_id]),
+            'icon' => 'qrcode',
+        ];
+
     if(perms(CommunityController::permsManage()))
         $menulinks[] = [
             'name' => __('pages.community.manageCommunity'),
@@ -79,8 +86,7 @@
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.bar')</h5>
         @if(perms(BarController::permsAdminister()))
-            <a href="{{ route('bar.edit', ['barId' =>
-            $bar->human_id]) }}" class="item">
+            <a href="{{ route('bar.edit', ['barId' => $bar->human_id]) }}" class="item">
                 @lang('pages.bar.editBar')
             </a>
         @else
@@ -97,7 +103,6 @@
 
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.assets')</h5>
-        {{-- TODO: products here --}}
         @if(perms(BarMemberController::permsView()))
             <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}" class="item">
                 @lang('misc.members')
@@ -115,8 +120,8 @@
             </a>
         @else
             <div class="item disabled">
-                @lang('pages.products.title')
-                <span class="subtle">@lang('pages.economies.inEconomy')</span>
+                @lang('pages.community.economy')
+                <span class="subtle">@lang('pages.community.inCommunity')</span>
             </div>
         @endif
         @if(perms(ProductController::permsView()))
@@ -132,6 +137,13 @@
                 @lang('pages.products.title')
                 <span class="subtle">@lang('pages.economies.inEconomy')</span>
             </div>
+        @endif
+        @if(perms(BarController::permsManage()))
+            <a href="{{ route('bar.poster.generate', ['barId' => $bar->human_id]) }}" class="item">
+                @lang('pages.bar.generatePoster')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.bar.editBar')</div>
         @endif
     </div>
 
