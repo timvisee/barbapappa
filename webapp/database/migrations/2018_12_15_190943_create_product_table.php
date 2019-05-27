@@ -27,7 +27,7 @@ class CreateProductTable extends Migration {
             $table->foreign('economy_id')
                 ->references('id')
                 ->on('economies')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

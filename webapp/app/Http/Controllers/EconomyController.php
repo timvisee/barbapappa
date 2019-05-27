@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
+use App\Models\Wallet;
 use App\Perms\Builder\Config as PermsConfig;
 
 class EconomyController extends Controller {
@@ -122,8 +123,14 @@ class EconomyController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
+        // List all blockers
+        $blockers = $economy->getDeleteBlockers();
+        if($blockers->contains(function($b) { return !($b instanceof Wallet); }))
+            throw new \Exception("Delete blocking entities contains unexpected types");
+
         return view('community.economy.delete')
-            ->with('economy', $economy);
+            ->with('economy', $economy)
+            ->with('blockingWallets', $blockers);
     }
 
     /**
@@ -136,7 +143,11 @@ class EconomyController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
-        // TODO: ensure deletion is allowed (and no users are using it)
+        // The economy must be deletable
+        if(!$economy->canDelete())
+            return redirect()
+                ->route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id])
+                ->with('error', __('pages.economies.cannotDeleteDependents'));
 
         // Delete the economy
         $economy->delete();

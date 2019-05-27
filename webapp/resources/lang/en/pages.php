@@ -136,9 +136,7 @@ return [
         'deleteBlocked' => 'You\'re about to permanently delete this community. You must delete the entities listed below first before you can continue with deleting this community.',
         'exactCommunityNameVerify' => 'Exact name of community to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
-
-        // TODO: temporary
-        'cannotDeleteDependentWallets' => 'This community cannot be deleted, as there are wallets within it that cannot be deleted.',
+        'cannotDeleteDependents' => 'This community cannot be deleted, as entities are depending on it which cannot just be deleted.',
     ],
 
     /**
@@ -174,6 +172,8 @@ return [
         'createEconomy' => 'Create economy',
         'economyCreated' => 'The economy has been created. Please add and configure a currency now.',
         'deleteQuestion' => 'You\'re about to delete this economy from this community. Are you sure you want to continue?',
+        'deleteBlocked' => 'You\'re about to permanently delete this economy. You must delete the entities listed below first before you can continue with deleting this economy.',
+        'cannotDeleteDependents' => 'This economy cannot be deleted, as entities are depending on it which cannot just be deleted.',
         'economyDeleted' => 'The economy has been removed.',
         'economyUpdated' => 'Economy changes saved.',
         'namePlaceholder' => 'Main economy',

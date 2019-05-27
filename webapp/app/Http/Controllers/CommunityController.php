@@ -350,7 +350,7 @@ class CommunityController extends Controller {
         if(!$community->canDelete())
             return redirect()
                 ->route('community.manage', ['communityId' => $community->human_id])
-                ->with('error', __('pages.community.cannotDeleteDependentWallets'));
+                ->with('error', __('pages.community.cannotDeleteDependents'));
 
         // Manually delete all user wallets in this economy
         $community->wallets()->delete();
