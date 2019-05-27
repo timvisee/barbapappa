@@ -140,6 +140,7 @@ return [
         'generatePoster' => 'Creëer groepsposter',
         'generatePosterDescription' => 'Creëer een poster voor deze groep om aan de muur te hangen. Bezoekers kunnen dan gemakklijk gebruik kunnen maken van :app en kunnen lid worden van deze groep door een QR code te scannen met hun mobiele telefoon.',
         'showCodeOnPoster' => 'Toon code om lid te worden op de poster',
+        'posterBarPreferred' => 'Het is vaak de voorkeur om een poster voor een bar te maken in plaats van voor een groep, omdat gebruikers die lid worden van een groep geen toegang hebben tot het kopen van producten zonder eerst ook lid te worden van een bar. Bezoek de beheers hub van een specifieke bar om daar een poster voor te creëren.',
         'poster' => [
             'thisCommunityUses' => 'Deze groep gebruikt',
             'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties',

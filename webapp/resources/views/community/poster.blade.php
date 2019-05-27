@@ -15,6 +15,13 @@
     </h2>
     <p>@lang('pages.community.generatePosterDescription', ['app' => config('app.name')])</p>
 
+    <div class="ui info message">
+        <span class="halflings halflings-info-sign icon"></span>
+        @lang('pages.community.posterBarPreferred')
+    </div>
+
+    <div class="ui divider hidden"></div>
+
     {!! Form::open(['action' => ['CommunityController@doGeneratePoster', 'communityId' => $community->human_id], 'method' => 'POST', 'class' => 'ui form', 'target' => '_blank']) !!}
 
         @php
@@ -58,7 +65,7 @@
             {{ ErrorRenderer::inline('show_code') }}
         </div>
 
-        <br />
+        <div class="ui divider hidden"></div>
 
         <button class="ui button primary" type="submit">@lang('misc.download')</button>
         <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}"

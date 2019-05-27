@@ -140,6 +140,7 @@ return [
         'generatePoster' => 'Create community poster',
         'generatePosterDescription' => 'Create a poster for this community to hang on a wall. Visitors will then be able to easily use :app and join this community by scanning a QR code with their mobile phone.',
         'showCodeOnPoster' => 'Show code to join this community on the poster',
+        'posterBarPreferred' => 'It is usually preferred to generate a poster for a bar instead of a community, as users joining a community doesn\'t give them acces to purchasing products without joining a bar as well. Visit the management hub of a specific bar to create a poster for it.',
         'poster' => [
             'thisCommunityUses' => 'This community uses',
             'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',

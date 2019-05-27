@@ -140,6 +140,7 @@ return [
         'generatePoster' => 'Create crew poster',
         'generatePosterDescription' => 'Create a poster for dis crew to hang on a wall. Fellow mateies will then be able to easily use :app and join dis crew by scanning a QR code with their handheld phoning device.',
         'showCodeOnPoster' => 'Show code to join dis crew on th\' poster',
+        'posterBarPreferred' => 'It be usually preferred to generate a poster for a bar instead of a crew, as mateies joining a crew doesn\'t give them acces to purchasing products without joining a bar as well. Visit the management hub of a specific bar to create a poster for it.',
         'poster' => [
             'thisCommunityUses' => 'Dis crew uses',
             'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',

@@ -58,7 +58,7 @@
             {{ ErrorRenderer::inline('show_code') }}
         </div>
 
-        <br />
+        <div class="ui divider hidden"></div>
 
         <button class="ui button primary" type="submit">@lang('misc.download')</button>
         <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
