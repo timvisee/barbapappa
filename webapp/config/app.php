@@ -299,7 +299,7 @@ return [
         /**
          * Laravel currency.
          */
-        'Currency' => \torann\Currency\Facades\Currency::class,
+        'Currency' => torann\Currency\Facades\Currency::class,
 
         /**
          * Laravel DebugBar.

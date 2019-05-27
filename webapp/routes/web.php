@@ -367,6 +367,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         // TODO: link to proper action
         // TODO: assing proper permission here, allow management role
         Route::get('/manage', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
+        // TODO: move into manage, check perms
+        Route::get('/manage/generate-poster', 'BarController@generatePoster')->name('bar.generatePoster');
+        Route::post('/manage/generate-poster', 'BarController@doGeneratePoster')->name('bar.doGeneratePoster');
 
         // Edit, require manage perms
         // TODO: require manager or admin?

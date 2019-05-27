@@ -211,6 +211,47 @@ class BarController extends Controller {
     }
 
     /**
+     * Page to generate a poster PDF for this bar, allowing some configuration.
+     *
+     * @return Response
+     */
+    public function generatePoster($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+
+        // TODO: return proper view here
+        return $this->doGeneratePoster($barId);
+    }
+
+    /**
+     * Generate the poster PDF, respond with it as a download.
+     *
+     * @return Response
+     */
+    public function doGeneratePoster($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+
+        // TODO: check form parameters, show password?
+
+        // Configure some parameters
+        $barUrl = preg_replace(
+            '/^https?:\/\//', '',
+            route('bar.show', ['barId' => $bar->human_id])
+        );
+        $qrUrl = route('bar.join', ['barId' => $bar->human_id, 'code' => $bar->password]);
+        $code = $bar->password;
+
+        // Render the PDF and respond with it as download
+        $pdf = \PDF::loadView('bar.poster', [
+            'bar_url' => $barUrl,
+            'qr_url' => $qrUrl,
+            'code' => $code,
+        ]);
+        return $pdf->download('bar-poster-' . $bar->human_id . '.pdf');
+    }
+
+    /**
      * Bar edit page.
      *
      * @return Response
