@@ -397,7 +397,7 @@ return [
         'exactBarNameVerify' => 'Exact name of bar to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
         'generatePoster' => 'Create bar poster',
-        'generatePosterDescription' => 'Create a poster for this bar hang on a wall. Visitors will then be able to easily use :app and join this bar by scanning a QR code with their mobile phone.',
+        'generatePosterDescription' => 'Create a poster for this bar to hang on a wall. Visitors will then be able to easily use :app and join this bar by scanning a QR code with their mobile phone.',
         'showCodeOnPoster' => 'Show code to join this bar on the poster',
         'poster' => [
             'thisBarUses' => 'This bar uses',

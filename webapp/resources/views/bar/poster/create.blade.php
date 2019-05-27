@@ -1,10 +1,18 @@
 @extends('layouts.app')
 
-{{-- TODO: translate --}}
 @section('title', __('pages.bar.generatePoster'))
 
 @section('content')
-    <h2 class="ui header">@yield('title')</h2>
+    <h2 class="ui header">
+        @yield('title')
+
+        <div class="sub header">
+            @lang('misc.for')
+            <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}">
+                {{ $bar->name }}
+            </a>
+        </div>
+    </h2>
     <p>@lang('pages.bar.generatePosterDescription', ['app' => config('app.name')])</p>
 
     {!! Form::open(['action' => ['BarController@doGeneratePoster', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form', 'target' => '_blank']) !!}
@@ -52,7 +60,7 @@
 
         <br />
 
-        <button class="ui button primary" type="submit">@lang('misc.create')</button>
+        <button class="ui button primary" type="submit">@lang('misc.download')</button>
         <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')

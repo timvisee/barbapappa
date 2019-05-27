@@ -397,7 +397,7 @@ return [
         'exactBarNameVerify' => 'Exact name of bar to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
         'generatePoster' => 'Create bar poster',
-        'generatePosterDescription' => 'Create a poster for dis bar hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a QR code with their handheld phoning device.',
+        'generatePosterDescription' => 'Create a poster for dis bar to hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a QR code with their handheld phoning device.',
         'showCodeOnPoster' => 'Show code to join dis bar on th\' poster',
         'poster' => [
             'thisBarUses' => 'Dis bar uses',
