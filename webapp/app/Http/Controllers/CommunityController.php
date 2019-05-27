@@ -162,7 +162,7 @@ class CommunityController extends Controller {
         $community = \Request::get('community');
 
         // Show the poster creation page
-        return view('community.poster.create');
+        return view('community.poster');
     }
 
     /**
@@ -180,7 +180,7 @@ class CommunityController extends Controller {
 
         // Configure some parameters
         $code = $withCode ? $community->password : null;
-        $communityUrl = preg_replace(
+        $plainUrl = preg_replace(
             '/^https?:\/\//', '',
             route('community.show', ['communityId' => $community->human_id])
         );
@@ -190,8 +190,9 @@ class CommunityController extends Controller {
         $qrUrl = route('community.join', $qrData);
 
         // Render the PDF and respond with it as download
-        return \PDF::loadView('community.poster.pdf', [
-                'community_url' => $communityUrl,
+        return \PDF::loadView('poster.pdf', [
+                'type' => 'community',
+                'plain_url' => $plainUrl,
                 'qr_url' => $qrUrl,
                 'code' => $code,
             ])

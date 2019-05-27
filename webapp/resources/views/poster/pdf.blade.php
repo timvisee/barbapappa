@@ -1,4 +1,4 @@
-{{-- View for a community poster to render as PDF --}}
+{{-- View for a community/bar poster to render as PDF --}}
 
 <!DOCTYPE html>
 <html>
@@ -52,13 +52,13 @@
     </style>
 </head>
 <body>
-    <h1>@lang('pages.community.poster.thisCommunityUses')</h1>
+    <h1>@lang('pages.' . $type . '.poster.this' . ucfirst($type) . 'Uses')</h1>
 
     <img class="logo" src="{{ asset('img/logo/logo_nowrap_600dpi.png') }}" />
 
     <p class="description">
-        @lang('pages.community.poster.toDigitallyManage')<br>
-        @lang('pages.community.poster.scanQr')
+        @lang('pages.' . $type . '.poster.toDigitallyManage')<br>
+        @lang('pages.' . $type . '.poster.scanQr')
     </p>
 
     <img src="data:image/png;base64,{{ base64_encode(
@@ -72,8 +72,8 @@
     <div class="footer">
         <table>
             <tr>
-                <td class="left">@lang('pages.community.poster.orVisit'):</td>
-                <td class="right">{{ $community_url }}</td>
+                <td class="left">@lang('pages.' . $type . '.poster.orVisit'):</td>
+                <td class="right">{{ $plain_url }}</td>
             </tr>
             @if(!empty($code))
                 <tr>

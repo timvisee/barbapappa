@@ -220,7 +220,7 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
 
         // Show the poster creation page
-        return view('bar.poster.create');
+        return view('bar.poster');
     }
 
     /**
@@ -238,7 +238,7 @@ class BarController extends Controller {
 
         // Configure some parameters
         $code = $withCode ? $bar->password : null;
-        $barUrl = preg_replace(
+        $plainUrl = preg_replace(
             '/^https?:\/\//', '',
             route('bar.show', ['barId' => $bar->human_id])
         );
@@ -248,8 +248,9 @@ class BarController extends Controller {
         $qrUrl = route('bar.join', $qrData);
 
         // Render the PDF and respond with it as download
-        return \PDF::loadView('bar.poster.pdf', [
-                'bar_url' => $barUrl,
+        return \PDF::loadView('poster.pdf', [
+                'type' => 'bar',
+                'plain_url' => $plainUrl,
                 'qr_url' => $qrUrl,
                 'code' => $code,
             ])
