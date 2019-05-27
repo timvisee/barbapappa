@@ -253,7 +253,7 @@ class BarController extends Controller {
                 'qr_url' => $qrUrl,
                 'code' => $code,
             ])
-            ->download('bar-poster-' . $bar->human_id . '.pdf');
+            ->download(strtolower(__('misc.bar')) . '-poster-' . $bar->human_id . '.pdf');
     }
 
     /**

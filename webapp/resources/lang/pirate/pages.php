@@ -137,6 +137,15 @@ return [
         'exactCommunityNameVerify' => 'Exact name of crew to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
         'cannotDeleteDependents' => 'Dis community cannot be sunk, as entities be depending on it which nay just be deleted.',
+        'generatePoster' => 'Create crew poster',
+        'generatePosterDescription' => 'Create a poster for dis crew to hang on a wall. Fellow mateies will then be able to easily use :app and join dis crew by scanning a QR code with their handheld phoning device.',
+        'showCodeOnPoster' => 'Show code to join dis crew on th\' poster',
+        'poster' => [
+            'thisCommunityUses' => 'Dis crew uses',
+            'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',
+            'scanQr' => 'scan the QR code below to join and make a purchase',
+            'orVisit' => 'Or see',
+        ],
     ],
 
     /**

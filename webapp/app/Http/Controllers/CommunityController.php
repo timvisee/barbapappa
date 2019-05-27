@@ -153,6 +153,52 @@ class CommunityController extends Controller {
     }
 
     /**
+     * Page to generate a poster PDF for this community, allowing some configuration.
+     *
+     * @return Response
+     */
+    public function generatePoster($communityId) {
+        // Get the community and session user
+        $community = \Request::get('community');
+
+        // Show the poster creation page
+        return view('community.poster.create');
+    }
+
+    /**
+     * Generate the poster PDF, respond with it as a download.
+     *
+     * @return Response
+     */
+    public function doGeneratePoster(Request $request, $communityId) {
+        // Get the community and session user
+        $community = \Request::get('community');
+        $withCode = !empty($community->password) && is_checked($request->input('show_code'));
+
+        // Set the poster locale
+        \App::setLocale($request->input('language'));
+
+        // Configure some parameters
+        $code = $withCode ? $community->password : null;
+        $communityUrl = preg_replace(
+            '/^https?:\/\//', '',
+            route('community.show', ['communityId' => $community->human_id])
+        );
+        $qrData = ['communityId' => $community->human_id];
+        if($withCode)
+            $qrData['code'] = $code;
+        $qrUrl = route('community.join', $qrData);
+
+        // Render the PDF and respond with it as download
+        return \PDF::loadView('community.poster.pdf', [
+                'community_url' => $communityUrl,
+                'qr_url' => $qrUrl,
+                'code' => $code,
+            ])
+            ->download(strtolower(__('misc.community')) . '-poster-' . $community->human_id . '.pdf');
+    }
+
+    /**
      * Community edit page.
      *
      * @return Response

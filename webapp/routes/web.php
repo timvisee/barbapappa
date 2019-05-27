@@ -120,9 +120,15 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             Route::delete('/', 'CommunityController@doDelete')->name('community.doDelete');
         });
 
-        // Management page
-        // TODO: assing proper permission here, allow management role
-        Route::get('/manage', 'CommunityController@manage')->middleware(CommunityController::permsManage()->middleware())->name('community.manage');
+        // Management pages
+        Route::prefix('/manage')->middleware(CommunityController::permsManage()->middleware())->group(function() {
+            // Index
+            Route::get('/', 'CommunityController@manage')->middleware(CommunityController::permsManage()->middleware())->name('community.manage');
+
+            // Generate poster
+            Route::get('/generate-poster', 'CommunityController@generatePoster')->name('community.poster.generate');
+            Route::post('/generate-poster', 'CommunityController@doGeneratePoster')->name('community.poster.doGenerate');
+        });
 
         // Community members, require view perms
         Route::prefix('/members')->middleware(CommunityMemberController::permsView()->middleware())->group(function() {

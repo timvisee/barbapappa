@@ -137,6 +137,15 @@ return [
         'exactCommunityNameVerify' => 'Exact name of community to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
         'cannotDeleteDependents' => 'This community cannot be deleted, as entities are depending on it which cannot just be deleted.',
+        'generatePoster' => 'Create community poster',
+        'generatePosterDescription' => 'Create a poster for this community to hang on a wall. Visitors will then be able to easily use :app and join this community by scanning a QR code with their mobile phone.',
+        'showCodeOnPoster' => 'Show code to join this community on the poster',
+        'poster' => [
+            'thisCommunityUses' => 'This community uses',
+            'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',
+            'scanQr' => 'scan the QR code with your phone to join and make a purchase',
+            'orVisit' => 'Or visit',
+        ],
     ],
 
     /**

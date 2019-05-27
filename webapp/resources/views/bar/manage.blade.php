@@ -143,7 +143,7 @@
                 @lang('pages.bar.generatePoster')
             </a>
         @else
-            <div class="item disabled">@lang('pages.bar.editBar')</div>
+            <div class="item disabled">@lang('pages.bar.generatePoster')</div>
         @endif
     </div>
 
