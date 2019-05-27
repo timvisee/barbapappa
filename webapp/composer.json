@@ -13,6 +13,7 @@
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.8",
         "sentry/sentry-laravel": "^1.0.2",
+        "simplesoftwareio/simple-qrcode": "^2.0",
         "staudenmeir/eloquent-has-many-deep": "^1.8",
         "torann/currency": "1.0.14"
     },
