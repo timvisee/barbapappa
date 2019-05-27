@@ -10,6 +10,7 @@ use App\Perms\CommunityRoles;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 // TODO: using barauth()->getSessionUser() in some places, shouldn't this be getUser() ?
@@ -398,9 +399,6 @@ class CommunityController extends Controller {
             return redirect()
                 ->route('community.manage', ['communityId' => $community->human_id])
                 ->with('error', __('pages.community.cannotDeleteDependents'));
-
-        // Manually delete all user wallets in this economy
-        $community->wallets()->delete();
 
         // Delete the community
         $community->delete();
