@@ -133,12 +133,10 @@ return [
         'inCommunity' => 'in crew',
         'deleted' => 'Th\' crew be sunk.',
         'deleteQuestion' => 'Yer \'bout to permanently sink dis crew. All mateies including yerself will lose access to it. All bars, booties, matey wallets, products and related entities that be used within dis crew will be deleted as well. Ye be sure ye want to continue?',
-        'deleteBlocked' => 'Yer \'bout to permanently delete this crew. ye must delete th\' entities listed below first before ye be continue with deleting dis crew.',
+        'deleteBlocked' => 'Yer \'bout to permanently sink this crew. ye must sink th\' entities listed below first before ye be continue with deleting dis crew.',
         'exactCommunityNameVerify' => 'Exact name of crew to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
-
-        // TODO: temporary
-        'cannotDeleteDependentWallets' => 'Dis community cannot be sunk, as there be wallets within it that cannot be sunk.',
+        'cannotDeleteDependents' => 'Dis community cannot be sunk, as entities be depending on it which nay just be deleted.',
     ],
 
     /**
@@ -174,6 +172,8 @@ return [
         'createEconomy' => 'Create booty',
         'economyCreated' => 'Th\' booty be created. Please add \'n configure a currency now.',
         'deleteQuestion' => 'Yer \'bout to sink dis booty from our crew. Ye be sure ye want to continue?',
+        'deleteBlocked' => 'Yer \'bout to permanently sink this booty. ye must delete th\' entities listed below first before ye be continue with deleting dis booty.',
+        'cannotDeleteDependents' => 'Dis booty cannot be sunk, as entities be depending on it which nay just be deleted.',
         'economyDeleted' => 'Th\' booty be sunk.',
         'economyUpdated' => 'Booty changes saved.',
         'namePlaceholder' => 'Our booty',

@@ -136,9 +136,7 @@ return [
         'deleteBlocked' => 'Je staat op het punt deze groep permanent te verwijderen. Verwijder eerst de entiteiten in de lijst hieronder voordat je verder kunt gaan met het verwijderen van deze groep.',
         'exactCommunityNameVerify' => 'Exacte naam van groep om te verwijderen (Verificatie)',
         'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
-
-        // TODO: temporary
-        'cannotDeleteDependentWallets' => 'Deze groep kan niet verwijderd worden, omdat er nog lid portemonnees zijn die niet zomaar verwijderd kunnen worden.',
+        'cannotDeleteDependents' => 'Deze groep kan niet verwijderd worden, omdat er nog entiteiten zijn die afhankelijk zijn en niet zomaar verwijderd kunnen worden.',
     ],
 
     /**
@@ -174,6 +172,8 @@ return [
         'createEconomy' => 'Economie aanmaken',
         'economyCreated' => 'De economie is aangemaakt. Voeg nu een valuta toe.',
         'deleteQuestion' => 'Je staat op het punt deze economie te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
+        'deleteBlocked' => 'Je staat op het punt deze economie permanent te verwijderen. Verwijder eerst de entiteiten in de lijst hieronder voordat je verder kunt gaan met het verwijderen van deze economie.',
+        'cannotDeleteDependents' => 'Deze economie kan niet verwijderd worden, omdat er nog entiteiten zijn die afhankelijk zijn en niet zomaar verwijderd kunnen worden.',
         'economyDeleted' => 'De economie is verwijderd.',
         'economyUpdated' => 'Economie aanpassingen opgeslagen.',
         'namePlaceholder' => 'Hoofdeconomie',

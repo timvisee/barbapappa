@@ -25,7 +25,6 @@
             @lang('pages.community.backToCommunity')
         </a>
     @else
-
         <p>@lang('pages.community.deleteQuestion')</p>
 
         {!! Form::open(['action' => ['CommunityController@doDelete', 'communityId' => $community->human_id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
