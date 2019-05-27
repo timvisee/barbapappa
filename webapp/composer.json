@@ -8,6 +8,7 @@
         "php": ">=7.2",
         "alfa6661/laravel-has-many-sync": "^1.1",
         "barryvdh/laravel-debugbar": "^3.2.3",
+        "barryvdh/laravel-dompdf": "^0.8.4",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.8",
