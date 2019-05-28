@@ -15,15 +15,15 @@ class CreatePaymentTable extends Migration {
         Schema::create('payments', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('state')->unsigned()->nullable(false);
-            $table->integer('payment_service_id')->unsigned()->nullable(true);
+            $table->integer('service_id')->unsigned()->nullable(true);
             $table->string('reference')->nullable(true);
             $table->decimal('money')->nullable(false);
             $table->integer('currency_id')->unsigned()->nullable(false);
             $table->timestamps();
 
-            $table->foreign('payment_service_id')
+            $table->foreign('service_id')
                 ->references('id')
-                ->on('payment_services')
+                ->on('services')
                 ->onDelete('set null');
             $table->foreign('currency_id')
                 ->references('id')
