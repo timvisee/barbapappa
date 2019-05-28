@@ -43,7 +43,7 @@ class MutationWallet extends Model {
      * @return The main mutation.
      */
     public function mutation() {
-        return $this->belongsTo('App\Models\Mutation');
+        return $this->belongsTo(Mutation::class);
     }
 
     /**
@@ -52,7 +52,7 @@ class MutationWallet extends Model {
      * @return The affected wallet.
      */
     public function wallet() {
-        return $this->belongsTo('App\Models\Wallet');
+        return $this->belongsTo(Wallet::class);
     }
 
     /**

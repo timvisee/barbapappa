@@ -71,7 +71,7 @@ class Mutation extends Model {
      * @return The transaction.
      */
     public function transaction() {
-        return $this->belongsTo('App\Models\Transaction');
+        return $this->belongsTo(Transaction::class);
     }
 
     /**
@@ -80,7 +80,7 @@ class Mutation extends Model {
      * @return The economy.
      */
     public function economy() {
-        return $this->belongsTo('App\Models\Economy');
+        return $this->belongsTo(Economy::class);
     }
 
     /**
@@ -92,7 +92,7 @@ class Mutation extends Model {
      * @return The currency.
      */
     public function currency() {
-        return $this->belongsTo('App\Models\Currency');
+        return $this->belongsTo(Currency::class);
     }
 
     /**
@@ -128,7 +128,7 @@ class Mutation extends Model {
      * @return Relation to the user that created this transaction.
      */
     public function owner() {
-        return $this->belongsTo('App\Models\User', 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     /**

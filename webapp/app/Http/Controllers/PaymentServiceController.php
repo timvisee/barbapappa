@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Product;
-use App\Models\PaymentService;
+use BarPay\Models\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;

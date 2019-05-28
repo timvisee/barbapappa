@@ -3,7 +3,7 @@
 @section('title', __('pages.paymentService.newService'))
 
 @php
-    use \App\Models\PaymentService;
+    use BarPay\Models\PaymentService;
 @endphp
 
 @section('content')

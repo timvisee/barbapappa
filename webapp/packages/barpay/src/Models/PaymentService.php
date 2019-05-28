@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace BarPay\Models;
 
 use App\Scopes\EnabledScope;
 use Carbon\Carbon;

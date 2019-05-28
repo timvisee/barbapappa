@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
+use BarPay\Models\PaymentService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;

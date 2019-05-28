@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace BarPay\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -45,6 +45,7 @@ class Payment extends Model {
      *
      * @return The currency.
      */
+    // TODO: is this correct?
     public function currency() {
         return $this->belongsTo(Currency::class);
     }

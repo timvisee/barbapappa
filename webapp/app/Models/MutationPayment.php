@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
+use App\Mail\Password\Reset;
+use App\Managers\PasswordResetManager;
+use App\Scopes\EnabledScope;
+use App\Utils\EmailRecipient;
+use BarPay\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-
-use App\Mail\Password\Reset;
-use App\Managers\PasswordResetManager;
-use App\Scopes\EnabledScope;
-use App\Utils\EmailRecipient;
 
 // TODO: update parent mutation change time, if this model changes
 
@@ -36,7 +36,7 @@ class MutationPayment extends Model {
      * @return The main mutation.
      */
     public function mutation() {
-        return $this->belongsTo('App\Models\Mutation');
+        return $this->belongsTo(Mutation::class);
     }
 
     /**
@@ -45,6 +45,6 @@ class MutationPayment extends Model {
      * @return The affected payment.
      */
     public function payment() {
-        return $this->belongsTo('App\Models\Payment');
+        return $this->belongsTo(Payment::class);
     }
 }

@@ -47,7 +47,7 @@ class MutationProduct extends Model {
      * @return The main mutation.
      */
     public function mutation() {
-        return $this->belongsTo('App\Models\Mutation');
+        return $this->belongsTo(Mutation::class);
     }
 
     /**
@@ -56,7 +56,7 @@ class MutationProduct extends Model {
      * @return The affected product.
      */
     public function product() {
-        return $this->belongsTo('App\Models\Product');
+        return $this->belongsTo(Product::class);
     }
 
     /**
@@ -65,7 +65,7 @@ class MutationProduct extends Model {
      * @return The bar the product was bought at.
      */
     public function bar() {
-        return $this->belongsTo('App\Models\Bar');
+        return $this->belongsTo(Bar::class);
     }
 
     /**
