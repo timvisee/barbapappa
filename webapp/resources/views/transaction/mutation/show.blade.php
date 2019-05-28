@@ -114,7 +114,7 @@
                     $trashed = $product == null || $product->trashed();
                 @endphp
 
-                <a class="item disabled"
+                <a class="item"
                         href="{{ !$trashed ? route('bar.product.show', [
                             'barId' => $mutation->mutationData->bar->human_id,
                             'productId' => $mutation->mutationData->product_id,

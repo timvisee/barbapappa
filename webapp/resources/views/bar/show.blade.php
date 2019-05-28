@@ -45,6 +45,7 @@
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
+    {{-- Quick buy list --}}
     <div class="ui vertical menu fluid">
         {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
             <div class="item">

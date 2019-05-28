@@ -92,7 +92,7 @@
             'link' => route('community.wallet.transactions', [
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id,
-                'walletId' => $wallet->id
+                'walletId' => $wallet->id,
             ]),
         ],
     ])
