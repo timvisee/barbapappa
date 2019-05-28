@@ -15,8 +15,7 @@ class CreatePaymentServiceTable extends Migration {
         Schema::create('payment_services', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
-            // TODO: replace with morph?
-            $table->integer('type')->unsigned()->nullable(false);
+            $table->morphs('serviceable');
             $table->decimal('deposit_min')->setNullable(false);
             $table->decimal('deposit_max')->setNullable(false);
             $table->decimal('withdraw_min')->setNullable(false);

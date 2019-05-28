@@ -6,7 +6,6 @@ use App\Scopes\EnabledScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Payment service model.
@@ -15,7 +14,9 @@ use Illuminate\Support\Facades\DB;
  *
  * @property int id
  * @property int economy_id
- * @property int type
+ * @property int serviceable_id
+ * @property string serviceable_type
+ * @property->read mixed serviceable
  * @property boolean enabled
  * @property int deposit_min
  * @property int deposit_max
@@ -93,5 +94,14 @@ class PaymentService extends Model {
      */
     public function scopeSupportsWithdraw($query) {
         return $query->where('withdraw_max', '>', 0);
+    }
+
+    /**
+     * Get a relation to the specific payment service type data.
+     *
+     * @return Relation to the payment service type data.
+     */
+    public function serviceable() {
+        return $this->morphTo();
     }
 }

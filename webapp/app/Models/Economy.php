@@ -154,6 +154,15 @@ class Economy extends Model {
     }
 
     /**
+     * Get a relation to all payment services configured in this economy.
+     *
+     * @return Relation to payment services.
+     */
+    public function paymentServices() {
+        return $this->hasMany(PaymentService::class);
+    }
+
+    /**
      * Go through all wallets of the current user in this economy, and calculate
      * the total balance.
      *
