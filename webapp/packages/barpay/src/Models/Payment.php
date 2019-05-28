@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
  *
  * @property int id
  * @property int state
- * @property int payment_service_id
+ * @property int service_id
  * @property string|null reference
  * @property decimal amount
  * @property int currency_id
@@ -32,12 +32,12 @@ class Payment extends Model {
     const STATE_FAILED = 6;
 
     /**
-     * Get the relation to the used payment service linked to this payment.
+     * Get the relation to the used service linked to this payment.
      *
-     * @return Relation to the used payment service.
+     * @return Relation to the used service.
      */
-    public function paymentService() {
-        return $this->belongsTo(PaymentService::class);
+    public function service() {
+        return $this->belongsTo(Service::class);
     }
 
     /**

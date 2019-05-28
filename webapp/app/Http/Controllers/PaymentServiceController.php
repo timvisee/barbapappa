@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Product;
-use BarPay\Models\PaymentService;
+use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -46,7 +46,7 @@ class PaymentServiceController extends Controller {
         // Validate type input
         if(!$choose)
             $request->validate([
-                'serviceable' => Rule::in(PaymentService::SERVICEABLES),
+                'serviceable' => Rule::in(PayService::SERVICEABLES),
             ]);
 
         // TODO: validate serviceable type!

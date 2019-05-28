@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentServiceTable extends Migration {
+class CreateServiceTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreatePaymentServiceTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('payment_services', function(Blueprint $table) {
+        Schema::create('services', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
             $table->morphs('serviceable');
@@ -39,6 +39,6 @@ class CreatePaymentServiceTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('payment_services');
+        Schema::dropIfExists('services');
     }
 }

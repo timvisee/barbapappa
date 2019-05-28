@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Payment service model.
+ * Service model.
  *
  * This represents a payment service.
  *
@@ -26,11 +26,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class PaymentService extends Model {
+class Service extends Model {
 
     use SoftDeletes;
 
-    protected $table = "payment_services";
+    protected $table = "services";
 
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
@@ -40,10 +40,10 @@ class PaymentService extends Model {
     const STATE_FAILED = 6;
 
     /**
-     * Payment service types.
+     * Service types.
      */
     public const SERVICEABLES = [
-        PaymentServiceManualIban::class,
+        ServiceManualIban::class,
     ];
 
     public static function boot() {
