@@ -66,6 +66,7 @@ return [
     'managementHub' => 'Beheer hub',
     'in' => 'in',
     'for' => 'voor',
+    'by' => 'door',
     'none' => 'Geen',
     'amount' => 'Bedrag',
     'amountInCurrency' => 'Bedrag in :currency',

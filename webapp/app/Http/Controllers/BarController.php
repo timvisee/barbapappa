@@ -117,12 +117,19 @@ class BarController extends Controller {
         else
             $products = $bar->economy->quickBuyProducts($currency_ids);
 
+        // List the last product mutations
+        $productMutations = $bar->productMutations()
+            ->latest()
+            ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
+            ->limit(5);
+
         // Show the bar page
         return view('bar.show')
             ->with('economy', $bar->economy)
             ->with('joined', $bar->isJoined($user))
             ->with('products', $products)
-            ->with('currencies', $currencies);
+            ->with('currencies', $currencies)
+            ->with('productMutations', $productMutations->get());
     }
 
     /**
