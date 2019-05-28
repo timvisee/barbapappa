@@ -2,10 +2,6 @@
 
 @section('title', __('pages.paymentService.newService'))
 
-@php
-    use BarPay\Models\PaymentService;
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 

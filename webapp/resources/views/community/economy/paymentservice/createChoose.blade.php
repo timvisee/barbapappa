@@ -3,7 +3,7 @@
 @section('title', __('pages.paymentService.newService'))
 
 @php
-    use BarPay\Models\PaymentService;
+    use BarPay\Models\Service as PayService;
 @endphp
 
 @section('content')
@@ -11,7 +11,7 @@
     <p>@lang('pages.paymentService.newChooseType')</p>
 
     <div class="ui top vertical menu fluid">
-        @forelse(PaymentService::SERVICEABLES as $service)
+        @forelse(PayService::SERVICEABLES as $service)
             <a class="item"
                     href="{{ route('community.economy.payservice.create', [
                         'communityId' => $community->human_id,

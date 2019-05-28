@@ -47,6 +47,6 @@ class ServiceManualIban extends Model {
      * @return string|null The translation or null if non existent.
      */
     public static function __($key) {
-        return __('service.manualiban.' . $key);
+        return __('barpay::service.manualiban.' . $key);
     }
 }

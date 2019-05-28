@@ -25,7 +25,8 @@ class BarPayServiceProvider extends ServiceProvider {
         //     __DIR__ . '/../views' => base_path('resources/views/timvisee/pay'),
         // ]);
 
-        // Load migrations
+        // Load provided
         $this->loadMigrationsFrom(__DIR__ . '/../migrations');
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'barpay');
     }
 }
