@@ -37,7 +37,7 @@ class Payment extends Model {
      * @return Relation to the used payment service.
      */
     public function paymentService() {
-        return $this->hasOne('App\Models\PaymentService');
+        return $this->belongsTo(PaymentService::class);
     }
 
     /**

@@ -83,7 +83,7 @@ class Product extends Model {
      * query.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $serach The search query.
+     * @param string $search The search query.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */

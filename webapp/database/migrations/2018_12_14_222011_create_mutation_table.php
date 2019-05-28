@@ -16,6 +16,7 @@ class CreateMutationTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('transaction_id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
+            // TODO: replace with morph?
             $table->integer('type')->unsigned()->nullable(false);
             $table->decimal('amount')->nullable(false);
             $table->integer('currency_id')->unsigned();

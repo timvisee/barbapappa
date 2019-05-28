@@ -15,11 +15,14 @@ class CreatePaymentServiceTable extends Migration {
         Schema::create('payment_services', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
-            $table->integer('service_type')->unsigned()->nullable(false);
-            $table->boolean('deposit')->setNullable(false);
-            $table->boolean('withdraw')->setNullable(false);
+            // TODO: replace with morph?
+            $table->integer('type')->unsigned()->nullable(false);
+            $table->decimal('deposit_min')->setNullable(false);
+            $table->decimal('deposit_max')->setNullable(false);
+            $table->decimal('withdraw_min')->setNullable(false);
+            $table->decimal('withdraw_max')->setNullable(false);
             $table->boolean('enabled')->setNullable(false)->default(true);
-            $table->boolean('archived')->setNullable(false)->default(false);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('economy_id')
