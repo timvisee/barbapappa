@@ -93,13 +93,17 @@
                 @php
                     $self = barauth()->getUser()->id == $productMutation->mutation->owner_id;
                     $linkTransaction = $self || perms(BarController::permsManage());
+                    $linkProduct = $productMutation->product_id != null;
                 @endphp
 
-                @if($linkTransaction)
+                @if($linkTransaction || $linkProduct)
                     <a class="item"
-                        href="{{ route('transaction.show', [
+                        href="{{ $linkTransaction ? route('transaction.show', [
                             'transactionId' => $productMutation->mutation->transaction_id,
-                        ]) }}">
+                        ]) : route('bar.product.show', [
+                            'barId' => $bar->human_id,
+                            'productId' => $productMutation->product_id,
+                        ])}}">
                 @else
                     <div class="item">
                 @endif
