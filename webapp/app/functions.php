@@ -164,12 +164,16 @@ if(!function_exists('balance')) {
      * @param decimal $balance The balance.
      * @param string $currency The currency code, such as `USD` or `EUR`.
      * @param int [$format=BALANCE_FORMAT_PLAIN] The balance formatting rules.
-     * @param string|null [$prefix=null] An optional prefix.
-     * @param bool [$neutral=null] Show a neutral balance, absolute and neutrally colored.
+     * @param array [$options=null] An array of options.
      *
      * @return string Formatted balance.
      */
-    function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN, $prefix = null, $neutral = false) {
+    function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN, $options = []) {
+        // Take parameters out of options, use defaults
+        $prefix = $options['prefix'] ?? null;
+        $neutral = $options['neutral'] ?? false;
+        $color = $options['color'] ?? true;
+
         // If neutrally formatting, always show positive number
         if($neutral)
             $balance = abs($balance);
@@ -187,7 +191,8 @@ if(!function_exists('balance')) {
             case BALANCE_FORMAT_PLAIN:
                 break;
             case BALANCE_FORMAT_COLOR:
-                if($neutral)
+                if(!$color) {}
+                else if($neutral)
                     // TODO: style instead of giving an explicit neutral color
                     $out = '<span style="color: #2185d0;">' . $out . '</span>';
                 else if($balance < 0)
@@ -197,7 +202,9 @@ if(!function_exists('balance')) {
                 break;
             case BALANCE_FORMAT_LABEL:
                 // TODO: may want to add horizontal class to labels
-                if($neutral)
+                if(!$color)
+                    $out = '<div class="ui label">' . $out . '</div>';
+                else if($neutral)
                     $out = '<div class="ui blue label">' . $out . '</div>';
                 else if($balance < 0)
                     $out = '<div class="ui red label">' . $out . '</div>';

@@ -17,7 +17,7 @@
                         'transactionId' => $transaction->id,
                     ]) }}">
                 {{ $transaction->describe() }}
-                {!! $transaction->formatCost(BALANCE_FORMAT_LABEL, false, $wallet); !!}
+                {!! $transaction->formatCost(BALANCE_FORMAT_LABEL, false, $wallet ?? null); !!}
 
                 <span class="sub-label">
                     @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at, 'short' => true])

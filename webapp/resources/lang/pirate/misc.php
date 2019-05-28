@@ -66,6 +66,7 @@ return [
     'managementHub' => 'Captains hut',
     'in' => 'in',
     'for' => 'for',
+    'by' => 'by',
     'none' => 'None',
     'amount' => 'Amount',
     'amountInCurrency' => 'Amount in :currency',

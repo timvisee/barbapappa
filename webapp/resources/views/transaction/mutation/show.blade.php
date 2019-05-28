@@ -27,7 +27,7 @@
             <tr>
                 <td>@lang('misc.amount')</td>
                 <td>
-                    {!! $mutation->formatAmount(BALANCE_FORMAT_COLOR, true) !!}
+                    {!! $mutation->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}
                     @if($mutation->amount >= 0)
                         @lang('pages.transactions.toTransaction')
                     @else
@@ -114,7 +114,7 @@
                     $trashed = $product == null || $product->trashed();
                 @endphp
 
-                <a class="item disabled"
+                <a class="item"
                         href="{{ !$trashed ? route('bar.product.show', [
                             'barId' => $mutation->mutationData->bar->human_id,
                             'productId' => $mutation->mutationData->product_id,
@@ -127,7 +127,7 @@
                         @ {{ $data->bar->name }}
                     </span>
 
-                    {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, true) !!}
+                    {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
                 </a>
             </div>
         @else

@@ -250,6 +250,7 @@ return [
         'backToProducts' => 'Back to products',
         'viewProduct' => 'View product',
         'unknownProduct' => 'Unknown product',
+        'recentlyBoughtProducts#' => '{0} Recently bought products|{1} Product bought recently|[2,*] :count products bought recently',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',

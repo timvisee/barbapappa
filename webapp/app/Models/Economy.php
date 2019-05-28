@@ -237,7 +237,7 @@ class Economy extends Model {
         $prefix = $out[2] ? '&asymp; ' : '';
 
         // Format the balance
-        return balance($balance, $currency, $format, $prefix);
+        return balance($balance, $currency, $format, ['prefix' => $prefix]);
     }
 
     /**

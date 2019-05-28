@@ -250,6 +250,7 @@ return [
         'backToProducts' => 'Terug naar producten',
         'viewProduct' => 'Product bekijken',
         'unknownProduct' => 'Onbekend product',
+        'recentlyBoughtProducts#' => '{0} Recent gekochte producten|{1} Recent gekocht product|[2,*] :count recent gekochte producten',
         'type' => [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',
