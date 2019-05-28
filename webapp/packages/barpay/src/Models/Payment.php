@@ -89,4 +89,15 @@ class Payment extends Model {
         // Translate and return
         return __('pages.payments.state.' . $key);
     }
+
+    /**
+     * Get a relation to the specific payment type data related to the used
+     * payment service.
+     *
+     * @return Relation to the payment type data related to the used payment
+     * service.
+     */
+    public function paymentable() {
+        return $this->morphTo();
+    }
 }
