@@ -46,7 +46,7 @@ class Transaction extends Model {
      * @return The mutations.
      */
     public function mutations() {
-        return $this->hasMany('App\Models\Mutation')->orderBy('amount', 'DESC');
+        return $this->hasMany(Mutation::class)->orderBy('amount', 'DESC');
     }
 
     /**
@@ -248,7 +248,7 @@ class Transaction extends Model {
             Self::STATE_FAILED => 'failed',
         ][$this->state];
         if(empty($key))
-            throw new \Exception("Unknown mutation state, cannot get state name");
+            throw new \Exception("Unknown transaction state, cannot get state name");
 
         // Translate and return
         return __('pages.mutations.state.' . $key);

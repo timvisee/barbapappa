@@ -16,16 +16,19 @@ class CreatePaymentTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('state')->unsigned()->nullable(false);
             $table->integer('payment_service_id')->unsigned()->nullable(true);
-            $table->string('reference');
+            $table->string('reference')->nullable(true);
             $table->decimal('money')->nullable(false);
-            // TODO: is this the correct data type, foreign key to currencies table instead?
-            $table->string('currency')->nullable(false);
+            $table->integer('currency_id')->unsigned()->nullable(false);
             $table->timestamps();
 
             $table->foreign('payment_service_id')
                 ->references('id')
                 ->on('payment_services')
                 ->onDelete('set null');
+            $table->foreign('currency_id')
+                ->references('id')
+                ->on('currencies')
+                ->onDelete('restrict');
         });
     }
 

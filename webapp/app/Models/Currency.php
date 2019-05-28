@@ -84,11 +84,13 @@ class Currency extends Model {
      * Format the given amount as human readable text using the proper currency
      * format.
      *
+     * @param decimal $amount The amount to format.
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     * @param array [$options=[]] Formatting options.
      *
      * @return string Formatted amount.
      */
-    public function formatAmount($amount, $format = BALANCE_FORMAT_PLAIN) {
-        return balance($amount, $this->code, $format);
+    public function formatAmount($amount, $format = BALANCE_FORMAT_PLAIN, $options = []) {
+        return balance($amount, $this->code, $format, $options);
     }
 }
