@@ -39,6 +39,13 @@ class PaymentService extends Model {
     const STATE_REJECTED = 5;
     const STATE_FAILED = 6;
 
+    /**
+     * Payment service types.
+     */
+    public const SERVICEABLES = [
+        PaymentServiceManualIban::class,
+    ];
+
     public static function boot() {
         parent::boot();
         static::addGlobalScope(new EnabledScope);

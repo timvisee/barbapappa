@@ -31,4 +31,22 @@ class PaymentServiceManualIban extends Model {
     public function paymentService() {
         return $this->morphOne(PaymentService::class, 'serviceable');
     }
+
+    /**
+     * Get the name for this payment service type.
+     *
+     * @return string Name for this payment service type.
+     */
+    public static function name() {
+        return Self::__('name');
+    }
+
+    /**
+     * Get a translation for this service.
+     *
+     * @return string|null The translation or null if non existent.
+     */
+    public static function __($key) {
+        return __('paymentservice.manualiban.' . $key);
+    }
 }

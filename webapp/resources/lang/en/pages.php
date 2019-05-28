@@ -241,7 +241,6 @@ return [
         'permanentlyDeleted' => 'The product has been permanently deleted.',
         'namePlaceholder' => 'Fancy Juice',
         'enabledDescription' => 'Enabled, can be bought',
-        'archivedDescription' => 'Archived, hidden from products',
         'prices' => 'Prices',
         'pricesDescription' => 'Configure prices for this product in the fields below for currencies you want to support.',
         'localizedNames' => 'Localized names',
@@ -255,6 +254,33 @@ return [
             'normal' => 'Normal',
             'custom' => 'Custom',
         ],
+    ],
+
+    /**
+     * Payment service pages.
+     */
+    'paymentService' => [
+        'title' => 'Payment services',
+        'noServices' => 'No payment services...',
+        'manageService' => 'Manage payment service',
+        'manageServices' => 'Manage payment services',
+        'serviceType' => 'Payment service type',
+        'newService' => 'Add service',
+        'newChooseType' => 'Please choose the type of payment service you\'d like to configure and add.',
+        'editService' => 'Edit service',
+        'created' => 'The payment service has been added.',
+        'changed' => 'The payment service has been changed.',
+        'restoreQuestion' => 'You\'re about to restore this payment service to make it available again. Are you sure you want to continue?',
+        'restored' => 'The payment service has been restored.',
+        'deleteQuestion' => 'You\'re about to delete this payment service. Are you sure you want to continue?',
+        'permanentDescription' => 'Tick the checkbox below to permanently delete this payment service. You will not be able to restore it.',
+        'permanentlyDelete' => 'Permanently delete payment service',
+        'deleted' => 'The payment service has been trashed.',
+        'permanentlyDeleted' => 'The payment service has been permanently deleted.',
+        'enabledDescription' => 'Enabled, can be used',
+        'backToServices' => 'Back to payment services',
+        'viewService' => 'View service',
+        'unknownService' => 'Unknown payment service',
     ],
 
     /**

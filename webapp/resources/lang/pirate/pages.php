@@ -241,7 +241,6 @@ return [
         'permanentlyDeleted' => 'The product be permanently deleted.',
         'namePlaceholder' => 'Bear Beer',
         'enabledDescription' => 'Enabled, can be bought',
-        'archivedDescription' => 'Archived, hidden from products',
         'prices' => 'Prices',
         'pricesDescription' => 'Configure prices for dis product in th\' fields below for booties ye want to support.',
         'localizedNames' => 'Localized names',
@@ -255,6 +254,33 @@ return [
             'normal' => 'Normal',
             'custom' => 'Custom',
         ],
+    ],
+
+    /**
+     * Payment service pages.
+     */
+    'paymentService' => [
+        'title' => 'Payment services',
+        'noServices' => 'Nay payment services...',
+        'manageService' => 'Manage payment service',
+        'manageServices' => 'Manage payment services',
+        'serviceType' => 'Payment service type',
+        'newService' => 'Add service',
+        'newChooseType' => 'Please choose th\' type of payment service yer like to configure and add.',
+        'editService' => 'Edit service',
+        'created' => 'The payment service be added.',
+        'changed' => 'The payment service be changed.',
+        'restoreQuestion' => 'Yer \'bout to afloat dis payment service to make it available again. Ye be sure ye want to continue?',
+        'restored' => 'The payment service be afloated.',
+        'deleteQuestion' => 'Yer \'bout to sink dis payment service. Ye be sure ye want to continue?',
+        'permanentDescription' => 'Tick th\' checkbox below to permanently delete dis payment service. Ye nay be able to restore it.',
+        'permanentlyDelete' => 'Permanently delete payment service',
+        'deleted' => 'The payment service be trashed.',
+        'permanentlyDeleted' => 'The payment service be permanently deleted.',
+        'enabledDescription' => 'Enabled, can be used',
+        'backToServices' => 'Back to payment services',
+        'viewService' => 'View service',
+        'unknownService' => 'Unknown payment service',
     ],
 
     /**

@@ -241,7 +241,6 @@ return [
         'permanentlyDeleted' => 'Het product is permanent verwijderd.',
         'namePlaceholder' => 'Luxe Sap',
         'enabledDescription' => 'Ingeschakeld, kan gekocht worden',
-        'archivedDescription' => 'Gearchiveerd, verborgen van producten lijst',
         'prices' => 'Prijzen',
         'pricesDescription' => 'Configureer de prijzen voor dit product in de velden hieronder voor de valutas die je wilt ondersteunen.',
         'localizedNames' => 'Gelokaliseerde namen',
@@ -255,6 +254,33 @@ return [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',
         ],
+    ],
+
+    /**
+     * Payment service pages.
+     */
+    'paymentService' => [
+        'title' => 'Betaalservices',
+        'noServices' => 'Geen betaalservices...',
+        'manageService' => 'Beheer betaalservice',
+        'manageServices' => 'Beheer betaalservices',
+        'serviceType' => 'Betaalservice type',
+        'newService' => 'Service toevoegen',
+        'newChooseType' => 'Kies alsjeblieft het type betaalservice dat je wilt configureren en wilt toevoegen.',
+        'editService' => 'Service aanpassen',
+        'created' => 'De betaalservice is aangemaakt.',
+        'changed' => 'Betaalservice aanpassingen opgeslagen.',
+        'restoreQuestion' => 'Je staat op het punt deze betaalservice te herstellen om het weer beschikbaar te maken. Weet je zeker dat je door wilt gaan?',
+        'restored' => 'Deze betaalservice is hersteld.',
+        'deleteQuestion' => 'Je staat op het punt deze betaalservice te verwijderen. Weet je zeker dat je door wilt gaan?',
+        'permanentDescription' => 'Vink het selectievakje aan om deze betaalservice permanent te verwijderen. Je kunt de service dan niet meer herstellen.',
+        'permanentlyDelete' => 'Betaalservice permanent verwijderen',
+        'deleted' => 'De betaalservice is weggegooid.',
+        'permanentlyDeleted' => 'De betaalservice is permanent verwijderd.',
+        'enabledDescription' => 'Ingeschakeld, kan gebruikt worden',
+        'backToServices' => 'Terug naar betaalservices',
+        'viewService' => 'Service bekijken',
+        'unknownService' => 'Onbekende betaalservice',
     ],
 
     /**
