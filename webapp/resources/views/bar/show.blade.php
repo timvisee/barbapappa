@@ -66,7 +66,7 @@
                 {!! Form::hidden('product_id', $product->id) !!}
                 <a href="#" onclick="event.preventDefault();this.parentNode.submit()" class="item">
                     {{ $product->displayName() }}
-                    {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL) !!}
+                    {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
                 </a>
             {!! Form::close() !!}
         @empty

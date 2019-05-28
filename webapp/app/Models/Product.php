@@ -201,12 +201,12 @@ class Product extends Model {
      * TODO: should we use currency IDs instead
      * @param [EconomyCurrency] $currencies An ordered list of preferred currencies.
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
-     * @param boolean [$neutral=true] True to neutrally format.
+     * @param array [$options=[]] A list of formatting options.
      *
      * @return string|null Formatted price or null if no matching price is
      *      found.
      */
-    public function formatPrice($currencies, $format = BALANCE_FORMAT_PLAIN, $neutral = true) {
+    public function formatPrice($currencies, $format = BALANCE_FORMAT_PLAIN, $options = []) {
         // Obtain the price
         $price = $this->getPrice($currencies);
         if($price == null)
@@ -214,6 +214,6 @@ class Product extends Model {
 
         // Render the price and return
         // TODO: optimize this currency->currency chain
-        return balance($price->price, $price->currency->currency->code, $format, null, $neutral);
+        return balance($price->price, $price->currency->currency->code, $format, $options);
     }
 }

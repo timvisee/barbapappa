@@ -18,7 +18,7 @@
                         'mutationId' => $mutation->id,
                     ]) }}">
                 {{ $mutation->describe() }}
-                {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, true); !!}
+                {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]); !!}
 
                 <span class="sub-label">
                     @include('includes.humanTimeDiff', ['time' => $mutation->updated_at ?? $mutation->created_at, 'short' => true])
