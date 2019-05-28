@@ -234,6 +234,12 @@ return [
         Alfa6661\EloquentHasManySync\ServiceProvider::class,
 
         /**
+         * Laravel validation extension.
+         * Adds support for 'iban' and 'bic'.
+         */
+        Intervention\Validation\ValidationServiceProvider::class,
+
+        /**
          * Custom service providers for BARbapAPPa.
          */
         App\Providers\LanguageManagerServiceProvider::class,
