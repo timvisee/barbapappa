@@ -4,6 +4,15 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "packages/barpay",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require": {
         "php": ">=7.2",
         "alfa6661/laravel-has-many-sync": "^1.1",
@@ -15,7 +24,8 @@
         "sentry/sentry-laravel": "^1.0.2",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "staudenmeir/eloquent-has-many-deep": "^1.8",
-        "torann/currency": "1.0.14"
+        "torann/currency": "1.0.14",
+        "barpay": "dev-76-payment-processing"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

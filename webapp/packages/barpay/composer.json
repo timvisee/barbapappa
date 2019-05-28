@@ -1,0 +1,26 @@
+{
+  "name": "barpay",
+  "description": "Laravel payment processing framework for BARbapAPPa",
+  "type": "library",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "timvisee",
+      "email": "tim@visee.me"
+    }
+  ],
+  "minimum-stability": "dev",
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "BarPay\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "BarPay\\BarPayServiceProvider"
+      ]
+    }
+  }
+}
