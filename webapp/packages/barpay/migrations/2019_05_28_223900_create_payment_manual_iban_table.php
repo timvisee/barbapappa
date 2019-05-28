@@ -18,7 +18,6 @@ class CreatePaymentManualIbanTable extends Migration {
 
             // Source account, a payment reference, transmit and confirm times
             $table->string('iban', 32)->nullable(false);
-            $table->string('ref', 32)->nullable(false);
             $table->datetime('transferred_at')->nullable(true);
             $table->datetime('confirmed_at')->nullable(true);
 

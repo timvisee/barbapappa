@@ -19,7 +19,7 @@ class CreateServiceManualIbanTable extends Migration {
             // Target account, account holder name, IBAN and optional BIC
             $table->string('account_holder')->nullable(false);
             $table->string('iban', 32)->nullable(false);
-            $table->string('bic', 8)->nullable(true);
+            $table->string('bic', 11)->nullable(true);
 
             $table->timestamps();
 
