@@ -16,6 +16,7 @@ class CreatePaymentTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('state')->unsigned()->nullable(false);
             $table->integer('service_id')->unsigned()->nullable(true);
+            $table->morphs('paymentable');
             $table->string('reference', 32)->unique()->nullable(true);
             $table->decimal('money')->nullable(false);
             $table->integer('currency_id')->unsigned()->nullable(false);
@@ -29,6 +30,8 @@ class CreatePaymentTable extends Migration {
                 ->references('id')
                 ->on('currencies')
                 ->onDelete('restrict');
+
+            $table->index(['paymentable_id', 'paymentable_type']);
         });
     }
 

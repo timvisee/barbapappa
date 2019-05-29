@@ -29,6 +29,8 @@ class CreateServiceTable extends Migration {
                 ->on('economies')
                 ->onDelete('set null');
 
+            $table->index(['serviceable_id', 'serviceable_type']);
+
             // TODO: add a field for supported currency/currencies by this service
         });
     }
