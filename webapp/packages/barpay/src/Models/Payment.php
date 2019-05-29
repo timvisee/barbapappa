@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\DB;
  * @property int id
  * @property int state
  * @property int service_id
+ * @property int paymentable_id
+ * @property string paymentable_type
+ * @property-read mixed paymentable
  * @property string|null reference
  * @property decimal amount
  * @property int currency_id

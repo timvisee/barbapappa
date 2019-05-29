@@ -43,11 +43,10 @@ class PaymentServiceController extends Controller {
         $serviceable = $request->query('serviceable');
         $choose = empty($serviceable);
 
-        // Validate type input
-        if(!$choose)
-            $request->validate([
-                'serviceable' => Rule::in(PayService::SERVICEABLES),
-            ]);
+        // Validate serviceable type input
+        $request->validate([
+            'serviceable' => Rule::in(PayService::SERVICEABLES),
+        ]);
 
         // TODO: validate serviceable type!
 
@@ -56,98 +55,93 @@ class PaymentServiceController extends Controller {
             ->with('serviceable', $serviceable);
     }
 
-    // /**
-    //  * Product create endpoint.
-    //  *
-    //  * @param Request $request Request.
-    //  *
-    //  * @return Response
-    //  */
-    // public function doCreate(Request $request, $communityId, $economyId) {
-    //     // Get the user, community, find the products
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $locales = collect(langManager()->getLocales(true, true));
-    //     $clone = $request->input('submit') == 'clone';
+    /**
+     * Payment service create endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doCreate(Request $request, $communityId, $economyId) {
+        // Get the user, community, find the products
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $serviceable_type = $request->input('serviceable');
 
-    //     // Build validation rules, and validate
-    //     $rules = ['name' => 'required|' . ValidationDefaults::NAME];
-    //     $messages = [];
-    //     foreach($economy->currencies as $currency) {
-    //         $rules['price_' . $currency->id] = 'nullable|' . ValidationDefaults::PRICE;
-    //         $messages['price_' . $currency->id . '.regex'] = __('misc.invalidPrice');
-    //     }
-    //     foreach($locales as $locale)
-    //         $rules['name_' . $locale] = 'nullable|' . ValidationDefaults::NAME;
-    //     $this->validate($request, $rules, $messages);
+        // TODO validate for all currencies here
+        // // Build validation rules, and validate
+        // $rules = ['name' => 'required|' . ValidationDefaults::NAME];
+        // $messages = [];
+        // foreach($economy->currencies as $currency) {
+        //     $rules['price_' . $currency->id] = 'nullable|' . ValidationDefaults::PRICE;
+        //     $messages['price_' . $currency->id . '.regex'] = __('misc.invalidPrice');
+        // }
+        // foreach($locales as $locale)
+        //     $rules['name_' . $locale] = 'nullable|' . ValidationDefaults::NAME;
+        // $this->validate($request, $rules, $messages);
 
-    //     // Create product and set prices in transaction
-    //     $product = null;
-    //     DB::transaction(function() use($request, $economy, $locales, &$product) {
-    //         // Create the product
-    //         $product = $economy->products()->create([
-    //             'economy_id' => $economy->id,
-    //             'type' => Product::TYPE_NORMAL,
-    //             'name' => $request->input('name'),
-    //             'enabled' => is_checked($request->input('enabled')),
-    //         ]);
+        // Validate service and serviceable fields
+        $request->validate([
+            'serviceable' => ['required', Rule::in(PayService::SERVICEABLES)],
+        ]);
+        ($serviceable_type::CONTROLLER)::validateCreate($request);
 
-    //         // Create the localized product names
-    //         $product->names()->createMany(
-    //             $locales
-    //                 ->filter(function($locale) use($request) {
-    //                     return $request->input('name_' . $locale) != null;
-    //                 })
-    //                 ->map(function($locale) use($request, $product) {
-    //                     return [
-    //                         'product_id' => $product->id,
-    //                         'locale' => $locale,
-    //                         'name' => $request->input('name_' . $locale),
-    //                     ];
-    //                 })
-    //                 ->toArray()
-    //         );
+        // Create the payment service in a transaction
+        DB::transaction(function() use($request, $economy, $serviceable_type) {
+            // Create the service
+            $service = $economy->paymentServices()->create([
+                'serviceable_id' => 0,
+                'serviceable_type' => '',
+                'enabled' => is_checked($request->input('enabled')),
+            ]);
 
-    //         // Create the product prices
-    //         $product->prices()->createMany(
-    //             $economy
-    //                 ->currencies
-    //                 ->filter(function($currency) use($request) {
-    //                     return $request->input('price_' . $currency->id) != null;
-    //                 })
-    //                 ->map(function($currency) use($request, $product) {
-    //                     return [
-    //                         'product_id' => $product->id,
-    //                         'currency_id' => $currency->id,
-    //                         'price' => str_replace(',', '.', $request->input('price_' . $currency->id)),
-    //                     ];
-    //                 })
-    //                 ->toArray()
-    //         );
-    //     });
+            // Create serviceable
+            $serviceable = ($serviceable_type::CONTROLLER)::create($request, $service);
 
-    //     // Build the response, redirect
-    //     $response = redirect();
+            // // Create the localized product names
+            // $product->names()->createMany(
+            //     $locales
+            //         ->filter(function($locale) use($request) {
+            //             return $request->input('name_' . $locale) != null;
+            //         })
+            //         ->map(function($locale) use($request, $product) {
+            //             return [
+            //                 'product_id' => $product->id,
+            //                 'locale' => $locale,
+            //                 'name' => $request->input('name_' . $locale),
+            //             ];
+            //         })
+            //         ->toArray()
+            // );
 
-    //     // Got to product index, or create page if cloning
-    //     if(!$clone)
-    //         $response = $response
-    //             ->route('community.economy.product.index', [
-    //                 'communityId' => $community->human_id,
-    //                 'economyId' => $economy->id,
-    //             ]);
-    //     else
-    //         $response = $response
-    //             ->route('community.economy.product.create', [
-    //                 'communityId' => $community->human_id,
-    //                 'economyId' => $economy->id,
-    //                 'productId' => $product->id,
-    //             ]);
+            // // Create the product prices
+            // $product->prices()->createMany(
+            //     $economy
+            //         ->currencies
+            //         ->filter(function($currency) use($request) {
+            //             return $request->input('price_' . $currency->id) != null;
+            //         })
+            //         ->map(function($currency) use($request, $product) {
+            //             return [
+            //                 'product_id' => $product->id,
+            //                 'currency_id' => $currency->id,
+            //                 'price' => str_replace(',', '.', $request->input('price_' . $currency->id)),
+            //             ];
+            //         })
+            //         ->toArray()
+            // );
+        });
 
-    //     // Attach success message and return
-    //     return $response->with('success', __('pages.products.created'));
-    // }
+        // Redirect to services index
+        return redirect()
+            ->route('community.economy.payservice.index', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+            ])
+            // TODO: translate this message
+            ->with('success', __('pages.paymentService.created'));
+    }
 
     // /**
     //  * Show a product.

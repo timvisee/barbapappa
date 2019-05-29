@@ -87,6 +87,8 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
+    'iban'                 => 'Enter a valid IBAN.',
+    'bic'                  => 'Enter a valid BIC.',
 
     /*
     |--------------------------------------------------------------------------

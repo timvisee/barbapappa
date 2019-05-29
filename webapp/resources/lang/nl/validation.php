@@ -87,6 +87,8 @@ return [
     'unique'               => 'De waarde in het :attribute veld is al gebruikt.',
     'uploaded'             => 'Het uploaden van het bestand in het :attribute veld is mislukt.',
     'url'                  => 'Het formaat in het :attribute veld is ongeldig.',
+    'iban'                 => 'Vul een geldige IBAN in.',
+    'bic'                  => 'Vul een geldige BIC in.',
 
     /*
     |--------------------------------------------------------------------------

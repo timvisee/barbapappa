@@ -2,6 +2,7 @@
 
 namespace BarPay\Models;
 
+use BarPay\Controllers\ServiceManualIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -22,6 +23,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ServiceManualIban extends Model {
 
     protected $table = "service_manual_iban";
+
+    /**
+     * The controller to use for this service.
+     */
+    public const CONTROLLER = ServiceManualIbanController::class;
 
     /**
      * Get a relation to the service this belongs to.

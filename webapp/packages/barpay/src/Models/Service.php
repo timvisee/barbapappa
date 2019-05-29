@@ -32,6 +32,16 @@ class Service extends Model {
 
     protected $table = "services";
 
+    protected $fillable = [
+        'serviceable_id',
+        'serviceable_type',
+        'enabled',
+        'deposit_min',
+        'deposit_max',
+        'withdraw_min',
+        'withdraw_max',
+    ];
+
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
     const STATE_COMPLETED = 3;

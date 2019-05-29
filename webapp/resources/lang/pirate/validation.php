@@ -87,6 +87,8 @@ return [
     'unique'               => 'Th\' :attribute has already been entered.',
     'uploaded'             => 'Th\' :attribute failed to upload.',
     'url'                  => 'Th\' :attribute format be sunken.',
+    'iban'                 => 'Enter a valid IBAN.',
+    'bic'                  => 'Enter a valid BIC.',
 
     /*
     |--------------------------------------------------------------------------
