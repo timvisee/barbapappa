@@ -25,10 +25,11 @@ class PaymentServiceController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+        $services = $economy->paymentServices;
 
         return view('community.economy.paymentservice.index')
             ->with('economy', $economy)
-            ->with('services', []);
+            ->with('services', $services);
     }
 
     /**

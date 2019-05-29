@@ -41,6 +41,8 @@ class Service extends Model {
         'currency_id',
     ];
 
+    protected $with = ['serviceable'];
+
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
     const STATE_COMPLETED = 3;
@@ -58,15 +60,6 @@ class Service extends Model {
     public static function boot() {
         parent::boot();
         static::addGlobalScope(new EnabledScope);
-    }
-
-    /**
-     * Get a relation to all payments made with this service.
-     *
-     * @return Relation to all payments.
-     */
-    public function payments() {
-        return $this->hasMany(Payment::class);
     }
 
     /**
@@ -113,12 +106,31 @@ class Service extends Model {
     }
 
     /**
+     * Get a relation to all payments made with this service.
+     *
+     * @return Relation to all payments.
+     */
+    public function payments() {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
      * Get a relation to the specific payment service type data.
      *
      * @return Relation to the payment service type data.
      */
     public function serviceable() {
         return $this->morphTo();
+    }
+
+    /**
+     * Get the display name for this service.
+     * This will be shown both to administrators and to regular users.
+     *
+     * @return string Display name.
+     */
+    public function displayName() {
+        return $this->serviceable::name();
     }
 
     /**
