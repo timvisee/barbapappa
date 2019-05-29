@@ -30,6 +30,11 @@ class ServiceManualIban extends Model {
     public const CONTROLLER = ServiceManualIbanController::class;
 
     /**
+     * The root for views related to this service.
+     */
+    public const VIEW_ROOT = 'barpay::service.manualiban';
+
+    /**
      * Get a relation to the service this belongs to.
      *
      * @return Relation to the service.
@@ -54,5 +59,14 @@ class ServiceManualIban extends Model {
      */
     public static function __($key) {
         return __('barpay::service.manualiban.' . $key);
+    }
+
+    /**
+     * Get the path for a view related to this service.
+     *
+     * @return string The path to the view.
+     */
+    public static function view($path) {
+        return Self::VIEW_ROOT . '.' . $path;
     }
 }

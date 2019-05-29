@@ -16,11 +16,10 @@ class CreateServiceTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
             $table->morphs('serviceable');
-            $table->decimal('deposit_min')->setNullable(false);
-            $table->decimal('deposit_max')->setNullable(false);
-            $table->decimal('withdraw_min')->setNullable(false);
-            $table->decimal('withdraw_max')->setNullable(false);
             $table->boolean('enabled')->setNullable(false)->default(true);
+            $table->integer('currency_id')->unsigned()->nullable(false);
+            $table->boolean('deposit')->nullable(false);
+            $table->boolean('withdraw')->nullable(false);
             $table->softDeletes();
             $table->timestamps();
 
@@ -28,6 +27,10 @@ class CreateServiceTable extends Migration {
                 ->references('id')
                 ->on('economies')
                 ->onDelete('set null');
+            $table->foreign('currency_id')
+                ->references('id')
+                ->on('currencies')
+                ->onDelete('restrict');
 
             $table->index(['serviceable_id', 'serviceable_type']);
 

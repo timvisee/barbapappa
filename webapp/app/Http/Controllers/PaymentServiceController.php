@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Product;
+use App\Models\EconomyCurrency;
 use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -48,11 +49,13 @@ class PaymentServiceController extends Controller {
             'serviceable' => Rule::in(PayService::SERVICEABLES),
         ]);
 
-        // TODO: validate serviceable type!
+        // List the currencies that can be used
+        $currencies = $economy->currencies;
 
         return view('community.economy.paymentservice.create' . ($choose ? 'Choose' : ''))
             ->with('economy', $economy)
-            ->with('serviceable', $serviceable);
+            ->with('serviceable', $serviceable)
+            ->with('currencies', $currencies);
     }
 
     /**
@@ -69,68 +72,30 @@ class PaymentServiceController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $serviceable_type = $request->input('serviceable');
 
-        // TODO validate for all currencies here
-        // // Build validation rules, and validate
-        // $rules = ['name' => 'required|' . ValidationDefaults::NAME];
-        // $messages = [];
-        // foreach($economy->currencies as $currency) {
-        //     $rules['price_' . $currency->id] = 'nullable|' . ValidationDefaults::PRICE;
-        //     $messages['price_' . $currency->id . '.regex'] = __('misc.invalidPrice');
-        // }
-        // foreach($locales as $locale)
-        //     $rules['name_' . $locale] = 'nullable|' . ValidationDefaults::NAME;
-        // $this->validate($request, $rules, $messages);
-
         // Validate service and serviceable fields
         $request->validate([
             'serviceable' => ['required', Rule::in(PayService::SERVICEABLES)],
+            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
         ]);
         ($serviceable_type::CONTROLLER)::validateCreate($request);
 
+        // Find the selected economy currency, get it's currency ID
+        $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
+
         // Create the payment service in a transaction
-        DB::transaction(function() use($request, $economy, $serviceable_type) {
+        DB::transaction(function() use($request, $economy, $serviceable_type, $currencyId) {
             // Create the service
             $service = $economy->paymentServices()->create([
                 'serviceable_id' => 0,
                 'serviceable_type' => '',
                 'enabled' => is_checked($request->input('enabled')),
+                'deposit' => is_checked($request->input('deposit')),
+                'withdraw' => is_checked($request->input('withdraw')),
+                'currency_id' => $currencyId,
             ]);
 
             // Create serviceable
             $serviceable = ($serviceable_type::CONTROLLER)::create($request, $service);
-
-            // // Create the localized product names
-            // $product->names()->createMany(
-            //     $locales
-            //         ->filter(function($locale) use($request) {
-            //             return $request->input('name_' . $locale) != null;
-            //         })
-            //         ->map(function($locale) use($request, $product) {
-            //             return [
-            //                 'product_id' => $product->id,
-            //                 'locale' => $locale,
-            //                 'name' => $request->input('name_' . $locale),
-            //             ];
-            //         })
-            //         ->toArray()
-            // );
-
-            // // Create the product prices
-            // $product->prices()->createMany(
-            //     $economy
-            //         ->currencies
-            //         ->filter(function($currency) use($request) {
-            //             return $request->input('price_' . $currency->id) != null;
-            //         })
-            //         ->map(function($currency) use($request, $product) {
-            //             return [
-            //                 'product_id' => $product->id,
-            //                 'currency_id' => $currency->id,
-            //                 'price' => str_replace(',', '.', $request->input('price_' . $currency->id)),
-            //             ];
-            //         })
-            //         ->toArray()
-            // );
         });
 
         // Redirect to services index

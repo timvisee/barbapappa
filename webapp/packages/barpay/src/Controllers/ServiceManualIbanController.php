@@ -41,9 +41,7 @@ class ServiceManualIbanController {
         $serviceable->save();
 
         // Update serviceable link on service
-        $service->serviceable_id = $serviceable->id;
-        $service->serviceable_type = get_class($serviceable);
-        $service->save();
+        $service->setServiceable($serviceable);
 
         return $serviceable;
     }

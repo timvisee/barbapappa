@@ -278,6 +278,8 @@ return [
         'deleted' => 'The payment service be trashed.',
         'permanentlyDeleted' => 'The payment service be permanently deleted.',
         'enabledDescription' => 'Enabled, can be used',
+        'supportDeposit' => 'Enable deposits. Allow mateies to deposit money to their wallets in this booty.',
+        'supportWithdraw' => 'Support withdraw. Allow mateies to withdraw money from their wallets in this booty.',
         'backToServices' => 'Back to payment services',
         'viewService' => 'View service',
         'unknownService' => 'Unknown payment service',

@@ -278,6 +278,8 @@ return [
         'deleted' => 'The payment service has been trashed.',
         'permanentlyDeleted' => 'The payment service has been permanently deleted.',
         'enabledDescription' => 'Enabled, can be used',
+        'supportDeposit' => 'Enable deposits. Allow users to deposit money to their wallets in this economy.',
+        'supportWithdraw' => 'Support withdraw. Allow users to withdraw money from their wallets in this economy.',
         'backToServices' => 'Back to payment services',
         'viewService' => 'View service',
         'unknownService' => 'Unknown payment service',

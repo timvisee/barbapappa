@@ -278,6 +278,8 @@ return [
         'deleted' => 'De betaalservice is weggegooid.',
         'permanentlyDeleted' => 'De betaalservice is permanent verwijderd.',
         'enabledDescription' => 'Ingeschakeld, kan gebruikt worden',
+        'supportDeposit' => 'Ondersteun storten. Laat gebruikers geld storten in portemonnees binnen deze economie.',
+        'supportWithdraw' => 'Ondersteun opnemen. Laat gebruikers geld opnemen van portemonnees binnen deze economie.',
         'backToServices' => 'Terug naar betaalservices',
         'viewService' => 'Service bekijken',
         'unknownService' => 'Onbekende betaalservice',

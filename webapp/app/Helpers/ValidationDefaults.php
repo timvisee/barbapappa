@@ -153,17 +153,21 @@ class ValidationDefaults {
      * Note: this function returns an array of validation rules.
      *
      * @param int $economy The economy this configuration is built for.
+     * @param bool [$unique=true] True to do the unique check, false if not.
+     *
      * @return Array An array of validation rules.
      */
-    public static function economyCurrency(Economy $economy) {
-        return [
-            Rule::exists('currencies', 'id'),
-            Rule::unique('economy_currencies', 'currency_id')
-                ->where(function($query) use($economy) {
-                    // Scope to the current economy
-                    return $query->where('economy_id', $economy->id);
-                }),
-        ];
+    public static function economyCurrency(Economy $economy, $unique = true) {
+        $rules = [Rule::exists('economy_currencies', 'id')];
+
+        if($unique)
+            $rules[] = Rule::unique('economy_currencies', 'currency_id')
+                    ->where(function($query) use($economy) {
+                        // Scope to the current economy
+                        return $query->where('economy_id', $economy->id);
+                    });
+
+        return $rules;
     }
 
     /**

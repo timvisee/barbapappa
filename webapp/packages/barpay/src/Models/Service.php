@@ -16,12 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int economy_id
  * @property int serviceable_id
  * @property string serviceable_type
- * @property->read mixed serviceable
+ * @property-read mixed serviceable
  * @property boolean enabled
- * @property int deposit_min
- * @property int deposit_max
- * @property int withdraw_min
- * @property int withdraw_max
+ * @property int currency_id
+ * @property-read Currency currency
+ * @property boolean deposit
+ * @property boolean withdraw
  * @property Carbon|null deleted_at
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -36,10 +36,9 @@ class Service extends Model {
         'serviceable_id',
         'serviceable_type',
         'enabled',
-        'deposit_min',
-        'deposit_max',
-        'withdraw_min',
-        'withdraw_max',
+        'deposit',
+        'withdraw',
+        'currency_id',
     ];
 
     const STATE_PENDING = 1;
@@ -98,7 +97,7 @@ class Service extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSupportsDeposit($query) {
-        return $query->where('deposit_max', '>', 0);
+        return $query->where('deposit', true);
     }
 
     /**
@@ -110,7 +109,7 @@ class Service extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSupportsWithdraw($query) {
-        return $query->where('withdraw_max', '>', 0);
+        return $query->where('withdraw', true);
     }
 
     /**
@@ -120,5 +119,19 @@ class Service extends Model {
      */
     public function serviceable() {
         return $this->morphTo();
+    }
+
+    /**
+     * Set the serviceable attached to this service.
+     *
+     * @param mixed The serviceable to attach.
+     * @param bool [$save=true] True to immediately save this model, false if
+     * not.
+     */
+    public function setServiceable($serviceable, $save = true) {
+        $this->serviceable_id = $serviceable->id;
+        $this->serviceable_type = get_class($serviceable);
+        if($save)
+            $this->save();
     }
 }

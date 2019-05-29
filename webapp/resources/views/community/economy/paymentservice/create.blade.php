@@ -34,120 +34,58 @@
             {{ ErrorRenderer::inline('enabled') }}
         </div>
 
-        <div class="ui divider"></div>
+        <div class="field {{ ErrorRenderer::hasError('currency') ? 'error' : '' }}">
+            {{ Form::label('currency', __('misc.currency')) }}
 
-        <div class="field {{ ErrorRenderer::hasError('account_holder') ? 'error' : '' }}">
-            {{ Form::label('account_holder', __('barpay::misc.accountHolder') . ':') }}
-            {{ Form::text('account_holder', '', [
-                'placeholder' => __('account.firstNamePlaceholder') . ' ' .  __('account.lastNamePlaceholder'),
-            ]) }}
-            {{ ErrorRenderer::inline('account_holder') }}
-        </div>
+            <div class="ui fluid selection dropdown">
+                <input type="hidden" name="currency" value="{{ $currencies->first()->id }}" />
+                <i class="dropdown icon"></i>
 
-        <div class="two fields">
-            <div class="field {{ ErrorRenderer::hasError('iban') ? 'error' : '' }}">
-                {{ Form::label('iban', __('barpay::misc.iban') . ':') }}
-                {{ Form::text('iban', '', [
-                    'placeholder' => __('barpay::misc.ibanPlaceholder'),
-                ]) }}
-                {{ ErrorRenderer::inline('iban') }}
+                <div class="default text">@lang('misc.pleaseSpecify')</div>
+                <div class="menu">
+                    @foreach($currencies as $c)
+                        <div class="item" data-value="{{ $c->id }}">{{ $c->displayName }}</div>
+                    @endforeach
+                </div>
             </div>
 
-            <div class="field {{ ErrorRenderer::hasError('bic') ? 'error' : '' }}">
-                {{ Form::label('bic', __('barpay::misc.bic') .  ' (' .  __('general.optional') . '):') }}
-                {{ Form::text('bic', '', [
-                    'placeholder' => __('barpay::misc.bicPlaceholder'),
-                ]) }}
-                {{ ErrorRenderer::inline('bic') }}
-            </div>
+            {{ ErrorRenderer::inline('currency') }}
         </div>
 
-        {{-- <div class="two fields"> --}}
-        {{--     <div class="inline field {{ ErrorRenderer::hasError('allow_deposit') ? 'error' : '' }}"> --}}
-        {{--         <div class="ui toggle checkbox"> --}}
-        {{--             <input type="checkbox" --}}
-        {{--                     name="allow_depost" --}}
-        {{--                     tabindex="0" --}}
-        {{--                     class="hidden" --}}
-        {{--                     checked="checked"> --}}
-        {{--             {1{-- TODO: translate --}1} --}}
-        {{--             {{ Form::label('allow_depost', __('Allow deposits')) }} --}}
-        {{--         </div> --}}
-        {{--         <br /> --}}
-        {{--         {{ ErrorRenderer::inline('allow_depost') }} --}}
-        {{--     </div> --}}
-        {{--     <div class="inline field {{ ErrorRenderer::hasError('allow_withdraw') ? 'error' : '' }}"> --}}
-        {{--         <div class="ui toggle checkbox"> --}}
-        {{--             <input type="checkbox" --}}
-        {{--                     name="allow_withdraw" --}}
-        {{--                     tabindex="0" --}}
-        {{--                     class="hidden" --}}
-        {{--                     checked="checked"> --}}
-        {{--             {1{-- TODO: translate --}1} --}}
-        {{--             {{ Form::label('allow_withdraw', __('Allow withdrawals')) }} --}}
-        {{--         </div> --}}
-        {{--         <br /> --}}
-        {{--         {{ ErrorRenderer::inline('allow_withdraw') }} --}}
-        {{--     </div> --}}
-        {{-- </div> --}}
+        <div class="inline field {{ ErrorRenderer::hasError('deposit') ? 'error' : '' }}">
+            <div class="ui toggle checkbox">
+                <input type="checkbox"
+                        name="deposit"
+                        tabindex="0"
+                        class="hidden"
+                        checked="checked">
+                {{-- TODO: translate --}}
+                {{ Form::label('deposit', __('pages.paymentService.supportDeposit')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('deposit') }}
+        </div>
 
-        {{-- <div class="four fields"> --}}
-        {{--     @php --}}
-        {{--         $field = 'tmp'; --}}
-        {{--     @endphp --}}
-        {{--     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}"> --}}
-        {{--         <label>Deposit minimum:</label> --}}
-        {{--         <div class="ui labeled input"> --}}
-        {{--             <label for="{{ $field }}" class="ui label">€</label> --}}
-        {{--             <input type="text" --}}
-        {{--                 placeholder="0.01" --}}
-        {{--                 id="{{ $field }}" --}}
-        {{--                 name="{{ $field }}" --}}
-        {{--                 value="0.01" /> --}}
-        {{--         </div> --}}
-        {{--         {{ ErrorRenderer::inline($field) }} --}}
-        {{--     </div> --}}
-        {{--     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}"> --}}
-        {{--         <label>Deposit maximum:</label> --}}
-        {{--         <div class="ui labeled input"> --}}
-        {{--             <label for="{{ $field }}" class="ui label">€</label> --}}
-        {{--             <input type="text" --}}
-        {{--                 placeholder="1000" --}}
-        {{--                 id="{{ $field }}" --}}
-        {{--                 name="{{ $field }}" --}}
-        {{--                 value="1000" /> --}}
-        {{--         </div> --}}
-        {{--         {{ ErrorRenderer::inline($field) }} --}}
-        {{--     </div> --}}
-        {{--     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}"> --}}
-        {{--         <label>Withdraw minimum:</label> --}}
-        {{--         <div class="ui labeled input"> --}}
-        {{--             <label for="{{ $field }}" class="ui label">€</label> --}}
-        {{--             <input type="text" --}}
-        {{--                 placeholder="0.01" --}}
-        {{--                 id="{{ $field }}" --}}
-        {{--                 name="{{ $field }}" --}}
-        {{--                 value="0.01" /> --}}
-        {{--         </div> --}}
-        {{--         {{ ErrorRenderer::inline($field) }} --}}
-        {{--     </div> --}}
-        {{--     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}"> --}}
-        {{--         <label>Withdraw maximum:</label> --}}
-        {{--         <div class="ui labeled input"> --}}
-        {{--             <label for="{{ $field }}" class="ui label">€</label> --}}
-        {{--             <input type="text" --}}
-        {{--                 placeholder="1000" --}}
-        {{--                 id="{{ $field }}" --}}
-        {{--                 name="{{ $field }}" --}}
-        {{--                 value="1000" /> --}}
-        {{--         </div> --}}
-        {{--         {{ ErrorRenderer::inline($field) }} --}}
-        {{--     </div> --}}
-        {{-- </div> --}}
+        <div class="inline field {{ ErrorRenderer::hasError('withdraw') ? 'error' : '' }}">
+            <div class="ui toggle checkbox">
+                <input type="checkbox"
+                        name="withdraw"
+                        tabindex="0"
+                        class="hidden"
+                        checked="checked">
+                {{-- TODO: translate --}}
+                {{ Form::label('withdraw', __('pages.paymentService.supportWithdraw')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('withdraw') }}
+        </div>
 
         <div class="ui divider"></div>
 
-        <br />
+        {{-- Embed servicable specific view --}}
+        @include($serviceable::view('create'))
+
+        <div class="ui divider"></div>
 
         <button class="ui button primary" type="submit" name="submit" value="">
             @lang('misc.add')
