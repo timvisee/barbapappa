@@ -15,6 +15,11 @@
         'method' => 'PUT',
         'class' => 'ui form'
     ]) !!}
+        <div class="ui warning message visible">
+            <span class="halflings halflings-warning-sign"></span>
+            @lang('pages.paymentService.startedWillUseOldDetails')
+        </div>
+
         <div class="field disabled">
             {{ Form::label('type', __('pages.paymentService.serviceType') . ':') }}
             {{ Form::text('type', $serviceable::name()) }}
@@ -37,7 +42,9 @@
             {{ Form::label('currency', __('misc.currency')) }}
 
             <div class="ui fluid selection dropdown">
-                <input type="hidden" name="currency" value="{{ $service->currency_id }}" />
+                <input type="hidden" name="currency" value="{{
+                        $currencies->firstWhere('currency_id', $service->currency_id)->id
+                    }}" />
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.pleaseSpecify')</div>

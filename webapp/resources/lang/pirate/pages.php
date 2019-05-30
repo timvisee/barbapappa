@@ -288,6 +288,7 @@ return [
         'backToServices' => 'Back to payment services',
         'viewService' => 'View service',
         'unknownService' => 'Unknown payment service',
+        'startedWillUseOldDetails' => 'Payments that already be initiated might still use old details, even after changing them here.',
     ],
 
     /**

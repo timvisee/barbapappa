@@ -16,8 +16,15 @@ class CreatePaymentManualIbanTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('payment_id')->unsigned()->nullable(false);
 
-            // Source account, a payment reference, transmit and confirm times
-            $table->string('iban', 32)->nullable(false);
+            // Target account details, from serviceable
+            $table->string('to_account_holder')->nullable(false);
+            $table->string('to_iban', 32)->nullable(false);
+            $table->string('to_bic', 11)->nullable(true);
+
+            // Source account details, from user
+            $table->string('from_iban', 32)->nullable(false);
+
+            // State
             $table->datetime('transferred_at')->nullable(true);
             $table->datetime('confirmed_at')->nullable(true);
 

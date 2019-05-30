@@ -1,3 +1,8 @@
+<div class="ui warning message visible">
+    <span class="halflings halflings-warning-sign"></span>
+    @lang('barpay::misc.mustBeCorrect')
+</div>
+
 <div class="field {{ ErrorRenderer::hasError('account_holder') ? 'error' : '' }}">
     {{ Form::label('account_holder', __('barpay::misc.accountHolder') . ':') }}
     {{ Form::text('account_holder', $serviceable->account_holder, [

@@ -288,6 +288,7 @@ return [
         'backToServices' => 'Terug naar betaalservices',
         'viewService' => 'Service bekijken',
         'unknownService' => 'Onbekende betaalservice',
+        'startedWillUseOldDetails' => 'Betalingen die al geïnitieerd zijn gebruiken mogelijk nog oude gegevens, ook nadat je ze hier aanpast.',
     ],
 
     /**
