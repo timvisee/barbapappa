@@ -76,6 +76,7 @@ class PaymentServiceController extends Controller {
         $request->validate([
             'serviceable' => ['required', Rule::in(PayService::SERVICEABLES)],
             'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
+            'withdraw' => 'required_without:deposit',
         ]);
         ($serviceable_type::CONTROLLER)::validateCreate($request);
 
@@ -171,6 +172,7 @@ class PaymentServiceController extends Controller {
         // Validate service and serviceable fields
         $request->validate([
             'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
+            'withdraw' => 'required_without:deposit',
         ]);
         ($serviceable::CONTROLLER)::validateCreate($request);
 
