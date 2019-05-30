@@ -251,8 +251,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::put('/edit', 'PaymentServiceController@doEdit')->name('community.economy.payservice.doEdit');
                             // Route::get('/restore', 'PaymentServiceController@restore')->name('community.economy.payservice.restore');
                             // Route::put('/restore', 'PaymentServiceController@doRestore')->name('community.economy.payservice.doRestore');
-                            // Route::get('/delete', 'PaymentServiceController@delete')->name('community.economy.payservice.delete');
-                            // Route::delete('/delete', 'PaymentServiceController@doDelete')->name('community.economy.payservice.doDelete');
+                            Route::get('/delete', 'PaymentServiceController@delete')->name('community.economy.payservice.delete');
+                            Route::delete('/delete', 'PaymentServiceController@doDelete')->name('community.economy.payservice.doDelete');
                         });
                     });
                 });

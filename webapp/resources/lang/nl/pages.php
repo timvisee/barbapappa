@@ -270,6 +270,7 @@ return [
         'newService' => 'Service toevoegen',
         'newChooseType' => 'Kies alsjeblieft het type betaalservice dat je wilt configureren en wilt toevoegen.',
         'editService' => 'Service aanpassen',
+        'deleteService' => 'Service verwijderen',
         'created' => 'De betaalservice is aangemaakt.',
         'changed' => 'Betaalservice aanpassingen opgeslagen.',
         'restoreQuestion' => 'Je staat op het punt deze betaalservice te herstellen om het weer beschikbaar te maken. Weet je zeker dat je door wilt gaan?',

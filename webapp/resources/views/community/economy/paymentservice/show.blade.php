@@ -99,14 +99,14 @@
                     {{--     @lang('misc.restore') --}}
                     {{-- </a> --}}
                 @endif
-                {{-- <a href="{{ route('community.economy.payservice.delete', [ --}}
-                {{--             'communityId' => $community->human_id, --}}
-                {{--             'economyId' => $economy->id, --}}
-                {{--             'serviceId' => $service->id, --}}
-                {{--         ]) }}" --}}
-                {{--         class="ui button negative"> --}}
-                {{--     @lang('misc.delete') --}}
-                {{-- </a> --}}
+                <a href="{{ route('community.economy.payservice.delete', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'serviceId' => $service->id,
+                        ]) }}"
+                        class="ui button negative">
+                    @lang('misc.delete')
+                </a>
             </div>
         </p>
     @endif

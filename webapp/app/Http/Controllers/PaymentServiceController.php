@@ -255,56 +255,52 @@ class PaymentServiceController extends Controller {
     //         ->with('success', __('pages.products.restored'));
     // }
 
-    // /**
-    //  * Page for confirming the deletion of the product.
-    //  *
-    //  * @return Response
-    //  */
-    // public function delete($communityId, $economyId, $productId) {
-    //     // Get the user, community, find the product
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $product = $economy->products()->withTrashed()->findOrFail($productId);
+    /**
+     * Page for confirming the deletion of the payment service.
+     *
+     * @return Response
+     */
+    public function delete($communityId, $economyId, $serviceId) {
+        // Get the user, community, find the payment service
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
 
-    //     // TODO: ensure there are no other constraints that prevent deleting the
-    //     // product
+        // TODO: ensure there are no other constraints that prevent deleting the
+        // product
 
-    //     return view('community.economy.product.delete')
-    //         ->with('economy', $economy)
-    //         ->with('product', $product);
-    // }
+        return view('community.economy.paymentservice.delete')
+            ->with('economy', $economy)
+            ->with('service', $service);
+    }
 
-    // /**
-    //  * Delete a product.
-    //  *
-    //  * @return Response
-    //  */
-    // public function doDelete(Request $request, $communityId, $economyId, $productId) {
-    //     // Get the user, community, find the product
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $product = $economy->products()->withTrashed()->findOrFail($productId);
-    //     $permanent = is_checked($request->input('permanent'));
+    /**
+     * Delete a payment service.
+     *
+     * @return Response
+     */
+    public function doDelete(Request $request, $communityId, $economyId, $serviceId) {
+        // Get the user, community, find the payment service
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
 
-    //     // TODO: ensure there are no other constraints that prevent deleting the
-    //     // product
+        // TODO: ensure there are no other constraints that prevent deleting the
+        // product
 
-    //     // Delete, or soft delete
-    //     if(!$permanent)
-    //         $product->delete();
-    //     else
-    //         $product->forceDelete();
+        // Soft delete
+        $service->delete();
 
-    //     // Redirect to the product index
-    //     return redirect()
-    //         ->route('community.economy.product.index', [
-    //             'communityId' => $community->human_id,
-    //             'economyId' => $economy->id
-    //         ])
-    //         ->with('success', __('pages.products.' . ($permanent ? 'permanentlyDeleted' : 'deleted')));
-    // }
+        // Redirect to the payment service index
+        return redirect()
+            ->route('community.economy.payservice.index', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+            ])
+            ->with('success', __('pages.paymentService.deleted'));
+    }
 
     /**
      * The permission required for viewing.

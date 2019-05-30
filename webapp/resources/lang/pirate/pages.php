@@ -270,6 +270,7 @@ return [
         'newService' => 'Add service',
         'newChooseType' => 'Please choose th\' type of payment service yer like to configure and add.',
         'editService' => 'Edit service',
+        'deleteService' => 'Delete service',
         'created' => 'The payment service be added.',
         'changed' => 'The payment service be changed.',
         'restoreQuestion' => 'Yer \'bout to afloat dis payment service to make it available again. Ye be sure ye want to continue?',

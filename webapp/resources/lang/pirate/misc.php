@@ -84,5 +84,6 @@ return [
     'assets' => 'Assets',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
+    'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',
 ];
