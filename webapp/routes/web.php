@@ -245,15 +245,15 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                         // Show
                         Route::get('/', 'PaymentServiceController@show')->name('community.economy.payservice.show');
 
-                    //     // Edit/delete, require manager perms
-                    //     Route::middleware(PaymentServiceController::permsManage()->middleware())->group(function() {
-                    //         Route::get('/edit', 'PaymentServiceController@edit')->name('community.economy.payservice.edit');
-                    //         Route::put('/edit', 'PaymentServiceController@doEdit')->name('community.economy.payservice.doEdit');
-                    //         Route::get('/restore', 'PaymentServiceController@restore')->name('community.economy.payservice.restore');
-                    //         Route::put('/restore', 'PaymentServiceController@doRestore')->name('community.economy.payservice.doRestore');
-                    //         Route::get('/delete', 'PaymentServiceController@delete')->name('community.economy.payservice.delete');
-                    //         Route::delete('/delete', 'PaymentServiceController@doDelete')->name('community.economy.payservice.doDelete');
-                    //     });
+                        // Edit/delete, require manager perms
+                        Route::middleware(PaymentServiceController::permsManage()->middleware())->group(function() {
+                            Route::get('/edit', 'PaymentServiceController@edit')->name('community.economy.payservice.edit');
+                            Route::put('/edit', 'PaymentServiceController@doEdit')->name('community.economy.payservice.doEdit');
+                            // Route::get('/restore', 'PaymentServiceController@restore')->name('community.economy.payservice.restore');
+                            // Route::put('/restore', 'PaymentServiceController@doRestore')->name('community.economy.payservice.doRestore');
+                            // Route::get('/delete', 'PaymentServiceController@delete')->name('community.economy.payservice.delete');
+                            // Route::delete('/delete', 'PaymentServiceController@doDelete')->name('community.economy.payservice.doDelete');
+                        });
                     });
                 });
             });

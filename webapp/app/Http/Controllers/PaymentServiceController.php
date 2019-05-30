@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
-use App\Models\Product;
 use App\Models\EconomyCurrency;
 use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
@@ -33,12 +32,12 @@ class PaymentServiceController extends Controller {
     }
 
     /**
-     * Product creation page.
+     * Payment service creation page.
      *
      * @return Response
      */
     public function create(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the products
+        // Get the user, community, find the payment service
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
@@ -67,7 +66,7 @@ class PaymentServiceController extends Controller {
      * @return Response
      */
     public function doCreate(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the products
+        // Get the user, community, find the payment service
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
@@ -114,7 +113,7 @@ class PaymentServiceController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $serviceId) {
-        // Get the user, community, find the product
+        // Get the user, community, find the payment service
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
@@ -127,115 +126,80 @@ class PaymentServiceController extends Controller {
             ->with('serviceable', $serviceable);
     }
 
-    // /**
-    //  * Edit a product.
-    //  *
-    //  * @return Response
-    //  */
-    // public function edit($communityId, $economyId, $productId) {
-    //     // TODO: with trashed?
+    /**
+     * Edit a payment service.
+     *
+     * @return Response
+     */
+    public function edit($communityId, $economyId, $serviceId) {
+        // TODO: with trashed?
 
-    //     // Get the user, community, find the product
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $product = $economy->products()->findOrFail($productId);
-    //     $locales = langManager()->getLocales(true, true);
+        // Get the user, community, find the payment service
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
+        $serviceable = $service->serviceable;
 
-    //     return view('community.economy.product.edit')
-    //         ->with('economy', $economy)
-    //         ->with('product', $product)
-    //         ->with('locales', $locales);
-    // }
+        // List the currencies that can be used
+        $currencies = $economy->currencies;
 
-    // /**
-    //  * Product update endpoint.
-    //  *
-    //  * @param Request $request Request.
-    //  *
-    //  * @return Response
-    //  */
-    // public function doEdit(Request $request, $communityId, $economyId, $productId) {
-    //     // TODO: with trashed?
+        return view('community.economy.paymentservice.edit')
+            ->with('economy', $economy)
+            ->with('service', $service)
+            ->with('serviceable', $serviceable)
+            ->with('currencies', $currencies);
+    }
 
-    //     // Get the user, community, find the product
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $product = $economy->products()->findOrFail($productId);
-    //     $locales = collect(langManager()->getLocales(true, true));
+    /**
+     * Payment service update endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doEdit(Request $request, $communityId, $economyId, $serviceId) {
+        // TODO: with trashed?
 
-    //     // Build validation rules, and validate
-    //     $rules = ['name' => 'required|' . ValidationDefaults::NAME];
-    //     $messages = [];
-    //     foreach($economy->currencies as $currency) {
-    //         $rules['price_' . $currency->id] = 'nullable|' . ValidationDefaults::PRICE;
-    //         $messages['price_' . $currency->id . '.regex'] = __('misc.invalidPrice');
-    //     }
-    //     foreach($locales as $locale)
-    //         $rules['name_' . $locale] = 'nullable|' . ValidationDefaults::NAME;
-    //     $this->validate($request, $rules, $messages);
+        // Get the user, community, find the payment service
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
+        $serviceable = $service->serviceable;
 
-    //     // Change product properties and sync prices in transaction
-    //     DB::transaction(function() use($request, $product, $economy, $locales) {
-    //         // Change properties
-    //         $product->name = $request->input('name');
-    //         $product->enabled = is_checked($request->input('enabled'));
-    //         $product->save();
+        // Validate service and serviceable fields
+        $request->validate([
+            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
+        ]);
+        ($serviceable::CONTROLLER)::validateCreate($request);
 
-    //         // Sync localized product names
-    //         $product->names()->sync(
-    //             $locales
-    //                 ->filter(function($locale) use($request) {
-    //                     return $request->input('name_' . $locale) != null;
-    //                 })
-    //                 ->map(function($locale) use($request, $product) {
-    //                     return [
-    //                         'id' => $product
-    //                             ->names
-    //                             ->filter(function($n) use($locale) { return $n->locale == $locale; })
-    //                             ->map(function($n) { return $n->id; })
-    //                             ->first(),
-    //                         'product_id' => $product->id,
-    //                         'locale' => $locale,
-    //                         'name' => $request->input('name_' . $locale),
-    //                     ];
-    //                 })
-    //                 ->toArray()
-    //         );
+        // Find the selected economy currency, get it's currency ID
+        // TODO: did we get Currency id from form? Should be economycurren?
+        $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
 
-    //         // Sync product prices
-    //         $product->prices()->sync(
-    //             $economy
-    //                 ->currencies
-    //                 ->filter(function($currency) use($request) {
-    //                     return $request->input('price_' . $currency->id) != null;
-    //                 })
-    //                 ->map(function($currency) use($request, $product) {
-    //                     return [
-    //                         'id' => $product
-    //                             ->prices
-    //                             ->filter(function($p) use($currency) { return $p->currency_id == $currency->id; })
-    //                             ->map(function($p) { return $p->id; })
-    //                             ->first(),
-    //                         'product_id' => $product->id,
-    //                         'currency_id' => $currency->id,
-    //                         'price' => str_replace(',', '.', $request->input('price_' . $currency->id)),
-    //                     ];
-    //                 })
-    //                 ->toArray()
-    //         );
-    //     });
+        // Change service and serviceable properties and sync prices in transaction
+        DB::transaction(function() use($request, $service, $serviceable, $currencyId) {
+            // Update service properties
+            $service->currency_id = $currencyId;
+            $service->enabled = is_checked($request->input('enabled'));
+            $service->deposit = is_checked($request->input('deposit'));
+            $service->withdraw = is_checked($request->input('withdraw'));
+            $service->save();
 
-    //     // Redirect the user to the account overview page
-    //     return redirect()
-    //         ->route('community.economy.product.show', [
-    //             'communityId' => $community->human_id,
-    //             'economyId' => $economy->id,
-    //             'productId' => $product->id,
-    //         ])
-    //         ->with('success', __('pages.products.changed'));
-    // }
+            // Update serviceable
+            $serviceable = ($serviceable::CONTROLLER)::edit($request, $service, $serviceable);
+        });
+
+        // Redirect the user to the payment service page
+        return redirect()
+            ->route('community.economy.payservice.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'serviceId' => $service->id,
+            ])
+            ->with('success', __('pages.paymentService.changed'));
+    }
 
     // /**
     //  * Page for confirming restoring a product.

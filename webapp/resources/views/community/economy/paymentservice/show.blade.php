@@ -77,39 +77,39 @@
 
     <div class="ui divider"></div>
 
-    {{-- @if(perms(PaymentServiceController::permsManage())) --}}
-    {{--     <p> --}}
-    {{--         <div class="ui buttons"> --}}
-    {{--             @if(!$service->trashed()) --}}
-    {{--                 <a href="{{ route('community.economy.payservice.edit', [ --}}
-    {{--                             'communityId' => $community->human_id, --}}
-    {{--                             'economyId' => $economy->id, --}}
-    {{--                             'serviceId' => $service->id, --}}
-    {{--                         ]) }}" --}}
-    {{--                         class="ui button secondary"> --}}
-    {{--                     @lang('misc.edit') --}}
-    {{--                 </a> --}}
-    {{--             @else --}}
-    {{--                 <a href="{{ route('community.economy.payservice.restore', [ --}}
-    {{--                             'communityId' => $community->human_id, --}}
-    {{--                             'economyId' => $economy->id, --}}
-    {{--                             'serviceId' => $service->id, --}}
-    {{--                         ]) }}" --}}
-    {{--                         class="ui button primary"> --}}
-    {{--                     @lang('misc.restore') --}}
-    {{--                 </a> --}}
-    {{--             @endif --}}
-    {{--             <a href="{{ route('community.economy.payservice.delete', [ --}}
-    {{--                         'communityId' => $community->human_id, --}}
-    {{--                         'economyId' => $economy->id, --}}
-    {{--                         'serviceId' => $service->id, --}}
-    {{--                     ]) }}" --}}
-    {{--                     class="ui button negative"> --}}
-    {{--                 @lang('misc.delete') --}}
-    {{--             </a> --}}
-    {{--         </div> --}}
-    {{--     </p> --}}
-    {{-- @endif --}}
+    @if(perms(PaymentServiceController::permsManage()))
+        <p>
+            <div class="ui buttons">
+                @if(!$service->trashed())
+                    <a href="{{ route('community.economy.payservice.edit', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'serviceId' => $service->id,
+                            ]) }}"
+                            class="ui button secondary">
+                        @lang('misc.edit')
+                    </a>
+                @else
+                    {{-- <a href="{{ route('community.economy.payservice.restore', [ --}}
+                    {{--             'communityId' => $community->human_id, --}}
+                    {{--             'economyId' => $economy->id, --}}
+                    {{--             'serviceId' => $service->id, --}}
+                    {{--         ]) }}" --}}
+                    {{--         class="ui button primary"> --}}
+                    {{--     @lang('misc.restore') --}}
+                    {{-- </a> --}}
+                @endif
+                {{-- <a href="{{ route('community.economy.payservice.delete', [ --}}
+                {{--             'communityId' => $community->human_id, --}}
+                {{--             'economyId' => $economy->id, --}}
+                {{--             'serviceId' => $service->id, --}}
+                {{--         ]) }}" --}}
+                {{--         class="ui button negative"> --}}
+                {{--     @lang('misc.delete') --}}
+                {{-- </a> --}}
+            </div>
+        </p>
+    @endif
 
     <p>
         <a href="{{ route('community.economy.payservice.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"

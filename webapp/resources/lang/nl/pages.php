@@ -265,7 +265,7 @@ return [
         'noServices' => 'Geen betaalservices...',
         'manageService' => 'Beheer betaalservice',
         'manageServices' => 'Beheer betaalservices',
-        'serviceType' => 'Type Betaalservice',
+        'serviceType' => 'Type betaalservice',
         'availableTypes#' => '{0} Geen betaalservice types beschikbaar|{1} Beschikbare betaalservice type|[2,*] :count betaalservice types beschikbaar',
         'newService' => 'Service toevoegen',
         'newChooseType' => 'Kies alsjeblieft het type betaalservice dat je wilt configureren en wilt toevoegen.',

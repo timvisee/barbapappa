@@ -45,4 +45,18 @@ class ServiceManualIbanController {
 
         return $serviceable;
     }
+
+    /**
+     * Create the service specific serviceable, and link it to the service.
+     *
+     * @param Request $request The request.
+     * @param Service $service The service.
+     * @param ServiceManualIban $serviceable The serviceable.
+     */
+    public static function edit(Request $request, Service $service, ServiceManualIban $serviceable) {
+        $serviceable->account_holder = $request->input('account_holder');
+        $serviceable->iban = $request->input('iban');
+        $serviceable->bic = $request->input('bic');
+        $serviceable->save();
+    }
 }
