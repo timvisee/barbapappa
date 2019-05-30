@@ -289,6 +289,7 @@ return [
         'viewService' => 'View service',
         'unknownService' => 'Unknown payment service',
         'startedWillUseOldDetails' => 'Payments that already be initiated might still use old details, even after changing them here.',
+        'startedWillComplete' => 'Nay new payments be accepted using dis service. However, payments that have already been initiated still be completed.',
     ],
 
     /**

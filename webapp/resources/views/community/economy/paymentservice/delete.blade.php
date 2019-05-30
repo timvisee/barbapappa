@@ -16,12 +16,17 @@
         'method' => 'DELETE',
         'class' => 'ui form'
     ]) !!}
-        <div class="ui info message visible">
+        <div class="ui info top attached message visible">
+            <span class="halflings halflings-info-sign"></span>
+            @lang('pages.paymentService.startedWillComplete')
+        </div>
+
+        <div class="ui info bottom attached message visible">
             <span class="halflings halflings-info-sign"></span>
             @lang('misc.trashingCanBeUndone')
         </div>
 
-        <br />
+        <div class="ui divider hidden"></div>
 
         <div class="ui buttons">
             <a href="{{ route('community.economy.payservice.show', [

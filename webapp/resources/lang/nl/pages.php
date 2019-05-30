@@ -289,6 +289,7 @@ return [
         'viewService' => 'Service bekijken',
         'unknownService' => 'Onbekende betaalservice',
         'startedWillUseOldDetails' => 'Betalingen die al geïnitieerd zijn gebruiken mogelijk nog oude gegevens, ook nadat je ze hier aanpast.',
+        'startedWillComplete' => 'Er zullen geen nieuwe betalingen geaccepteerd worden met deze service. Betaling die al geïnitieerd zijn zullen echter wel nog worden afgemaakt.',
     ],
 
     /**
