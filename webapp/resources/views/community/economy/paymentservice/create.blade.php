@@ -59,8 +59,7 @@
                         tabindex="0"
                         class="hidden"
                         checked="checked">
-                {{-- TODO: translate --}}
-                {{ Form::label('deposit', __('pages.paymentService.supportDeposit')) }}
+                {{ Form::label('deposit', __('pages.paymentService.supportDepositDescription')) }}
             </div>
             <br />
             {{ ErrorRenderer::inline('deposit') }}
@@ -73,8 +72,7 @@
                         tabindex="0"
                         class="hidden"
                         checked="checked">
-                {{-- TODO: translate --}}
-                {{ Form::label('withdraw', __('pages.paymentService.supportWithdraw')) }}
+                {{ Form::label('withdraw', __('pages.paymentService.supportWithdrawDescription')) }}
             </div>
             <br />
             {{ ErrorRenderer::inline('withdraw') }}

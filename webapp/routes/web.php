@@ -240,10 +240,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                         Route::post('/add', 'PaymentServiceController@doCreate')->name('community.economy.payservice.doCreate');
                     });
 
-                    // // Specific
-                    // Route::prefix('/{productId}')->group(function() {
-                    //     // Show
-                    //     Route::get('/', 'PaymentServiceController@show')->name('community.economy.payservice.show');
+                    // Specific
+                    Route::prefix('/{serviceId}')->group(function() {
+                        // Show
+                        Route::get('/', 'PaymentServiceController@show')->name('community.economy.payservice.show');
 
                     //     // Edit/delete, require manager perms
                     //     Route::middleware(PaymentServiceController::permsManage()->middleware())->group(function() {
@@ -254,7 +254,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     //         Route::get('/delete', 'PaymentServiceController@delete')->name('community.economy.payservice.delete');
                     //         Route::delete('/delete', 'PaymentServiceController@doDelete')->name('community.economy.payservice.doDelete');
                     //     });
-                    // });
+                    });
                 });
             });
         });

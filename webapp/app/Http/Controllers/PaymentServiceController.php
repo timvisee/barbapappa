@@ -105,26 +105,27 @@ class PaymentServiceController extends Controller {
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id,
             ])
-            // TODO: translate this message
             ->with('success', __('pages.paymentService.created'));
     }
 
-    // /**
-    //  * Show a product.
-    //  *
-    //  * @return Response
-    //  */
-    // public function show($communityId, $economyId, $productId) {
-    //     // Get the user, community, find the product
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $product = $economy->products()->withTrashed()->findOrFail($productId);
+    /**
+     * Show a payment service.
+     *
+     * @return Response
+     */
+    public function show($communityId, $economyId, $serviceId) {
+        // Get the user, community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
+        $serviceable = $service->serviceable;
 
-    //     return view('community.economy.product.show')
-    //         ->with('economy', $economy)
-    //         ->with('product', $product);
-    // }
+        return view('community.economy.paymentservice.show')
+            ->with('economy', $economy)
+            ->with('service', $service)
+            ->with('serviceable', $serviceable);
+    }
 
     // /**
     //  * Edit a product.

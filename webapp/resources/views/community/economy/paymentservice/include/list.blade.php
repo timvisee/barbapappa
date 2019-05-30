@@ -10,13 +10,12 @@
         {{-- Payment services --}}
         @forelse($group['services'] as $service)
             <a class="item"
-                    {{-- href="{{ route('community.economy.payservice.show', [ --}}
-                    {{--     // TODO: this is not efficient --}}
-                    {{--     'communityId' => $service->economy->community->human_id, --}}
-                    {{--     'economyId' => $service->economy_id, --}}
-                    {{--     'serviceId' => $service->id, --}}
-                    {{-- ]) }}"> --}}
-                    >
+                    href="{{ route('community.economy.payservice.show', [
+                        // TODO: this is not efficient
+                        'communityId' => $service->economy->community->human_id,
+                        'economyId' => $service->economy_id,
+                        'serviceId' => $service->id,
+                    ]) }}">
                 {{ $service->displayName() }}
 
                 {{-- TODO: show some other stat here --}}

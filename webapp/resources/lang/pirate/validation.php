@@ -126,6 +126,8 @@ return [
         'new_password_confirmation' => 'shiny passcode check',
         'language' => 'speak',
         'invalidate_other_sessions' => 'sink other ships',
+        'iban' => 'IBAN',
+        'bic' => 'BIC',
     ],
 
 ];

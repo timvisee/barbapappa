@@ -127,8 +127,13 @@ return [
         'first_name' => 'voornaam',
         'last_name' => 'achternaam',
         'language' => 'taal',
+        'currency' => 'valuta',
+        'enabled' => 'ingeschakeld',
         'invalidate_other_sessions' => 'log uit op andere apparaten',
         'slug' => 'URL-pad',
+        'iban' => 'IBAN',
+        'bic' => 'BIC',
+        'account_holder' => 'rekeninghouder',
     ],
 
 ];

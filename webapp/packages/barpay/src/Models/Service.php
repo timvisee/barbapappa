@@ -3,6 +3,7 @@
 namespace BarPay\Models;
 
 use App\Scopes\EnabledScope;
+use App\Models\Economy;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -103,6 +104,15 @@ class Service extends Model {
      */
     public function scopeSupportsWithdraw($query) {
         return $query->where('withdraw', true);
+    }
+
+    /**
+     * Get a relation to the economy this belongs to.
+     *
+     * @return Relation to the economy.
+     */
+    public function economy() {
+        return $this->belongsTo(Economy::class);
     }
 
     /**

@@ -11,6 +11,11 @@
     <p>@lang('pages.paymentService.newChooseType')</p>
 
     <div class="ui top vertical menu fluid">
+        <h5 class="ui item header">
+            {{ trans_choice('pages.paymentService.availableTypes#', [
+                'count' => count(PayService::SERVICEABLES)
+            ]) }}
+        </h5>
         @forelse(PayService::SERVICEABLES as $service)
             <a class="item"
                     href="{{ route('community.economy.payservice.create', [

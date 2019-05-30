@@ -120,6 +120,8 @@ return [
 
     'attributes' => [
         'invalidate_other_sessions' => 'log out on other devices',
+        'iban' => 'IBAN',
+        'bic' => 'BIC',
     ],
 
 ];
