@@ -29,10 +29,29 @@
     </h2>
 
     {{-- Payment service list --}}
+    @php
+        $groups = [];
+        if($services->contains('enabled', true))
+            $groups[] = [
+                'header' => trans_choice(
+                    'pages.paymentService.enabledServices#',
+                    $services->where('enabled', true)->count()
+                ),
+                'services' => $services->where('enabled', true),
+            ];
+        if($services->contains('enabled', false))
+            $groups[] = [
+                'header' => trans_choice(
+                    'pages.paymentService.disabledServices#',
+                    $services->where('enabled', false)->count()
+                ),
+                'services' => $services->where('enabled', false),
+            ];
+        if(empty($groups))
+            $groups[] = ['services' => []];
+    @endphp
     @include('community.economy.paymentservice.include.list', [
-        'groups' => [[
-            'services' => $services,
-        ]],
+        'groups' => $groups,
     ])
 
     <p>

@@ -281,6 +281,8 @@ return [
         'deleted' => 'De betaalservice is weggegooid.',
         'permanentlyDeleted' => 'De betaalservice is permanent verwijderd.',
         'enabledDescription' => 'Ingeschakeld, kan gebruikt worden',
+        'enabledServices#' => '{0} Geen ingeschakelde services|{1} Ingeschakelde service|[2,*] :count ingeschakelde services',
+        'disabledServices#' => '{0} Geen uitgeschakelde services|{1} Uitgeschakelde service|[2,*] :count uitgeschakelde services',
         'supportDeposit' => 'Ondersteun storingen',
         'supportWithdraw' => 'Ondersteun opnames',
         'supportDepositDescription' => 'Ondersteun stortingen. Laat gebruikers geld storten in portemonnees binnen deze economie.',

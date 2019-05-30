@@ -24,7 +24,7 @@ class PaymentServiceController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $services = $economy->paymentServices;
+        $services = $economy->paymentServices()->withDisabled()->get();
 
         return view('community.economy.paymentservice.index')
             ->with('economy', $economy)
@@ -118,7 +118,11 @@ class PaymentServiceController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
+        $service = $economy
+            ->paymentServices()
+            ->withDisabled()
+            ->withTrashed()
+            ->findOrFail($serviceId);
         $serviceable = $service->serviceable;
 
         return view('community.economy.paymentservice.show')
@@ -139,7 +143,10 @@ class PaymentServiceController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
+        $service = $economy
+            ->paymentServices()
+            ->withDisabled()
+            ->findOrFail($serviceId);
         $serviceable = $service->serviceable;
 
         // List the currencies that can be used
@@ -166,7 +173,10 @@ class PaymentServiceController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
+        $service = $economy
+            ->paymentServices()
+            ->withDisabled()
+            ->findOrFail($serviceId);
         $serviceable = $service->serviceable;
 
         // Validate service and serviceable fields
@@ -267,7 +277,11 @@ class PaymentServiceController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
+        $service = $economy
+            ->paymentServices()
+            ->withDisabled()
+            ->withTrashed()
+            ->findOrFail($serviceId);
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // product
@@ -287,7 +301,11 @@ class PaymentServiceController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $service = $economy->paymentServices()->withTrashed()->findOrFail($serviceId);
+        $service = $economy
+            ->paymentServices()
+            ->withDisabled()
+            ->withTrashed()
+            ->findOrFail($serviceId);
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // product

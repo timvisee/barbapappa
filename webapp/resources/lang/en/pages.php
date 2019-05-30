@@ -281,6 +281,8 @@ return [
         'deleted' => 'The payment service has been trashed.',
         'permanentlyDeleted' => 'The payment service has been permanently deleted.',
         'enabledDescription' => 'Enabled, can be used',
+        'enabledServices#' => '{0} No enabled services|{1} Enabled service|[2,*] :count enabled services',
+        'disabledServices#' => '{0} No disabled services|{1} Disabled service|[2,*] :count disabled services',
         'supportDeposit' => 'Support deposits',
         'supportDepositDescription' => 'Enable deposits. Allow users to deposit money to their wallets in this economy.',
         'supportWithdraw' => 'Support withdrawals',
