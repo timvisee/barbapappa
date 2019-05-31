@@ -82,6 +82,9 @@ return [
     'bar' => 'Bar',
     'community' => 'Groep',
     'assets' => 'Middelen',
+    'topUp' => 'Top-up',
+    'deposit' => 'Storten',
+    'withdraw' => 'Opnemen',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',

@@ -131,9 +131,11 @@ return [
         'enabled' => 'ingeschakeld',
         'invalidate_other_sessions' => 'log uit op andere apparaten',
         'slug' => 'URL-pad',
+        'amount' => 'bedrag',
         'iban' => 'IBAN',
         'bic' => 'BIC',
         'account_holder' => 'rekeninghouder',
+        'payment_service' => 'betaalservice',
     ],
 
 ];

@@ -292,6 +292,8 @@ return [
         'unknownService' => 'Unknown payment service',
         'startedWillUseOldDetails' => 'Payments that have already been initiated might still use the old details, even after changing them here.',
         'startedWillComplete' => 'No new payments will be accepted using this service. However, payments that have already been initiated will still be completed.',
+        'amountToTopUpInCurrency' => 'Amount to top-up with in :currency',
+        'selectPaymentServiceToUse' => 'Select a payment method to use',
     ],
 
     /**
@@ -321,6 +323,7 @@ return [
         'transferToUser' => 'Transfer to user',
         'toSelf' => 'To wallet',
         'toUser' => 'To user',
+        'topUp' => 'Top-up wallet',
         'successfullyTransferredAmount' => 'Successfully transfered :amount to :wallet',
         'backToWallet' => 'Back to wallet',
         'walletTransactions' => 'Wallet transactions',

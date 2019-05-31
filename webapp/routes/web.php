@@ -292,6 +292,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::post('/transfer', 'WalletController@doTransfer')->name('community.wallet.doTransfer');
                     Route::get('/transfer/user', 'WalletController@transferUser')->name('community.wallet.transfer.user');
 
+                    // Top-up pages
+                    Route::get('/top-up', 'WalletController@topUp')->name('community.wallet.topUp');
+                    Route::post('/top-up', 'WalletController@doTopUp')->name('community.wallet.topUp');
+
                     // // Supported economy currencies
                     // Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
                     //     // Index

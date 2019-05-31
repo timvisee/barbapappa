@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.wallets.transferToSelf'))
+@section('title', __('pages.wallets.topUp'))
 
 @section('content')
     <h2 class="ui header">
@@ -18,27 +18,24 @@
         {{-- </div> --}}
     </h2>
 
-    <div class="ui two item menu">
-        <a href="{{ route('community.wallet.transfer', [
-            'communityId' => $community->human_id,
-            'economyId' => $economy->id,
-            'walletId' => $wallet->id
-        ]) }}"
-            class="item active">@lang('pages.wallets.toSelf')</a>
-        <a href="{{ route('community.wallet.transfer.user',
-            ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]
-        ) }}"
-            class="item">@lang('pages.wallets.toUser')</a>
-    </div>
-
-    <div class="ui hidden divider"></div>
-
     {!! Form::open(['action' => [
-        'WalletController@doTransfer',
+        'WalletController@doTopUp',
         $community->human_id,
         $economy->id,
         $wallet->id,
     ], 'method' => 'POST', 'class' => 'ui form']) !!}
+
+    <div class="ui two item menu">
+        <a href="{{ route('community.wallet.topUp', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id,
+            'walletId' => $wallet->id
+        ]) }}"
+            class="item active">@lang('misc.deposit')</a>
+        <a href="#" class="item disabled">@lang('misc.withdraw')</a>
+    </div>
+
+    <div class="ui hidden divider"></div>
 
     <table class="ui compact celled definition table">
         <tbody>
@@ -53,12 +50,8 @@
         </tbody>
     </table>
 
-    <div class="highlight-box">
-        <i class="glyphicons glyphicons-arrow-down arrow-icon"></i>
-    </div>
-
     <div class="field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
-        <label for="amount">@lang('misc.amountInCurrency', ['currency' => $currency->name]):</label>
+        <label for="amount">@lang('pages.paymentService.amountToTopUpInCurrency', ['currency' => $currency->name]):</label>
         <div class="ui labeled input">
             <label for="amount" class="ui label">{{ $currency->symbol }}</label>
             <input type="text" placeholder="1.23" id="amount" name="amount" value="" />
@@ -66,34 +59,23 @@
         {{ ErrorRenderer::inline('amount') }}
     </div>
 
-    <div class="highlight-box">
-        <i class="glyphicons glyphicons-arrow-down arrow-icon"></i>
-    </div>
-
-    <div class="field {{ ErrorRenderer::hasError('to_wallet') ? 'error' : '' }}">
-        {{ Form::label('to_wallet', __('pages.wallets.toSelf') . ':') }}
-
-        <div class="ui fluid selection dropdown">
-            <input type="hidden" name="to_wallet">
-            <i class="dropdown icon"></i>
-
-            <div class="default text">@lang('misc.pleaseSpecify')</div>
-            <div class="menu">
-                @foreach($toWallets as $toWallet)
-                    <div class="item" data-value="{{ $toWallet->id }}">{{ $toWallet->name }}</div>
-                @endforeach
-                <div class="item" data-value="new"><i>@lang('pages.wallets.createWallet')</i></div>
+    <div class="grouped fields">
+        {{ Form::label('payment_service', __('pages.paymentService.selectPaymentServiceToUse')) }}
+        @foreach($services as $service)
+            <div class="field">
+                <div class="ui radio checkbox">
+                    {{ Form::radio('payment_service', $service->id, ['class' => 'hidden', 'tabindex' => 0]) }}
+                    {{ Form::label('payment_service', $service->displayName()) }}
+                </div>
             </div>
-        </div>
-
-        {{ ErrorRenderer::inline('to_wallet') }}
+        @endforeach
     </div>
 
     <div class="ui hidden divider"></div>
 
     <p>
         <button class="ui button primary"
-            type="submit">@lang('pages.wallets.transfer')</button>
+            type="submit">@lang('pages.wallets.topUp')</button>
         <a href="{{ route('community.wallet.show', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id,

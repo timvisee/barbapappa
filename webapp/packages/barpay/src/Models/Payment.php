@@ -2,6 +2,7 @@
 
 namespace BarPay\Models;
 
+use App\Models\Currency;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -102,5 +103,58 @@ class Payment extends Model {
      */
     public function paymentable() {
         return $this->morphTo();
+    }
+
+    /**
+     * Set the paymentable attached to this service.
+     * This is only allowed when no paymentable is set yet.
+     *
+     * @param mixed The paymentable to attach.
+     * @param bool [$save=true] True to immediately save this model, false if
+     * not.
+     *
+     * @throws \Exception Throws if a paymentable was already set.
+     */
+    public function setPaymentable($paymentable, $save = true) {
+        // Assert no paymentable is set yet
+        if(!empty($this->paymentable_id) || !empty($this->paymentable_type))
+            throw new \Exception('Could not link paymentable to payment, it has already been set');
+
+        // Set the paymentable
+        $this->paymentable_id = $paymentable->id;
+        $this->paymentable_type = get_class($paymentable);
+        if($save)
+            $this->save();
+    }
+
+    /**
+     * Start a new payment with the given service, currency and amount.
+     *
+     * @param Service $service The payment service to use.
+     * @param Currency $currency The currency to use.
+     * @param float $amount The payment amount.
+     *
+     * @return Payment The created payment.
+     */
+    public static function startNew(Service $service, Currency $currency, float $amount) {
+        // TODO: require to be in a transaction?
+
+        // TODO: assert this payment service can be used with this currency and amount
+        // TODO: assert amount is 0.01 or higher, or should we allow negative as well?
+
+        // Build a new payment
+        $payment = new Payment();
+        $payment->state = Payment::STATE_PENDING;
+        $payment->service_id = $service->id;
+        $payment->paymentable_id = 0;
+        $payment->paymentable_type = '';
+        $payment->currency_id = $currency->id;
+        $payment->money = $amount;
+        $payment->save();
+
+        // Build the paymentable and attach it to the payment
+        $paymentable = $service->serviceable::startPaymentable($payment, $service);
+
+        return $payment;
     }
 }

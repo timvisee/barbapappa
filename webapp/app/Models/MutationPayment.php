@@ -30,6 +30,13 @@ class MutationPayment extends Model {
 
     protected $table = "mutations_payment";
 
+    protected $with = ['payment'];
+
+    protected $fillable = [
+        'mutation_id',
+        'payment_id',
+    ];
+
     /**
      * Get the main mutation this payment mutation data belongs to.
      *

@@ -33,4 +33,35 @@ class PaymentManualIban extends Model {
     public function payment() {
         return $this->morphOne(Payment::class, 'paymentable');
     }
+
+    /**
+     * Create the paymentable part for a newly started payment, and attach it to
+     * the payment.
+     *
+     * @param Payment $payment The payment to create it for, and to attach it to.
+     * @param Service $service The payment service to use.
+     *
+     * @return Paymentable The created payment.
+     */
+    public static function startPaymentable(Payment $payment, Service $service) {
+        // TODO: require to be in a transaction?
+
+        // Get the serviceable
+        $serviceable = $service->serviceable;
+
+        // Build the paymentable for the payment
+        $paymentable = new PaymentManualIban();
+        $paymentable->payment_id = $payment->id;
+        $paymentable->to_account_holder = $serviceable->account_holder;
+        $paymentable->to_iban = $serviceable->iban;
+        $paymentable->to_bic = $serviceable->bic;
+        // TODO: somehow obtain the target iban here!
+        $paymentable->from_iban = '';
+        $paymentable->save();
+
+        // Attach the paymentable to the payment
+        $payment->setPaymentable($paymentable);
+
+        return $paymentable;
+    }
 }

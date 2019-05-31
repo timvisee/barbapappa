@@ -82,6 +82,9 @@ return [
     'bar' => 'Bar',
     'community' => 'Community',
     'assets' => 'Assets',
+    'topUp' => 'Top-up',
+    'deposit' => 'Deposit',
+    'withdraw' => 'Withdraw',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'trashingCanBeUndone' => 'The item will be trashed. This operation can be reverted, by restoring the item from the trash.',

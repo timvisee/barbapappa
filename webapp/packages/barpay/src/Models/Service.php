@@ -2,8 +2,9 @@
 
 namespace BarPay\Models;
 
-use App\Scopes\EnabledScope;
+use App\Models\Currency;
 use App\Models\Economy;
+use App\Scopes\EnabledScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -145,15 +146,35 @@ class Service extends Model {
 
     /**
      * Set the serviceable attached to this service.
+     * This is only allowed when no serviceable is set yet.
      *
      * @param mixed The serviceable to attach.
      * @param bool [$save=true] True to immediately save this model, false if
      * not.
+     *
+     * @throws \Exception Throws if a serviceable was already set.
      */
     public function setServiceable($serviceable, $save = true) {
+        // Assert no serviceable is set yet
+        if(!empty($this->serviceable_id) || !empty($this->serviceable_type))
+            throw new \Exception('Could not link serviceable to payment service, it has already been set');
+
+        // Set the serviceable
         $this->serviceable_id = $serviceable->id;
         $this->serviceable_type = get_class($serviceable);
         if($save)
             $this->save();
+    }
+
+    /**
+     * Start a new payment with this service.
+     *
+     * @param Currency $currency The currency to use.
+     * @param float $amount The payment amount.
+     *
+     * @return Payment The created payment.
+     */
+    public function startPayment(Currency $currency, float $amount) {
+        return Payment::startNew($this, $currency, $amount);
     }
 }

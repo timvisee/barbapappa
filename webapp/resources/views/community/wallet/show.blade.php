@@ -19,6 +19,11 @@
         'icon' => 'fees-payments',
     ];
     $menulinks[] = [
+        'name' => __('misc.topUp'),
+        'link' => route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]),
+        'icon' => 'credit-card',
+    ];
+    $menulinks[] = [
         'name' => __('pages.wallets.transfer'),
         'link' => route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]),
         'icon' => 'transfer',
@@ -75,6 +80,10 @@
                 @lang('misc.delete')
             </a>
         </div>
+        <a href="{{ route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                class="ui button basic">
+            @lang('misc.topUp')
+        </a>
         <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
                 class="ui button basic">
             @lang('pages.wallets.transfer')

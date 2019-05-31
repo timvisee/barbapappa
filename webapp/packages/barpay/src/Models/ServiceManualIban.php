@@ -30,6 +30,11 @@ class ServiceManualIban extends Model {
     public const CONTROLLER = ServiceManualIbanController::class;
 
     /**
+     * The payment model for this service.
+     */
+    public const PAYMENT_MODEL = PaymentManualIban::class;
+
+    /**
      * The root for views related to this service.
      */
     public const VIEW_ROOT = 'barpay::service.manualiban';
@@ -68,5 +73,18 @@ class ServiceManualIban extends Model {
      */
     public static function view($path) {
         return Self::VIEW_ROOT . '.' . $path;
+    }
+
+    /**
+     * Create the paymentable part for a newly started payment, and attach it to
+     * the payment.
+     *
+     * @param Payment $payment The payment to create it for, and to attach it to.
+     * @param Service $service The payment service to use.
+     *
+     * @return Paymentable The created payment.
+     */
+    protected static function startPaymentable(Payment $payment, Service $service) {
+        return (Self::PAYMENT_MODEL)::startPaymentable($payment, $service);
     }
 }
