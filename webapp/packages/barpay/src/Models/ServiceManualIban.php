@@ -87,4 +87,11 @@ class ServiceManualIban extends Model {
     protected static function startPaymentable(Payment $payment, Service $service) {
         return (Self::PAYMENT_MODEL)::startPaymentable($payment, $service);
     }
+
+    /**
+     * Block direclty deleting.
+     */
+    public function delete() {
+        throw new \Exception('cannot directly delete serviceable, delete the owning service instead');
+    }
 }

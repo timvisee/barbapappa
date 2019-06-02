@@ -393,6 +393,28 @@ return [
     ],
 
     /**
+     * Payment pages.
+     */
+    'payments' => [
+        'title' => 'Payments',
+        'details' => 'Payment details',
+        'progress' => 'Payment progress',
+        'last#' => '{0} Last payments|{1} Last payment|[2,*] Last :count payments',
+        'backToPayment' => 'Back to payment',
+        'state' => [
+            'init' => 'Initiated',
+            'pendingManual' => 'Pendin\' (manual)',
+            'pendingAuto' => 'Pendin\' (automatic)',
+            'processing' => 'Processin\'',
+            'completed' => 'Hurray!',
+            'revoked' => 'Revoked',
+            'rejected' => 'Rejected',
+            'failed' => 'Sunk',
+            'cancelled' => 'Cancelled',
+        ],
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

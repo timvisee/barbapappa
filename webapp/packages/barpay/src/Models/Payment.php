@@ -28,12 +28,15 @@ class Payment extends Model {
 
     protected $table = "payments";
 
-    const STATE_PENDING = 1;
-    const STATE_PROCESSING = 2;
-    const STATE_COMPLETED = 3;
-    const STATE_REVOKED = 4;
-    const STATE_REJECTED = 5;
-    const STATE_FAILED = 6;
+    const STATE_INIT = 0;
+    const STATE_PENDING_MANUAL = 1;
+    const STATE_PENDING_AUTO = 2;
+    const STATE_PROCESSING = 3;
+    const STATE_COMPLETED = 4;
+    const STATE_REVOKED = 5;
+    const STATE_REJECTED = 6;
+    const STATE_FAILED = 7;
+    const STATE_CANCELLED = 8;
 
     /**
      * Get the relation to the used service linked to this payment.
@@ -68,7 +71,7 @@ class Payment extends Model {
      * @return string Formatted amount.
      */
     public function formatCost($format = BALANCE_FORMAT_PLAIN, $options = ['neutral' => true]) {
-        return $this->currency->formatAmount($this->amount, $format, $options);
+        return $this->currency->formatAmount($this->money, $format, $options);
     }
 
     /**
@@ -80,12 +83,15 @@ class Payment extends Model {
     public function stateName() {
         // Get the state key here
         $key = [
-            Self::STATE_PENDING => 'pending',
+            Self::STATE_INIT => 'init',
+            Self::STATE_PENDING_MANUAL => 'pendingManual',
+            Self::STATE_PENDING_AUTO => 'pendingAuto',
             Self::STATE_PROCESSING => 'processing',
             Self::STATE_COMPLETED => 'completed',
             Self::STATE_REVOKED => 'revoked',
             Self::STATE_REJECTED => 'rejected',
             Self::STATE_FAILED => 'failed',
+            Self::STATE_CANCELLED => 'cancelled',
         ][$this->state];
         if(empty($key))
             throw new \Exception("Unknown payment state, cannot get state name");
@@ -128,6 +134,25 @@ class Payment extends Model {
     }
 
     /**
+     * Check whehter this payment is still in progress.
+     *
+     * The payment is in progress when the payment has not successfully
+     * completed, cancelled, rejected or revoked yet.
+     * This method also returns `true` if the payment is in the `init` state.
+     *
+     * @return bool True if in progress, false if not.
+     */
+    public function isInProgress() {
+        return !in_array($this->state, [
+            Self::STATE_COMPLETED,
+            Self::STATE_REVOKED,
+            Self::STATE_REJECTED,
+            Self::STATE_FAILED,
+            Self::STATE_CANCELLED,
+        ]);
+    }
+
+    /**
      * Start a new payment with the given service, currency and amount.
      *
      * @param Service $service The payment service to use.
@@ -144,7 +169,8 @@ class Payment extends Model {
 
         // Build a new payment
         $payment = new Payment();
-        $payment->state = Payment::STATE_PENDING;
+        // TODO: should we immediately jump to the `pending_manual` state here?
+        $payment->state = Payment::STATE_INIT;
         $payment->service_id = $service->id;
         $payment->paymentable_id = 0;
         $payment->paymentable_type = '';

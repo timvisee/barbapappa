@@ -503,6 +503,57 @@ Route::prefix('/transactions')->group(function() {
     });
 });
 
+// Payments
+Route::prefix('/payments')->group(function() {
+    // Index
+    // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
+    // TODO: create a payment index for the current user
+
+    // Specific
+    // TODO: find payment, check permission
+    Route::prefix('/{paymentId}')->group(function() {
+        // Show
+        Route::get('/', 'PaymentController@show')->name('payment.show');
+
+        // Pay
+        Route::get('/pay', 'PaymentController@pay')->name('payment.pay');
+
+        // // Edit/delete, require manager perms
+        // Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
+        //     Route::get('/edit', 'EconomyCurrencyController@edit')->name('community.economy.currency.edit');
+        //     Route::put('/edit', 'EconomyCurrencyController@doEdit')->name('community.economy.currency.doEdit');
+        //     Route::get('/remove', 'EconomyCurrencyController@delete')->name('community.economy.currency.delete');
+        //     Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
+        // });
+
+        // // Undo
+        // Route::get('/undo', 'TransactionController@undo')->name('transaction.undo');
+        // Route::delete('/undo', 'TransactionController@doUndo')->name('transaction.doUndo');
+
+        // // Transaction mutations
+        // // TODO: add a permission check
+        // // Route::prefix('/mutations')->middleware(MutationController::permsView()->middleware())->group(function() {
+        // Route::prefix('/mutations')->group(function() {
+        //     // Index
+        //     // Route::get('/', 'MutationController@index')->name('transaction.mutation.index');
+
+        //     // Specific
+        //     Route::prefix('/{mutationId}')->group(function() {
+        //         // Show
+        //         Route::get('/', 'MutationController@show')->name('transaction.mutation.show');
+
+        //         // // Edit/delete, require manage perms
+        //         // Route::middleware(MutationController::permsManage()->middleware())->group(function() {
+        //         //     Route::get('/edit', 'MutationController@edit')->name('bar.member.edit');
+        //         //     Route::put('/edit', 'MutationController@doEdit')->name('bar.member.doEdit');
+        //         //     Route::get('/delete', 'MutationController@delete')->name('bar.member.delete');
+        //         //     Route::delete('/delete', 'MutationController@doDelete')->name('bar.member.doDelete');
+        //         // });
+        //     });
+        // });
+    });
+});
+
 // Magic routes
 Route::get('/__heartbeat__', function() { return 'OK'; });
 Route::get('/__version__', function() { return [

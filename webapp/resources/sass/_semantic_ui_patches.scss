@@ -15,3 +15,8 @@
         padding: .4em .75em !important;
     }
 }
+
+// Scroll unstackable steps when larger than the page
+.steps.unstackable {
+    overflow-x: auto;
+}

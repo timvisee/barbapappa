@@ -504,14 +504,10 @@ class WalletController extends Controller {
             ]);
         });
 
-        // Redirect back to the wallet page with a success message
-        return redirect()
-            ->route('community.wallet.show', [
-                'communityId' => $community->human_id,
-                'economyId' => $economy->id,
-                'walletId' => $wallet->id,
-            ])
-            ;
+        // Redirect to the payment page
+        return redirect()->route('payment.pay', [
+            'paymentId' => $payment->id,
+        ]);
     }
 
     /**

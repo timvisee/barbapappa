@@ -1,5 +1,6 @@
 <?php
 
+use BarApp\Models\Payment;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -14,7 +15,7 @@ class CreatePaymentTable extends Migration {
     public function up() {
         Schema::create('payments', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('state')->unsigned()->nullable(false);
+            $table->integer('state')->unsigned()->nullable(false)->defaults(Payment::STATE_INIT);
             $table->integer('service_id')->unsigned()->nullable(true);
             $table->morphs('paymentable');
             $table->string('reference', 32)->unique()->nullable(true);

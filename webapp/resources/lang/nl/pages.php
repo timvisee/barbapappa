@@ -393,6 +393,28 @@ return [
     ],
 
     /**
+     * Payment pages.
+     */
+    'payments' => [
+        'title' => 'Betalingen',
+        'details' => 'Betaling details',
+        'progress' => 'Betaling voortgang',
+        'last#' => '{0} Laatste betalingen|{1} Laatste betaling|[2,*] Laatste :count betalingen',
+        'backToPayment' => 'Terug naar betaling',
+        'state' => [
+            'init' => 'Geïnitieerd',
+            'pendingManual' => 'In afwachting (handmatig)',
+            'pendingAuto' => 'In afwachting (automatisch)',
+            'processing' => 'Bezig met verwerken',
+            'completed' => 'Voltooid',
+            'revoked' => 'Ingetrokken',
+            'rejected' => 'Afgekeurd',
+            'failed' => 'Mislukt',
+            'cancelled' => 'Geannuleerd',
+        ],
+    ],
+
+    /**
      * Bar pages.
      */
     'bar' => [

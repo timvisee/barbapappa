@@ -64,4 +64,11 @@ class PaymentManualIban extends Model {
 
         return $paymentable;
     }
+
+    /**
+     * Block direclty deleting.
+     */
+    public function delete() {
+        throw new \Exception('cannot directly delete paymentable, delete the owning payment instead');
+    }
 }
