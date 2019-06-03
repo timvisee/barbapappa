@@ -44,6 +44,29 @@
         </tbody>
     </table>
 
+    {{-- SEPA payment QR code --}}
+    @if(isset($paymentQrPayload))
+        <div class="ui fluid accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
+                Show payment QR code
+            </div>
+            <div class="content">
+                <p class="transition hidden">
+                    Scan this QR code with your mobile banking app, to automatically
+                    fill in all payment details. This works with most modern banks.
+                </p>
+                <img src="data:image/png;base64,{{ base64_encode(
+                    QrCode::format('png')
+                        ->size(300)
+                        ->margin(1)
+                        ->errorCorrection('M')
+                        ->generate($paymentQrPayload)
+                    ) }}">
+            </div>
+        </div>
+    @endif
+
     <div class="ui divider hidden"></div>
 
     <p>

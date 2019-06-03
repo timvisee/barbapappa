@@ -31,6 +31,7 @@ $(document).ready(function() {
     // Initialize components
     $('.ui.checkbox').checkbox();
     $('.ui.dropdown').dropdown();
+    $('.ui.accordion').accordion();
 
     // Join label popup
     $('.joined-label-popup').popup({

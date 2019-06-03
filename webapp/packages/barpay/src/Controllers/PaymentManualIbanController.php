@@ -11,6 +11,23 @@ use Illuminate\Http\Request;
 class PaymentManualIbanController {
 
     public static function stepTransfer(Payment $payment, PaymentManualIban $paymentable, $response) {
+        // Add SEPA QR code payload to response if can be used
+        if($paymentable->to_iban != null && $paymentable->to_bic != null && $payment->currency->code == 'EUR') {
+            $qr = "BCD\n";
+            $qr .= "001\n";
+            $qr .= "1\n";
+            $qr .= "SCT\n";
+            $qr .= $paymentable->to_bic . "\n";
+            $qr .= $paymentable->to_account_holder . "\n";
+            $qr .= $paymentable->to_iban . "\n";
+            $qr .= 'EUR' . $payment->money . "\n";
+            $qr .= "\n";
+            // TODO: get this prefix from payment as well
+            $qr .= 'BarApp ' . format_payment_reference($payment->reference);
+
+            $response = $response->with('paymentQrPayload', $qr);
+        }
+
         return $response;
     }
 
