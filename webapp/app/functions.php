@@ -262,8 +262,8 @@ if(!function_exists('ref_format')) {
      */
     function ref_format($str, $step, $reverse = false) {
         if($reverse)
-            return strrev(chunk_split(strrev($str), $step, ' '));
-        return chunk_split($str, $step, ' ');
+            return rtrim(strrev(chunk_split(strrev($str), $step, ' ')), ' ');
+        return rtrim(chunk_split($str, $step, ' '), ' ');
     }
 }
 
