@@ -5,7 +5,7 @@
 <div class="ui one tiny statistics">
     <div class="statistic">
         <div class="label">
-            Waiting for
+            @lang('misc.waitingFor')
         </div>
         <div class="value">
             {{ $timeWaiting }}
@@ -16,12 +16,9 @@
 <div class="ui divider hidden"></div>
 
 <div class="ui info message">
-    {{-- TODO: translate --}}
-    Waiting for a community manager to manually confirm your transaction has
-    been received. This may take a long while.<br>
+    @lang('barpay::payment.manualiban.waitOnReceipt')<br>
     <br>
-    You may close this page now. You will be notified by email when the status
-    of this payment changes.
+    @lang('barpay::misc.mayClosePageWillNotify')
 </div>
 
 <div class="ui divider hidden"></div>

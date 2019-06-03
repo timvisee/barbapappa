@@ -21,6 +21,8 @@ return [
     'rename' => 'Rename',
     'delete' => 'Abandon',
     'continue' => 'Continue',
+    'continueIn' => 'Continue in',
+    'waitingFor' => 'Waiting for',
     'permanentlyDelete' => 'Permanently abandon',
     'iUnderstandDelete' => 'I understand th\' consequences, continue to sink',
     'trash' => 'Trash',

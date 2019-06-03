@@ -9,8 +9,7 @@
 
     <div class="ui info top attached message visible">
         <span class="halflings halflings-info-sign"></span>
-        {{-- TODO: translate --}}
-        @lang('Please transfer the amount to the account as noted below. You must use the exact same description which is used to identify your payment, or your payment might be lost.')
+        @lang('barpay::payment.manualiban.pleaseTransferSameDescription')
     </div>
 
     <table class="ui compact celled definition table bottom attached">
@@ -20,26 +19,22 @@
             <td>{!! $payment->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
             <tr>
-                {{-- TODO: translate --}}
-                <td>To @lang('Account holder')</td>
+                <td>@lang('barpay::misc.toAccountHolder')</td>
                 <td><code class="literal copy">{{ $payment->paymentable->to_account_holder }}</code></td>
             </tr>
             <tr>
-                {{-- TODO: translate --}}
-                <td>To @lang('barpay::misc.iban')</td>
+                <td>@lang('barpay::misc.toIban')</td>
                 <td><code class="literal copy" data-copy="{{ $payment->paymentable->to_iban }}">{{ format_iban($payment->paymentable->to_iban) }}</code></td>
             </tr>
             @if(!empty($payment->paymentable->to_bic))
                 <tr>
-                    {{-- TODO: translate --}}
-                    <td>To @lang('barpay::misc.bic')</td>
+                    <td>@lang('barpay::misc.toBic')</td>
                     <td><code class="literal copy" data-copy="{{ $payment->paymentable->to_bic }}">{{ format_bic($payment->paymentable->to_bic) }}</code></td>
                 </tr>
             @endif
             <tr>
-                {{-- TODO: translate --}}
-                <td>@lang('Payment description')</td>
-                <td><code class="literal copy">BarApp {{ format_payment_reference($payment->reference) }}</code></td>
+                <td>@lang('barpay::misc.paymentDescription')</td>
+                <td><code class="literal copy">{{ $description }}</code></td>
             </tr>
         </tbody>
     </table>
@@ -49,12 +44,11 @@
         <div class="ui fluid accordion">
             <div class="title">
                 <i class="dropdown icon"></i>
-                Show payment QR code
+                @lang('barpay::payment.qr.showPaymentQr')
             </div>
             <div class="content">
                 <p class="transition hidden">
-                    Scan this QR code with your mobile banking app, to automatically
-                    fill in all payment details. This works with most modern banks.
+                    @lang('barpay::payment.qr.instruction')
                 </p>
                 <img src="data:image/png;base64,{{ base64_encode(
                     QrCode::format('png')
@@ -69,14 +63,9 @@
 
     <div class="ui divider hidden"></div>
 
-    <p>
-        {{-- TODO: translate --}}
-        Enter the IBAN you're transferring the money from, so we can link the
-        payment to your account.
-    </p>
+    <p>@lang('barpay::payment.manualiban.enterOwnIban')</p>
     <div class="field {{ ErrorRenderer::hasError('iban') ? 'error' : '' }}">
-        {{-- TODO: translate --}}
-        {{ Form::label('iban', __('Your IBAN') . ':') }}
+        {{ Form::label('iban', __('barpay::misc.yourIban') . ':') }}
         {{ Form::text('iban', '', ['placeholder' => __('barpay::misc.ibanPlaceholder')]) }}
         {{ ErrorRenderer::inline('iban') }}
     </div>
@@ -89,8 +78,7 @@
                     name="confirm_transfer"
                     tabindex="0"
                     class="hidden">
-            {{-- TODO: translate --}}
-            {{ Form::label('confirm_transfer', __('I confirm I\'ve transferred the money with the given payment details')) }}
+            {{ Form::label('confirm_transfer', __('barpay::payment.manualiban.confirmTransfer')) }}
         </div>
         <br />
         {{ ErrorRenderer::inline('confirm_transfer') }}

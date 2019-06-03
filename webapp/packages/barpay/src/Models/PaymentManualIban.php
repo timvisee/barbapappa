@@ -77,7 +77,7 @@ class PaymentManualIban extends Model {
      * @return Paymentable The created payment.
      */
     public static function startPaymentable(Payment $payment, Service $service) {
-        // TODO: require to be in a transaction?
+        // TODO: require to be in a transaction
 
         // Get the serviceable
         $serviceable = $service->serviceable;

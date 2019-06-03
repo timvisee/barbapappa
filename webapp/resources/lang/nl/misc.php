@@ -21,6 +21,8 @@ return [
     'rename' => 'Hernoemen',
     'delete' => 'Verwijderen',
     'continue' => 'Verder gaan',
+    'continueIn' => 'Verder in',
+    'waitingFor' => 'Aan het wachten voor',
     'permanentlyDelete' => 'Permanent verwijderen',
     'iUnderstandDelete' => 'Ik begrijp de consequenties, doorgaan met verwijderen',
     'trash' => 'Weggooien',

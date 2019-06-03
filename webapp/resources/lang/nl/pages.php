@@ -398,7 +398,7 @@ return [
     'payments' => [
         'title' => 'Betalingen',
         'details' => 'Betaling details',
-        'progress' => 'Betaling voortgang',
+        'progress' => 'Voortgang van betaling',
         'last#' => '{0} Laatste betalingen|{1} Laatste betaling|[2,*] Laatste :count betalingen',
         'backToPayment' => 'Terug naar betaling',
         'state' => [

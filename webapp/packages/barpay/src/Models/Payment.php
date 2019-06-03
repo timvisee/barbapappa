@@ -57,7 +57,6 @@ class Payment extends Model {
      *
      * @return The currency.
      */
-    // TODO: is this correct?
     public function currency() {
         return $this->belongsTo(Currency::class);
     }
@@ -84,7 +83,6 @@ class Payment extends Model {
      *
      * @return State display name.
      */
-    // TODO: add these in translation files
     public function stateName() {
         // Get the state key here
         $key = [
@@ -139,6 +137,23 @@ class Payment extends Model {
     }
 
     /**
+     * Get the unique reference for this payment.
+     *
+     * @param bool [$prefix=true] Include an application prefix.
+     * @param bool [$format=true] Format the reference for humans.
+     *
+     * @return string The payment reference.
+     */
+    public function getReference($prefix = true, $format = true) {
+        $reference = $this->reference;
+        if($format)
+            $reference = format_payment_reference($reference);
+        if($prefix)
+            $reference = 'BarApp ' . $reference;
+        return $reference;
+    }
+
+    /**
      * Check whehter this payment is still in progress.
      *
      * The payment is in progress when the payment has not successfully
@@ -171,7 +186,7 @@ class Payment extends Model {
      * @return Payment The created payment.
      */
     public static function startNew(Service $service, Currency $currency, float $amount) {
-        // TODO: require to be in a transaction?
+        // TODO: require to be in a transaction
 
         // TODO: assert this payment service can be used with this currency and amount
         // TODO: assert amount is 0.01 or higher, or should we allow negative as well?
