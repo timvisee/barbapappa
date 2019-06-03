@@ -65,7 +65,7 @@
             <div class="field">
                 <div class="ui radio checkbox">
                     {{ Form::radio('payment_service', $service->id, ['class' => 'hidden', 'tabindex' => 0]) }}
-                    {{ Form::label('payment_service', $service->displayName()) }}
+                    {{ Form::label('payment_service', $service->displayName() .  ' (' . $service->serviceable->__('duration') . ')') }}
                 </div>
             </div>
         @endforeach
