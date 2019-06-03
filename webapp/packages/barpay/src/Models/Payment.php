@@ -28,6 +28,11 @@ class Payment extends Model {
 
     protected $table = "payments";
 
+    /**
+     * The character length of a payment reference.
+     */
+    const REFERENCE_LEN = 12;
+
     const STATE_INIT = 0;
     const STATE_PENDING_MANUAL = 1;
     const STATE_PENDING_AUTO = 2;
@@ -171,11 +176,17 @@ class Payment extends Model {
         // TODO: assert this payment service can be used with this currency and amount
         // TODO: assert amount is 0.01 or higher, or should we allow negative as well?
 
+        // Generate a new unique payment reference
+        $reference = null;
+        while($reference == null || Payment::where('reference', $reference)->count() > 0)
+            $reference = random_str(Self::REFERENCE_LEN, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+
         // Build a new payment
         $payment = new Payment();
         // TODO: should we immediately jump to the `pending_manual` state here?
         $payment->state = Payment::STATE_INIT;
         $payment->service_id = $service->id;
+        $payment->reference = $reference;
         $payment->paymentable_id = 0;
         $payment->paymentable_type = '';
         $payment->currency_id = $currency->id;

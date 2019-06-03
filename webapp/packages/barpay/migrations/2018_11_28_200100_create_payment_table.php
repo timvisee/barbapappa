@@ -17,7 +17,7 @@ class CreatePaymentTable extends Migration {
             $table->integer('state')->unsigned()->nullable(false);
             $table->integer('service_id')->unsigned()->nullable(true);
             $table->morphs('paymentable');
-            $table->string('reference', 32)->unique()->nullable(true);
+            $table->string('reference', 12)->unique()->nullable(false);
             $table->decimal('money')->nullable(false);
             $table->integer('currency_id')->unsigned()->nullable(false);
             $table->timestamps();
