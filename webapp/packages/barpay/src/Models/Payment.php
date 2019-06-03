@@ -157,8 +157,8 @@ class Payment extends Model {
         ]);
     }
 
-    public function getStepData() {
-        return $this->paymentable->getStepData();
+    public function getStepsData() {
+        return $this->paymentable->getStepsData();
     }
 
     /**

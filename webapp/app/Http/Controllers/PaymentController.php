@@ -59,7 +59,7 @@ class PaymentController extends Controller {
         // Build the response
         $response = view('payment.pay')
             ->with('payment', $payment)
-            ->with('steps', $payment->getStepData())
+            ->with('steps', $payment->getStepsData())
             ->with('stepView', $paymentable->getStepView());
 
         // Run through paymentable controller action as well, return

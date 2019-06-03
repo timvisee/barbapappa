@@ -24,6 +24,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class PaymentManualIban extends Model {
 
+    use Paymentable;
+
     protected $table = "payment_manual_iban";
 
     protected $casts = [
@@ -47,18 +49,23 @@ class PaymentManualIban extends Model {
      */
     public const VIEW_ROOT = 'barpay::payment.manualiban';
 
+    /**
+     * The root for language related to this payment.
+     */
+    public const LANG_ROOT = 'barpay::payment.manualiban';
+
     const STEP_TRANSFER = 'transfer';
     const STEP_TRANSFERRING = 'transferring';
     const STEP_RECEIPT = 'receipt';
 
     /**
-     * Get a relation to the payment this belongs to.
-     *
-     * @return Relation to the payment.
+     * An ordered list of steps in this payment.
      */
-    public function payment() {
-        return $this->morphOne(Payment::class, 'paymentable');
-    }
+    public const STEPS = [
+        Self::STEP_TRANSFER,
+        Self::STEP_TRANSFERRING,
+        Self::STEP_RECEIPT,
+    ];
 
     /**
      * Create the paymentable part for a newly started payment, and attach it to
@@ -81,8 +88,6 @@ class PaymentManualIban extends Model {
         $paymentable->to_account_holder = $serviceable->account_holder;
         $paymentable->to_iban = $serviceable->iban;
         $paymentable->to_bic = $serviceable->bic;
-        // TODO: somehow obtain the target iban here!
-        $paymentable->from_iban = '';
         $paymentable->save();
 
         // Attach the paymentable to the payment
@@ -99,91 +104,12 @@ class PaymentManualIban extends Model {
     public function getStep() {
         if($this->transferred_at == null || $this->from_iban == null)
             return Self::STEP_TRANSFER;
-        // TODO: fetch days from constant
         if($this->transferred_at > now()->subSeconds(Self::TRANSFER_WAIT))
             return Self::STEP_TRANSFERRING;
         if($this->confirmed_at == null)
             return Self::STEP_RECEIPT;
 
         throw new \Exception('Paymentable is in invalid step state');
-    }
-
-    public function getStepData() {
-        // TODO: translate
-        // TODO: build this based on the paymentable!
-        $steps = [
-            Self::STEP_TRANSFER => [
-                'label' => 'Transfer',
-                'description' => 'Transfer money, enter IBAN',
-            ],
-            Self::STEP_TRANSFERRING => [
-                'label' => 'Transferring',
-                'description' => 'Wait on transfer',
-            ],
-            Self::STEP_RECEIPT => [
-                'label' => 'Receipt',
-                'description' => 'Wait for receipt',
-            ],
-        ];
-
-        // Add state to each step, based on current step, return it
-        // - -1: upcomming
-        // -  0: current
-        // -  1: done
-        $currentStep = $this->getStep();
-        $got = false;
-        return collect($steps)
-            ->reverse()
-            ->map(function($data, $step) use(&$got, $currentStep) {
-                // Determine step states
-                if(!$got) {
-                    if($step == $currentStep) {
-                        $got = true;
-                        $data['state'] = 0;
-                    } else
-                        $data['state'] = -1;
-                } else
-                    $data['state'] = 1;
-
-                // Only leave description on current step
-                if($data['state'] != 0)
-                    unset($data['description']);
-
-                return $data;
-            })
-            ->reverse()
-            ->toArray();
-    }
-
-    public function getStepView() {
-        return $this->view('step' . ucfirst($this->getStep()));
-    }
-
-    public function getStepAction($prefix = null) {
-        // Build the normal action, optionally prefix
-        $action = 'step' . ucfirst($this->getStep());
-        if(!empty($prefix))
-            $action = 'do' . ucfirst($action);
-
-        return $action;
-    }
-
-    /**
-     * Get a translation for this payment.
-     *
-     * @return string|null The translation or null if non existent.
-     */
-    public static function __($key) {
-        return __('barpay::payment.manualiban.' . $key);
-    }
-
-    /**
-     * Get the path for a view related to this payment.
-     *
-     * @return string The path to the view.
-     */
-    public static function view($path) {
-        return Self::VIEW_ROOT . '.' . $path;
     }
 
     /**

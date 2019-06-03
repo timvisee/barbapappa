@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class ServiceManualIban extends Model {
 
+    use Serviceable;
+
     protected $table = "service_manual_iban";
 
     /**
@@ -35,58 +37,14 @@ class ServiceManualIban extends Model {
     public const PAYMENT_MODEL = PaymentManualIban::class;
 
     /**
+     * The root for language values related to this service.
+     */
+    public const LANG_ROOT = 'barpay::service.manualiban';
+
+    /**
      * The root for views related to this service.
      */
     public const VIEW_ROOT = 'barpay::service.manualiban';
-
-    /**
-     * Get a relation to the service this belongs to.
-     *
-     * @return Relation to the service.
-     */
-    public function service() {
-        return $this->morphOne(Service::class, 'serviceable');
-    }
-
-    /**
-     * Get the name for this service type.
-     *
-     * @return string Name for this service type.
-     */
-    public static function name() {
-        return Self::__('name');
-    }
-
-    /**
-     * Get a translation for this service.
-     *
-     * @return string|null The translation or null if non existent.
-     */
-    public static function __($key) {
-        return __('barpay::service.manualiban.' . $key);
-    }
-
-    /**
-     * Get the path for a view related to this service.
-     *
-     * @return string The path to the view.
-     */
-    public static function view($path) {
-        return Self::VIEW_ROOT . '.' . $path;
-    }
-
-    /**
-     * Create the paymentable part for a newly started payment, and attach it to
-     * the payment.
-     *
-     * @param Payment $payment The payment to create it for, and to attach it to.
-     * @param Service $service The payment service to use.
-     *
-     * @return Paymentable The created payment.
-     */
-    protected static function startPaymentable(Payment $payment, Service $service) {
-        return (Self::PAYMENT_MODEL)::startPaymentable($payment, $service);
-    }
 
     /**
      * Block direclty deleting.

@@ -55,4 +55,14 @@ class PaymentManualIbanController {
 
         return $response->with('timeLeft', $timeLeft);
     }
+
+    public static function stepReceipt(Payment $payment, PaymentManualIban $paymentable, $response) {
+        // Build time waiting string
+        $timeWaiting = $paymentable
+            ->transferred_at
+            ->addSeconds(PaymentManualIban::TRANSFER_WAIT)
+            ->longAbsoluteDiffForHumans();
+
+        return $response->with('timeWaiting', $timeWaiting);
+    }
 }

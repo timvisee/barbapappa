@@ -5,10 +5,10 @@
 <div class="ui one tiny statistics">
     <div class="statistic">
         <div class="label">
-            Continue in
+            Waiting for
         </div>
         <div class="value">
-            {{ $timeLeft }}
+            {{ $timeWaiting }}
         </div>
     </div>
 </div>
@@ -17,8 +17,8 @@
 
 <div class="ui info message">
     {{-- TODO: translate --}}
-    Waiting for usual bank transfer delays before requesting a
-    community manager to review and confirm your transfer.<br>
+    Waiting for a community manager to manually confirm your transaction has
+    been received. This may take a long while.<br>
     <br>
     You may close this page now. You will be notified by email when the status
     of this payment changes.
