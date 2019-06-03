@@ -152,6 +152,10 @@ class Payment extends Model {
         ]);
     }
 
+    public function getStepData() {
+        return $this->paymentable->getStepData();
+    }
+
     /**
      * Start a new payment with the given service, currency and amount.
      *

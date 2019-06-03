@@ -1,22 +1,16 @@
 {!! Form::open([
     'action' => [
-        'PaymentController@pay',
+        'PaymentController@doPay',
         $payment->id,
     ],
-    'method' => 'PUT',
+    'method' => 'POST',
     'class' => 'ui form'
 ]) !!}
 
     <div class="ui info top attached message visible">
         <span class="halflings halflings-info-sign"></span>
         {{-- TODO: translate --}}
-        @lang('Please transfer the amount to the account as noted below. You must set the given description as well, which is used to identify your payment.')
-    </div>
-
-    <div class="ui warning attached message visible">
-        <span class="halflings halflings-warning-sign"></span>
-        {{-- TODO: translate --}}
-        @lang('You must use the exact amount, IBAN and description for the transfer as shown below, or else your payment might be lost.')
+        @lang('Please transfer the amount to the account as noted below. You must use the exact same description which is used to identify your payment, or your payment might be lost.')
     </div>
 
     <table class="ui compact celled definition table bottom attached">
@@ -57,10 +51,11 @@
         Enter the IBAN you're transferring the money from, so we can link the
         payment to your account.
     </p>
-    <div class="field">
+    <div class="field {{ ErrorRenderer::hasError('iban') ? 'error' : '' }}">
         {{-- TODO: translate --}}
-        {{ Form::label('from_iban', __('Your IBAN') . ':') }}
-        {{ Form::text('from_iban', '', ['placeholder' => __('barpay::misc.ibanPlaceholder')]) }}
+        {{ Form::label('iban', __('Your IBAN') . ':') }}
+        {{ Form::text('iban', '', ['placeholder' => __('barpay::misc.ibanPlaceholder')]) }}
+        {{ ErrorRenderer::inline('iban') }}
     </div>
 
     <div class="ui divider hidden"></div>
@@ -72,7 +67,7 @@
                     tabindex="0"
                     class="hidden">
             {{-- TODO: translate --}}
-            {{ Form::label('confirm_transfer', __('I confirm I\'ve transferred the money, and the transfer description matches')) }}
+            {{ Form::label('confirm_transfer', __('I confirm I\'ve transferred the money with the given payment details')) }}
         </div>
         <br />
         {{ ErrorRenderer::inline('confirm_transfer') }}

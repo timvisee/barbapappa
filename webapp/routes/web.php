@@ -517,6 +517,7 @@ Route::prefix('/payments')->group(function() {
 
         // Pay
         Route::get('/pay', 'PaymentController@pay')->name('payment.pay');
+        Route::post('/pay', 'PaymentController@doPay')->name('payment.doPay');
 
         // // Edit/delete, require manager perms
         // Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {

@@ -22,7 +22,7 @@ class CreatePaymentManualIbanTable extends Migration {
             $table->string('to_bic', 11)->nullable(true);
 
             // Source account details, from user
-            $table->string('from_iban', 32)->nullable(false);
+            $table->string('from_iban', 32)->nullable(true);
 
             // State
             $table->datetime('transferred_at')->nullable(true);

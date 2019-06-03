@@ -43,8 +43,9 @@ class PaymentController extends Controller {
     public function pay($paymentId) {
         // TODO: do some advanced permission checking here!
 
-        // Get the payment
+        // Get the payment and paymentable
         $payment = Payment::findOrFail($paymentId);
+        $paymentable = $payment->paymentable;
 
         // If the payment is not in progress anymore, redirect to show page
         if(!$payment->isInProgress())
@@ -55,92 +56,41 @@ class PaymentController extends Controller {
         // if(!Self::hasPermission($transaction))
         //     return response(view('noPermission'));
 
-        return view('payment.pay')
-            ->with('payment', $payment);
+        // Build the response
+        $response = view('payment.pay')
+            ->with('payment', $payment)
+            ->with('steps', $payment->getStepData())
+            ->with('stepView', $paymentable->getStepView());
+
+        // Run through paymentable controller action as well, return
+        return ($paymentable::CONTROLLER)::{$paymentable->getStepAction()}($payment, $paymentable, $response);
     }
 
-    // /**
-    //  * Undo a user transaction.
-    //  *
-    //  * @return Response
-    //  */
-    // public function undo($transactionId) {
-    //     // Get the transaction
-    //     $transaction = Transaction::findOrFail($transactionId);
+    /**
+     * Show the payment progression page.
+     *
+     * @return Response
+     */
+    public function doPay(Request $request, $paymentId) {
+        // TDO: do some advanced permission checking here!
 
-    //     // Make sure we can undo
-    //     if(!$transaction->canUndo())
-    //         // Redirect back to the transaction details page
-    //         return redirect()
-    //             ->route('transaction.show', ['transactionId' => $transactionId])
-    //             ->with('error', __('pages.transactions.cannotUndo'));
+        // Get the payment and paymentable
+        $payment = Payment::findOrFail($paymentId);
+        $paymentable = $payment->paymentable;
 
-    //     // Redirect back to the bar
-    //     return view('transaction.undo')
-    //         ->with('transaction', $transaction);
-    // }
+        // If the payment is not in progress anymore, redirect to show page
+        if(!$payment->isInProgress())
+            return redirect()->route('payment.show', ['paymentId' => $payment->id]);
 
-    // /**
-    //  * Do undo the given transaction.
-    //  *
-    //  * @return Response
-    //  */
-    // public function doUndo($transactionId) {
-    //     // Get the transaction
-    //     $transaction = Transaction::findOrFail($transactionId);
+        // // Check permission
+        // // TODO: check this permission in middleware, redirect to login
+        // if(!Self::hasPermission($transaction))
+        //     return response(view('noPermission'));
 
-    //     // Make sure we can undo
-    //     if(!$transaction->canUndo())
-    //         // Redirect back to the transaction details page
-    //         return redirect()
-    //             ->route('transaction.show', ['transactionId' => $transactionId])
-    //             ->with('error', __('pages.transactions.cannotUndo'));
+        // Build the response
+        $response = redirect()->route('payment.pay', ['paymentId' => $payment->id]);
 
-    //     // Undo the transaction
-    //     DB::transaction(function() use($transaction) {
-    //         $transaction->undo();
-    //     });
-
-    //     // Redirect back to the bar
-    //     return redirect()
-    //         // TODO: redirect to better page!
-    //         ->route('last')
-    //         ->with('success', __('pages.transactions.undone'));
-    // }
-
-    // /**
-    //  * Check whether the currently authenticated user has permission to view the
-    //  * given transaction.
-    //  *
-    //  * @param Transaction $transaction The transaction model.
-    //  *
-    //  * @return boolean True if the user can view this transaction, false if not.
-    //  */
-    // static function hasPermission(Transaction $transaction) {
-    //     // The user must be authenticated
-    //     $barauth = barauth();
-    //     if(!$barauth->isAuth())
-    //         return false;
-    //     $user = $barauth->getUser();
-
-    //     // If the current user initiated the transaction, it's all right
-    //     if($transaction->owner_id == $user->id)
-    //         return true;
-
-    //     // Get all wallet mutations
-    //     $mutations = $transaction
-    //         ->mutations()
-    //         ->where('type', Mutation::TYPE_WALLET)
-    //         ->get();
-
-    //     // If the user owns any of the wallets, allow
-    //     foreach($mutations as $mutation)
-    //         if($mutation->mutationData->wallet->user_id == $user->id)
-    //             return true;
-
-    //     // Allow permission if user is admin or community manager
-    //     // TODO: give current request as second parameter as well
-    //     // TODO: we must somehow give a reference to current community
-    //     return perms(CommunityRoles::presetManager());
-    // }
+        // Run through paymentable controller action as well, return
+        return ($paymentable::CONTROLLER)::{$paymentable->getStepAction('do')}($request, $payment, $paymentable, $response);
+    }
 }

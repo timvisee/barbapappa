@@ -27,6 +27,7 @@ return [
     'trashed' => 'Trashed',
     'remove' => 'Abandon',
     'restore' => 'Restore',
+    'refresh' => 'Refresh',
     'undo' => 'Undo',
     'saveChanges' => 'Stow changes',
     'unspecified' => 'Unspecified',
