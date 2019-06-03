@@ -33,13 +33,13 @@
             <tr>
                 {{-- TODO: translate --}}
                 <td>To @lang('barpay::misc.iban')</td>
-                <td><code class="literal copy">{{ format_iban($payment->paymentable->to_iban) }}</code></td>
+                <td><code class="literal copy" data-copy="{{ $payment->paymentable->to_iban }}">{{ format_iban($payment->paymentable->to_iban) }}</code></td>
             </tr>
             @if(!empty($payment->paymentable->to_bic))
                 <tr>
                     {{-- TODO: translate --}}
                     <td>To @lang('barpay::misc.bic')</td>
-                    <td><code class="literal copy">{{ format_bic($payment->paymentable->to_bic) }}</code></td>
+                    <td><code class="literal copy" data-copy="{{ $payment->paymentable->to_bic }}">{{ format_bic($payment->paymentable->to_bic) }}</code></td>
                 </tr>
             @endif
             <tr>
