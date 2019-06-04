@@ -407,6 +407,8 @@ return [
         'inProgressDescription' => 'This payment is still in progress.',
         'settled#' => '{0} None settled|{1} Payment settled|[2,*] :count settled',
         'noPayments' => 'You have not made any payments yet',
+        'viewPayment' => 'View payment',
+        'unknownPayment' => 'Unknown payment',
         'state' => [
             'init' => 'Initiated',
             'pendingManual' => 'Pending (manual)',

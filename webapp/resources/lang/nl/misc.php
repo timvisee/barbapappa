@@ -88,6 +88,8 @@ return [
     'sold' => 'Verkocht',
     'bar' => 'Bar',
     'community' => 'Groep',
+    'product' => 'Product',
+    'payment' => 'Betaling',
     'assets' => 'Middelen',
     'topUp' => 'Top-up',
     'deposit' => 'Storten',

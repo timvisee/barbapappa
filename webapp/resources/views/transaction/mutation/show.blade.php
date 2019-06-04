@@ -102,7 +102,7 @@
             @endphp
 
             <div class="ui top vertical menu fluid">
-                <h5 class="ui item header">Product</h5>
+                <h5 class="ui item header">@lang('misc.product')</h5>
 
                 @php
                     // Get the product
@@ -128,6 +128,42 @@
                     </span>
 
                     {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
+                </a>
+            </div>
+        @elseif($data instanceof MutationPayment)
+            @php
+                // Extend page links
+                $menulinks[] = [
+                    'name' => __('pages.payments.viewPayment'),
+                    'link' => route('payment.show', [
+                        'paymentId' => $mutation->mutationData->payment_id,
+                    ]),
+                    'icon' => 'credit-card',
+                ];
+            @endphp
+
+            <div class="ui top vertical menu fluid">
+                <h5 class="ui item header">@lang('misc.payment')</h5>
+
+                @php
+                    // Get the payment
+                    $payment = $mutation->mutationData->payment;
+                @endphp
+
+                <a class="item"
+                        href="{{ $payment != null ? route('payment.show', [
+                            'paymentId' => $payment->id,
+                        ]) : '#'}}">
+                    {{ $payment != null ? $payment->displayName() : __('pages.payments.unknownPayment') }}
+                    <span class="subtle">
+                        ({{ $payment->stateName() }})
+                    </span>
+
+                    {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
+
+                    <span class="sub-label">
+                        @include('includes.humanTimeDiff', ['time' => $payment->updated_at ?? $payment->created_at])
+                    </span>
                 </a>
             </div>
         @else

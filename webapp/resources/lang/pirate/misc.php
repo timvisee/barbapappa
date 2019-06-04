@@ -88,6 +88,8 @@ return [
     'sold' => 'Sold',
     'bar' => 'Bar',
     'community' => 'Crew',
+    'product' => 'Product',
+    'payment' => 'Payment',
     'assets' => 'Assets',
     'topUp' => 'Top-up',
     'deposit' => 'Deposit',

@@ -407,6 +407,8 @@ return [
         'inProgressDescription' => 'Deze betaling is nog in behandeling.',
         'settled#' => '{0} Geen afgehandeld|{1} Betaling afgehandeld|[2,*] :count afgehandeld',
         'noPayments' => 'Je hebt nog geen betalingen gedaan',
+        'viewPayment' => 'Betaling bekijken',
+        'unknownPayment' => 'Onbekende betaling',
         'state' => [
             'init' => 'Geïnitieerd',
             'pendingManual' => 'In afwachting (handmatig)',

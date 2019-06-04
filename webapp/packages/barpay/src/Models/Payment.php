@@ -3,6 +3,9 @@
 namespace BarPay\Models;
 
 use App\Models\Currency;
+use App\Models\Mutation;
+use App\Models\MutationPayment;
+use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -91,6 +94,15 @@ class Payment extends Model {
      */
     public function currency() {
         return $this->belongsTo(Currency::class);
+    }
+
+    /**
+     * Get a relation to the payment mutation this belongs to.
+     *
+     * @return Relation to payment mutation.
+     */
+    public function mutationPayment() {
+        return $this->belongsTo(MutationPayment::class);
     }
 
     /**
