@@ -26,7 +26,8 @@ class CreatePaymentManualIbanTable extends Migration {
 
             // State
             $table->datetime('transferred_at')->nullable(true);
-            $table->datetime('confirmed_at')->nullable(true);
+            $table->datetime('checked_at')->nullable(true);
+            $table->datetime('settled_at')->nullable(true);
 
             $table->timestamps();
 

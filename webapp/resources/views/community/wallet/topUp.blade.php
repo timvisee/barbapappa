@@ -59,16 +59,17 @@
         {{ ErrorRenderer::inline('amount') }}
     </div>
 
-    <div class="grouped fields">
+    <div class="grouped fields {{ ErrorRenderer::hasError('payment_service') ? 'error' : '' }}">
         {{ Form::label('payment_service', __('pages.paymentService.selectPaymentServiceToUse') . ':') }}
         @foreach($services as $service)
             <div class="field">
                 <div class="ui radio checkbox">
-                    {{ Form::radio('payment_service', $service->id, ['class' => 'hidden', 'tabindex' => 0]) }}
+                    {{ Form::radio('payment_service', $service->id, false, ['class' => 'hidden', 'tabindex' => 0]) }}
                     {{ Form::label('payment_service', $service->displayName() .  ' (' . $service->serviceable->__('duration') . ')') }}
                 </div>
             </div>
         @endforeach
+        {{ ErrorRenderer::inline('payment_service') }}
     </div>
 
     <div class="ui hidden divider"></div>

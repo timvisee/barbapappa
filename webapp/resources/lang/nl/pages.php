@@ -405,7 +405,8 @@ return [
         'last#' => '{0} Laatste betalingen|{1} Laatste betaling|[2,*] Laatste :count betalingen',
         'backToPayment' => 'Terug naar betaling',
         'backToPayments' => 'Terug naar betalingen',
-        'requiringAction#' => '{0} Geen vereisen actie|{1} Betaling vereist actie|[2,*] :count vereisen actie',
+        'requiringAction' => 'Betaling wacht op actie',
+        'requiringAction#' => '{0} Geen actie vereist|{1} Betaling vereist actie|[2,*] :count vereisen actie',
         'inProgress' => 'Betaling in behandeling',
         'inProgress#' => '{0} Geen in behandeling|{1} Betaling in behandeling|[2,*] :count in behandeling',
         'inProgressDescription' => 'Deze betaling is nog in behandeling.',
@@ -418,6 +419,7 @@ return [
         'paymentsToApprove' => 'Betalingen wachtend op actie',
         'paymentsWaitingForAction' => 'Een aantal betalingen wachten op actie van een groepsbeheerder. Behandel deze alsjeblieft zo snel mogelijk.',
         'paymentsToApproveDescription' => 'De volgende betalingen wachten op actie van een groepsbeheerder. Verwerk deze alsjeblieft zo snel mogelijk om betalingen vlot te laten verlopen.',
+        'paymentRequiresCommunityAction' => 'Deze betaling wacht op actie van een groepsbeheerder.',
         'state' => [
             'init' => 'Geïnitieerd',
             'pendingManual' => 'In afwachting (handmatig)',

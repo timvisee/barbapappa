@@ -110,7 +110,7 @@ class PaymentController extends Controller {
         $response = view('payment.pay')
             ->with('payment', $payment)
             ->with('steps', $payment->getStepsData())
-            ->with('stepView', $paymentable->getStepView());
+            ->with('stepView', $paymentable->getStepPayView());
 
         // Run through paymentable controller action as well, return
         return ($paymentable::CONTROLLER)::{$paymentable->getStepAction()}($payment, $paymentable, $response);
@@ -145,12 +145,12 @@ class PaymentController extends Controller {
     }
 
     /**
-     * Payment approval index page.
+     * Payment approval list page.
      * Show a list of payments that the current user can approve.
      *
      * @return Response
      */
-    public function approveIndex(Request $request) {
+    public function approveList(Request $request) {
         // Get the user, community, find the products
         $user = barauth()->getUser();
 
@@ -159,7 +159,65 @@ class PaymentController extends Controller {
             ->requireCommunityAction()
             ->oldest('updated_at');
 
-        return view('payment.approve.index')
+        return view('payment.approveList')
             ->with('payments', $payments->get());
+    }
+
+    /**
+     * Show payment approval page.
+     *
+     * @return Response
+     */
+    public function approve($paymentId) {
+        // TODO: do some advanced permission checking here!
+
+        // Get the payment
+        $payment = Payment::requireCommunityAction()->findOrFail($paymentId);
+        $paymentable = $payment->paymentable;
+
+        // If the payment is not in progress anymore, redirect to show page
+        if(!$payment->isInProgress())
+            return redirect()->route('payment.show', ['paymentId' => $payment->id]);
+
+        // // Check permission
+        // // TODO: check this permission in middleware, redirect to login
+        // if(!Self::hasPermission($transaction))
+        //     return response(view('noPermission'));
+
+        // Build the response
+        $response = view('payment.approve')
+            ->with('payment', $payment)
+            ->with('stepView', $paymentable->getStepApproveView());
+
+        // Run through paymentable controller action as well, return
+        return ($paymentable::CONTROLLER)::{$paymentable->getStepAction('approve')}($payment, $paymentable, $response);
+    }
+
+    /**
+     * Approve the payment.
+     *
+     * @return Response
+     */
+    public function doApprove(Request $request, $paymentId) {
+        // TODO: do some advanced permission checking here!
+
+        // Get the payment
+        $payment = Payment::requireCommunityAction()->findOrFail($paymentId);
+        $paymentable = $payment->paymentable;
+
+        // If the payment is not in progress anymore, redirect to show page
+        if(!$payment->isInProgress())
+            return redirect()->route('payment.show', ['paymentId' => $payment->id]);
+
+        // // Check permission
+        // // TODO: check this permission in middleware, redirect to login
+        // if(!Self::hasPermission($transaction))
+        //     return response(view('noPermission'));
+
+        // Build the response
+        $response = redirect()->route('payment.approveList');
+
+        // Run through paymentable controller action as well, return
+        return ($paymentable::CONTROLLER)::{$paymentable->getStepAction('doApprove')}($request, $payment, $paymentable, $response);
     }
 }

@@ -37,6 +37,12 @@
 
     <table class="ui compact celled definition table">
         <tbody>
+            @if($payment->user_id == barauth()->getUser()->id)
+                <tr>
+                    <td>@lang('misc.user')</td>
+                    <td>{{ $payment->user->name }}</td>
+                </tr>
+            @endif
             <tr>
                 <td>@lang('misc.amount')</td>
                 <td>{!! $payment->formatCost(BALANCE_FORMAT_COLOR) !!}</td>

@@ -67,4 +67,68 @@ class PaymentManualIbanController {
 
         return $response->with('timeWaiting', $timeWaiting);
     }
+
+    public static function approveStepReceipt(Payment $payment, PaymentManualIban $paymentable, $response) {
+        // Check whether delay is allowed
+        $allowDelay = $paymentable ->transferred_at
+            >= now()->subSeconds(PaymentManualIban::TRANSFER_DELAY_MAX);
+
+        // Respond
+        return $response
+            ->with('description', $payment->getReference(true, true))
+            ->with('allowDelay', $allowDelay);
+    }
+
+    public static function doApproveStepReceipt(Request $request, Payment $payment, PaymentManualIban $paymentable, $response) {
+        // Validate
+        $request->validate([
+            'choice' => 'required|in:approve,delay,reject',
+            'confirm' => 'accepted',
+        ]);
+
+        // Update the checked time
+        $paymentable->checked_at = now();
+
+        // Handle the choice
+        switch($request->input('choice')) {
+        case 'approve':
+            throw new \Exception('Not yet implemented');
+
+            // Update the settle time
+            $paymentable->settled_at = now();
+
+            // Set the payment state
+            // TODO: do this through a function!
+            $payment->state = Payment::STATE_COMPLETED;
+            $payment->save();
+
+            // TODO: update transactoin as well, send mail to user
+            break;
+
+        case 'delay':
+            break;
+
+        case 'reject':
+            throw new \Exception('Not yet implemented');
+
+            // Update the settle time
+            $paymentable->settled_at = now();
+
+            // Set the payment state
+            // TODO: do this through a function!
+            $payment->state = Payment::STATE_REJECTED;
+            $payment->save();
+
+            // TODO: update transactoin as well, send mail to user
+            break;
+
+        default:
+            throw new \Exception('Unknown approval choice');
+        }
+
+        // Save the paymentable
+        $paymentable->save();
+
+        return $response;
+    }
 }

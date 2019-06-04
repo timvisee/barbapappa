@@ -48,6 +48,7 @@ return [
     'public' => 'Publiek',
     'name' => 'Naam',
     'user' => 'Gebruiker',
+    'fromUser' => 'Van gebruiker',
     'role' => 'Rol',
     'createdAt' => 'Gemaakt op',
     'initiatedAt' => 'Geïnitieerd op',

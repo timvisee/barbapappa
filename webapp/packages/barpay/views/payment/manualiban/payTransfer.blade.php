@@ -1,3 +1,5 @@
+{{-- TODO: provide $paymentable as well --}}
+
 {!! Form::open([
     'action' => [
         'PaymentController@doPay',

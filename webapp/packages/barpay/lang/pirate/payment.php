@@ -15,6 +15,12 @@ return [
         'confirmTransfer' => 'I confirm I transferred th\' money wit\' given payment details',
         'waitOnTransfer' => 'Waiting for usual bank transfer delays before requesting a crew manager to review \'n confirm yer transfer.',
         'waitOnReceipt' => 'Waiting for a crew manager to manually confirm yer transaction be received. Dis may take a long while.',
+        'pleaseConfirmReceivedDescription' => 'Please confirm dis transaction be received on yer banking account. Th\' amount, IBAN and description must match.',
+        'approve' => [
+            'approve' => 'Approve payment, money be received, all details match',
+            'delay' => 'Delay payment, money nay be received, ask again later',
+            'reject' => 'Reject payment, money nay be received and won\'t be received in th\' future',
+        ],
         'steps' => [
             'transfer' => 'Transfer',
             'transferring' => 'Transferring',

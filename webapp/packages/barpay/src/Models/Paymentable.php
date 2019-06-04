@@ -77,13 +77,25 @@ trait Paymentable {
     }
 
     /**
-     * Get the embeddable view for this paymentable based on what step we're
-     * currently at. This is shown on the payment progression page.
+     * Get the embeddable view for this paymentable to pay as a user based on
+     * what step we're currently at.
+     * This is shown on the payment progression page.
      *
      * @return string View to use.
      */
-    public function getStepView() {
-        return $this->view('step' . ucfirst($this->getStep()));
+    public function getStepPayView() {
+        return $this->view('pay' . ucfirst($this->getStep()));
+    }
+
+    /**
+     * Get the embeddable view for this paymentable to approve as a community
+     * manager based on what step we're currently at.
+     * This is shown on the payment progression page.
+     *
+     * @return string View to use.
+     */
+    public function getStepApproveView() {
+        return $this->view('approve' . ucfirst($this->getStep()));
     }
 
     /**
@@ -98,7 +110,7 @@ trait Paymentable {
         // Build the normal action, optionally prefix
         $action = 'step' . ucfirst($this->getStep());
         if(!empty($prefix))
-            $action = 'do' . ucfirst($action);
+            $action = $prefix . ucfirst($action);
 
         return $action;
     }

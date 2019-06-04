@@ -512,7 +512,12 @@ Route::prefix('/payments')->middleware('auth')->group(function() {
     // TODO: check permission
     Route::prefix('/approve')->group(function() {
         // Show
-        Route::get('/', 'PaymentController@approveIndex')->name('payment.approve.index');
+        Route::get('/', 'PaymentController@approveList')->name('payment.approveList');
+
+        // Specific
+        // TODO: find payment, check permission
+        Route::get('/{paymentId}', 'PaymentController@approve')->name('payment.approve');
+        Route::post('/{paymentId}', 'PaymentController@doApprove')->name('payment.doApprove');
     });
 
     // Specific

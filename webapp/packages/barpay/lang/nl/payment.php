@@ -15,6 +15,12 @@ return [
         'confirmTransfer' => 'Ik bevestig dat ik het geld heb overgemaakt met de gegeven informatie.',
         'waitOnTransfer' => 'Aan het wachten op gebruikelijke vertragingen bij overboekingen tussen banken voordat een groepsbeheerder gevraagd zal worden om je betaling te controleren.',
         'waitOnReceipt' => 'Aan het wachten op een groepsbeheerder om je betaling handmatig te controleren. Dit kan een lange tijd duren.',
+        'pleaseConfirmReceivedDescription' => 'Verifieer dat deze transactie ontvangen is op de bankrekening. Het bedrag, de IBAN en de beschrijving moeten overeen komen.',
+        'approve' => [
+            'approve' => 'Betaling goedkeuren, geld is ontvangen, alle gegevens komen overeen',
+            'delay' => 'Betaling uitstellen, geld is nog niet ontvangen, vraag later opnieuw',
+            'reject' => 'Betaling afwijzen, geld is niet ontvangen en zal ook in de toekomst niet ontvangen worden',
+        ],
         'steps' => [
             'transfer' => 'Overboeking',
             'transferring' => 'Overboeken',

@@ -12,7 +12,7 @@
         {{-- Payments --}}
         @forelse($group['payments'] as $payment)
             <a class="item"
-                    href="{{ route('payment.approve.show', [
+                    href="{{ route('payment.approve', [
                         'paymentId' => $payment->id,
                     ]) }}">
                 {{ $payment->displayName() }}

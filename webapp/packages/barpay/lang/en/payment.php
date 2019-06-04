@@ -15,6 +15,12 @@ return [
         'confirmTransfer' => 'I confirm I\'ve transferred the money with the given payment details',
         'waitOnTransfer' => 'Waiting for usual bank transfer delays before requesting a community manager to review and confirm your transfer.',
         'waitOnReceipt' => 'Waiting for a community manager to manually confirm your transaction has been received. This may take a long while.',
+        'pleaseConfirmReceivedDescription' => 'Please confirm this transaction is received on your banking account. The amount, IBAN and description must match.',
+        'approve' => [
+            'approve' => 'Approve payment, money is received, all details match',
+            'delay' => 'Delay payment, money is not yet received, ask again later',
+            'reject' => 'Reject payment, money is not received and won\'t be received in the future',
+        ],
         'steps' => [
             'transfer' => 'Transfer',
             'transferring' => 'Transferring',

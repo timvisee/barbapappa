@@ -7,7 +7,7 @@
     <p>@lang('pages.payments.paymentsToApproveDescription')</p>
 
     {{-- Payment list --}}
-    @include('payment.approve.include.list', [
+    @include('payment.include.listApprove', [
         'groups' => [[
                 'header' => trans_choice('pages.payments.requiringAction#', count($payments)),
             'payments' => $payments,

@@ -17,7 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string iban IBAN to transfer to.
  * @property string ref A reference code.
  * @property datetime|null transferred_at When the user manuall transferred if done.
- * @property datetime|null confirmed_at When the manual transfer was confirmed by the counter party if done.
+ * @property datetime|null checked_at Last time the transaction was checked at.
+ * @property datetime|null settled_at When the manual transfer was settled by the counter party if done.
  * @property string|null bic Optional BIC corresponding to the IBAN.
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -30,7 +31,8 @@ class PaymentManualIban extends Model {
 
     protected $casts = [
         'transferred_at' => 'datetime',
-        'confirmed_at' => 'datetime',
+        'checked_at' => 'datetime',
+        'settled_at' => 'datetime',
     ];
 
     /**
@@ -38,6 +40,17 @@ class PaymentManualIban extends Model {
      * manager to confirm the payment is received.
      */
     public const TRANSFER_WAIT = 2 * 24 * 60 * 60;
+
+    /**
+     * Wait this number of seconds after checking a transfer, before checking it
+     * again.
+     */
+    public const TRANSFER_CHECK_RETRY = 1.5 * 24 * 60 * 60;
+
+    /**
+     * The maximum number of seconds a transfer check can be delayed.
+     */
+    public const TRANSFER_DELAY_MAX = 30 * 24 * 60 * 60;
 
     /**
      * The controller to use for this paymentable.
@@ -95,7 +108,11 @@ class PaymentManualIban extends Model {
      */
     public static function scopeRequireCommunityAction($query, $paymentable_query) {
         $paymentable_query
-            ->where('transferred_at', '<', now()->subSeconds(Self::TRANSFER_WAIT));
+            ->where('transferred_at', '<', now()->subSeconds(Self::TRANSFER_WAIT))
+            ->where(function($query) {
+                $query->where('checked_at', '<', now()->subSeconds(Self::TRANSFER_CHECK_RETRY))
+                    ->orWhere('checked_at', null);
+            });
     }
 
     /**
@@ -137,7 +154,7 @@ class PaymentManualIban extends Model {
             return Self::STEP_TRANSFER;
         if($this->transferred_at > now()->subSeconds(Self::TRANSFER_WAIT))
             return Self::STEP_TRANSFERRING;
-        if($this->confirmed_at == null)
+        if($this->settled_at == null)
             return Self::STEP_RECEIPT;
 
         throw new \Exception('Paymentable is in invalid step state');

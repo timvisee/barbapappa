@@ -10,7 +10,7 @@
         <div class="ui info message visible">
             <div class="header">@lang('pages.payments.handleCommunityPayments')</div>
             <p>@lang('pages.payments.paymentsWaitingForAction')</p>
-            <a href="{{ route('payment.approve.index') }}"
+            <a href="{{ route('payment.approveList') }}"
                     class="ui button basic">
                 @lang('pages.payments.handlePayments')
             </a>

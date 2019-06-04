@@ -136,6 +136,8 @@ return [
         'bic' => 'BIC',
         'account_holder' => 'rekeninghouder',
         'payment_service' => 'betaalservice',
+        'choice' => 'keuze',
+        'confirm' => 'bevestiging',
     ],
 
 ];

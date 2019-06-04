@@ -48,6 +48,7 @@ return [
     'public' => 'Public',
     'name' => 'Name',
     'user' => 'User',
+    'fromUser' => 'From user',
     'role' => 'Rank',
     'createdAt' => 'Created at',
     'initiatedAt' => 'Initiated at',
