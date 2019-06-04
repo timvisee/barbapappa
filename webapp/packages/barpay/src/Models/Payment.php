@@ -48,6 +48,13 @@ class Payment extends Model {
     const STATE_CANCELLED = 8;
 
     /**
+     * A list of all availalbe paymentables.
+     */
+    const PAYMENTABLES = [
+        PaymentManualIban::class,
+    ];
+
+    /**
      * Array containing all states that define a payment is settled (not in
      * progress).
      */
@@ -67,6 +74,83 @@ class Payment extends Model {
             return $query->whereNotIn('state', Self::SETTLED);
         else
             return $query->whereIn('state', Self::SETTLED);
+    }
+
+    /**
+     * A scope for selecting payments that currently require action by the user
+     * that makes the payment, for example, to enter payment credentials.
+     *
+     * This only returns payments that are in progress.
+     *
+     * @param Builder Query builder.
+     */
+    // TODO: deduplicate, use generic method for this kind of scope
+    public function scopeRequireUserAction($query) {
+        $query->inProgress(true)
+            ->where(function($query) {
+                // For each paymentable type, attempt to select payments
+                // that require user action using it's specific logic and scope
+                foreach(Self::PAYMENTABLES as $paymentable_type)
+                    $query->orWhere(function($query) use($paymentable_type) {
+                        // Limit to current paymentable
+                        $query->where('paymentable_type', $paymentable_type);
+
+                        // Get table for paymentable
+                        $table = (new $paymentable_type)->getTable();
+
+                        // Create query builder for paymentable
+                        $query->whereExists(function($p_query) use($query, $table, $paymentable_type) {
+                            $p_query->selectRaw('1')
+                                ->from($table)
+                                ->whereRaw('paymentable_id = ' . $table . '.id')
+                                ->where(function($p_query) use($query, $paymentable_type) {
+                                    // Use paymentable specific scope for payment and
+                                    // paymentable query builders
+                                    // TODO: use a real paymentable scope here,
+                                    // without main payment query
+                                    $paymentable_type::scopeRequireUserAction($query, $p_query);
+                                });
+                        });
+                    });
+            });
+    }
+
+    /**
+     * A scope for selecting payments that currently require action by a manager
+     * in the respective community/economy, for example, to approve a payment.
+     *
+     * This only returns payments that are in progress.
+     *
+     * @param Builder Query builder.
+     */
+    public function scopeRequireCommunityAction($query) {
+        $query->inProgress(true)
+            ->where(function($query) {
+                // For each paymentable type, attempt to select payments
+                // that require community action using it's specific logic and scope
+                foreach(Self::PAYMENTABLES as $paymentable_type)
+                    $query->orWhere(function($query) use($paymentable_type) {
+                        // Limit to current paymentable
+                        $query->where('paymentable_type', $paymentable_type);
+
+                        // Get table for paymentable
+                        $table = (new $paymentable_type)->getTable();
+
+                        // Create query builder for paymentable
+                        $query->whereExists(function($p_query) use($query, $table, $paymentable_type) {
+                            $p_query->selectRaw('1')
+                                ->from($table)
+                                ->whereRaw('paymentable_id = ' . $table . '.id')
+                                ->where(function($p_query) use($query, $paymentable_type) {
+                                    // Use paymentable specific scope for payment and
+                                    // paymentable query builders
+                                    // TODO: use a real paymentable scope here,
+                                    // without main payment query
+                                    $paymentable_type::scopeRequireCommunityAction($query, $p_query);
+                                });
+                        });
+                    });
+            });
     }
 
     /**

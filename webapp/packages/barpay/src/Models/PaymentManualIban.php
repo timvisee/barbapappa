@@ -68,6 +68,37 @@ class PaymentManualIban extends Model {
     ];
 
     /**
+     * A scope for selecting payments that currently require action by the user
+     * that makes the payment, for example, to enter payment credentials.
+     *
+     * This only returns payments that are in progress.
+     *
+     * @param Builder $query Query builder for the payment.
+     * @param Builder $paymentable_query Query builder for the corresponding
+     *      paymentable.
+     */
+    public static function scopeRequireUserAction($query, $paymentable_query) {
+        $paymentable_query
+            ->where('from_iban', null)
+            ->orWhere('transferred_at', null);
+    }
+
+    /**
+     * A scope for selecting payments that currently require action by a
+     * community/economy manager, for example, to approve the payment.
+     *
+     * This only returns payments that are in progress.
+     *
+     * @param Builder $query Query builder for the payment.
+     * @param Builder $paymentable_query Query builder for the corresponding
+     *      paymentable.
+     */
+    public static function scopeRequireCommunityAction($query, $paymentable_query) {
+        $paymentable_query
+            ->where('transferred_at', '<', now()->subSeconds(Self::TRANSFER_WAIT));
+    }
+
+    /**
      * Create the paymentable part for a newly started payment, and attach it to
      * the payment.
      *
