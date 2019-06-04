@@ -3,6 +3,7 @@
 namespace BarPay\Models;
 
 use App\Models\Currency;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -44,12 +45,43 @@ class Payment extends Model {
     const STATE_CANCELLED = 8;
 
     /**
+     * Array containing all states that define a payment is settled (not in
+     * progress).
+     */
+    const SETTLED = [
+        Self::STATE_COMPLETED,
+        Self::STATE_REVOKED,
+        Self::STATE_REJECTED,
+        Self::STATE_FAILED,
+        Self::STATE_CANCELLED,
+    ];
+
+    /**
+     * A scope for selecting payments that are, or are not in progress.
+     */
+    public function scopeInProgress($query, $inProgress = true) {
+        if($inProgress)
+            return $query->whereNotIn('state', Self::SETTLED);
+        else
+            return $query->whereIn('state', Self::SETTLED);
+    }
+
+    /**
      * Get the relation to the used service linked to this payment.
      *
      * @return Relation to the used service.
      */
     public function service() {
         return $this->belongsTo(Service::class);
+    }
+
+    /**
+     * Get the used user.
+     *
+     * @return The user.
+     */
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -170,6 +202,16 @@ class Payment extends Model {
             Self::STATE_FAILED,
             Self::STATE_CANCELLED,
         ]);
+    }
+
+    /**
+     * Get the display name for this payment.
+     *
+     * @return string Display name based on serviceable type.
+     */
+    public function displayName() {
+        // TODO: this is very inefficient, fix this!
+        return $this->service->displayName();
     }
 
     public function getStepsData() {

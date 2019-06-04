@@ -16,6 +16,22 @@ use Validator;
 class PaymentController extends Controller {
 
     /**
+     * Payment index page.
+     * Show a list of payments for the current user.
+     *
+     * @return Response
+     */
+    public function index(Request $request) {
+        // Get the user, community, find the products
+        $user = barauth()->getUser();
+        $payments = $user->payments()->latest('updated_at');
+
+        return view('payment.index')
+            ->with('inProgress', $payments->inProgress(true)->get())
+            ->with('settled', $payments->inProgress(false)->get());
+    }
+
+    /**
      * Show a user payment.
      *
      * @return Response

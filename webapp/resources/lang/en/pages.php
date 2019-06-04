@@ -397,12 +397,16 @@ return [
      */
     'payments' => [
         'title' => 'Payments',
+        'description' => 'This shows all in progress and settled payments you\'ve made in any community.',
         'details' => 'Payment details',
         'payment' => 'Payment progress',
         'last#' => '{0} Last payments|{1} Last payment|[2,*] Last :count payments',
         'backToPayment' => 'Back to payment',
         'inProgress' => 'Payment in progress',
+        'inProgress#' => '{0} None in progress|{1} Payment in progress|[2,*] :count in progress',
         'inProgressDescription' => 'This payment is still in progress.',
+        'settled#' => '{0} None settled|{1} Payment settled|[2,*] :count settled',
+        'noPayments' => 'You have not made any payments yet',
         'state' => [
             'init' => 'Initiated',
             'pendingManual' => 'Pending (manual)',

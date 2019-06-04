@@ -457,7 +457,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 });
 
 // Transactions
-Route::prefix('/transactions')->group(function() {
+Route::prefix('/transactions')->middleware('auth')->group(function() {
     // Index
     // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
 
@@ -504,10 +504,9 @@ Route::prefix('/transactions')->group(function() {
 });
 
 // Payments
-Route::prefix('/payments')->group(function() {
+Route::prefix('/payments')->middleware('auth')->group(function() {
     // Index
-    // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
-    // TODO: create a payment index for the current user
+    Route::get('/', 'PaymentController@index')->name('payment.index');
 
     // Specific
     // TODO: find payment, check permission

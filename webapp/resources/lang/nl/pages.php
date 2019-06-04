@@ -397,12 +397,16 @@ return [
      */
     'payments' => [
         'title' => 'Betalingen',
+        'description' => 'Hier zie je alle betalingen in behandeling en afgehandeld die je gemaakt hebt in alle groepen.',
         'details' => 'Betaling details',
         'progress' => 'Voortgang van betaling',
         'last#' => '{0} Laatste betalingen|{1} Laatste betaling|[2,*] Laatste :count betalingen',
         'backToPayment' => 'Terug naar betaling',
         'inProgress' => 'Betaling in behandeling',
+        'inProgress#' => '{0} Geen in behandeling|{1} Betaling in behandeling|[2,*] :count in behandeling',
         'inProgressDescription' => 'Deze betaling is nog in behandeling.',
+        'settled#' => '{0} Geen afgehandeld|{1} Betaling afgehandeld|[2,*] :count afgehandeld',
+        'noPayments' => 'Je hebt nog geen betalingen gedaan',
         'state' => [
             'init' => 'Geïnitieerd',
             'pendingManual' => 'In afwachting (handmatig)',
