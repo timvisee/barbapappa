@@ -60,7 +60,7 @@
     </div>
 
     <div class="grouped fields">
-        {{ Form::label('payment_service', __('pages.paymentService.selectPaymentServiceToUse')) }}
+        {{ Form::label('payment_service', __('pages.paymentService.selectPaymentServiceToUse') . ':') }}
         @foreach($services as $service)
             <div class="field">
                 <div class="ui radio checkbox">

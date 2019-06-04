@@ -6,7 +6,7 @@
 return [
     'qr' => [
         'showPaymentQr' => 'Show payment QR code',
-        'instruction' => 'Scan this QR code with your mobile banking app to automatically fill in all payment details. This works with most modern banks.',
+        'instruction' => 'Scan this QR code with your mobile banking app to automatically fill in all payment details. This works with some modern banks.',
     ],
 
     'manualiban' => [

@@ -35,6 +35,7 @@ return [
     'unspecified' => 'Unspecified',
     'pleaseSpecify' => 'Please specify',
     'information' => 'Spyglasses',
+    'moreInfo' => 'More info',
     'description' => 'Description',
     'actions' => 'Actions',
     'welcome' => 'Welcome',

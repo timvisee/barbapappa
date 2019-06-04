@@ -35,6 +35,7 @@ return [
     'unspecified' => 'Niet gespecificeerd',
     'pleaseSpecify' => 'Te specificeren',
     'information' => 'Informatie',
+    'moreInfo' => 'Meer info',
     'description' => 'Omschrijving',
     'actions' => 'Acties',
     'welcome' => 'Welkom',

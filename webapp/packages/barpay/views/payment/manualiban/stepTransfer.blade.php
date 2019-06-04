@@ -49,6 +49,10 @@
             <div class="content">
                 <p class="transition hidden">
                     @lang('barpay::payment.qr.instruction')
+                    <a href="https://www.scan2pay.info/#av_section_8"
+                            target="_blank">
+                        @lang('misc.moreInfo')
+                    </a>
                 </p>
                 <img src="data:image/png;base64,{{ base64_encode(
                     QrCode::format('png')
