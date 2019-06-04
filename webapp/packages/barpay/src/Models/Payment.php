@@ -2,6 +2,7 @@
 
 namespace BarPay\Models;
 
+use App\Http\Controllers\CommunityController;
 use App\Models\Currency;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
@@ -77,12 +78,36 @@ class Payment extends Model {
     }
 
     /**
+     * A scope for selecting payments that can be managed as a community/economy
+     * manager or administrator by the currently authenticated user.
+     *
+     * @param Builder $query Query builder.
+     */
+    public function scopeCanManage($query) {
+        // TODO: properly select economies user can manage!
+        $economies = [];
+
+        // Query mutation payment
+        $query->whereExists(function($query) use($economies) {
+            $query->selectRaw('1')
+                ->from('mutations_payment')
+                ->whereRaw('payments.id = mutations_payment.payment_id')
+                ->leftJoin('mutations', function($leftJoin) {
+                    $leftJoin->on('mutations_payment.mutation_id', '=', 'mutations.id');
+                })
+                // TODO: enable this again once implemented!
+                // ->whereIn('economy_id', $economies)
+                ;
+        });
+    }
+
+    /**
      * A scope for selecting payments that currently require action by the user
      * that makes the payment, for example, to enter payment credentials.
      *
      * This only returns payments that are in progress.
      *
-     * @param Builder Query builder.
+     * @param Builder $query Query builder.
      */
     // TODO: deduplicate, use generic method for this kind of scope
     public function scopeRequireUserAction($query) {
@@ -102,7 +127,7 @@ class Payment extends Model {
                         $query->whereExists(function($p_query) use($query, $table, $paymentable_type) {
                             $p_query->selectRaw('1')
                                 ->from($table)
-                                ->whereRaw('paymentable_id = ' . $table . '.id')
+                                ->whereRaw('payments.paymentable_id = ' . $table . '.id')
                                 ->where(function($p_query) use($query, $paymentable_type) {
                                     // Use paymentable specific scope for payment and
                                     // paymentable query builders
@@ -121,7 +146,7 @@ class Payment extends Model {
      *
      * This only returns payments that are in progress.
      *
-     * @param Builder Query builder.
+     * @param Builder $query Query builder.
      */
     public function scopeRequireCommunityAction($query) {
         $query->inProgress(true)
@@ -140,7 +165,7 @@ class Payment extends Model {
                         $query->whereExists(function($p_query) use($query, $table, $paymentable_type) {
                             $p_query->selectRaw('1')
                                 ->from($table)
-                                ->whereRaw('paymentable_id = ' . $table . '.id')
+                                ->whereRaw('payments.paymentable_id = ' . $table . '.id')
                                 ->where(function($p_query) use($query, $paymentable_type) {
                                     // Use paymentable specific scope for payment and
                                     // paymentable query builders

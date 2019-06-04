@@ -24,11 +24,37 @@ class PaymentController extends Controller {
     public function index(Request $request) {
         // Get the user, community, find the products
         $user = barauth()->getUser();
-        $payments = $user->payments()->latest('updated_at');
+
+        // Get payments in different stages
+        $requireUserAction = $user
+            ->payments()
+            ->inProgress(true)
+            ->requireUserAction()
+            ->latest('updated_at')
+            ->get();
+        $inProgress = $user
+            ->payments()
+            ->inProgress(true)
+            ->latest('updated_at')
+            ->whereNotIn('id', $requireUserAction->pluck('id'))
+            ->get();
+        $settled = $user
+            ->payments()
+            ->inProgress(false)
+            ->latest('updated_at')
+            ->get();
+
+        // Check whether there are 
+        $requireCommunityAction = Payment::canManage()
+            ->requireCommunityAction()
+            ->limit(1)
+            ->count() > 0;
 
         return view('payment.index')
-            ->with('inProgress', $payments->inProgress(true)->get())
-            ->with('settled', $payments->inProgress(false)->get());
+            ->with('requireUserAction', $requireUserAction)
+            ->with('inProgress', $inProgress)
+            ->with('settled', $settled)
+            ->with('requireCommunityAction', $requireCommunityAction);
     }
 
     /**
@@ -116,5 +142,24 @@ class PaymentController extends Controller {
 
         // Run through paymentable controller action as well, return
         return ($paymentable::CONTROLLER)::{$paymentable->getStepAction('do')}($request, $payment, $paymentable, $response);
+    }
+
+    /**
+     * Payment approval index page.
+     * Show a list of payments that the current user can approve.
+     *
+     * @return Response
+     */
+    public function approveIndex(Request $request) {
+        // Get the user, community, find the products
+        $user = barauth()->getUser();
+
+        // Get all payments to approve, show earliest first
+        $payments = Payment::canManage()
+            ->requireCommunityAction()
+            ->oldest('updated_at');
+
+        return view('payment.approve.index')
+            ->with('payments', $payments->get());
     }
 }
