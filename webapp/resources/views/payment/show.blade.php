@@ -2,6 +2,25 @@
 
 @section('title', __('pages.payments.details'))
 
+@php
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.payments.backToPayments'),
+        'link' => route('payment.index'),
+        'icon' => 'undo',
+    ];
+
+    // Extend page links
+    if(!empty($transaction))
+        $menulinks[] = [
+            'name' => __('pages.transactions.viewTransaction'),
+            'link' => route('transaction.show', [
+                'transactionId' => $transaction->id,
+            ]),
+            'icon' => 'shopping-bag',
+        ];
+@endphp
+
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
@@ -43,7 +62,30 @@
         </tbody>
     </table>
 
-    {{-- TODO: link wallet and transaction related to this payment --}}
+    {{-- Show link to transaction --}}
+    @if(!empty($transaction))
+        <div class="ui top vertical menu fluid">
+            <h5 class="ui item header">
+                @lang('pages.transactions.linkedTransaction')
+            </h5>
+
+            <a class="item"
+                    href="{{ route('transaction.show', [
+                        'transactionId' => $transaction->id,
+                    ])}}">
+                {{ $transaction->describe() }}
+                <span class="subtle">
+                    ({{ $transaction->stateName() }})
+                </span>
+
+                {!! $transaction->formatCost(BALANCE_FORMAT_LABEL) !!}
+
+                <span class="sub-label">
+                    @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at])
+                </span>
+            </a>
+        </div>
+    @endif
 
     {{-- TODO: some action buttons --}}
     {{-- <p> --}}
@@ -59,11 +101,10 @@
     {{--     </div> --}}
     {{-- </p> --}}
 
-    {{-- TODO: implement go back button! --}}
-    {{-- <p> --}}
-    {{--     <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" --}}
-    {{--             class="ui button basic"> --}}
-    {{--         @lang('general.goBack') --}}
-    {{--     </a> --}}
-    {{-- </p> --}}
+    <p>
+        <a href="{{ route('payment.index') }}"
+                class="ui button basic">
+            @lang('general.goBack')
+        </a>
+    </p>
 @endsection

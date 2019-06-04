@@ -102,7 +102,7 @@ class Payment extends Model {
      * @return Relation to payment mutation.
      */
     public function mutationPayment() {
-        return $this->belongsTo(MutationPayment::class);
+        return $this->hasOne(MutationPayment::class);
     }
 
     /**

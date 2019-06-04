@@ -42,13 +42,21 @@ class PaymentController extends Controller {
         // Get the payment
         $payment = Payment::findOrFail($paymentId);
 
+        // Find a transaction corresponding ton this payment
+        $transaction = $payment->mutationPayment;
+        if($transaction != null)
+            $transaction = $transaction->mutation->transaction;
+        else
+            $transaction = null;
+
         // // Check permission
         // // TODO: check this permission in middleware, redirect to login
         // if(!Self::hasPermission($transaction))
         //     return response(view('noPermission'));
 
         return view('payment.show')
-            ->with('payment', $payment);
+            ->with('payment', $payment)
+            ->with('transaction', $transaction);
     }
 
     /**

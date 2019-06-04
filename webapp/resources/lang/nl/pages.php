@@ -345,6 +345,8 @@ return [
         'undone' => 'De transactie is ongedaan gemaakt.',
         'undoTransaction' => 'Transactie ongedaan maken',
         'undoQuestion' => 'Je staat op het punt deze transactie ongedaan te maken. Weet je zeker dat je door wilt gaan?',
+        'viewTransaction' => 'Bekijk transactie',
+        'linkedTransaction' => 'Gekoppelde transactie',
         'state' => [
             'pending' => 'In afwachting',
             'processing' => 'Bezig met verwerken',
@@ -402,6 +404,7 @@ return [
         'progress' => 'Voortgang van betaling',
         'last#' => '{0} Laatste betalingen|{1} Laatste betaling|[2,*] Laatste :count betalingen',
         'backToPayment' => 'Terug naar betaling',
+        'backToPayments' => 'Terug naar betalingen',
         'inProgress' => 'Betaling in behandeling',
         'inProgress#' => '{0} Geen in behandeling|{1} Betaling in behandeling|[2,*] :count in behandeling',
         'inProgressDescription' => 'Deze betaling is nog in behandeling.',

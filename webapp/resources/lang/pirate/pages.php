@@ -345,6 +345,8 @@ return [
         'undone' => 'The transaction has been undone.',
         'undoTransaction' => 'Undo transaction',
         'undoQuestion' => 'Yer \'bout to undo this transaction. Ye be sure ye want to continue?',
+        'viewTransaction' => 'View transaction',
+        'linkedTransaction' => 'Linked transaction',
         'state' => [
             'pending' => 'Pendin\'',
             'processing' => 'Processin\'',
@@ -402,6 +404,7 @@ return [
         'progress' => 'Payment progress',
         'last#' => '{0} Last payments|{1} Last payment|[2,*] Last :count payments',
         'backToPayment' => 'Back to payment',
+        'backToPayments' => 'Back to payments',
         'inProgress' => 'Payment in progress',
         'inProgress#' => '{0} None in progress|{1} Payment in progress|[2,*] :count in progress',
         'inProgressDescription' => 'This payment is still in progress.',
