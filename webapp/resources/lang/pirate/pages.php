@@ -401,6 +401,8 @@ return [
         'progress' => 'Payment progress',
         'last#' => '{0} Last payments|{1} Last payment|[2,*] Last :count payments',
         'backToPayment' => 'Back to payment',
+        'inProgress' => 'Payment in progress',
+        'inProgressDescription' => 'This payment is still in progress.',
         'state' => [
             'init' => 'Initiated',
             'pendingManual' => 'Pendin\' (manual)',

@@ -67,6 +67,7 @@ return [
     'disable' => 'Uitschakelen',
     'disabled' => 'Uitgeschakeld',
     'archived' => 'Gearchiveerd',
+    'showProgress' => 'Toon voortgang',
     'showAll' => 'Bekijk alles',
     'manage' => 'Beheren',
     'managementHub' => 'Beheer hub',

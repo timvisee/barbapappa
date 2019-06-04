@@ -67,6 +67,7 @@ return [
     'disable' => 'Disable',
     'disabled' => 'Disabled',
     'archived' => 'Archived',
+    'showProgress' => 'Show progress',
     'showAll' => 'Show \'ll',
     'manage' => 'Manage',
     'managementHub' => 'Captains hut',

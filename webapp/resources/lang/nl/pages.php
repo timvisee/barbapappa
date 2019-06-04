@@ -401,6 +401,8 @@ return [
         'progress' => 'Voortgang van betaling',
         'last#' => '{0} Laatste betalingen|{1} Laatste betaling|[2,*] Laatste :count betalingen',
         'backToPayment' => 'Terug naar betaling',
+        'inProgress' => 'Betaling in behandeling',
+        'inProgressDescription' => 'Deze betaling is nog in behandeling.',
         'state' => [
             'init' => 'Geïnitieerd',
             'pendingManual' => 'In afwachting (handmatig)',

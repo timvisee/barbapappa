@@ -5,6 +5,17 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
+    @if($payment->isInProgress())
+        <div class="ui info message visible">
+            <div class="header">@lang('pages.payments.inProgress')</div>
+            <p>@lang('pages.payments.inProgressDescription')</p>
+            <a href="{{ route('payment.pay', ['paymentId' => $payment->id]) }}"
+                    class="ui button basic">
+                @lang('misc.showProgress')
+            </a>
+        </div>
+    @endif
+
     <table class="ui compact celled definition table">
         <tbody>
             <tr>
