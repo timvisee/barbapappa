@@ -30,11 +30,6 @@
 
         <div class="ui divider"></div>
 
-        <div class="ui warning message visible">
-            <div class="header">@lang('account.isCompromised')</div>
-            <p>@lang('account.invalidateOtherSessionsDescription')</p>
-        </div>
-
         <div class="inline field">
             <div class="ui toggle checkbox">
                 <input type="checkbox" name="invalidate_other_sessions" tabindex="0" class="hidden" checked="checked">
