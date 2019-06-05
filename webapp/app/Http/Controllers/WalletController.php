@@ -357,6 +357,7 @@ class WalletController extends Controller {
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
+                    'depends_on' => $mut_wallet->id,
                 ]);
             MutationWallet::create([
                 'mutation_id' => $mut_wallet->id,
@@ -495,8 +496,9 @@ class WalletController extends Controller {
                     'type' => Mutation::TYPE_WALLET,
                     'amount' => -$amount,
                     'currency_id' => $currency->id,
-                    'state' => Mutation::STATE_SUCCESS,
+                    'state' => Mutation::STATE_PENDING,
                     'owner_id' => $user->id,
+                    'depends_on' => $mut_payment->id,
                 ]);
             MutationWallet::create([
                 'mutation_id' => $mut_wallet->id,

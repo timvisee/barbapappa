@@ -65,15 +65,9 @@ class PaymentController extends Controller {
     public function show($paymentId) {
         // TODO: do some advanced permission checking here!
 
-        // Get the payment
+        // Get the payment, find it's transaction
         $payment = Payment::findOrFail($paymentId);
-
-        // Find a transaction corresponding ton this payment
-        $transaction = $payment->mutationPayment;
-        if($transaction != null)
-            $transaction = $transaction->mutation->transaction;
-        else
-            $transaction = null;
+        $transaction = $payment->findTransaction();
 
         // // Check permission
         // // TODO: check this permission in middleware, redirect to login
@@ -140,8 +134,13 @@ class PaymentController extends Controller {
         // Build the response
         $response = redirect()->route('payment.pay', ['paymentId' => $payment->id]);
 
-        // Run through paymentable controller action as well, return
-        return ($paymentable::CONTROLLER)::{$paymentable->getStepAction('do')}($request, $payment, $paymentable, $response);
+        // Run paymentable specific action in a transaction, then return
+        DB::transaction(function() use($request, $payment, $paymentable, &$response) {
+            $response = ($paymentable::CONTROLLER)
+                ::{$paymentable->getStepAction('do')}
+                ($request, $payment, $paymentable, $response);
+        });
+        return $response;
     }
 
     /**
@@ -217,7 +216,12 @@ class PaymentController extends Controller {
         // Build the response
         $response = redirect()->route('payment.approveList');
 
-        // Run through paymentable controller action as well, return
-        return ($paymentable::CONTROLLER)::{$paymentable->getStepAction('doApprove')}($request, $payment, $paymentable, $response);
+        // Run paymentable specific action in a transaction, then return
+        DB::transaction(function() use($request, $payment, $paymentable, &$response) {
+            $response = ($paymentable::CONTROLLER)
+                ::{$paymentable->getStepAction('doApprove')}
+                ($request, $payment, $paymentable, $response);
+        });
+        return $response;
     }
 }

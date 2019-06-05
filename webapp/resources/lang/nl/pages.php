@@ -429,7 +429,6 @@ return [
             'revoked' => 'Ingetrokken',
             'rejected' => 'Afgekeurd',
             'failed' => 'Mislukt',
-            'cancelled' => 'Geannuleerd',
         ],
     ],
 

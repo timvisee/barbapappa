@@ -53,6 +53,11 @@ class Mutation extends Model {
     const STATE_SUCCESS = 3;
     const STATE_FAILED = 4;
 
+    const SETTLED = [
+        Self::STATE_SUCCESS,
+        Self::STATE_FAILED,
+    ];
+
     /**
      * The child mutation types that belong to this mutation for a given type.
      *
@@ -252,6 +257,89 @@ class Mutation extends Model {
 
         // Translate and return
         return __('pages.mutations.state.' . $key);
+    }
+
+    /**
+     * Set the state of this mutation with some bound checks.
+     *
+     * @param int $state The state to set to.
+     * @param boolean [$save=true] True to save the model after setting the state.
+     *
+     * @throws \Exception Throws if an invalid state is given.
+     */
+    private function setState($state, $save = true) {
+        // Never allow setting to pending
+        if($state == Self::STATE_PENDING)
+            throw new \Exception('Cannot set mutation state to pending');
+
+        // Set the state, and save
+        $this->state = $state;
+        if($save)
+            $this->save();
+    }
+
+    /**
+     * Settle this mutation.
+     * This in turn settles any related/depending mutations and the
+     * encapsulating transaction.
+     *
+     * @param int $state The new mutation state to settle with.
+     * @param bool [$save=true] True to save this model after settling.
+     *
+     * @throws \Exception Throws if an invalid settle state is given.
+     */
+    public function settle($state, $save = true) {
+        // The given state must be in the settled array
+        if(!in_array($state, Self::SETTLED))
+            throw new \Exception('Failed to settle mutation, given new state is not recognized as settle state');
+
+        // Skip if already in this state
+        if($this->state == $state)
+            return;
+
+        // TODO: must be in a transaction
+
+        // Set the state
+        $this->setState($state, false);
+
+        // Settle any dependents
+        // TODO: ensure this doesn't cause issues with circular dependencies
+        foreach(($this->dependents ?? []) as $dependent)
+            $dependent->settle($state, true);
+
+        // TODO: do mutation specific logic on settling and/or block
+        // - payment: do not allow settle if not settled
+        // - wallet: transfer moneys
+        // TODO: move this into a mutation specific function
+        if($state = Self::STATE_SUCCESS && $this->type == Self::TYPE_WALLET) {
+            $wallet = $this->mutationData->wallet;
+            if($wallet->currency_id != $this->currency_id)
+                throw new \Exception('Wallet mutation and wallet differ in currency, cannot process');
+            if($this->amount > 0)
+                $wallet->withdraw($this->amount);
+            else
+                $wallet->deposit(-$this->amount);
+        }
+
+        // TODO: make sure transaction state is still consistent!
+
+        // Save the model
+        if($save)
+            $this->save();
+
+        // Settle the transaction
+        $transactionState = null;
+        switch($state) {
+        case Self::STATE_SUCCESS:
+            $transactionState = Transaction::STATE_SUCCESS;
+            break;
+        case Self::STATE_FAILED:
+            $transactionState = Transaction::STATE_FAILED;
+            break;
+        default:
+            throw new \Exception('Unknown mutation state');
+        }
+        $this->transaction->settle($transactionState, true);
     }
 
     /**

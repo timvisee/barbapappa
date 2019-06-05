@@ -97,35 +97,18 @@ class PaymentManualIbanController {
         // Handle the choice
         switch($request->input('choice')) {
         case 'approve':
-            throw new \Exception('Not yet implemented');
-
-            // Update the settle time
+            // Update the settle time, settle the payment
             $paymentable->settled_at = $now;
-
-            // Set the payment state
-            // TODO: do this through a function!
-            $payment->state = Payment::STATE_COMPLETED;
-            $payment->save();
-
-            // TODO: update transactoin as well, send mail to user
+            $payment->settle(Payment::STATE_COMPLETED, true);
             break;
 
         case 'delay':
             break;
 
         case 'reject':
-            throw new \Exception('Not yet implemented');
-
-            // Update the settle time
+            // Update the settle time, settle the payment
             $paymentable->settled_at = $now;
-
-            // Set the payment state
-            // TODO: do this through a function!
-            $payment->state = Payment::STATE_REJECTED;
-            $payment->save();
-
-            // TODO: update transactoin as well, send mail to user
-            break;
+            $payment->settle(Payment::STATE_REJECTED, true);
 
         default:
             throw new \Exception('Unknown approval choice');

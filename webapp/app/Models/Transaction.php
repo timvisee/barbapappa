@@ -33,6 +33,11 @@ class Transaction extends Model {
     const STATE_SUCCESS = 3;
     const STATE_FAILED = 4;
 
+    const SETTLED = [
+        Self::STATE_SUCCESS,
+        Self::STATE_FAILED,
+    ];
+
     /**
      * The maximum allowed lifetime in seconds of a transaction that still
      * allows undoing.
@@ -252,6 +257,59 @@ class Transaction extends Model {
 
         // Translate and return
         return __('pages.mutations.state.' . $key);
+    }
+
+    /**
+     * Set the state of this transaction with some bound checks.
+     *
+     * @param int $state The state to set to.
+     * @param boolean [$save=true] True to save the model after setting the state.
+     *
+     * @throws \Exception Throws if an invalid state is given.
+     */
+    private function setState($state, $save = true) {
+        // Never allow setting to pending
+        if($state == Self::STATE_PENDING)
+            throw new \Exception('Cannot set transaction state to pending');
+
+        // Set the state, and save
+        $this->state = $state;
+        if($save)
+            $this->save();
+    }
+
+    /**
+     * Settle this transaction.
+     * This will fail if some mutations don't have a settled state yet.
+     *
+     * @param int $state The new transaction state to settle with.
+     * @param bool [$save=true] True to save this model after settling.
+     *
+     * @throws \Exception Throws if an invalid settle state is given.
+     */
+    public function settle($state, $save = true) {
+        // The given state must be in the settled array
+        if(!in_array($state, Self::SETTLED))
+            throw new \Exception('Failed to settle transaction, given new state is not recognized as settle state');
+
+        // Skip if already in this state
+        if($this->state == $state)
+            return;
+
+        // All mutations must be settled
+        $allSettled = $this->mutations->every(function($m) {
+            return $m->isSettled();
+        });
+        if(!$allSettled)
+            throw new \Exception('Failed to settle transaction, not all it\'s mutations are settled yet');
+
+        // TODO: must be in a transaction
+        // TODO: make sure transaction state is still consistent!
+
+        // Set the state, save the model
+        $this->setState($state, false);
+        if($save)
+            $this->save();
     }
 
     /**

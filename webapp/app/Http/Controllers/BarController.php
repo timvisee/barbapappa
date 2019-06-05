@@ -533,6 +533,7 @@ class BarController extends Controller {
             $free = $price == 0;
 
             // Create the wallet mutation unless product is free
+            $mut_wallet = null;
             if(!$free) {
                 // Find an mutation for the wallet in this transaction
                 $mut_wallet = $last_transaction == null ? null : $transaction
@@ -590,6 +591,7 @@ class BarController extends Controller {
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
                         'owner_id' => $user->id,
+                        'depends_on' => $mut_wallet != null ? $mut_wallet->id : null,
                     ]);
                 MutationProduct::create([
                     'mutation_id' => $mut_product->id,
@@ -603,6 +605,7 @@ class BarController extends Controller {
             }
 
             // Update the wallet balance
+            // TODO: do this by setting the mutation states instead
             if(!$free)
                 $wallet->withdraw($price);
 

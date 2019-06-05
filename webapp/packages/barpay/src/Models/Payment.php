@@ -46,7 +46,6 @@ class Payment extends Model {
     const STATE_REVOKED = 5;
     const STATE_REJECTED = 6;
     const STATE_FAILED = 7;
-    const STATE_CANCELLED = 8;
 
     /**
      * A list of all availalbe paymentables.
@@ -64,7 +63,6 @@ class Payment extends Model {
         Self::STATE_REVOKED,
         Self::STATE_REJECTED,
         Self::STATE_FAILED,
-        Self::STATE_CANCELLED,
     ];
 
     /**
@@ -247,7 +245,6 @@ class Payment extends Model {
             Self::STATE_REVOKED => 'revoked',
             Self::STATE_REJECTED => 'rejected',
             Self::STATE_FAILED => 'failed',
-            Self::STATE_CANCELLED => 'cancelled',
         ][$this->state];
         if(empty($key))
             throw new \Exception("Unknown payment state, cannot get state name");
@@ -310,19 +307,13 @@ class Payment extends Model {
      * Check whehter this payment is still in progress.
      *
      * The payment is in progress when the payment has not successfully
-     * completed, cancelled, rejected or revoked yet.
+     * completed, rejected or revoked yet.
      * This method also returns `true` if the payment is in the `init` state.
      *
      * @return bool True if in progress, false if not.
      */
     public function isInProgress() {
-        return !in_array($this->state, [
-            Self::STATE_COMPLETED,
-            Self::STATE_REVOKED,
-            Self::STATE_REJECTED,
-            Self::STATE_FAILED,
-            Self::STATE_CANCELLED,
-        ]);
+        return !in_array($this->state, Self::SETTLED);
     }
 
     /**
@@ -337,6 +328,18 @@ class Payment extends Model {
 
     public function getStepsData() {
         return $this->paymentable->getStepsData();
+    }
+
+    /**
+     * Find the transaction this payment is linked to.
+     *
+     * @return Transaction|null The transaction, or null if there is none.
+     */
+    public function findTransaction() {
+        $mut_payment = $payment->mutationPayment;
+        if($mut_payment != null)
+            return $mut_payment->mutation->transaction;
+        return null;
     }
 
     /**
@@ -375,5 +378,78 @@ class Payment extends Model {
         $paymentable = $service->serviceable::startPaymentable($payment, $service);
 
         return $payment;
+    }
+
+    /**
+     * Set the state of this payment with some bound checks.
+     *
+     * @param int $state The state to set to.
+     * @param boolean [$save=true] True to save the model after setting the state.
+     *
+     * @throws \Exception Throws if an invalid state is given.
+     */
+    private function setState($state, $save = true) {
+        // Never allow setting to init
+        if($state == Self::STATE_INIT)
+            throw new \Exception('Cannot set payment state to init');
+
+        // Set the state, and save
+        $this->state = $state;
+        if($save)
+            $this->save();
+    }
+
+    /**
+     * Settle this payment.
+     * This in turn settles any linked mutations, transactions and such.
+     *
+     * @param int $state The new payment state to settle with.
+     * @param bool [$save=true] True to save this model after settling.
+     *
+     * @throws \Exception Throws if an invalid settle state is given.
+     */
+    public function settle($state, $save = true) {
+        // The given state must be in the settled array
+        if(!in_array($state, Self::SETTLED))
+            throw new \Exception('Failed to settle payment, given new state is not recognized as settle state');
+
+        // Skip if already in this state
+        if($this->state == $state)
+            return;
+
+        // TODO: must be in a transaction
+
+        // Set the state
+        $this->setState($state, false);
+
+        // Settle state of linked payment mutation if there is any
+        $mut_payment = $this->mutationPayment;
+        if($mut_payment != null) {
+            $mutation = $mut_payment->mutation;
+
+            // Determine the state to set linked payment mutations to
+            $mutationState = null;
+            switch($state) {
+            case Self::STATE_COMPLETED:
+                $mutationState = Mutation::STATE_SUCCESS;
+                break;
+            case Self::STATE_REVOKED:
+            case Self::STATE_REJECTED:
+            case Self::STATE_FAILED:
+                $mutationState = Mutation::STATE_FAILED;
+                break;
+            default:
+                throw new \Exception('Unknown state');
+            }
+
+            // Settle the mutation
+            $mutation->settle($mutationState);
+        }
+
+        // TODO: send message to the user
+
+        // Save the model
+        if($save)
+            $this->save();
     }
 }

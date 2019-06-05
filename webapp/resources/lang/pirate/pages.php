@@ -429,7 +429,6 @@ return [
             'revoked' => 'Revoked',
             'rejected' => 'Rejected',
             'failed' => 'Sunk',
-            'cancelled' => 'Cancelled',
         ],
     ],
 
