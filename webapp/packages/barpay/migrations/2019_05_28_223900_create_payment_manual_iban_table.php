@@ -24,6 +24,9 @@ class CreatePaymentManualIbanTable extends Migration {
             // Source account details, from user
             $table->string('from_iban', 32)->nullable(true);
 
+            // Assessor: last user that checked this payment
+            $table->integer('asseccor_id')->unsigned()->nullable(true);
+
             // State
             $table->datetime('transferred_at')->nullable(true);
             $table->datetime('checked_at')->nullable(true);
@@ -35,6 +38,10 @@ class CreatePaymentManualIbanTable extends Migration {
                 ->references('id')
                 ->on('payments')
                 ->onDelete('cascade');
+            $table->foreign('accessor_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('set null');
         });
     }
 

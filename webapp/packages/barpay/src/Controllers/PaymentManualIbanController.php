@@ -80,6 +80,10 @@ class PaymentManualIbanController {
     }
 
     public static function doApproveStepReceipt(Request $request, Payment $payment, PaymentManualIban $paymentable, $response) {
+        // Gather some facts, the current time and the current user
+        $now = now();
+        $user = barauth()->getUser()->id;
+
         // Validate
         $request->validate([
             'choice' => 'required|in:approve,delay,reject',
@@ -87,7 +91,8 @@ class PaymentManualIbanController {
         ]);
 
         // Update the checked time
-        $paymentable->checked_at = now();
+        $paymentable->checked_at = $now;
+        $paymentable->accessor_id = $user;
 
         // Handle the choice
         switch($request->input('choice')) {
@@ -95,7 +100,7 @@ class PaymentManualIbanController {
             throw new \Exception('Not yet implemented');
 
             // Update the settle time
-            $paymentable->settled_at = now();
+            $paymentable->settled_at = $now;
 
             // Set the payment state
             // TODO: do this through a function!
@@ -112,7 +117,7 @@ class PaymentManualIbanController {
             throw new \Exception('Not yet implemented');
 
             // Update the settle time
-            $paymentable->settled_at = now();
+            $paymentable->settled_at = $now;
 
             // Set the payment state
             // TODO: do this through a function!

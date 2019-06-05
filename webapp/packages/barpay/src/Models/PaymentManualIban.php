@@ -2,6 +2,7 @@
 
 namespace BarPay\Models;
 
+use App\Models\User;
 use BarPay\Controllers\PaymentManualIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -14,12 +15,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property int id
  * @property int payment_id
- * @property string iban IBAN to transfer to.
+ * @property-read Payment payment
+ * @property string to_account_holder Account holder to transfer to.
+ * @property string to_iban IBAN to transfer to.
+ * @property string|null to_bic BIC to transfer to.
+ * @property string|null from_iban IBAN user transfers from.
+ * @property int|null accessor_id ID of user that last accessed this payment.
+ * @property-read User|null accessor User that last accessed this payment.
  * @property string ref A reference code.
  * @property datetime|null transferred_at When the user manuall transferred if done.
  * @property datetime|null checked_at Last time the transaction was checked at.
  * @property datetime|null settled_at When the manual transfer was settled by the counter party if done.
- * @property string|null bic Optional BIC corresponding to the IBAN.
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -113,6 +119,18 @@ class PaymentManualIban extends Model {
                 $query->where('checked_at', '<', now()->subSeconds(Self::TRANSFER_CHECK_RETRY))
                     ->orWhere('checked_at', null);
             });
+    }
+
+    /**
+     * Get a relation to the user that last accessed this payment.
+     *
+     * This is set to the community manager that checks and approves the
+     * payment. This may be null if the payment had not been checked yet.
+     *
+     * @return Relation to the accessing user.
+     */
+    public function accessor() {
+        return $this->belongsTo(User::class);
     }
 
     /**
