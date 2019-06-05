@@ -4,6 +4,7 @@ namespace BarPay\Models;
 
 use App\Models\Currency;
 use App\Models\Economy;
+use App\Models\User;
 use App\Scopes\EnabledScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -171,10 +172,11 @@ class Service extends Model {
      *
      * @param Currency $currency The currency to use.
      * @param float $amount The payment amount.
+     * @param User $user User the payment is for.
      *
      * @return Payment The created payment.
      */
-    public function startPayment(Currency $currency, float $amount) {
-        return Payment::startNew($this, $currency, $amount);
+    public function startPayment(Currency $currency, float $amount, User $user) {
+        return Payment::startNew($this, $currency, $amount, $user);
     }
 }

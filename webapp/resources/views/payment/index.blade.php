@@ -31,16 +31,16 @@
                 'payments' => $inProgress,
             ];
     @endphp
-    @include('payment.include.list', [
-        'groups' => $groups,
-    ])
-
-    @if($settled->isNotEmpty())
+    @if(!empty($groups))
         @include('payment.include.list', [
-            'groups' => [[
-                'header' => trans_choice('pages.payments.settled#', count($settled)),
-                'payments' => $settled,
-            ]],
+            'groups' => $groups,
         ])
     @endif
+
+    @include('payment.include.list', [
+        'groups' => [[
+            'header' => trans_choice('pages.payments.settled#', count($settled)),
+            'payments' => $settled,
+        ]],
+    ])
 @endsection

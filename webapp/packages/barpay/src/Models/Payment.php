@@ -336,7 +336,7 @@ class Payment extends Model {
      * @return Transaction|null The transaction, or null if there is none.
      */
     public function findTransaction() {
-        $mut_payment = $payment->mutationPayment;
+        $mut_payment = $this->mutationPayment;
         if($mut_payment != null)
             return $mut_payment->mutation->transaction;
         return null;
@@ -348,10 +348,11 @@ class Payment extends Model {
      * @param Service $service The payment service to use.
      * @param Currency $currency The currency to use.
      * @param float $amount The payment amount.
+     * @param User $user User the payment is for.
      *
      * @return Payment The created payment.
      */
-    public static function startNew(Service $service, Currency $currency, float $amount) {
+    public static function startNew(Service $service, Currency $currency, float $amount, User $user) {
         // TODO: require to be in a transaction
 
         // TODO: assert this payment service can be used with this currency and amount
@@ -367,6 +368,7 @@ class Payment extends Model {
         // TODO: should we immediately jump to the `pending_manual` state here?
         $payment->state = Payment::STATE_INIT;
         $payment->service_id = $service->id;
+        $payment->user_id = $user->id;
         $payment->reference = $reference;
         $payment->paymentable_id = 0;
         $payment->paymentable_type = '';
@@ -408,7 +410,7 @@ class Payment extends Model {
      *
      * @throws \Exception Throws if an invalid settle state is given.
      */
-    public function settle($state, $save = true) {
+    public function settle(int $state, $save = true) {
         // The given state must be in the settled array
         if(!in_array($state, Self::SETTLED))
             throw new \Exception('Failed to settle payment, given new state is not recognized as settle state');

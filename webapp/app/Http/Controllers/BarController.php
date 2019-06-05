@@ -591,7 +591,7 @@ class BarController extends Controller {
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
                         'owner_id' => $user->id,
-                        'depends_on' => $mut_wallet != null ? $mut_wallet->id : null,
+                        'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
                     ]);
                 MutationProduct::create([
                     'mutation_id' => $mut_product->id,

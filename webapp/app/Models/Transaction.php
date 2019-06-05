@@ -287,7 +287,7 @@ class Transaction extends Model {
      *
      * @throws \Exception Throws if an invalid settle state is given.
      */
-    public function settle($state, $save = true) {
+    public function settle(int $state, $save = true) {
         // The given state must be in the settled array
         if(!in_array($state, Self::SETTLED))
             throw new \Exception('Failed to settle transaction, given new state is not recognized as settle state');
@@ -307,9 +307,7 @@ class Transaction extends Model {
         // TODO: make sure transaction state is still consistent!
 
         // Set the state, save the model
-        $this->setState($state, false);
-        if($save)
-            $this->save();
+        $this->setState($state, $save);
     }
 
     /**

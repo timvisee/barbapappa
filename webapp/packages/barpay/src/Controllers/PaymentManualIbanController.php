@@ -92,7 +92,7 @@ class PaymentManualIbanController {
 
         // Update the checked time
         $paymentable->checked_at = $now;
-        $paymentable->accessor_id = $user;
+        $paymentable->assessor_id = $user;
 
         // Handle the choice
         switch($request->input('choice')) {
@@ -109,6 +109,7 @@ class PaymentManualIbanController {
             // Update the settle time, settle the payment
             $paymentable->settled_at = $now;
             $payment->settle(Payment::STATE_REJECTED, true);
+            break;
 
         default:
             throw new \Exception('Unknown approval choice');

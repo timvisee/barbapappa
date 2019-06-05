@@ -45,7 +45,8 @@ class PaymentManualIban extends Model {
      * Wait this number of seconds after a transfer, before asking a community
      * manager to confirm the payment is received.
      */
-    public const TRANSFER_WAIT = 1.5 * 24 * 60 * 60;
+    // public const TRANSFER_WAIT = 1.5 * 24 * 60 * 60;
+    public const TRANSFER_WAIT = 30;
 
     /**
      * Wait this number of seconds after checking a transfer, before checking it

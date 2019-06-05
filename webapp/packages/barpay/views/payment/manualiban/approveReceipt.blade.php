@@ -20,10 +20,12 @@
                 <td>@lang('misc.amount')</td>
                 <td>{!! $payment->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
-            <tr>
-                <td>@lang('misc.fromUser')</td>
-                <td>{{ $payment->user->name }}</td>
-            </tr>
+            @if($payment->user_id != null)
+                <tr>
+                    <td>@lang('misc.fromUser')</td>
+                    <td>{{ $payment->user->name }}</td>
+                </tr>
+            @endif
             <tr>
                 <td>@lang('barpay::misc.fromIban')</td>
                 <td>

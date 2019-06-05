@@ -42,6 +42,7 @@ class Mutation extends Model {
         'currency_id',
         'state',
         'owner_id',
+        'depend_on',
     ];
 
     const TYPE_MAGIC = 1;
@@ -53,6 +54,9 @@ class Mutation extends Model {
     const STATE_SUCCESS = 3;
     const STATE_FAILED = 4;
 
+    /**
+     * States which define this mutation is settled.
+     */
     const SETTLED = [
         Self::STATE_SUCCESS,
         Self::STATE_FAILED,
@@ -288,7 +292,7 @@ class Mutation extends Model {
      *
      * @throws \Exception Throws if an invalid settle state is given.
      */
-    public function settle($state, $save = true) {
+    public function settle(int $state) {
         // The given state must be in the settled array
         if(!in_array($state, Self::SETTLED))
             throw new \Exception('Failed to settle mutation, given new state is not recognized as settle state');
@@ -300,7 +304,7 @@ class Mutation extends Model {
         // TODO: must be in a transaction
 
         // Set the state
-        $this->setState($state, false);
+        $this->setState($state, true);
 
         // Settle any dependents
         // TODO: ensure this doesn't cause issues with circular dependencies
@@ -311,7 +315,7 @@ class Mutation extends Model {
         // - payment: do not allow settle if not settled
         // - wallet: transfer moneys
         // TODO: move this into a mutation specific function
-        if($state = Self::STATE_SUCCESS && $this->type == Self::TYPE_WALLET) {
+        if($state == Self::STATE_SUCCESS && $this->type == Self::TYPE_WALLET) {
             $wallet = $this->mutationData->wallet;
             if($wallet->currency_id != $this->currency_id)
                 throw new \Exception('Wallet mutation and wallet differ in currency, cannot process');
@@ -322,10 +326,6 @@ class Mutation extends Model {
         }
 
         // TODO: make sure transaction state is still consistent!
-
-        // Save the model
-        if($save)
-            $this->save();
 
         // Settle the transaction
         $transactionState = null;
@@ -340,6 +340,15 @@ class Mutation extends Model {
             throw new \Exception('Unknown mutation state');
         }
         $this->transaction->settle($transactionState, true);
+    }
+
+    /**
+     * Check whether this mutation is settled.
+     *
+     * @return bool True if settled, false if in progress.
+     */
+    public function isSettled() {
+        return in_array($this->state, Self::SETTLED);
     }
 
     /**

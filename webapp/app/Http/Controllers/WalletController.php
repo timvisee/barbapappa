@@ -357,7 +357,7 @@ class WalletController extends Controller {
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
-                    'depends_on' => $mut_wallet->id,
+                    'depend_on' => $mut_wallet->id,
                 ]);
             MutationWallet::create([
                 'mutation_id' => $mut_wallet->id,
@@ -464,7 +464,7 @@ class WalletController extends Controller {
         $payment = null;
         DB::transaction(function() use($user, $economy, $wallet, $service, $currency, $amount, &$payment) {
             // Start a new payment
-            $payment = $service->startPayment($currency, $amount);
+            $payment = $service->startPayment($currency, $amount, $user);
 
             // Create the transaction
             $transaction = Transaction::create([
@@ -498,7 +498,7 @@ class WalletController extends Controller {
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_PENDING,
                     'owner_id' => $user->id,
-                    'depends_on' => $mut_payment->id,
+                    'depend_on' => $mut_payment->id,
                 ]);
             MutationWallet::create([
                 'mutation_id' => $mut_wallet->id,

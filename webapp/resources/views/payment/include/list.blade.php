@@ -24,6 +24,7 @@
                 </span>
             </a>
         @empty
+            {{-- TODO: improve this translation --}}
             <i class="item">@lang('pages.payments.noPayments')</i>
         @endforelse
     @endforeach
