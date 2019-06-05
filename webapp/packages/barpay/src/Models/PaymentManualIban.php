@@ -20,8 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string to_iban IBAN to transfer to.
  * @property string|null to_bic BIC to transfer to.
  * @property string|null from_iban IBAN user transfers from.
- * @property int|null accessor_id ID of user that last accessed this payment.
- * @property-read User|null accessor User that last accessed this payment.
+ * @property int|null assessor_id ID of user that last assessed this payment.
+ * @property-read User|null assessor User that last assessed this payment.
  * @property string ref A reference code.
  * @property datetime|null transferred_at When the user manuall transferred if done.
  * @property datetime|null checked_at Last time the transaction was checked at.
@@ -122,14 +122,14 @@ class PaymentManualIban extends Model {
     }
 
     /**
-     * Get a relation to the user that last accessed this payment.
+     * Get a relation to the user that last assessed this payment.
      *
      * This is set to the community manager that checks and approves the
      * payment. This may be null if the payment had not been checked yet.
      *
-     * @return Relation to the accessing user.
+     * @return Relation to the assessing user.
      */
-    public function accessor() {
+    public function assessor() {
         return $this->belongsTo(User::class);
     }
 
