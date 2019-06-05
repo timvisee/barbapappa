@@ -38,17 +38,6 @@
 
         <div class="ui divider"></div>
 
-        <div class="ui warning message visible">
-            <div class="header">@lang('account.isCompromised')</div>
-            <p>
-                @if(barauth()->isAuth())
-                    @lang('account.invalidateOtherSessionsDescription')
-                @else
-                    @lang('account.invalidateAllSessionsDescription')
-                @endif
-            </p>
-        </div>
-
         <div class="inline field">
             <div class="ui toggle checkbox {{ Request::query('compromised') ? 'disabled' : '' }}">
                 <input type="checkbox" name="invalidate_other_sessions" tabindex="0" class="hidden" checked="checked">
