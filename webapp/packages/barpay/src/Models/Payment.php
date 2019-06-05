@@ -3,14 +3,19 @@
 namespace BarPay\Models;
 
 use App\Http\Controllers\CommunityController;
+use App\Mail\Email\Payment\Completed;
+use App\Models\Community;
 use App\Models\Currency;
+use App\Models\Economy;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Payment model.
@@ -343,6 +348,35 @@ class Payment extends Model {
     }
 
     /**
+     * Find the economy this payment is linked to.
+     *
+     * @return Economy|null The community, or null if there is none.
+     */
+    public function findEconomy() {
+        $mut_payment = $this->mutationPayment;
+        if($mut_payment != null)
+            return $mut_payment->mutation->economy;
+        return null;
+    }
+
+    /**
+     * Find the wallet this payment is linked to.
+     *
+     * @return Wallet|null The wallet, or null if there is none.
+     */
+    public function findWallet() {
+        $mut_payment = $this->mutationPayment;
+        if($mut_payment == null)
+            return null;
+        $mut_payment = $mut_payment->mutation;
+
+        $mut_wallet = $mut_payment->dependents->first();
+        if($mut_wallet == null)
+            return null;
+        return $mut_wallet->mutationData->wallet;
+    }
+
+    /**
      * Start a new payment with the given service, currency and amount.
      *
      * @param Service $service The payment service to use.
@@ -419,6 +453,9 @@ class Payment extends Model {
         if($this->state == $state)
             return;
 
+        // Gather some facts
+        $user = barauth()->getUser();
+
         // TODO: must be in a transaction
 
         // Set the state
@@ -448,10 +485,12 @@ class Payment extends Model {
             $mutation->settle($mutationState);
         }
 
-        // TODO: send message to the user
-
         // Save the model
         if($save)
             $this->save();
+
+        // Create the mailable for the settlement, send the mailable
+        $mailable = new Completed($user->buildEmailRecipients(), $this);
+        Mail::send($mailable);
     }
 }

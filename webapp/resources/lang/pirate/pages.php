@@ -95,6 +95,7 @@ return [
         'noCommunities' => 'Nay crews asea...',
         'viewCommunity' => 'View crew',
         'viewCommunities' => 'View crews',
+        'visitCommunity' => 'Visit crew',
         'createCommunity' => 'Create crew',
         'editCommunity' => 'Edit crew',
         'deleteCommunity' => 'Sink crew',

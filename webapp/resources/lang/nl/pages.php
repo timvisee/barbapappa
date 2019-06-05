@@ -95,6 +95,7 @@ return [
         'noCommunities' => 'Geen groepen beschikbaar...',
         'viewCommunity' => 'Bekijk groep',
         'viewCommunities' => 'Bekijk groepen',
+        'visitCommunity' => 'Bezoek groep',
         'createCommunity' => 'Groep aanmaken',
         'editCommunity' => 'Groep aanpassen',
         'deleteCommunity' => 'Groep verwijderen',

@@ -76,4 +76,13 @@ return [
             'noChangeThenContact' => 'If ye received dis message but have nay change yer passcode, [contact](:contact) th\' :contact crew as soon as possible \'bout dis piracy issue.',
         ]
     ],
+
+    'payment' => [
+        'completed' => [
+            'subject' => 'Payment accepted',
+            'subtitle' => 'Ye topped up yer wallet.',
+            'paymentReceived' => 'Yer payment be received. It be processed and be accepted.',
+            'amountReadyToUse' => 'The amount now be available on yer account and be ready for use.',
+        ],
+    ],
 ];

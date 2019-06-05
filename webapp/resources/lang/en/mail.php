@@ -74,4 +74,13 @@ return [
             'noChangeThenContact' => 'If you received this message but haven\'t changed your password, please [contact](:contact) the :contact team as soon as possible about this security issue.',
         ]
     ],
+
+    'payment' => [
+        'completed' => [
+            'subject' => 'Payment accepted',
+            'subtitle' => 'You have topped up your wallet.',
+            'paymentReceived' => 'Your payment has been received. It has been processed and accepted.',
+            'amountReadyToUse' => 'The amount is now available on your account and is ready to be used.',
+        ],
+    ],
 ];

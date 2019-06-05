@@ -289,6 +289,7 @@ class User extends Model {
                 $extraReset = PasswordResetManager::create($this);
 
                 // Create a mailable
+                // TODO: get recipient from buildEmailRecipients function
                 $recipient = new EmailRecipient($email, $this);
                 $mailable = new Reset($recipient, $extraReset);
 
@@ -386,5 +387,17 @@ class User extends Model {
             'name' => $name ?? __('pages.wallets.nameDefault'),
             'currency_id' => $currency_id,
         ]);
+    }
+
+    /**
+     * Get the email recipients for this user.
+     *
+     * @return array An array of email recipients to send a message to.
+     */
+    public function buildEmailRecipients() {
+        // TODO: get for all addressses!
+        // TODO: only use verified addresses?
+        $email = $this->emails()->first();
+        return $email->buildEmailRecipient($this);
     }
 }

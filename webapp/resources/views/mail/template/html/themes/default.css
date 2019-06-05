@@ -61,3 +61,7 @@ td.container-text p {
     border-bottom: 10px solid #bf5329;
     border-left: 18px solid #bf5329;
 }
+
+table.details td {
+    padding-right: 10px;
+}

@@ -74,4 +74,13 @@ return [
             'noChangeThenContact' => 'Als je dit bericht ontvangen hebt maar niet je wachtwoord hebt aangepast, neem zo snel mogelijk [contact](:contact) op met het :contact team wegens dit mogelijke veiligheidsincident.',
         ]
     ],
+
+    'payment' => [
+        'completed' => [
+            'subject' => 'Betaling geaccepteerd',
+            'subtitle' => 'Je hebt je portemonnee aangevuld.',
+            'paymentReceived' => 'Je betaling is ontvangen. De betaling is verwerkt en geaccepteerd.',
+            'amountReadyToUse' => 'Het bedrag is nu beschikbaar op je account en kan vanaf nu gebruikt worden.',
+        ],
+    ],
 ];

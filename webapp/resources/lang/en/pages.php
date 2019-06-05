@@ -95,6 +95,7 @@ return [
         'noCommunities' => 'No communities available...',
         'viewCommunity' => 'View community',
         'viewCommunities' => 'View communities',
+        'visitCommunity' => 'Visit community',
         'createCommunity' => 'Create community',
         'editCommunity' => 'Edit community',
         'deleteCommunity' => 'Delete community',
