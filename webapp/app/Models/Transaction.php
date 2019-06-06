@@ -234,9 +234,16 @@ class Transaction extends Model {
         if($invert)
             $cost *= -1;
 
+        // Blue in progress, green/red succeeded, gray failed
+        $options = [];
+        if($this->state == Self::STATE_FAILED)
+            $options['color'] = false;
+        else if($this->state != Self::STATE_SUCCESS)
+            $options['neutral'] = true;
+
         // TODO: choose the correct currency here based on transactions
         // return balance($cost, $this->currency->code, $format);
-        return balance($cost, 'EUR', $format);
+        return balance($cost, 'EUR', $format, $options);
     }
 
     /**

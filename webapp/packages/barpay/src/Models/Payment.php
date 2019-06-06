@@ -234,6 +234,11 @@ class Payment extends Model {
      * @return string Formatted amount.
      */
     public function formatCost($format = BALANCE_FORMAT_PLAIN, $options = ['neutral' => true]) {
+        // Blue in progress, green/red succeeded, gray failed
+        if($this->isFailed())
+            $options['color'] = false;
+        else if(!$this->isInProgress())
+            $options['neutral'] = false;
         return $this->currency->formatAmount($this->money, $format, $options);
     }
 
@@ -330,6 +335,17 @@ class Payment extends Model {
      */
     public function isInProgress() {
         return !in_array($this->state, Self::SETTLED);
+    }
+
+    /**
+     * Check whether this payment failed.
+     * This would mean the payment is not in progress anymore, and was not
+     * completed.
+     *
+     * @return bool True if failed, false if not.
+     */
+    public function isFailed() {
+        return !$this->isInProgress() && $this->state != Self::STATE_COMPLETED;
     }
 
     /**
