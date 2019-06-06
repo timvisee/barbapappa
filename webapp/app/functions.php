@@ -1,10 +1,10 @@
 <?php
 
+use App\Perms\Builder\Config as PermsConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-
-use App\Perms\Builder\Config as PermsConfig;
 
 // Build the barauth function
 if(!function_exists('barauth')) {
@@ -308,21 +308,33 @@ if(!function_exists('format_payment_reference')) {
 
 if(!function_exists('random_str')) {
     /**
-    * Generate a random string, using a cryptographically secure 
-    * pseudorandom number generator (random_int)
-    *
-    * For PHP 7, random_int is a PHP core function
-    *
-    * @param int $length      How many characters do we want?
-    * @param string $keyspace A string of all possible characters
-    *                         to select from
-    * @return string
-    */
+     * Generate a random string, using a cryptographically secure 
+     * pseudorandom number generator (random_int)
+     *
+     * For PHP 7, random_int is a PHP core function
+     *
+     * @param int $length      How many characters do we want?
+     * @param string $keyspace A string of all possible characters
+     *                         to select from
+     * @return string
+     */
     function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
         $pieces = [];
         $max = mb_strlen($keyspace, '8bit') - 1;
         for ($i = 0; $i < $length; ++$i)
             $pieces []= $keyspace[random_int(0, $max)];
         return implode('', $pieces);
+    }
+}
+
+if(!function_exists('assert_transaction')) {
+    /**
+     * Assert/require that a database transaction is currently active.
+     *
+     * @throws \Exception Throws if no database transaction is active right now.
+     */
+    function assert_transaction() {
+        if(DB::transactionLevel() <= 0)
+            throw new \Exception('No database transaction active, while this is required');
     }
 }

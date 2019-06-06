@@ -202,7 +202,8 @@ class Wallet extends Model {
         if($amount <= 0)
             throw new \Exception("Failed to withdraw from wallet, amount is <= 0");
 
-        // TODO: assert we're in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // Decrement the balance
         $this->decrement('balance', $amount);
@@ -225,7 +226,8 @@ class Wallet extends Model {
         if($amount <= 0)
             throw new \Exception("Failed to deposit to wallet, amount is <= 0");
 
-        // TODO: assert we're in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // Increment the balance
         $this->increment('balance', $amount);
@@ -248,8 +250,6 @@ class Wallet extends Model {
         // Assert the amount is positive
         if($amount <= 0)
             throw new \Exception("Failed to transfer money to wallet, amount is <= 0");
-
-        // TODO: assert we're in a transaction
 
         // Verify the currency and economy
         if($this->currency_id != $wallet->currency_id)

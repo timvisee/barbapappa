@@ -310,7 +310,9 @@ class Transaction extends Model {
         if(!$allSettled)
             throw new \Exception('Failed to settle transaction, not all it\'s mutations are settled yet');
 
-        // TODO: must be in a transaction
+        // We must be in a database transaction
+        assert_transaction();
+
         // TODO: make sure transaction state is still consistent!
 
         // Set the state, save the model

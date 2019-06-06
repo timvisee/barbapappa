@@ -304,7 +304,8 @@ class Mutation extends Model {
         if($this->state == $state)
             return;
 
-        // TODO: must be in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // Set the state
         $oldState = $this->state;
@@ -411,7 +412,8 @@ class Mutation extends Model {
         if($amount <= 0)
             throw new \Exception("Failed to increment mutation amount, amount is < 0");
 
-        // TODO: assert we're in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // Increment the amount
         $this->increment('amount', $amount);
@@ -434,7 +436,8 @@ class Mutation extends Model {
         if($amount < 0)
             throw new \Exception("Failed to decrement mutation amount, amount is < 0");
 
-        // TODO: assert we're in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // Decrement the amount
         $this->decrement('amount', $amount);

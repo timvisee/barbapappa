@@ -414,7 +414,8 @@ class Payment extends Model {
      * @return Payment The created payment.
      */
     public static function startNew(Service $service, Currency $currency, float $amount, User $user) {
-        // TODO: require to be in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // TODO: assert this payment service can be used with this currency and amount
         // TODO: assert amount is 0.01 or higher, or should we allow negative as well?
@@ -498,7 +499,8 @@ class Payment extends Model {
         if($this->state == $state)
             return;
 
-        // TODO: must be in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // Set the state
         $this->setState($state, false);
