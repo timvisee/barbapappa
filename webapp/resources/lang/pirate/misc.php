@@ -68,6 +68,7 @@ return [
     'disable' => 'Disable',
     'disabled' => 'Disabled',
     'archived' => 'Archived',
+    'progress' => 'Progress',
     'showProgress' => 'Show progress',
     'showAll' => 'Show \'ll',
     'manage' => 'Manage',
@@ -101,4 +102,5 @@ return [
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',
+    'confirmCancel' => 'I confirm I want to cancel',
 ];

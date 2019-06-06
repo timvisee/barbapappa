@@ -421,6 +421,9 @@ return [
         'paymentsWaitingForAction' => 'Een aantal betalingen wachten op actie van een groepsbeheerder. Behandel deze alsjeblieft zo snel mogelijk.',
         'paymentsToApproveDescription' => 'De volgende betalingen wachten op actie van een groepsbeheerder. Verwerk deze alsjeblieft zo snel mogelijk om betalingen vlot te laten verlopen.',
         'paymentRequiresCommunityAction' => 'Deze betaling wacht op actie van een groepsbeheerder.',
+        'cancelPayment' => 'Betaling annuleren',
+        'cancelPaymentQuestion' => 'Je staat op het punt deze betaling te annuleren. Annulleer nooit een betaling waarvoor je al geld hebt overgemaakt, of je overboeking gaat mogelijk verloren. Weet je zeker dat je door wilt gaan?',
+        'paymentCancelled' => 'Payment cancelled',
         'state' => [
             'init' => 'Geïnitieerd',
             'pendingManual' => 'In afwachting (handmatig)',

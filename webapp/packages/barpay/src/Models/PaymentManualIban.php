@@ -179,7 +179,19 @@ class PaymentManualIban extends Model {
     }
 
     /**
-     * Block direclty deleting.
+     * Check whether this payment can be cancelled at this moment.
+     *
+     * This does not do permission checking. It simply checks whether this
+     * payment is eligible for cancellation in it's current state.
+     *
+     * @return boolean True if it can be cancelled, false if not.
+     */
+    public function canCancel() {
+        return $this->getStep() == Self::STEP_TRANSFER;
+    }
+
+    /**
+     * Block directly deleting.
      */
     public function delete() {
         throw new \Exception('cannot directly delete paymentable, delete the owning payment instead');

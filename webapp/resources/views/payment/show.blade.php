@@ -10,7 +10,24 @@
         'icon' => 'undo',
     ];
 
-    // Extend page links
+    if($payment->isInProgress())
+        $menulinks[] = [
+            'name' => __('misc.showProgress'),
+            'link' => route('payment.pay', [
+                'paymentId' => $payment->id,
+            ]),
+            'icon' => 'hourglass',
+        ];
+
+    if($payment->canCancel())
+        $menulinks[] = [
+            'name' => __('pages.payments.cancelPayment'),
+            'link' => route('payment.cancel', [
+                'paymentId' => $payment->id,
+            ]),
+            'icon' => 'remove-sign',
+        ];
+
     if(!empty($transaction))
         $menulinks[] = [
             'name' => __('pages.transactions.viewTransaction'),
@@ -68,6 +85,24 @@
         </tbody>
     </table>
 
+    {{-- Action buttons --}}
+    @if($payment->isInProgress())
+        <div class="ui buttons">
+            @if($payment->isInProgress())
+                <a href="{{ route('payment.pay', ['paymentId' => $payment->id]) }}"
+                        class="ui button positive">
+                    @lang('misc.progress')
+                </a>
+            @endif
+            @if($payment->canCancel())
+                <a href="{{ route('payment.cancel', ['paymentId' => $payment->id]) }}"
+                        class="ui button negative">
+                    @lang('general.cancel')
+                </a>
+            @endif
+        </div>
+    @endif
+
     {{-- Show link to transaction --}}
     @if(!empty($transaction))
         <div class="ui top vertical menu fluid">
@@ -93,24 +128,8 @@
         </div>
     @endif
 
-    {{-- TODO: some action buttons --}}
-    {{-- <p> --}}
-    {{--     <div class="ui buttons"> --}}
-    {{--         <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}" --}}
-    {{--                 class="ui button secondary"> --}}
-    {{--             @lang('misc.rename') --}}
-    {{--         </a> --}}
-    {{--         <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}" --}}
-    {{--                 class="ui button negative"> --}}
-    {{--             @lang('misc.delete') --}}
-    {{--         </a> --}}
-    {{--     </div> --}}
-    {{-- </p> --}}
-
-    <p>
-        <a href="{{ route('payment.index') }}"
-                class="ui button basic">
-            @lang('general.goBack')
-        </a>
-    </p>
+    <a href="{{ route('payment.index') }}"
+            class="ui button basic">
+        @lang('general.goBack')
+    </a>
 @endsection

@@ -421,6 +421,9 @@ return [
         'paymentsWaitingForAction' => 'Some payments are waiting for action by a community manager, please review these as soon as possible.',
         'paymentsToApproveDescription' => 'The following user payments are waiting for action by a community manager. Please go through these as soon as possible to minimize payment times.',
         'paymentRequiresCommunityAction' => 'This payment awaits action by a community manager.',
+        'cancelPayment' => 'Cancel payment',
+        'cancelPaymentQuestion' => 'You\'re about to cancel this payment. Never cancel a payment for which you\'ve already transfered money, or your transfer might be lost. Are you sure you want to continue?',
+        'paymentCancelled' => 'Payment cancelled',
         'state' => [
             'init' => 'Initiated',
             'pendingManual' => 'Pending (manual)',

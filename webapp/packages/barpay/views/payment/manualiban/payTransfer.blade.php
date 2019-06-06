@@ -95,12 +95,11 @@
     <button class="ui button primary" type="submit" name="submit" value="">
         @lang('misc.continue')
     </button>
-    {{-- <a href="{{ route('community.economy.payservice.index', [ --}}
-    {{--     'communityId' => $community->human_id, --}}
-    {{--     'economyId' => $economy->id, --}}
-    {{-- ]) }}" --}}
-    {{--         class="ui button basic"> --}}
-    {{--     @lang('general.cancel') --}}
-    {{-- </a> --}}
+    <a href="{{ route('payment.cancel', [
+                'paymentId' => $payment->id,
+            ]) }}"
+            class="ui button negative basic">
+        @lang('general.cancel')
+    </a>
 
 {!! Form::close() !!}

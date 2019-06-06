@@ -426,6 +426,20 @@ class Payment extends Model {
     }
 
     /**
+     * Check whether this payment can be cancelled at this moment.
+     * The payment must be in progress, and the paymentable that is use must
+     * allow it in it's current state.
+     *
+     * This does not do permission checking. It simply checks whether this
+     * payment is eligible for cancellation in it's current state.
+     *
+     * @return boolean True if it can be cancelled, false if not.
+     */
+    public function canCancel() {
+        return $this->isInProgress() && $this->paymentable->canCancel();
+    }
+
+    /**
      * Set the state of this payment with some bound checks.
      *
      * @param int $state The state to set to.

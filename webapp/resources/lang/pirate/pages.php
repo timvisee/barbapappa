@@ -421,6 +421,9 @@ return [
         'paymentsWaitingForAction' => 'Some payments are waiting for action by a crew manager, please review these as soon as possible.',
         'paymentsToApproveDescription' => 'Th\' following user payments be waiting for action by a crew manager. Please go through these as soon as possible to minimize payment times.',
         'paymentRequiresCommunityAction' => 'Dis payment awaits action by a crew manager.',
+        'cancel' => 'Cancel payment',
+        'cancelPaymentQuestion' => 'Yer about to cancel dis payment. Never cancel a payment for which yer already transfered money, or ye transfer might be lost. Ye be sure ye want to continue?',
+        'paymentCancelled' => 'Payment cancelled',
         'state' => [
             'init' => 'Initiated',
             'pendingManual' => 'Pendin\' (manual)',
