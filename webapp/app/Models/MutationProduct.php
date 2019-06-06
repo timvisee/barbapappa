@@ -75,4 +75,17 @@ class MutationProduct extends Model {
      * @throws \Exception Throws if we cannot undo right now.
      */
     public function undo() {}
+
+    /**
+     * Handle changes as effect of a state change.
+     * This method is called when the state of the mutation changes.
+     *
+     * For a wallet mutation, this method would change the wallet balance when
+     * the new state defines success.
+     *
+     * @param Mutation $mutation The mutation, parent of this instance.
+     * @param int $oldState The old state.
+     * @param int $newState The new, current state.
+     */
+    public function applyState(Mutation $mutation, int $oldState, int $newState) {}
 }

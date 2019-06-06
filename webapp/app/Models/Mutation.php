@@ -307,26 +307,17 @@ class Mutation extends Model {
         // TODO: must be in a transaction
 
         // Set the state
+        $oldState = $this->state;
         $this->setState($state, true);
+
+        // Apply the state change logic based on the used mutation type
+        if($oldState != $state && $this->hasMutationData())
+            $this->mutationData->applyState($this, $oldState, $state);
 
         // Settle any dependents
         // TODO: ensure this doesn't cause issues with circular dependencies
         foreach(($this->dependents ?? []) as $dependent)
             $dependent->settle($state, true);
-
-        // TODO: do mutation specific logic on settling and/or block
-        // - payment: do not allow settle if not settled
-        // - wallet: transfer moneys
-        // TODO: move this into a mutation specific function
-        if($state == Self::STATE_SUCCESS && $this->type == Self::TYPE_WALLET) {
-            $wallet = $this->mutationData->wallet;
-            if($wallet->currency_id != $this->currency_id)
-                throw new \Exception('Wallet mutation and wallet differ in currency, cannot process');
-            if($this->amount > 0)
-                $wallet->withdraw($this->amount);
-            else
-                $wallet->deposit(-$this->amount);
-        }
 
         // TODO: make sure transaction state is still consistent!
 

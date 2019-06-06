@@ -54,4 +54,19 @@ class MutationPayment extends Model {
     public function payment() {
         return $this->belongsTo(Payment::class);
     }
+
+    /**
+     * Handle changes as effect of a state change.
+     * This method is called when the state of the mutation changes.
+     *
+     * For a wallet mutation, this method would change the wallet balance when
+     * the new state defines success.
+     *
+     * @param Mutation $mutation The mutation, parent of this instance.
+     * @param int $oldState The old state.
+     * @param int $newState The new, current state.
+     */
+    public function applyState(Mutation $mutation, int $oldState, int $newState) {
+        // TODO: the new state must be related to the payment state
+    }
 }
