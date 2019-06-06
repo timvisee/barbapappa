@@ -80,7 +80,7 @@ return [
             'subject' => 'Payment accepted',
             'subtitle' => 'You have topped up your wallet.',
             'paymentReceived' => 'Your payment has been received. It has been processed and accepted.',
-            'amountReadyToUse' => 'The amount is now available on your account and is ready to be used.',
+            'amountReadyToUse' => 'The amount is now available in your wallet and is ready to be used.',
         ],
     ],
 ];

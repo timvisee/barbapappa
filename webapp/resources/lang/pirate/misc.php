@@ -89,11 +89,13 @@ return [
     'sold' => 'Sold',
     'bar' => 'Bar',
     'community' => 'Crew',
+    'wallet' => 'Wallet',
     'product' => 'Product',
     'payment' => 'Payment',
     'assets' => 'Assets',
     'topUp' => 'Top-up',
     'deposit' => 'Deposit',
+    'deposited' => 'Deposited',
     'withdraw' => 'Withdraw',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',

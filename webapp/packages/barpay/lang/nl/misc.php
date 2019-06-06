@@ -23,5 +23,5 @@ return [
 
     'mustBeCorrect' => 'Dubbel-check alsjeblieft de gegevens hieronder. Gebruikers die geld naar het verkeerde account overmaken kan voor onherstelbare schade zorgen.',
     'mayClosePageWillNotify' => 'Je kunt deze pagina nu sluiten. Je wordt op de hoogste gesteld via e-mail wanneer de status van deze betaling veranderd.',
-    'confirmChoice' => 'I confirm the choice is correct',
+    'confirmChoice' => 'Ik bevestig dat de keuze correct is',
 ];

@@ -80,7 +80,7 @@ return [
             'subject' => 'Betaling geaccepteerd',
             'subtitle' => 'Je hebt je portemonnee aangevuld.',
             'paymentReceived' => 'Je betaling is ontvangen. De betaling is verwerkt en geaccepteerd.',
-            'amountReadyToUse' => 'Het bedrag is nu beschikbaar op je account en kan vanaf nu gebruikt worden.',
+            'amountReadyToUse' => 'Het bedrag is nu beschikbaar in je portemonnee en kan direct gebruikt worden.',
         ],
     ],
 ];

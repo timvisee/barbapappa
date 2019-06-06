@@ -20,8 +20,9 @@ return [
     'transferredAt' => 'Transferred at',
     'makeAChoice' => 'Make a choice',
     'receivingOnAccount' => 'Receiving on account',
+    'visit' => 'Visit',
 
     'mustBeCorrect' => 'Please double-check th\' correctness of credentials below. Mateies transfering money to \'n incorrect account may cause inreversable damage.',
     'mayClosePageWillNotify' => 'Ye may close dis page now. Ye be notified by e-bottle message when th\' status of dis payment changes.',
-    'confirmChoice' => 'I confirm the choice is correct',
+    'confirmChoice' => 'I confirm the choice be correct',
 ];
