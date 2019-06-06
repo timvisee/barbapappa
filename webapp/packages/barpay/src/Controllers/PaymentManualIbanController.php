@@ -83,6 +83,7 @@ class PaymentManualIbanController {
         // Gather some facts, the current time and the current user
         $now = now();
         $user = barauth()->getUser()->id;
+        $action = $request->input('choice');
 
         // Validate
         $request->validate([
@@ -95,7 +96,7 @@ class PaymentManualIbanController {
         $paymentable->assessor_id = $user;
 
         // Handle the choice
-        switch($request->input('choice')) {
+        switch($action) {
         case 'approve':
             // Update the settle time, settle the payment
             $paymentable->settled_at = $now;
@@ -112,12 +113,14 @@ class PaymentManualIbanController {
             break;
 
         default:
-            throw new \Exception('Unknown approval choice');
+            throw new \Exception('Unknown approval action');
         }
 
         // Save the paymentable
         $paymentable->save();
 
-        return $response;
+        // Add a status message and return
+        return $response
+            ->with('success', __('barpay::payment.manualiban.actionMessage.' . $action));
     }
 }

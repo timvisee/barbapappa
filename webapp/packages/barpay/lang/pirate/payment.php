@@ -21,6 +21,11 @@ return [
             'delay' => 'Delay payment, money nay be received, ask again later',
             'reject' => 'Reject payment, money nay be received and won\'t be received in th\' future',
         ],
+        'actionMessage' => [
+            'approve' => 'Payment approved',
+            'delay' => 'Payment delayed',
+            'reject' => 'Payment rejected',
+        ],
         'steps' => [
             'transfer' => 'Transfer',
             'transferring' => 'Transferring',

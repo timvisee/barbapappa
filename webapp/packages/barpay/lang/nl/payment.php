@@ -21,6 +21,11 @@ return [
             'delay' => 'Betaling uitstellen, geld is nog niet ontvangen, vraag later opnieuw',
             'reject' => 'Betaling afwijzen, geld is niet ontvangen en zal ook in de toekomst niet ontvangen worden',
         ],
+        'actionMessage' => [
+            'approve' => 'Betaling goedgekeurd',
+            'delay' => 'Betaling uitgesteld',
+            'reject' => 'Betaling afgekeurd',
+        ],
         'steps' => [
             'transfer' => 'Overboeking',
             'transferring' => 'Overboeken',
