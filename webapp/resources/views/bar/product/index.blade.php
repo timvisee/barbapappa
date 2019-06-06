@@ -56,7 +56,7 @@
                     ]) }}"
                 class="item">
                 {{ $product->displayName() }}
-                {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL) !!}
+                {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
             </a>
         @empty
             <i class="item">@lang('pages.products.noProducts')</i>
