@@ -240,6 +240,9 @@ class Mutation extends Model {
      * @return string Formatted balance
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN, $options = []) {
+        // Gray if failed
+        if($this->state == Self::STATE_FAILED)
+            $options['color'] = false;
         return balance($this->amount, $this->currency->code, $format, $options);
     }
 
