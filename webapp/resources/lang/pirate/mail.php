@@ -84,5 +84,12 @@ return [
             'paymentReceived' => 'Yer payment be received. It be processed and be accepted.',
             'amountReadyToUse' => 'The amount now be available in yer wallet and be ready for use.',
         ],
+        'failed' => [
+            'subject' => 'Payment failed',
+            'subtitle' => 'Yer wallet top up nay be succesful.',
+            'stateFailed' => 'A payment ye started nay be completed, because it failed. If ye believe dis is an error, please bottle-message us.',
+            'stateRevoked' => 'A payment ye started nay be completed, because it be revoked. If ye believe dis is an error, please bottle-message us.',
+            'stateRejected' => 'A payment ye started nay be completed, because it be rejected. If ye believe dis is an error, please bottle-message us.',
+        ],
     ],
 ];

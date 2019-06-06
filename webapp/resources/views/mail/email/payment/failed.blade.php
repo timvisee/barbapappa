@@ -1,22 +1,24 @@
+{{-- Generic email for various payment failure states --}}
+
 @include('mail.inc.fixLocale')
 
 @component('mail::message', [
     'recipient' => $recipient,
     'subject' => $subject,
-    'subtitle' => __('mail.payment.completed.subtitle'),
+    'subtitle' => __('mail.payment.failed.subtitle'),
 ])
 
+@if($payment != null)
 @component('mail::text')
-@lang('mail.payment.completed.paymentReceived')<br>
-
-@lang('mail.payment.completed.amountReadyToUse')
+@lang('mail.payment.failed.state' . ucfirst($payment->stateIdentifier()))
 @endcomponent
+@endif
 
 @php
     $details = [];
     if($payment != null)
         $details[] = [
-            'key' => __('misc.deposited'),
+            'key' => __('misc.amount'),
             'valueHtml' => $payment->formatCost(BALANCE_FORMAT_COLOR),
         ];
     if($wallet != null) {
@@ -33,12 +35,17 @@
             'valueHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
         ];
     }
-    if($payment != null)
+    if($payment != null) {
         $details[] = [
             'key' => __('misc.payment'),
             'valueHtml' => '<a href="' . route('payment.show', ['paymentId' => $payment->id]) . '">'
                 . $payment->service->displayName() . '</a>',
         ];
+        $details[] = [
+            'key' => __('misc.state'),
+            'value' => $payment->stateName(),
+        ];
+    }
     if($community != null)
         $details[] = [
             'key' => __('misc.community'),
@@ -55,10 +62,10 @@
 <br>
 
 @if($community != null)
-@component('mail::button', ['url' => route('community.show', [
-    'communityId' => $community->human_id
+@component('mail::button', ['url' => route('payment.show', [
+    'paymentId' => $payment->id
 ])])
-@lang('misc.visit') {{ $community->name }}
+@lang('pages.payments.viewPayment')
 @endcomponent
 @endif
 <br>

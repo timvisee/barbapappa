@@ -4,6 +4,7 @@ namespace BarPay\Models;
 
 use App\Http\Controllers\CommunityController;
 use App\Mail\Email\Payment\Completed;
+use App\Mail\Email\Payment\Failed;
 use App\Models\Community;
 use App\Models\Currency;
 use App\Models\Economy;
@@ -235,13 +236,13 @@ class Payment extends Model {
     }
 
     /**
-     * Get the display name for the current payment state.
+     * Get the state identifier, such as `completed` or `revoked`.
      *
      * @return State display name.
      */
-    public function stateName() {
-        // Get the state key here
-        $key = [
+    public function stateIdentifier() {
+        // Get the state identifier here
+        $id = [
             Self::STATE_INIT => 'init',
             Self::STATE_PENDING_MANUAL => 'pendingManual',
             Self::STATE_PENDING_AUTO => 'pendingAuto',
@@ -251,11 +252,19 @@ class Payment extends Model {
             Self::STATE_REJECTED => 'rejected',
             Self::STATE_FAILED => 'failed',
         ][$this->state];
-        if(empty($key))
-            throw new \Exception("Unknown payment state, cannot get state name");
+        if(empty($id))
+            throw new \Exception("Unknown payment state, cannot get state identifier");
 
-        // Translate and return
-        return __('pages.payments.state.' . $key);
+        return $id;
+    }
+
+    /**
+     * Get the display name for the current payment state.
+     *
+     * @return State display name.
+     */
+    public function stateName() {
+        return __('pages.payments.state.' . $this->stateIdentifier());
     }
 
     /**
@@ -490,7 +499,10 @@ class Payment extends Model {
             $this->save();
 
         // Create the mailable for the settlement, send the mailable
-        $mailable = new Completed($user->buildEmailRecipients(), $this);
+        if($state == Payment::STATE_COMPLETED)
+            $mailable = new Completed($user->buildEmailRecipients(), $this);
+        else
+            $mailable = new Failed($user->buildEmailRecipients(), $this);
         Mail::send($mailable);
     }
 }

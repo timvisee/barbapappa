@@ -82,5 +82,12 @@ return [
             'paymentReceived' => 'Je betaling is ontvangen. De betaling is verwerkt en geaccepteerd.',
             'amountReadyToUse' => 'Het bedrag is nu beschikbaar in je portemonnee en kan direct gebruikt worden.',
         ],
+        'failed' => [
+            'subject' => 'Betaling gefaald',
+            'subtitle' => 'Je portemonnee storting was niet succesvol.',
+            'stateFailed' => 'Een betaling die je gestart hebt kon niet succesvol afgerond worden, omdat de betaling is gefaald. Neem alsjeblieft contact met ons op als je denkt dat dit een fout is.',
+            'stateRevoked' => 'Een betaling die je gestart hebt kon niet succesvol afgerond worden, omdat de betaling is ingetrokken. Neem alsjeblieft contact met ons op als je denkt dat dit een fout is.',
+            'stateRejected' => 'Een betaling die je gestart hebt kon niet succesvol afgerond worden, omdat de betaling is afgekeurd. Neem alsjeblieft contact met ons op als je denkt dat dit een fout is.',
+        ],
     ],
 ];
