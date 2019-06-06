@@ -2,6 +2,8 @@
 
 namespace BarPay\Models;
 
+use App\Events\PaymentCompleted;
+use App\Events\PaymentFailed;
 use App\Http\Controllers\CommunityController;
 use App\Mail\Email\Payment\Completed;
 use App\Mail\Email\Payment\Failed;
@@ -476,9 +478,6 @@ class Payment extends Model {
         if($this->state == $state)
             return;
 
-        // Gather some facts
-        $user = barauth()->getUser();
-
         // TODO: must be in a transaction
 
         // Set the state
@@ -512,11 +511,10 @@ class Payment extends Model {
         if($save)
             $this->save();
 
-        // Create the mailable for the settlement, send the mailable
+        // Invoke a payment completion or failure event
         if($state == Payment::STATE_COMPLETED)
-            $mailable = new Completed($user->buildEmailRecipients(), $this);
+            event(new PaymentCompleted($this));
         else
-            $mailable = new Failed($user->buildEmailRecipients(), $this);
-        Mail::send($mailable);
+            event(new PaymentFailed($this));
     }
 }
