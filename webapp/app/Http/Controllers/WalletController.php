@@ -6,6 +6,7 @@ use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
 use App\Models\EconomyCurrency;
 use App\Models\Mutation;
+use App\Models\MutationPayment;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
 use App\Perms\Builder\Config as PermsConfig;
@@ -356,6 +357,7 @@ class WalletController extends Controller {
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
+                    'depend_on' => $mut_wallet->id,
                 ]);
             MutationWallet::create([
                 'mutation_id' => $mut_wallet->id,
@@ -399,6 +401,115 @@ class WalletController extends Controller {
         return view('community.wallet.transferUser')
             ->with('economy', $economy)
             ->with('wallet', $wallet);
+    }
+
+    /**
+     * Show the wallet top-up page.
+     *
+     * @return Response
+     */
+    public function topUp($communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+        $services = $economy->paymentServices()->supportsDeposit()->get();
+
+        // TODO: return error if there are no usable services, user can't top-up
+
+        return view('community.wallet.topUp')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet)
+            ->with('currency', $wallet->currency)
+            ->with('services', $services);
+    }
+
+    /**
+     * Do the wallet top-up.
+     *
+     * @return Response
+     */
+    public function doTopUp(Request $request, $communityId, $economyId, $walletId) {
+        // TODO: do some permission checking?
+
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $user
+            ->wallets()
+            ->where('economy_id', $economyId)
+            ->findOrFail($walletId);
+        $services = $economy->paymentServices()->supportsDeposit()->get();
+        $currency = $wallet->currency;
+
+        // Validate
+        $this->validate($request, [
+            'amount' => ['required', ValidationDefaults::PRICE_POSITIVE],
+            'payment_service' => [
+                'required',
+                Rule::in($services->pluck('id')),
+            ],
+        ]);
+        $amount = $request->input('amount');
+        $service = $services->firstWhere('id', $request->input('payment_service'));
+
+        // Start a database transaction for the top-up
+        $payment = null;
+        DB::transaction(function() use($user, $economy, $wallet, $service, $currency, $amount, &$payment) {
+            // Start a new payment
+            $payment = $service->startPayment($currency, $amount, $user);
+
+            // Create the transaction
+            $transaction = Transaction::create([
+                'state' => Transaction::STATE_PENDING,
+                'owner_id' => $user->id,
+            ]);
+
+            // Create the payment mutation
+            $mut_payment = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $economy->id,
+                    'type' => Mutation::TYPE_PAYMENT,
+                    'amount' => $amount,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_PENDING,
+                    'owner_id' => $user->id,
+                ]);
+            MutationPayment::create([
+                'mutation_id' => $mut_payment->id,
+                'payment_id' => $payment->id,
+            ]);
+
+            // Create the to wallet mutation
+            $mut_wallet = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $economy->id,
+                    'type' => Mutation::TYPE_WALLET,
+                    'amount' => -$amount,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_PENDING,
+                    'owner_id' => $user->id,
+                    'depend_on' => $mut_payment->id,
+                ]);
+            MutationWallet::create([
+                'mutation_id' => $mut_wallet->id,
+                'wallet_id' => $wallet->id,
+            ]);
+        });
+
+        // Redirect to the payment page
+        return redirect()->route('payment.pay', [
+            'paymentId' => $payment->id,
+        ]);
     }
 
     /**

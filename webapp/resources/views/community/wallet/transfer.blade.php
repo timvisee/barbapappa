@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-{{-- TODO: Translate! --}}
 @section('title', __('pages.wallets.transferToSelf'))
 
 @section('content')

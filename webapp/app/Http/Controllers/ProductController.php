@@ -19,8 +19,6 @@ class ProductController extends Controller {
      * @return Response
      */
     public function index(Request $request, $communityId, $economyId) {
-        // TODO: add some sort of toggle to view trashed
-
         // Get the user, community, find the products
         $user = barauth()->getUser();
         $community = \Request::get('community');

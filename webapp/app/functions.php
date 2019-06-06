@@ -1,10 +1,10 @@
 <?php
 
+use App\Perms\Builder\Config as PermsConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-
-use App\Perms\Builder\Config as PermsConfig;
 
 // Build the barauth function
 if(!function_exists('barauth')) {
@@ -247,5 +247,94 @@ if(!function_exists('rand_float')) {
      */
     function rand_float() {
         return mt_rand() / mt_getrandmax();
+    }
+}
+
+if(!function_exists('ref_format')) {
+    /**
+     * Format the given string in chunks, with spaces in between.
+     *
+     * @param string $str The string to format.
+     * @param int $step Characters per chunk.
+     * @param bool [$reverse=false] Reverse chunking.
+     *
+     * @return string The formatted string.
+     */
+    function ref_format($str, $step, $reverse = false) {
+        if($reverse)
+            return rtrim(strrev(chunk_split(strrev($str), $step, ' ')), ' ');
+        return rtrim(chunk_split($str, $step, ' '), ' ');
+    }
+}
+
+if(!function_exists('format_iban')) {
+    /**
+     * Format the given IBAN in a more readable format.
+     *
+     * @param string $iban The IBAN to format.
+     *
+     * @return The formatted IBAN.
+     */
+    function format_iban($iban) {
+        return ref_format($iban, 4);
+    }
+}
+
+if(!function_exists('format_bic')) {
+    /**
+     * Format the given BIC in a more readable format.
+     *
+     * @param string $iban The BIC to format.
+     *
+     * @return The formatted BIC.
+     */
+    function format_bic($iban) {
+        return ref_format($iban, 4);
+    }
+}
+
+if(!function_exists('format_payment_reference')) {
+    /**
+     * Format the given payment reference in a more readable format.
+     *
+     * @param string $reference The payment reference to format.
+     *
+     * @return The formatted payment reference.
+     */
+    function format_payment_reference($reference) {
+        return ref_format($reference, 4);
+    }
+}
+
+if(!function_exists('random_str')) {
+    /**
+     * Generate a random string, using a cryptographically secure 
+     * pseudorandom number generator (random_int)
+     *
+     * For PHP 7, random_int is a PHP core function
+     *
+     * @param int $length      How many characters do we want?
+     * @param string $keyspace A string of all possible characters
+     *                         to select from
+     * @return string
+     */
+    function random_str($length, $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+        $pieces = [];
+        $max = mb_strlen($keyspace, '8bit') - 1;
+        for ($i = 0; $i < $length; ++$i)
+            $pieces []= $keyspace[random_int(0, $max)];
+        return implode('', $pieces);
+    }
+}
+
+if(!function_exists('assert_transaction')) {
+    /**
+     * Assert/require that a database transaction is currently active.
+     *
+     * @throws \Exception Throws if no database transaction is active right now.
+     */
+    function assert_transaction() {
+        if(DB::transactionLevel() <= 0)
+            throw new \Exception('No database transaction active, while this is required');
     }
 }

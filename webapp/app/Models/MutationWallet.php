@@ -43,7 +43,7 @@ class MutationWallet extends Model {
      * @return The main mutation.
      */
     public function mutation() {
-        return $this->belongsTo('App\Models\Mutation');
+        return $this->belongsTo(Mutation::class);
     }
 
     /**
@@ -52,7 +52,7 @@ class MutationWallet extends Model {
      * @return The affected wallet.
      */
     public function wallet() {
-        return $this->belongsTo('App\Models\Wallet');
+        return $this->belongsTo(Wallet::class);
     }
 
     /**
@@ -79,5 +79,35 @@ class MutationWallet extends Model {
             $this->wallet->deposit($amount);
         else
             $this->wallet->withdraw($amount);
+    }
+
+    /**
+     * Handle changes as effect of a state change.
+     * This method is called when the state of the mutation changes.
+     *
+     * For a wallet mutation, this method would change the wallet balance when
+     * the new state defines success.
+     *
+     * @param Mutation $mutation The mutation, parent of this instance.
+     * @param int $oldState The old state.
+     * @param int $newState The new, current state.
+     */
+    public function applyState(Mutation $mutation, int $oldState, int $newState) {
+        // Make sure the currency IDs match
+        if($this->wallet->currency_id != $mutation->currency_id)
+            throw new \Exception('Wallet mutation and wallet differ in currency, cannot process');
+
+        // Modify the wallet balance
+        if($newState == Mutation::STATE_SUCCESS) {
+            if($mutation->amount > 0)
+                $this->wallet->withdraw($mutation->amount);
+            else
+                $this->wallet->deposit(-$mutation->amount);
+        } else if($oldState == Mutation::STATE_SUCCESS) {
+            if($mutation->amount > 0)
+                $this->wallet->deposit($mutation->amount);
+            else
+                $this->wallet->withdraw(-$mutation->amount);
+        }
     }
 }

@@ -51,6 +51,14 @@ span.spacer.x5 {
   text-align: center;
 }
 
+// Code/literal highlighting
+code.literal {
+    padding: 2px 4px;
+    color: #c0341d;
+    background-color: #fbe5e1;
+    border-radius: 4px;
+}
+
 // Highlight box
 $highlight-dynamic-min-width: 100px;
 $highlight-dynamic-max-width: 600px;

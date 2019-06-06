@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
+use BarPay\Models\Service as PayService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -151,6 +152,15 @@ class Economy extends Model {
      */
     public function mutations() {
         return $this->hasMany(Mutation::class);
+    }
+
+    /**
+     * Get a relation to all payment services configured in this economy.
+     *
+     * @return Relation to payment services.
+     */
+    public function paymentServices() {
+        return $this->hasMany(PayService::class);
     }
 
     /**

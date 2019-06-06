@@ -28,6 +28,14 @@
         ]),
         'icon' => 'shopping-bag',
     ];
+    $menulinks[] = [
+        'name' => __('pages.paymentService.manageServices'),
+        'link' => route('community.economy.payservice.index', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id
+        ]),
+        'icon' => 'credit-card',
+    ];
 @endphp
 
 @section('content')
@@ -72,6 +80,14 @@
                 ]) }}"
                 class="ui button basic">
             @lang('pages.products.manageProducts')
+        </a>
+
+        <a href="{{ route('community.economy.payservice.index', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id
+                ]) }}"
+                class="ui button basic">
+            @lang('pages.paymentService.manageServices')
         </a>
     </p>
 

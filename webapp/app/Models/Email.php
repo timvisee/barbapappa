@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -57,5 +58,17 @@ class Email extends Model {
      */
     public function isVerified() {
         return $this->verified_at != null;
+    }
+
+    /**
+     * Build an EmailRecipient for this user email address.
+     *
+     * @param User $user The user this is for, or null to use the user linked to
+     *      this mail address automatically.
+     *
+     * @return EmailRecipient The email recipient.
+     */
+    public function buildEmailRecipient($user = null) {
+        return new EmailRecipient($this->email, $user ?? $this->user);
     }
 }

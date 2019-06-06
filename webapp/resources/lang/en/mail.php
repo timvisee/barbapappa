@@ -74,4 +74,20 @@ return [
             'noChangeThenContact' => 'If you received this message but haven\'t changed your password, please [contact](:contact) the :contact team as soon as possible about this security issue.',
         ]
     ],
+
+    'payment' => [
+        'completed' => [
+            'subject' => 'Payment accepted',
+            'subtitle' => 'You have topped up your wallet.',
+            'paymentReceived' => 'Your payment has been received. It has been processed and accepted.',
+            'amountReadyToUse' => 'The amount is now available in your wallet and is ready to be used.',
+        ],
+        'failed' => [
+            'subject' => 'Payment failed',
+            'subtitle' => 'Your wallet top up did not succeed.',
+            'stateFailed' => 'A payment you\'ve started could not be completed, because it failed. If you believe this is an error, please contact us.',
+            'stateRevoked' => 'A payment you\'ve started could not be completed, because it has been revoked. If you believe this is an error, please contact us.',
+            'stateRejected' => 'A payment you\'ve started could not be completed, because it has been rejected. If you believe this is an error, please contact us.',
+        ],
+    ],
 ];

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
+use BarPay\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -169,6 +170,15 @@ class User extends Model {
     }
 
     /**
+     * Get the payments owned by this user.
+     *
+     * @return The payments.
+     */
+    public function payments() {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
      * Check whether this user has any verified email addresses.
      *
      * @return bool True if the user has any verified email address, false if not.
@@ -279,6 +289,7 @@ class User extends Model {
                 $extraReset = PasswordResetManager::create($this);
 
                 // Create a mailable
+                // TODO: get recipient from buildEmailRecipients function
                 $recipient = new EmailRecipient($email, $this);
                 $mailable = new Reset($recipient, $extraReset);
 
@@ -376,5 +387,17 @@ class User extends Model {
             'name' => $name ?? __('pages.wallets.nameDefault'),
             'currency_id' => $currency_id,
         ]);
+    }
+
+    /**
+     * Get the email recipients for this user.
+     *
+     * @return array An array of email recipients to send a message to.
+     */
+    public function buildEmailRecipients() {
+        // TODO: get for all addressses!
+        // TODO: only use verified addresses?
+        $email = $this->emails()->first();
+        return $email->buildEmailRecipient($this);
     }
 }

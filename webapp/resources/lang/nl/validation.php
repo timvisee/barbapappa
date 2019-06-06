@@ -87,6 +87,8 @@ return [
     'unique'               => 'De waarde in het :attribute veld is al gebruikt.',
     'uploaded'             => 'Het uploaden van het bestand in het :attribute veld is mislukt.',
     'url'                  => 'Het formaat in het :attribute veld is ongeldig.',
+    'iban'                 => 'Vul een geldige IBAN in.',
+    'bic'                  => 'Vul een geldige BIC in.',
 
     /*
     |--------------------------------------------------------------------------
@@ -125,8 +127,17 @@ return [
         'first_name' => 'voornaam',
         'last_name' => 'achternaam',
         'language' => 'taal',
+        'currency' => 'valuta',
+        'enabled' => 'ingeschakeld',
         'invalidate_other_sessions' => 'log uit op andere apparaten',
         'slug' => 'URL-pad',
+        'amount' => 'bedrag',
+        'iban' => 'IBAN',
+        'bic' => 'BIC',
+        'account_holder' => 'rekeninghouder',
+        'payment_service' => 'betaalservice',
+        'choice' => 'keuze',
+        'confirm' => 'bevestiging',
     ],
 
 ];

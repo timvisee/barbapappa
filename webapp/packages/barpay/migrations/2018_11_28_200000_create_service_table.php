@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentServiceTable extends Migration {
+class CreateServiceTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,20 +12,27 @@ class CreatePaymentServiceTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('payment_services', function(Blueprint $table) {
+        Schema::create('services', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
-            $table->integer('service_type')->unsigned()->nullable(false);
-            $table->boolean('deposit')->setNullable(false);
-            $table->boolean('withdraw')->setNullable(false);
+            $table->morphs('serviceable');
             $table->boolean('enabled')->setNullable(false)->default(true);
-            $table->boolean('archived')->setNullable(false)->default(false);
+            $table->integer('currency_id')->unsigned()->nullable(false);
+            $table->boolean('deposit')->nullable(false);
+            $table->boolean('withdraw')->nullable(false);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('economy_id')
                 ->references('id')
                 ->on('economies')
                 ->onDelete('set null');
+            $table->foreign('currency_id')
+                ->references('id')
+                ->on('currencies')
+                ->onDelete('restrict');
+
+            $table->index(['serviceable_id', 'serviceable_type']);
 
             // TODO: add a field for supported currency/currencies by this service
         });
@@ -37,6 +44,6 @@ class CreatePaymentServiceTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('payment_services');
+        Schema::dropIfExists('services');
     }
 }

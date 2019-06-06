@@ -6,6 +6,7 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyCurrencyController;
+use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -227,6 +228,34 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                         });
                     });
                 });
+
+                // Economy payment services, require view perms
+                Route::prefix('/pay-services')->middleware(PaymentServiceController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'PaymentServiceController@index')->name('community.economy.payservice.index');
+
+                    // Create, require manage perms
+                    Route::middleware(PaymentServiceController::permsManage()->middleware())->group(function() {
+                        Route::get('/add', 'PaymentServiceController@create')->name('community.economy.payservice.create');
+                        Route::post('/add', 'PaymentServiceController@doCreate')->name('community.economy.payservice.doCreate');
+                    });
+
+                    // Specific
+                    Route::prefix('/{serviceId}')->group(function() {
+                        // Show
+                        Route::get('/', 'PaymentServiceController@show')->name('community.economy.payservice.show');
+
+                        // Edit/delete, require manager perms
+                        Route::middleware(PaymentServiceController::permsManage()->middleware())->group(function() {
+                            Route::get('/edit', 'PaymentServiceController@edit')->name('community.economy.payservice.edit');
+                            Route::put('/edit', 'PaymentServiceController@doEdit')->name('community.economy.payservice.doEdit');
+                            // Route::get('/restore', 'PaymentServiceController@restore')->name('community.economy.payservice.restore');
+                            // Route::put('/restore', 'PaymentServiceController@doRestore')->name('community.economy.payservice.doRestore');
+                            Route::get('/delete', 'PaymentServiceController@delete')->name('community.economy.payservice.delete');
+                            Route::delete('/delete', 'PaymentServiceController@doDelete')->name('community.economy.payservice.doDelete');
+                        });
+                    });
+                });
             });
         });
 
@@ -262,6 +291,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::get('/transfer', 'WalletController@transfer')->name('community.wallet.transfer');
                     Route::post('/transfer', 'WalletController@doTransfer')->name('community.wallet.doTransfer');
                     Route::get('/transfer/user', 'WalletController@transferUser')->name('community.wallet.transfer.user');
+
+                    // Top-up pages
+                    Route::get('/top-up', 'WalletController@topUp')->name('community.wallet.topUp');
+                    Route::post('/top-up', 'WalletController@doTopUp')->name('community.wallet.topUp');
 
                     // // Supported economy currencies
                     // Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
@@ -424,7 +457,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 });
 
 // Transactions
-Route::prefix('/transactions')->group(function() {
+Route::prefix('/transactions')->middleware('auth')->group(function() {
     // Index
     // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
 
@@ -467,6 +500,39 @@ Route::prefix('/transactions')->group(function() {
                 // });
             });
         });
+    });
+});
+
+// Payments
+Route::prefix('/payments')->middleware('auth')->group(function() {
+    // Index
+    Route::get('/', 'PaymentController@index')->name('payment.index');
+
+    // Approve
+    // TODO: check permission
+    Route::prefix('/approve')->group(function() {
+        // Show
+        Route::get('/', 'PaymentController@approveList')->name('payment.approveList');
+
+        // Specific
+        // TODO: find payment, check permission
+        Route::get('/{paymentId}', 'PaymentController@approve')->name('payment.approve');
+        Route::post('/{paymentId}', 'PaymentController@doApprove')->name('payment.doApprove');
+    });
+
+    // Specific
+    // TODO: find payment, check permission
+    Route::prefix('/{paymentId}')->group(function() {
+        // Show
+        Route::get('/', 'PaymentController@show')->name('payment.show');
+
+        // Pay
+        Route::get('/pay', 'PaymentController@pay')->name('payment.pay');
+        Route::post('/pay', 'PaymentController@doPay')->name('payment.doPay');
+
+        // Cancel
+        Route::get('/cancel', 'PaymentController@cancel')->name('payment.cancel');
+        Route::delete('/cancel', 'PaymentController@doCancel')->name('payment.doCancel');
     });
 });
 

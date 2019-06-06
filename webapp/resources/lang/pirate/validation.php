@@ -87,6 +87,8 @@ return [
     'unique'               => 'Th\' :attribute has already been entered.',
     'uploaded'             => 'Th\' :attribute failed to upload.',
     'url'                  => 'Th\' :attribute format be sunken.',
+    'iban'                 => 'Enter a valid IBAN.',
+    'bic'                  => 'Enter a valid BIC.',
 
     /*
     |--------------------------------------------------------------------------
@@ -124,6 +126,8 @@ return [
         'new_password_confirmation' => 'shiny passcode check',
         'language' => 'speak',
         'invalidate_other_sessions' => 'sink other ships',
+        'iban' => 'IBAN',
+        'bic' => 'BIC',
     ],
 
 ];

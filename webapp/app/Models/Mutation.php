@@ -42,6 +42,7 @@ class Mutation extends Model {
         'currency_id',
         'state',
         'owner_id',
+        'depend_on',
     ];
 
     const TYPE_MAGIC = 1;
@@ -52,6 +53,14 @@ class Mutation extends Model {
     const STATE_PROCESSING = 2;
     const STATE_SUCCESS = 3;
     const STATE_FAILED = 4;
+
+    /**
+     * States which define this mutation is settled.
+     */
+    const SETTLED = [
+        Self::STATE_SUCCESS,
+        Self::STATE_FAILED,
+    ];
 
     /**
      * The child mutation types that belong to this mutation for a given type.
@@ -71,7 +80,7 @@ class Mutation extends Model {
      * @return The transaction.
      */
     public function transaction() {
-        return $this->belongsTo('App\Models\Transaction');
+        return $this->belongsTo(Transaction::class);
     }
 
     /**
@@ -80,7 +89,7 @@ class Mutation extends Model {
      * @return The economy.
      */
     public function economy() {
-        return $this->belongsTo('App\Models\Economy');
+        return $this->belongsTo(Economy::class);
     }
 
     /**
@@ -92,7 +101,7 @@ class Mutation extends Model {
      * @return The currency.
      */
     public function currency() {
-        return $this->belongsTo('App\Models\Currency');
+        return $this->belongsTo(Currency::class);
     }
 
     /**
@@ -128,7 +137,7 @@ class Mutation extends Model {
      * @return Relation to the user that created this transaction.
      */
     public function owner() {
-        return $this->belongsTo('App\Models\User', 'owner_id');
+        return $this->belongsTo(User::class, 'owner_id');
     }
 
     /**
@@ -231,6 +240,9 @@ class Mutation extends Model {
      * @return string Formatted balance
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN, $options = []) {
+        // Gray if failed
+        if($this->state == Self::STATE_FAILED)
+            $options['color'] = false;
         return balance($this->amount, $this->currency->code, $format, $options);
     }
 
@@ -252,6 +264,86 @@ class Mutation extends Model {
 
         // Translate and return
         return __('pages.mutations.state.' . $key);
+    }
+
+    /**
+     * Set the state of this mutation with some bound checks.
+     *
+     * @param int $state The state to set to.
+     * @param boolean [$save=true] True to save the model after setting the state.
+     *
+     * @throws \Exception Throws if an invalid state is given.
+     */
+    private function setState($state, $save = true) {
+        // Never allow setting to pending
+        if($state == Self::STATE_PENDING)
+            throw new \Exception('Cannot set mutation state to pending');
+
+        // Set the state, and save
+        $this->state = $state;
+        if($save)
+            $this->save();
+    }
+
+    /**
+     * Settle this mutation.
+     * This in turn settles any related/depending mutations and the
+     * encapsulating transaction.
+     *
+     * @param int $state The new mutation state to settle with.
+     * @param bool [$save=true] True to save this model after settling.
+     *
+     * @throws \Exception Throws if an invalid settle state is given.
+     */
+    public function settle(int $state) {
+        // The given state must be in the settled array
+        if(!in_array($state, Self::SETTLED))
+            throw new \Exception('Failed to settle mutation, given new state is not recognized as settle state');
+
+        // Skip if already in this state
+        if($this->state == $state)
+            return;
+
+        // We must be in a database transaction
+        assert_transaction();
+
+        // Set the state
+        $oldState = $this->state;
+        $this->setState($state, true);
+
+        // Apply the state change logic based on the used mutation type
+        if($oldState != $state && $this->hasMutationData())
+            $this->mutationData->applyState($this, $oldState, $state);
+
+        // Settle any dependents
+        // TODO: ensure this doesn't cause issues with circular dependencies
+        foreach(($this->dependents ?? []) as $dependent)
+            $dependent->settle($state, true);
+
+        // TODO: make sure transaction state is still consistent!
+
+        // Settle the transaction
+        $transactionState = null;
+        switch($state) {
+        case Self::STATE_SUCCESS:
+            $transactionState = Transaction::STATE_SUCCESS;
+            break;
+        case Self::STATE_FAILED:
+            $transactionState = Transaction::STATE_FAILED;
+            break;
+        default:
+            throw new \Exception('Unknown mutation state');
+        }
+        $this->transaction->settle($transactionState, true);
+    }
+
+    /**
+     * Check whether this mutation is settled.
+     *
+     * @return bool True if settled, false if in progress.
+     */
+    public function isSettled() {
+        return in_array($this->state, Self::SETTLED);
     }
 
     /**
@@ -320,7 +412,8 @@ class Mutation extends Model {
         if($amount <= 0)
             throw new \Exception("Failed to increment mutation amount, amount is < 0");
 
-        // TODO: assert we're in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // Increment the amount
         $this->increment('amount', $amount);
@@ -343,7 +436,8 @@ class Mutation extends Model {
         if($amount < 0)
             throw new \Exception("Failed to decrement mutation amount, amount is < 0");
 
-        // TODO: assert we're in a transaction
+        // We must be in a database transaction
+        assert_transaction();
 
         // Decrement the amount
         $this->decrement('amount', $amount);
