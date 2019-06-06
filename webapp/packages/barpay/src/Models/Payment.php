@@ -440,6 +440,10 @@ class Payment extends Model {
         // Build the paymentable and attach it to the payment
         $paymentable = $service->serviceable::startPaymentable($payment, $service);
 
+        // Assert the payment state is not init anymore
+        if($payment->state == Payment::STATE_INIT)
+            throw new \Exception('Could not create payment, it\'s state should have been set by the corresponding paymentable');
+
         return $payment;
     }
 
@@ -465,7 +469,7 @@ class Payment extends Model {
      *
      * @throws \Exception Throws if an invalid state is given.
      */
-    private function setState($state, $save = true) {
+    public function setState($state, $save = true) {
         // Never allow setting to init
         if($state == Self::STATE_INIT)
             throw new \Exception('Cannot set payment state to init');

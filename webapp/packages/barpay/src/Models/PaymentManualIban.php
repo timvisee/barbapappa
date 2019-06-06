@@ -157,6 +157,7 @@ class PaymentManualIban extends Model {
         $paymentable->save();
 
         // Attach the paymentable to the payment
+        $payment->setState(Payment::STATE_PENDING_MANUAL, false);
         $payment->setPaymentable($paymentable);
 
         return $paymentable;
