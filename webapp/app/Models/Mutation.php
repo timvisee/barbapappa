@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Mail;
  *
  * @property int id
  * @property int transaction_id
- * @property int type
+ * @property int mutationable_id
+ * @property string mutationable_type
+ * @property-read mixed mutationable
  * @property decimal amount
  * @property int currency_id
  * @property int state
@@ -37,7 +39,8 @@ class Mutation extends Model {
 
     protected $fillable = [
         'economy_id',
-        'type',
+        'mutationable_id',
+        'mutationable_type',
         'amount',
         'currency_id',
         'state',
@@ -45,10 +48,16 @@ class Mutation extends Model {
         'depend_on',
     ];
 
-    const TYPE_MAGIC = 1;
-    const TYPE_WALLET = 2;
-    const TYPE_PRODUCT = 3;
-    const TYPE_PAYMENT = 4;
+    /**
+     * A list of all mutationable types.
+     */
+    const MUTATIONABLES = [
+        MutationMagic::class,
+        MutationWallet::class,
+        MutationProduct::class,
+        MutationPayment::class,
+    ];
+
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
     const STATE_SUCCESS = 3;
@@ -63,24 +72,44 @@ class Mutation extends Model {
     ];
 
     /**
-     * The child mutation types that belong to this mutation for a given type.
-     *
-     * This list is dynamically used to link child mutation data to this
-     * mutation, if this mutation is of a type that has additional data.
-     */
-    protected static $typeModels = [
-        Self::TYPE_WALLET => MutationWallet::class,
-        Self::TYPE_PRODUCT => MutationProduct::class,
-        Self::TYPE_PAYMENT => MutationPayment::class,
-    ];
-
-    /**
      * Get the transaction this mutation is part of.
      *
      * @return The transaction.
      */
     public function transaction() {
         return $this->belongsTo(Transaction::class);
+    }
+
+    /**
+     * Get a relation to the specific mutation type data related to the used
+     * mutationable.
+     *
+     * @return Relation to the mutation type data related to the used mutationable.
+     */
+    public function mutationable() {
+        return $this->morphTo();
+    }
+
+    /**
+     * Set the mutationable attached to this mutation.
+     * This is only allowed when no mutationable is set yet.
+     *
+     * @param Mutationable The mutationable to attach.
+     * @param bool [$save=true] True to immediately save this model, false if
+     * not.
+     *
+     * @throws \Exception Throws if a paymentable was already set.
+     */
+    public function setMutationable($mutationable, $save = true) {
+        // Assert no mutationable is set yet
+        if(!empty($this->mutationable_id) || !empty($this->mutationable_type))
+            throw new \Exception('Could not link mutationable to mutation, it has already been set');
+
+        // Set the mutationable
+        $this->mutationable_id = $mutationable->id;
+        $this->mutationable_type = get_class($mutationable);
+        if($save)
+            $this->save();
     }
 
     /**
@@ -157,18 +186,20 @@ class Mutation extends Model {
      * @return string Mutation description.
      */
     public function describe($detail = false) {
+        // TODO: properly describe based on the type!
+
         // Determine direction translation key name
         $dir = $this->amount > 0 ? 'From' : 'To';
 
         // Describe based on the mutation dir
-        switch($this->type) {
-        case Self::TYPE_MAGIC:
+        switch($this->mutationable_type) {
+        case MutationMagic::class:
             return __('pages.mutations.types.magic');
 
-        case Self::TYPE_WALLET:
+        case MutationWallet::class:
             if($detail) {
                 // Get the wallet, it's name and build a link to it
-                $wallet = $this->mutationData->wallet;
+                $wallet = $this->mutationable->wallet;
                 $name = $wallet->name;
                 $link = '<a href="' . $wallet->getUrlShow() . '">' . e($name) . "</a>";
 
@@ -177,57 +208,26 @@ class Mutation extends Model {
             } else
                 return __('pages.mutations.types.wallet' . $dir);
 
-        case Self::TYPE_PRODUCT:
+        case MutationProduct::class:
             if($detail) {
                 // Build a list of products with quantities if not 1
-                $product = $this->mutationData->product()->withTrashed()->first();
+                $mut_product = $this->mutationable;
+                $product = $mut_product->product()->withTrashed()->first();
                 $name = $product != null ? $product->displayName() : __('pages.products.unknownProduct');
-                $products[] = ($this->mutationData->quantity != 1 ? $this->mutationData->quantity . 'x ' : '') . $name;
+                $products[] = ($mut_product->quantity != 1 ? $mut_product->quantity . 'x ' : '') . $name;
 
                 // Return the description string including the product names
                 return __('pages.mutations.types.product' . $dir . 'Detail', ['products' => implode(', ', $products)]);
             } else
                 return __('pages.mutations.types.product' . $dir);
 
-        case Self::TYPE_PAYMENT:
+        case MutationPayment::class:
             // TODO: describe mutation in detail here
             return __('pages.mutations.types.payment' . $dir);
 
         default:
-            throw new \Exception("Unknown mutation type, cannot describe");
+            throw new \Exception('Unknown mutation type');
         }
-    }
-
-    /**
-     * Check whether the mutation has any related child mutation data, based on
-     * the mutation type. See `Self::mutationData()`.
-     *
-     * @return bool True if this mutation has child data, false if not.
-     */
-    public function hasMutationData() {
-        return isset(Self::$typeModels[$this->type]);
-    }
-
-    /**
-     * Get the relation to the child mutation data object, if available.
-     *
-     * For example, this would provide a relation to the `MutationPayment`
-     * object that belongs to this mutation, for a payment mutation.
-     *
-     * @return HasOne The child mutation data model relation.
-     * @throws \Exception Throws if the current mutation type doesn't have
-     *      additional mutation data.
-     */
-    public function mutationData() {
-        // Make sure this mutation type has additional data
-        if(!$this->hasMutationData())
-            throw new \Exception(
-                "attempted to get relation to additional mutation data, " .
-                "for a mutation type that doesn't have this"
-            );
-
-        // Return the relation
-        return $this->hasOne(Self::$typeModels[$this->type], 'mutation_id', 'id');
     }
 
     /**
@@ -312,8 +312,8 @@ class Mutation extends Model {
         $this->setState($state, true);
 
         // Apply the state change logic based on the used mutation type
-        if($oldState != $state && $this->hasMutationData())
-            $this->mutationData->applyState($this, $oldState, $state);
+        if($oldState != $state)
+            $this->mutationable->applyState($this, $oldState, $state);
 
         // Settle any dependents
         // TODO: ensure this doesn't cause issues with circular dependencies
@@ -358,18 +358,15 @@ class Mutation extends Model {
      * @throws \Exception Throws if we cannot undo right now or if not in a
      *      transaction.
      */
+    // TODO: delete by default, or set states back to pending?
     public function undo($delete = false) {
-        // Assert we have an active database transaction
-        if(DB::transactionLevel() <= 0)
-            throw new \Exception("Mutation can only be undone when database transaction is active");
+        // We must be in a database transaction
+        assert_transaction();
 
-        // Assert we can undo
+        // Assert we can undo, then undo the mutationable
         if(!$this->canUndo())
             throw new \Exception("Attempting to undo transaction mutation while this is not allowed");
-
-        // Undo on the mutation data
-        if($this->hasMutationData())
-            $this->mutationData->undo();
+        $this->mutationable->undo();
 
         // Delete the model
         if($delete)
@@ -385,13 +382,16 @@ class Mutation extends Model {
      * @return bool True if it can be undone, false if not.
      */
     public function canUndo() {
-        switch($this->type) {
-        case Self::TYPE_MAGIC:
-        case Self::TYPE_WALLET:
-        case Self::TYPE_PRODUCT:
+        switch($this->mutationable_type) {
+        case MutationMagic::class:
+        case MutationWallet::class:
+        case MutationProduct::class:
             return true;
-        case Self::TYPE_PAYMENT:
+        case MutationPayment::class:
             return false;
+
+        default:
+            throw new \Exception('Unknown mutation type');
         }
     }
 

@@ -369,7 +369,7 @@ class Economy extends Model {
             ->mutations()
             ->select('id')
             ->where('owner_id', barauth()->getUser()->id)
-            ->where('type', Mutation::TYPE_PRODUCT)
+            ->where('mutationable_type', MutationProduct::class)
             ->latest()
             ->limit(100)
             ->get()
@@ -399,7 +399,7 @@ class Economy extends Model {
             $mutation_ids = $this
                 ->mutations()
                 ->select('id')
-                ->where('type', Mutation::TYPE_PRODUCT)
+                ->where('mutationable_type', MutationProduct::class)
                 ->latest()
                 ->limit(100)
                 ->get()

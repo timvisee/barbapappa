@@ -289,7 +289,7 @@ class Payment extends Model {
      * Set the paymentable attached to this service.
      * This is only allowed when no paymentable is set yet.
      *
-     * @param mixed The paymentable to attach.
+     * @param Paymentable The paymentable to attach.
      * @param bool [$save=true] True to immediately save this model, false if
      * not.
      *
@@ -400,7 +400,7 @@ class Payment extends Model {
         $mut_wallet = $mut_payment->dependents->first();
         if($mut_wallet == null)
             return null;
-        return $mut_wallet->mutationData->wallet;
+        return $mut_wallet->mutationable->wallet;
     }
 
     /**

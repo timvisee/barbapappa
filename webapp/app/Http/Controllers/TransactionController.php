@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Mutation;
+use App\Models\MutationWallet;
 use App\Models\Transaction;
 use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\CommunityRoles;
@@ -111,12 +112,12 @@ class TransactionController extends Controller {
         // Get all wallet mutations
         $mutations = $transaction
             ->mutations()
-            ->where('type', Mutation::TYPE_WALLET)
+            ->where('mutationable_type', MutationWallet::class)
             ->get();
 
         // If the user owns any of the wallets, allow
         foreach($mutations as $mutation)
-            if($mutation->mutationData->wallet->user_id == $user->id)
+            if($mutation->mutationable->wallet->user_id == $user->id)
                 return true;
 
         // Allow permission if user is admin or community manager

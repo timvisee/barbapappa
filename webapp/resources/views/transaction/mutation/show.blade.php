@@ -59,11 +59,11 @@
     </table>
 
     {{-- Metadata for transaction types --}}
-    @if($mutation->hasMutationData())
-        @php
-            // TODO: eager load data.wallet.economy here to improve performance!
-            $data = $mutation->mutationData()->firstOrFail();
-        @endphp
+    @php
+        // TODO: eager load data.wallet.economy here to improve performance!
+        $data = $mutation->mutationable;
+    @endphp
+    @if($data != null)
         @if($data instanceof MutationWallet)
             @php
                 // Extend page links
@@ -87,15 +87,15 @@
                 $menulinks[] = [
                     'name' => __('pages.products.viewProduct'),
                     'link' => route('bar.product.show', [
-                            'barId' => $mutation->mutationData->bar->human_id,
-                            'productId' => $mutation->mutationData->product_id,
+                            'barId' => $data->bar->human_id,
+                            'productId' => $data->product_id,
                         ]),
                     'icon' => 'shopping-bag',
                 ];
                 $menulinks[] = [
                     'name' => __('pages.bar.viewBar'),
                     'link' => route('bar.show', [
-                            'barId' => $mutation->mutationData->bar->human_id,
+                            'barId' => $data->bar->human_id,
                         ]),
                     'icon' => 'beer',
                 ];
@@ -106,18 +106,14 @@
 
                 @php
                     // Get the product
-                    $product = $mutation
-                        ->mutationData
-                        ->product()
-                        ->withTrashed()
-                        ->first();
+                    $product = $data->product()->withTrashed()->first();
                     $trashed = $product == null || $product->trashed();
                 @endphp
 
                 <a class="item"
                         href="{{ !$trashed ? route('bar.product.show', [
-                            'barId' => $mutation->mutationData->bar->human_id,
-                            'productId' => $mutation->mutationData->product_id,
+                            'barId' => $data->bar->human_id,
+                            'productId' => $data->product_id,
                         ]) : '#'}}">
                     @if($data->quantity != 1)
                         <span class="subtle">{{ $data->quantity }}×</span>
@@ -136,7 +132,7 @@
                 $menulinks[] = [
                     'name' => __('pages.payments.viewPayment'),
                     'link' => route('payment.show', [
-                        'paymentId' => $mutation->mutationData->payment_id,
+                        'paymentId' => $data->payment_id,
                     ]),
                     'icon' => 'credit-card',
                 ];
@@ -147,7 +143,7 @@
 
                 @php
                     // Get the payment
-                    $payment = $mutation->mutationData->payment;
+                    $payment = $data->payment;
                 @endphp
 
                 <a class="item"
@@ -167,9 +163,20 @@
                 </a>
             </div>
         @else
-            <p>
-                TODO: show mutation type specific data, not yet implemented
-            </p>
+            <table class="ui compact celled definition table">
+                <tbody>
+                    <tr>
+                        <td>@lang('misc.description')</td>
+                        <td>
+                            @if($data->description)
+                                {{ $data->description }}
+                            @else
+                                <i>@lang('misc.none')</i>
+                            @endif
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         @endif
     @endif
 

@@ -2,70 +2,47 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Scopes\EnabledScope;
 use App\Utils\EmailRecipient;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 // TODO: update parent mutation change time, if this model changes
 
 /**
- * Mutation product model.
- * This defines additional information for a product mutation, that belongs to a
- * main mutation.
+ * Mutation magic model.
+ * This defines a generic but magic kind of mutation, that belongs to a main
+ * mutation.
  *
  * @property int id
  * @property int mutation_id
- * @property int|null product_id
- * @property int|null bar_id
- * @property int quantity
+ * @property string|null description
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class MutationProduct extends Model {
+class MutationMagic extends Model {
 
     use Mutationable;
 
-    protected $table = "mutations_product";
-
-    protected $with = ['product'];
+    protected $table = "mutations_magic";
 
     protected $fillable = [
         'mutation_id',
-        'product_id',
-        'bar_id',
-        'quantity',
+        'description',
     ];
-
-    /**
-     * Get the product this mutation had an effect on.
-     *
-     * @return The affected product.
-     */
-    public function product() {
-        return $this->belongsTo(Product::class);
-    }
-
-    /**
-     * Get the bar the product for this mutation was bought at.
-     *
-     * @return The bar the product was bought at.
-     */
-    public function bar() {
-        return $this->belongsTo(Bar::class);
-    }
 
     /**
      * Undo the product mutation.
      * This does not delete the mutation model.
      *
-     * @throws \Exception Throws if we cannot undo right now.
+     * @throws \Exception Throws if we cannot undo right now or if not in a
+     *      transaction.
      */
     public function undo() {}
 
