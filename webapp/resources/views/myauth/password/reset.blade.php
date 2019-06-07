@@ -40,7 +40,7 @@
 
         <div class="inline field">
             <div class="ui toggle checkbox {{ Request::query('compromised') ? 'disabled' : '' }}">
-                <input type="checkbox" name="invalidate_other_sessions" tabindex="0" class="hidden" checked="checked">
+                {{ Form::checkbox('invalidate_other_sessions', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
                 @if(barauth()->isAuth())
                     {{ Form::label('invalidate_other_sessions', __('account.invalidateOtherSessions')) }}
                 @else

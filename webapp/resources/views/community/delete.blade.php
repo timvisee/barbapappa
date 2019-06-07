@@ -48,10 +48,7 @@
             <div class="ui bottom attached segment">
                 <div class="field {{ ErrorRenderer::hasError('confirm_delete') ? 'error' : '' }}">
                     <div class="ui checkbox">
-                        <input type="checkbox"
-                                name="confirm_delete"
-                                tabindex="0"
-                                class="hidden">
+                        {{ Form::checkbox('confirm_delete', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                         {{ Form::label('confirm_delete', __('misc.iUnderstandDelete')) }}
                     </div>
                     <br />

@@ -24,11 +24,7 @@
         <div class="ui bottom attached segment">
             <div class="field {{ ErrorRenderer::hasError('permanent') ? 'error' : '' }}">
                 <div class="ui checkbox {{ $product->trashed() ? 'disabled' : ''}}">
-                    <input type="checkbox"
-                            name="permanent"
-                            tabindex="0"
-                            class="hidden"
-                            {!! $product->trashed() ? 'checked="checked"' : '' !!}>
+                    {{ Form::checkbox('permanent', true, $product->trashed(), ['tabindex' => 0, 'class' => 'hidden']) }}
                     {{ Form::label('permanent', __('pages.products.permanentlyDelete')) }}
                 </div>
                 <br />

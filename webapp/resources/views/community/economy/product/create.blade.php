@@ -40,13 +40,13 @@
                         : null;
                 @endphp
                 <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
-                    <label>@lang('lang.name', [], $locale) ({{ __('general.optional') }}):</label>
+                    {{ Form::label($field, __('lang.name', [], $locale) . ' (' .  __('general.optional') . '):') }}
                     <div class="ui labeled input">
-                        <input type="text"
-                            placeholder="@lang('pages.products.namePlaceholder', [], $locale)"
-                            id="{{ $field }}"
-                            name="{{ $field }}"
-                            {!! !empty($value) ? 'value="' . e($value) . '"' : '' !!} />
+                        {{ Form::text(
+                            $field,
+                            e($value),
+                            ['id' => $field, 'placeholder' => __('pages.products.namePlaceholder', [], $locale)]
+                        ) }}
                     </div>
                     {{ ErrorRenderer::inline($field) }}
                 </div>
@@ -73,14 +73,14 @@
                             : null;
                     @endphp
                     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
-                        <label>{{ $currency->name }} ({{ __('general.optional') }}):</label>
+                        {{ Form::label($field, $currency->name . ' (' .  __('general.optional') . '):') }}
                         <div class="ui labeled input">
-                            <label for="{{ $field }}" class="ui label">{{ $currency->symbol }}</label>
-                            <input type="text"
-                                placeholder="1.23"
-                                id="{{ $field }}"
-                                name="{{ $field }}"
-                                {!! !empty($value) ? 'value="' . e($value) . '"' : '' !!} />
+                            {{ Form::label($field, $currency->symbol, ['class' => 'ui label']) }}
+                            {{ Form::text(
+                                $field,
+                                e($value),
+                                ['id' => $field, 'placeholder' => '1.23']
+                            ) }}
                         </div>
                         {{ ErrorRenderer::inline($field) }}
                     </div>
@@ -101,11 +101,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
             <div class="ui checkbox">
-                <input type="checkbox"
-                        name="enabled"
-                        tabindex="0"
-                        class="hidden"
-                        {{ !$clone || $cloneProduct->enabled ?  'checked="checked"' : '' }}>
+                {{ Form::checkbox('enabled', true, !$clone || $cloneProduct->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('enabled', __('pages.products.enabledDescription')) }}
             </div>
             <br />

@@ -6,7 +6,7 @@
     {{--
         <div class="item">
             <div class="ui transparent icon input">
-                <input type="text" placeholder="Search bars...">
+                {{ Form::text('search', '', ['placeholder' => 'Search bars...']) }}
                 <i class="icon glyphicons glyphicons-search link"></i>
             </div>
         </div>

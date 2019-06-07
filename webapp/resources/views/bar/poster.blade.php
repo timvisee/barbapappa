@@ -28,7 +28,7 @@
             {{ Form::label('language', __('lang.language')) }}
 
             <div class="ui fluid selection dropdown">
-                <input type="hidden" name="language" value="{{ langManager()->getLocale() }}">
+                {{ Form::hidden('language', langManager()->getLocale()) }}
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.unspecified')</div>
@@ -47,11 +47,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('show_code') ?  'error' : '' }} {{ empty($bar->password) ? 'disabled' : '' }}">
             <div class="ui toggle checkbox">
-                <input type="checkbox"
-                        name="show_code"
-                        tabindex="0"
-                        class="hidden"
-                        {{ !empty($bar->password) ? 'checked="checked"' : '' }}>
+                {{ Form::checkbox('show_code', true, !empty($bar->password), ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('show_code', __('pages.bar.showCodeOnPoster')) }}
             </div>
             <br />

@@ -27,11 +27,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
             <div class="ui checkbox">
-                <input type="checkbox"
-                        name="enabled"
-                        tabindex="0"
-                        class="hidden"
-                        {!! $service->enabled ? 'checked="checked"' : '' !!}>
+                {{ Form::checkbox('enabled', true, $service->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('enabled', __('pages.paymentService.enabledDescription')) }}
             </div>
             <br />
@@ -42,9 +38,7 @@
             {{ Form::label('currency', __('misc.currency')) }}
 
             <div class="ui fluid selection dropdown">
-                <input type="hidden" name="currency" value="{{
-                        $currencies->firstWhere('currency_id', $service->currency_id)->id
-                    }}" />
+                {{ Form::hidden('currency', $currencies->firstWhere('currency_id', $service->currency_id)->id) }}
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.pleaseSpecify')</div>
@@ -60,11 +54,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('deposit') ? 'error' : '' }}">
             <div class="ui toggle checkbox">
-                <input type="checkbox"
-                        name="deposit"
-                        tabindex="0"
-                        class="hidden"
-                        {!! $service->deposit ? 'checked="checked"' : '' !!}>
+                {{ Form::checkbox('deposit', true, $service->deposit, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('deposit', __('pages.paymentService.supportDepositDescription')) }}
             </div>
             <br />
@@ -73,11 +63,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('withdraw') ? 'error' : '' }}">
             <div class="ui toggle checkbox">
-                <input type="checkbox"
-                        name="withdraw"
-                        tabindex="0"
-                        class="hidden"
-                        {!! $service->withdraw ? 'checked="checked"' : '' !!}>
+                {{ Form::checkbox('withdraw', true, $service->withdraw, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('withdraw', __('pages.paymentService.supportWithdrawDescription')) }}
             </div>
             <br />

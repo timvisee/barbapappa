@@ -80,10 +80,7 @@
 
     <div class="inline field {{ ErrorRenderer::hasError('confirm_transfer') ? 'error' : '' }}">
         <div class="ui checkbox">
-            <input type="checkbox"
-                    name="confirm_transfer"
-                    tabindex="0"
-                    class="hidden">
+            {{ Form::checkbox('confirm_transfer', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
             {{ Form::label('confirm_transfer', __('barpay::payment.manualiban.confirmTransfer')) }}
         </div>
         <br />

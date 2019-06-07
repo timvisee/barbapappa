@@ -13,11 +13,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
             <div class="ui checkbox">
-                <input type="checkbox"
-                        name="enabled"
-                        tabindex="0"
-                        class="hidden"
-                        {{ $currency->enabled ? 'checked="checked"' : '' }}>
+                {{ Form::checkbox('enabled', true, $currency->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('enabled', __('misc.enabled')) }}
             </div>
             <br />
@@ -35,7 +31,7 @@
             {{ Form::label('currency', __('misc.currency')) }}
 
             <div class="ui fluid selection dropdown">
-                <input type="hidden" name="currency" value="{{ $currency->currency->id }}" />
+                {{ Form::hidden('currency', $currency->currency->id) }}
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.pleaseSpecify')</div>
@@ -54,11 +50,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('allow_wallet') ? 'error' : '' }}">
             <div class="ui checkbox">
-                <input type="checkbox"
-                        name="allow_wallet"
-                        tabindex="0"
-                        class="hidden"
-                        {{ $currency->allow_wallet ? 'checked="checked"' : '' }}>
+                {{ Form::checkbox('allow_wallet', true, $currency->allow_wallet, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('allow_wallet', __('pages.currencies.allowWallets')) }}
             </div>
             <br />

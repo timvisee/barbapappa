@@ -14,7 +14,7 @@
             {{ Form::label('role', __('misc.role')) }}
 
             <div class="ui fluid selection dropdown">
-                <input type="hidden" name="role" value="{{ $member->pivot->role }}">
+                {{ Form::hidden('role', $member->pivot->role) }}
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.pleaseSpecify')</div>
@@ -46,10 +46,7 @@
         <div class="ui bottom attached segment">
             <div class="inline field {{ ErrorRenderer::hasError('confirm_role_change') ? 'error' : '' }}">
                 <div class="ui checkbox">
-                    <input type="checkbox"
-                            name="confirm_role_change"
-                            tabindex="0"
-                            class="hidden">
+                    {{ Form::checkbox('confirm_role_change', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                     {{ Form::label('confirm_role_change', __('pages.barMembers.confirmRoleChange')) }}
                 </div>
                 <br />

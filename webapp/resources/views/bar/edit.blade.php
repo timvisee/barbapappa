@@ -36,7 +36,7 @@
         <div class="field {{ ErrorRenderer::hasError('slug') ? 'error' : '' }}">
             {{ Form::label('slug', __('misc.slug') . ' (' .  __('general.optional') . '):') }}
             <div class="ui labeled input">
-                <label for="slug" class="ui label">/b/</label>
+                {{ Form::label('slug', '/b/', ['class' => 'ui label']) }}
                 {{ Form::text('slug', $bar->slug, ['placeholder' => __('pages.bar.slugPlaceholder')]) }}
             </div>
             {{ ErrorRenderer::inline('slug') }}
@@ -66,7 +66,7 @@
             {{ Form::label('economy', __('pages.community.economy')) }}
 
             <div class="ui fluid selection dropdown">
-                <input type="hidden" name="economy" value="{{ $bar->economy_id }}">
+                {{ Form::hidden('economy', $bar->economy_id) }}
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.pleaseSpecify')</div>
@@ -88,11 +88,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('show_explore') ? 'error' : '' }}">
             <div class="ui checkbox">
-                <input type="checkbox"
-                        name="show_explore"
-                        tabindex="0"
-                        class="hidden"
-                        {{ $bar->show_explore ? 'checked="checked"' : '' }}>
+                {{ Form::checkbox('show_explore', true, $bar->show_explore, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('show_explore', __('pages.bar.showExploreDescription')) }}
             </div>
             <br />
@@ -101,11 +97,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('show_community') ? 'error' : '' }}">
             <div class="ui checkbox">
-                <input type="checkbox"
-                        name="show_community"
-                        tabindex="0"
-                        class="hidden"
-                        {{ $bar->show_community ? 'checked="checked"' : '' }}>
+                {{ Form::checkbox('show_community', true, $bar->show_community, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('show_community', __('pages.bar.showCommunityDescription')) }}
             </div>
             <br />
@@ -114,11 +106,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('self_enroll') ? 'error' : '' }}">
             <div class="ui checkbox">
-                <input type="checkbox"
-                        name="self_enroll"
-                        tabindex="0"
-                        class="hidden"
-                        {{ $bar->self_enroll ? 'checked="checked"' : '' }}>
+                {{ Form::checkbox('self_enroll', true, $bar->self_enroll, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('self_enroll', __('pages.bar.selfEnrollDescription')) }}
             </div>
             <br />

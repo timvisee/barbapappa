@@ -91,9 +91,7 @@
                 {!! Form::hidden('product_id', $product->id) !!}
 
                 <div class="ui labeled button" tabindex="0">
-                    <input type="submit"
-                            class="ui button blue"
-                            value="@lang('pages.bar.quickBuy')">
+                    {{ Form::submit(__('pages.bar.quickBuy'), ['class' => 'ui button blue']) }}
                     <div class="ui basic left pointing blue label">
                         {{ $format_price }}
                     </div>

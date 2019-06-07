@@ -19,10 +19,7 @@
         @if($member->id == barauth()->getSessionUser()->id)
             <div class="field {{ ErrorRenderer::hasError('confirm_self_delete') ? 'error' : '' }}">
                 <div class="ui checkbox">
-                    <input type="checkbox"
-                            name="confirm_self_delete"
-                            tabindex="0"
-                            class="hidden">
+                    {{ Form::checkbox('confirm_self_delete', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                     {{ Form::label('confirm_self_delete', __('pages.barMembers.confirmSelfDelete')) }}
                 </div>
                 <br />

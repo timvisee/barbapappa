@@ -42,7 +42,7 @@
             <br>
             <div class="inline field">
                 <div class="ui toggle checkbox">
-                    <input type="checkbox" name="join_community" tabindex="0" class="hidden" checked="checked">
+                    {{ Form::checkbox('join_community', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
                     {{ Form::label('join_community', __('pages.bar.alsoJoinCommunity') . ': ' . $community->name) }}
                 </div>
                 {{ ErrorRenderer::inline('join_community') }}

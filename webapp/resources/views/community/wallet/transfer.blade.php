@@ -58,10 +58,10 @@
     </div>
 
     <div class="field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
-        <label for="amount">@lang('misc.amountInCurrency', ['currency' => $currency->name]):</label>
+        {{ Form::label('amount', __('misc.amountInCurrency', ['currency' => $currency->name]) . ':') }}
         <div class="ui labeled input">
-            <label for="amount" class="ui label">{{ $currency->symbol }}</label>
-            <input type="text" placeholder="1.23" id="amount" name="amount" value="" />
+            {{ Form::label('amount', $currency->symbol, ['class' => 'ui label']) }}
+            {{ Form::text('amount', '', ['id' => 'amount', 'placeholder' => '1.23']) }}
         </div>
         {{ ErrorRenderer::inline('amount') }}
     </div>
@@ -74,7 +74,7 @@
         {{ Form::label('to_wallet', __('pages.wallets.toSelf') . ':') }}
 
         <div class="ui fluid selection dropdown">
-            <input type="hidden" name="to_wallet">
+            {{ Form::hidden('to_wallet') }}
             <i class="dropdown icon"></i>
 
             <div class="default text">@lang('misc.pleaseSpecify')</div>
