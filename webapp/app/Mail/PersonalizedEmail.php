@@ -63,7 +63,8 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         if($this->recipients->pluck('user')->unique()->count() > 1)
             throw new \Exception('Failed to send mailable, sending to recipients being different users, should send separately');
 
-        // Determine the subject
+        // Gather recipient user, determine subject
+        $user = $this->recipients->first()->getUser();
         $subject = trans($this->subjectKey, $this->subjectValues);
 
         // Build the mailable
@@ -71,9 +72,8 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
             ->to($this->recipients)
             ->subject($subject)
             ->onQueue($this->getWorkerQueue())
-            ->locale($this->recipients->first()->getUser())
-            // TODO: specify user here instead
-            ->with('recipient', $this->recipients[0])
+            ->locale($user)
+            ->with('user', $user)
             ->with('subject', $subject);
     }
 

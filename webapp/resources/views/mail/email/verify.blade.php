@@ -1,5 +1,5 @@
 @component('mail::message', [
-    'recipient' => $recipient,
+    'user' => $user,
     'subject' => $subject,
     'subtitle' => __('mail.email.verify.subtitle'),
 ])

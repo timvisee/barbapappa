@@ -1,7 +1,7 @@
 {{-- Generic email for various payment failure states --}}
 
 @component('mail::message', [
-    'recipient' => $recipient,
+    'user' => $user,
     'subject' => $subject,
     'subtitle' => __('mail.payment.failed.subtitle'),
 ])
