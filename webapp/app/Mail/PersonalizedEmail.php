@@ -74,6 +74,7 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         return $mail
             ->subject($subject)
             ->onQueue($this->getWorkerQueue())
+            ->locale($locale)
             ->with('recipient', $this->recipients[0])
             ->with('subject', $subject)
             ->with('locale', $locale);

@@ -1,7 +1,5 @@
 {{-- Generic email for various payment failure states --}}
 
-@include('mail.inc.fixLocale')
-
 @component('mail::message', [
     'recipient' => $recipient,
     'subject' => $subject,
