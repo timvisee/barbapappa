@@ -34,12 +34,12 @@ class Failed extends PersonalizedEmail {
     /**
      * Constructor.
      *
-     * @param EmailRecipient $recipient Email recipient.
+     * @param EmailRecipient[] $recipients A list of email recipients.
      * @param Payment $payment The payment for which to send the message.
      */
-    public function __construct(EmailRecipient $recipient, Payment $payment) {
+    public function __construct($recipients, Payment $payment) {
         // Construct the parent
-        parent::__construct($recipient, self::SUBJECT);
+        parent::__construct($recipients, self::SUBJECT);
 
         $this->payment_id = $payment->id;
     }

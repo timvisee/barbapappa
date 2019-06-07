@@ -1,7 +1,5 @@
-@include('mail.inc.fixLocale')
-
 @component('mail::message', [
-    'recipient' => $recipient,
+    'user' => $user,
     'subject' => $subject,
     'subtitle' => __('mail.email.verify.subtitleRegistered'),
 ])
