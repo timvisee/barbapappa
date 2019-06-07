@@ -295,7 +295,7 @@ class Payment extends Model {
      *
      * @throws \Exception Throws if a paymentable was already set.
      */
-    public function setPaymentable(Paymentable $paymentable, $save = true) {
+    public function setPaymentable($paymentable, $save = true) {
         // Assert no paymentable is set yet
         if(!empty($this->paymentable_id) || !empty($this->paymentable_type))
             throw new \Exception('Could not link paymentable to payment, it has already been set');

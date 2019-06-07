@@ -100,7 +100,7 @@ class Mutation extends Model {
      *
      * @throws \Exception Throws if a paymentable was already set.
      */
-    public function setMutationable(Mutationable $mutationable, $save = true) {
+    public function setMutationable($mutationable, $save = true) {
         // Assert no mutationable is set yet
         if(!empty($this->mutationable_id) || !empty($this->mutationable_type))
             throw new \Exception('Could not link mutationable to mutation, it has already been set');
