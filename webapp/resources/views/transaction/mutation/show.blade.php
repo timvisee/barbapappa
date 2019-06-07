@@ -163,9 +163,20 @@
                 </a>
             </div>
         @else
-            <p>
-                TODO: show mutation type specific data, not yet implemented
-            </p>
+            <table class="ui compact celled definition table">
+                <tbody>
+                    <tr>
+                        <td>@lang('misc.description')</td>
+                        <td>
+                            @if($data->description)
+                                {{ $data->description }}
+                            @else
+                                <i>@lang('misc.none')</i>
+                            @endif
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         @endif
     @endif
 
