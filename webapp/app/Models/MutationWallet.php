@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Mail;
  */
 class MutationWallet extends Model {
 
+    use Mutationable;
+
     protected $table = "mutations_wallet";
 
     protected $with = ['wallet'];
@@ -36,15 +38,6 @@ class MutationWallet extends Model {
         'mutation_id',
         'wallet_id',
     ];
-
-    /**
-     * Get the main mutation this wallet mutation data belongs to.
-     *
-     * @return The main mutation.
-     */
-    public function mutation() {
-        return $this->belongsTo(Mutation::class);
-    }
 
     /**
      * Get the wallet this mutation had an effect on.
@@ -65,9 +58,8 @@ class MutationWallet extends Model {
      *      transaction.
      */
     public function undo() {
-        // Assert we have an active database transaction
-        if(DB::transactionLevel() <= 0)
-            throw new \Exception("Mutation can only be undone when database transaction is active");
+        // We must be in a database transaction
+        assert_transaction();
 
         // Determine whether we need to deposit or withdraw from the wallet
         $amount = $this->mutation->amount;

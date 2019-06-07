@@ -329,9 +329,8 @@ class Transaction extends Model {
      *      database transaction.
      */
     public function undo() {
-        // Assert we have an active database transaction
-        if(DB::transactionLevel() <= 0)
-            throw new \Exception("Transaction can only be undone when database transaction is active");
+        // We must be in a database transaction
+        assert_transaction();
 
         // Assert we can undo
         if(!$this->canUndo())

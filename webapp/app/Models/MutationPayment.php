@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\Mail;
  */
 class MutationPayment extends Model {
 
+    use Mutationable;
+
     protected $table = "mutations_payment";
 
     protected $with = ['payment'];
@@ -36,15 +38,6 @@ class MutationPayment extends Model {
         'mutation_id',
         'payment_id',
     ];
-
-    /**
-     * Get the main mutation this payment mutation data belongs to.
-     *
-     * @return The main mutation.
-     */
-    public function mutation() {
-        return $this->belongsTo(Mutation::class);
-    }
 
     /**
      * Get the payment this mutation had an effect on.

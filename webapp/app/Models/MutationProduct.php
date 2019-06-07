@@ -30,6 +30,8 @@ use App\Utils\EmailRecipient;
  */
 class MutationProduct extends Model {
 
+    use Mutationable;
+
     protected $table = "mutations_product";
 
     protected $with = ['product'];
@@ -40,15 +42,6 @@ class MutationProduct extends Model {
         'bar_id',
         'quantity',
     ];
-
-    /**
-     * Get the main mutation this product mutation data belongs to.
-     *
-     * @return The main mutation.
-     */
-    public function mutation() {
-        return $this->belongsTo(Mutation::class);
-    }
 
     /**
      * Get the product this mutation had an effect on.
