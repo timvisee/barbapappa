@@ -19,10 +19,11 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
     const QUEUE_DEFAULT = 'normal';
 
     /**
-     * The recipient that will receive the email.
-     * @var EmailRecipient
+     * The recipients that will receive the email.
+     * This may be multiple recipients with different email addresses for the same user.
+     * @var EmailRecipient[]
      */
-    public $recipient;
+    public $recipients = [];
 
     /**
      * The language key for the subject of the message.
@@ -39,12 +40,12 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
     /**
      * Constructor.
      *
-     * @param EmailRecipient $recipient Email recipient.
+     * @param EmailRecipient[] $recipients Email recipients, may be a single one.
      * @param string $subjectKey Message subject language key.
      * @param array $subjectValues Fields to replace in the subject language value.
      */
-    public function __construct(EmailRecipient $recipient, $subjectKey, array $subjectValues = []) {
-        $this->recipient = $recipient;
+    public function __construct($recipients, $subjectKey, array $subjectValues = []) {
+        $this->recipients = collect($recipients)->toArray();
         $this->subjectKey = $subjectKey;
         $this->subjectValues = $subjectValues;
     }
@@ -56,7 +57,7 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
      */
     public function build() {
         // Get the user's locale
-        $locale = LangManager::getUserLocaleSafe($this->recipient->getUser());
+        $locale = LangManager::getUserLocaleSafe($this->recipients[0]->getUser());
 
         // Set the locale
         LangManager::setLocale($locale, false, false);
@@ -64,11 +65,16 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         // Determine the subject
         $subject = trans($this->subjectKey, $this->subjectValues);
 
+        // TODO: use separate mailables here for each recipient!
+
         // Build the mailable
-        return $this
-            ->to($this->recipient)
+        $mail = $this->to($this->recipients[0]);
+        if(count($this->recipients) > 1)
+            $mail = $mail->cc(array_slice($this->recipients, 1));
+        return $mail
             ->subject($subject)
             ->onQueue($this->getWorkerQueue())
+            ->with('recipient', $this->recipients[0])
             ->with('subject', $subject)
             ->with('locale', $locale);
     }

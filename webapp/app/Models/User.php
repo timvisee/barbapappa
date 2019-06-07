@@ -395,9 +395,14 @@ class User extends Model {
      * @return array An array of email recipients to send a message to.
      */
     public function buildEmailRecipients() {
-        // TODO: get for all addressses!
         // TODO: only use verified addresses?
-        $email = $this->emails()->first();
-        return $email->buildEmailRecipient($this);
+
+        // Build email recipients for all user emails
+        $user = $this;
+        return $this
+            ->emails
+            ->map(function($email) use($user) {
+                return $email->buildEmailRecipient($user);
+            });
     }
 }
