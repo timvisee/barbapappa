@@ -29,7 +29,7 @@ class Failed extends PersonalizedEmail {
      * The ID of the payment this is for.
      * @var int ID of the payment.
      */
-    private $payment_id;
+    private $payment;
 
     /**
      * Constructor.
@@ -41,7 +41,7 @@ class Failed extends PersonalizedEmail {
         // Construct the parent
         parent::__construct($recipients, self::SUBJECT);
 
-        $this->payment_id = $payment->id;
+        $this->payment = $payment;
     }
 
     /**
@@ -51,16 +51,14 @@ class Failed extends PersonalizedEmail {
      */
     public function build() {
         // Gather details
-        // TODO: fix failures when payment is not found
-        $payment = Payment::find($this->payment_id);
-        $economy = $payment->findEconomy();
+        $economy = $this->payment->findEconomy();
         $community = $economy->community;
-        $transaction = $payment->findTransaction();
-        $wallet = $payment->findWallet();
+        $transaction = $this->payment->findTransaction();
+        $wallet = $this->payment->findWallet();
 
         // Build the mail
         return parent::build()
-            ->with('payment', $payment)
+            ->with('payment', $this->payment)
             ->with('community', $community)
             ->with('transaction', $transaction)
             ->with('wallet', $wallet)

@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\PaymentFailed;
 use App\Mail\Email\Payment\Failed;
-use BarPay\Models\Payment;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -30,7 +29,7 @@ class SendPaymentFailNotification implements ShouldQueue {
      */
     public function handle(PaymentFailed $event) {
         // Gather facts
-        $payment = Payment::findOrFail($event->payment_id);
+        $payment = $event->payment;
         $user = $payment->user;
 
         // Create the mailable for the failure, send the mailable

@@ -15,8 +15,7 @@ class PaymentCompleted {
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    // TODO: switch to Payment once mutations properly serialize
-    public $payment_id;
+    public $payment;
 
     /**
      * Create a new event instance.
@@ -24,7 +23,7 @@ class PaymentCompleted {
      * @return void
      */
     public function __construct(Payment $payment) {
-        $this->payment_id = $payment->id;
+        $this->payment = $payment;
     }
 
     /**
