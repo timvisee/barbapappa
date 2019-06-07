@@ -16,8 +16,8 @@ use Illuminate\Support\Facades\Mail;
 // TODO: update parent mutation change time, if this model changes
 
 /**
- * Mutation special model.
- * This defines a generic but special kind of mutation, that belongs to a main
+ * Mutation magic model.
+ * This defines a generic but magic kind of mutation, that belongs to a main
  * mutation.
  *
  * @property int id
@@ -26,11 +26,11 @@ use Illuminate\Support\Facades\Mail;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class MutationSpecial extends Model {
+class MutationMagic extends Model {
 
     use Mutationable;
 
-    protected $table = "mutations_special";
+    protected $table = "mutations_magic";
 
     protected $fillable = [
         'mutation_id',

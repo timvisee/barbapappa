@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMutationSpecialTable extends Migration {
+class CreateMutationMagicTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateMutationSpecialTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('mutations_special', function(Blueprint $table) {
+        Schema::create('mutations_magic', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('mutation_id')->unsigned()->nullable(false);
             $table->string('description', 2048)->nullable(true)->default(null);
@@ -31,6 +31,6 @@ class CreateMutationSpecialTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('mutations_special');
+        Schema::dropIfExists('mutations_magic');
     }
 }

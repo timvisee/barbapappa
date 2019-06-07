@@ -52,7 +52,7 @@ class Mutation extends Model {
      * A list of all mutationable types.
      */
     const MUTATIONABLES = [
-        MutationSpecial::class,
+        MutationMagic::class,
         MutationWallet::class,
         MutationProduct::class,
         MutationPayment::class,
@@ -193,7 +193,7 @@ class Mutation extends Model {
 
         // Describe based on the mutation dir
         switch($this->mutationable_type) {
-        case MutationSpecial::class:
+        case MutationMagic::class:
             return __('pages.mutations.types.magic');
 
         case MutationWallet::class:
@@ -383,7 +383,7 @@ class Mutation extends Model {
      */
     public function canUndo() {
         switch($this->mutationable_type) {
-        case MutationSpecial::class:
+        case MutationMagic::class:
         case MutationWallet::class:
         case MutationProduct::class:
             return true;
