@@ -496,11 +496,11 @@ class BarController extends Controller {
                     ->leftJoin('mutations_product', 'mutations_product.mutation_id', '=', 'mutations.id')
                     ->whereRaw('mutations.transaction_id = transactions.id')
                     ->where(function($query) {
-                        $query->where('type', '<>', Mutation::TYPE_WALLET)
+                        $query->where('mutationable_type', '<>', MutationWallet::class)
                             ->orWhere('amount', '<=', 0);
                     })
                     ->where(function($query) use($bar) {
-                        $query->where('type', '<>', Mutation::TYPE_PRODUCT)
+                        $query->where('mutationable_type', '<>', MutationProduct::class)
                             ->orWhere('amount', '>', 0)
                             ->orWhere('mutations_product.bar_id', '<>', $bar->id);
                     });
@@ -538,7 +538,7 @@ class BarController extends Controller {
                 // Find an mutation for the wallet in this transaction
                 $mut_wallet = $last_transaction == null ? null : $transaction
                     ->mutations()
-                    ->where('type', Mutation::TYPE_WALLET)
+                    ->where('mutationable_type', MutationWallet::class)
                     ->whereExists(function($query) use($wallet) {
                         $query->selectRaw('1')
                             ->from('mutations_wallet')
@@ -553,16 +553,19 @@ class BarController extends Controller {
                         ->mutations()
                         ->create([
                             'economy_id' => $bar->economy_id,
-                            'type' => Mutation::TYPE_WALLET,
+                            'mutationable_id' => 0,
+                            'mutationable_type' => '',
                             'amount' => $price,
                             'currency_id' => $currency->id,
                             'state' => Mutation::STATE_SUCCESS,
                             'owner_id' => $user->id,
                         ]);
-                    MutationWallet::create([
-                        'mutation_id' => $mut_wallet->id,
-                        'wallet_id' => $wallet->id,
-                    ]);
+                    $mut_wallet->setMutationable(
+                        MutationWallet::create([
+                            'mutation_id' => $mut_wallet->id,
+                            'wallet_id' => $wallet->id,
+                        ])
+                    );
                 } else
                     $mut_wallet->incrementAmount($price);
             }
@@ -570,7 +573,7 @@ class BarController extends Controller {
             // Find an mutation for the product in this transaction
             $mut_product = $last_transaction == null ? null : $transaction
                 ->mutations()
-                ->where('type', Mutation::TYPE_PRODUCT)
+                ->where('mutationable_type', Mutationproduct::class)
                 ->whereExists(function($query) use($product) {
                     $query->selectRaw('1')
                         ->from('mutations_product')
@@ -586,22 +589,25 @@ class BarController extends Controller {
                     ->mutations()
                     ->create([
                         'economy_id' => $bar->economy_id,
-                        'type' => Mutation::TYPE_PRODUCT,
+                        'mutationable_id' => 0,
+                        'mutationable_type' => '',
                         'amount' => -$price,
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
                         'owner_id' => $user->id,
                         'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
                     ]);
-                MutationProduct::create([
-                    'mutation_id' => $mut_product->id,
-                    'product_id' => $product->id,
-                    'bar_id' => $bar->id,
-                    'quantity' => 1,
-                ]);
+                $mut_product->setMutationable(
+                    MutationProduct::create([
+                        'mutation_id' => $mut_product->id,
+                        'product_id' => $product->id,
+                        'bar_id' => $bar->id,
+                        'quantity' => 1,
+                    ])
+                );
             } else {
                 $mut_product->decrementAmount($price);
-                $mut_product->mutationData()->increment('quantity');
+                $mut_product->mutationable()->increment('quantity');
             }
 
             // Update the wallet balance

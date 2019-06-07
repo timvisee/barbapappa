@@ -103,7 +103,7 @@ class Transaction extends Model {
         // Determine cost based on wallet
         $query = $this
             ->mutations()
-            ->where('type', Mutation::TYPE_WALLET);
+            ->where('mutationable_type', MutationWallet::class);
         if($perspective instanceof Wallet) {
             $query = $query
                 ->whereExists(function($query) use($perspective) {
@@ -119,7 +119,7 @@ class Transaction extends Model {
         // Determine cost based on payments
         $cost = -$this
             ->mutations()
-            ->where('type', Mutation::TYPE_PAYMENT)
+            ->where('mutationable_type', MutationPayment::class)
             ->pluck('amount')
             ->sum();
         if($cost != 0)
@@ -128,7 +128,7 @@ class Transaction extends Model {
         // Find total transaction value based on wallets
         list($pos, $neg) = $this
             ->mutations()
-            ->where('type', Mutation::TYPE_WALLET)
+            ->where('mutationable_type', MutationWallet::class)
             ->pluck('amount')
             ->partition(function($amount) {
                 return $amount >= 0;
@@ -140,7 +140,7 @@ class Transaction extends Model {
         // Find total transaction value based on payments
         list($pos, $neg) = $this
             ->mutations()
-            ->where('type', Mutation::TYPE_PRODUCT)
+            ->where('mutationable_type', MutationProduct::class)
             ->pluck('amount')
             ->partition(function($amount) {
                 return $amount >= 0;
@@ -185,7 +185,7 @@ class Transaction extends Model {
         list($to, $from) = $this
             ->mutations
             ->map(function($m) {
-                return [$m->type, $m->amount];
+                return [$m->mutationable_type, $m->amount];
             })->partition(function($m) {
                 return $m[1] < 0;
             });
@@ -193,17 +193,17 @@ class Transaction extends Model {
         $from = $from->pluck(0);
 
         // Based on the mutation types, find a fitting description
-        if($from->containsStrict(Mutation::TYPE_WALLET) && $to->containsStrict(Mutation::TYPE_PRODUCT))
+        if($from->containsStrict(MutationWallet::class) && $to->containsStrict(MutationProduct::class))
             return __('pages.transactions.descriptions.fromWalletToProduct') . $suffix;
-        else if($to->containsStrict(Mutation::TYPE_PRODUCT))
+        else if($to->containsStrict(MutationProduct::class))
             return __('pages.transactions.descriptions.toProduct') . $suffix;
-        else if($from->containsStrict(Mutation::TYPE_PAYMENT && $to->containsStrict(Mutation::TYPE_WALLET)))
+        else if($from->containsStrict(MutationPayment::class) && $to->containsStrict(MutationWallet::class))
             return __('pages.transactions.descriptions.fromPaymentToWallet') . $suffix;
-        else if($from->containsStrict(Mutation::TYPE_WALLET) && $to->containsStrict(Mutation::TYPE_WALLET))
+        else if($from->containsStrict(MutationWallet::class) && $to->containsStrict(MutationWallet::class))
             return __('pages.transactions.descriptions.fromWalletToWallet') . $suffix;
-        else if($to->containsStrict(Mutation::TYPE_WALLET))
+        else if($to->containsStrict(MutationWallet::class))
             return __('pages.transactions.descriptions.toWallet'). $suffix;
-        else if($from->containsStrict(Mutation::TYPE_WALLET))
+        else if($from->containsStrict(MutationWallet::class))
             return __('pages.transactions.descriptions.fromWallet') . $suffix;
 
         // Formulate description based on mutation descriptions

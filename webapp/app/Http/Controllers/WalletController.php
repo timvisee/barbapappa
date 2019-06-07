@@ -336,33 +336,39 @@ class WalletController extends Controller {
                 ->mutations()
                 ->create([
                     'economy_id' => $economy->id,
-                    'type' => Mutation::TYPE_WALLET,
+                    'mutationable_id' => 0,
+                    'mutationable_type' => '',
                     'amount' => $amount,
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
                 ]);
-            MutationWallet::create([
-                'mutation_id' => $mut_wallet->id,
-                'wallet_id' => $wallet->id,
-            ]);
+            $mut_wallet->setMutationable(
+                MutationWallet::create([
+                    'mutation_id' => $mut_wallet->id,
+                    'wallet_id' => $wallet->id,
+                ])
+            );
 
             // Create the to wallet mutation
             $mut_wallet = $transaction
                 ->mutations()
                 ->create([
                     'economy_id' => $economy->id,
-                    'type' => Mutation::TYPE_WALLET,
+                    'mutationable_id' => 0,
+                    'mutationable_type' => '',
                     'amount' => -$amount,
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
                     'depend_on' => $mut_wallet->id,
                 ]);
-            MutationWallet::create([
-                'mutation_id' => $mut_wallet->id,
-                'wallet_id' => $toWallet->id,
-            ]);
+            $mut_wallet->setMutationable(
+                MutationWallet::create([
+                    'mutation_id' => $mut_wallet->id,
+                    'wallet_id' => $toWallet->id,
+                ])
+            );
 
             // Transfer the money
             $wallet->transfer($amount, $toWallet);
@@ -477,33 +483,39 @@ class WalletController extends Controller {
                 ->mutations()
                 ->create([
                     'economy_id' => $economy->id,
-                    'type' => Mutation::TYPE_PAYMENT,
+                    'mutationable_id' => 0,
+                    'mutationable_type' => '',
                     'amount' => $amount,
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_PENDING,
                     'owner_id' => $user->id,
                 ]);
-            MutationPayment::create([
-                'mutation_id' => $mut_payment->id,
-                'payment_id' => $payment->id,
-            ]);
+            $mut_payment->setMutationable(
+                MutationPayment::create([
+                    'mutation_id' => $mut_payment->id,
+                    'payment_id' => $payment->id,
+                ])
+            );
 
             // Create the to wallet mutation
             $mut_wallet = $transaction
                 ->mutations()
                 ->create([
                     'economy_id' => $economy->id,
-                    'type' => Mutation::TYPE_WALLET,
+                    'mutationable_id' => 0,
+                    'mutationable_type' => '',
                     'amount' => -$amount,
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_PENDING,
                     'owner_id' => $user->id,
                     'depend_on' => $mut_payment->id,
                 ]);
-            MutationWallet::create([
-                'mutation_id' => $mut_wallet->id,
-                'wallet_id' => $wallet->id,
-            ]);
+            $mut_wallet->setMutationable(
+                MutationWallet::create([
+                    'mutation_id' => $mut_wallet->id,
+                    'wallet_id' => $wallet->id,
+                ])
+            );
         });
 
         // Redirect to the payment page

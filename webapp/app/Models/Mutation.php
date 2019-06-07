@@ -58,10 +58,6 @@ class Mutation extends Model {
         MutationPayment::class,
     ];
 
-    const TYPE_MAGIC = 1;
-    const TYPE_WALLET = 2;
-    const TYPE_PRODUCT = 3;
-    const TYPE_PAYMENT = 4;
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
     const STATE_SUCCESS = 3;
@@ -92,6 +88,28 @@ class Mutation extends Model {
      */
     public function mutationable() {
         return $this->morphTo();
+    }
+
+    /**
+     * Set the mutationable attached to this mutation.
+     * This is only allowed when no mutationable is set yet.
+     *
+     * @param Mutationable The mutationable to attach.
+     * @param bool [$save=true] True to immediately save this model, false if
+     * not.
+     *
+     * @throws \Exception Throws if a paymentable was already set.
+     */
+    public function setMutationable(Mutationable $mutationable, $save = true) {
+        // Assert no mutationable is set yet
+        if(!empty($this->mutationable_id) || !empty($this->mutationable_type))
+            throw new \Exception('Could not link mutationable to mutation, it has already been set');
+
+        // Set the mutationable
+        $this->mutationable_id = $mutationable->id;
+        $this->mutationable_type = get_class($mutationable);
+        if($save)
+            $this->save();
     }
 
     /**
