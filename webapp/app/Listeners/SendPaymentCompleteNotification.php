@@ -34,8 +34,6 @@ class SendPaymentCompleteNotification implements ShouldQueue {
         $user = $payment->user;
 
         // Create the mailable for the settlement, send the mailable
-        Mail::send(
-            new Completed($user->buildEmailRecipients(), $payment)
-        );
+        Mail::send(new Completed($user->buildEmailRecipients(), $payment));
     }
 }

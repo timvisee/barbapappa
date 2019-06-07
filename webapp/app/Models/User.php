@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Facades\LangManager;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
