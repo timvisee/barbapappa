@@ -7,6 +7,7 @@ use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
 use BarPay\Models\Payment;
 use Carbon\Carbon;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,7 @@ use Illuminate\Support\Facades\Mail;
  * @property Carbon updated_at
  * @property-read string email
  */
-class User extends Model {
+class User extends Model implements HasLocalePreference {
 
     /**
      * The attributes that are mass assignable.
@@ -197,6 +198,15 @@ class User extends Model {
     public function getPrimaryEmail() {
         // TODO: Actually return the primary email address instead of the first one.
         return $this->emails()->first();
+    }
+
+    /**
+     * Get the user's preferred locale.
+     *
+     * @return string The preferred locale.
+     */
+    public function preferredLocale() {
+        return LangManager::getUserLocaleSafe($this);
     }
 
     /**
