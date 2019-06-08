@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
@@ -534,6 +535,12 @@ Route::prefix('/payments')->middleware('auth')->group(function() {
         Route::get('/cancel', 'PaymentController@cancel')->name('payment.cancel');
         Route::delete('/cancel', 'PaymentController@doCancel')->name('payment.doCancel');
     });
+});
+
+// Management pages
+Route::prefix('/manage')->middleware(AppController::permsAdminister()->middleware())->group(function() {
+    // Index
+    Route::get('/', 'AppController@manage')->name('app.manage');
 });
 
 // Magic routes
