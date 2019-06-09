@@ -43,11 +43,10 @@
         --}}
 
         @forelse($wallets as $wallet)
-            {{-- TODO: link to wallet page --}}
             <a href="{{ route('community.wallet.show', [
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id,
-                'walletId' => $wallet->id
+                'walletId' => $wallet->id,
             ]) }}" class="item">
                 {{ $wallet->name }}
                 {!! $wallet->formatBalance(BALANCE_FORMAT_LABEL); !!}
