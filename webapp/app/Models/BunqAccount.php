@@ -6,9 +6,10 @@ use App\Scopes\EnabledScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Crypt;
 
 /**
- * bunq account mccountodel.
+ * bunq account model.
  *
  * This specifies a bunq account (with a specific IBAN) which is dedicated to
  * this application, to use for automated payment processing.
@@ -48,5 +49,29 @@ class BunqAccount extends Model {
      */
     public function community() {
         return $this->belongsTo(Community::class);
+    }
+
+    /**
+     * Get the bunq API token for this account.
+     * This automatically decrypts the `token_encrypted` field.
+     *
+     * This token should be handled with care!
+     *
+     * TODO: do not allow printing this token in debug information.
+     *
+     * @return string bunq API token.
+     */
+    public function getToken() {
+        return Crypt::decryptString($this->token_encrypted);
+    }
+
+    /**
+     * Set the bunq API token for this account.
+     * This automatically encrypts the token to the `token_encrypted` field.
+     *
+     * @param string $token The bunq API token.
+     */
+    public function setToken(string $token) {
+        $this->token_encrypted = Crypt::encryptString($token);
     }
 }

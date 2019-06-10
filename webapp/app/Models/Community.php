@@ -97,6 +97,15 @@ class Community extends Model {
     }
 
     /**
+     * Get all bunq accounts created in this community scope.
+     *
+     * @return The bunq accounts.
+     */
+    public function bunqAccounts() {
+        return $this->hasMany(BunqAccount::class);
+    }
+
+    /**
      * A list of users that joined this community.
      *
      * @param array [$pivotColumns] An array of pivot columns to include.
