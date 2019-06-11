@@ -61,7 +61,7 @@ class BunqAccountController extends Controller {
         // Get the community
         $community = \Request::get('community');
 
-        // Validate service and serviceable fields
+        // Validate
         $request->validate([
             'name' => 'required|' . ValidationDefaults::NAME,
             'token' => 'required|' . ValidationDefaults::BUNQ_TOKEN,
@@ -186,164 +186,76 @@ class BunqAccountController extends Controller {
             ->first();
     }
 
-    // /**
-    //  * Show a payment service.
-    //  *
-    //  * @return Response
-    //  */
-    // public function show($communityId, $economyId, $serviceId) {
-    //     // Get the user, community, find the payment service
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $service = $economy
-    //         ->paymentServices()
-    //         ->withDisabled()
-    //         ->withTrashed()
-    //         ->findOrFail($serviceId);
-    //     $serviceable = $service->serviceable;
+    /**
+     * Show a bunq account.
+     *
+     * @param int $communityId The community ID.
+     * @param int $accountId The bunq account ID.
+     *
+     * @return Response
+     */
+    public function show($communityId, $accountId) {
+        // Get the community, find the bunq account
+        $community = \Request::get('community');
+        $account = $community->bunqAccounts()->findOrFail($accountId);
 
-    //     return view('community.economy.paymentservice.show')
-    //         ->with('economy', $economy)
-    //         ->with('service', $service)
-    //         ->with('serviceable', $serviceable);
-    // }
+        return view('community.bunqAccount.show')
+            ->with('account', $account);
+    }
 
-    // /**
-    //  * Edit a payment service.
-    //  *
-    //  * @return Response
-    //  */
-    // public function edit($communityId, $economyId, $serviceId) {
-    //     // TODO: with trashed?
+    /**
+     * Edit a bunq account.
+     *
+     * @param int $communityId The community ID.
+     * @param int $accountId The bunq account ID.
+     *
+     * @return Response
+     */
+    public function edit($communityId, $accountId) {
+        // Get the community, find the bunq account
+        $community = \Request::get('community');
+        $account = $community->bunqAccounts()->findOrFail($accountId);
 
-    //     // Get the user, community, find the payment service
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $service = $economy
-    //         ->paymentServices()
-    //         ->withDisabled()
-    //         ->findOrFail($serviceId);
-    //     $serviceable = $service->serviceable;
+        return view('community.bunqAccount.edit')
+            ->with('account', $account);
+    }
 
-    //     // List the currencies that can be used
-    //     $currencies = $economy->currencies;
+    /**
+     * bunq account update endpoint.
+     *
+     * @param Request $request Request.
+     * @param int $communityId The community ID.
+     * @param int $accountId The bunq account ID.
+     *
+     * @return Response
+     */
+    public function doEdit(Request $request, $communityId, $accountId) {
+        // TODO: with trashed?
 
-    //     return view('community.economy.paymentservice.edit')
-    //         ->with('economy', $economy)
-    //         ->with('service', $service)
-    //         ->with('serviceable', $serviceable)
-    //         ->with('currencies', $currencies);
-    // }
+        // Get the community, find the bunq account
+        $community = \Request::get('community');
+        $account = $community->bunqAccounts()->findOrFail($accountId);
 
-    // /**
-    //  * Payment service update endpoint.
-    //  *
-    //  * @param Request $request Request.
-    //  *
-    //  * @return Response
-    //  */
-    // public function doEdit(Request $request, $communityId, $economyId, $serviceId) {
-    //     // TODO: with trashed?
+        // Validate
+        $request->validate([
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'account_holder' => 'required|' . ValidationDefaults::NAME,
+        ]);
 
-    //     // Get the user, community, find the payment service
-    //     $user = barauth()->getUser();
-    //     $community = \Request::get('community');
-    //     $economy = $community->economies()->findOrFail($economyId);
-    //     $service = $economy
-    //         ->paymentServices()
-    //         ->withDisabled()
-    //         ->findOrFail($serviceId);
-    //     $serviceable = $service->serviceable;
+        // Edit the account
+        $account->name = $request->input('name');
+        $account->enabled = is_checked($request->input('enabled'));
+        $account->account_holder = $request->input('account_holder');
+        $account->save();
 
-    //     // Validate service and serviceable fields
-    //     $request->validate([
-    //         'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
-    //         'withdraw' => 'required_without:deposit',
-    //     ]);
-    //     ($serviceable::CONTROLLER)::validateCreate($request);
-
-    //     // Find the selected economy currency, get it's currency ID
-    //     // TODO: did we get Currency id from form? Should be economycurren?
-    //     $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
-
-    //     // Change service and serviceable properties and sync prices in transaction
-    //     DB::transaction(function() use($request, $service, $serviceable, $currencyId) {
-    //         // Update service properties
-    //         $service->currency_id = $currencyId;
-    //         $service->enabled = is_checked($request->input('enabled'));
-    //         $service->deposit = is_checked($request->input('deposit'));
-    //         $service->withdraw = is_checked($request->input('withdraw'));
-    //         $service->save();
-
-    //         // Update serviceable
-    //         $serviceable = ($serviceable::CONTROLLER)::edit($request, $service, $serviceable);
-    //     });
-
-    //     // Redirect the user to the payment service page
-    //     return redirect()
-    //         ->route('community.economy.payservice.show', [
-    //             'communityId' => $community->human_id,
-    //             'economyId' => $economy->id,
-    //             'serviceId' => $service->id,
-    //         ])
-    //         ->with('success', __('pages.paymentService.changed'));
-    // }
-
-    // // /**
-    // //  * Page for confirming restoring a product.
-    // //  *
-    // //  * @return Response
-    // //  */
-    // // public function restore($communityId, $economyId, $productId) {
-    // //     // Get the user, community, find the product
-    // //     $user = barauth()->getUser();
-    // //     $community = \Request::get('community');
-    // //     $economy = $community->economies()->findOrFail($economyId);
-    // //     $product = $economy->products()->withTrashed()->findOrFail($productId);
-
-    // //     // If already restored, redirect to the product
-    // //     if(!$product->trashed())
-    // //         return redirect()
-    // //             ->route('community.economy.product.show', [
-    // //                 'communityId' => $community->human_id,
-    // //                 'economyId' => $economy->id,
-    // //                 'productId' => $product->id,
-    // //             ])
-    // //             ->with('success', __('pages.products.restored'));
-
-    // //     return view('community.economy.product.restore')
-    // //         ->with('economy', $economy)
-    // //         ->with('product', $product);
-    // // }
-
-    // // /**
-    // //  * Restore a product.
-    // //  *
-    // //  * @return Response
-    // //  */
-    // // public function doRestore($communityId, $economyId, $productId) {
-    // //     // TODO: delete trashed, and allow trashing?
-
-    // //     // Get the user, community, find the product
-    // //     $user = barauth()->getUser();
-    // //     $community = \Request::get('community');
-    // //     $economy = $community->economies()->findOrFail($economyId);
-    // //     $product = $economy->products()->withTrashed()->findOrFail($productId);
-
-    // //     // Restore the product
-    // //     $product->restore();
-
-    // //     // Redirect to the product index
-    // //     return redirect()
-    // //         ->route('community.economy.product.show', [
-    // //             'communityId' => $community->human_id,
-    // //             'economyId' => $economy->id,
-    // //             'productId' => $product->id,
-    // //         ])
-    // //         ->with('success', __('pages.products.restored'));
-    // // }
+        // Redirect the user to the payment service page
+        return redirect()
+            ->route('community.bunqAccount.show', [
+                'communityId' => $community->human_id,
+                'accountId' => $account->id,
+            ])
+            ->with('success', __('pages.bunqAccounts.changed'));
+    }
 
     // /**
     //  * Page for confirming the deletion of the payment service.

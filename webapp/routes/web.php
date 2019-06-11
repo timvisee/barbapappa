@@ -140,6 +140,18 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 // Create
                 Route::get('/add', 'BunqAccountController@create')->name('community.bunqAccount.create');
                 Route::post('/add', 'BunqAccountController@doCreate')->name('community.bunqAccount.doCreate');
+
+                // Specific
+                Route::prefix('/{accountId}')->group(function() {
+                    // Show
+                    Route::get('/', 'BunqAccountController@show')->name('community.bunqAccount.show');
+
+                    // Edit/delete
+                    Route::get('/edit', 'BunqAccountController@edit')->name('community.bunqAccount.edit');
+                    Route::put('/edit', 'BunqAccountController@doEdit')->name('community.bunqAccount.doEdit');
+                    Route::get('/delete', 'BunqAccountController@delete')->name('community.bunqAccount.delete');
+                    Route::delete('/delete', 'BunqAccountController@doDelete')->name('community.bunqAccount.doDelete');
+                });
             });
         });
 

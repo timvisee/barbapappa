@@ -2,20 +2,14 @@
 
 @section('title', __('pages.bunqAccounts.title'))
 
-{{-- TODO: define menulinks! --}}
-{{-- @php --}}
-{{--     // Define menulinks --}}
-{{--     $menulinks[] = [ --}}
-{{--         'name' => __('pages.community.goTo'), --}}
-{{--         'link' => route('community.show', ['communityId' => $community->human_id]), --}}
-{{--         'icon' => 'undo', --}}
-{{--     ]; --}}
-{{--     $menulinks[] = [ --}}
-{{--         'name' => __('pages.wallets.all'), --}}
-{{--         'link' => route('community.wallet.index', ['communityId' => $community->human_id]), --}}
-{{--         'icon' => 'wallet', --}}
-{{--     ]; --}}
-{{-- @endphp --}}
+@php
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.community.goTo'),
+        'link' => route('community.show', ['communityId' => $community->human_id]),
+        'icon' => 'undo',
+    ];
+@endphp
 
 @section('content')
     <h2 class="ui header">

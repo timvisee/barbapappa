@@ -20,8 +20,7 @@ class PaymentServiceController extends Controller {
      * @return Response
      */
     public function index(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the payment services
-        $user = barauth()->getUser();
+        // Get the community, find the payment services
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $services = $economy->paymentServices()->withDisabled()->get();
@@ -37,8 +36,7 @@ class PaymentServiceController extends Controller {
      * @return Response
      */
     public function create(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the payment service
-        $user = barauth()->getUser();
+        // Get the community, find the payment service
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $serviceable = $request->query('serviceable');
@@ -66,8 +64,7 @@ class PaymentServiceController extends Controller {
      * @return Response
      */
     public function doCreate(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the payment service
-        $user = barauth()->getUser();
+        // Get the community, find the payment service
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $serviceable_type = $request->input('serviceable');
@@ -114,8 +111,7 @@ class PaymentServiceController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $serviceId) {
-        // Get the user, community, find the payment service
-        $user = barauth()->getUser();
+        // Get the community, find the payment service
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
@@ -139,8 +135,7 @@ class PaymentServiceController extends Controller {
     public function edit($communityId, $economyId, $serviceId) {
         // TODO: with trashed?
 
-        // Get the user, community, find the payment service
-        $user = barauth()->getUser();
+        // Get the community, find the payment service
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
@@ -169,8 +164,7 @@ class PaymentServiceController extends Controller {
     public function doEdit(Request $request, $communityId, $economyId, $serviceId) {
         // TODO: with trashed?
 
-        // Get the user, community, find the payment service
-        $user = barauth()->getUser();
+        // Get the community, find the payment service
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
@@ -273,8 +267,7 @@ class PaymentServiceController extends Controller {
      * @return Response
      */
     public function delete($communityId, $economyId, $serviceId) {
-        // Get the user, community, find the payment service
-        $user = barauth()->getUser();
+        // Get the community, find the payment service
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
@@ -297,8 +290,7 @@ class PaymentServiceController extends Controller {
      * @return Response
      */
     public function doDelete(Request $request, $communityId, $economyId, $serviceId) {
-        // Get the user, community, find the payment service
-        $user = barauth()->getUser();
+        // Get the community, find the payment service
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
