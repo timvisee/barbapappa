@@ -100,8 +100,17 @@ class BunqAccountController extends Controller {
             return redirect()->back()->withInput();
         }
 
-        // TODO: account must be euro
-        // TODO: account must have 0 balance
+        // Must use euro and have a zero balance
+        $balance = $monetaryAccount->getBalance();
+        \Debugbar::info($balance);
+        if($balance->getCurrency() != 'EUR') {
+            add_session_error('iban', __('pages.bunqAccounts.onlyEuroSupported'));
+            return redirect()->back()->withInput();
+        }
+        if($balance->getValue() != '0.00') {
+            add_session_error('iban', __('pages.bunqAccounts.notZeroBalance'));
+            return redirect()->back()->withInput();
+        }
 
         // Add the bunq account to the database
         $account = new BunqAccount();

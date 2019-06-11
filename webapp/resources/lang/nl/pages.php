@@ -313,6 +313,8 @@ return [
         'mustEnterBunqIban' => 'Je moet een bunq IBAN invullen',
         'accountAlreadyUsed' => 'Dit monitair account wordt al gebruikt',
         'noAccountWithIban' => 'Geen actief monetair account met deze IBAN',
+        'onlyEuroSupported' => 'Alleen accounts die de EURO valuta gebruiken zijn ondersteund',
+        'notZeroBalance' => 'Account heeft geen balans van €0.00, maak een nieuwe monitair account',
         'added' => 'Het bunq account is toegevoegd',
         'enabled' => 'Ingeschakeld, sta gebruik voor betalingen toe',
         'confirm' => 'Ik ga hiermee akkoord en voldoe aan de eisen',

@@ -19,7 +19,7 @@
         <div class="ui segment bottom attached">
             <div class="field {{ ErrorRenderer::hasError('token') ? 'error' : '' }}">
                 {{ Form::label('token', __('misc.token') . ':') }}
-                {{ Form::text('token', '') }}
+                {{ Form::text('token', '', ['autocomplete' => 'off']) }}
                 {{ ErrorRenderer::inline('token') }}
             </div>
         </div>
