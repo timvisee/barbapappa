@@ -89,6 +89,7 @@ return [
     'members' => 'Leden',
     'enrolled' => 'Ingeschreven',
     'sold' => 'Verkocht',
+    'app' => 'App',
     'bar' => 'Bar',
     'community' => 'Groep',
     'wallet' => 'Portemonnee',

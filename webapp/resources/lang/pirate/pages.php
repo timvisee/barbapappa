@@ -21,6 +21,13 @@ return [
     'contactUs' => 'Contact us',
 
     /**
+     * App pages.
+     */
+    'app' => [
+        'manageApp' => 'Manage app',
+    ],
+
+    /**
      * Dashboard page.
      */
     'dashboard' => [

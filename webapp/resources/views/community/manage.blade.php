@@ -3,6 +3,7 @@
 @section('title', __('misc.managementHub'))
 
 @php
+    use App\Http\Controllers\AppController;
     use App\Http\Controllers\BarController;
     use App\Http\Controllers\BunqAccountController;
     use App\Http\Controllers\CommunityController;
@@ -56,6 +57,13 @@
             'name' => __('pages.bar.createBar'),
             'link' => route('bar.create', ['communityId' => $community->human_id]),
             'icon' => 'plus',
+        ];
+
+    if(perms(AppController::permsAdminister()))
+        $menulinks[] = [
+            'name' => __('pages.app.manageApp'),
+            'link' => route('app.manage'),
+            'icon' => 'settings',
         ];
 
     $menulinks[] = [
@@ -140,6 +148,17 @@
             </a>
         @else
             <div class="ui bottom attached button disabled">@lang('pages.bar.createBar')</div>
+        @endif
+    </div>
+
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">@lang('misc.app')</h5>
+        @if(perms(AppController::permsAdminister()))
+            <a href="{{ route('app.manage') }}" class="item">
+                @lang('pages.app.manageApp')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.app.manageApp')</div>
         @endif
     </div>
 

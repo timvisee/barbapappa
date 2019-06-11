@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppBunqAccountController;
 use App\Http\Controllers\AppController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
@@ -566,8 +567,8 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
     Route::get('/', 'AppController@manage')->name('app.manage');
 
     // bunq accounts, require view perms
-    // TODO: set proper permissions!
-    Route::prefix('/bunq-accounts')->group(function() {
+    // TODO: set proper perms here
+    Route::prefix('/bunq-accounts')->middleware(AppBunqAccountController::permsView()->middleware())->group(function() {
         // Index
         Route::get('/', 'AppBunqAccountController@index')->name('app.bunqAccount.index');
 

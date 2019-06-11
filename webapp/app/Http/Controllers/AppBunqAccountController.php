@@ -298,21 +298,19 @@ class AppBunqAccountController extends Controller {
     //         ->with('success', __('pages.paymentService.deleted'));
     // }
 
-    // TODO: set proper perms here!
     /**
      * The permission required for viewing.
      * @return PermsConfig The permission configuration.
      */
     public static function permsView() {
-        return EconomyController::permsView();
+        return AppController::permsAdminister();
     }
 
-    // TODO: set proper perms here!
     /**
      * The permission required for managing such as editing and deleting.
      * @return PermsConfig The permission configuration.
      */
     public static function permsManage() {
-        return EconomyController::permsManage();
+        return AppController::permsAdminister();
     }
 }

@@ -89,6 +89,7 @@ return [
     'members' => 'Members',
     'enrolled' => 'Joined',
     'sold' => 'Sold',
+    'app' => 'App',
     'bar' => 'Bar',
     'community' => 'Community',
     'wallet' => 'Wallet',

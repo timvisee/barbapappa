@@ -21,6 +21,13 @@ return [
     'contactUs' => 'Neem contact op',
 
     /**
+     * App pages.
+     */
+    'app' => [
+        'manageApp' => 'App beheren',
+    ],
+
+    /**
      * Dashboard page.
      */
     'dashboard' => [
