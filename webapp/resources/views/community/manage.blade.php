@@ -3,11 +3,11 @@
 @section('title', __('misc.managementHub'))
 
 @php
-    use \App\Http\Controllers\BarController;
-    use \App\Http\Controllers\BunqAccountController;
-    use \App\Http\Controllers\CommunityController;
-    use \App\Http\Controllers\CommunityMemberController;
-    use \App\Http\Controllers\EconomyController;
+    use App\Http\Controllers\BarController;
+    use App\Http\Controllers\BunqAccountController;
+    use App\Http\Controllers\CommunityController;
+    use App\Http\Controllers\CommunityMemberController;
+    use App\Http\Controllers\EconomyController;
 
     // Define menulinks
     if(perms(CommunityController::permsAdminister())) {

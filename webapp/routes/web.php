@@ -564,6 +564,29 @@ Route::prefix('/payments')->middleware('auth')->group(function() {
 Route::prefix('/manage')->middleware(AppController::permsAdminister()->middleware())->group(function() {
     // Index
     Route::get('/', 'AppController@manage')->name('app.manage');
+
+    // bunq accounts, require view perms
+    // TODO: set proper permissions!
+    Route::prefix('/bunq-accounts')->group(function() {
+        // Index
+        Route::get('/', 'AppBunqAccountController@index')->name('app.bunqAccount.index');
+
+        // Create
+        Route::get('/add', 'AppBunqAccountController@create')->name('app.bunqAccount.create');
+        Route::post('/add', 'AppBunqAccountController@doCreate')->name('app.bunqAccount.doCreate');
+
+        // Specific
+        Route::prefix('/{accountId}')->group(function() {
+            // Show
+            Route::get('/', 'AppBunqAccountController@show')->name('app.bunqAccount.show');
+
+            // Edit/delete
+            Route::get('/edit', 'AppBunqAccountController@edit')->name('app.bunqAccount.edit');
+            Route::put('/edit', 'AppBunqAccountController@doEdit')->name('app.bunqAccount.doEdit');
+            Route::get('/delete', 'AppBunqAccountController@delete')->name('app.bunqAccount.delete');
+            Route::delete('/delete', 'AppBunqAccountController@doDelete')->name('app.bunqAccount.doDelete');
+        });
+    });
 });
 
 // Magic routes

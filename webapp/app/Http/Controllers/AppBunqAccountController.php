@@ -21,23 +21,19 @@ use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
 use bunq\Model\Generated\Object\Pointer;
 use bunq\Util\BunqEnumApiEnvironmentType;
 
-class BunqAccountController extends Controller {
-
-    // TODO: make this controller generic, also support it for application
-    //       glboal configuration?
+class AppBunqAccountController extends Controller {
 
     /**
      * Bunq account index page for communities.
      *
      * @return Response
      */
-    public function index(Request $request, $communityId) {
+    public function index(Request $request) {
         $user = barauth()->getUser();
-        $community = \Request::get('community');
         // TODO: also list disabled accounts
-        $accounts = $community->bunqAccounts;
+        $accounts = BunqAccount::where('community_id', null)->get();
 
-        return view('community.bunqAccount.index')
+        return view('app.bunqAccount.index')
             ->with('accounts', $accounts);
     }
 
@@ -46,8 +42,8 @@ class BunqAccountController extends Controller {
      *
      * @return Response
      */
-    public function create(Request $request, $communityId) {
-        return view('community.bunqAccount.create');
+    public function create(Request $request) {
+        return view('app.bunqAccount.create');
     }
 
     /**
@@ -57,10 +53,7 @@ class BunqAccountController extends Controller {
      *
      * @return Response
      */
-    public function doCreate(Request $request, $communityId) {
-        // Get the community
-        $community = \Request::get('community');
-
+    public function doCreate(Request $request) {
         // Validate
         $request->validate([
             'name' => 'required|' . ValidationDefaults::NAME,
@@ -114,7 +107,7 @@ class BunqAccountController extends Controller {
 
         // Add the bunq account to the database
         $account = new BunqAccount();
-        $account->community_id = $community->id;
+        $account->community_id = null;
         $account->enabled = is_checked($request->input('enabled'));
         $account->name = $request->input('name');
         $account->api_context = $apiContext;
@@ -126,8 +119,7 @@ class BunqAccountController extends Controller {
 
         // Redirect to services index
         return redirect()
-            ->route('community.bunqAccount.show', [
-                'communityId' => $community->human_id,
+            ->route('app.bunqAccount.show', [
                 'accountId' => $account->id,
             ])
             ->with('success', __('pages.bunqAccounts.added'));
@@ -188,34 +180,32 @@ class BunqAccountController extends Controller {
     /**
      * Show a bunq account.
      *
-     * @param int $communityId The community ID.
      * @param int $accountId The bunq account ID.
      *
      * @return Response
      */
-    public function show($communityId, $accountId) {
-        // Get the community, find the bunq account
-        $community = \Request::get('community');
-        $account = $community->bunqAccounts()->findOrFail($accountId);
+    public function show($accountId) {
+        // Find the bunq account
+        $account = BunqAccount::where('community_id', null)
+            ->findOrFail($accountId);
 
-        return view('community.bunqAccount.show')
+        return view('app.bunqAccount.show')
             ->with('account', $account);
     }
 
     /**
      * Edit a bunq account.
      *
-     * @param int $communityId The community ID.
      * @param int $accountId The bunq account ID.
      *
      * @return Response
      */
-    public function edit($communityId, $accountId) {
-        // Get the community, find the bunq account
-        $community = \Request::get('community');
-        $account = $community->bunqAccounts()->findOrFail($accountId);
+    public function edit($accountId) {
+        // Find the bunq account
+        $account = BunqAccount::where('community_id', null)
+            ->findOrFail($accountId);
 
-        return view('community.bunqAccount.edit')
+        return view('app.bunqAccount.edit')
             ->with('account', $account);
     }
 
@@ -223,17 +213,15 @@ class BunqAccountController extends Controller {
      * bunq account update endpoint.
      *
      * @param Request $request Request.
-     * @param int $communityId The community ID.
      * @param int $accountId The bunq account ID.
      *
      * @return Response
      */
-    public function doEdit(Request $request, $communityId, $accountId) {
+    public function doEdit(Request $request, $accountId) {
         // TODO: with trashed?
 
-        // Get the community, find the bunq account
-        $community = \Request::get('community');
-        $account = $community->bunqAccounts()->findOrFail($accountId);
+        // Find the bunq account
+        $account = BunqAccount::where('community_id', null)->findOrFail($accountId);
 
         // Validate
         $request->validate([
@@ -249,8 +237,7 @@ class BunqAccountController extends Controller {
 
         // Redirect the user to the payment service page
         return redirect()
-            ->route('community.bunqAccount.show', [
-                'communityId' => $community->human_id,
+            ->route('app.bunqAccount.show', [
                 'accountId' => $account->id,
             ])
             ->with('success', __('pages.bunqAccounts.changed'));
