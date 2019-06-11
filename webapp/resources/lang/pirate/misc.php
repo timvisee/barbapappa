@@ -47,6 +47,7 @@ return [
     'visible' => 'Visible',
     'public' => 'Public',
     'name' => 'Name',
+    'descriptiveName' => 'Descriptive name',
     'user' => 'User',
     'fromUser' => 'From user',
     'role' => 'Rank',

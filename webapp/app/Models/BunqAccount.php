@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Scopes\EnabledScope;
+use bunq\Context\ApiContext;
+use bunq\Context\BunqContext;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,9 +20,10 @@ use Illuminate\Support\Facades\Crypt;
  * @property int community_id
  * @property-read Community community
  * @property boolean enabled
- * @property string|null description
- * @property string token_encrypted
- * @property string token
+ * @property string|null name
+ * @property string api_context_encrypted
+ * @property string api_context
+ * @property int monetary_account_id
  * @property string account_holder
  * @property string iban
  * @property string bic
@@ -34,7 +37,7 @@ class BunqAccount extends Model {
 
     protected $table = "bunq_accounts";
 
-    protected $fillable = ['community_id', 'enabled', 'description', 'iban', 'bic'];
+    protected $fillable = ['community_id', 'enabled', 'name', 'account_holder', 'iban', 'bic'];
 
     public static function boot() {
         parent::boot();
@@ -52,26 +55,35 @@ class BunqAccount extends Model {
     }
 
     /**
-     * Get the bunq API token for this account.
-     * This automatically decrypts the `token_encrypted` field.
+     * Get the bunq API context for this linked account.
+     * This automatically decrypts the `api_context_encrypted` field.
      *
-     * This token should be handled with care!
+     * This context should be handled with care!
      *
-     * TODO: do not allow printing this token in debug information.
-     *
-     * @return string bunq API token.
+     * @return string bunq API context.
      */
-    public function getToken() {
-        return Crypt::decryptString($this->token_encrypted);
+    public function getApiContextAttribute() {
+        return ApiContext::fromJson(
+            Crypt::decryptString($this->api_context_encrypted)
+        );
     }
 
     /**
      * Set the bunq API token for this account.
-     * This automatically encrypts the token to the `token_encrypted` field.
+     * This automatically encrypts the context to the `api_context_encrypted` field.
      *
      * @param string $token The bunq API token.
      */
-    public function setToken(string $token) {
-        $this->token_encrypted = Crypt::encryptString($token);
+    public function setApiContextAttribute(ApiContext $api_context) {
+        $this->api_context_encrypted = Crypt::encryptString(
+            $api_context->toJson()
+        );
+    }
+
+    /**
+     * A function to load a bunq context for this bunq account.
+     */
+    public function loadBunqContext() {
+        BunqContext::loadApiContext($this->api_context);
     }
 }

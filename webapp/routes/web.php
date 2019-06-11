@@ -136,6 +136,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             Route::prefix('/bunq-accounts')->group(function() {
                 // Index
                 Route::get('/', 'BunqAccountController@index')->name('community.bunqAccount.index');
+
+                // Create
+                Route::get('/add', 'BunqAccountController@create')->name('community.bunqAccount.create');
+                Route::post('/add', 'BunqAccountController@doCreate')->name('community.bunqAccount.doCreate');
             });
         });
 

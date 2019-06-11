@@ -21,37 +21,25 @@
     <h2 class="ui header">
         @yield('title') ({{ count($accounts) }})
 
-        {{-- TODO: use breadcrumbs here --}}
-        {{-- <div class="sub header"> --}}
-        {{--     @lang('misc.in') --}}
-        {{--     <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}"> --}}
-        {{--         {{ $community->name }} --}}
-        {{--     </a> --}}
-        {{--     @lang('misc.for') --}}
-        {{--     {{ $economy->name }} --}}
-        {{-- </div> --}}
+        <div class="sub header">
+            @lang('misc.in')
+            <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}">
+                {{ $community->name }}
+            </a>
+        </div>
     </h2>
 
     {{-- TODO: change translation --}}
     <p>@lang('pages.bunqAccounts.description')</p>
 
     <div class="ui vertical menu fluid">
-        {{--
-            <div class="item">
-                <div class="ui transparent icon input">
-                    {{ Form::text('search', '', ['placeholder' => 'Search communities...']) }}
-                    <i class="icon glyphicons glyphicons-search link"></i>
-                </div>
-            </div>
-        --}}
-
         @forelse($accounts as $account)
             {{-- TODO: link to bunq account page --}}
             <a href="{{ route('community.bunqAccount.show', [
                 'communityId' => $community->human_id,
                 'accountId' => $account->id
             ]) }}" class="item">
-                TODO: some wallet name
+                {{ $account->name }}
             </a>
         @empty
             <div class="item">

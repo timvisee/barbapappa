@@ -47,6 +47,7 @@ return [
     'visible' => 'Zichtbaar',
     'public' => 'Publiek',
     'name' => 'Naam',
+    'descriptiveName' => 'Beschrijvende naam',
     'user' => 'Gebruiker',
     'fromUser' => 'Van gebruiker',
     'role' => 'Rol',

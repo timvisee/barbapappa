@@ -16,11 +16,12 @@ class CreateBunqAccountTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('community_id')->unsigned()->nullable(true);
             $table->boolean('enabled')->default(true)->nullable(false);
-            $table->string('description', 2048)->nullable(true)->default(null);
-            $table->string('token_encrypted');
+            $table->string('name')->nullable(false);
+            $table->text('api_context_encrypted');
+            $table->bigInteger('monetary_account_id');
             $table->string('account_holder');
             $table->string('iban', 32);
-            $table->string('bic', 8);
+            $table->string('bic', 8)->nullable(true);
             $table->softDeletes();
             $table->timestamps();
 

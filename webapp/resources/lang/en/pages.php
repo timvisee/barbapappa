@@ -304,6 +304,18 @@ return [
         'title' => 'bunq accounts',
         'description' => 'Click on one of your bunq accounts to manage it, or add a new one.',
         'noAccounts' => 'You don\'t have any bunq accounts added yet...',
+        'addAccount' => 'Add bunq account',
+        'descriptionPlaceholder' => 'bunq account for automating bar payments',
+        'tokenDescription' => 'Create a new API key in the developer section of the bunq app on your phone, and enter the newly created token in this field. This token must never be shared with anyone else.',
+        'ibanDescription' => 'Enter the IBAN of a monetary account in your bunq profile. This monetary account will be dedicated to payment processing and cannot be used for anything else. It is recommended to create a new monetary account through the bunq application for this.',
+        'invalidApiToken' => 'Invalid API token',
+        'addConfirm' => 'By adding this bunq account, you give :app full control over the monitary account assigned to the specified IBAN. That account will be dedicated to automated payment processing, until this link between :app and bunq is dropped. Never drop this link through the mobile bunq app by deleting the API key, but drop it through :app to ensure any ongoing payments can be finished properly. The account must have a current balance of €0.00. You cannot use this monetary account for any other payments, applications or :app instances, and you might risk serious money-flow issues if you do so. :app is not responsible for any damage caused by linking your bunq account to this application.',
+        'mustEnterBunqIban' => 'You must enter a bunq IBAN',
+        'accountAlreadyUsed' => 'This monetary is already used',
+        'noAccountWithIban' => 'No active monetary account with this IBAN',
+        'added' => 'The bunq account has been added',
+        'enabled' => 'Enabled, allow usage for payments',
+        'confirm' => 'I agree with this and meet the requirements',
     ],
 
     /**
