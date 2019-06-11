@@ -298,6 +298,15 @@ return [
     ],
 
     /**
+     * bunq account pages.
+     */
+    'bunqAccounts' => [
+        'title' => 'bunq accounts',
+        'description' => 'Click on one of your bunq accounts to manage it, or add a new one.',
+        'noAccounts' => 'You don\'t have any bunq accounts added yet...',
+    ],
+
+    /**
      * Wallet pages.
      */
     'wallets' => [

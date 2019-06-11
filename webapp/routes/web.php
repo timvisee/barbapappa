@@ -130,6 +130,13 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             // Generate poster
             Route::get('/generate-poster', 'CommunityController@generatePoster')->name('community.poster.generate');
             Route::post('/generate-poster', 'CommunityController@doGeneratePoster')->name('community.poster.doGenerate');
+
+            // bunq accounts, require view perms
+            // TODO: set proper permissions!
+            Route::prefix('/bunq-accounts')->group(function() {
+                // Index
+                Route::get('/', 'BunqAccountController@index')->name('community.bunqAccount.index');
+            });
         });
 
         // Community members, require view perms

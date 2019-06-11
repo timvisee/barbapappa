@@ -4,6 +4,7 @@
 
 @php
     use \App\Http\Controllers\BarController;
+    use \App\Http\Controllers\BunqAccountController;
     use \App\Http\Controllers\CommunityController;
     use \App\Http\Controllers\CommunityMemberController;
     use \App\Http\Controllers\EconomyController;
@@ -34,6 +35,13 @@
             'name' => __('misc.members'),
             'link' => route('community.member.index', ['communityId' => $community->human_id]),
             'icon' => 'user-structure',
+        ];
+
+    if(perms(BunqAccountController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bunqAccounts.title'),
+            'link' => route('community.bunqAccount.index', ['communityId' => $community->human_id]),
+            'icon' => 'credit-card',
         ];
 
     if(perms(CommunityController::permsManage()))
@@ -102,6 +110,13 @@
             </a>
         @else
             <div class="item disabled">@lang('misc.members')</div>
+        @endif
+        @if(perms(BunqAccountController::permsView()))
+            <a href="{{ route('community.bunqAccount.index', ['communityId' => $community->human_id]) }}" class="item">
+                @lang('pages.bunqAccounts.title')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.economies.title')</div>
         @endif
         @if(perms(CommunityController::permsManage()))
             <a href="{{ route('community.poster.generate', ['communityId' => $community->human_id]) }}" class="item">
