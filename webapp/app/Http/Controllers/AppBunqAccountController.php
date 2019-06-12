@@ -122,6 +122,18 @@ class AppBunqAccountController extends Controller {
             return redirect()->back()->withInput();
         }
 
+        // List the last account event, obtain its ID
+        $events = Event::listing([
+                'monetary_account_id' => $account->monetary_account_id,
+                'status' => 'FINALIZED',
+                'count' => 1,
+            ], [])->getValue();
+        $last_event_id = collect($events)
+            ->map(function($event) {
+                return $event->getId();
+            })
+            ->first();
+
         // Add the bunq account to the database
         $account = new BunqAccount();
         $account->community_id = null;
@@ -132,6 +144,7 @@ class AppBunqAccountController extends Controller {
         $account->account_holder = $account_holder;
         $account->iban = $iban;
         $account->bic = $bic;
+        $account->last_event_id = $last_event_id;
         $account->save();
 
         // Redirect to services index

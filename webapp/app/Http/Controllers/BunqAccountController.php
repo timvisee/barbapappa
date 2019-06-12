@@ -17,6 +17,7 @@ use bunq\Context\BunqContext;
 use bunq\Exception\ApiException;
 use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
+use bunq\Model\Generated\Endpoint\Event;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
 use bunq\Model\Generated\Object\Pointer;
 use bunq\Util\BunqEnumApiEnvironmentType;
@@ -126,6 +127,18 @@ class BunqAccountController extends Controller {
             return redirect()->back()->withInput();
         }
 
+        // List the last account event, obtain its ID
+        $events = Event::listing([
+                'monetary_account_id' => $account->monetary_account_id,
+                'status' => 'FINALIZED',
+                'count' => 1,
+            ], [])->getValue();
+        $last_event_id = collect($events)
+            ->map(function($event) {
+                return $event->getId();
+            })
+            ->first();
+
         // Add the bunq account to the database
         $account = new BunqAccount();
         $account->community_id = $community->id;
@@ -136,6 +149,7 @@ class BunqAccountController extends Controller {
         $account->account_holder = $account_holder;
         $account->iban = $iban;
         $account->bic = $bic;
+        $account->last_event_id = $last_event_id;
         $account->save();
 
         // Redirect to services index
