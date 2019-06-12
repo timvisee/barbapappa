@@ -44,7 +44,7 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
      * @param array $subjectValues Fields to replace in the subject language value.
      */
     public function __construct($recipients, $subjectKey, array $subjectValues = []) {
-        $this->recipients = collect($recipients);
+        $this->recipients = collect([$recipients])->flatten();
         $this->subjectKey = $subjectKey;
         $this->subjectValues = $subjectValues;
     }

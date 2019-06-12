@@ -124,6 +124,7 @@ return [
         'password_confirmation' => 'wachtwoord controle',
         'new_password' => 'nieuw wachtwoord',
         'new_password_confirmation' => 'nieuw wachtwoord controle',
+        'name' => 'naam',
         'first_name' => 'voornaam',
         'last_name' => 'achternaam',
         'language' => 'taal',

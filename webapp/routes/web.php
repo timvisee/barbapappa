@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AppBunqAccountController;
+use App\Http\Controllers\AppController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
@@ -129,6 +131,32 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             // Generate poster
             Route::get('/generate-poster', 'CommunityController@generatePoster')->name('community.poster.generate');
             Route::post('/generate-poster', 'CommunityController@doGeneratePoster')->name('community.poster.doGenerate');
+
+            // bunq accounts, require view perms
+            // TODO: set proper permissions!
+            Route::prefix('/bunq-accounts')->group(function() {
+                // Index
+                Route::get('/', 'BunqAccountController@index')->name('community.bunqAccount.index');
+
+                // Create
+                Route::get('/add', 'BunqAccountController@create')->name('community.bunqAccount.create');
+                Route::post('/add', 'BunqAccountController@doCreate')->name('community.bunqAccount.doCreate');
+
+                // Specific
+                Route::prefix('/{accountId}')->group(function() {
+                    // Show
+                    Route::get('/', 'BunqAccountController@show')->name('community.bunqAccount.show');
+
+                    // Housekeeping
+                    Route::post('/housekeep', 'BunqAccountController@doHousekeep')->name('community.bunqAccount.doHousekeep');
+
+                    // Edit/delete
+                    Route::get('/edit', 'BunqAccountController@edit')->name('community.bunqAccount.edit');
+                    Route::put('/edit', 'BunqAccountController@doEdit')->name('community.bunqAccount.doEdit');
+                    Route::get('/delete', 'BunqAccountController@delete')->name('community.bunqAccount.delete');
+                    Route::delete('/delete', 'BunqAccountController@doDelete')->name('community.bunqAccount.doDelete');
+                });
+            });
         });
 
         // Community members, require view perms
@@ -533,6 +561,38 @@ Route::prefix('/payments')->middleware('auth')->group(function() {
         // Cancel
         Route::get('/cancel', 'PaymentController@cancel')->name('payment.cancel');
         Route::delete('/cancel', 'PaymentController@doCancel')->name('payment.doCancel');
+    });
+});
+
+// Management pages
+Route::prefix('/manage')->middleware(AppController::permsAdminister()->middleware())->group(function() {
+    // Index
+    Route::get('/', 'AppController@manage')->name('app.manage');
+
+    // bunq accounts, require view perms
+    // TODO: set proper perms here
+    Route::prefix('/bunq-accounts')->middleware(AppBunqAccountController::permsView()->middleware())->group(function() {
+        // Index
+        Route::get('/', 'AppBunqAccountController@index')->name('app.bunqAccount.index');
+
+        // Create
+        Route::get('/add', 'AppBunqAccountController@create')->name('app.bunqAccount.create');
+        Route::post('/add', 'AppBunqAccountController@doCreate')->name('app.bunqAccount.doCreate');
+
+        // Specific
+        Route::prefix('/{accountId}')->group(function() {
+            // Show
+            Route::get('/', 'AppBunqAccountController@show')->name('app.bunqAccount.show');
+
+            // Housekeeping
+            Route::post('/housekeep', 'AppBunqAccountController@doHousekeep')->name('app.bunqAccount.doHousekeep');
+
+            // Edit/delete
+            Route::get('/edit', 'AppBunqAccountController@edit')->name('app.bunqAccount.edit');
+            Route::put('/edit', 'AppBunqAccountController@doEdit')->name('app.bunqAccount.doEdit');
+            Route::get('/delete', 'AppBunqAccountController@delete')->name('app.bunqAccount.delete');
+            Route::delete('/delete', 'AppBunqAccountController@doDelete')->name('app.bunqAccount.doDelete');
+        });
     });
 });
 

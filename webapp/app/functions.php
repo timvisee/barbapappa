@@ -4,7 +4,9 @@ use App\Perms\Builder\Config as PermsConfig;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
+use Illuminate\Support\ViewErrorBag;
 
 // Build the barauth function
 if(!function_exists('barauth')) {
@@ -336,5 +338,24 @@ if(!function_exists('assert_transaction')) {
     function assert_transaction() {
         if(DB::transactionLevel() <= 0)
             throw new \Exception('No database transaction active, while this is required');
+    }
+}
+
+if(!function_exists('add_session_error')) {
+    /**
+     * Add a custom error for a field to the session.
+     *
+     * @param string $field The name of the field the error is for.
+     * @param string $message The error to show.
+     */
+    function add_session_error($field, $message) {
+        $errors = session('errors') ?? new ViewErrorBag;
+        session()->flash(
+            'errors',
+            $errors->put(
+                'default',
+                ($errors->getBag('default') ?? new MessagBag)->add($field, $message)
+            )
+        );
     }
 }

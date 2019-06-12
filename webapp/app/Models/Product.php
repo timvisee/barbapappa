@@ -6,6 +6,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+// TODO: use EnabledScope (currently used in EconomyCurrency)
+
 /**
  * Product model.
  *
@@ -19,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int type
  * @property string name
  * @property bool enabled
+ * @property Carbon|null deleted_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */

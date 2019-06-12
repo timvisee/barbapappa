@@ -31,11 +31,4 @@
     </div>
 
     @include('community.include.list')
-
-    @if(perms(CommunityController::permsCreate()))
-        <a href="{{ route('community.create') }}"
-                class="ui button basic">
-            @lang('pages.community.createCommunity')
-        </a>
-    @endif
 @endsection

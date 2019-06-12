@@ -21,6 +21,13 @@ return [
     'contactUs' => 'Neem contact op',
 
     /**
+     * App pages.
+     */
+    'app' => [
+        'manageApp' => 'App beheren',
+    ],
+
+    /**
      * Dashboard page.
      */
     'dashboard' => [
@@ -295,6 +302,33 @@ return [
         'startedWillComplete' => 'Er zullen geen nieuwe betalingen geaccepteerd worden met deze service. Betaling die al geïnitieerd zijn zullen echter wel nog worden afgemaakt.',
         'amountToTopUpInCurrency' => 'Bedrag om te storten in :currency',
         'selectPaymentServiceToUse' => 'Betaalmethode',
+    ],
+
+    /**
+     * bunq account pages.
+     */
+    'bunqAccounts' => [
+        'title' => 'bunq accounts',
+        'description' => 'Klik op één van je bunq accounts om deze te beheren, of maak een nieuwe aan.',
+        'noAccounts' => 'Je hebt nog geen bunq accounts toegevoegd...',
+        'addAccount' => 'Add bunq account',
+        'descriptionPlaceholder' => 'bunq account voor automatisering van bar betalingen',
+        'tokenDescription' => 'Maak een nieuwe API sleutel aan in de ontwikkelaars sectie van de bunq app op je mobiele telefoon, en vul de aangemaakte token in. Deze token mag nooit gedeeld worden met anderen.',
+        'ibanDescription' => 'Vul de IBAN van een monitair account binnen je bunq profiel in. Dit account zal volledig opgedragen worden aan betaalverwerking, en kan niet gebruikt worden voor andere doeleinden. Het is aangeraden om hiervoor een nieuw monitair account aan te maken via de bunq app.',
+        'invalidApiToken' => 'Invalid API token',
+        'addConfirm' => 'Zodra je dit bunq account toevoegt, geef je :app volledige control over het monitaire account gekoppeld aan de gegeven IBAN. Dat account zal volledig gewijd worden aan geautomatiseerde betaalverwerking, totdat de koppeling tussen :app en bunq is opgeheven. Hef deze koppeling nooit op via de mobiele bunq applicatie door de API token te verwijderen, maar doe dit via :app zodat lopende betaling netjes afgerond kunnen worden. Het account moet een huidig balans van €0.00 hebben. Je kunt dit monitaire account niet meer voor andere betalingen, applicaties of andere :app instanties gebruiken, want dan riskeer je serieuze geldstroom problemen. :app is niet aansprakelijk voor schade aangericht door het koppelen van je bunq aacount aan deze applicatie.',
+        'mustEnterBunqIban' => 'Je moet een bunq IBAN invullen',
+        'accountAlreadyUsed' => 'Dit monitair account wordt al gebruikt',
+        'noAccountWithIban' => 'Geen actief monetair account met deze IBAN',
+        'onlyEuroSupported' => 'Alleen accounts die de EURO valuta gebruiken zijn ondersteund',
+        'notZeroBalance' => 'Account heeft geen balans van €0.00, maak een nieuwe monitair account',
+        'added' => 'Het bunq account is toegevoegd.',
+        'changed' => 'Het bunq account is aangepast.',
+        'enabled' => 'Ingeschakeld, sta gebruik voor betalingen toe',
+        'confirm' => 'Ik ga hiermee akkoord en voldoe aan de eisen',
+        'environment' => 'bunq API environment',
+        'runHousekeeping' => 'Voer huishouden uit',
+        'runHousekeepingSuccess' => 'Het monitaire bunq account is opnieuw ingesteld en eventuele openstaande betalingen staan nu in de wachtrij voor verwerking.',
     ],
 
     /**

@@ -84,8 +84,7 @@ class WalletController extends Controller {
      * @return Response
      */
     public function create($communityId, $economyId) {
-        // Get the user, community, find the economy and wallet
-        $user = barauth()->getUser();
+        // Get the community, find the economy and wallet
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 

@@ -100,6 +100,11 @@ class ValidationDefaults {
         . ')?$/';
 
     /**
+     * bunq API token.
+     */
+    const BUNQ_TOKEN = 'string|alpha_num|size:64';
+
+    /**
      * Build the community slug validation configuration.
      *
      * @param int|null $community The community this configuration is built for.

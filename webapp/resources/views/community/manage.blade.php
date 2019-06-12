@@ -3,10 +3,12 @@
 @section('title', __('misc.managementHub'))
 
 @php
-    use \App\Http\Controllers\BarController;
-    use \App\Http\Controllers\CommunityController;
-    use \App\Http\Controllers\CommunityMemberController;
-    use \App\Http\Controllers\EconomyController;
+    use App\Http\Controllers\AppController;
+    use App\Http\Controllers\BarController;
+    use App\Http\Controllers\BunqAccountController;
+    use App\Http\Controllers\CommunityController;
+    use App\Http\Controllers\CommunityMemberController;
+    use App\Http\Controllers\EconomyController;
 
     // Define menulinks
     if(perms(CommunityController::permsAdminister())) {
@@ -36,6 +38,13 @@
             'icon' => 'user-structure',
         ];
 
+    if(perms(BunqAccountController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bunqAccounts.title'),
+            'link' => route('community.bunqAccount.index', ['communityId' => $community->human_id]),
+            'icon' => 'credit-card',
+        ];
+
     if(perms(CommunityController::permsManage()))
         $menulinks[] = [
             'name' => __('pages.community.generatePoster'),
@@ -48,6 +57,13 @@
             'name' => __('pages.bar.createBar'),
             'link' => route('bar.create', ['communityId' => $community->human_id]),
             'icon' => 'plus',
+        ];
+
+    if(perms(AppController::permsAdminister()))
+        $menulinks[] = [
+            'name' => __('pages.app.manageApp'),
+            'link' => route('app.manage'),
+            'icon' => 'settings',
         ];
 
     $menulinks[] = [
@@ -103,6 +119,13 @@
         @else
             <div class="item disabled">@lang('misc.members')</div>
         @endif
+        @if(perms(BunqAccountController::permsView()))
+            <a href="{{ route('community.bunqAccount.index', ['communityId' => $community->human_id]) }}" class="item">
+                @lang('pages.bunqAccounts.title')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.economies.title')</div>
+        @endif
         @if(perms(CommunityController::permsManage()))
             <a href="{{ route('community.poster.generate', ['communityId' => $community->human_id]) }}" class="item">
                 @lang('pages.community.generatePoster')
@@ -125,6 +148,17 @@
             </a>
         @else
             <div class="ui bottom attached button disabled">@lang('pages.bar.createBar')</div>
+        @endif
+    </div>
+
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">@lang('misc.app')</h5>
+        @if(perms(AppController::permsAdminister()))
+            <a href="{{ route('app.manage') }}" class="item">
+                @lang('pages.app.manageApp')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.app.manageApp')</div>
         @endif
     </div>
 
