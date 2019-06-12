@@ -17,10 +17,35 @@
             @lang('pages.bunqAccounts.tokenDescription')
         </div>
         <div class="ui segment bottom attached">
-            <div class="field {{ ErrorRenderer::hasError('token') ? 'error' : '' }}">
-                {{ Form::label('token', __('misc.token') . ':') }}
-                {{ Form::text('token', '', ['autocomplete' => 'off']) }}
-                {{ ErrorRenderer::inline('token') }}
+            <div class="two fields">
+                <div class="four wide field">
+                    <div class="field {{ ErrorRenderer::hasError('language') ? 'error' : '' }}">
+                        {{ Form::label('environment', __('pages.bunqAccounts.environment') . ':') }}
+                        <div class="ui fluid selection dropdown">
+                            {{ Form::hidden('environment', 'production') }}
+                            <i class="dropdown icon"></i>
+
+                            <div class="default text">@lang('misc.pleaseSpecify')</div>
+                            <div class="menu">
+                                <div class="item" data-value="production">
+                                    Production
+                                </div>
+                                <div class="item" data-value="sandbox">
+                                    Sandbox
+                                </div>
+                            </div>
+                        </div>
+                        {{ ErrorRenderer::inline('environment') }}
+                    </div>
+                </div>
+
+                <div class="twelve wide field">
+                    <div class="field {{ ErrorRenderer::hasError('token') ? 'error' : '' }}">
+                        {{ Form::label('token', __('misc.token') . ':') }}
+                        {{ Form::text('token', '', ['autocomplete' => 'off']) }}
+                        {{ ErrorRenderer::inline('token') }}
+                    </div>
+                </div>
             </div>
         </div>
 

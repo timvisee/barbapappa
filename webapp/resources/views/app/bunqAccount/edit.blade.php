@@ -5,7 +5,7 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    {!! Form::open(['action' => ['BunqAccountController@doEdit', null, $account->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['AppBunqAccountController@doEdit', $account->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.descriptiveName') . ' :') }}
             {{ Form::text('name', $account->name, ['placeholder' => __('pages.bunqAccounts.descriptionPlaceholder')]) }}

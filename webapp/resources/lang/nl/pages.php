@@ -326,6 +326,7 @@ return [
         'changed' => 'Het bunq account is aangepast.',
         'enabled' => 'Ingeschakeld, sta gebruik voor betalingen toe',
         'confirm' => 'Ik ga hiermee akkoord en voldoe aan de eisen',
+        'environment' => 'bunq API environment',
     ],
 
     /**

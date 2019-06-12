@@ -57,6 +57,7 @@ class AppBunqAccountController extends Controller {
         // Validate
         $request->validate([
             'name' => 'required|' . ValidationDefaults::NAME,
+            'environment' => 'required|in:production,sandbox',
             'token' => 'required|' . ValidationDefaults::BUNQ_TOKEN,
             'account_holder' => 'required|' . ValidationDefaults::NAME,
             'iban' => 'required|iban|regex:/[A-Z]{2}\d\dBUNQ[0-9]+/|unique:bunq_accounts,iban',
@@ -74,8 +75,21 @@ class AppBunqAccountController extends Controller {
 
         // Create an API context for this application instance, load the context
         try {
+            // Select the environment
+            switch($request->input('environment')) {
+            case 'production':
+                $environment = BunqEnumApiEnvironmentType::PRODUCTION();
+                break;
+            case 'sandbox':
+                $environment = BunqEnumApiEnvironmentType::SANDBOX();
+                break;
+            default:
+                throw new \Exception('Unknown bunq environment selected');
+            }
+
+            // Create the API context, obtain a session
             $apiContext = ApiContext::create(
-                BunqEnumApiEnvironmentType::PRODUCTION(),
+                $environment,
                 $request->input('token'),
                 config('app.name') . ' ' . config('app.url'),
                 []
