@@ -5,6 +5,6 @@ cd "$(dirname "$0")/webapp"
 
 # Start the queue
 echo "Starting the worker..."
-sudo -u www-data php ./artisan queue:work --queue=high,normal,low
+sudo -u www-data php ./artisan queue:work --queue=high,normal,low --tries=10 --delay=10
 echo "The worker died."
 

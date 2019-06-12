@@ -38,7 +38,7 @@ class ProcessBunqAccountEvents implements ShouldQueue {
     /**
      * Number of seconds between events being handled.
      */
-    const EVENT_INTERVAL = 1.5;
+    const EVENT_INTERVAL = 2;
 
     /**
      * The ID of a bunq account model to handle new events for.

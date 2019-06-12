@@ -77,7 +77,7 @@ class EmailVerificationManager {
         $verification = self::create($email);
 
         // Create the mailable for the verification
-        $recipient = new EmailRecipient($email);
+        $recipient = new EmailRecipient($email, $email->user);
         $mailable = new Verify($recipient, $verification, $justRegistered);
 
         // Send the mailable
