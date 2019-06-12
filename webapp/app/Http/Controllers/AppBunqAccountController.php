@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\BunqAccount;
+use App\Jobs\ProcessBunqAccountEvents;
 use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,7 +18,9 @@ use bunq\Context\BunqContext;
 use bunq\Exception\ApiException;
 use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
+use bunq\Model\Generated\Endpoint\Event;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
+use bunq\Model\Generated\Object\NotificationFilter;
 use bunq\Model\Generated\Object\Pointer;
 use bunq\Util\BunqEnumApiEnvironmentType;
 

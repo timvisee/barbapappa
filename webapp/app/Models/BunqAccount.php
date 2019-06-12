@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Scopes\EnabledScope;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -85,5 +86,18 @@ class BunqAccount extends Model {
      */
     public function loadBunqContext() {
         BunqContext::loadApiContext($this->api_context);
+    }
+
+    /**
+     * Get the monetary account that is specified for this bunq account.
+     * You must have called `loadBunqContext()` first.
+     *
+     * TODO: automatically call `loadBunqContext` if currently in a different
+     * context.
+     *
+     * @return MonetaryAccountBank The monetary bank account, or an error.
+     */
+    public function fetchMonetaryAccount() {
+        return MonetaryAccountBank::get($this->monetary_account_id)->getValue();
     }
 }
