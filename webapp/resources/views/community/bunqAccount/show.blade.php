@@ -79,6 +79,12 @@
     </p>
 
     <p>
+        {!! Form::open(['action' => ['BunqAccountController@doHousekeep', $community->human_id, $account->id], 'method' => 'POST', 'class' => 'ui form']) !!}
+            <button class="ui button orange" type="submit">@lang('pages.bunqAccounts.runHousekeeping')</button>
+        {!! Form::close() !!}
+    </p>
+
+    <p>
         <a href="{{ route('community.bunqAccount.index', ['communityId' => $community->human_id]) }}"
                 class="ui button basic">
             @lang('general.goBack')

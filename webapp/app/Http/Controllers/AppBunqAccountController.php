@@ -226,6 +226,35 @@ class AppBunqAccountController extends Controller {
     }
 
     /**
+     * Run housekeeping for this bunq account.
+     *
+     * This will reconfigure the used monetary account on bunqs end, to set
+     * callback URLs and such thing. And it will queue all pending events for
+     * processing.
+     *
+     * @param int $accountId The bunq account ID.
+     *
+     * @return Response
+     */
+    public function doHousekeep($accountId) {
+        // Find the bunq account
+        $account = BunqAccount::where('community_id', null)
+            ->findOrFail($accountId);
+
+        // Load the bunq API context
+        $account->loadBunqContext();
+
+        // Update bunq account settings, dispatch job to process pending events
+        $account->updateBunqAccountSettings();
+        ProcessBunqAccountEvents::dispatch($account);
+
+        // Redirect back to the show page
+        return redirect()
+            ->route('app.bunqAccount.show', ['accountId' => $accountId])
+            ->with('success', __('pages.bunqAccounts.runHousekeepingSuccess'));
+    }
+
+    /**
      * Edit a bunq account.
      *
      * @param int $accountId The bunq account ID.

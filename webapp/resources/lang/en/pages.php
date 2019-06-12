@@ -327,6 +327,8 @@ return [
         'enabled' => 'Enabled, allow usage for payments',
         'confirm' => 'I agree with this and meet the requirements',
         'environment' => 'bunq API environment',
+        'runHousekeeping' => 'Run housekeeping',
+        'runHousekeepingSuccess' => 'The monetary bunq account has been reconfigured and any pending payments are now queued for processing.',
     ],
 
     /**

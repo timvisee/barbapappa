@@ -47,9 +47,9 @@ class BunqController extends Controller {
 
         // Handle the notification, update bunq events for its monetary account
         if(($payment = $object->getPayment()) != null)
-            Self::processEventsForAccount($payment->monetaryAccountId);
+            Self::processEventsForAccount($payment->getMonetaryAccountId());
         else if(($bunqMeTab = $object->getBunqMeTab()) != null)
-            Self::processEventsForAccount($bunqMeTab->monetaryAccountId);
+            Self::processEventsForAccount($bunqMeTab->getMonetaryAccountId());
         else
             throw new \Exception('Unhandled notification type');
 

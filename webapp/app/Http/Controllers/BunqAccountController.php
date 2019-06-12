@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
+use App\Jobs\ProcessBunqAccountEvents;
 use App\Models\BunqAccount;
 use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
@@ -231,6 +232,38 @@ class BunqAccountController extends Controller {
 
         return view('community.bunqAccount.show')
             ->with('account', $account);
+    }
+
+    /**
+     * Run housekeeping for this bunq account.
+     *
+     * This will reconfigure the used monetary account on bunqs end, to set
+     * callback URLs and such thing. And it will queue all pending events for
+     * processing.
+     *
+     * @param int $accountId The bunq account ID.
+     *
+     * @return Response
+     */
+    public function doHousekeep($communityId, $accountId) {
+        // Get the community, find the bunq account
+        $community = \Request::get('community');
+        $account = $community->bunqAccounts()->findOrFail($accountId);
+
+        // Load the bunq API context
+        $account->loadBunqContext();
+
+        // Update bunq account settings, dispatch job to process pending events
+        $account->updateBunqAccountSettings();
+        ProcessBunqAccountEvents::dispatch($account);
+
+        // Redirect back to the show page
+        return redirect()
+            ->route('community.bunqAccount.show', [
+                'communityId' => $community->human_id,
+                'accountId' => $accountId
+            ])
+            ->with('success', __('pages.bunqAccounts.runHousekeepingSuccess'));
     }
 
     /**

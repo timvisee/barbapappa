@@ -147,6 +147,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     // Show
                     Route::get('/', 'BunqAccountController@show')->name('community.bunqAccount.show');
 
+                    // Housekeeping
+                    Route::post('/housekeep', 'BunqAccountController@doHousekeep')->name('community.bunqAccount.doHousekeep');
+
                     // Edit/delete
                     Route::get('/edit', 'BunqAccountController@edit')->name('community.bunqAccount.edit');
                     Route::put('/edit', 'BunqAccountController@doEdit')->name('community.bunqAccount.doEdit');
@@ -580,6 +583,9 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
         Route::prefix('/{accountId}')->group(function() {
             // Show
             Route::get('/', 'AppBunqAccountController@show')->name('app.bunqAccount.show');
+
+            // Housekeeping
+            Route::post('/housekeep', 'AppBunqAccountController@doHousekeep')->name('app.bunqAccount.doHousekeep');
 
             // Edit/delete
             Route::get('/edit', 'AppBunqAccountController@edit')->name('app.bunqAccount.edit');
