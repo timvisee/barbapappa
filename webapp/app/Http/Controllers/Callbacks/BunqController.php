@@ -36,6 +36,9 @@ class BunqController extends Controller {
         if(empty(trim($json)))
             return 'OK';
 
+        // Get the NotificationUrl section to parse
+        $json = json_encode(json_decode($json, true)['NotificationUrl']);
+
         // Create the NotificationUrl object
         $notification = NotificationUrl::createFromJsonString($json);
         $category = $notification->getCategory();
