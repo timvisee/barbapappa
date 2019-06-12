@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Scopes\EnabledScope;
-use bunq\Context\ApiContext;
-use bunq\Context\BunqContext;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Crypt;
+use bunq\Context\ApiContext;
+use bunq\Context\BunqContext;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
+use bunq\Model\Generated\Object\NotificationFilter;
 
 /**
  * bunq account model.
@@ -99,5 +100,41 @@ class BunqAccount extends Model {
      */
     public function fetchMonetaryAccount() {
         return MonetaryAccountBank::get($this->monetary_account_id)->getValue();
+    }
+
+    /**
+     * Update the settings for the bunq account required to properly function.
+     *
+     * The bunq API context must be loaded first.
+     */
+    public function updateBunqAccountSettings() {
+        // Buid a list of filters to use
+        $filters = [
+            new NotificationFilter(
+                'URL',
+                route('callback.bunq'),
+                'PAYMENT'
+            ),
+            new NotificationFilter(
+                'URL',
+                route('callback.bunq'),
+                'BUNQME_TAB'
+            ),
+        ];
+
+        // Set the filters
+        MonetaryAccountBank::update(
+            $this->monetary_account_id,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            $filters,
+            null,
+            []
+        );
     }
 }

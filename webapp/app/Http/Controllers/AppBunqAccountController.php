@@ -20,7 +20,6 @@ use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
 use bunq\Model\Generated\Endpoint\Event;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\NotificationFilter;
 use bunq\Model\Generated\Object\Pointer;
 use bunq\Util\BunqEnumApiEnvironmentType;
 
@@ -124,7 +123,7 @@ class AppBunqAccountController extends Controller {
 
         // List the last account event, obtain its ID
         $events = Event::listing([
-                'monetary_account_id' => $account->monetary_account_id,
+                'monetary_account_id' => $monetaryAccount->getId(),
                 'status' => 'FINALIZED',
                 'count' => 1,
             ], [])->getValue();
@@ -146,6 +145,9 @@ class AppBunqAccountController extends Controller {
         $account->bic = $bic;
         $account->last_event_id = $last_event_id;
         $account->save();
+
+        // Update the bunq account settings, configure things like callbacks
+        $account->updateBunqAccountSettings();
 
         // Redirect to services index
         return redirect()
