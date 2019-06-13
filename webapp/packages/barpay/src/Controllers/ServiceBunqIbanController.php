@@ -17,8 +17,13 @@ class ServiceBunqIbanController {
      */
     public static function validateCreate(Request $request) {
         // TODO: validate bunq account here!
+        // TODO: IBAN cannot be a bunq account IBAN, prevent infinite loops
+
         $request->validate([
             'bunq_account' => 'required|numeric|exists:bunq_accounts,id',
+            'account_holder' => 'required|' . ValidationDefaults::NAME,
+            'iban' => 'required|iban',
+            'bic' => 'nullable|bic',
         ]);
     }
 
@@ -35,6 +40,9 @@ class ServiceBunqIbanController {
         $serviceable = new ServiceBunqIban();
         $serviceable->service_id = $service->id;
         $serviceable->bunq_account_id = $request->input('bunq_account');
+        $serviceable->account_holder = $request->input('account_holder');
+        $serviceable->iban = $request->input('iban');
+        $serviceable->bic = $request->input('bic');
         $serviceable->save();
 
         // Update serviceable link on service
@@ -50,5 +58,12 @@ class ServiceBunqIbanController {
      * @param Service $service The service.
      * @param ServiceBunqIban $serviceable The serviceable.
      */
-    public static function edit(Request $request, Service $service, ServiceBunqIban $serviceable) {}
+    public static function edit(Request $request, Service $service, ServiceBunqIban $serviceable) {
+        // TODO: did we validate for this?
+
+        $serviceable->account_holder = $request->input('account_holder');
+        $serviceable->iban = $request->input('iban');
+        $serviceable->bic = $request->input('bic');
+        $serviceable->save();
+    }
 }
