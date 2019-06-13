@@ -97,13 +97,17 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
         if($amountValue != $barPayment->money || $amount->getCurrency() != 'EUR')
             return false;
 
-        // TODO: do source IBAN check
-        // TODO: set source IBAN if noet set in paymentable yet
-
         // Settle this payment
-        DB::transaction(function() use($barPayment, $barPaymentable) {
+        DB::transaction(function() use($apiPayment, $barPayment, $barPaymentable) {
+            // Set from IBAN and transfer time if not set, set settled time
+            if($barPaymentable->from_iban == null)
+                $barPaymentable->from_iban = $apiPayment->getCounterpartyAlias()->getIban();
+            if($barPaymentable->transferred_at == null)
+                $barPaymentable->transferred_at = now();
             $barPaymentable->settled_at = now();
             $barPaymentable->save();
+
+            // Settle the payment
             $barPayment->settle(Payment::STATE_COMPLETED);
         });
 
