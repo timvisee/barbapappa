@@ -92,16 +92,22 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
         $amountValue = (float) $amount->getValue();
         $service = $barPayment->service;
         $serviceable = $barPayment->serviceable;
+        $paymentIban = $apiPayment->getCounterpartyAlias()->getIban();
+        $fromIban = $barPaymentable->from_iban;
 
         // Must be same amount and euro
         if($amountValue != $barPayment->money || $amount->getCurrency() != 'EUR')
             return false;
 
+        // IBANs must match if set
+        if($paymentIban != $fromIban && $paymentIban != null && $fromIban != null)
+            return false;
+
         // Settle this payment
-        DB::transaction(function() use($apiPayment, $barPayment, $barPaymentable) {
+        DB::transaction(function() use($paymentIban, $barPayment, $barPaymentable) {
             // Set from IBAN and transfer time if not set, set settled time
             if($barPaymentable->from_iban == null)
-                $barPaymentable->from_iban = $apiPayment->getCounterpartyAlias()->getIban();
+                $barPaymentable->from_iban = $paymentIban;
             if($barPaymentable->transferred_at == null)
                 $barPaymentable->transferred_at = now();
             $barPaymentable->settled_at = now();
@@ -166,7 +172,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
             $account,
             $apiPayment,
             $to,
-            // TODO: translate
+            // TODO: use language file here
             'Payed ' . $barPayment->getReference()
         );
     }
