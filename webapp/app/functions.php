@@ -359,3 +359,18 @@ if(!function_exists('add_session_error')) {
         );
     }
 }
+
+if(!function_exists('is_url_secure')) {
+    /**
+     * Check whether the given URL is secure, and is using HTTPS.
+     * If no URL is given, the base URL of this application is checked.
+     *
+     * @param string|null [$url=null] The URL to check, or null to use the
+     *      application base URL.
+     *
+     * @return bool True if secure, false if not.
+     */
+    function is_url_secure(string $url = null) {
+        return trim(strtolower(parse_url($url ?? url('/'), PHP_URL_SCHEME)));
+    }
+}

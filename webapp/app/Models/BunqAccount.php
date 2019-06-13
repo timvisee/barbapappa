@@ -106,21 +106,28 @@ class BunqAccount extends Model {
      * Update the settings for the bunq account required to properly function.
      *
      * The bunq API context must be loaded first.
+     *
+     * @return string|null An optional warning message.
      */
     public function updateBunqAccountSettings() {
-        // Buid a list of filters to use
-        $filters = [
-            new NotificationFilter(
+        // A warning to return
+        $message = null;
+
+        // Build a list of filters to use if we have HTTPS, error otherwise
+        $filters = [];
+        if(!is_url_secure()) {
+            $filters[] = new NotificationFilter(
                 'URL',
                 route('callback.bunq'),
                 'PAYMENT'
-            ),
-            new NotificationFilter(
+            );
+            $filters[] = new NotificationFilter(
                 'URL',
                 route('callback.bunq'),
                 'BUNQME_TAB'
-            ),
-        ];
+            );
+        } else
+            $message = __('pages.bunqAccounts.noHttpsNoCallbacks');
 
         // Set the filters
         MonetaryAccountBank::update(
@@ -136,5 +143,7 @@ class BunqAccount extends Model {
             null,
             []
         );
+
+        return $message;
     }
 }

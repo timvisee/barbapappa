@@ -329,6 +329,7 @@ return [
         'environment' => 'bunq API environment',
         'runHousekeeping' => 'Voer huishouden uit',
         'runHousekeepingSuccess' => 'Het monitaire bunq account is opnieuw ingesteld en eventuele hangende betalingen staan nu in de wachtrij voor verwerking.',
+        'noHttpsNoCallbacks' => 'Deze site gebruikt geen HTTPS, real time bunq betalingen worden daardoor niet ondersteund. Betalingen worden eens per dag verwerkt.',
     ],
 
     /**
