@@ -126,18 +126,17 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 // Obtain the object
                 $o = $event->getObject();
 
+                // Determine delay for this job based on it's index
+                $delay = now()->addSeconds($i * Self::EVENT_INTERVAL);
+
                 // Spawn a job corresponding to the event type
                 if(!is_null($payment = $o->getPayment()))
-                    $job = ProcessBunqPaymentEvent::dispatch($account, $payment);
+                    $job = ProcessBunqPaymentEvent::dispatch($account, $payment)
+                        ->delay($delay);
                 else if(!is_null($tab = $o->getBunqMeTab()))
-                    $job = ProcessBunqBunqMeTabEvent::dispatch();
+                    $job = ProcessBunqBunqMeTabEvent::dispatch()->delay($delay);
                 else
                     throw new \Exception('Attempting to handle bunq event with unhandled type');
-
-                sleep(2);
-
-                // Delay each job based on an interval
-                $job->delay(now()->addSeconds($i * Self::EVENT_INTERVAL));
             });
 
         // Walk through new events again if not completed, to handle the rest
