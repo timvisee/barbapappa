@@ -154,15 +154,18 @@ class BunqAccountController extends Controller {
         $account->save();
 
         // Update the bunq account settings, configure things like callbacks
-        $account->updateBunqAccountSettings();
+        $message = $account->updateBunqAccountSettings();
 
         // Redirect to services index
-        return redirect()
+        $message = redirect()
             ->route('community.bunqAccount.show', [
                 'communityId' => $community->human_id,
                 'accountId' => $account->id,
             ])
             ->with('success', __('pages.bunqAccounts.added'));
+        if(!empty($message))
+            $response = $response->with('warning', $message);
+        return $response;
     }
 
     /**
@@ -254,16 +257,19 @@ class BunqAccountController extends Controller {
         $account->loadBunqContext();
 
         // Update bunq account settings, dispatch job to process pending events
-        $account->updateBunqAccountSettings();
+        $message = $account->updateBunqAccountSettings();
         ProcessBunqAccountEvents::dispatch($account);
 
         // Redirect back to the show page
-        return redirect()
+        $response = redirect()
             ->route('community.bunqAccount.show', [
                 'communityId' => $community->human_id,
                 'accountId' => $accountId
             ])
             ->with('success', __('pages.bunqAccounts.runHousekeepingSuccess'));
+        if(!empty($message))
+            $response = $response->with('warning', $message);
+        return $response;
     }
 
     /**

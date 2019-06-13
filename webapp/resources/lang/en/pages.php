@@ -329,6 +329,7 @@ return [
         'environment' => 'bunq API environment',
         'runHousekeeping' => 'Run housekeeping',
         'runHousekeepingSuccess' => 'The monetary bunq account has been reconfigured and any pending payments are now queued for processing.',
+        'noHttpsNoCallbacks' => 'This site does not use HTTPS, real time bunq payments are not supported. Payment events will be processed daily.',
     ],
 
     /**

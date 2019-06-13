@@ -32,3 +32,14 @@
         @endif
     </div>
 @endif
+
+@if(session('warning') || session('warningHtml'))
+    <div class="ui warning message">
+        <span class="halflings halflings-warning-sign icon"></span>
+        @if(session('warningHtml'))
+            {!! session('warningHtml') !!}
+        @else
+            {{ session('warning') }}
+        @endif
+    </div>
+@endif
