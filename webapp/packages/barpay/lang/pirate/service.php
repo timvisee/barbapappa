@@ -5,12 +5,12 @@
  */
 return [
     'manualiban' => [
-        'name' => 'Manual IBAN transfer',
+        'name' => 'IBAN transfer, manual check',
         'duration' => 'takes up to 1 month',
     ],
 
-    'bunqrequest' => [
-        'name' => 'IBAN transfer',
+    'bunqiban' => [
+        'name' => 'IBAN transfer, automatic',
         'duration' => 'instant / up to 3 days',
     ],
 

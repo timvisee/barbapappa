@@ -39,8 +39,8 @@ class PaymentServiceController extends Controller {
         // Get the community, find the payment service
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $serviceable = $request->query('serviceable');
-        $choose = empty($serviceable);
+        $serviceable_type = $request->query('serviceable');
+        $choose = empty($serviceable_type);
 
         // Validate serviceable type input
         $request->validate([
@@ -48,11 +48,18 @@ class PaymentServiceController extends Controller {
         ]);
 
         // List the currencies that can be used
-        $currencies = $economy->currencies;
+        $currencies = [];
+        if(!$choose) {
+            $currencies = $economy
+                ->currencies
+                ->filter(function($currency) use($serviceable_type) {
+                    return $serviceable_type::isSupportedCurrency($currency->currency);
+                });
+        }
 
         return view('community.economy.paymentservice.create' . ($choose ? 'Choose' : ''))
             ->with('economy', $economy)
-            ->with('serviceable', $serviceable)
+            ->with('serviceable', $serviceable_type)
             ->with('currencies', $currencies);
     }
 
@@ -78,7 +85,10 @@ class PaymentServiceController extends Controller {
         ($serviceable_type::CONTROLLER)::validateCreate($request);
 
         // Find the selected economy currency, get it's currency ID
-        $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
+        $currency = EconomyCurrency::findOrFail($request->input('currency'))->currency;
+        if(!$serviceable_type::isSupportedCurrency($currency))
+            throw new \Exception('Unsupported currency type');
+        $currencyId = $currency->id;
 
         // Create the payment service in a transaction
         DB::transaction(function() use($request, $economy, $serviceable_type, $currencyId) {
@@ -145,7 +155,11 @@ class PaymentServiceController extends Controller {
         $serviceable = $service->serviceable;
 
         // List the currencies that can be used
-        $currencies = $economy->currencies;
+        $currencies = $economy
+            ->currencies
+            ->filter(function($currency) use($serviceable) {
+                return $serviceable::isSupportedCurrency($currency->currency);
+            });
 
         return view('community.economy.paymentservice.edit')
             ->with('economy', $economy)
@@ -182,7 +196,10 @@ class PaymentServiceController extends Controller {
 
         // Find the selected economy currency, get it's currency ID
         // TODO: did we get Currency id from form? Should be economycurren?
-        $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
+        $currency = EconomyCurrency::findOrFail($request->input('currency'))->currency;
+        if(!$serviceable::isSupportedCurrency($currency))
+            throw new \Exception('Unsupported currency type');
+        $currencyId = $currency->id;
 
         // Change service and serviceable properties and sync prices in transaction
         DB::transaction(function() use($request, $service, $serviceable, $currencyId) {

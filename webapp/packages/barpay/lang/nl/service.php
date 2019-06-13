@@ -5,12 +5,12 @@
  */
 return [
     'manualiban' => [
-        'name' => 'Handmatige IBAN overschrijving',
+        'name' => 'IBAN overschrijving, handmatige check',
         'duration' => 'duurt tot 1 maand',
     ],
 
-    'bunqrequest' => [
-        'name' => 'IBAN overschrijving',
+    'bunqiban' => [
+        'name' => 'IBAN overschrijving, automatisch',
         'duration' => 'direct / tot 3 dagen',
     ],
 

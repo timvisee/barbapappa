@@ -37,4 +37,19 @@ return [
             'receipt' => 'Wacht op bevestiging',
         ],
     ],
+
+    'bunqiban' => [
+        'pleaseTransferSameDescription' => 'Maak het bedrag over naar de rekening zoals hieronder beschreven staat. De beschrijving van de overboeking moet exact hetzelfde zijn en wordt gebruikt om je betaling te identificeren, anders gaat je betaling verloren.',
+        'enterOwnIban' => 'Vul de IBAN in van de rekening waar vanaf je betaald, zodat we de betaling aan je account kunnen koppelen.',
+        'confirmTransfer' => 'Ik bevestig dat ik het geld heb overgemaakt met de gegeven informatie.',
+        'waitOnReceipt' => 'Aan het wachten tot de betaling ontvangen is. Dit kan tot een aantal dagen duren.',
+        'steps' => [
+            'transfer' => 'Overboeking',
+            'receipt' => 'Bevestiging',
+        ],
+        'stepDescriptions' => [
+            'transfer' => 'Geld overmaken, IBAN invullen',
+            'receipt' => 'Wacht op bevestiging',
+        ],
+    ],
 ];
