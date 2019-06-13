@@ -328,7 +328,7 @@ return [
         'confirm' => 'Ik ga hiermee akkoord en voldoe aan de eisen',
         'environment' => 'bunq API environment',
         'runHousekeeping' => 'Voer huishouden uit',
-        'runHousekeepingSuccess' => 'Het monitaire bunq account is opnieuw ingesteld en eventuele openstaande betalingen staan nu in de wachtrij voor verwerking.',
+        'runHousekeepingSuccess' => 'Het monitaire bunq account is opnieuw ingesteld en eventuele hangende betalingen staan nu in de wachtrij voor verwerking.',
     ],
 
     /**
