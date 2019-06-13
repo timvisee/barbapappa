@@ -115,7 +115,7 @@ class BunqAccount extends Model {
 
         // Build a list of filters to use if we have HTTPS, error otherwise
         $filters = [];
-        if(!is_url_secure()) {
+        if(is_url_secure()) {
             $filters[] = new NotificationFilter(
                 'URL',
                 route('callback.bunq'),
