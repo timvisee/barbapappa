@@ -30,9 +30,9 @@ return [
     ],
 
     /**
-     * Transfer through payment request using bunq.
+     * Transfer through a bunqme tab payment request.
      */
-    'bunqrequest' => [
+    'bunqmetab' => [
         'name' => 'iDeal betaling',
         'duration' => 'direct',
     ],
