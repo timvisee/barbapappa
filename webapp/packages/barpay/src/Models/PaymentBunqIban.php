@@ -93,7 +93,10 @@ class PaymentBunqIban extends Model {
      * @param Builder $paymentable_query Query builder for the corresponding
      *      paymentable.
      */
-    public static function scopeRequireCommunityAction($query, $paymentable_query) {}
+    public static function scopeRequireCommunityAction($query, $paymentable_query) {
+        // Do not include this for community action
+        $paymentable_query->whereRaw('1 = 2');
+    }
 
     /**
      * Get the bunq account.
