@@ -72,7 +72,6 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      * @param ApiPayment $apiPayment The received bunq API payment model.
      * @return bool True if handled, false if not.
      */
-    // TODO: do all this in transaction with fresh models
     private static function handleBunqIban(BunqAccount $account, ApiPayment $apiPayment) {
         // Search for reference in payment
         $ref = Self::parsePaymentReference($apiPayment);
@@ -134,8 +133,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      */
     private static function refundPayment(BunqAccount $account, ApiPayment $apiPayment) {
         // Build a description
-        // TODO: use language file here
-        $description = [config('app.name') . ' unknown payment refund'];
+        $description = [config('app.name') . ' ' . __('barpay::service.bunq.unknownPaymentRefund')];
         if(!empty($apiPayment->getDescription()))
             $description[] = $apiPayment->getDescription();
         $description = substr(implode(': ', $description), 0, 140);
@@ -174,8 +172,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
             $account,
             $apiPayment,
             $to,
-            // TODO: use language file here
-            'Payed ' . $barPayment->getReference()
+            config('app.name') . ' ' . __('barpay::service.bunq.payed') . ': ' . $barPayment->getReference()
         );
     }
 
