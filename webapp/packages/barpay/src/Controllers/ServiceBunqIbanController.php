@@ -17,13 +17,13 @@ class ServiceBunqIbanController {
      */
     public static function validateCreate(Request $request) {
         // TODO: validate bunq account here!
-        // TODO: IBAN cannot be a bunq account IBAN, prevent infinite loops
-
         $request->validate([
             'bunq_account' => 'required|numeric|exists:bunq_accounts,id',
             'account_holder' => 'required|' . ValidationDefaults::NAME,
-            'iban' => 'required|iban',
+            'iban' => 'required|iban|unique:bunq_accounts,iban',
             'bic' => 'nullable|bic',
+        ], [
+            'iban.unique' => __('barpay::service.bunq.ibanCannotBeReceivingBunqAccount'),
         ]);
     }
 
