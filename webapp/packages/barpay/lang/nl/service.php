@@ -4,16 +4,34 @@
  * Payment service translations.
  */
 return [
+    /**
+     * IBAN transfer service with manual check.
+     */
     'manualiban' => [
-        'name' => 'Handmatige IBAN overschrijving',
+        'name' => 'IBAN overschrijving, handmatige check',
         'duration' => 'duurt tot 1 maand',
     ],
 
-    'bunqrequest' => [
-        'name' => 'IBAN overschrijving',
+    /**
+     * Generic bunq related service translations.
+     */
+    'bunq' => [
+        'unknownPaymentRefund' => 'terugbetaling onbekende storting',
+        'payed' => 'betaald',
+        'ibanCannotBeReceivingBunqAccount' => 'Kan geen IBAN zijn waarop betalingen worden ontvangen binnen deze applicatie.'
+    ],
+
+    /**
+     * IBAN transfer service with automatic checking through bunq.
+     */
+    'bunqiban' => [
+        'name' => 'IBAN overschrijving, automatisch',
         'duration' => 'direct / tot 3 dagen',
     ],
 
+    /**
+     * Transfer through payment request using bunq.
+     */
     'bunqrequest' => [
         'name' => 'iDeal betaling',
         'duration' => 'direct',

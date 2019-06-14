@@ -37,4 +37,19 @@ return [
             'receipt' => 'Wait on receipt',
         ],
     ],
+
+    'bunqiban' => [
+        'pleaseTransferSameDescription' => 'Please transfer the amount to the account as noted below. You must use the exact same description which is used to identify your payment, or your payment will be lost.',
+        'enterOwnIban' => 'Enter the IBAN you\'re transferring the money from, so we can link the payment to your account.',
+        'confirmTransfer' => 'I confirm I\'ve transferred the money with the given payment details',
+        'waitOnReceipt' => 'Waiting for the payment to be received. This may take up to a few days.',
+        'steps' => [
+            'transfer' => 'Transfer',
+            'receipt' => 'Receipt',
+        ],
+        'stepDescriptions' => [
+            'transfer' => 'Transfer money, enter IBAN',
+            'receipt' => 'Wait on receipt',
+        ],
+    ],
 ];

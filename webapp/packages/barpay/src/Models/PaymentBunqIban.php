@@ -2,16 +2,17 @@
 
 namespace BarPay\Models;
 
+use App\Models\BunqAccount;
 use App\Models\User;
-use BarPay\Controllers\PaymentManualIbanController;
+use BarPay\Controllers\PaymentBunqIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Manual IBAN payment data class.
+ * Bunq IBAN payment data class.
  *
- * This represents a payment data for a manual IBAN transfer.
+ * This represents a payment data for a bunq IBAN transfer.
  *
  * @property int id
  * @property int payment_id
@@ -25,56 +26,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string ref A reference code.
  * @property datetime|null transferred_at When the user manually transferred if done.
  * @property datetime|null checked_at Last time the transaction was checked at.
- * @property datetime|null settled_at When the manual transfer was settled by the counter party if done.
+ * @property datetime|null settled_at When the bunq transfer was settled by the counter party if done.
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class PaymentManualIban extends Model {
+class PaymentBunqIban extends Model {
 
     use Paymentable;
 
-    protected $table = "payment_manual_iban";
+    protected $table = "payment_bunq_iban";
 
     protected $casts = [
         'transferred_at' => 'datetime',
-        'checked_at' => 'datetime',
         'settled_at' => 'datetime',
     ];
 
     /**
-     * Wait this number of seconds after a transfer, before asking a community
-     * manager to confirm the payment is received.
-     */
-    public const TRANSFER_WAIT = 1.5 * 24 * 60 * 60;
-
-    /**
-     * Wait this number of seconds after checking a transfer, before checking it
-     * again.
-     */
-    public const TRANSFER_CHECK_RETRY = 1.5 * 24 * 60 * 60;
-
-    /**
-     * The maximum number of seconds a transfer check can be delayed.
-     */
-    public const TRANSFER_DELAY_MAX = 30 * 24 * 60 * 60;
-
-    /**
      * The controller to use for this paymentable.
      */
-    public const CONTROLLER = PaymentManualIbanController::class;
+    public const CONTROLLER = PaymentBunqIbanController::class;
 
     /**
      * The root for views related to this payment.
      */
-    public const VIEW_ROOT = 'barpay::payment.manualiban';
+    public const VIEW_ROOT = 'barpay::payment.bunqiban';
 
     /**
      * The root for language related to this payment.
      */
-    public const LANG_ROOT = 'barpay::payment.manualiban';
+    public const LANG_ROOT = 'barpay::payment.bunqiban';
 
     const STEP_TRANSFER = 'transfer';
-    const STEP_TRANSFERRING = 'transferring';
     const STEP_RECEIPT = 'receipt';
 
     /**
@@ -82,7 +64,6 @@ class PaymentManualIban extends Model {
      */
     public const STEPS = [
         Self::STEP_TRANSFER,
-        Self::STEP_TRANSFERRING,
         Self::STEP_RECEIPT,
     ];
 
@@ -113,24 +94,18 @@ class PaymentManualIban extends Model {
      *      paymentable.
      */
     public static function scopeRequireCommunityAction($query, $paymentable_query) {
-        $paymentable_query
-            ->where('transferred_at', '<', now()->subSeconds(Self::TRANSFER_WAIT))
-            ->where(function($query) {
-                $query->where('checked_at', '<', now()->subSeconds(Self::TRANSFER_CHECK_RETRY))
-                    ->orWhere('checked_at', null);
-            });
+        // Do not include this for community action
+        $paymentable_query->whereRaw('1 = 2');
     }
 
     /**
-     * Get a relation to the user that last assessed this payment.
+     * Get the bunq account.
      *
-     * This is set to the community manager that checks and approves the
-     * payment. This may be null if the payment had not been checked yet.
-     *
-     * @return Relation to the assessing user.
+     * @return The bunq account.
      */
-    public function assessor() {
-        return $this->belongsTo(User::class);
+    // TODO: use a relation, make this more efficient
+    public function getBunqAccount() {
+        return $this->payment->service->serviceable->bunqAccount;
     }
 
     /**
@@ -150,11 +125,8 @@ class PaymentManualIban extends Model {
         $serviceable = $service->serviceable;
 
         // Build the paymentable for the payment
-        $paymentable = new PaymentManualIban();
+        $paymentable = new PaymentBunqIban();
         $paymentable->payment_id = $payment->id;
-        $paymentable->to_account_holder = $serviceable->account_holder;
-        $paymentable->to_iban = $serviceable->iban;
-        $paymentable->to_bic = $serviceable->bic;
         $paymentable->save();
 
         // Attach the paymentable to the payment
@@ -172,8 +144,6 @@ class PaymentManualIban extends Model {
     public function getStep() {
         if($this->transferred_at == null || $this->from_iban == null)
             return Self::STEP_TRANSFER;
-        if($this->transferred_at > now()->subSeconds(Self::TRANSFER_WAIT))
-            return Self::STEP_TRANSFERRING;
         if($this->settled_at == null)
             return Self::STEP_RECEIPT;
 

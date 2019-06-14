@@ -29,7 +29,7 @@
         @endphp
 
         <div class="field {{ ErrorRenderer::hasError('language') ? 'error' : '' }}">
-            {{ Form::label('language', __('lang.language')) }}
+            {{ Form::label('language', __('lang.language') . ':') }}
 
             <div class="ui fluid selection dropdown">
                 {{ Form::hidden('language', langManager()->getLocale()) }}

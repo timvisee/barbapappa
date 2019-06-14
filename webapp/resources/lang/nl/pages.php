@@ -309,6 +309,7 @@ return [
      */
     'bunqAccounts' => [
         'title' => 'bunq accounts',
+        'bunqAccount' => 'bunq account',
         'description' => 'Klik op één van je bunq accounts om deze te beheren, of maak een nieuwe aan.',
         'noAccounts' => 'Je hebt nog geen bunq accounts toegevoegd...',
         'addAccount' => 'Add bunq account',
@@ -330,6 +331,8 @@ return [
         'runHousekeeping' => 'Voer huishouden uit',
         'runHousekeepingSuccess' => 'Het monitaire bunq account is opnieuw ingesteld en eventuele hangende betalingen staan nu in de wachtrij voor verwerking.',
         'noHttpsNoCallbacks' => 'Deze site gebruikt geen HTTPS, real time bunq betalingen worden daardoor niet ondersteund. Betalingen worden eens per dag verwerkt.',
+        'manageCommunityAccounts' => 'Beheer bunq accounts voor groep',
+        'manageAppAccounts' => 'Beheer bunq accounts voor gehele applicatie',
     ],
 
     /**

@@ -2,50 +2,59 @@
 
 namespace BarPay\Models;
 
+use App\Models\BunqAccount;
 use App\Models\Currency;
-use BarPay\Controllers\ServiceManualIbanController;
+use BarPay\Controllers\ServiceBunqIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Manual IBAN service class.
+ * Bunq IBAN service class.
  *
- * This represents a payment service for a manual IBAN transfer.
+ * This represents a payment service for a bunq IBAN transfer.
  *
  * @property int id
  * @property int service_id
- * @property string account_holder Name of the account holder.
- * @property string iban IBAN to transfer to.
- * @property string|null bic Optional BIC corresponding to the IBAN.
+ * @property string bunq_account_id The ID of the bunq account being used.
+ * @property-read BunqAccount bunq_account The ID of the bunq account being used.
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class ServiceManualIban extends Model {
+class ServiceBunqIban extends Model {
 
     use Serviceable;
 
-    protected $table = "service_manual_iban";
+    protected $table = "service_bunq_iban";
 
     /**
      * The controller to use for this service.
      */
-    public const CONTROLLER = ServiceManualIbanController::class;
+    public const CONTROLLER = ServiceBunqIbanController::class;
 
     /**
      * The payment model for this service.
      */
-    public const PAYMENT_MODEL = PaymentManualIban::class;
+    public const PAYMENT_MODEL = PaymentBunqIban::class;
 
     /**
      * The root for language values related to this service.
      */
-    public const LANG_ROOT = 'barpay::service.manualiban';
+    public const LANG_ROOT = 'barpay::service.bunqiban';
 
     /**
      * The root for views related to this service.
      */
-    public const VIEW_ROOT = 'barpay::service.manualiban';
+    public const VIEW_ROOT = 'barpay::service.bunqiban';
+
+    /**
+     * Get a relation to the bunq account.
+     *
+     * @return Relation to the bunq account.
+     */
+    public function bunqAccount() {
+        return $this->belongsTo(BunqAccount::class);
+    }
 
     /**
      * Block direclty deleting.
@@ -62,6 +71,6 @@ class ServiceManualIban extends Model {
      * @return bool True if supported, false if not.
      */
     public static function isSupportedCurrency(Currency $currency) {
-        return true;
+        return $currency->code == 'EUR';
     }
 }

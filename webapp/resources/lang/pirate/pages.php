@@ -309,6 +309,7 @@ return [
      */
     'bunqAccounts' => [
         'title' => 'bunq accounts',
+        'bunqAccount' => 'bunq account',
         'description' => 'Click on one of yer bunq accounts to manage it, or add a new one.',
         'noWallets' => 'Yer nay be any bunq accounts added yet...',
         'addAccount' => 'Add bunq account',
@@ -330,6 +331,8 @@ return [
         'runHousekeeping' => 'Run housekeeping',
         'runHousekeepingSuccess' => 'Th\' monetary bunq account be reconfigured and any pending payments now be queued for processing.',
         'noHttpsNoCallbacks' => 'Dis site does nay be HTTPS, real time bunq payments nay be supported. Payment events be processed daily.',
+        'manageCommunityAccounts' => 'Manage community bunq accounts',
+        'manageAppAccounts' => 'Manage application global bunq accounts',
     ],
 
     /**

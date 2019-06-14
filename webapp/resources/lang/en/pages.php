@@ -309,6 +309,7 @@ return [
      */
     'bunqAccounts' => [
         'title' => 'bunq accounts',
+        'bunqAccount' => 'bunq account',
         'description' => 'Click on one of your bunq accounts to manage it, or add a new one.',
         'noAccounts' => 'You don\'t have any bunq accounts added yet...',
         'addAccount' => 'Add bunq account',
@@ -330,6 +331,8 @@ return [
         'runHousekeeping' => 'Run housekeeping',
         'runHousekeepingSuccess' => 'The monetary bunq account has been reconfigured and any pending payments are now queued for processing.',
         'noHttpsNoCallbacks' => 'This site does not use HTTPS, real time bunq payments are not supported. Payment events will be processed daily.',
+        'manageCommunityAccounts' => 'Manage community bunq accounts',
+        'manageAppAccounts' => 'Manage application global bunq accounts',
     ],
 
     /**
@@ -437,7 +440,7 @@ return [
         'title' => 'Payments',
         'description' => 'This shows all in progress and settled payments you\'ve made in any community.',
         'details' => 'Payment details',
-        'payment' => 'Payment progress',
+        'progress' => 'Payment progress',
         'last#' => '{0} Last payments|{1} Last payment|[2,*] Last :count payments',
         'backToPayment' => 'Back to payment',
         'backToPayments' => 'Back to payments',
