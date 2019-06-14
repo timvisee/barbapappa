@@ -107,6 +107,10 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
 
         // Settle this payment
         DB::transaction(function() use($paymentIban, $barPayment, $barPaymentable) {
+            // Forward the money
+            // TODO: do this in an event, so we can retry on fail
+            Self::forwardPayment($account, $apiPayment, $barPayment, $serviceable);
+
             // Set from IBAN and transfer time if not set, set settled time
             if($barPaymentable->from_iban == null)
                 $barPaymentable->from_iban = $paymentIban;
@@ -118,10 +122,6 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
             // Settle the payment
             $barPayment->settle(Payment::STATE_COMPLETED);
         });
-
-        // Forward the money
-        // TODO: do this in an event, so we can retry on fail
-        Self::forwardPayment($account, $apiPayment, $barPayment, $serviceable);
 
         return true;
     }
