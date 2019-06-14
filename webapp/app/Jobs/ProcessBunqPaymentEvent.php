@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\BunqAccount;
 use BarPay\Models\Payment;
 use BarPay\Models\PaymentBunqIban;
+use BarPay\Models\ServiceBunqIban;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -91,7 +92,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
         $amount = $apiPayment->getAmount();
         $amountValue = (float) $amount->getValue();
         $service = $barPayment->service;
-        $serviceable = $barPayment->serviceable;
+        $serviceable = $service->serviceable;
         $paymentIban = $apiPayment->getCounterpartyAlias()->getIban();
         $fromIban = $barPaymentable->from_iban;
 
