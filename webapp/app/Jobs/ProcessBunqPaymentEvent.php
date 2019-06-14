@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Jobs\SendBunqPayment;
 use App\Models\BunqAccount;
 use BarPay\Models\Payment;
 use BarPay\Models\PaymentBunqIban;
@@ -187,16 +188,13 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      * @param string $description The payment description.
      */
     private static function sendPayment(BunqAccount $account, ApiPayment $apiPayment, Pointer $to, string $description) {
-        ApiPayment::create(
-            $apiPayment->getAmount(),
+        // Queue the payment sending action
+        SendBunqPayment::dispatch(
+            $account,
             $to,
-            $description,
-            $account->monetary_account_id,
-            null,
-            null,
-            null,
-            []
-        );
+            $apiPayment->getAmount(),
+            $description
+        )->delay(now()->addSecond());
     }
 
     /**
