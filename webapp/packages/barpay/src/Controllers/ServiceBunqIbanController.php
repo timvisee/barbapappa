@@ -59,8 +59,6 @@ class ServiceBunqIbanController {
      * @param ServiceBunqIban $serviceable The serviceable.
      */
     public static function edit(Request $request, Service $service, ServiceBunqIban $serviceable) {
-        // TODO: did we validate for this?
-
         $serviceable->account_holder = $request->input('account_holder');
         $serviceable->iban = $request->input('iban');
         $serviceable->bic = $request->input('bic');

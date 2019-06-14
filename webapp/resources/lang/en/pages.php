@@ -440,7 +440,7 @@ return [
         'title' => 'Payments',
         'description' => 'This shows all in progress and settled payments you\'ve made in any community.',
         'details' => 'Payment details',
-        'payment' => 'Payment progress',
+        'progress' => 'Payment progress',
         'last#' => '{0} Last payments|{1} Last payment|[2,*] Last :count payments',
         'backToPayment' => 'Back to payment',
         'backToPayments' => 'Back to payments',
