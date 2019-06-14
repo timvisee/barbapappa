@@ -115,9 +115,15 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 if(is_null($o))
                     return false;
 
-                // Filter to only keep event types we should handle
-                return !is_null($o->getPayment())
-                    || !is_null($o->getBunqMeTab());
+                // Process payments if we received money in euros
+                if(($payment = $o->getPayment()) != null) {
+                    $amount = $payment->getAmount();
+                    $amountValue = (float) $amount->getValue();
+                    return $amountValue >= 0 && $amount->getCurrency() == 'EUR';
+                }
+
+                // Filter to only keep other event types we should handle
+                return !is_null($o->getBunqMeTab());
             })
             ->values()
 
