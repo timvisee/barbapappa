@@ -16,8 +16,9 @@ class CreatePaymentBunqmeTabTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('payment_id')->unsigned()->nullable(false);
 
-            // The BunqMe Tab ID
+            // The BunqMe Tab ID and share URL
             $table->bigInteger('bunq_tab_id')->nullable(true);
+            $table->string('bunq_tab_url')->nullable(true);
 
             // State
             $table->datetime('transferred_at')->nullable(true);

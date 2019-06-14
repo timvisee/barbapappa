@@ -52,4 +52,15 @@ return [
             'receipt' => 'Wait on receipt',
         ],
     ],
+
+    'bunqmetab' => [
+        'steps' => [
+            'transfer' => 'Pay',
+            'receipt' => 'Receipt',
+        ],
+        'stepDescriptions' => [
+            'transfer' => 'Pay via bunq',
+            'receipt' => 'Wait on receipt',
+        ],
+    ],
 ];

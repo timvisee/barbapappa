@@ -9,6 +9,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use bunq\Model\Generated\Endpoint\BunqMeTab;
+use bunq\Model\Generated\Endpoint\BunqMeTabEntry;
+use bunq\Model\Generated\Object\Amount;
+
 /**
  * BunqMe Tab payment data class.
  *
@@ -17,7 +21,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int id
  * @property int payment_id
  * @property-read Payment payment
- * @property int bunq_tab_id The BunqMe Tab ID.
+ * @property int|null bunq_tab_id The BunqMe Tab ID.
+ * @property string|null bunq_tab_url The BunqMe Tab share URL.
  * @property datetime|null transferred_at When the user manually transferred if done.
  * @property datetime|null settled_at When the bunq transfer was settled by the counter party if done.
  * @property Carbon created_at
@@ -116,12 +121,44 @@ class PaymentBunqmeTab extends Model {
         // Get the serviceable
         $serviceable = $service->serviceable;
 
+
+
+
+
+        // Get the bunq account to use, load the bunq API context
+        $account = $serviceable->bunqAccount;
+        $account->loadBunqContext();
+
+        $bunqMeTabEntry = new BunqMeTabEntry(
+            // TODO: use proper amount here
+            new Amount('1.00', 'EUR'),
+            'Some payment description',
+            route('payment.pay', ['paymentId' => $payment->id])
+        );
+
+        $bunqMeTabId = BunqMeTab::create(
+            $bunqMeTabEntry,
+            $account->monetary_account_id,
+            null,
+            []
+        )->getValue();
+
+        $bunqMeTab = BunqMeTab::get(
+            $bunqMeTabId,
+            $account->monetary_account_id,
+            []
+        )->getValue();
+
+
+
+
+
         // Build the paymentable for the payment
         $paymentable = new PaymentBunqmeTab();
         $paymentable->payment_id = $payment->id;
+        $paymentable->bunq_tab_id = $bunqMeTabId;
+        $paymentable->bunq_tab_url = $bunqMeTab->getBunqmeTabShareUrl();
         $paymentable->save();
-
-        // TODO: create the bunqme tab request
 
         // Attach the paymentable to the payment
         $payment->setState(Payment::STATE_PENDING_MANUAL, false);

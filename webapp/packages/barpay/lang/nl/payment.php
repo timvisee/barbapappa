@@ -52,4 +52,15 @@ return [
             'receipt' => 'Wacht op bevestiging',
         ],
     ],
+
+    'bunqmetab' => [
+        'steps' => [
+            'pay' => 'Betalen',
+            'receipt' => 'Bevestiging',
+        ],
+        'stepDescriptions' => [
+            'pay' => 'Betalen via bunq',
+            'receipt' => 'Wacht op bevestiging',
+        ],
+    ],
 ];
