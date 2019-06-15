@@ -59,6 +59,7 @@ class Payment extends Model {
      * A list of all availalbe paymentables.
      */
     const PAYMENTABLES = [
+        PaymentBunqMeTab::class,
         PaymentBunqIban::class,
         PaymentManualIban::class,
     ];
@@ -505,6 +506,9 @@ class Payment extends Model {
 
         // Set the state
         $this->setState($state, false);
+
+        // Call event handler in paymentable
+        $this->paymentable->onSetState($state);
 
         // Settle state of linked payment mutation if there is any
         $mut_payment = $this->mutationPayment;

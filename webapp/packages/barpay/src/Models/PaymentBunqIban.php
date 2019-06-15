@@ -17,13 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int id
  * @property int payment_id
  * @property-read Payment payment
- * @property string to_account_holder Account holder to transfer to.
- * @property string to_iban IBAN to transfer to.
- * @property string|null to_bic BIC to transfer to.
  * @property string|null from_iban IBAN user transfers from.
- * @property int|null assessor_id ID of user that last assessed this payment.
- * @property-read User|null assessor User that last assessed this payment.
- * @property string ref A reference code.
  * @property datetime|null transferred_at When the user manually transferred if done.
  * @property datetime|null checked_at Last time the transaction was checked at.
  * @property datetime|null settled_at When the bunq transfer was settled by the counter party if done.
@@ -168,4 +162,11 @@ class PaymentBunqIban extends Model {
     public function delete() {
         throw new \Exception('cannot directly delete paymentable, delete the owning payment instead');
     }
+
+    /**
+     * Called when the state of the payment is changed.
+     *
+     * @param int $state The new state.
+     */
+    public function onSetState($state, $save = true) {}
 }

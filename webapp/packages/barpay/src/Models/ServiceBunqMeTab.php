@@ -4,15 +4,15 @@ namespace BarPay\Models;
 
 use App\Models\BunqAccount;
 use App\Models\Currency;
-use BarPay\Controllers\ServiceBunqIbanController;
+use BarPay\Controllers\ServiceBunqMeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * Bunq IBAN service class.
+ * BunqMe Tab service class.
  *
- * This represents a payment service for a bunq IBAN transfer.
+ * This represents a payment service for a BunqMe Tab payment request.
  *
  * @property int id
  * @property int service_id
@@ -24,31 +24,31 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class ServiceBunqIban extends Model {
+class ServiceBunqMeTab extends Model {
 
     use Serviceable;
 
-    protected $table = "service_bunq_iban";
+    protected $table = "service_bunqme_tab";
 
     /**
      * The controller to use for this service.
      */
-    public const CONTROLLER = ServiceBunqIbanController::class;
+    public const CONTROLLER = ServiceBunqMeTabController::class;
 
     /**
      * The payment model for this service.
      */
-    public const PAYMENT_MODEL = PaymentBunqIban::class;
+    public const PAYMENT_MODEL = PaymentBunqMeTab::class;
 
     /**
      * The root for language values related to this service.
      */
-    public const LANG_ROOT = 'barpay::service.bunqiban';
+    public const LANG_ROOT = 'barpay::service.bunqmetab';
 
     /**
      * The root for views related to this service.
      */
-    public const VIEW_ROOT = 'barpay::service.bunqiban';
+    public const VIEW_ROOT = 'barpay::service.bunqmetab';
 
     /**
      * Get a relation to the bunq account.

@@ -2,80 +2,67 @@
 
 namespace BarPay\Models;
 
+use App\Jobs\CreateBunqMeTabPayment;
+use App\Jobs\CancelBunqMeTabPayment;
+use App\Models\BunqAccount;
 use App\Models\User;
-use BarPay\Controllers\PaymentManualIbanController;
+use BarPay\Controllers\PaymentBunqMeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use bunq\Model\Generated\Object\Amount;
 
 /**
- * Manual IBAN payment data class.
+ * BunqMe Tab payment data class.
  *
- * This represents a payment data for a manual IBAN transfer.
+ * This represents a payment data for a bunq BunqMe Tab payment request.
  *
  * @property int id
  * @property int payment_id
  * @property-read Payment payment
- * @property string|null from_iban IBAN user transfers from.
+ * @property int|null bunq_tab_id The BunqMe Tab ID.
+ * @property string|null bunq_tab_url The BunqMe Tab share URL.
  * @property datetime|null transferred_at When the user manually transferred if done.
- * @property datetime|null settled_at When the manual transfer was settled by the counter party if done.
+ * @property datetime|null settled_at When the bunq transfer was settled by the counter party if done.
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class PaymentManualIban extends Model {
+class PaymentBunqMeTab extends Model {
 
     use Paymentable;
 
-    protected $table = "payment_manual_iban";
+    protected $table = "payment_bunqme_tab";
 
     protected $casts = [
         'transferred_at' => 'datetime',
-        'checked_at' => 'datetime',
         'settled_at' => 'datetime',
     ];
 
     /**
-     * Wait this number of seconds after a transfer, before asking a community
-     * manager to confirm the payment is received.
-     */
-    public const TRANSFER_WAIT = 1.5 * 24 * 60 * 60;
-
-    /**
-     * Wait this number of seconds after checking a transfer, before checking it
-     * again.
-     */
-    public const TRANSFER_CHECK_RETRY = 1.5 * 24 * 60 * 60;
-
-    /**
-     * The maximum number of seconds a transfer check can be delayed.
-     */
-    public const TRANSFER_DELAY_MAX = 30 * 24 * 60 * 60;
-
-    /**
      * The controller to use for this paymentable.
      */
-    public const CONTROLLER = PaymentManualIbanController::class;
+    public const CONTROLLER = PaymentBunqMeTabController::class;
 
     /**
      * The root for views related to this payment.
      */
-    public const VIEW_ROOT = 'barpay::payment.manualiban';
+    public const VIEW_ROOT = 'barpay::payment.bunqmetab';
 
     /**
      * The root for language related to this payment.
      */
-    public const LANG_ROOT = 'barpay::payment.manualiban';
+    public const LANG_ROOT = 'barpay::payment.bunqmetab';
 
-    const STEP_TRANSFER = 'transfer';
-    const STEP_TRANSFERRING = 'transferring';
+    const STEP_CREATE = 'create';
+    const STEP_PAY = 'pay';
     const STEP_RECEIPT = 'receipt';
 
     /**
      * An ordered list of steps in this payment.
      */
     public const STEPS = [
-        Self::STEP_TRANSFER,
-        Self::STEP_TRANSFERRING,
+        Self::STEP_CREATE,
+        Self::STEP_PAY,
         Self::STEP_RECEIPT,
     ];
 
@@ -91,8 +78,8 @@ class PaymentManualIban extends Model {
      */
     public static function scopeRequireUserAction($query, $paymentable_query) {
         $paymentable_query
-            ->where('from_iban', null)
-            ->orWhere('transferred_at', null);
+            ->whereNotNull('bunq_tab_id')
+            ->where('transferred_at', null);
     }
 
     /**
@@ -106,24 +93,18 @@ class PaymentManualIban extends Model {
      *      paymentable.
      */
     public static function scopeRequireCommunityAction($query, $paymentable_query) {
-        $paymentable_query
-            ->where('transferred_at', '<', now()->subSeconds(Self::TRANSFER_WAIT))
-            ->where(function($query) {
-                $query->where('checked_at', '<', now()->subSeconds(Self::TRANSFER_CHECK_RETRY))
-                    ->orWhere('checked_at', null);
-            });
+        // Do not include this for community action
+        $paymentable_query->whereRaw('1 = 2');
     }
 
     /**
-     * Get a relation to the user that last assessed this payment.
+     * Get the bunq account.
      *
-     * This is set to the community manager that checks and approves the
-     * payment. This may be null if the payment had not been checked yet.
-     *
-     * @return Relation to the assessing user.
+     * @return The bunq account.
      */
-    public function assessor() {
-        return $this->belongsTo(User::class);
+    // TODO: use a relation, make this more efficient
+    public function getBunqAccount() {
+        return $this->payment->service->serviceable->bunqAccount;
     }
 
     /**
@@ -139,20 +120,28 @@ class PaymentManualIban extends Model {
         // We must be in a database transaction
         assert_transaction();
 
-        // Get the serviceable
+        // Get the serviceable and the account
         $serviceable = $service->serviceable;
+        $account = $serviceable->bunqAccount;
+
+        // Define the amount to pay
+        $amount = new Amount(
+            number_format($payment->money, 2, '.', ''),
+            'EUR'
+        );
 
         // Build the paymentable for the payment
-        $paymentable = new PaymentManualIban();
+        $paymentable = new PaymentBunqMeTab();
         $paymentable->payment_id = $payment->id;
-        $paymentable->to_account_holder = $serviceable->account_holder;
-        $paymentable->to_iban = $serviceable->iban;
-        $paymentable->to_bic = $serviceable->bic;
         $paymentable->save();
 
         // Attach the paymentable to the payment
         $payment->setState(Payment::STATE_PENDING_MANUAL, false);
         $payment->setPaymentable($paymentable);
+
+        // Create job to set up the BunqMe Tab payment
+        CreateBunqMeTabPayment::dispatch($account, $payment, $amount)
+            ->onQueue('high');
 
         return $paymentable;
     }
@@ -163,10 +152,10 @@ class PaymentManualIban extends Model {
      * @return string Paymentable step.
      */
     public function getStep() {
-        if($this->transferred_at == null || $this->from_iban == null)
-            return Self::STEP_TRANSFER;
-        if($this->transferred_at > now()->subSeconds(Self::TRANSFER_WAIT))
-            return Self::STEP_TRANSFERRING;
+        if($this->bunq_tab_id == null)
+            return Self::STEP_CREATE;
+        if(!is_checked(request('returned')))
+            return Self::STEP_PAY;
         if($this->settled_at == null)
             return Self::STEP_RECEIPT;
 
@@ -182,7 +171,13 @@ class PaymentManualIban extends Model {
      * @return boolean True if it can be cancelled, false if not.
      */
     public function canCancel() {
-        return $this->getStep() == Self::STEP_TRANSFER;
+        switch($this->getStep()) {
+        case Self::STEP_CREATE:
+        case Self::STEP_PAY:
+            return true;
+        default:
+            return false;
+        }
     }
 
     /**
@@ -197,5 +192,19 @@ class PaymentManualIban extends Model {
      *
      * @param int $state The new state.
      */
-    public function onSetState($state, $save = true) {}
+    public function onSetState($state, $save = true) {
+        switch($state) {
+        case Payment::STATE_COMPLETED:
+        case Payment::STATE_REVOKED:
+        case Payment::STATE_REJECTED:
+        case Payment::STATE_FAILED:
+            // Cancel the BunqMe Tab over on bunqs side
+            if($this->bunq_tab_id != null)
+                CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id);
+            break;
+
+        default:
+            break;
+        }
+    }
 }
