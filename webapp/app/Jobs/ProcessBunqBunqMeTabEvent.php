@@ -81,12 +81,10 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
         $service = $barPayment->service;
         $serviceable = $service->serviceable;
 
-        // Were done if not inquired, skip if inquired more than once
+        // Were done if not inquired
         $inquiries = $bunqMeTab->getResultInquiries();
         if(count($inquiries) <= 0)
             return true;
-        if(count($inquiries) > 1)
-            return false;
 
         // TODO: do amount check, once payment data from bunq API isn't null anymore
 
