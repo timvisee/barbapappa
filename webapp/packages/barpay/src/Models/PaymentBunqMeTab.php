@@ -2,10 +2,10 @@
 
 namespace BarPay\Models;
 
-use App\Jobs\CreateBunqmeTabPayment;
+use App\Jobs\CreateBunqMeTabPayment;
 use App\Models\BunqAccount;
 use App\Models\User;
-use BarPay\Controllers\PaymentBunqmeTabController;
+use BarPay\Controllers\PaymentBunqMeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,7 +26,7 @@ use bunq\Model\Generated\Object\Amount;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class PaymentBunqmeTab extends Model {
+class PaymentBunqMeTab extends Model {
 
     use Paymentable;
 
@@ -40,7 +40,7 @@ class PaymentBunqmeTab extends Model {
     /**
      * The controller to use for this paymentable.
      */
-    public const CONTROLLER = PaymentBunqmeTabController::class;
+    public const CONTROLLER = PaymentBunqMeTabController::class;
 
     /**
      * The root for views related to this payment.
@@ -130,7 +130,7 @@ class PaymentBunqmeTab extends Model {
         );
 
         // Build the paymentable for the payment
-        $paymentable = new PaymentBunqmeTab();
+        $paymentable = new PaymentBunqMeTab();
         $paymentable->payment_id = $payment->id;
         $paymentable->save();
 
@@ -139,7 +139,8 @@ class PaymentBunqmeTab extends Model {
         $payment->setPaymentable($paymentable);
 
         // Create job to set up the BunqMe Tab payment
-        CreateBunqmeTabPayment::dispatch($account, $payment, $amount);
+        CreateBunqMeTabPayment::dispatch($account, $payment, $amount)
+            ->onQueue('high');
 
         return $paymentable;
     }
@@ -152,7 +153,7 @@ class PaymentBunqmeTab extends Model {
     public function getStep() {
         if($this->bunq_tab_id == null)
             return Self::STEP_CREATE;
-        if($this->transferred_at == null)
+        if(!is_checked(request('returned')))
             return Self::STEP_PAY;
         if($this->settled_at == null)
             return Self::STEP_RECEIPT;

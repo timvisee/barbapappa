@@ -122,8 +122,11 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                     return $amountValue >= 0 && $amount->getCurrency() == 'EUR';
                 }
 
-                // Filter to only keep other event types we should handle
-                return !is_null($o->getBunqMeTab());
+                // Only handle BunqMe Tab event updates
+                if(!is_null($o->getBunqMeTab()))
+                    return $event->getAction() == 'UPDATE';
+
+                return false;
             })
             ->values()
 
@@ -140,7 +143,8 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                     $job = ProcessBunqPaymentEvent::dispatch($account, $payment)
                         ->delay($delay);
                 else if(!is_null($tab = $o->getBunqMeTab()))
-                    $job = ProcessBunqBunqMeTabEvent::dispatch()->delay($delay);
+                    $job = ProcessBunqBunqMeTabEvent::dispatch($account, $tab)
+                        ->delay($delay);
                 else
                     throw new \Exception('Attempting to handle bunq event with unhandled type');
             });

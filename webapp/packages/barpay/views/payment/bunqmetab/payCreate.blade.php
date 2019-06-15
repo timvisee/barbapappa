@@ -2,6 +2,10 @@
 
 <a href="{{ url()->current() }}" class="ui loading button primary big">...</a>
 
+<div class="ui left pointing blue label">
+    @lang('barpay::misc.justASecond')
+</div>
+
 <div class="ui divider hidden"></div>
 
 <div class="ui info message">
@@ -11,6 +15,9 @@
 </div>
 
 <div class="ui divider hidden"></div>
+
+{{-- TODO: find a better refreshing method! --}}
+<meta http-equiv="refresh" content="2">
 
 <a href="{{ url()->current() }}"
         class="ui button basic"

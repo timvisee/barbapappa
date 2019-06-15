@@ -4,7 +4,7 @@ namespace BarPay\Models;
 
 use App\Models\BunqAccount;
 use App\Models\Currency;
-use BarPay\Controllers\ServiceBunqmeTabController;
+use BarPay\Controllers\ServiceBunqMeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -24,7 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class ServiceBunqmeTab extends Model {
+class ServiceBunqMeTab extends Model {
 
     use Serviceable;
 
@@ -33,12 +33,12 @@ class ServiceBunqmeTab extends Model {
     /**
      * The controller to use for this service.
      */
-    public const CONTROLLER = ServiceBunqmeTabController::class;
+    public const CONTROLLER = ServiceBunqMeTabController::class;
 
     /**
      * The payment model for this service.
      */
-    public const PAYMENT_MODEL = PaymentBunqmeTab::class;
+    public const PAYMENT_MODEL = PaymentBunqMeTab::class;
 
     /**
      * The root for language values related to this service.

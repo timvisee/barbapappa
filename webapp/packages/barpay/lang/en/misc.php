@@ -21,6 +21,9 @@ return [
     'makeAChoice' => 'Make a choice',
     'receivingOnAccount' => 'Receiving on account',
     'cannotCancelPaymentCurrently' => 'This payment cannot be cancelled at this time.',
+    'justASecond' => 'Just a second...',
+    'pay' => 'Pay',
+    'iHaveNotPayed' => 'I have not payed',
 
     'mustBeCorrect' => 'Please double-check the correctness of the credentials below. Users transfering money to an incorrect account may cause inreversable damage.',
     'mayClosePageWillNotify' => 'You may close this page now. You will be notified by email when the status of this payment changes.',

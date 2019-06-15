@@ -57,7 +57,7 @@ class Service extends Model {
      * Service types.
      */
     public const SERVICEABLES = [
-        ServiceBunqmeTab::class,
+        ServiceBunqMeTab::class,
         ServiceBunqIban::class,
         ServiceManualIban::class,
     ];

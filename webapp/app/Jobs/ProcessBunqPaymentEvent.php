@@ -151,7 +151,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
     }
 
     /**
-     * Send back the given payment to the counter party.
+     * Forward the given payment to the counter party.
      *
      * @param BunqAccount $account The bunq account.
      * @param ApiPayment $apiPayment The payment to send back.

@@ -1,36 +1,30 @@
-{{-- TODO: link wallet and transaction related to this payment --}}
+{{-- TODO: provide $paymentable as well --}}
 
 <div class="ui divider hidden"></div>
 
-<div class="ui one tiny statistics">
-    <div class="statistic">
-        <div class="label">
-            @lang('misc.waitingFor')
-        </div>
-        <div class="value">
-            {{ $timeWaiting }}
-        </div>
-    </div>
+<a href="{{ url()->full() }}" class="ui loading button gray big">...</a>
+
+<div class="ui left pointing label">
+    @lang('barpay::payment.bunqmetab.processingDontPayTwice')
 </div>
 
 <div class="ui divider hidden"></div>
 
+{{-- TODO: find a better refreshing method! --}}
+<meta http-equiv="refresh" content="2">
+
 <div class="ui info message">
-    @lang('barpay::payment.bunqiban.waitOnReceipt')<br>
+    @lang('barpay::payment.bunqmetab.processingDescription')<br>
     <br>
     @lang('barpay::misc.mayClosePageWillNotify')
 </div>
 
 <div class="ui divider hidden"></div>
 
-<a class="ui button primary"
-        href="{{ route('dashboard') }}"
-        title="@lang('pages.dashboard.title')">
-    @lang('pages.dashboard.title')
-</a>
-
-<a href="{{ url()->current() }}"
+<a href="{{ url()->full() }}"
         class="ui button basic"
         title="@lang('misc.refresh')">
     @lang('misc.refresh')
 </a>
+
+&nbsp;&nbsp;<a href="{{ url()->current() }}">@lang('barpay::misc.iHaveNotPayed')</a>

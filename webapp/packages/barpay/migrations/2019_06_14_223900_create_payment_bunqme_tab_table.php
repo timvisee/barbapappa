@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentBunqmeTabTable extends Migration {
+class CreatePaymentBunqMeTabTable extends Migration {
 
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class CreatePaymentBunqmeTabTable extends Migration {
             $table->integer('payment_id')->unsigned()->nullable(false);
 
             // The BunqMe Tab ID and share URL
-            $table->bigInteger('bunq_tab_id')->nullable(true);
+            $table->bigInteger('bunq_tab_id')->nullable(true)->unique();
             $table->string('bunq_tab_url')->nullable(true);
 
             // State

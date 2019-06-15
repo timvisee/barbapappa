@@ -14,7 +14,7 @@ use bunq\Model\Generated\Endpoint\BunqMeTabEntry;
 use bunq\Model\Generated\Object\Amount;
 
 // TODO: always use high priority for this job
-class CreateBunqmeTabPayment implements ShouldQueue {
+class CreateBunqMeTabPayment implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -72,8 +72,8 @@ class CreateBunqmeTabPayment implements ShouldQueue {
         // Build the BunqMe Tab entry
         $bunqMeTabEntry = new BunqMeTabEntry(
             $this->amount,
-            config('app.name') . ': ' . __('barpay::payment.bunqmetab.paymentForWalletTopUp'),
-            route('payment.pay', ['paymentId' => $this->payment_id])
+            $payment->getReference() . "\n" . config('app.name') . ': ' . __('barpay::payment.bunqmetab.paymentForWalletTopUp'),
+            route('payment.pay', ['paymentId' => $this->payment_id, 'returned' => true])
         );
 
         // Create the BunqMe Tab entry

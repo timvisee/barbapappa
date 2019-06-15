@@ -21,6 +21,9 @@ return [
     'makeAChoice' => 'Maak een keus',
     'receivingOnAccount' => 'Ontvangen op rekening',
     'cannotCancelPaymentCurrently' => 'Deze betaling kan op dit moment niet geannulleerd worden.',
+    'justASecond' => 'Even geduld...',
+    'pay' => 'Betaal',
+    'iHaveNotPayed' => 'Ik heb nog niet betaald',
 
     'mustBeCorrect' => 'Dubbel-check alsjeblieft de gegevens hieronder. Gebruikers die geld naar het verkeerde account overmaken kan voor onherstelbare schade zorgen.',
     'mayClosePageWillNotify' => 'Je kunt deze pagina nu sluiten. Je wordt op de hoogste gesteld via e-mail wanneer de status van deze betaling veranderd.',

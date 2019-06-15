@@ -4,11 +4,11 @@ namespace BarPay\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use BarPay\Models\Service;
-use BarPay\Models\ServiceBunqmeTab;
+use BarPay\Models\ServiceBunqMeTab;
 use Illuminate\Http\Request;
 
 // TODO: extend something else, possibly a trait
-class ServiceBunqmeTabController {
+class ServiceBunqMeTabController {
 
     /**
      * Validate the form input for creating the new serviceable.
@@ -33,11 +33,11 @@ class ServiceBunqmeTabController {
      * @param Request $request The request.
      * @param Service $service The service.
      *
-     * @return ServiceBunqmeTab The created serviceable.
+     * @return ServiceBunqMeTab The created serviceable.
      */
     public static function create(Request $request, Service $service) {
         // Create the serviceable
-        $serviceable = new ServiceBunqmeTab();
+        $serviceable = new ServiceBunqMeTab();
         $serviceable->service_id = $service->id;
         $serviceable->bunq_account_id = $request->input('bunq_account');
         $serviceable->account_holder = $request->input('account_holder');
@@ -56,9 +56,9 @@ class ServiceBunqmeTabController {
      *
      * @param Request $request The request.
      * @param Service $service The service.
-     * @param ServiceBunqmeTab $serviceable The serviceable.
+     * @param ServiceBunqMeTab $serviceable The serviceable.
      */
-    public static function edit(Request $request, Service $service, ServiceBunqmeTab $serviceable) {
+    public static function edit(Request $request, Service $service, ServiceBunqMeTab $serviceable) {
         $serviceable->account_holder = $request->input('account_holder');
         $serviceable->iban = $request->input('iban');
         $serviceable->bic = $request->input('bic');

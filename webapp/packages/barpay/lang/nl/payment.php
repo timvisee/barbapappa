@@ -59,6 +59,8 @@ return [
         'pleasePay' => 'Klik op de \'Betaal\' knop en voltooi de betaling via bunq.',
         'handledByBunq' => 'Je betaling zal behandeld worden door bunq, een bank die hiervoor een service verleent. Je kunt met iDeal of SOFORT betalen op de bunq-betaalpagina.',
         'paymentForWalletTopUp' => 'Betaling voor portemonnee storting',
+        'processingDontPayTwice' => 'Verwerken. Betaal niet dubbel!',
+        'processingDescription' => 'Je betaling wordt verwerkt op de achtergrond. Het kan tot een minuut duren voordat de betaling doorkomt.',
         'steps' => [
             'create' => 'Aanmaken',
             'pay' => 'Betalen',

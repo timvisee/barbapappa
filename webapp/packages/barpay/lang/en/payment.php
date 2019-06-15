@@ -59,6 +59,8 @@ return [
         'pleasePay' => 'Please click the \'Pay\' button and finish the payment through bunq.',
         'handledByBunq' => 'Your payment will be handled through bunq, a bank which provides a service for this. You\'ll be able to pay with iDeal or SOFORT on the bunq payment page.',
         'paymentForWalletTopUp' => 'Payment for wallet top-up',
+        'processingDontPayTwice' => 'Processing. Do not pay twice!',
+        'processingDescription' => 'Your payment is being processed in the backgroud. Please allow up to a minute for it to come through.',
         'steps' => [
             'create' => 'Create',
             'pay' => 'Pay',

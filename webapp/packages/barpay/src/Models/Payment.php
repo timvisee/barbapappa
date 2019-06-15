@@ -59,7 +59,7 @@ class Payment extends Model {
      * A list of all availalbe paymentables.
      */
     const PAYMENTABLES = [
-        PaymentBunqmeTab::class,
+        PaymentBunqMeTab::class,
         PaymentBunqIban::class,
         PaymentManualIban::class,
     ];
