@@ -191,4 +191,11 @@ class PaymentManualIban extends Model {
     public function delete() {
         throw new \Exception('cannot directly delete paymentable, delete the owning payment instead');
     }
+
+    /**
+     * Called when the state of the payment is changed.
+     *
+     * @param int $state The new state.
+     */
+    public function onSetState($state, $save = true) {}
 }

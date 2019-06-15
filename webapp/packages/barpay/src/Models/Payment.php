@@ -507,6 +507,9 @@ class Payment extends Model {
         // Set the state
         $this->setState($state, false);
 
+        // Call event handler in paymentable
+        $this->paymentable->onSetState($state);
+
         // Settle state of linked payment mutation if there is any
         $mut_payment = $this->mutationPayment;
         if($mut_payment != null) {

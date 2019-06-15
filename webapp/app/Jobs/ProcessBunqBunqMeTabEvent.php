@@ -52,8 +52,8 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
         if(Self::handleBunqMeTabEvent($account, $bunqMeTab))
             return;
 
-        // TODO: do not throw here, send a message to admin instead
-        throw new \Exception('Unhandled BunqMe Tab payment, should refund?');
+        // TODO: send a message to admin instead, should not reach this
+        \Log::error(new \Exception('Unhandled BunqMe Tab payment, should refund?'));
     }
 
     /**

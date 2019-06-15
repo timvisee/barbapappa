@@ -3,6 +3,7 @@
 namespace BarPay\Models;
 
 use App\Jobs\CreateBunqMeTabPayment;
+use App\Jobs\CancelBunqMeTabPayment;
 use App\Models\BunqAccount;
 use App\Models\User;
 use BarPay\Controllers\PaymentBunqMeTabController;
@@ -170,9 +171,13 @@ class PaymentBunqMeTab extends Model {
      * @return boolean True if it can be cancelled, false if not.
      */
     public function canCancel() {
-        // TODO: revoke BunqMe Tab request on cancel!
-
-        return $this->getStep() == Self::STEP_PAY;
+        switch($this->getStep()) {
+        case Self::STEP_CREATE:
+        case Self::STEP_PAY:
+            return true;
+        default:
+            return false;
+        }
     }
 
     /**
@@ -180,5 +185,26 @@ class PaymentBunqMeTab extends Model {
      */
     public function delete() {
         throw new \Exception('cannot directly delete paymentable, delete the owning payment instead');
+    }
+
+    /**
+     * Called when the state of the payment is changed.
+     *
+     * @param int $state The new state.
+     */
+    public function onSetState($state, $save = true) {
+        switch($state) {
+        case Payment::STATE_COMPLETED:
+        case Payment::STATE_REVOKED:
+        case Payment::STATE_REJECTED:
+        case Payment::STATE_FAILED:
+            // Cancel the BunqMe Tab over on bunqs side
+            if($this->bunq_tab_id != null)
+                CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id);
+            break;
+
+        default:
+            break;
+        }
     }
 }

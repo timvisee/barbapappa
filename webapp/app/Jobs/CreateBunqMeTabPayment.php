@@ -95,5 +95,9 @@ class CreateBunqMeTabPayment implements ShouldQueue {
         $paymentable->bunq_tab_id = $bunqMeTabId;
         $paymentable->bunq_tab_url = $bunqMeTab->getBunqmeTabShareUrl();
         $paymentable->save();
+
+        // Immediately cancel if payment is not in progress anymore
+        if(!$payment->isInProgress())
+            CancelBunqMeTabPayment::dispatch($account, $bunqMeTabId);
     }
 }

@@ -19,6 +19,12 @@
 {{-- TODO: find a better refreshing method! --}}
 <meta http-equiv="refresh" content="2">
 
+<a href="{{ route('payment.cancel', [
+            'paymentId' => $payment->id,
+        ]) }}"
+        class="ui button negative basic">
+    @lang('general.cancel')
+</a>
 <a href="{{ url()->current() }}"
         class="ui button basic"
         title="@lang('misc.refresh')">
