@@ -2,15 +2,13 @@
 
 namespace BarPay\Models;
 
+use App\Jobs\CreateBunqmeTabPayment;
 use App\Models\BunqAccount;
 use App\Models\User;
 use BarPay\Controllers\PaymentBunqmeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
-use bunq\Model\Generated\Endpoint\BunqMeTab;
-use bunq\Model\Generated\Endpoint\BunqMeTabEntry;
 use bunq\Model\Generated\Object\Amount;
 
 /**
@@ -54,6 +52,7 @@ class PaymentBunqmeTab extends Model {
      */
     public const LANG_ROOT = 'barpay::payment.bunqmetab';
 
+    const STEP_CREATE = 'create';
     const STEP_PAY = 'pay';
     const STEP_RECEIPT = 'receipt';
 
@@ -61,6 +60,7 @@ class PaymentBunqmeTab extends Model {
      * An ordered list of steps in this payment.
      */
     public const STEPS = [
+        Self::STEP_CREATE,
         Self::STEP_PAY,
         Self::STEP_RECEIPT,
     ];
@@ -76,8 +76,9 @@ class PaymentBunqmeTab extends Model {
      *      paymentable.
      */
     public static function scopeRequireUserAction($query, $paymentable_query) {
-        // TODO: update this!
-        $paymentable_query->where('transferred_at', null);
+        $paymentable_query
+            ->whereNotNull('bunq_tab_id')
+            ->where('transferred_at', null);
     }
 
     /**
@@ -118,51 +119,27 @@ class PaymentBunqmeTab extends Model {
         // We must be in a database transaction
         assert_transaction();
 
-        // Get the serviceable
+        // Get the serviceable and the account
         $serviceable = $service->serviceable;
-
-
-
-
-
-        // Get the bunq account to use, load the bunq API context
         $account = $serviceable->bunqAccount;
-        $account->loadBunqContext();
 
-        $bunqMeTabEntry = new BunqMeTabEntry(
-            // TODO: use proper amount here
-            new Amount('1.00', 'EUR'),
-            'Some payment description',
-            route('payment.pay', ['paymentId' => $payment->id])
+        // Define the amount to pay
+        $amount = new Amount(
+            number_format($payment->money, 2, '.', ''),
+            'EUR'
         );
-
-        $bunqMeTabId = BunqMeTab::create(
-            $bunqMeTabEntry,
-            $account->monetary_account_id,
-            null,
-            []
-        )->getValue();
-
-        $bunqMeTab = BunqMeTab::get(
-            $bunqMeTabId,
-            $account->monetary_account_id,
-            []
-        )->getValue();
-
-
-
-
 
         // Build the paymentable for the payment
         $paymentable = new PaymentBunqmeTab();
         $paymentable->payment_id = $payment->id;
-        $paymentable->bunq_tab_id = $bunqMeTabId;
-        $paymentable->bunq_tab_url = $bunqMeTab->getBunqmeTabShareUrl();
         $paymentable->save();
 
         // Attach the paymentable to the payment
         $payment->setState(Payment::STATE_PENDING_MANUAL, false);
         $payment->setPaymentable($paymentable);
+
+        // Create job to set up the BunqMe Tab payment
+        CreateBunqmeTabPayment::dispatch($account, $payment, $amount);
 
         return $paymentable;
     }
@@ -173,6 +150,8 @@ class PaymentBunqmeTab extends Model {
      * @return string Paymentable step.
      */
     public function getStep() {
+        if($this->bunq_tab_id == null)
+            return Self::STEP_CREATE;
         if($this->transferred_at == null)
             return Self::STEP_PAY;
         if($this->settled_at == null)

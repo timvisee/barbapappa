@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 // TODO: extend something else, possibly a trait
 class PaymentBunqmeTabController {
 
+    public static function stepCreate(Payment $payment, PaymentBunqmeTab $paymentable, $response) {
+        return $response;
+    }
+
     public static function stepPay(Payment $payment, PaymentBunqmeTab $paymentable, $response) {
         // TODO: pass bunqme tab link to response
 

@@ -54,12 +54,19 @@ return [
     ],
 
     'bunqmetab' => [
+        'waitOnReceipt' => 'Waiting for the payment to be received. This may take up to a few days.',
+        'waitOnCreate' => 'The payment is being created in the background. Please wait.',
+        'pleasePay' => 'Please click the \'Pay\' button and finish the payment through bunq.',
+        'handledByBunq' => 'Your payment will be handled through bunq, a bank which provides a service for this. You\'ll be able to pay with iDeal or SOFORT on the bunq payment page.',
+        'paymentForWalletTopUp' => 'Payment for wallet top-up',
         'steps' => [
-            'transfer' => 'Pay',
+            'create' => 'Create',
+            'pay' => 'Pay',
             'receipt' => 'Receipt',
         ],
         'stepDescriptions' => [
-            'transfer' => 'Pay via bunq',
+            'create' => 'Creating payment',
+            'pay' => 'Pay via bunq',
             'receipt' => 'Wait on receipt',
         ],
     ],
