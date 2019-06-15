@@ -17,7 +17,7 @@
     if($payment != null)
         $details[] = [
             'key' => __('misc.amount'),
-            'valueHtml' => $payment->formatCost(BALANCE_FORMAT_COLOR),
+            'valueHtml' => '<strike>' .  $payment->formatCost(BALANCE_FORMAT_COLOR) . '</strike>',
         ];
     if($wallet != null) {
         $details[] = [
