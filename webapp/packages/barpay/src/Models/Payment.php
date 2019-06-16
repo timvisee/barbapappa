@@ -79,7 +79,7 @@ class Payment extends Model {
         parent::boot();
 
         // Cascade delete to paymentable
-        self::deleting(function($model){
+        static::deleting(function($model) {
             $model->paymentable()->delete();
         });
     }

@@ -75,7 +75,7 @@ class Mutation extends Model {
         parent::boot();
 
         // Cascade delete to mutationable
-        self::deleting(function($model){
+        static::deleting(function($model) {
             $model->mutationable()->delete();
         });
     }

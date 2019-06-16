@@ -84,20 +84,6 @@ class Wallet extends Model {
         )->where('economy_id', $this->economy_id);
     }
 
-    // TODO: is this replaced by the `mutations` function?
-    // /**
-    //  * Get a list of wallet mutations, linked to this wallet.
-    //  * These aren't regular mutations, rather they are wallet specific
-    //  * mutations which are linked to a regular mutation.
-    //  *
-    //  * @return The wallet mutations.
-    //  */
-    // public function walletMutations() {
-    //     // TODO: implement this!
-    //     throw new \Exception("not yet implemented");
-    //     return $this->hasMany('App\Models\WalletMutation');
-    // }
-
     /**
      * Get a list of mutations, linked to this wallet.
      *
@@ -107,18 +93,12 @@ class Wallet extends Model {
      * @return The mutations.
      */
     public function mutations() {
-        return $this->hasManyDeep(
-            Mutation::class,
-            [MutationWallet::class],
-            [
-                'wallet_id',
-                'id',
-            ],
-            [
-                'id',
-                'mutation_id',
-            ]
-        );
+        return $this
+            ->hasManyDeepFromRelations(
+                $this->hasMany(MutationWallet::class),
+                (new MutationWallet)->mutation()
+            )
+            ->latest();
     }
 
     /**

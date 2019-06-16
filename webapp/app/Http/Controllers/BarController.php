@@ -493,7 +493,7 @@ class BarController extends Controller {
             ->whereNotExists(function($query) use($bar) {
                 $query->selectRaw('1')
                     ->fromRaw('mutations')
-                    ->leftJoin('mutations_product', 'mutations_product.mutation_id', '=', 'mutations.id')
+                    ->leftJoin('mutations_product', 'mutations_product.id', '=', 'mutations.mutationable_id')
                     ->whereRaw('mutations.transaction_id = transactions.id')
                     ->where(function($query) {
                         $query->where('mutationable_type', '<>', MutationWallet::class)
@@ -542,7 +542,7 @@ class BarController extends Controller {
                     ->whereExists(function($query) use($wallet) {
                         $query->selectRaw('1')
                             ->from('mutations_wallet')
-                            ->whereRaw('mutations.id = mutations_wallet.mutation_id')
+                            ->whereRaw('mutations.mutationable_id = mutations_wallet.id')
                             ->where('wallet_id', $wallet->id);
                     })
                     ->first();
@@ -576,7 +576,7 @@ class BarController extends Controller {
                 ->whereExists(function($query) use($product) {
                     $query->selectRaw('1')
                         ->from('mutations_product')
-                        ->whereRaw('mutations.id = mutations_product.mutation_id')
+                        ->whereRaw('mutations.mutationable_id = mutations_product.id')
                         ->where('product_id', $product->id);
                 })
                 ->first();

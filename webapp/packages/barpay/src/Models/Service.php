@@ -69,7 +69,7 @@ class Service extends Model {
         static::addGlobalScope(new EnabledScope);
 
         // Cascade delete to serviceable
-        self::deleting(function($model){
+        static::deleting(function($model) {
             $model->serviceable()->delete();
         });
     }

@@ -44,7 +44,7 @@ class Notification extends Model {
         parent::boot();
 
         // Cascade delete to notificationable
-        self::deleting(function($model){
+        static::deleting(function($model) {
             $model->notificationable()->delete();
         });
     }
