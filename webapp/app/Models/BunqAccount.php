@@ -39,7 +39,20 @@ class BunqAccount extends Model {
 
     protected $table = "bunq_accounts";
 
-    protected $fillable = ['community_id', 'enabled', 'name', 'account_holder', 'iban', 'bic'];
+    protected $fillable = [
+        'community_id',
+        'enabled',
+        'name',
+        'account_holder',
+        'iban',
+        'bic'
+    ];
+
+    protected $hidden = [
+        'api_context_encrypted',
+        'api_context',
+        'monetary_account_id',
+    ];
 
     public static function boot() {
         parent::boot();
