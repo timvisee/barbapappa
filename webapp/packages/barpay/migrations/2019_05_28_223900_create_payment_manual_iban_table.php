@@ -14,7 +14,6 @@ class CreatePaymentManualIbanTable extends Migration {
     public function up() {
         Schema::create('payment_manual_iban', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('payment_id')->unsigned()->nullable(false);
 
             // Target account details, from serviceable
             $table->string('to_account_holder')->nullable(false);
@@ -34,10 +33,6 @@ class CreatePaymentManualIbanTable extends Migration {
 
             $table->timestamps();
 
-            $table->foreign('payment_id')
-                ->references('id')
-                ->on('payments')
-                ->onDelete('cascade');
             $table->foreign('assessor_id')
                 ->references('id')
                 ->on('users')

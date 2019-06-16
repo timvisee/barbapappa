@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This represents a payment service for a BunqMe Tab payment request.
  *
  * @property int id
- * @property int service_id
  * @property string bunq_account_id The ID of the bunq account being used.
  * @property-read BunqAccount bunq_account The ID of the bunq account being used.
  * @property string account_holder The account holder to forward collected payments to.

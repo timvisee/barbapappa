@@ -18,7 +18,6 @@ use bunq\Model\Generated\Object\Amount;
  * This represents a payment data for a bunq BunqMe Tab payment request.
  *
  * @property int id
- * @property int payment_id
  * @property-read Payment payment
  * @property int|null bunq_tab_id The BunqMe Tab ID.
  * @property string|null bunq_tab_url The BunqMe Tab share URL.
@@ -132,7 +131,6 @@ class PaymentBunqMeTab extends Model {
 
         // Build the paymentable for the payment
         $paymentable = new PaymentBunqMeTab();
-        $paymentable->payment_id = $payment->id;
         $paymentable->save();
 
         // Attach the paymentable to the payment

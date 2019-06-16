@@ -75,6 +75,15 @@ class Payment extends Model {
         Self::STATE_FAILED,
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        // Cascade delete to paymentable
+        self::deleting(function($model){
+            $model->paymentable()->delete();
+        });
+    }
+
     /**
      * A scope for selecting payments that are, or are not in progress.
      */

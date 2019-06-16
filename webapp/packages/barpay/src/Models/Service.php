@@ -64,7 +64,14 @@ class Service extends Model {
 
     public static function boot() {
         parent::boot();
+
+        // Add global scopes
         static::addGlobalScope(new EnabledScope);
+
+        // Cascade delete to serviceable
+        self::deleting(function($model){
+            $model->serviceable()->delete();
+        });
     }
 
     /**

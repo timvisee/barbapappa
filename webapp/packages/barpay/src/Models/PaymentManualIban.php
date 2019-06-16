@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This represents a payment data for a manual IBAN transfer.
  *
  * @property int id
- * @property int payment_id
  * @property-read Payment payment
  * @property string|null from_iban IBAN user transfers from.
  * @property datetime|null transferred_at When the user manually transferred if done.
@@ -144,7 +143,6 @@ class PaymentManualIban extends Model {
 
         // Build the paymentable for the payment
         $paymentable = new PaymentManualIban();
-        $paymentable->payment_id = $payment->id;
         $paymentable->to_account_holder = $serviceable->account_holder;
         $paymentable->to_iban = $serviceable->iban;
         $paymentable->to_bic = $serviceable->bic;

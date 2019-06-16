@@ -71,6 +71,15 @@ class Mutation extends Model {
         Self::STATE_FAILED,
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        // Cascade delete to mutationable
+        self::deleting(function($model){
+            $model->mutationable()->delete();
+        });
+    }
+
     /**
      * Get the transaction this mutation is part of.
      *

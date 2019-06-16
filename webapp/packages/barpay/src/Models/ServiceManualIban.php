@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This represents a payment service for a manual IBAN transfer.
  *
  * @property int id
- * @property int service_id
  * @property string account_holder Name of the account holder.
  * @property string iban IBAN to transfer to.
  * @property string|null bic Optional BIC corresponding to the IBAN.
