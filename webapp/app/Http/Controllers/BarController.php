@@ -562,7 +562,6 @@ class BarController extends Controller {
                         ]);
                     $mut_wallet->setMutationable(
                         MutationWallet::create([
-                            'mutation_id' => $mut_wallet->id,
                             'wallet_id' => $wallet->id,
                         ])
                     );
@@ -599,7 +598,6 @@ class BarController extends Controller {
                     ]);
                 $mut_product->setMutationable(
                     MutationProduct::create([
-                        'mutation_id' => $mut_product->id,
                         'product_id' => $product->id,
                         'bar_id' => $bar->id,
                         'quantity' => 1,

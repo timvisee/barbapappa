@@ -344,7 +344,6 @@ class WalletController extends Controller {
                 ]);
             $mut_wallet->setMutationable(
                 MutationWallet::create([
-                    'mutation_id' => $mut_wallet->id,
                     'wallet_id' => $wallet->id,
                 ])
             );
@@ -364,7 +363,6 @@ class WalletController extends Controller {
                 ]);
             $mut_wallet->setMutationable(
                 MutationWallet::create([
-                    'mutation_id' => $mut_wallet->id,
                     'wallet_id' => $toWallet->id,
                 ])
             );
@@ -491,7 +489,6 @@ class WalletController extends Controller {
                 ]);
             $mut_payment->setMutationable(
                 MutationPayment::create([
-                    'mutation_id' => $mut_payment->id,
                     'payment_id' => $payment->id,
                 ])
             );
@@ -511,7 +508,6 @@ class WalletController extends Controller {
                 ]);
             $mut_wallet->setMutationable(
                 MutationWallet::create([
-                    'mutation_id' => $mut_wallet->id,
                     'wallet_id' => $wallet->id,
                 ])
             );

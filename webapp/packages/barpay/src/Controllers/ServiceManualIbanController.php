@@ -34,7 +34,6 @@ class ServiceManualIbanController {
     public static function create(Request $request, Service $service) {
         // Create the serviceable
         $serviceable = new ServiceManualIban();
-        $serviceable->service_id = $service->id;
         $serviceable->account_holder = $request->input('account_holder');
         $serviceable->iban = $request->input('iban');
         $serviceable->bic = $request->input('bic');
