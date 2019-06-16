@@ -32,13 +32,25 @@ class ProcessBunqAccountEvents implements ShouldQueue {
      * The maximum number of unhandled events to query from bunq at once.
      *
      * This job will automatically be repeated until all events are handled.
+     *
+     * @var int
      */
     const EVENT_COUNT = 200;
 
     /**
      * Number of seconds between events being handled.
+     *
+     * @var int
      */
     const EVENT_INTERVAL = 2;
+
+    /**
+     * The number of seconds to wait for retrying this job once, when no new
+     * events were found the first time and `$retryIfNone` is `true`.
+     *
+     * @var int
+     */
+    const EMPTY_RETRY_AFTER = 10;
 
     /**
      * The ID of a bunq account model to handle new events for.
@@ -48,14 +60,24 @@ class ProcessBunqAccountEvents implements ShouldQueue {
     private $accountId;
 
     /**
+     * Retry this job once after a few seconds, if no new bunq events were found.
+     *
+     * @var bool
+     */
+    private $retryIfNone;
+
+    /**
      * Create a new job instance.
      *
      * @param BunqAccount $account The account to handle new events for.
+     * @param bool [$retryIfNone=false] Retry this job once after a few
+     *      seconds, if no new events were found when running it the first time.
      *
      * @return void
      */
-    public function __construct(BunqAccount $account) {
+    public function __construct(BunqAccount $account, bool $retryIfNone = false) {
         $this->accountId = $account->id;
+        $this->retryIfNone = $retryIfNone;
     }
 
     /**
@@ -107,7 +129,7 @@ class ProcessBunqAccountEvents implements ShouldQueue {
         $completed = $events->count() < $pagination->getCount();
 
         // Handle each not-yet-handled event
-        $events
+        $events = $events
             // Only keep event types we should handle, then reindex
             ->filter(function($event) {
                 // Get the object
@@ -128,34 +150,40 @@ class ProcessBunqAccountEvents implements ShouldQueue {
 
                 return false;
             })
-            ->values()
+            ->values();
 
-            // Spawn a job for each event
-            ->each(function($event, $i) use($account) {
-                // Obtain the object
-                $o = $event->getObject();
+        // Spawn a job for each event
+        $events->each(function($event, $i) use($account) {
+            // Obtain the object
+            $o = $event->getObject();
 
-                // Determine delay for this job based on it's index
-                $delay = now()->addSeconds($i * Self::EVENT_INTERVAL);
+            // Determine delay for this job based on it's index
+            $delay = now()->addSeconds($i * Self::EVENT_INTERVAL);
 
-                // Spawn a job corresponding to the event type
-                if(!is_null($payment = $o->getPayment()))
-                    $job = ProcessBunqPaymentEvent::dispatch($account, $payment)
-                        ->delay($delay);
-                else if(!is_null($tab = $o->getBunqMeTab()))
-                    $job = ProcessBunqBunqMeTabEvent::dispatch($account, $tab)
-                        ->delay($delay);
-                else
-                    throw new \Exception('Attempting to handle bunq event with unhandled type');
-            });
+            // Spawn a job corresponding to the event type
+            if(!is_null($payment = $o->getPayment()))
+                $job = ProcessBunqPaymentEvent::dispatch($account, $payment)
+                    ->delay($delay);
+            else if(!is_null($tab = $o->getBunqMeTab()))
+                $job = ProcessBunqBunqMeTabEvent::dispatch($account, $tab)
+                    ->delay($delay);
+            else
+                throw new \Exception('Attempting to handle bunq event with unhandled type');
+        });
+
+        // If no events were found, reschedule job after a few seconds
+        if($this->retryIfNone && $events->isEmpty()) {
+            Self::dispatch($account, false)
+                ->delay(now()->addSeconds(Self::EMPTY_RETRY_AFTER));
+            return;
+        }
 
         // Walk through new events again if not completed, to handle the rest
-        if(!$completed) {
+        if(!$completed)
             // Dispatch this event handling job again, delayed after event jobs
-            Self::dispatch($account)
+            Self::dispatch($account, false)
                 ->delay(
                     now()->addSeconds($events->count() * Self::EVENT_INTERVAL)
                 );
-        }
     }
 }

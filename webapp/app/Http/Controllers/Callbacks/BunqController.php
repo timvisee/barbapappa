@@ -50,9 +50,9 @@ class BunqController extends Controller {
 
         // Handle the notification, update bunq events for its monetary account
         if(($payment = $object->getPayment()) != null)
-            Self::processEventsForAccount($payment->getMonetaryAccountId());
+            Self::processEventsForAccount($payment->getMonetaryAccountId(), false);
         else if(($bunqMeTab = $object->getBunqMeTab()) != null)
-            Self::processEventsForAccount($bunqMeTab->getMonetaryAccountId());
+            Self::processEventsForAccount($bunqMeTab->getMonetaryAccountId(), true);
         else
             throw new \Exception('Unhandled notification type');
 
@@ -67,9 +67,13 @@ class BunqController extends Controller {
      * under control by BARbapAPPa.
      *
      * @param int $monetaryAccountId The ID of the monetary account.
+     * @param bool $retryIfNone Retry the job once after a few seconds if no new
+     *      events were found while running it the first time. This is useful
+     *      for some events that may be collected with a slight delay on bunqs
+     *      end.
      */
     // TODO: differentiate by production/sandbox account IDs
-    private static function processEventsForAccount(int $monetaryAccountId) {
+    private static function processEventsForAccount(int $monetaryAccountId, bool $retryIfNone) {
         // Find the account, skip if it is not linked
         // TODO: handle deleted accounts here as well?
         $account = BunqAccount::where('monetary_account_id', $monetaryAccountId)->first();
@@ -77,6 +81,6 @@ class BunqController extends Controller {
             return;
 
         // Dispatch a job for processing all new events on this monetary account
-        ProcessBunqAccountEvents::dispatch($account);
+        ProcessBunqAccountEvents::dispatch($account, $retryIfNone);
     }
 }
