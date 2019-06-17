@@ -596,6 +596,12 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
     });
 });
 
+// Ajax routes
+// TODO: skip language select middleware here
+Route::prefix('/ajax')->name('ajax.')->group(function() {
+    Route::get('/messages-sidebar', 'AjaxController@messagesSidebar')->name('messagesSidebar');
+});
+
 // Magic routes
 Route::get('/__heartbeat__', function() { return 'OK'; });
 Route::get('/__version__', function() { return [

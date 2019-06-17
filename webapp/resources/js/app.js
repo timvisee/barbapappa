@@ -20,7 +20,14 @@
 //     el: '#app'
 // });
 
+var axios = require('axios');
+
 $(document).ready(function() {
+    // Initialize components
+    $('.ui.checkbox').checkbox();
+    $('.ui.dropdown').dropdown();
+    $('.ui.accordion').accordion();
+
     // Sidebar toggle
     $('.sidebar-toggle').click(function() {
         let sidebarClass = $(this).data('sidebar');
@@ -28,18 +35,13 @@ $(document).ready(function() {
         return false;
     });
 
-    // Initialize components
-    $('.ui.checkbox').checkbox();
-    $('.ui.dropdown').dropdown();
-    $('.ui.accordion').accordion();
-
     // Join label popup
     $('.joined-label-popup').popup({
         position: 'bottom left',
         transition: 'vertical flip',
     });
 
-    // Join label popup
+    // Regular popup
     $('.popup').popup({
         position: 'top center',
         transition: 'scale',
@@ -75,6 +77,21 @@ $(document).ready(function() {
     $('.copy').popup({
         content: 'Click to copy',
         position: 'right center',
+    });
+
+    // Load messages sidebar content through AJAX when it's opened
+    let sidebarMessages = $('.ui.sidebar.messages').first();
+    sidebarMessages.sidebar({
+        'onVisible': function() {
+            sidebarMessages.prepend('<div class="ui active dimmer"><div class="ui loader"></div></div>');
+            axios.get('/ajax/messages-sidebar')
+                .then(function(response) {
+                    sidebarMessages.html(response.data);
+                })
+                .finally(function () {
+                    // always executed
+                });
+        }
     });
 });
 
