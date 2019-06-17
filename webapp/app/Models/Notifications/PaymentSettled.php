@@ -52,4 +52,29 @@ class PaymentSettled extends Model {
     public function payment() {
         return $this->belongsTo(Payment::class);
     }
+
+    /**
+     * Get the view data for this notification.
+     * This returns an array of view data for the notification.
+     *
+     * This method is expensive for many notifications, be careful.
+     *
+     * @return array Array of view data.
+     */
+    public function viewData() {
+        // Gather facts
+        $payment = $this->payment;
+
+        // Return view data
+        return [
+            // TODO: translate this
+            'message' => 'Your ' . $payment->formatCost() . ' top-up completed',
+
+            'actions' => [[
+                // TODO: translate this
+                'name' => 'View',
+                'url' => route('payment.show', ['paymentId' => $this->payment_id]),
+            ]],
+        ];
+    }
 }

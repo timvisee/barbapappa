@@ -123,6 +123,18 @@ class Notification extends Model {
     }
 
     /**
+     * Get the view data for this notification.
+     * This returns an array of view data for the notification.
+     *
+     * This method is expensive for many notifications, be careful.
+     *
+     * @return array Array of view data.
+     */
+    public function viewData() {
+        return $this->notificationable->viewData();
+    }
+
+    /**
      * Create a notification which which owns the given notificationable.
      *
      * It is not recommended to call this method directly. Create a
