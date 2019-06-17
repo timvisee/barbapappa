@@ -110,7 +110,7 @@ class Payment extends Model {
                 ->from('mutations_payment')
                 ->whereRaw('payments.id = mutations_payment.payment_id')
                 ->leftJoin('mutations', function($leftJoin) {
-                    $leftJoin->on('mutations_payment.mutation_id', '=', 'mutations.id');
+                    $leftJoin->on('mutations_payment.id', '=', 'mutations.mutationable_id');
                 })
                 // TODO: enable this again once implemented!
                 // ->whereIn('economy_id', $economies)
