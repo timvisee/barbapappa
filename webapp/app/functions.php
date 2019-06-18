@@ -374,3 +374,47 @@ if(!function_exists('is_url_secure')) {
         return trim(strtolower(parse_url($url ?? url('/'), PHP_URL_SCHEME)));
     }
 }
+
+if(!function_exists('name_case')) {
+    /**
+     * Normalize the given name.
+     *
+     * - Re-capitalize, take inserts into account (especially for last names)
+     * - Remove excess white spaces
+     *
+     * Inspired by: https://www.media-division.com/correct-name-capitalization-in-php/
+     *
+     * @param string $name The name.
+     * @return string The normalized name.
+     */
+    function name_case($name) {
+        $splits = array(' ', '-', "O'", "L'", "D'", 'St.', 'Mc');
+        $lc_except = array('the', 'van', 'het', 'ten', 'den', 'von', 'und', 'der', 'de', 'da', 'of', 'and', "l'", "d'");
+        $uc_except = array('III', 'IV', 'VI', 'VII', 'VIII', 'IX');
+
+        $name = strtolower($name);
+        foreach($splits as $delimiter) {
+            $words = explode($delimiter, $name);
+            $newwords = array();
+            foreach($words as $word) {
+                // Skip emtpy
+                if(empty($word))
+                    continue;
+
+                if(in_array(strtoupper($word), $uc_except))
+                    $word = strtoupper($word);
+                else if(!in_array($word, $lc_except))
+                    $word = ucfirst($word);
+
+                $newwords[] = $word;
+            }
+
+            if(in_array(strtolower($delimiter), $lc_except))
+                $delimiter = strtolower($delimiter);
+
+            $name = join($delimiter, $newwords);
+        }
+
+        return $name;
+    }
+}

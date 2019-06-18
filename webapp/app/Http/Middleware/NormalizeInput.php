@@ -14,6 +14,10 @@ class NormalizeInput extends TransformsRequest {
      * @return mixed
      */
     public function transform($key, $value) {
+        // Normalize the first and last names
+        if($key == 'first_name' || $key == 'last_name')
+            return name_case($value);
+
         // Normalize IBANs and BICs
         if($key == 'iban' || $key == 'bic')
             return is_string($value)
