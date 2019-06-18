@@ -388,33 +388,44 @@ if(!function_exists('name_case')) {
      * @return string The normalized name.
      */
     function name_case($name) {
-        $splits = array(' ', '-', "O'", "L'", "D'", 'St.', 'Mc');
-        $lc_except = array('the', 'van', 'het', 'ten', 'den', 'von', 'und', 'der', 'de', 'da', 'of', 'and', "l'", "d'");
-        $uc_except = array('III', 'IV', 'VI', 'VII', 'VIII', 'IX');
+        // A list of properly cased parts
+        $CASED = collect(array(
+            "O'", "l'", "d'", 'St.', 'Mc', 'the', 'van', 'het', 'ten', 'den',
+            'von', 'und', 'der', 'de', 'da', 'of', 'and', 'III', 'IV', 'VI',
+            'VII', 'VIII', 'IX'
+        ));
 
-        $name = strtolower($name);
-        foreach($splits as $delimiter) {
-            $words = explode($delimiter, $name);
-            $newwords = array();
-            foreach($words as $word) {
-                // Skip emtpy
-                if(empty($word))
-                    continue;
+        // Trim whitespace sequences to one space, append space to properly chunk
+        $name = preg_replace('/\s+/', ' ', $name) . ' ';
 
-                if(in_array(strtoupper($word), $uc_except))
-                    $word = strtoupper($word);
-                else if(!in_array($word, $lc_except))
-                    $word = ucfirst($word);
+        // Break name up into parts split by name separators
+        $parts = preg_split('/( |-|O\'|l\'|d\'|St\\.|Mc)/i', $name, -1, PREG_SPLIT_DELIM_CAPTURE);
 
-                $newwords[] = $word;
-            }
+        // Chunk parts, use $CASED or uppercase first, remove unfinished chunks
+        $name = collect($parts)
+            ->chunk(2)
+            ->filter(function($part) {
+                return $part->count() == 2;
+            })
+            ->mapSpread(function($part, $separator = null) use($CASED) {
+                // Use specified case for separator if set
+                $cased = $CASED->first(function($i) use($separator) {
+                    return strcasecmp($i, $separator) == 0;
+                });
+                $separator = $cased ?? $separator;
 
-            if(in_array(strtolower($delimiter), $lc_except))
-                $delimiter = strtolower($delimiter);
+                // Choose specified part case, or uppercase first as default
+                $cased = $CASED->first(function($i) use($part) {
+                    return strcasecmp($i, $part) == 0;
+                });
+                return [$cased ?? ucfirst(strtolower($part)), $separator];
+            })
+            ->map(function($part) {
+                return implode($part);
+            })
+            ->join('');
 
-            $name = join($delimiter, $newwords);
-        }
-
-        return $name;
+        // Trim and return normalized name
+        return trim($name);
     }
 }
