@@ -374,3 +374,58 @@ if(!function_exists('is_url_secure')) {
         return trim(strtolower(parse_url($url ?? url('/'), PHP_URL_SCHEME)));
     }
 }
+
+if(!function_exists('name_case')) {
+    /**
+     * Normalize the given name.
+     *
+     * - Re-capitalize, take inserts into account (especially for last names)
+     * - Remove excess white spaces
+     *
+     * Inspired by: https://www.media-division.com/correct-name-capitalization-in-php/
+     *
+     * @param string $name The name.
+     * @return string The normalized name.
+     */
+    function name_case($name) {
+        // A list of properly cased parts
+        $CASED = collect(array(
+            "O'", "l'", "d'", 'St.', 'Mc', 'the', 'van', 'het', 'ten', 'den',
+            'von', 'und', 'der', 'de', 'da', 'of', 'and', 'III', 'IV', 'VI',
+            'VII', 'VIII', 'IX'
+        ));
+
+        // Trim whitespace sequences to one space, append space to properly chunk
+        $name = preg_replace('/\s+/', ' ', $name) . ' ';
+
+        // Break name up into parts split by name separators
+        $parts = preg_split('/( |-|O\'|l\'|d\'|St\\.|Mc)/i', $name, -1, PREG_SPLIT_DELIM_CAPTURE);
+
+        // Chunk parts, use $CASED or uppercase first, remove unfinished chunks
+        $name = collect($parts)
+            ->chunk(2)
+            ->filter(function($part) {
+                return $part->count() == 2;
+            })
+            ->mapSpread(function($part, $separator = null) use($CASED) {
+                // Use specified case for separator if set
+                $cased = $CASED->first(function($i) use($separator) {
+                    return strcasecmp($i, $separator) == 0;
+                });
+                $separator = $cased ?? $separator;
+
+                // Choose specified part case, or uppercase first as default
+                $cased = $CASED->first(function($i) use($part) {
+                    return strcasecmp($i, $part) == 0;
+                });
+                return [$cased ?? ucfirst(strtolower($part)), $separator];
+            })
+            ->map(function($part) {
+                return implode($part);
+            })
+            ->join('');
+
+        // Trim and return normalized name
+        return trim($name);
+    }
+}
