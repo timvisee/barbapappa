@@ -553,5 +553,8 @@ class Payment extends Model {
             event(new PaymentCompleted($this));
         else
             event(new PaymentFailed($this));
+
+        // TODO: use an event listener for this?
+        PaymentSettled::notify($this);
     }
 }

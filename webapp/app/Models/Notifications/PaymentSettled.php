@@ -67,14 +67,12 @@ class PaymentSettled extends Model {
 
         // Return view data
         return [
-            // TODO: translate this
-            'kind' => 'Payment',
-            'message' => 'Your ' . $payment->formatCost() . ' top-up completed',
+            'kind' => __('notifications.paymentSettled.kind'),
+            'message' => __('notifications.paymentSettled.message', ['amount' => $payment->formatCost()]),
 
             'actions' => [[
-                // TODO: translate this
                 'action' => 'view',
-                'label' => 'View',
+                'label' => __('misc.view'),
             ]],
         ];
     }

@@ -18,7 +18,6 @@
 
             <div class="ui card {{ $group['cardClass'] ?? '' }}">
                 <div class="content">
-                    {{-- <div class="header">Cute Dog</div> --}}
                     <div class="meta">
                         <div class="right floated time">
                             @include('includes.humanTimeDiff', ['time' => $notification->updated_at])

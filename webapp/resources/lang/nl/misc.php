@@ -72,6 +72,7 @@ return [
     'progress' => 'Voortgang',
     'showProgress' => 'Toon voortgang',
     'showAll' => 'Bekijk alles',
+    'view' => 'Bekijken',
     'manage' => 'Beheren',
     'managementHub' => 'Beheer hub',
     'in' => 'in',

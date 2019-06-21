@@ -447,6 +447,7 @@ return [
         'all' => 'All notifications',
         'markAsRead' => 'Mark as read',
         'markAllAsRead' => 'Mark all as read',
+        'unknownNotificationAction' => 'Unknown notification action',
     ],
 
     /**
