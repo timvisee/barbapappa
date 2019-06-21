@@ -25,6 +25,7 @@
             $groups[] = [
                 'header' => trans_choice('pages.notifications.read#', $notificationsRead->count()),
                 'notifications' => $notificationsRead,
+                'disabled' => true,
             ];
     @endphp
     @if(!empty($groups))

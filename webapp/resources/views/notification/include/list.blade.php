@@ -33,19 +33,27 @@
                 </div>
 
                 <div class="extra content">
-                    <div class="ui buttons tiny">
-                        @if(isset($data['actions']))
-                            @foreach($data['actions'] as $action)
+                    @if(isset($data['actions']))
+                        @foreach($data['actions'] as $action)
+                            @if(!isset($group['disabled']) || !$group['disabled'])
                                 <a href="{{ route('notification.action', [
                                     'notificationId' => $notification->id,
                                     'action' => $action['action'],
                                 ]) }}"
-                                   class="ui compact tiny button primary basic">
+                                class="ui compact tiny button primary basic">
                                     {{ $action['label'] }}
                                 </a>
-                            @endforeach
-                        @endif
-                    </div>
+                            @else
+                                <a href="{{ route('notification.action', [
+                                    'notificationId' => $notification->id,
+                                    'action' => $action['action'],
+                                ]) }}"
+                                class="ui compact tiny button basic">
+                                    {{ $action['label'] }}
+                                </a>
+                            @endif
+                        @endforeach
+                    @endif
                 </div>
             </div>
         @empty
