@@ -434,6 +434,22 @@ return [
     ],
 
     /**
+     * Notification pages.
+     */
+    'notifications' => [
+        'title' => 'Notifications',
+        'notification' => 'Notification',
+        'description' => 'This shows all your notifications, both new and read.',
+        'unread#' => '{0} No unread notifications|{1} Unread notification|[2,*] :count unread notifications',
+        'persistent#' => '{0} No persistent notifications|{1} Persistent notification|[2,*] :count persistent notifications',
+        'read#' => '{0} No read notifications|{1} Read notification|[2,*] :count read notifications',
+        'noNotifications' => 'No notifications...',
+        'all' => 'All notifications',
+        'markAsRead' => 'Mark as read',
+        'markAllAsRead' => 'Mark all as read',
+    ],
+
+    /**
      * Payment pages.
      */
     'payments' => [

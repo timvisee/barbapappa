@@ -531,6 +531,12 @@ Route::prefix('/transactions')->middleware('auth')->group(function() {
     });
 });
 
+// Notifications
+Route::prefix('/notifications')->middleware('auth')->group(function() {
+    // Index
+    Route::get('/', 'NotificationController@index')->name('notification.index');
+});
+
 // Payments
 Route::prefix('/payments')->middleware('auth')->group(function() {
     // Index

@@ -1,20 +1,23 @@
 @if(isset($notificationsUnread) && $notificationsUnread->isNotEmpty())
-    {{-- TODO: link to user notifications page --}}
-    <a href="{{ route('dashboard') }}" class="item header">
-        {{-- TODO: translate --}}
-        {{ $notificationsUnread->count() }} unread notifications
+    <a href="{{ route('notification.index') }}" class="item header">
+        {{ trans_choice('pages.notifications.unread#', $notificationsUnread->count()) }}
     </a>
     @foreach($notificationsUnread as $notification)
         @include('ajax.include.notification', $notification->viewData())
     @endforeach
-    <div class="item"></div>
+    <div class="item">
+        @if($notificationsUnread->count() > 1)
+            {{-- TODO: implement action --}}
+            <a href="#" class="ui compact inverted tiny button primary basic">
+                @lang('pages.notifications.markAllAsRead')
+            </a>
+        @endif
+    </div>
 @endif
 
 @if(isset($notifications) && $notifications->isNotEmpty())
-    {{-- TODO: link to user notifications page --}}
-    <a href="{{ route('dashboard') }}" class="item header">
-        {{-- TODO: translate --}}
-        {{ $notifications->count() }} notifications
+    <a href="{{ route('notification.index') }}" class="item header">
+        {{ trans_choice('pages.notifications.persistent#', $notifications->count()) }}
     </a>
     @foreach($notifications as $notification)
         @include('ajax.include.notification', $notification->viewData())
@@ -24,13 +27,10 @@
 
 @if((!isset($notificationsUnread) || $notificationsUnread->isEmpty())
     && (!isset($notifications) || $notifications->isEmpty()))
-    {{-- TODO: translate this --}}
-    <div class="item"><i>No notifications...</i></div>
+    <div class="item"><i>@lang('pages.notifications.noNotifications')</i></div>
 @endif
 
-{{-- TODO: route to notifications page --}}
-<a href="{{ route('dashboard') }}" class="item">
+<a href="{{ route('notification.index') }}" class="item">
     <i class="glyphicons glyphicons-message-full"></i>
-    {{-- TODO: translate --}}
-    All notifications
+    @lang('pages.notifications.all')
 </a>

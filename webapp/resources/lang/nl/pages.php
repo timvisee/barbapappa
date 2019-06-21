@@ -434,6 +434,22 @@ return [
     ],
 
     /**
+     * Notification pages.
+     */
+    'notifications' => [
+        'title' => 'Notificaties',
+        'notification' => 'Notificatie',
+        'description' => 'Hier zie je al je notificaties, gelezen en ongelezen.',
+        'unread#' => '{0} Geen ongelezen notificaties|{1} Ongelezen notificatie|[2,*] :count ongelezen notificaties',
+        'persistent#' => '{0} Geen vaste notificaties|{1} Vaste notificatie|[2,*] :count vaste notificatiespers',
+        'read#' => '{0} Geen gelezen notificaties|{1} Gelezen notificatie|[2,*] :count gelezen notificaties',
+        'noNotifications' => 'Geen notificaties...',
+        'all' => 'Alle notificaties',
+        'markAsRead' => 'Markeren als gelezen',
+        'markAllAsRead' => 'Alle markeren als gelezen',
+    ],
+
+    /**
      * Payment pages.
      */
     'payments' => [

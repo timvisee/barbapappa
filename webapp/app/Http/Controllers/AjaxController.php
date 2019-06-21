@@ -26,11 +26,6 @@ class AjaxController extends Controller {
             $response = $response
                 ->with('notificationsUnread', $notificationsUnread)
                 ->with('notifications', $notifications);
-
-            // Mark all as read for now
-            $notificationsUnread->each(function($m) {
-                $m->markAsRead();
-            });
         }
 
         return $response;
