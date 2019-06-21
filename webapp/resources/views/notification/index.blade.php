@@ -6,18 +6,20 @@
     <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.notifications.description')</p>
 
-    {{-- Payment list --}}
+    {{-- Notification list --}}
     @php
         $groups = [];
         if($notificationsUnread->isNotEmpty())
             $groups[] = [
                 'header' => trans_choice('pages.notifications.unread#', $notificationsUnread->count()),
                 'notifications' => $notificationsUnread,
+                'cardClass' => 'raised',
             ];
         if($notifications->isNotEmpty())
             $groups[] = [
                 'header' => trans_choice('pages.notifications.persistent#', $notifications->count()),
                 'notifications' => $notifications,
+                'cardClass' => 'yellow',
             ];
         if($notificationsRead->isNotEmpty())
             $groups[] = [
@@ -28,16 +30,6 @@
     @if(!empty($groups))
         @include('notification.include.list', [
             'groups' => $groups,
-        ])
-    @endif
-
-    {{-- Notification history --}}
-    @if($notificationsRead->isNotEmpty())
-        @include('notification.include.list', [
-            'groups' => [[
-                'header' => trans_choice('pages.notifications.read#', count($notificationsRead)),
-                'notifications' => $notificationsRead,
-            ]],
         ])
     @endif
 

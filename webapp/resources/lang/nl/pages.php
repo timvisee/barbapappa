@@ -447,6 +447,7 @@ return [
         'all' => 'Alle notificaties',
         'markAsRead' => 'Markeren als gelezen',
         'markAllAsRead' => 'Alle markeren als gelezen',
+        'unknownNotificationAction' => 'Onbekelde notificatie actie',
     ],
 
     /**

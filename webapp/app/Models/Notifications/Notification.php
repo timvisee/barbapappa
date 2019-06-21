@@ -131,7 +131,28 @@ class Notification extends Model {
      * @return array Array of view data.
      */
     public function viewData() {
-        return $this->notificationable->viewData();
+        $data = $this->notificationable->viewData();
+        $data['notification'] = $this;
+        return $data;
+    }
+
+    /**
+     * Get the URL for an action with the given name.
+     *
+     * This method is expensive for many notifications, be careful.
+     *
+     * @param string $action The action name.
+     * @param bool $markAsRead Mark this notification as read.
+     *
+     * @return string|null The action URL, or null if invalid.
+     */
+    public function getActionUrl($action, $markAsRead) {
+        // Mark as read
+        if($markAsRead)
+            $this->markAsRead();
+
+        // Get the action URL from the notificationable
+        return $this->notificationable->getActionUrl($action);
     }
 
     /**

@@ -16,7 +16,7 @@
                 $data = $notification->viewData();
             @endphp
 
-            <div class="ui card">
+            <div class="ui card {{ $group['cardClass'] ?? '' }}">
                 <div class="content">
                     {{-- <div class="header">Cute Dog</div> --}}
                     <div class="meta">
@@ -24,7 +24,7 @@
                             @include('includes.humanTimeDiff', ['time' => $notification->updated_at])
                         </div>
                         <div class="context">
-                            @lang('pages.notifications.notification')
+                            {{ $data['kind'] }}
                         </div>
                     </div>
                     <div class="description">
@@ -36,9 +36,12 @@
                     <div class="ui buttons tiny">
                         @if(isset($data['actions']))
                             @foreach($data['actions'] as $action)
-                                <a href="{!! $action['url'] !!}"
+                                <a href="{{ route('notification.action', [
+                                    'notificationId' => $notification->id,
+                                    'action' => $action['action'],
+                                ]) }}"
                                    class="ui compact tiny button primary basic">
-                                    {{ $action['name'] }}
+                                    {{ $action['label'] }}
                                 </a>
                             @endforeach
                         @endif

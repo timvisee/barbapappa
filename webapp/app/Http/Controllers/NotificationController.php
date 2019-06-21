@@ -20,9 +20,6 @@ class NotificationController extends Controller {
      * @return Response
      */
     public function index(Request $request) {
-        // Get the user, community, find the products
-        $user = barauth()->getUser();
-
         // List notifications
         list($notificationsUnread, $notifications) = Notification::visible()
             // TODO: set this as default scope
@@ -31,15 +28,35 @@ class NotificationController extends Controller {
             ->partition(function($n) {
                 return $n->read_at == null;
             });
-        // TODO: saturate this list as well
-        $notificationsRead = collect();
-
-        $notificationsUnread = $notificationsUnread->concat($notificationsUnread);
-        $notificationsUnread = $notificationsUnread->concat($notificationsUnread);
+        $notificationsRead = Notification::withoutGlobalScope('visible')
+            ->whereNotNull('read_at')
+            ->where('persistent', 0)
+            ->get();
 
         return view('notification.index')
             ->with('notificationsUnread', $notificationsUnread)
             ->with('notifications', $notifications)
             ->with('notificationsRead', $notificationsRead);
+    }
+
+    /**
+     * Invoke a notification action.
+     *
+     * @return Response
+     */
+    public function action($notificationId, $action) {
+        // Find the notification
+        $notification = Notification::withoutGlobalScope('visible')
+            ->findOrFail($notificationId);
+
+        // Get the action URL
+        $url = $notification->getActionUrl($action, true);
+        if(is_null($url))
+            return redirect()
+                ->route('dashboard')
+                ->with('error', __('pages.notifications.unknownNotificationAction'));
+
+        // Redirect to the action URL
+        return redirect($url);
     }
 }

@@ -68,13 +68,30 @@ class PaymentSettled extends Model {
         // Return view data
         return [
             // TODO: translate this
+            'kind' => 'Payment',
             'message' => 'Your ' . $payment->formatCost() . ' top-up completed',
 
             'actions' => [[
                 // TODO: translate this
-                'name' => 'View',
-                'url' => route('payment.show', ['paymentId' => $this->payment_id]),
+                'action' => 'view',
+                'label' => 'View',
             ]],
         ];
+    }
+
+    /**
+     * Get the URL for an action with the given name.
+     *
+     * @param string $action The action name.
+     *
+     * @return string|null The action URL, or null if invalid.
+     */
+    public function getActionUrl($action) {
+        switch($action) {
+        case 'view':
+            return route('payment.show', ['paymentId' => $this->payment_id]);
+        default:
+            return null;
+        }
     }
 }

@@ -9,9 +9,12 @@
 
     @if(isset($actions))
         @foreach($actions as $action)
-            <a href="{!! $action['url'] !!}"
+            <a href="{!! route('notification.action', [
+                'notificationId' => $notification->id,
+                'action' => $action['action'],
+            ]) !!}"
                     class="ui compact inverted tiny button primary basic">
-                {{ $action['name'] }}
+                {{ $action['label'] }}
             </a>
         @endforeach
     @endif
