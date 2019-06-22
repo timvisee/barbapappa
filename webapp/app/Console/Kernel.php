@@ -27,6 +27,10 @@ class Kernel extends ConsoleKernel {
         // Process all pending bunq events twice a day
         $schedule->job(new ProcessAllBunqAccountEvents)
             ->twiceDaily(0, 12);
+
+        // Expire all old notifications
+        $schedule->job(new ExpireNotifications)
+            ->hourly();
     }
 
     /**
