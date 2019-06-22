@@ -53,6 +53,9 @@ class Notification extends Model {
         static::addGlobalScope('visible', function(Builder $builder) {
             $builder->visible();
         });
+        static::addGlobalScope('order', function(Builder $builder) {
+            $builder->latest('updated_at');
+        });
 
         // Cascade delete to notificationable
         static::deleting(function($model) {

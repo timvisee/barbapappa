@@ -23,7 +23,6 @@ class NotificationController extends Controller {
         // List notifications
         list($notificationsUnread, $notifications) = Notification::visible()
             // TODO: set this as default scope
-            ->latest('updated_at')
             ->get()
             ->partition(function($n) {
                 return $n->read_at == null;
