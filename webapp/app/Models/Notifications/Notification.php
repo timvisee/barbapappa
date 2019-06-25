@@ -96,6 +96,19 @@ class Notification extends Model {
     }
 
     /**
+     * A scope for notifications that have expired.
+     *
+     * The default global scopes affect what notifications are scoped by this.
+     * To manage/delete expired notifications for all users, make sure to
+     * disable the correct global scopes.
+     *
+     * @param \Builder $query The query builder.
+     */
+    public function scopeExpired($query) {
+        return $query->where('expire_at', '<=', now());
+    }
+
+    /**
      * Get a relation to the user this belogns to.
      *
      * @return The user this belongs to.
