@@ -18,6 +18,8 @@ class CreateBunqMeTabPayment implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $queue = 'high';
+
     /**
      * The ID of the bunq account, which the money is sent from.
      *

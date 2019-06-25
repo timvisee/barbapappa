@@ -28,6 +28,8 @@ class ProcessBunqAccountEvents implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $queue = 'normal';
+
     /**
      * The maximum number of unhandled events to query from bunq at once.
      *

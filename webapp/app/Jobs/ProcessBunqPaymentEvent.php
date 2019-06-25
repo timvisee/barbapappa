@@ -20,6 +20,8 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $queue = 'high';
+
     private $accountId;
     private $apiPaymentId;
 

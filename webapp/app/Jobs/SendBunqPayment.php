@@ -16,6 +16,8 @@ class SendBunqPayment implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $queue = 'low';
+
     /**
      * The ID of the bunq account, which the money is sent from.
      *

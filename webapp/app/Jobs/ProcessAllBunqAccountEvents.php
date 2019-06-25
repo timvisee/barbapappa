@@ -28,6 +28,8 @@ class ProcessAllBunqAccountEvents implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $queue = 'low';
+
     /**
      * Create a new job instance.
      *
