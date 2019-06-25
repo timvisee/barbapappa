@@ -12,7 +12,6 @@ use App\Models\Currency;
 use App\Models\Economy;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
-use App\Models\Notifications\PaymentSettled;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Utils\EmailRecipient;
@@ -553,8 +552,5 @@ class Payment extends Model {
             event(new PaymentCompleted($this));
         else
             event(new PaymentFailed($this));
-
-        // TODO: use an event listener for this?
-        PaymentSettled::notify($this);
     }
 }

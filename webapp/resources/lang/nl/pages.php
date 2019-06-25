@@ -446,7 +446,7 @@ return [
         'noNotifications' => 'Geen notificaties...',
         'all' => 'Alle notificaties',
         'markAsRead' => 'Markeren als gelezen',
-        'markAllAsRead' => 'Alles markeren als gelezen',
+        'markAllAsRead' => 'Markeer alles als gelezen',
         'markedAsRead#' => '{0} Geen notificaties als gemarkeerd als gelezen|{1} Notificatie gemarkeerd als gelezen|[2,*] :count notificaties gemarkeerd als gelezen',
         'unknownNotificationAction' => 'Onbekelde notificatie actie',
     ],

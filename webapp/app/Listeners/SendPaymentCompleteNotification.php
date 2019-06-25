@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\PaymentCompleted;
 use App\Mail\Email\Payment\Completed;
+use App\Models\Notifications\PaymentSettled;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -31,6 +32,9 @@ class SendPaymentCompleteNotification implements ShouldQueue {
         // Gather facts
         $payment = $event->payment;
         $user = $payment->user;
+
+        // Notify the user
+        PaymentSettled::notify($this);
 
         // Create the mailable for the settlement, send the mailable
         Mail::send(new Completed($user->buildEmailRecipients(), $payment));

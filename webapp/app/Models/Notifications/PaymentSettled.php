@@ -68,8 +68,10 @@ class PaymentSettled extends Model {
         // Return view data
         return [
             'kind' => __('notifications.paymentSettled.kind'),
-            'message' => __('notifications.paymentSettled.message', ['amount' => $payment->formatCost()]),
-
+            'message' => __(
+                'notifications.paymentSettled.message.' . $payment->stateIdentifier(),
+                ['amount' => $payment->formatCost()]
+            ),
             'actions' => [[
                 'action' => 'view',
                 'label' => __('misc.view'),
