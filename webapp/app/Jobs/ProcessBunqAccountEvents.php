@@ -28,7 +28,10 @@ class ProcessBunqAccountEvents implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $queue = 'normal';
+    /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'normal';
 
     /**
      * The maximum number of unhandled events to query from bunq at once.
@@ -78,6 +81,9 @@ class ProcessBunqAccountEvents implements ShouldQueue {
      * @return void
      */
     public function __construct(BunqAccount $account, bool $retryIfNone = false) {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+
         $this->accountId = $account->id;
         $this->retryIfNone = $retryIfNone;
     }

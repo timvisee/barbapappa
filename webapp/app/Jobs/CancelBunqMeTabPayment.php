@@ -15,7 +15,10 @@ class CancelBunqMeTabPayment implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $queue = 'low';
+    /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'low';
 
     /**
      * The ID of the bunq account, which the money is sent from.
@@ -40,6 +43,9 @@ class CancelBunqMeTabPayment implements ShouldQueue {
      * @return void
      */
     public function __construct(BunqAccount $account, int $bunqMeTabId) {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+
         $this->account_id = $account->id;
         $this->tab_id = $bunqMeTabId;
     }

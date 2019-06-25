@@ -20,7 +20,10 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $queue = 'high';
+    /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'high';
 
     private $accountId;
     private $apiPaymentId;
@@ -31,6 +34,9 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      * @return void
      */
     public function __construct(BunqAccount $account, ApiPayment $apiPayment) {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+
         $this->accountId = $account->id;
         $this->apiPaymentId = $apiPayment->getId();
     }

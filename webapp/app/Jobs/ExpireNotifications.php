@@ -20,14 +20,20 @@ class ExpireNotifications implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $queue = 'low';
+    /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'low';
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct() {}
+    public function __construct() {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+    }
 
     /**
      * Execute the job.

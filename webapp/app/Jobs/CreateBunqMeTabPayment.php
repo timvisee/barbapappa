@@ -18,7 +18,10 @@ class CreateBunqMeTabPayment implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $queue = 'high';
+    /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'high';
 
     /**
      * The ID of the bunq account, which the money is sent from.
@@ -51,6 +54,9 @@ class CreateBunqMeTabPayment implements ShouldQueue {
      * @return void
      */
     public function __construct(BunqAccount $account, Payment $payment, Amount $amount) {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+
         $this->account_id = $account->id;
         $this->payment_id = $payment->id;
         $this->amount = $amount;

@@ -21,7 +21,10 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $queue = 'high';
+    /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'high';
 
     private $accountId;
     private $tabId;
@@ -32,6 +35,9 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
      * @return void
      */
     public function __construct(BunqAccount $account, BunqMeTab $tabResult) {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+
         $this->accountId = $account->id;
         $this->tabId = $tabResult->getId();
     }
