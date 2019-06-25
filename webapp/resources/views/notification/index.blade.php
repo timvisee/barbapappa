@@ -6,15 +6,30 @@
     <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.notifications.description')</p>
 
-    {{-- Notification list --}}
-    @php
-        $groups = [];
-        if($notificationsUnread->isNotEmpty())
-            $groups[] = [
+    {{-- Unread notification list --}}
+    @if($notificationsUnread->isNotEmpty())
+        @include('notification.include.list', [
+            'groups' => [[
                 'header' => trans_choice('pages.notifications.unread#', $notificationsUnread->count()),
                 'notifications' => $notificationsUnread,
                 'cardClass' => 'raised',
-            ];
+            ]],
+        ])
+        <br />
+
+        {{-- Mark all as read button --}}
+        {!! Form::open([
+            'action' => ['NotificationController@doMarkAllRead'],
+            'method' => 'POST',
+            'class' => 'ui form'
+        ]) !!}
+            <button class="ui tiny button positive basic" type="submit">@lang('pages.notifications.markAllAsRead')</button>
+        {!! Form::close() !!}
+    @endif
+
+    {{-- Other notification list --}}
+    @php
+        $groups = [];
         if($notifications->isNotEmpty())
             $groups[] = [
                 'header' => trans_choice('pages.notifications.persistent#', $notifications->count()),

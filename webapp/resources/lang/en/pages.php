@@ -447,6 +447,7 @@ return [
         'all' => 'All notifications',
         'markAsRead' => 'Mark as read',
         'markAllAsRead' => 'Mark all as read',
+        'markedAsRead#' => '{0} Marked no notifications as read|{1} Marked a notification as read|[2,*] Marked :count notifications as read',
         'unknownNotificationAction' => 'Unknown notification action',
     ],
 

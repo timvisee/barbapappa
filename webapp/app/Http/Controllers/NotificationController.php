@@ -39,6 +39,26 @@ class NotificationController extends Controller {
     }
 
     /**
+     * Mark all notifications as read for the current user.
+     *
+     * @return Response
+     */
+    public function doMarkAllRead() {
+        // Mark all notifications as read
+        $notifications = Notification::unread()
+            ->select(['id', 'read_at'])
+            ->get();
+        $notifications->each(function($notification) {
+            $notification->markAsRead();
+        });
+
+        // Redirect back to notification overview page
+        return redirect()
+            ->route('notification.index')
+            ->with('success', trans_choice('pages.notifications.markedAsRead#', $notifications->count()));
+    }
+
+    /**
      * Invoke a notification action.
      *
      * @return Response

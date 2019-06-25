@@ -536,6 +536,9 @@ Route::prefix('/notifications')->middleware('auth')->group(function() {
     // Index
     Route::get('/', 'NotificationController@index')->name('notification.index');
 
+    // Mark all notifications as read
+    Route::post('/mark-all-as-read', 'NotificationController@doMarkAllRead')->name('notification.doMarkAllRead');
+
     // Specific
     Route::prefix('/{notificationId}')->group(function() {
         // Action

@@ -56,7 +56,7 @@
                 </div>
             </div>
         @empty
-            <i class="item">@lang('pages.notification.noNotifications')</i>
+            <i class="item">@lang('pages.notifications.noNotifications')</i>
         @endforelse
     </div>
 @endforeach

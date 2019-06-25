@@ -7,10 +7,14 @@
     @endforeach
     <div class="item">
         @if($notificationsUnread->count() > 1)
-            {{-- TODO: implement action --}}
-            <a href="#" class="ui compact inverted tiny button primary basic">
-                @lang('pages.notifications.markAllAsRead')
-            </a>
+            {{-- Mark all as read button --}}
+            {!! Form::open([
+                'action' => ['NotificationController@doMarkAllRead'],
+                'method' => 'POST',
+                'class' => 'ui form'
+            ]) !!}
+                <button class="ui compact inverted tiny button green basic" type="submit">@lang('pages.notifications.markAllAsRead')</button>
+            {!! Form::close() !!}
         @endif
     </div>
 @endif
