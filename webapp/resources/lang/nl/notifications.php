@@ -14,4 +14,8 @@ return [
         'kind' => 'Betaling',
         'message' => 'Je :amount top-up vereist actie',
     ],
+    'paymentRequiresCommunityAction' => [
+        'kind' => 'Betaling',
+        'message' => 'Een :amount top-up vereist je beoordeling',
+    ],
 ];

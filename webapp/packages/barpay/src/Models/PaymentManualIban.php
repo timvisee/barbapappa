@@ -115,6 +115,21 @@ class PaymentManualIban extends Model {
     }
 
     /**
+     * Check whehter this payment requires action by a community administrator.
+     *
+     * @return bool True if action is required, false if not.
+     */
+    public function checkRequiresCommunityAction() {
+        // Requires action if transferred a while ago, and not recently checked
+        return !is_null($this->transferred_at)
+            && $this->transferred_at < now()->subSeconds(Self::TRANSFER_WAIT)
+            && (
+                $this->checked_at == null
+                || $this->checked_at < now()->subSeconds(Self::TRANSFER_CHECK_RETRY)
+            );
+    }
+
+    /**
      * Get a relation to the user that last assessed this payment.
      *
      * This is set to the community manager that checks and approves the
@@ -150,7 +165,7 @@ class PaymentManualIban extends Model {
         $paymentable->save();
 
         // Attach the paymentable to the payment
-        $payment->setState(Payment::STATE_PENDING_MANUAL, false);
+        $payment->setState(Payment::STATE_PENDING_USER, false);
         $payment->setPaymentable($paymentable);
 
         return $paymentable;
@@ -175,16 +190,7 @@ class PaymentManualIban extends Model {
     /**
      * Invoked when the current step for this payment changes.
      */
-    public function onStepChange($step) {
-        // Show/suppress require user action notification for payment
-        if($step == Self::STEP_TRANSFER)
-            PaymentRequiresUserAction::notify($this->payment);
-        else
-            PaymentRequiresUserAction::suppress($this->payment);
-
-        // Show require community admin notification action for payment
-        // TODO: implement this
-    }
+    public function onStepChange($step) {}
 
     /**
      * Check whether this payment can be cancelled at this moment.

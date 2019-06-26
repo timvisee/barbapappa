@@ -73,6 +73,7 @@ return [
     'showProgress' => 'Show progress',
     'showAll' => 'Show all',
     'view' => 'View',
+    'review' => 'Review',
     'manage' => 'Manage',
     'managementHub' => 'Management hub',
     'in' => 'in',

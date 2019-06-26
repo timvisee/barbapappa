@@ -41,7 +41,7 @@ class ExpireNotifications implements ShouldQueue {
      */
     public function handle() {
         // Delete all notifications that readed their expiry time
-        Notification::withoutGlobalScope(['order', 'visible', 'user'])
+        Notification::withoutGlobalScopes()
             ->expired()
             ->delete();
     }

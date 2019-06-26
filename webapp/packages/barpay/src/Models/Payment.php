@@ -12,6 +12,8 @@ use App\Models\Currency;
 use App\Models\Economy;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
+use App\Models\Notifications\PaymentRequiresCommunityAction;
+use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Utils\EmailRecipient;
@@ -47,13 +49,14 @@ class Payment extends Model {
     const REFERENCE_LEN = 12;
 
     const STATE_INIT = 0;
-    const STATE_PENDING_MANUAL = 1;
-    const STATE_PENDING_AUTO = 2;
-    const STATE_PROCESSING = 3;
-    const STATE_COMPLETED = 4;
-    const STATE_REVOKED = 5;
-    const STATE_REJECTED = 6;
-    const STATE_FAILED = 7;
+    const STATE_PENDING_USER = 1;
+    const STATE_PENDING_COMMUNITY = 2;
+    const STATE_PENDING_AUTO = 3;
+    const STATE_PROCESSING = 4;
+    const STATE_COMPLETED = 5;
+    const STATE_REVOKED = 6;
+    const STATE_REJECTED = 7;
+    const STATE_FAILED = 8;
 
     /**
      * A list of all availalbe paymentables.
@@ -264,7 +267,8 @@ class Payment extends Model {
         // Get the state identifier here
         $id = [
             Self::STATE_INIT => 'init',
-            Self::STATE_PENDING_MANUAL => 'pendingManual',
+            Self::STATE_PENDING_USER => 'pendingUser',
+            Self::STATE_PENDING_COMMUNITY => 'pendingCommunity',
             Self::STATE_PENDING_AUTO => 'pendingAuto',
             Self::STATE_PROCESSING => 'processing',
             Self::STATE_COMPLETED => 'completed',
@@ -537,6 +541,10 @@ class Payment extends Model {
         if($state == Self::STATE_INIT)
             throw new \Exception('Cannot set payment state to init');
 
+        // Do not change if already in this state
+        if($this->state == $state)
+            return;
+
         // Set the state, and save
         $this->state = $state;
         if($save)
@@ -545,6 +553,16 @@ class Payment extends Model {
         // Set current step to null if settled
         if(!$this->isInProgress())
             $this->setStep(null, $save);
+
+        // Show/suppress require user/community admin action notifications
+        if($state == Self::STATE_PENDING_USER)
+            PaymentRequiresUserAction::notify($this);
+        else
+            PaymentRequiresUserAction::suppress($this);
+        if($state == Self::STATE_PENDING_COMMUNITY)
+            PaymentRequiresCommunityAction::notify($this);
+        else
+            PaymentRequiresCommunityAction::suppress($this);
     }
 
     /**

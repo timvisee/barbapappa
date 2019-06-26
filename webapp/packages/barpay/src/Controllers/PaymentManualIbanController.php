@@ -107,6 +107,7 @@ class PaymentManualIbanController {
             break;
 
         case 'delay':
+            $payment->setState(Payment::STATE_PENDING_AUTO, true);
             break;
 
         case 'reject':

@@ -482,7 +482,8 @@ return [
         'paymentCancelled' => 'Payment cancelled',
         'state' => [
             'init' => 'Initiated',
-            'pendingManual' => 'Pendin\' (manual)',
+            'pendingUser' => 'Pendin\' (manual)',
+            'pendingCommunity' => 'Pendin\' (manual)',
             'pendingAuto' => 'Pendin\' (automatic)',
             'processing' => 'Processin\'',
             'completed' => 'Hurray!',

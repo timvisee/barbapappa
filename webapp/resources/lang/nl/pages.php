@@ -482,7 +482,8 @@ return [
         'paymentCancelled' => 'Payment cancelled',
         'state' => [
             'init' => 'Geïnitieerd',
-            'pendingManual' => 'In afwachting (handmatig)',
+            'pendingUser' => 'In afwachting (handmatig)',
+            'pendingCommunity' => 'In afwachting (handmatig)',
             'pendingAuto' => 'In afwachting (automatisch)',
             'processing' => 'Bezig met verwerken',
             'completed' => 'Voltooid',

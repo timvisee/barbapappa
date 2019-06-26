@@ -14,4 +14,8 @@ return [
         'kind' => 'Payment',
         'message' => 'Your :amount top-up requires action',
     ],
+    'paymentRequiresCommunityAction' => [
+        'kind' => 'Payment',
+        'message' => 'Your :amount top-up requires your review',
+    ],
 ];

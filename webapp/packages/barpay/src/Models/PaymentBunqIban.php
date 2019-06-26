@@ -123,7 +123,7 @@ class PaymentBunqIban extends Model {
         $paymentable->save();
 
         // Attach the paymentable to the payment
-        $payment->setState(Payment::STATE_PENDING_MANUAL, false);
+        $payment->setState(Payment::STATE_PENDING_USER, false);
         $payment->setPaymentable($paymentable);
 
         return $paymentable;
@@ -146,13 +146,7 @@ class PaymentBunqIban extends Model {
     /**
      * Invoked when the current step for this payment changes.
      */
-    public function onStepChange($step) {
-        // Show/suppress require user action notification for payment
-        if($step == Self::STEP_TRANSFER)
-            PaymentRequiresUserAction::notify($this->payment);
-        else
-            PaymentRequiresUserAction::suppress($this->payment);
-    }
+    public function onStepChange($step) {}
 
     /**
      * Check whether this payment can be cancelled at this moment.
