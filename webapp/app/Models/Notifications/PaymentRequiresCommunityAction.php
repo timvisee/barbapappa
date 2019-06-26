@@ -5,6 +5,7 @@ namespace App\Models\Notifications;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Models\User;
+use App\Perms\CommunityRoles;
 use App\Scopes\EnabledScope;
 use App\Utils\EmailRecipient;
 use BarPay\Models\Payment;
@@ -42,27 +43,38 @@ class PaymentRequiresCommunityAction extends Model {
      * @return Notification The created notification.
      */
     public static function notify(Payment $payment) {
-        // TODO: notify community administrators instead of the user!
         // TODO: prevent duplicates
 
-        $notificationable = new Self();
-        $notificationable->payment_id = $payment->id;
-        return $notificationable->createNotification($payment->user);
+        // Attempt to find the community this payment is made in
+        $economy = $payment->findEconomy();
+        if(is_null($economy))
+            return [];
+        $community = $economy->community;
+
+        // List all community managers
+        $managers = $community
+            ->users()
+            ->wherePivot('role', '>=', CommunityRoles::MANAGER)
+            ->get();
+
+        // Build a notification for each manager, return notifications
+        return $managers
+            ->map(function($manager) use($payment) {
+                $notificationable = new Self();
+                $notificationable->payment_id = $payment->id;
+                return $notificationable->createNotification($manager);
+            });
     }
 
     /**
      * Suppress this notification for a user.
      *
      * @param Payment $payment The payment.
-     * @return Notification The created notification.
      */
     public static function suppress(Payment $payment) {
-        PaymentRequiresCommunityAction::withoutGlobalScope('user')
-            ->where('payment_id', $payment->id)
+        PaymentRequiresCommunityAction::where('payment_id', $payment->id)
             ->each(function($notificationable) {
-                $notification = $notificationable->notification;
-                if(!is_null($notification))
-                    $notification->delete();
+                $notificationable->notification()->withoutGlobalScopes()->delete();
             });
     }
 

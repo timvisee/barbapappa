@@ -55,12 +55,9 @@ class PaymentRequiresUserAction extends Model {
      * @return Notification The created notification.
      */
     public static function suppress(Payment $payment) {
-        PaymentRequiresUserAction::withoutGlobalScope('user')
-            ->where('payment_id', $payment->id)
+        PaymentRequiresUserAction::where('payment_id', $payment->id)
             ->each(function($notificationable) {
-                $notification = $notificationable->notification;
-                if(!is_null($notification))
-                    $notification->delete();
+                $notificationable->notification()->withoutGlobalScope()->delete();
             });
     }
 

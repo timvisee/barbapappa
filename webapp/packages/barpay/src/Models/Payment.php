@@ -483,6 +483,10 @@ class Payment extends Model {
      * different state.
      */
     public function updateState() {
+        // Skip if not in progress anymore
+        if(!$this->isInProgress())
+            return;
+
         // Gather facts
         $paymentable = $this->paymentable;
 
