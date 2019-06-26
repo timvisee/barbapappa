@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\RenewBunqApiContext;
 use App\Scopes\EnabledScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -36,6 +37,12 @@ use bunq\Model\Generated\Object\NotificationFilter;
 class BunqAccount extends Model {
 
     use SoftDeletes;
+
+    /**
+     * The number of seconds to start renewing the API context session in before
+     * it expires.
+     */
+    const BUNQ_SESSION_EXPIRY_RENEW_PERIOD = ApiContext::TIME_TO_SESSION_EXPIRY_MINIMUM_SECONDS;
 
     protected $table = "bunq_accounts";
 
@@ -102,11 +109,16 @@ class BunqAccount extends Model {
         // Obtain the API context
         $apiContext = $this->api_context;
 
-        // Restore expired sessions, re-initialize and update in database
-        if(!$apiContext->isSessionActive()) {
-            $apiContext->initializeSessionContext();
-            $this->api_context = $apiContext;
-        }
+        // Determine in how many seconds the session expires
+        $expireAt = $apiContext->getSessionContext()->getExpiryTime()->getTimestamp();
+        $expireIn = $expireAt - time();
+
+        // Immediately renew session if expired, queue if expiring soon
+        if($expireIn <= 1)
+            RenewBunqApiContext::dispatchNow($this);
+        else if($expireIn <= Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD)
+            // TODO: do not dispatch duplicates!
+            RenewBunqApiContext::dispatch($this);
 
         // Load the bunq context for this request
         BunqContext::loadApiContext($apiContext);
