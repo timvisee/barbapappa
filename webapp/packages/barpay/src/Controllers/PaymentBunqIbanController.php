@@ -45,7 +45,8 @@ class PaymentBunqIbanController {
         $paymentable->transferred_at = now();
         $paymentable->save();
 
-        // Update the payment step
+        // Update the payment state and step
+        $payment->setState(Payment::STATE_PENDING_AUTO);
         $payment->setStep($paymentable->getStep());
 
         return $response;

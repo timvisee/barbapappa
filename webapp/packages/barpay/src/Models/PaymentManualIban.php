@@ -115,6 +115,16 @@ class PaymentManualIban extends Model {
     }
 
     /**
+     * Check whehter this payment requires action by the user.
+     *
+     * @return bool True if action is required, false if not.
+     */
+    public function checkRequiresUserAction() {
+        // Requires action if not transferred
+        return is_null($this->transferred_at);
+    }
+
+    /**
      * Check whehter this payment requires action by a community administrator.
      *
      * @return bool True if action is required, false if not.
