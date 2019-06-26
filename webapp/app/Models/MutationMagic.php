@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Mail;
  * mutation.
  *
  * @property int id
- * @property int mutation_id
  * @property string|null description
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -33,7 +32,6 @@ class MutationMagic extends Model {
     protected $table = "mutations_magic";
 
     protected $fillable = [
-        'mutation_id',
         'description',
     ];
 

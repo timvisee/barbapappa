@@ -20,7 +20,14 @@
 //     el: '#app'
 // });
 
+var axios = require('axios');
+
 $(document).ready(function() {
+    // Initialize components
+    $('.ui.checkbox').checkbox();
+    $('.ui.dropdown').dropdown();
+    $('.ui.accordion').accordion();
+
     // Sidebar toggle
     $('.sidebar-toggle').click(function() {
         let sidebarClass = $(this).data('sidebar');
@@ -28,23 +35,25 @@ $(document).ready(function() {
         return false;
     });
 
-    // Initialize components
-    $('.ui.checkbox').checkbox();
-    $('.ui.dropdown').dropdown();
-    $('.ui.accordion').accordion();
-
-    // Join label popup
+    // Popups
+    $('.popup').popup({
+        position: 'top center',
+        transition: 'scale',
+    });
     $('.joined-label-popup').popup({
         position: 'bottom left',
         transition: 'vertical flip',
     });
 
-    // Join label popup
-    $('.popup').popup({
-        position: 'top center',
-        transition: 'scale',
-    });
+    // Build the copy fields and messages sidebar
+    buildCopyFields();
+    buildMessagesSidebar();
+});
 
+/**
+ * Build and set up the copy-on-click fields.
+ */
+function buildCopyFields() {
     // Copy on clock for copy elements
     // TODO: translate
     $('.copy').click(function() {
@@ -76,7 +85,28 @@ $(document).ready(function() {
         content: 'Click to copy',
         position: 'right center',
     });
-});
+}
+
+/**
+ * Build the messages sidebar.
+ */
+function buildMessagesSidebar() {
+    // Load messages sidebar content through AJAX when it's opened
+    let sidebarMessages = $('.ui.sidebar.messages').first();
+    sidebarMessages.sidebar({
+        'onVisible': function() {
+            sidebarMessages.prepend('<div class="ui active dimmer"><div class="ui loader"></div></div>');
+            axios.get('/ajax/messages-sidebar')
+                .then(function(response) {
+                    sidebarMessages.html(response.data);
+                })
+                .catch(function (error) {
+                    // TODO: handle loading errors
+                    console.log(error);
+                });
+        }
+    });
+}
 
 /**
  * Select all text in the given DOM node.

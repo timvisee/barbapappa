@@ -21,7 +21,6 @@ use App\Utils\EmailRecipient;
  * main mutation.
  *
  * @property int id
- * @property int mutation_id
  * @property int|null product_id
  * @property int|null bar_id
  * @property int quantity
@@ -37,7 +36,6 @@ class MutationProduct extends Model {
     protected $with = ['product'];
 
     protected $fillable = [
-        'mutation_id',
         'product_id',
         'bar_id',
         'quantity',

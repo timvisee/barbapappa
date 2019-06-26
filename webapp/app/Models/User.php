@@ -86,15 +86,19 @@ class User extends Model implements HasLocalePreference {
     }
 
     public function sessions() {
-        return $this->hasMany('App\Models\Session');
+        return $this->hasMany(Session::class);
     }
 
     public function emails() {
-        return $this->hasMany('App\Models\Email');
+        return $this->hasMany(Email::class);
+    }
+
+    public function notifications() {
+        return $this->hasMany(Notification::class);
     }
 
     public function passwordResets() {
-        return $this->hasMany('App\Models\PasswordReset');
+        return $this->hasMany(PasswordReset::class);
     }
 
     /**

@@ -21,6 +21,12 @@
 
 <div class="ui divider hidden"></div>
 
+<a class="ui button primary"
+        href="{{ route('dashboard') }}"
+        title="@lang('pages.dashboard.title')">
+    @lang('pages.dashboard.title')
+</a>
+
 <a href="{{ url()->full() }}"
         class="ui button basic"
         title="@lang('misc.refresh')">

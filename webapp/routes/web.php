@@ -531,6 +531,21 @@ Route::prefix('/transactions')->middleware('auth')->group(function() {
     });
 });
 
+// Notifications
+Route::prefix('/notifications')->middleware('auth')->group(function() {
+    // Index
+    Route::get('/', 'NotificationController@index')->name('notification.index');
+
+    // Mark all notifications as read
+    Route::post('/mark-all-as-read', 'NotificationController@doMarkAllRead')->name('notification.doMarkAllRead');
+
+    // Specific
+    Route::prefix('/{notificationId}')->group(function() {
+        // Action
+        Route::get('/action/{action}', 'NotificationController@action')->name('notification.action');
+    });
+});
+
 // Payments
 Route::prefix('/payments')->middleware('auth')->group(function() {
     // Index
@@ -594,6 +609,12 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
             Route::delete('/delete', 'AppBunqAccountController@doDelete')->name('app.bunqAccount.doDelete');
         });
     });
+});
+
+// Ajax routes
+// TODO: skip language select middleware here
+Route::prefix('/ajax')->name('ajax.')->group(function() {
+    Route::get('/messages-sidebar', 'AjaxController@messagesSidebar')->name('messagesSidebar');
 });
 
 // Magic routes

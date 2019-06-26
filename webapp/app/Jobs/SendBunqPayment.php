@@ -17,6 +17,19 @@ class SendBunqPayment implements ShouldQueue {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'low';
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     * The bunq API has a 30-second cooldown when throttling.
+     *
+     * @var int
+     */
+    public $retryAfter = 32;
+
+    /**
      * The ID of the bunq account, which the money is sent from.
      *
      * @var int
@@ -55,6 +68,9 @@ class SendBunqPayment implements ShouldQueue {
      * @return void
      */
     public function __construct(BunqAccount $account, Pointer $to, Amount $amount, string $description) {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+
         $this->account_id = $account->id;
         $this->to = $to;
         $this->amount = $amount;

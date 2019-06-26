@@ -434,6 +434,24 @@ return [
     ],
 
     /**
+     * Notification pages.
+     */
+    'notifications' => [
+        'title' => 'Notifications',
+        'notification' => 'Notification',
+        'description' => 'Dis shows all yer notifications, both new and read.',
+        'unread#' => '{0} Nay unread notifications|{1} Unread notification|[2,*] :count unread notifications',
+        'persistent#' => '{0} Nay persistent notifications|{1} Persistent notification|[2,*] :count persistent notifications',
+        'read#' => '{0} Nay read notifications|{1} Read notification|[2,*] :count read notifications',
+        'noNotifications' => 'Nay notifications...',
+        'all' => 'All notifications',
+        'markAsRead' => 'Mark as read',
+        'markAllAsRead' => 'Mark all as read',
+        'markedAsRead#' => '{0} Marked no notifications as read|{1} Marked a notification as read|[2,*] Marked :count notifications as read',
+        'unknownNotificationAction' => 'Unknown notification action',
+    ],
+
+    /**
      * Payment pages.
      */
     'payments' => [
@@ -464,7 +482,8 @@ return [
         'paymentCancelled' => 'Payment cancelled',
         'state' => [
             'init' => 'Initiated',
-            'pendingManual' => 'Pendin\' (manual)',
+            'pendingUser' => 'Pendin\' user action',
+            'pendingCommunity' => 'Pendin\' review',
             'pendingAuto' => 'Pendin\' (automatic)',
             'processing' => 'Processin\'',
             'completed' => 'Hurray!',

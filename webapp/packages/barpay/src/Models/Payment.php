@@ -12,6 +12,8 @@ use App\Models\Currency;
 use App\Models\Economy;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
+use App\Models\Notifications\PaymentRequiresCommunityAction;
+use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Utils\EmailRecipient;
@@ -47,13 +49,14 @@ class Payment extends Model {
     const REFERENCE_LEN = 12;
 
     const STATE_INIT = 0;
-    const STATE_PENDING_MANUAL = 1;
-    const STATE_PENDING_AUTO = 2;
-    const STATE_PROCESSING = 3;
-    const STATE_COMPLETED = 4;
-    const STATE_REVOKED = 5;
-    const STATE_REJECTED = 6;
-    const STATE_FAILED = 7;
+    const STATE_PENDING_USER = 1;
+    const STATE_PENDING_COMMUNITY = 2;
+    const STATE_PENDING_AUTO = 3;
+    const STATE_PROCESSING = 4;
+    const STATE_COMPLETED = 5;
+    const STATE_REVOKED = 6;
+    const STATE_REJECTED = 7;
+    const STATE_FAILED = 8;
 
     /**
      * A list of all availalbe paymentables.
@@ -74,6 +77,17 @@ class Payment extends Model {
         Self::STATE_REJECTED,
         Self::STATE_FAILED,
     ];
+
+    public static function boot() {
+        parent::boot();
+
+        // Cascade delete to paymentable
+        static::deleting(function($model) {
+            $model->paymentable()->delete();
+
+            // TODO: delete related notifications?
+        });
+    }
 
     /**
      * A scope for selecting payments that are, or are not in progress.
@@ -101,7 +115,7 @@ class Payment extends Model {
                 ->from('mutations_payment')
                 ->whereRaw('payments.id = mutations_payment.payment_id')
                 ->leftJoin('mutations', function($leftJoin) {
-                    $leftJoin->on('mutations_payment.mutation_id', '=', 'mutations.id');
+                    $leftJoin->on('mutations_payment.id', '=', 'mutations.mutationable_id');
                 })
                 // TODO: enable this again once implemented!
                 // ->whereIn('economy_id', $economies)
@@ -253,7 +267,8 @@ class Payment extends Model {
         // Get the state identifier here
         $id = [
             Self::STATE_INIT => 'init',
-            Self::STATE_PENDING_MANUAL => 'pendingManual',
+            Self::STATE_PENDING_USER => 'pendingUser',
+            Self::STATE_PENDING_COMMUNITY => 'pendingCommunity',
             Self::STATE_PENDING_AUTO => 'pendingAuto',
             Self::STATE_PROCESSING => 'processing',
             Self::STATE_COMPLETED => 'completed',
@@ -429,7 +444,6 @@ class Payment extends Model {
 
         // Build a new payment
         $payment = new Payment();
-        // TODO: should we immediately jump to the `pending_manual` state here?
         $payment->state = Payment::STATE_INIT;
         $payment->service_id = $service->id;
         $payment->user_id = $user->id;
@@ -465,6 +479,29 @@ class Payment extends Model {
     }
 
     /**
+     * Check what the current payment state should be, and update it is in a
+     * different state.
+     */
+    public function updateState() {
+        // Skip if not in progress anymore
+        if(!$this->isInProgress())
+            return;
+
+        // Gather facts
+        $paymentable = $this->paymentable;
+
+        // Set pending states
+        if($paymentable->checkRequiresUserAction())
+            $this->setState(Payment::STATE_PENDING_USER);
+        else if($paymentable->checkRequiresCommunityAction())
+            $this->setState(Payment::STATE_PENDING_COMMUNITY);
+
+        // Move to pending from initial state
+        if($this->state = Payment::STATE_INIT)
+            $this->setState(Payment::STATE_PENDING_AUTO);
+    }
+
+    /**
      * Set the state of this payment with some bound checks.
      *
      * @param int $state The state to set to.
@@ -477,10 +514,24 @@ class Payment extends Model {
         if($state == Self::STATE_INIT)
             throw new \Exception('Cannot set payment state to init');
 
+        // Do not change if already in this state
+        if($this->state == $state)
+            return;
+
         // Set the state, and save
         $this->state = $state;
         if($save)
             $this->save();
+
+        // Show/suppress require user/community admin action notifications
+        if($state == Self::STATE_PENDING_USER)
+            PaymentRequiresUserAction::notify($this);
+        else
+            PaymentRequiresUserAction::suppress($this);
+        if($state == Self::STATE_PENDING_COMMUNITY)
+            PaymentRequiresCommunityAction::notify($this);
+        else
+            PaymentRequiresCommunityAction::suppress($this);
     }
 
     /**

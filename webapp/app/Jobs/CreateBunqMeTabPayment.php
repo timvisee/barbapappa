@@ -13,10 +13,22 @@ use bunq\Model\Generated\Endpoint\BunqMeTab;
 use bunq\Model\Generated\Endpoint\BunqMeTabEntry;
 use bunq\Model\Generated\Object\Amount;
 
-// TODO: always use high priority for this job
 class CreateBunqMeTabPayment implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'high';
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     * The bunq API has a 30-second cooldown when throttling.
+     *
+     * @var int
+     */
+    public $retryAfter = 32;
 
     /**
      * The ID of the bunq account, which the money is sent from.
@@ -49,6 +61,9 @@ class CreateBunqMeTabPayment implements ShouldQueue {
      * @return void
      */
     public function __construct(BunqAccount $account, Payment $payment, Amount $amount) {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+
         $this->account_id = $account->id;
         $this->payment_id = $payment->id;
         $this->amount = $amount;

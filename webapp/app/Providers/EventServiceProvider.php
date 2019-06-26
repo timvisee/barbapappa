@@ -6,8 +6,8 @@ use App\Events\PaymentCompleted;
 use App\Events\PaymentFailed;
 use App\Listeners\SendPaymentCompleteNotification;
 use App\Listeners\SendPaymentFailNotification;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider {
 

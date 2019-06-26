@@ -14,7 +14,6 @@ class CreateServiceBunqMeTabTable extends Migration {
     public function up() {
         Schema::create('service_bunqme_tab', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('service_id')->unsigned()->nullable(false);
             $table->integer('bunq_account_id')->unsigned()->nullable(false);
 
             // Target account, account holder name, IBAN and optional BIC
@@ -23,10 +22,6 @@ class CreateServiceBunqMeTabTable extends Migration {
             $table->string('bic', 11)->nullable(true);
             $table->timestamps();
 
-            $table->foreign('service_id')
-                ->references('id')
-                ->on('services')
-                ->onDelete('cascade');
             $table->foreign('bunq_account_id')
                 ->references('id')
                 ->on('bunq_accounts')

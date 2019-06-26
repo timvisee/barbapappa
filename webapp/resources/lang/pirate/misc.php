@@ -72,6 +72,8 @@ return [
     'progress' => 'Progress',
     'showProgress' => 'Show progress',
     'showAll' => 'Show \'ll',
+    'view' => 'View',
+    'review' => 'Review',
     'manage' => 'Manage',
     'managementHub' => 'Captains hut',
     'in' => 'in',

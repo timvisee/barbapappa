@@ -156,19 +156,10 @@ class Bar extends Model {
      */
     public function transactions() {
         return $this
-            ->hasManyDeep(
-                Transaction::class,
-                [MutationProduct::class, Mutation::class],
-                [
-                    'bar_id',
-                    'id',
-                    'id',
-                ],
-                [
-                    'id',
-                    'mutation_id',
-                    'transaction_id',
-                ]
+            ->hasManyDeepFromRelations(
+                $this->productMutations(),
+                (new MutationWallet)->mutation(),
+                (new Mutation)->transaction()
             )
             ->distinct();
     }

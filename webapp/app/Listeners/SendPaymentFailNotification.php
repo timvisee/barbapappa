@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Events\PaymentFailed;
 use App\Mail\Email\Payment\Failed;
+use App\Models\Notifications\PaymentSettled;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
@@ -31,6 +32,9 @@ class SendPaymentFailNotification implements ShouldQueue {
         // Gather facts
         $payment = $event->payment;
         $user = $payment->user;
+
+        // Notify the user
+        PaymentSettled::notify($payment);
 
         // Create the mailable for the failure, send the mailable
         Mail::send(

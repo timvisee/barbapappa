@@ -17,7 +17,6 @@ class CreateMutationTable extends Migration {
             $table->integer('transaction_id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
             $table->morphs('mutationable');
-            // $table->integer('type')->unsigned()->nullable(false);
             $table->decimal('amount')->nullable(false);
             $table->integer('currency_id')->unsigned();
             $table->integer('state')->unsigned()->nullable(false)->default(1);

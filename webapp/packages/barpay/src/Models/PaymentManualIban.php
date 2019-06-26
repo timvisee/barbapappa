@@ -3,6 +3,7 @@
 namespace BarPay\Models;
 
 use App\Models\User;
+use App\Models\Notifications\PaymentRequiresUserAction;
 use BarPay\Controllers\PaymentManualIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This represents a payment data for a manual IBAN transfer.
  *
  * @property int id
- * @property int payment_id
  * @property-read Payment payment
  * @property string|null from_iban IBAN user transfers from.
  * @property datetime|null transferred_at When the user manually transferred if done.
@@ -115,6 +115,31 @@ class PaymentManualIban extends Model {
     }
 
     /**
+     * Check whehter this payment requires action by the user.
+     *
+     * @return bool True if action is required, false if not.
+     */
+    public function checkRequiresUserAction() {
+        // Requires action if not transferred
+        return is_null($this->transferred_at);
+    }
+
+    /**
+     * Check whehter this payment requires action by a community administrator.
+     *
+     * @return bool True if action is required, false if not.
+     */
+    public function checkRequiresCommunityAction() {
+        // Requires action if transferred a while ago, and not recently checked
+        return !is_null($this->transferred_at)
+            && $this->transferred_at < now()->subSeconds(Self::TRANSFER_WAIT)
+            && (
+                $this->checked_at == null
+                || $this->checked_at < now()->subSeconds(Self::TRANSFER_CHECK_RETRY)
+            );
+    }
+
+    /**
      * Get a relation to the user that last assessed this payment.
      *
      * This is set to the community manager that checks and approves the
@@ -144,14 +169,13 @@ class PaymentManualIban extends Model {
 
         // Build the paymentable for the payment
         $paymentable = new PaymentManualIban();
-        $paymentable->payment_id = $payment->id;
         $paymentable->to_account_holder = $serviceable->account_holder;
         $paymentable->to_iban = $serviceable->iban;
         $paymentable->to_bic = $serviceable->bic;
         $paymentable->save();
 
         // Attach the paymentable to the payment
-        $payment->setState(Payment::STATE_PENDING_MANUAL, false);
+        $payment->setState(Payment::STATE_PENDING_USER, false);
         $payment->setPaymentable($paymentable);
 
         return $paymentable;

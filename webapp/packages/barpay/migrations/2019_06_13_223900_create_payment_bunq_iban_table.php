@@ -14,7 +14,6 @@ class CreatePaymentBunqIbanTable extends Migration {
     public function up() {
         Schema::create('payment_bunq_iban', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('payment_id')->unsigned()->nullable(false);
 
             // Source account details, from user
             $table->string('from_iban', 32)->nullable(true);
@@ -24,11 +23,6 @@ class CreatePaymentBunqIbanTable extends Migration {
             $table->datetime('settled_at')->nullable(true);
 
             $table->timestamps();
-
-            $table->foreign('payment_id')
-                ->references('id')
-                ->on('payments')
-                ->onDelete('cascade');
         });
     }
 

@@ -330,7 +330,7 @@ return [
         'environment' => 'bunq API environment',
         'runHousekeeping' => 'Voer huishouden uit',
         'runHousekeepingSuccess' => 'Het monitaire bunq account is opnieuw ingesteld en eventuele hangende betalingen staan nu in de wachtrij voor verwerking.',
-        'noHttpsNoCallbacks' => 'Deze site gebruikt geen HTTPS, real time bunq betalingen worden daardoor niet ondersteund. Betalingen worden eens per dag verwerkt.',
+        'noHttpsNoCallbacks' => 'Deze site gebruikt geen HTTPS, real time bunq betalingen zijn daarom niet ondersteund. Betalingen zullen eens per dag verwerkt worden.',
         'manageCommunityAccounts' => 'Beheer bunq accounts voor groep',
         'manageAppAccounts' => 'Beheer bunq accounts voor gehele applicatie',
     ],
@@ -434,6 +434,24 @@ return [
     ],
 
     /**
+     * Notification pages.
+     */
+    'notifications' => [
+        'title' => 'Notificaties',
+        'notification' => 'Notificatie',
+        'description' => 'Hier zie je al je notificaties, gelezen en ongelezen.',
+        'unread#' => '{0} Geen ongelezen notificaties|{1} Ongelezen notificatie|[2,*] :count ongelezen notificaties',
+        'persistent#' => '{0} Geen vaste notificaties|{1} Vaste notificatie|[2,*] :count vaste notificaties',
+        'read#' => '{0} Geen gelezen notificaties|{1} Gelezen notificatie|[2,*] :count gelezen notificaties',
+        'noNotifications' => 'Geen notificaties...',
+        'all' => 'Alle notificaties',
+        'markAsRead' => 'Markeren als gelezen',
+        'markAllAsRead' => 'Markeer alles als gelezen',
+        'markedAsRead#' => '{0} Geen notificaties als gemarkeerd als gelezen|{1} Notificatie gemarkeerd als gelezen|[2,*] :count notificaties gemarkeerd als gelezen',
+        'unknownNotificationAction' => 'Onbekelde notificatie actie',
+    ],
+
+    /**
      * Payment pages.
      */
     'payments' => [
@@ -464,7 +482,8 @@ return [
         'paymentCancelled' => 'Payment cancelled',
         'state' => [
             'init' => 'Geïnitieerd',
-            'pendingManual' => 'In afwachting (handmatig)',
+            'pendingUser' => 'Wachtend op gebruiker actie',
+            'pendingCommunity' => 'Wachtend op beoordeling',
             'pendingAuto' => 'In afwachting (automatisch)',
             'processing' => 'Bezig met verwerken',
             'completed' => 'Voltooid',

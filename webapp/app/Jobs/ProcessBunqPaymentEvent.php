@@ -20,6 +20,19 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'high';
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     * The bunq API has a 30-second cooldown when throttling.
+     *
+     * @var int
+     */
+    public $retryAfter = 32;
+
     private $accountId;
     private $apiPaymentId;
 
@@ -29,6 +42,9 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      * @return void
      */
     public function __construct(BunqAccount $account, ApiPayment $apiPayment) {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+
         $this->accountId = $account->id;
         $this->apiPaymentId = $apiPayment->getId();
     }

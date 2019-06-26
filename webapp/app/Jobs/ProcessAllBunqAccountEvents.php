@@ -29,11 +29,27 @@ class ProcessAllBunqAccountEvents implements ShouldQueue {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
+     * Preferred queue constant.
+     */
+    const QUEUE = 'low';
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     * The bunq API has a 30-second cooldown when throttling.
+     *
+     * @var int
+     */
+    public $retryAfter = 32;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct() {}
+    public function __construct() {
+        // Set queue
+        $this->onQueue(Self::QUEUE);
+    }
 
     /**
      * Execute the job.

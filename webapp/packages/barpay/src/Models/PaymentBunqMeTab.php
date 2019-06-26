@@ -2,9 +2,10 @@
 
 namespace BarPay\Models;
 
-use App\Jobs\CreateBunqMeTabPayment;
 use App\Jobs\CancelBunqMeTabPayment;
+use App\Jobs\CreateBunqMeTabPayment;
 use App\Models\BunqAccount;
+use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\User;
 use BarPay\Controllers\PaymentBunqMeTabController;
 use Carbon\Carbon;
@@ -18,7 +19,6 @@ use bunq\Model\Generated\Object\Amount;
  * This represents a payment data for a bunq BunqMe Tab payment request.
  *
  * @property int id
- * @property int payment_id
  * @property-read Payment payment
  * @property int|null bunq_tab_id The BunqMe Tab ID.
  * @property string|null bunq_tab_url The BunqMe Tab share URL.
@@ -98,6 +98,25 @@ class PaymentBunqMeTab extends Model {
     }
 
     /**
+     * Check whehter this payment requires action by the user.
+     *
+     * @return bool True if action is required, false if not.
+     */
+    public function checkRequiresUserAction() {
+        // Requires action if share URL is set and not transferred
+        return is_null($this->bunq_tab_id) && !is_null($this->transferred_at);
+    }
+
+    /**
+     * Check whehter this payment requires action by a community administrator.
+     *
+     * @return bool True if action is required, false if not.
+     */
+    public function checkRequiresCommunityAction() {
+        return false;
+    }
+
+    /**
      * Get the bunq account.
      *
      * @return The bunq account.
@@ -132,11 +151,10 @@ class PaymentBunqMeTab extends Model {
 
         // Build the paymentable for the payment
         $paymentable = new PaymentBunqMeTab();
-        $paymentable->payment_id = $payment->id;
         $paymentable->save();
 
         // Attach the paymentable to the payment
-        $payment->setState(Payment::STATE_PENDING_MANUAL, false);
+        $payment->setState(Payment::STATE_PENDING_USER, false);
         $payment->setPaymentable($paymentable);
 
         // Create job to set up the BunqMe Tab payment

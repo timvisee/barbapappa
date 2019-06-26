@@ -14,14 +14,8 @@ class CreateMutationMagicTable extends Migration {
     public function up() {
         Schema::create('mutations_magic', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('mutation_id')->unsigned()->nullable(false);
             $table->string('description', 2048)->nullable(true)->default(null);
             $table->timestamps();
-
-            $table->foreign('mutation_id')
-                ->references('id')
-                ->on('mutations')
-                ->onDelete('cascade');
         });
     }
 

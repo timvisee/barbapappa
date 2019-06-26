@@ -274,7 +274,12 @@ class Economy extends Model {
         // Build a sub query for selecting the last 100 product mutations
         $lastProducts = MutationProduct::select('product_id', 'quantity');
         if($mutation_ids != null)
-            $lastProducts = $lastProducts->whereIn('mutation_id', $mutation_ids);
+            $lastProducts = $lastProducts
+                ->whereExists(function($query) {
+                    $query->selectRaw('1')
+                        ->from('mutations')
+                        ->whereRaw('mutations.mutationable_id = mutations_product.id');
+                });
         if($exclude_product_ids != null)
             $lastProducts = $lastProducts->whereNotIn('product_id', $exclude_product_ids);
         $lastProducts = $lastProducts
@@ -330,7 +335,11 @@ class Economy extends Model {
         // Find all recent product mutations in order
         $product_ids = MutationProduct::select('product_id')
             ->distinct()
-            ->whereIn('mutation_id', $mutation_ids)
+            ->whereExists(function($query) {
+                $query->selectRaw('1')
+                    ->from('mutations')
+                    ->whereRaw('mutations.mutationable_id = mutations_product.id');
+            })
             ->whereNotIn('product_id', $exclude_product_ids)
             ->latest()
             ->limit($limit)

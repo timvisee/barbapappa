@@ -371,7 +371,7 @@ if(!function_exists('is_url_secure')) {
      * @return bool True if secure, false if not.
      */
     function is_url_secure(string $url = null) {
-        return trim(strtolower(parse_url($url ?? url('/'), PHP_URL_SCHEME)));
+        return trim(strtolower(parse_url($url ?? url('/'), PHP_URL_SCHEME))) == 'https';
     }
 }
 

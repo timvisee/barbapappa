@@ -21,7 +21,6 @@ use Illuminate\Support\Facades\Mail;
  * main mutation.
  *
  * @property int id
- * @property int mutation_id
  * @property int|null wallet_id
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -35,7 +34,6 @@ class MutationWallet extends Model {
     protected $with = ['wallet'];
 
     protected $fillable = [
-        'mutation_id',
         'wallet_id',
     ];
 

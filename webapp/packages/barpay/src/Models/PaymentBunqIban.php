@@ -3,6 +3,7 @@
 namespace BarPay\Models;
 
 use App\Models\BunqAccount;
+use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\User;
 use BarPay\Controllers\PaymentBunqIbanController;
 use Carbon\Carbon;
@@ -15,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * This represents a payment data for a bunq IBAN transfer.
  *
  * @property int id
- * @property int payment_id
  * @property-read Payment payment
  * @property string|null from_iban IBAN user transfers from.
  * @property datetime|null transferred_at When the user manually transferred if done.
@@ -93,6 +93,25 @@ class PaymentBunqIban extends Model {
     }
 
     /**
+     * Check whehter this payment requires action by the user.
+     *
+     * @return bool True if action is required, false if not.
+     */
+    public function checkRequiresUserAction() {
+        // Requires action if not transferred
+        return is_null($this->transferred_at);
+    }
+
+    /**
+     * Check whehter this payment requires action by a community administrator.
+     *
+     * @return bool True if action is required, false if not.
+     */
+    public function checkRequiresCommunityAction() {
+        return false;
+    }
+
+    /**
      * Get the bunq account.
      *
      * @return The bunq account.
@@ -120,11 +139,10 @@ class PaymentBunqIban extends Model {
 
         // Build the paymentable for the payment
         $paymentable = new PaymentBunqIban();
-        $paymentable->payment_id = $payment->id;
         $paymentable->save();
 
         // Attach the paymentable to the payment
-        $payment->setState(Payment::STATE_PENDING_MANUAL, false);
+        $payment->setState(Payment::STATE_PENDING_USER, false);
         $payment->setPaymentable($paymentable);
 
         return $paymentable;

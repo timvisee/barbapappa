@@ -38,7 +38,6 @@ class ServiceBunqMeTabController {
     public static function create(Request $request, Service $service) {
         // Create the serviceable
         $serviceable = new ServiceBunqMeTab();
-        $serviceable->service_id = $service->id;
         $serviceable->bunq_account_id = $request->input('bunq_account');
         $serviceable->account_holder = $request->input('account_holder');
         $serviceable->iban = $request->input('iban');

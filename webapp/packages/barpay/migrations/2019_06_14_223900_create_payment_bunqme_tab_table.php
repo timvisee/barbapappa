@@ -14,7 +14,6 @@ class CreatePaymentBunqMeTabTable extends Migration {
     public function up() {
         Schema::create('payment_bunqme_tab', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('payment_id')->unsigned()->nullable(false);
 
             // The BunqMe Tab ID and share URL
             $table->bigInteger('bunq_tab_id')->nullable(true)->unique();
@@ -26,12 +25,7 @@ class CreatePaymentBunqMeTabTable extends Migration {
 
             $table->timestamps();
 
-            // TODO: should we cascade? We might need to cancel bunqme tab
-            // payment first
-            $table->foreign('payment_id')
-                ->references('id')
-                ->on('payments')
-                ->onDelete('cascade');
+            // TODO: require to cancel bunqme tab at bunq first before delete?
         });
     }
 

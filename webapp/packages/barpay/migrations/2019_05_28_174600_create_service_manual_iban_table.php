@@ -14,7 +14,6 @@ class CreateServiceManualIbanTable extends Migration {
     public function up() {
         Schema::create('service_manual_iban', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('service_id')->unsigned()->nullable(false);
 
             // Target account, account holder name, IBAN and optional BIC
             $table->string('account_holder')->nullable(false);
@@ -22,11 +21,6 @@ class CreateServiceManualIbanTable extends Migration {
             $table->string('bic', 11)->nullable(true);
 
             $table->timestamps();
-
-            $table->foreign('service_id')
-                ->references('id')
-                ->on('services')
-                ->onDelete('cascade');
         });
     }
 

@@ -109,7 +109,7 @@ class Transaction extends Model {
                 ->whereExists(function($query) use($perspective) {
                     $query->selectRaw('1')
                         ->from('mutations_wallet')
-                        ->whereRaw('mutations.id = mutations_wallet.mutation_id')
+                        ->whereRaw('mutations.mutationable_id = mutations_wallet.id')
                         ->where('wallet_id', $perspective->id);
                 });
         }
@@ -336,9 +336,9 @@ class Transaction extends Model {
         if(!$this->canUndo())
             throw new \Exception("Attempting to undo transaction while this is not allowed");
 
-        // Undo all mutations without deleting them
+        // Undo all mutations, and delete them
         $this->mutations->each(function($m) {
-            $m->undo(false);
+            $m->undo(true);
         });
 
         // Delete this transaction

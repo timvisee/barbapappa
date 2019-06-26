@@ -45,6 +45,9 @@ class PaymentManualIbanController {
         $paymentable->transferred_at = now();
         $paymentable->save();
 
+        // Update the payment state
+        $payment->setState(Payment::STATE_PENDING_AUTO);
+
         return $response;
     }
 
@@ -104,6 +107,7 @@ class PaymentManualIbanController {
             break;
 
         case 'delay':
+            $payment->setState(Payment::STATE_PENDING_AUTO, true);
             break;
 
         case 'reject':
