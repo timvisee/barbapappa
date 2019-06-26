@@ -47,7 +47,6 @@ class PaymentBunqIbanController {
 
         // Update the payment state and step
         $payment->setState(Payment::STATE_PENDING_AUTO);
-        $payment->setStep($paymentable->getStep());
 
         return $response;
     }

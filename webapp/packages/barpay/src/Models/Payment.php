@@ -461,9 +461,6 @@ class Payment extends Model {
         if($payment->state == Payment::STATE_INIT)
             throw new \Exception('Could not create payment, it\'s state should have been set by the corresponding paymentable');
 
-        // Set the initial step
-        $payment->setStep($paymentable->getStep());
-
         return $payment;
     }
 
@@ -482,50 +479,22 @@ class Payment extends Model {
     }
 
     /**
-     * Set the step this pyament is in with some bound checks.
-     *
-     * @param string $step The step identifier to set to.
-     * @param boolean [$save=true] True to save the model after setting the
-     *      step.
-     *
-     * @throws \Exception Throws if an invalid step is given.
+     * Check what the current payment state should be, and update it is in a
+     * different state.
      */
-    public function setStep($step, $save = true) {
-        // Cannot be null in progress, must be null when settled
-        if(is_null($step) && $this->isInProgress())
-            throw new \Exception('Cannot set step to zero value when payment is in progress');
-        if(!is_null($step) && !$this->isInProgress())
-            throw new \Exception('Cannot set step to non-zero value when payment is not in progress');
+    public function updateState() {
+        // Gather facts
+        $paymentable = $this->paymentable;
 
-        // Step must have changed
-        if($this->step == $step)
-            return;
+        // Set pending states
+        if($paymentable->checkRequiresUserAction())
+            $this->setState(Payment::STATE_PENDING_USER);
+        else if($paymentable->checkRequiresCommunityAction())
+            $this->setState(Payment::STATE_PENDING_COMMUNITY);
 
-        // Set the step
-        $this->step = $step;
-        if($save)
-            $this->save();
-
-        // Call the step change handler
-        $this->onStepChange($step);
-    }
-
-    /**
-     * Check what the current payment step should be, and update it the model
-     * has a different step set.
-     */
-    public function updateStep() {
-        $this->setStep(
-            $this->isInProgress() ? $this->paymentable->getStep() : null
-        );
-    }
-
-    /**
-     * Invoked when the current step for this payment changes.
-     */
-    public function onStepChange($step) {
-        // Call the on step change function in paymentable
-        $this->paymentable->onStepChange($step);
+        // Move to pending from initial state
+        if($this->state = Payment::STATE_INIT)
+            $this->setState(Payment::STATE_PENDING_AUTO);
     }
 
     /**
@@ -549,10 +518,6 @@ class Payment extends Model {
         $this->state = $state;
         if($save)
             $this->save();
-
-        // Set current step to null if settled
-        if(!$this->isInProgress())
-            $this->setStep(null, $save);
 
         // Show/suppress require user/community admin action notifications
         if($state == Self::STATE_PENDING_USER)

@@ -45,8 +45,8 @@ class PaymentManualIbanController {
         $paymentable->transferred_at = now();
         $paymentable->save();
 
-        // Update the payment step
-        $payment->onStepChange($paymentable->getStep());
+        // Update the payment state
+        $payment->setState(Payment::STATE_PENDING_AUTO);
 
         return $response;
     }

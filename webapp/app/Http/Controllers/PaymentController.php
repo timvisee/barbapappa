@@ -74,8 +74,8 @@ class PaymentController extends Controller {
         // if(!Self::hasPermission($transaction))
         //     return response(view('noPermission'));
 
-        // Force update tahe payment step
-        $payment->updateStep();
+        // Force update the payment state
+        $payment->updateState();
 
         return view('payment.show')
             ->with('payment', $payment)
@@ -99,8 +99,8 @@ class PaymentController extends Controller {
         // if(!Self::hasPermission($transaction))
         //     return response(view('noPermission'));
 
-        // Force update tahe payment step
-        $payment->updateStep();
+        // Force update the payment state
+        $payment->updateState();
 
         // If the payment is not in progress anymore, redirect to show page
         if(!$payment->isInProgress())

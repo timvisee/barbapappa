@@ -5,7 +5,6 @@ namespace App\Console;
 use App\Jobs\ExpireNotifications;
 use App\Jobs\ProcessAllBunqAccountEvents;
 use App\Jobs\UpdatePaymentStates;
-use App\Jobs\UpdatePaymentSteps;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -27,10 +26,8 @@ class Kernel extends ConsoleKernel {
      * @return void
      */
     protected function schedule(Schedule $schedule) {
-        // Update payment states and steps every 15 minutes
+        // Update payment states every 15 minutes
         $schedule->job(new UpdatePaymentStates)
-            ->everyFifteenMinutes();
-        $schedule->job(new UpdatePaymentSteps)
             ->everyFifteenMinutes();
 
         // Expire all old notifications

@@ -198,11 +198,6 @@ class PaymentManualIban extends Model {
     }
 
     /**
-     * Invoked when the current step for this payment changes.
-     */
-    public function onStepChange($step) {}
-
-    /**
      * Check whether this payment can be cancelled at this moment.
      *
      * This does not do permission checking. It simply checks whether this
