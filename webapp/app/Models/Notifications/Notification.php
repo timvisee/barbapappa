@@ -188,7 +188,7 @@ class Notification extends Model {
         $notification->user_id = $user->id;
         $notification->notificationable_id = $notificationable->id;
         $notification->notificationable_type = get_class($notificationable);
-        $notification->persistent = false;
+        $notification->persistent = $notificationable->persistent ?? false;
         $notification->expire_at = now()->addSeconds(Self::NOTIFICATION_EXPIRE);
         $notification->save();
 

@@ -2,9 +2,10 @@
 
 namespace BarPay\Models;
 
-use App\Jobs\CreateBunqMeTabPayment;
 use App\Jobs\CancelBunqMeTabPayment;
+use App\Jobs\CreateBunqMeTabPayment;
 use App\Models\BunqAccount;
+use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\User;
 use BarPay\Controllers\PaymentBunqMeTabController;
 use Carbon\Carbon;
@@ -158,6 +159,17 @@ class PaymentBunqMeTab extends Model {
             return Self::STEP_RECEIPT;
 
         throw new \Exception('Paymentable is in invalid step state');
+    }
+
+    /**
+     * Invoked when the current step for this payment changes.
+     */
+    public function onStepChange($step) {
+        // Show/suppress require user action notification for payment
+        if($step == Self::STEP_PAY)
+            PaymentRequiresUserAction::notify($this->payment);
+        else
+            PaymentRequiresUserAction::suppress($this->payment);
     }
 
     /**

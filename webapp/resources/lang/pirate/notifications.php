@@ -10,4 +10,8 @@ return [
             'failed' => 'Yer :amount top-up sunk',
         ],
     ],
+    'paymentRequiresUserAction' => [
+        'kind' => 'Payment',
+        'message' => 'Your :amount top-up requires action',
+    ],
 ];

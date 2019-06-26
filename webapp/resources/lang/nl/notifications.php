@@ -10,4 +10,8 @@ return [
             'failed' => 'Je :amount top-up is mislukt',
         ],
     ],
+    'paymentRequiresUserAction' => [
+        'kind' => 'Betaling',
+        'message' => 'Je :amount top-up vereist actie',
+    ],
 ];

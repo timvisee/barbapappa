@@ -81,6 +81,8 @@ class Payment extends Model {
         // Cascade delete to paymentable
         static::deleting(function($model) {
             $model->paymentable()->delete();
+
+            // TODO: delete related notifications?
         });
     }
 
@@ -456,6 +458,9 @@ class Payment extends Model {
         if($payment->state == Payment::STATE_INIT)
             throw new \Exception('Could not create payment, it\'s state should have been set by the corresponding paymentable');
 
+        // Call the step change function
+        $payment->onStepChange($paymentable->getStep());
+
         return $payment;
     }
 
@@ -471,6 +476,14 @@ class Payment extends Model {
      */
     public function canCancel() {
         return $this->isInProgress() && $this->paymentable->canCancel();
+    }
+
+    /**
+     * Invoked when the current step for this payment changes.
+     */
+    public function onStepChange($step) {
+        // Call the on step change function in paymentable
+        $this->paymentable->onStepChange($step);
     }
 
     /**
@@ -490,6 +503,10 @@ class Payment extends Model {
         $this->state = $state;
         if($save)
             $this->save();
+
+        // Call the step change function if settled
+        if(in_array($state, Self::SETTLED))
+            $this->onStepChange(null);
     }
 
     /**

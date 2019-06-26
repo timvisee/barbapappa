@@ -3,6 +3,7 @@
 namespace BarPay\Models;
 
 use App\Models\User;
+use App\Models\Notifications\PaymentRequiresUserAction;
 use BarPay\Controllers\PaymentManualIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -169,6 +170,20 @@ class PaymentManualIban extends Model {
             return Self::STEP_RECEIPT;
 
         throw new \Exception('Paymentable is in invalid step state');
+    }
+
+    /**
+     * Invoked when the current step for this payment changes.
+     */
+    public function onStepChange($step) {
+        // Show/suppress require user action notification for payment
+        if($step == Self::STEP_TRANSFER)
+            PaymentRequiresUserAction::notify($this->payment);
+        else
+            PaymentRequiresUserAction::suppress($this->payment);
+
+        // Show require community admin notification action for payment
+        // TODO: implement this
     }
 
     /**
