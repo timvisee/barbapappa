@@ -24,6 +24,14 @@ class CreateBunqMeTabPayment implements ShouldQueue {
     const QUEUE = 'high';
 
     /**
+     * The number of seconds to wait before retrying the job.
+     * The bunq API has a 30-second cooldown when throttling.
+     *
+     * @var int
+     */
+    public $retryAfter = 32;
+
+    /**
      * The ID of the bunq account, which the money is sent from.
      *
      * @var int
