@@ -99,7 +99,17 @@ class BunqAccount extends Model {
      * A function to load a bunq context for this bunq account.
      */
     public function loadBunqContext() {
-        BunqContext::loadApiContext($this->api_context);
+        // Obtain the API context
+        $apiContext = $this->api_context;
+
+        // Restore expired sessions, re-initialize and update in database
+        if(!$apiContext->isSessionActive()) {
+            $apiContext->initializeSessionContext();
+            $this->api_context = $apiContext;
+        }
+
+        // Load the bunq context for this request
+        BunqContext::loadApiContext($apiContext);
     }
 
     /**
