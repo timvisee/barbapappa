@@ -10,7 +10,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use bunq\Model\Generated\Endpoint\BunqMeTab;
 
-// TODO: always use high priority for this job
 class CancelBunqMeTabPayment implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -18,7 +17,7 @@ class CancelBunqMeTabPayment implements ShouldQueue {
     /**
      * Preferred queue constant.
      */
-    const QUEUE = 'low';
+    const QUEUE = 'normal';
 
     /**
      * The number of seconds to wait before retrying the job.

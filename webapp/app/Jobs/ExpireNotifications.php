@@ -15,7 +15,6 @@ use Illuminate\Queue\SerializesModels;
  * This does not delete any notifications not linked to anything anymore. A
  * different job is used for that.
  */
-// TODO: always use low priority for this job
 class ExpireNotifications implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;

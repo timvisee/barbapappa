@@ -13,7 +13,6 @@ use bunq\Model\Generated\Endpoint\BunqMeTab;
 use bunq\Model\Generated\Endpoint\BunqMeTabEntry;
 use bunq\Model\Generated\Object\Amount;
 
-// TODO: always use high priority for this job
 class CreateBunqMeTabPayment implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
