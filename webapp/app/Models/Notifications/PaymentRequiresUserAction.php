@@ -58,7 +58,9 @@ class PaymentRequiresUserAction extends Model {
         PaymentRequiresUserAction::withoutGlobalScope('user')
             ->where('payment_id', $payment->id)
             ->each(function($notificationable) {
-                $notificationable->notification->delete();
+                $notification = $notificationable->notification;
+                if(!is_null($notification))
+                    $notification->delete();
             });
     }
 

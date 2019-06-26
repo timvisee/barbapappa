@@ -74,6 +74,9 @@ class PaymentController extends Controller {
         // if(!Self::hasPermission($transaction))
         //     return response(view('noPermission'));
 
+        // Force update tahe payment step
+        $payment->updateStep();
+
         return view('payment.show')
             ->with('payment', $payment)
             ->with('transaction', $transaction);
@@ -91,14 +94,17 @@ class PaymentController extends Controller {
         $payment = Payment::findOrFail($paymentId);
         $paymentable = $payment->paymentable;
 
-        // If the payment is not in progress anymore, redirect to show page
-        if(!$payment->isInProgress())
-            return redirect()->route('payment.show', ['paymentId' => $payment->id]);
-
         // // Check permission
         // // TODO: check this permission in middleware, redirect to login
         // if(!Self::hasPermission($transaction))
         //     return response(view('noPermission'));
+
+        // Force update tahe payment step
+        $payment->updateStep();
+
+        // If the payment is not in progress anymore, redirect to show page
+        if(!$payment->isInProgress())
+            return redirect()->route('payment.show', ['paymentId' => $payment->id]);
 
         // Build the response
         $response = view('payment.pay')

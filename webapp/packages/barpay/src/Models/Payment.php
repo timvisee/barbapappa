@@ -440,7 +440,6 @@ class Payment extends Model {
 
         // Build a new payment
         $payment = new Payment();
-        // TODO: should we immediately jump to the `pending_manual` state here?
         $payment->state = Payment::STATE_INIT;
         $payment->service_id = $service->id;
         $payment->user_id = $user->id;
@@ -458,8 +457,8 @@ class Payment extends Model {
         if($payment->state == Payment::STATE_INIT)
             throw new \Exception('Could not create payment, it\'s state should have been set by the corresponding paymentable');
 
-        // Call the step change function
-        $payment->onStepChange($paymentable->getStep());
+        // Set the initial step
+        $payment->setStep($paymentable->getStep());
 
         return $payment;
     }
@@ -476,6 +475,45 @@ class Payment extends Model {
      */
     public function canCancel() {
         return $this->isInProgress() && $this->paymentable->canCancel();
+    }
+
+    /**
+     * Set the step this pyament is in with some bound checks.
+     *
+     * @param string $step The step identifier to set to.
+     * @param boolean [$save=true] True to save the model after setting the
+     *      step.
+     *
+     * @throws \Exception Throws if an invalid step is given.
+     */
+    public function setStep($step, $save = true) {
+        // Cannot be null in progress, must be null when settled
+        if(is_null($step) && $this->isInProgress())
+            throw new \Exception('Cannot set step to zero value when payment is in progress');
+        if(!is_null($step) && !$this->isInProgress())
+            throw new \Exception('Cannot set step to non-zero value when payment is not in progress');
+
+        // Step must have changed
+        if($this->step == $step)
+            return;
+
+        // Set the step
+        $this->step = $step;
+        if($save)
+            $this->save();
+
+        // Call the step change handler
+        $this->onStepChange($step);
+    }
+
+    /**
+     * Check what the current payment step should be, and update it the model
+     * has a different step set.
+     */
+    public function updateStep() {
+        $this->setStep(
+            $this->isInProgress() ? $this->paymentable->getStep() : null
+        );
     }
 
     /**
@@ -504,9 +542,9 @@ class Payment extends Model {
         if($save)
             $this->save();
 
-        // Call the step change function if settled
-        if(in_array($state, Self::SETTLED))
-            $this->onStepChange(null);
+        // Set current step to null if settled
+        if(!$this->isInProgress())
+            $this->setStep(null, $save);
     }
 
     /**

@@ -45,8 +45,8 @@ class PaymentBunqIbanController {
         $paymentable->transferred_at = now();
         $paymentable->save();
 
-        // Call on step change function
-        $payment->onStepChange($paymentable->getStep());
+        // Update the payment step
+        $payment->setStep($paymentable->getStep());
 
         return $response;
     }
