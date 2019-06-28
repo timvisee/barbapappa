@@ -65,6 +65,7 @@ class RenewBunqApiContext implements ShouldQueue {
         // Renew the context, update it in the database
         $apiContext->resetSession();
         $account->api_context = $apiContext;
+        $account->renewed_at = now();
         $account->save();
     }
 }

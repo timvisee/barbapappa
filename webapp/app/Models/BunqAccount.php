@@ -31,6 +31,7 @@ use bunq\Model\Generated\Object\NotificationFilter;
  * @property string iban
  * @property string bic
  * @property Carbon|null deleted_at
+ * @property Carbon renewed_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -45,6 +46,11 @@ class BunqAccount extends Model {
     const BUNQ_SESSION_EXPIRY_RENEW_PERIOD = ApiContext::TIME_TO_SESSION_EXPIRY_MINIMUM_SECONDS;
 
     protected $table = "bunq_accounts";
+
+    protected $casts = [
+        'deleted_at' => 'datetime',
+        'renewed_at' => 'datetime',
+    ];
 
     protected $fillable = [
         'community_id',
@@ -109,19 +115,51 @@ class BunqAccount extends Model {
         // Obtain the API context
         $apiContext = $this->api_context;
 
+        // Renew the API context if (close to) expired
+        $this->checkRenewApiContext($apiContext);
+
+        // Load the bunq context for this request
+        BunqContext::loadApiContext($apiContext);
+    }
+
+    /**
+     * Check whether the bunq API context should be renewed, and renew it if
+     * it's close to expiry.
+     *
+     * This basically ensures a valid API context is used. When the context is
+     * already expired, it is immediately renewed in a synchronous manner. If
+     * it's close to expiry, a job is spawned to renew it in the background.
+     *
+     * The given API context is updated in-place if it is renewed synchronously
+     * because it had already expired.
+     *
+     * @param ApiContext &$apiContext The current bunq API context.
+     */
+    private function checkRenewApiContext(&$apiContext) {
         // Determine in how many seconds the session expires
         $expireAt = $apiContext->getSessionContext()->getExpiryTime()->getTimestamp();
         $expireIn = $expireAt - time();
 
-        // Immediately renew session if expired, queue if expiring soon
-        if($expireIn <= 1)
-            RenewBunqApiContext::dispatchNow($this);
-        else if($expireIn <= Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD)
-            // TODO: do not dispatch duplicates!
-            RenewBunqApiContext::dispatch($this);
+        // Return if not close to expiry
+        if($expireIn > Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD)
+            return;
 
-        // Load the bunq context for this request
-        BunqContext::loadApiContext($apiContext);
+        // Immediately renew session if already expired, refresh API context
+        if($expireIn <= 1) {
+            RenewBunqApiContext::dispatchNow($this);
+            $this->refresh();
+            $apiContext = $this->api_context;
+            return;
+        }
+
+        // Do not spawn renewal job if already recently renewed/renewing
+        if(!is_null($this->renewed_at) && $this->renewed_at >= now()->subSeconds(Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD))
+            return;
+
+        // Dispatch a job to renew the session, update the renew time
+        RenewBunqApiContext::dispatch($this);
+        $this->renewed_at = now();
+        $this->save();
     }
 
     /**
