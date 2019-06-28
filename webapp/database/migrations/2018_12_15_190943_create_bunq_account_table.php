@@ -23,6 +23,7 @@ class CreateBunqAccountTable extends Migration {
             $table->string('iban', 32);
             $table->string('bic', 8)->nullable(true);
             $table->bigInteger('last_event_id')->nullable(true);
+            $table->timestamp('renewed_at');
             $table->softDeletes();
             $table->timestamps();
 
