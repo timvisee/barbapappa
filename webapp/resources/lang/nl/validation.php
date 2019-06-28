@@ -139,6 +139,7 @@ return [
         'payment_service' => 'betaalservice',
         'choice' => 'keuze',
         'confirm' => 'bevestiging',
+        'confirm_transfer' => 'bevestiging',
     ],
 
 ];
