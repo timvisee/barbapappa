@@ -6,6 +6,8 @@ return [
      * Common actions.
      */
     'login' => 'Login',
+    'loginPassword' => 'Login with password',
+    'loginEmail' => 'Login with email',
     'logout' => 'Logout',
     'register' => 'Register',
     'forgotPassword' => 'Forgot your password?',
@@ -27,8 +29,14 @@ return [
     'mustAcceptTerms' => 'You must agree to register.',
 
     'loggedIn' => 'You\'ve been logged in.',
+    'alreadyLoggedIn' => 'You\'re already logged in.',
     'registeredAndLoggedIn' => 'Account registered, you\'ve been logged in.',
     'loggedOut' => 'You\'ve been logged out.',
+
+    'sessionLinkUnknown' => 'Failed to sign in. Expired or invalid session link.',
+    'sessionLinkSent' => 'We sent you a magic link to :email. Click it to sign in.',
+    'sessionLinkSentOrPassword' => 'We sent you a magic link to :email. Click it to sign in or enter your password.',
+    'unrecognizedEmailRegister' => 'We do not recognize your email address yet. Please register an account to start using :app.',
 
     /*
     | TODO: Are these properties still required?

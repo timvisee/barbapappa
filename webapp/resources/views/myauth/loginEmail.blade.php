@@ -5,7 +5,7 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['LoginController@doEmail'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
     <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
         {{ Form::label('email', __('account.email') . ':') }}
@@ -13,18 +13,9 @@
         {{ ErrorRenderer::inline('email') }}
     </div>
 
-    <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
-        {{ Form::label('password', __('account.password') . ':') }}
-        {{ Form::password('password') }}
-        {{ ErrorRenderer::inline('password') }}
-    </div>
-
     <div>
         <button class="ui button primary" type="submit">@lang('auth.login')</button>
-        @if(config('app.auth_session_link'))
-            <a href="{{ route('login.email') }}" class="ui button basic">@lang('auth.loginEmail')</a>
-        @endif
-        <a href="{{ route('password.request') }}" class="ui button basic">@lang('auth.forgotPassword')</a>
+        <a href="{{ route('login') }}" class="ui button basic">@lang('auth.loginPassword')</a>
         <a href="{{ route('register') }}" class="ui button basic">@lang('auth.register')</a>
     </div>
 

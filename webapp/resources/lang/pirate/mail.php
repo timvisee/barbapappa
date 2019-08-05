@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Blimey!|Sail ho!',
-        'signoff' => '~ A :app pirate robot',
+        'signoff' => '~ :app pirate robot',
     ],
 
     /**
@@ -42,6 +42,23 @@ return [
             'startUsingSeeDashboard' => 'To sail wit :app, navigate to yer pirate dashboard.',
             'configureEmailPreferences' => 'To mend th\' sails \'bout how often ye receive e-bottle parchments from :app, navigate to yer e-bottle preferences panel.',
         ]
+    ],
+
+    /**
+     * Authentication emails.
+     */
+    // TODO: use :app variable here, instead of BARbapAPPa
+    'auth' => [
+        /**
+         * Session link email.
+         */
+        'sessionLink' => [
+            'subject' => 'Sign in to BARbapAPPa',
+            'subtitle' => 'Tap th\' button to sign in to yer BARbapAPPa account.',
+            'soon' => 'The link expires **within :minutes minutes**, and can be used once.',
+            'button' => 'Sign in to BARbapAPPa',
+            'manual' => 'If th\' above button don\'t work, open the following link in yer web browser:',
+        ],
     ],
 
     /**

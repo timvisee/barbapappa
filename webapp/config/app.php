@@ -124,6 +124,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Session link authentication
+    |--------------------------------------------------------------------------
+    |
+    | Enable or disable authentication with session links.
+    | If enabled, users with authenticate with a session link through email by
+    | default. An optional password can be set on the users profile page.
+    | If disabled, a user must specify a password on registration.
+    |
+    */
+
+    'auth_session_link' => true,
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |

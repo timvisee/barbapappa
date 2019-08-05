@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Groet,|Groeten,|Dank,',
-        'signoff' => '~ A :app robot',
+        'signoff' => '~ :app robot',
     ],
 
     /**
@@ -73,6 +73,23 @@ return [
             'orContact' => 'Of neem zo snel mogelijk [contact](:contact) op met het :app team wegens dit mogelijke veiligheidsincident.',
             'noChangeThenContact' => 'Als je dit bericht ontvangen hebt maar niet je wachtwoord hebt aangepast, neem zo snel mogelijk [contact](:contact) op met het :contact team wegens dit mogelijke veiligheidsincident.',
         ]
+    ],
+
+    /**
+     * Authentication emails.
+     */
+    // TODO: use :app variable here, instead of BARbapAPPa
+    'auth' => [
+        /**
+         * Session link email.
+         */
+        'sessionLink' => [
+            'subject' => 'Inloggen op BARbapAPPa',
+            'subtitle' => 'Druk op de knop om in te loggen op je BARbapAPPa account.',
+            'soon' => 'De link verloopt **binnen :minutes minuten**, en kan één keer gebruikt worden.',
+            'button' => 'Inloggen op BARbapAPPa',
+            'manual' => 'Als de bovenstaande knop niet werkt, open de onderstaande link in je web browser:',
+        ],
     ],
 
     'payment' => [

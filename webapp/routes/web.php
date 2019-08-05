@@ -39,6 +39,8 @@ Route::middleware('auth')->get('/dashboard', 'DashboardController@index')->name(
 // Authentication routes
 Route::get('/login', 'LoginController@login')->name('login');
 Route::post('/login', 'LoginController@doLogin');
+Route::get('/login/email', 'LoginController@email')->name('login.email');
+Route::post('/login/email', 'LoginController@doEmail');
 Route::get('/register', 'RegisterController@register')->name('register');
 Route::post('/register', 'RegisterController@doRegister');
 Route::get('/logout', 'LogoutController@logout')->name('logout');
@@ -50,6 +52,8 @@ Route::prefix('/password')->group(function() {
     Route::get('/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
     Route::post('/reset', 'PasswordResetController@doReset');
 });
+Route::post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinue');
+Route::get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
 
 // Email routes
 Route::prefix('/email/verify')->group(function() {

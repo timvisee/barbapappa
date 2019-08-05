@@ -24,10 +24,13 @@ class RequireAuth {
      * @return Response Response.
      */
     public function handle($request, Closure $next) {
+        // Determine login route
+        $route = config('app.auth_session_link') ? 'login.email' : 'login';
+
         // Redirect to the login page if not authenticated
         if(!barauth()->isAuth())
             return redirect()
-                ->guest(route('login'))
+                ->guest(route($route))
                 ->with('error', __('auth.authRequired'));
 
         return $next($request);

@@ -9,7 +9,7 @@
     <h1>
         @php
             $homeRoute = barauth()->isAuth() ? 'dashboard' : 'index';
-            $homeRouteName = __('pages.' . (barauth()->isAuth() ?  'dashboard.title' : 'index'));
+            $homeRouteName = __('pages.' . (barauth()->isAuth() ?  'dashboard' : 'index') . '.title');
         @endphp
 
         <a href="{{ route($homeRoute) }}" title="{{ $homeRouteName }}">

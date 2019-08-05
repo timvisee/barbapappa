@@ -5,11 +5,13 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
+    <p>@lang('auth.unrecognizedEmailRegister', ['app' => config('app.name')])</p>
+
     {!! Form::open(['action' => ['RegisterController@doRegister'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-    <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
+    <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }} {{ ($email_lock ?? false) ? 'disabled' : '' }}">
         {{ Form::label('email', __('account.email') . ':') }}
-        {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
+        {{ Form::text('email', $email ?? '', ['placeholder' => __('account.emailPlaceholder')]) }}
         {{ ErrorRenderer::inline('email') }}
     </div>
 
@@ -27,19 +29,21 @@
         </div>
     </div>
 
-    <div class="two fields">
-        <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
-            {{ Form::label('password', __('account.password') . ':') }}
-            {{ Form::password('password') }}
-            {{ ErrorRenderer::inline('password') }}
-        </div>
+    @unless(config('app.auth_session_link'))
+        <div class="two fields">
+            <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
+                {{ Form::label('password', __('account.password') . ':') }}
+                {{ Form::password('password') }}
+                {{ ErrorRenderer::inline('password') }}
+            </div>
 
-        <div class="field {{ ErrorRenderer::hasError('password_confirmation') ? 'error' : '' }}">
-            {{ Form::label('password_confirmation', __('account.confirmPassword') . ':') }}
-            {{ Form::password('password_confirmation') }}
-            {{ ErrorRenderer::inline('password_confirmation') }}
+            <div class="field {{ ErrorRenderer::hasError('password_confirmation') ? 'error' : '' }}">
+                {{ Form::label('password_confirmation', __('account.confirmPassword') . ':') }}
+                {{ Form::password('password_confirmation') }}
+                {{ ErrorRenderer::inline('password_confirmation') }}
+            </div>
         </div>
-    </div>
+    @endif
 
     <br />
 
@@ -56,7 +60,11 @@
 
     <div>
         <button class="ui button primary" type="submit">@lang('auth.register')</button>
-        <a href="{{ route('login') }}" class="ui button basic">@lang('auth.login')</a>
+        @if(config('app.auth_session_link'))
+            <a href="{{ route('login.email') }}" class="ui button basic">@lang('auth.login')</a>
+        @else
+            <a href="{{ route('login') }}" class="ui button basic">@lang('auth.login')</a>
+        @endif
     </div>
 
     {!! Form::close() !!}

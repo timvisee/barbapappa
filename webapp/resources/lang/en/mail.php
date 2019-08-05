@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Thanks,|That\'s all,',
-        'signoff' => '~ A :app robot',
+        'signoff' => '~ :app robot',
     ],
 
     /**
@@ -41,6 +41,23 @@ return [
             'startUsingSeeDashboard' => 'To start using :app, take a look at your personalized dashboard.',
             'configureEmailPreferences' => 'To configure how often you receive email updates from :app, check out your email preferences panel.',
         ]
+    ],
+
+    /**
+     * Authentication emails.
+     */
+    // TODO: use :app variable here, instead of BARbapAPPa
+    'auth' => [
+        /**
+         * Session link email.
+         */
+        'sessionLink' => [
+            'subject' => 'Sign in to BARbapAPPa',
+            'subtitle' => 'Tap the button to sign in to your BARbapAPPa account.',
+            'soon' => 'The link expires **within :minutes minutes**, and can be used once.',
+            'button' => 'Sign in to BARbapAPPa',
+            'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
+        ],
     ],
 
     /**

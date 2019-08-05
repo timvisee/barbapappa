@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Mail\Auth\SessionLinkMail;
+use App\Utils\TokenGenerator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * Session link model.
@@ -20,6 +23,12 @@ use Illuminate\Support\Facades\DB;
 class SessionLink extends Model {
 
     // TODO: use global scope to limit to non-expired tokens
+
+    /**
+     * The length in characters of reset tokens.
+     * @type int
+     */
+    const TOKEN_LENGTH = 24;
 
     /**
      * A scope for session links that have not yet expired.
@@ -66,6 +75,57 @@ class SessionLink extends Model {
     }
 
     /**
+     * Create a new session link for the given user.
+     *
+     * This will not send any mail to the user.
+     *
+     * @param User $user The user to create the link for.
+     * @return SessionLink The session link object that was created.
+     */
+    public static function create(User $user) {
+        // TODO: generate expiry time from some configuration constant
+        $link = new SessionLink();
+        $link->user_id = $user->id;
+        $link->token = Self::generateToken();
+        $link->expire_at = now()->addMinutes(30);
+        $link->save();
+        return $link;
+    }
+
+    /**
+     * Generate an unique session token.
+     * This method blocks until a new unique token has been generated.
+     *
+     * @return string Unique token.
+     */
+    private static function generateToken() {
+        // Keep generating tokens until we've an unique one
+        do {
+            // Generate a new token
+            $token = TokenGenerator::generate(self::TOKEN_LENGTH, false);
+
+            // Make sure the session token is unique
+            $exists = Self::where('token', '=', $token)->first() != null;
+
+        } while($exists);
+
+        // Return the generated token
+        return $token;
+    }
+
+    /**
+     * Send a mail for this session link to the corresponding user.
+     * This will allow the user to authenticate by clicking the link.
+     *
+     * @param string [$email] An optional specific email to use, otherwise all
+     *      user email addresses are used.
+     */
+    public function sendMail($email = null) {
+        // TODO: assert the token was not consumed already
+        Mail::send(new SessionLinkMail($this->user->buildEmailRecipients($email), $this));
+    }
+
+    /**
      * Consume the given token and authenticate.
      *
      * @param string $token The token to authenticate with.
@@ -86,7 +146,7 @@ class SessionLink extends Model {
 
         // Create session in transaction
         $authResult = null;
-        DB::transaction(function() use($link, $authResult) {
+        DB::transaction(function() use($link, &$authResult) {
             // Get the linked user, delete session link, only allow using it once
             $user = $link->user;
             $link->delete();
