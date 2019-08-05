@@ -69,7 +69,7 @@ class EmailController extends Controller {
                 $query
                     ->whereNotNull('verified_at')
                     ->orWhere('user_id', $userId)
-                    ->orWhere('created_at', '>', now()->subSeconds(15));
+                    ->orWhere('created_at', '>', now()->subMinutes(15));
             })
             ->limit(1)
             ->count() > 0;
