@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Thanks,|That\'s all,',
-        'signoff' => '~ A :app robot',
+        'signoff' => '~ :app robot',
     ],
 
     /**
@@ -25,10 +25,10 @@ return [
             'addNewEmail' => 'You\'ve just added a new email address to your account.',
             'verifyBeforeUseAccount' => 'Before you can use our service, you need to verify your email address.',
             'verifyBeforeUseEmail' => 'Before you can use it on our service, you need to verify it.',
-            'soon' => 'Please do this as soon as possible as the verification link expires **within :hours hours**.',
+            'soon' => 'Please do this as soon as possible as the verification link expires **within :expire**.',
             'clickButtonToVerify' => 'Please click the following button to verify your email address.',
             'verifyButton' => 'Verify your email address',
-            'manual' => 'If the above button doesn\'t work, you may use the following link and token to verify your email address manually.',
+            'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
         ],
 
         /**
@@ -44,6 +44,23 @@ return [
     ],
 
     /**
+     * Authentication emails.
+     */
+    // TODO: use :app variable here, instead of BARbapAPPa
+    'auth' => [
+        /**
+         * Session link email.
+         */
+        'sessionLink' => [
+            'subject' => 'Sign in to BARbapAPPa',
+            'subtitle' => 'Tap the button to sign in to your BARbapAPPa account.',
+            'soon' => 'The link expires **within :expire**, and can be used once.',
+            'button' => 'Sign in to BARbapAPPa',
+            'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
+        ],
+    ],
+
+    /**
      * Password emails.
      */
     'password' => [
@@ -55,10 +72,10 @@ return [
             'subtitle' => 'We\'ll help you to configure a new password.',
             'requestedReset' => 'You\'ve just requested to reset your password.',
             'visitResetPage' => 'Simply visit the password reset page and enter your preferred password.',
-            'soon' => 'Please do this as soon as possible as the reset link expires **within :hours hours**.',
+            'soon' => 'Please do this as soon as possible as the reset link expires **within :expire**.',
             'clickButtonToReset' => 'Please click the following button to reset your password.',
             'resetButton' => 'Reset your password',
-            'manual' => 'If the above button doesn\'t work, you may use the following link and token to reset your password manually.',
+            'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
             'notRequested' => 'If you haven\'t requested a password reset, you may ignore this email message.',
         ],
 

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int id
  * @property int email_id
+ * @property-read Email email
  * @property string token
  * @property Carbon|null expire_at
  * @property Carbon created_at
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 class EmailVerification extends Model {
 
     public function email() {
-        return $this->belongsTo('App\Models\Email');
+        return $this->belongsTo(Email::class);
     }
 
     /**

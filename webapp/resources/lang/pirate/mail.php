@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Blimey!|Sail ho!',
-        'signoff' => '~ A :app pirate robot',
+        'signoff' => '~ :app pirate robot',
     ],
 
     /**
@@ -26,10 +26,10 @@ return [
             'addNewEmail' => 'Ye just entered a new e-bottle address to yer ship.',
             'verifyBeforeUseAccount' => 'Before ye use our seas, be need to verify ye e-bottle address.',
             'verifyBeforeUseEmail' => 'Before ye can use it on our seas, be need to verify it.',
-            'soon' => 'Please do dis as soon as possible, th\' verification link sinks **within :hours turns o\'the hourglass**.',
+            'soon' => 'Please do dis as soon as possible, th\' verification link sinks **within :expire**.',
             'clickButtonToVerify' => 'Please click th\' following button be verify yer e-bottle address.',
             'verifyButton' => 'Verify yer e-bottle address',
-            'manual' => 'If th\' above button doesn\'t work, ye may use the following coordinate n\' token to verify yer e-bottle address by hook.',
+            'manual' => 'If th\' above button doesn\'t work, open th\' following link in yer web browser:',
         ],
 
         /**
@@ -45,6 +45,23 @@ return [
     ],
 
     /**
+     * Authentication emails.
+     */
+    // TODO: use :app variable here, instead of BARbapAPPa
+    'auth' => [
+        /**
+         * Session link email.
+         */
+        'sessionLink' => [
+            'subject' => 'Sign in to BARbapAPPa',
+            'subtitle' => 'Tap th\' button to sign in to yer BARbapAPPa account.',
+            'soon' => 'The link expires **within :expire**, and can be used once.',
+            'button' => 'Sign in to BARbapAPPa',
+            'manual' => 'If th\' above button don\'t work, open th\' following link in yer web browser:',
+        ],
+    ],
+
+    /**
      * Password emails.
      * TODO: Translate this
      */
@@ -57,10 +74,10 @@ return [
             'subtitle' => 'We\'ll help ye to mend th\' sails for a shiny passcode.',
             'requestedReset' => 'Ye just requested yer shiny passcode.',
             'visitResetPage' => 'Navigate to th\' passcode reset parchment n\' enter yer shiny passcode.',
-            'soon' => 'Do dis as soon as possible. Th\' reset coordinate sinks **within :hours turns o\'the hourglass**.',
+            'soon' => 'Do dis as soon as possible. Th\' reset coordinate sinks **within :expire**.',
             'clickButtonToReset' => 'Navigate to th\' following button to reset yer passcode.',
             'resetButton' => 'Reset yer passcode',
-            'manual' => 'If th\' above button doesn\'t work, ye may use be following coordinate n\' token to reset yer passcode by hook.',
+            'manual' => 'If th\' above button doesn\'t work, open th\' following link in yer web browser:',
             'notRequested' => 'If ye have nay requested a shiny passcode, ye may ignore dis e-bottle message.',
         ],
 

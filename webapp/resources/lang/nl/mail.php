@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Groet,|Groeten,|Dank,',
-        'signoff' => '~ A :app robot',
+        'signoff' => '~ :app robot',
     ],
 
     /**
@@ -25,10 +25,10 @@ return [
             'addNewEmail' => 'Je hebt zojuist een nieuw e-mailadres aan je account toegevoegd.',
             'verifyBeforeUseAccount' => 'Voordat je onze service kunt gebruiken, moet je je e-mailadres verifiëren.',
             'verifyBeforeUseEmail' => 'Voordat je het op onze service kunt gebruiken, moet je het verifiëren.',
-            'soon' => 'Doe dit alsjeblieft zo snel mogelijk, de verificatie link verloopt **binnen :hours uur**.',
+            'soon' => 'Doe dit alsjeblieft zo snel mogelijk, de verificatie link verloopt **binnen :expire**.',
             'clickButtonToVerify' => 'Klik op de onderstaande knop om je e-mailadres te verifieren.',
             'verifyButton' => 'Verifiëer je e-mailadres',
-            'manual' => 'Als de bovenstaande knop niet werkt kun je je e-mailadres handmatig verifiëren met behulp van de volgende link en token.',
+            'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
         ],
 
         /**
@@ -55,10 +55,10 @@ return [
             'subtitle' => 'We helpen je een nieuw wachtwoord in te stellen.',
             'requestedReset' => 'Je hebt zojuist een nieuw wachtwoord aangevraagd.',
             'visitResetPage' => 'Bezoek simpelweg de wachtwoord reset pagina en vul je nieuwe wachtwoord in.',
-            'soon' => 'Do dit alsjeblieft zo snel mogelijk omdat de reset link **binnen :hours uur** verloopt.',
+            'soon' => 'Do dit alsjeblieft zo snel mogelijk omdat de reset link **binnen :expire** verloopt.',
             'clickButtonToReset' => 'Klik op de onderstaande knop om je wachtwoord te resetten',
             'resetButton' => 'Je wachtwoord resetten',
-            'manual' => 'Als de bovenstaande knop niet werkt, kun je de volgende link en token gebruiken om je wachtwoord handmatig te resetten.',
+            'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
             'notRequested' => 'Als je geen wachtwoord reset hebt aangevraagd, kun je dit email bericht als niet verzonden beschouwen.',
         ],
 
@@ -73,6 +73,23 @@ return [
             'orContact' => 'Of neem zo snel mogelijk [contact](:contact) op met het :app team wegens dit mogelijke veiligheidsincident.',
             'noChangeThenContact' => 'Als je dit bericht ontvangen hebt maar niet je wachtwoord hebt aangepast, neem zo snel mogelijk [contact](:contact) op met het :contact team wegens dit mogelijke veiligheidsincident.',
         ]
+    ],
+
+    /**
+     * Authentication emails.
+     */
+    // TODO: use :app variable here, instead of BARbapAPPa
+    'auth' => [
+        /**
+         * Session link email.
+         */
+        'sessionLink' => [
+            'subject' => 'Inloggen op BARbapAPPa',
+            'subtitle' => 'Druk op de knop om in te loggen op je BARbapAPPa account.',
+            'soon' => 'De link verloopt **binnen :expire**, en kan één keer gebruikt worden.',
+            'button' => 'Inloggen op BARbapAPPa',
+            'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
+        ],
     ],
 
     'payment' => [

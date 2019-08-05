@@ -5,7 +5,6 @@
  */
 return [
     'pages' => 'Pages',
-    'index' => 'Home page',
     'emailPreferences' => 'Email preferences',
     // TODO: move to misc?
     'communities' => 'Communities',
@@ -25,6 +24,14 @@ return [
      */
     'app' => [
         'manageApp' => 'Manage app',
+    ],
+
+    /**
+     * Index page.
+     */
+    'index' => [
+        'title' => 'Home page',
+        'emailAndContinue' => 'Enter your email address to login or register and continue.',
     ],
 
     /**

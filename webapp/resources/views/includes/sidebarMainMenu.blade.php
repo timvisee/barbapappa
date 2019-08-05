@@ -23,7 +23,7 @@
         <a href="{{ route('index') }}"
                 class="item {{ Route::currentRouteName() == 'index' ? ' active' : '' }}">
             <i class="glyphicons glyphicons-home"></i>
-            @lang('pages.index')
+            @lang('pages.index.title')
         </a>
         <a href="{{ route('login') }}"
                 class="item {{ Route::currentRouteName() == 'login' ? ' active' : '' }}">

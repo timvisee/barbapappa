@@ -9,7 +9,7 @@
 
 @lang('mail.password.request.visitResetPage')<br>
 
-@lang('mail.password.request.soon', ['hours' => 24])
+@lang('mail.password.request.soon', ['expire' => $expire])
 @endcomponent
 
 @component('mail::notice')
@@ -23,8 +23,7 @@
 @component('mail::text')
 @lang('mail.password.request.manual')<br>
 
-**@lang('misc.link'):** [{{ route('password.reset') }}]({{ route('password.reset', ['token' => $token]) }})<br>
-**@lang('misc.token'):** _{{ $token }}_<br>
+{{ route('password.reset', ['token' => $token]) }}<br>
 
 @lang('mail.password.request.notRequested')
 @endcomponent

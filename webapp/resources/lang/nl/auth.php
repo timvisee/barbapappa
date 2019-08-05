@@ -6,6 +6,8 @@ return [
      * Common actions.
      */
     'login' => 'Inloggen',
+    'loginPassword' => 'Inloggen met wachtwoord',
+    'loginEmail' => 'Inloggen met e-mail',
     'logout' => 'Uitloggen',
     'register' => 'Registreren',
     'forgotPassword' => 'Wachtwoord vergeten?',
@@ -27,8 +29,14 @@ return [
     'mustAcceptTerms' => 'Je moet akkoord gaan om te registreren.',
 
     'loggedIn' => 'Je bent ingelogd.',
+    'alreadyLoggedIn' => 'Je bent al ingelogd.',
     'registeredAndLoggedIn' => 'Account aangemaakt, je bent ingelogd.',
     'loggedOut' => 'Je bent uitgelogd.',
+
+    'sessionLinkUnknown' => 'Inloggen mislukt. Verlopen of ongeldige sessie link.',
+    'sessionLinkSent' => 'We hebben een magische link gestuurd naar :email. Klik er op om in te loggen.',
+    'sessionLinkSentOrPassword' => 'We hebben een magische link gestuurd naar :email. Klik er op om in te loggen of vul je wachtwoord in.',
+    'unrecognizedEmailRegister' => 'We herkennen je e-mailadres nog niet. Registreer een account om gebruik te maken van :app.',
 
     /*
     | TODO: Are these properties still required?

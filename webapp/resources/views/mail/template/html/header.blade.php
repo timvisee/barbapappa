@@ -1,5 +1,5 @@
 <table class="row header"
-       style="margin-bottom: 10px; border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; background: #BBB; padding: 0px;"
+       style="margin-bottom: 10px; border-spacing: 0; border-collapse: collapse; vertical-align: top; text-align: left; width: 100%; position: relative; background: #e9e9e9; padding: 0px;"
        bgcolor="#999999">
     <tr style="vertical-align: top; text-align: left; padding: 0;" align="left">
         <td class="center" align="center"

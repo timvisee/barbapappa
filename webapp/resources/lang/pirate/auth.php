@@ -6,6 +6,8 @@ return [
      * Common actions.
      */
     'login' => 'Enter ship',
+    'loginPassword' => 'Login wit\' password',
+    'loginEmail' => 'Login wit\' email',
     'logout' => 'Abandon ship',
     'register' => 'New ship',
     'forgotPassword' => 'Lost yer passcode?',
@@ -27,8 +29,14 @@ return [
     'mustAcceptTerms' => 'Ye must agree to register.',
 
     'loggedIn' => 'Ye be aboard.',
+    'alreadyLoggedIn' => 'Ye already be logged in.',
     'registeredAndLoggedIn' => 'Ship created, ye be aboard now.',
     'loggedOut' => 'Ye ship be sunk.',
+
+    'sessionLinkUnknown' => 'Failed to sign in. Expired or invalid session link.',
+    'sessionLinkSent' => 'We sent ye a magic link to :email. Click it to sign in.',
+    'sessionLinkSentOrPassword' => 'We sent ye a magic link to :email. Click it to sign in or enter your password.',
+    'unrecognizedEmailRegister' => 'We nay recognize yer e-bottle address yet. Please register an account to start using :app.',
 
     /*
     | TODO: Are these properties still required?

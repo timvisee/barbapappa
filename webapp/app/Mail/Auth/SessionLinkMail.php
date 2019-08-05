@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Mail\Password;
+namespace App\Mail\Auth;
 
 use App\Mail\PersonalizedEmail;
-use App\Managers\PasswordResetManager;
-use App\Models\PasswordReset;
+use App\Models\EmailVerification;
+use App\Models\SessionLink;
 use App\Utils\EmailRecipient;
 use Illuminate\Mail\Mailable;
 
-class Request extends PersonalizedEmail {
+class SessionLinkMail extends PersonalizedEmail {
 
     /**
      * Email subject.
      */
-    const SUBJECT = 'mail.password.request.subject';
+    const SUBJECT = 'mail.auth.sessionLink.subject';
 
     /**
      * Email view.
      */
-    const VIEW = 'mail.password.request';
+    const VIEW = 'mail.auth.sessionLink';
 
     /**
      * The worker queue to put this mailable on.
@@ -26,22 +26,21 @@ class Request extends PersonalizedEmail {
     const QUEUE = 'high';
 
     /**
-     * Password reset token.
+     * Token to authenticate the session with.
      * @var string
      */
     public $token;
 
     /**
-     * Reset constructor.
+     * Constructor.
      *
-     * @param EmailRecipient $recipient Email recipient.
-     * @param \App\Models\PasswordReset $passwordReset Password reset model to use the token from.
+     * @param EmailRecipient|EmailRecipient[] $recipient Email recipient.
+     * @param \App\Models\SessionLink $sessionLink Session link object to use
+     *      the token from.
      */
-    public function __construct(EmailRecipient $recipient, PasswordReset $passwordReset) {
-        // Construct the parent
+    public function __construct($recipient, SessionLink $sessionLink) {
         parent::__construct($recipient, self::SUBJECT);
-
-        $this->token = $passwordReset->token;
+        $this->token = $sessionLink->token;
     }
 
     /**
@@ -51,7 +50,7 @@ class Request extends PersonalizedEmail {
      */
     public function build() {
         $expire = now()
-            ->addSeconds(PasswordResetManager::EXPIRE_AFTER + 1)
+            ->addSeconds(config('app.auth_session_link_expire') + 1)
             ->longAbsoluteDiffForHumans();
 
         return parent::build()

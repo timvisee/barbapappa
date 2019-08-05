@@ -5,7 +5,6 @@
  */
 return [
     'pages' => 'Parchments',
-    'index' => 'Home port',
     'emailPreferences' => 'E-bottle preferences',
     // TODO: move to misc?
     'communities' => 'Crews',
@@ -25,6 +24,14 @@ return [
      */
     'app' => [
         'manageApp' => 'Manage app',
+    ],
+
+    /**
+     * Index page.
+     */
+    'index' => [
+        'title' => 'Home port',
+        'emailAndContinue' => 'Enter yer email address to login or register and continue.',
     ],
 
     /**

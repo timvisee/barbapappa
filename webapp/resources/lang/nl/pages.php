@@ -5,7 +5,6 @@
  */
 return [
     'pages' => 'Pagina\'s',
-    'index' => 'Hoofdpagina',
     'emailPreferences' => 'E-mailvoorkeuren',
     // TODO: move to misc?
     'communities' => 'Groepen',
@@ -25,6 +24,14 @@ return [
      */
     'app' => [
         'manageApp' => 'App beheren',
+    ],
+
+    /**
+     * Index page.
+     */
+    'index' => [
+        'title' => 'Hoofdpagina',
+        'emailAndContinue' => 'Vul je e-mailadres in om in te loggen of te registreren en ga verder.',
     ],
 
     /**

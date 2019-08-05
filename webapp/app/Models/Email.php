@@ -61,6 +61,17 @@ class Email extends Model {
     }
 
     /**
+     * Check whether the given text email address matches this email.
+     *
+     * @param string $email The email address.
+     *
+     * @return boolean True if matches, false if not.
+     */
+    public function isEmail($email) {
+        return trim(strtolower($this->email)) == trim(strtolower($email));
+    }
+
+    /**
      * Build an EmailRecipient for this user email address.
      *
      * @param User $user The user this is for, or null to use the user linked to

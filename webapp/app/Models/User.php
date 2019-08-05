@@ -407,17 +407,34 @@ class User extends Model implements HasLocalePreference {
     /**
      * Get the email recipients for this user.
      *
+     * @param string [$email] Optional email address to use exclusively. If none
+     *      is given, all user email addresses are returned as recipient.
+     *
      * @return array An array of email recipients to send a message to.
      */
-    public function buildEmailRecipients() {
+    public function buildEmailRecipients($email = null) {
         // TODO: only use verified addresses?
 
         // Build email recipients for all user emails
         $user = $this;
-        return $this
+        $emails = $this
             ->emails
+            ->filter(function($e) use($email) {
+                // Allow all emails if none is specified
+                if($email == null)
+                    return true;
+
+                // Limit to filtered email
+                return $e->isEmail($email);
+            })
             ->map(function($email) use($user) {
                 return $email->buildEmailRecipient($user);
             });
+
+        // Throw error if no email while filtering
+        if(!empty($email) && empty($emails))
+            throw new \Exception('Could not build email recipient for user, given email not linked to this user');
+
+        return $emails;
     }
 }
