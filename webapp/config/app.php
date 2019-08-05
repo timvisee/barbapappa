@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'BARbapAPPa'),
+    'name' => env('APP_NAME', 'Barbapappa'),
 
     /**
      * Application version name and code.
@@ -257,7 +257,7 @@ return [
         Intervention\Validation\ValidationServiceProvider::class,
 
         /**
-         * Custom service providers for BARbapAPPa.
+         * Custom service providers for Barbapappa.
          */
         App\Providers\LanguageManagerServiceProvider::class,
         App\Providers\BarAuthServiceProvider::class,
@@ -340,7 +340,7 @@ return [
         'Sentry' => Sentry\Laravel\Facade::class,
 
         /**
-         * BARbapAPPa aliases.
+         * Barbapappa aliases.
          */
         'ErrorRenderer' => App\Helpers\ErrorRenderer::class,
     ],

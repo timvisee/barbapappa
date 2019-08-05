@@ -1,7 +1,7 @@
 [![Pipeline status on GitLab CI][pipeline-badge]][pipeline-link]
 
-# BARbapAPPa
-BARbapAPPa bar management application.
+# Barbapappa
+Barbapappa bar management application.
 
 ## Installation
 This application requires some installation steps.

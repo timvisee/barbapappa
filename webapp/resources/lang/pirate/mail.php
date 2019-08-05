@@ -47,16 +47,16 @@ return [
     /**
      * Authentication emails.
      */
-    // TODO: use :app variable here, instead of BARbapAPPa
+    // TODO: use :app variable here, instead of Barbapappa
     'auth' => [
         /**
          * Session link email.
          */
         'sessionLink' => [
-            'subject' => 'Sign in to BARbapAPPa',
-            'subtitle' => 'Tap th\' button to sign in to yer BARbapAPPa account.',
+            'subject' => 'Sign in to Barbapappa',
+            'subtitle' => 'Tap th\' button to sign in to yer Barbapappa account.',
             'soon' => 'The link expires **within :expire**, and can be used once.',
-            'button' => 'Sign in to BARbapAPPa',
+            'button' => 'Sign in to Barbapappa',
             'manual' => 'If th\' above button don\'t work, open th\' following link in yer web browser:',
         ],
     ],

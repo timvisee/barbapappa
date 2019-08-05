@@ -1,7 +1,7 @@
 # Permissions
 Version: 0.1-draft (2017-08-28)
 
-In BARbapAPPa permissions are used to define what a given user is authorised to do.
+In Barbapappa permissions are used to define what a given user is authorised to do.
 
 There is a predefined list of permissions, which are identified by a dot-separated string.  
 For example; `user.product.create` would define whether a user is able to create a product in a community.

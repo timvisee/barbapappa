@@ -73,7 +73,7 @@
 
             <span class="spacer x05"></span>
             <a href="http://eloydegen.nl/" target="_blank">E. Degen</a><br />
-            <i>who suggested the BARbapAPPa name</i>
+            <i>who suggested the Barbapappa name</i>
         </p>
 
         <div class="page-divider">
@@ -108,7 +108,7 @@
         </div>
 
         <p>
-            Copyright &copy; BARbapAPPa {{ date('Y') }}.
+            Copyright &copy; Barbapappa {{ date('Y') }}.
             <span class="spacer x05"></span>
             All rights reserved.
         </p>
