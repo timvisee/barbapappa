@@ -9,7 +9,7 @@
 
 @lang('mail.password.request.visitResetPage')<br>
 
-@lang('mail.password.request.soon', ['hours' => 24])
+@lang('mail.password.request.soon', ['expire' => $expire])
 @endcomponent
 
 @component('mail::notice')

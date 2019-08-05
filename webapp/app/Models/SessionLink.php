@@ -87,7 +87,7 @@ class SessionLink extends Model {
         $link = new SessionLink();
         $link->user_id = $user->id;
         $link->token = Self::generateToken();
-        $link->expire_at = now()->addMinutes(30);
+        $link->expire_at = now()->addSeconds(config('app.auth_session_link_expire'));
         $link->save();
         return $link;
     }

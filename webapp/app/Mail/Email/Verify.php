@@ -3,6 +3,7 @@
 namespace App\Mail\Email;
 
 use App\Mail\PersonalizedEmail;
+use App\Managers\EmailVerificationManager;
 use App\Models\EmailVerification;
 use App\Utils\EmailRecipient;
 use Illuminate\Mail\Mailable;
@@ -71,9 +72,15 @@ class Verify extends PersonalizedEmail {
      * @return Mailable
      */
     public function build() {
-        return parent::build()->markdown(
-            $this->justRegistered ? self::VIEW_REGISTERED : self::VIEW
-        );
+        $expire = now()
+            ->addSeconds(EmailVerificationManager::EXPIRE_AFTER + 1)
+            ->longAbsoluteDiffForHumans();
+
+        return parent::build()
+            ->markdown(
+                $this->justRegistered ? self::VIEW_REGISTERED : self::VIEW
+            )
+            ->with('expire', $expire);
     }
 
     /**

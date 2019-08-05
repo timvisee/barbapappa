@@ -9,7 +9,7 @@
 
 @lang('mail.email.verify.verifyBeforeUseAccount')<br>
 
-@lang('mail.email.verify.soon', ['hours' => 48])
+@lang('mail.email.verify.soon', ['expire' => $expire])
 @endcomponent
 
 @component('mail::notice')

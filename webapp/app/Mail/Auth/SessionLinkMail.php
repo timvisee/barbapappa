@@ -49,7 +49,13 @@ class SessionLinkMail extends PersonalizedEmail {
      * @return Mailable
      */
     public function build() {
-        return parent::build()->markdown(self::VIEW);
+        $expire = now()
+            ->addSeconds(config('app.auth_session_link_expire') + 1)
+            ->longAbsoluteDiffForHumans();
+
+        return parent::build()
+            ->markdown(self::VIEW)
+            ->with('expire', $expire);
     }
 
     /**

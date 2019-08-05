@@ -5,8 +5,7 @@
 ])
 
 @component('mail::text')
-{{-- TODO: show dynamic number of minutes here --}}
-@lang('mail.auth.sessionLink.soon', ['minutes' => 30])
+@lang('mail.auth.sessionLink.soon', ['expire' => $expire])
 @endcomponent
 
 @component('mail::button', ['url' => route('auth.login', ['token' => $token])])

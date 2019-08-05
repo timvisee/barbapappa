@@ -3,6 +3,7 @@
 namespace App\Mail\Password;
 
 use App\Mail\PersonalizedEmail;
+use App\Managers\PasswordResetManager;
 use App\Models\PasswordReset;
 use App\Utils\EmailRecipient;
 use Illuminate\Mail\Mailable;
@@ -49,7 +50,13 @@ class Request extends PersonalizedEmail {
      * @return Mailable
      */
     public function build() {
-        return parent::build()->markdown(self::VIEW);
+        $expire = now()
+            ->addSeconds(PasswordResetManager::EXPIRE_AFTER + 1)
+            ->longAbsoluteDiffForHumans();
+
+        return parent::build()
+            ->markdown(self::VIEW)
+            ->with('expire', $expire);
     }
 
     /**
