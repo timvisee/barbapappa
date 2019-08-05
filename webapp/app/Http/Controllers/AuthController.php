@@ -24,8 +24,7 @@ class AuthController extends Controller {
         // Find a user with this email address, register if not existant
         $email = Email::where('email', $request->input('email'))->first();
         if(empty($email))
-            return (new RegisterController())
-                ->register()
+            return redirect('register')
                 ->with('email', $request->input('email'))
                 ->with('email_lock', true);
 

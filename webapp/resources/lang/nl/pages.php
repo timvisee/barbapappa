@@ -41,7 +41,7 @@ return [
         'title' => 'Dashboard',
         'yourPersonalDashboard' => 'Je persoonlijke dashboard',
         'noBarsOrCommunities' => 'Geen bars of groepen',
-        'nothingHereNoMemberUseExploreButtons' => 'Er is hier niks om te zien omdat je nog geen lid bent van een bar of groep. Vind de jouwe met de onderstaande knoppen.',
+        'nothingHereNoMemberUseExploreButtons' => 'Er is hier niks om te zien omdat je nog geen lid bent van een bar of groep. Vind die van jouw met de onderstaande knoppen.',
     ],
 
     /**

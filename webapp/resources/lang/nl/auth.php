@@ -34,8 +34,8 @@ return [
     'loggedOut' => 'Je bent uitgelogd.',
 
     'sessionLinkUnknown' => 'Inloggen mislukt. Verlopen of ongeldige sessie link.',
-    'sessionLinkSent' => 'We hebben een magische link gestuurd naar :email. Klik er op om in te loggen.',
-    'sessionLinkSentOrPassword' => 'We hebben een magische link gestuurd naar :email. Klik er op om in te loggen of vul je wachtwoord in.',
+    'sessionLinkSent' => 'We hebben je een magische link gestuurd naar :email. Klik er op om in te loggen.',
+    'sessionLinkSentOrPassword' => 'We hebben je een magische link gestuurd naar :email. Klik er op om in te loggen of vul je wachtwoord in.',
     'unrecognizedEmailRegister' => 'We herkennen je e-mailadres nog niet. Registreer een account om gebruik te maken van :app.',
 
     /*
