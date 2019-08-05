@@ -108,4 +108,4 @@
     State or location.
 </p>
 
-{{-- Generated with: https://getterms.io/g/?url=https%3A%2F%2Fbar.visee.me%2F&name=BARbapAPPa&location=the%20Netherlands&effective_date=1%20October%202018 --}}
+{{-- Generated with: https://getterms.io/g/?url=https%3A%2F%2Fbar.visee.me%2F&name=Barbapappa&location=the%20Netherlands&effective_date=1%20October%202018 --}}

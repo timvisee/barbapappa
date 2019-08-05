@@ -19,7 +19,7 @@ The state of any related payment mutations should be updated along with it.
     - 1: `pending`: waiting for the payment to be started
     - 2: `processing`: waiting on the payment service to finish processing
     - 3: `completed`: the payment has been completed
-    - 4: `revoked`: the payment has been revoked by BARbapAPPa, possibly by a user through the BARbapAPPa platform
+    - 4: `revoked`: the payment has been revoked by Barbapappa, possibly by a user through the Barbapappa platform
     - 5: `rejected`: the payment was rejected at the payment service, possibly by the user through the payment platform
     - 6: `failed`: the payment failed due to an error or another issue
 - `payment_service_id`: reference to the payment service that was used

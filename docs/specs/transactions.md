@@ -1,7 +1,7 @@
 # Transactions
 Version: 0.1-draft (2017-08-28)
 
-This document describes the basics of the transactions model BARbapAPPa uses.
+This document describes the basics of the transactions model Barbapappa uses.
 It is technical and intended for developers.
 
 ## Transaction

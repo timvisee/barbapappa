@@ -49,4 +49,4 @@
 
 <p>This policy is effective as of 1 October 2018.</p>
 
-{{-- Generated with: https://getterms.io/g/?url=https%3A%2F%2Fbar.visee.me%2F&name=BARbapAPPa&location=The%20Netherlands&effective_date=1%20October%202018 --}}
+{{-- Generated with: https://getterms.io/g/?url=https%3A%2F%2Fbar.visee.me%2F&name=Barbapappa&location=The%20Netherlands&effective_date=1%20October%202018 --}}

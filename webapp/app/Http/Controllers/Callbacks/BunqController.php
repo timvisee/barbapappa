@@ -64,7 +64,7 @@ class BunqController extends Controller {
      *
      * If no linked bunq account is found for the given monetary account ID it
      * is ignored. Notifications are commonly received for monetary accounts not
-     * under control by BARbapAPPa.
+     * under control by Barbapappa.
      *
      * @param int $monetaryAccountId The ID of the monetary account.
      * @param bool $retryIfNone Retry the job once after a few seconds if no new

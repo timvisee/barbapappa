@@ -21,7 +21,7 @@ Communities will then be able to add the provided service for payment support wi
 
 For example, the bunq service may be used to generate payment requests.
 The use of bunq requires an economy to have a premium bunq account and access to their API.
-Administrators of the BARbapAPPa platform may add credentials for a general bunq account.
+Administrators of the Barbapappa platform may add credentials for a general bunq account.
 Economy users would then be able to use this service if _provided_.
 The economy would only have to configure their IBAN account number.
 When the payment is processed through bunq, it is redirected to the proper IBAN of the economy.

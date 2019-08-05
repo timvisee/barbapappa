@@ -10,9 +10,9 @@
 
     {{-- Title --}}
     @hasSection('title')
-        <title>@yield('title') - {{ config('app.name', 'BARbapAPPa') }}</title>
+        <title>@yield('title') - {{ config('app.name', 'Barbapappa') }}</title>
     @else
-        <title>{{ config('app.name', 'BARbapAPPa') }}</title>
+        <title>{{ config('app.name', 'Barbapappa') }}</title>
     @endif
 
     {{-- Styles --}}

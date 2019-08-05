@@ -126,7 +126,7 @@
                     "email": "tim@visee.me"
                 }
             ],
-            "description": "Laravel payment processing framework for BARbapAPPa",
+            "description": "Laravel payment processing framework for Barbapappa",
             "transport-options": {
                 "symlink": true
             }

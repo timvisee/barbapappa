@@ -176,13 +176,13 @@ It is used for mutations that don't fit in the other mutation types available.
 This kind of mutation doesn't explicitly specify what the mutation is for, with for example a attached payment or wallet.
 Except for the fact that a `description` field is available on this mutation.
 This should be filled in by the initiating user when possible to further describe what this magical mutation is about.
-The `description` field is purely for accounting purposes and isn't interpreted by BARbapAPPa itself.
+The `description` field is purely for accounting purposes and isn't interpreted by Barbapappa itself.
 
 Additionally, a magic mutation isn't tied to a specific bar or banking account.
 Because of this, a single magic mutation may be used to add money to two wallets on different bars or banking accounts.
 
 To give a better picture of what this magic mutation might be used for, take a look at the following use case:  
-In a given BARbapAPPa setup, users have a default wallet balance of €10,-.
+In a given Barbapappa setup, users have a default wallet balance of €10,-.
 The balance of an initialized wallet is zero. To get to default balance specified, a transaction must be used.
 Of course, this transaction would contain a wallet mutation to add €10 to the user's wallet.
 Because the money sum of a transaction must be zero, the money has to flow from somewhere.
