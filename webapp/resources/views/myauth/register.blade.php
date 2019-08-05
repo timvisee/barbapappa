@@ -52,7 +52,7 @@
     <div class="inline field {{ ErrorRenderer::hasError('accept_terms') ? 'error' : '' }}">
         <div class="ui checkbox">
             {{ Form::checkbox('accept_terms', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
-            {{ Form::label('accept_terms', __('auth.iAgreeToTerms', ['terms' => route('terms'), 'privacy' => route('privacy')])) }}
+            <label for="accept_terms">@lang('auth.iAgreeToTerms', ['terms' => route('terms'), 'privacy' => route('privacy')])</label>
         </div>
         <br>
         {{ ErrorRenderer::inline('accept_terms') }}
