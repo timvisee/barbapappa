@@ -627,6 +627,14 @@ return [
     ],
 
     /**
+     * Password disable page.
+     */
+    'passwordDisable' => [
+        'title' => 'Disable passcode',
+        'description' => 'Enter yer current passcode in th\' field bellow, to disable using a password for logging in in th\' future. Yer still be able to login using a link sent to yer e-bottle inbox.',
+    ],
+
+    /**
      * Password reset page.
      */
     'passwordReset' => [

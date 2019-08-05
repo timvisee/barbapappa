@@ -88,10 +88,21 @@ return [
             'subject' => 'Yer passcode mend th\' sails',
             'forSecurity' => 'Our jolly crew notified ye for piracy reasons.',
             'useNewPassword' => 'From now, use yer shiny passcode to enter ye ship.',
-            'noChangeThenReset' => 'If ye did nay change yer passcode, change it as soon as possible using th\' following coordinate n\' token.',
-            'orContact' => 'Or [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy issue.',
-            'noChangeThenContact' => 'If ye received dis message but have nay change yer passcode, [contact](:contact) th\' :contact crew as soon as possible \'bout dis piracy issue.',
-        ]
+            'noChangeThenReset' => 'If ye did nay change yer passcode, change it as soon as possible using th\' following web coordinate.',
+            'orContact' => 'Or [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy incident.',
+            'noChangeThenContact' => 'If ye received dis message but have nay change yer passcode, [contact](:contact) th\' :contact crew as soon as possible \'bout dis piracy incident.',
+        ],
+
+        /**
+         * Password disabled email.
+         */
+        'disabled' => [
+            'subject' => 'Yer passcode mend th\' sails',
+            'forSecurity' => 'Our jolly crew notified ye for piracy reasons.',
+            'noDisabledThenReset' => 'If ye did nay disdable yer passcode, change it as soon as possible using th\' following web coordinate:',
+            'orContact' => 'Or [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy incident.',
+            'noDisabledThenContact' => 'If ye received dis message but have nay disabled yer passcode, [contact](:contact) th\' :contact crew as soon as possible \'bout dis piracy incident.',
+        ],
     ],
 
     'payment' => [

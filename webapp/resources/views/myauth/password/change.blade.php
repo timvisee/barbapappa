@@ -8,11 +8,13 @@
 
     {!! Form::open(['action' => ['PasswordChangeController@doChange'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
-            {{ Form::label('password', __('account.currentPassword') . ':') }}
-            {{ Form::password('password') }}
-            {{ ErrorRenderer::inline('password') }}
-        </div>
+        @if($has_password)
+            <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
+                {{ Form::label('password', __('account.currentPassword') . ':') }}
+                {{ Form::password('password') }}
+                {{ ErrorRenderer::inline('password') }}
+            </div>
+        @endif
 
         <div class="two fields">
             <div class="field {{ ErrorRenderer::hasError('new_password') ? 'error' : '' }}">
@@ -45,6 +47,13 @@
                 class="ui button basic">
             @lang('general.cancel')
         </a>
+
+        @if($can_disable)
+            &nbsp;&nbsp;
+            <a href="{{ route('password.disable') }}">
+                @lang('pages.passwordDisable.title')
+            </a>
+        @endif
 
     {!! Form::close() !!}
 @endsection

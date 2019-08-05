@@ -19,6 +19,7 @@ return [
     'guestRequired' => 'Ye ship must be sunk to view dis page.',
     'unauthorized' => 'Ye be unauthorized to view dis page.',
     'passwordChanged' => 'Yer passcode be changed.',
+    'passwordDisabled' => 'Yer passcode be disabled.',
     'currentPasswordInvalid' => 'Yer ol\' passcode be invalid.',
     'invalidCredentials' => 'Incorrect e-bottle coordinate or passcode.',
     'invalidPassword' => 'Incorrect passcode.',

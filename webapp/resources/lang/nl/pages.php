@@ -627,6 +627,14 @@ return [
     ],
 
     /**
+     * Password disable page.
+     */
+    'passwordDisable' => [
+        'title' => 'Wachtwoord uitschakelen',
+        'description' => 'Vul je huidige wachtwoord in in het veld hieronder om inloggen met een wachtwoord uit te schakelen. Je kunt daarna blijven inloggen met een link die gestuurd wordt naar je e-mail inbox.',
+    ],
+
+    /**
      * Password reset page.
      */
     'passwordReset' => [

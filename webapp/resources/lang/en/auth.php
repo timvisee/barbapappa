@@ -19,6 +19,7 @@ return [
     'guestRequired' => 'You can\'t visit this page while you\'re logged in.',
     'unauthorized' => 'You are unauthorized to view this page.',
     'passwordChanged' => 'Your password has been changed.',
+    'passwordDisabled' => 'Your password has been disabled.',
     'currentPasswordInvalid' => 'Your current password is invalid.',
     'invalidCredentials' => 'Incorrect email address or password.',
     'invalidPassword' => 'Incorrect password.',
