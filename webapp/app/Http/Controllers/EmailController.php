@@ -60,13 +60,30 @@ class EmailController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'email' => 'required|' . ValidationDefaults::EMAIL . '|unique:emails',
-        ], [
-            'email.unique' => __('auth.emailUsed')
+            'email' => 'required|' . ValidationDefaults::EMAIL,
         ]);
+
+        // Do not allow if already verified or recently added by someone else
+        $used = Email::where('email', $request->input('email'))
+            ->where(function($query) use($userId) {
+                $query
+                    ->whereNotNull('verified_at')
+                    ->orWhere('user_id', $userId)
+                    ->orWhere('created_at', '>', now()->subSeconds(15));
+            })
+            ->limit(1)
+            ->count() > 0;
+        if($used) {
+            add_session_error('email', __('auth.emailUsed'));
+            return redirect()->back();
+        }
 
         // Get the user
         $user = \Request::get('user');
+
+        // Delete any existing email entries
+        Email::where('email', $request->input('email'))
+            ->delete();
 
         // Create the email address
         $email = new Email();
