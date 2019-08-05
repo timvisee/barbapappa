@@ -28,7 +28,7 @@ return [
             'soon' => 'Please do this as soon as possible as the verification link expires **within :expire**.',
             'clickButtonToVerify' => 'Please click the following button to verify your email address.',
             'verifyButton' => 'Verify your email address',
-            'manual' => 'If the above button doesn\'t work, you may use the following link and token to verify your email address manually.',
+            'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
         ],
 
         /**
@@ -75,7 +75,7 @@ return [
             'soon' => 'Please do this as soon as possible as the reset link expires **within :expire**.',
             'clickButtonToReset' => 'Please click the following button to reset your password.',
             'resetButton' => 'Reset your password',
-            'manual' => 'If the above button doesn\'t work, you may use the following link and token to reset your password manually.',
+            'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
             'notRequested' => 'If you haven\'t requested a password reset, you may ignore this email message.',
         ],
 

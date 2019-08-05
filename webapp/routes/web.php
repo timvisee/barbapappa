@@ -56,10 +56,8 @@ Route::post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinu
 Route::get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
 
 // Email routes
-Route::prefix('/email/verify')->group(function() {
-    Route::get('/{token?}', 'EmailVerifyController@verify')->name('email.verify');
-    Route::post('/', 'EmailVerifyController@doVerify');
-});
+Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('email.verify');
+Route::post('/email/verify', 'EmailVerifyController@doVerify');
 
 // Account routes
 Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(function() {

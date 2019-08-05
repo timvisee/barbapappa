@@ -15,7 +15,7 @@
 @component('mail::text')
 @lang('mail.auth.sessionLink.manual')<br>
 
-[{{ route('auth.login', ['token' => $token]) }}]({{ route('auth.login', ['token' => $token]) }})<br>
+{{ route('auth.login', ['token' => $token]) }}<br>
 @endcomponent
 
 @endcomponent

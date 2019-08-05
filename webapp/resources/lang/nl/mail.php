@@ -28,7 +28,7 @@ return [
             'soon' => 'Doe dit alsjeblieft zo snel mogelijk, de verificatie link verloopt **binnen :expire**.',
             'clickButtonToVerify' => 'Klik op de onderstaande knop om je e-mailadres te verifieren.',
             'verifyButton' => 'Verifiëer je e-mailadres',
-            'manual' => 'Als de bovenstaande knop niet werkt kun je je e-mailadres handmatig verifiëren met behulp van de volgende link en token.',
+            'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
         ],
 
         /**
@@ -58,7 +58,7 @@ return [
             'soon' => 'Do dit alsjeblieft zo snel mogelijk omdat de reset link **binnen :expire** verloopt.',
             'clickButtonToReset' => 'Klik op de onderstaande knop om je wachtwoord te resetten',
             'resetButton' => 'Je wachtwoord resetten',
-            'manual' => 'Als de bovenstaande knop niet werkt, kun je de volgende link en token gebruiken om je wachtwoord handmatig te resetten.',
+            'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
             'notRequested' => 'Als je geen wachtwoord reset hebt aangevraagd, kun je dit email bericht als niet verzonden beschouwen.',
         ],
 
@@ -88,7 +88,7 @@ return [
             'subtitle' => 'Druk op de knop om in te loggen op je BARbapAPPa account.',
             'soon' => 'De link verloopt **binnen :expire**, en kan één keer gebruikt worden.',
             'button' => 'Inloggen op BARbapAPPa',
-            'manual' => 'Als de bovenstaande knop niet werkt, open de onderstaande link in je web browser:',
+            'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
         ],
     ],
 
