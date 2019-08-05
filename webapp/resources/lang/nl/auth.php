@@ -19,6 +19,7 @@ return [
     'guestRequired' => 'Je kunt deze pagina niet bekijken als je bent ingelogd.',
     'unauthorized' => 'Je bent onbevoegd deze pagina te bekijken.',
     'passwordChanged' => 'Je wachtwoord is aangepast.',
+    'passwordDisabled' => 'Je wachtwoord is uitgestakeld.',
     'currentPasswordInvalid' => 'Je huidige wachtwoord is incorrect.',
     'invalidCredentials' => 'Onjuist e-mailadres of wachtwoord.',
     'invalidPassword' => 'Onjuist wachtwoord.',

@@ -10,12 +10,6 @@
 @lang('mail.password.reset.useNewPassword')
 @endcomponent
 
-@component('mail::button', ['url' => route('dashboard')])
-@lang('pages.dashboard.yourPersonalDashboard')
-@endcomponent
-
-<br>
-
 @component('mail::notice')
 @if(isset($token))
 @lang('mail.password.reset.noChangeThenReset')<br>

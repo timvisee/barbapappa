@@ -69,10 +69,21 @@ return [
             'subject' => 'Wachtwoord aangepast',
             'forSecurity' => 'We informeren je even wegens veiligheidsredenen.',
             'useNewPassword' => 'Vanaf nu kun je je nieuwe wachtwoord gebruiken om in te loggen.',
-            'noChangeThenReset' => 'Als je je wachtwoord niet zelf hebt aangepast, verander het alsjeblieft zo snel mogelijk met behulp van de volgende link en token.',
+            'noChangeThenReset' => 'Als je je wachtwoord niet zelf hebt aangepast, verander het alsjeblieft zo snel mogelijk met behulp van de volgende link:',
             'orContact' => 'Of neem zo snel mogelijk [contact](:contact) op met het :app team wegens dit mogelijke veiligheidsincident.',
             'noChangeThenContact' => 'Als je dit bericht ontvangen hebt maar niet je wachtwoord hebt aangepast, neem zo snel mogelijk [contact](:contact) op met het :contact team wegens dit mogelijke veiligheidsincident.',
-        ]
+        ],
+
+        /**
+         * Password disabled email.
+         */
+        'disabled' => [
+            'subject' => 'Wachtwoord uitgeschakeld',
+            'forSecurity' => 'We informeren je even wegens veiligheidsredenen.',
+            'noDisabledThenReset' => 'Als je je wachtwoord niet zelf hebt uitgeschakeld, stel dan alsjeblieft zo snel mogelijk een nieuw wachtwoord in met behulp van de volgende link:',
+            'orContact' => 'Of neem zo snel mogelijk [contact](:contact) op met het :app team wegens dit mogelijke veiligheidsincident.',
+            'noDisabledThenContact' => 'Als je dit bericht ontvangen hebt maar niet je wachtwoord hebt uitgeschakeld, neem zo snel mogelijk [contact](:contact) op met het :contact team wegens dit mogelijke veiligheidsincident.',
+        ],
     ],
 
     /**

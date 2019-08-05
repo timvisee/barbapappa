@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Facades\LangManager;
 use App\Mail\Password\Reset;
+use App\Mail\Password\Disabled;
 use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
 use BarPay\Models\Payment;
@@ -185,6 +186,15 @@ class User extends Model implements HasLocalePreference {
     }
 
     /**
+     * Check whether this user has a password configured or not.
+     *
+     * @return boolean True if a password is configured, false if not.
+     */
+    public function hasPassword() {
+        return !empty($this->password);
+    }
+
+    /**
      * Check whether this user has any verified email addresses.
      *
      * @return bool True if the user has any verified email address, false if not.
@@ -295,6 +305,8 @@ class User extends Model implements HasLocalePreference {
 
         // Send an email about the password change
         if($sendMail) {
+            // TODO: send to all user recipients
+
             // Get the primary email address for the user
             $email = $this->getPrimaryEmail();
 
@@ -307,6 +319,39 @@ class User extends Model implements HasLocalePreference {
                 // TODO: get recipient from buildEmailRecipients function
                 $recipient = new EmailRecipient($email, $this);
                 $mailable = new Reset($recipient, $extraReset);
+
+                // Send the mailable
+                Mail::send($mailable);
+            }
+        }
+    }
+
+    /**
+     * Disable the password for this user.
+     *
+     * @param bool $sendMail True to send a mail about the password disable, false if not.
+     */
+    public function disablePassword($sendMail) {
+        // Change the password
+        $this->password = null;
+        $this->save();
+
+        // Send an email about the password change
+        if($sendMail) {
+            // TODO: send to all user recipients
+
+            // Get the primary email address for the user
+            $email = $this->getPrimaryEmail();
+
+            // Send an additional reset token to allow the user to revert the password if the change was unwanted
+            if($email != null) {
+                // Create an additional reset token to allow the user to revert the password change
+                $extraReset = PasswordResetManager::create($this);
+
+                // Create a mailable
+                // TODO: get recipient from buildEmailRecipients function
+                $recipient = new EmailRecipient($email, $this);
+                $mailable = new Disabled($recipient, $extraReset);
 
                 // Send the mailable
                 Mail::send($mailable);
