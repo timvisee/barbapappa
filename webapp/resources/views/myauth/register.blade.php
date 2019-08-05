@@ -5,7 +5,9 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <p>@lang('auth.unrecognizedEmailRegister', ['app' => config('app.name')])</p>
+    @if(!empty($email))
+        <p>@lang('auth.unrecognizedEmailRegister', ['app' => config('app.name')])</p>
+    @endif
 
     {!! Form::open(['action' => ['RegisterController@doRegister'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
@@ -50,7 +52,7 @@
     <div class="inline field {{ ErrorRenderer::hasError('accept_terms') ? 'error' : '' }}">
         <div class="ui checkbox">
             {{ Form::checkbox('accept_terms', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
-            {{ Form::label('accept_terms', __('auth.iAgreeToTerms', ['terms' => route('terms'), 'privacy' => route('privacy')])) }}
+            <label for="accept_terms">@lang('auth.iAgreeToTerms', ['terms' => route('terms'), 'privacy' => route('privacy')])</label>
         </div>
         <br>
         {{ ErrorRenderer::inline('accept_terms') }}

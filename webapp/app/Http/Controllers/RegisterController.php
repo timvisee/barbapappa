@@ -20,18 +20,29 @@ class RegisterController extends Controller {
     }
 
     public function register() {
-        return view('myauth.register');
+        $response = view('myauth.register');
+
+        // Add flashed data to view
+        if(!empty($email = session('email')))
+            $response = $response->with('email', $email);
+
+        return $response;
     }
 
     public function doRegister(Request $request) {
+        // Determine whether to register with password
+        $with_password = !config('app.auth_session_link') || !empty($request->input('password'));
+
         // Validate
-        $this->validate($request, [
+        $rules = [
+            'email' => 'required|' . ValidationDefaults::EMAIL . '|unique:emails',
             'first_name' => 'required|' . ValidationDefaults::FIRST_NAME,
             'last_name' => 'required|' . ValidationDefaults::LAST_NAME,
-            'email' => 'required|' . ValidationDefaults::EMAIL . '|unique:emails',
-            'password' => 'required|' . ValidationDefaults::USER_PASSWORD . '|confirmed',
             'accept_terms' => 'required',
-        ], [
+        ];
+        if($with_password)
+            $rules['password'] = 'required|' . ValidationDefaults::USER_PASSWORD . '|confirmed';
+        $this->validate($request, $rules, [
             'email.unique' => __('auth.emailUsed'),
             'accept_terms.required' => __('auth.mustAcceptTerms'),
         ]);
@@ -40,7 +51,8 @@ class RegisterController extends Controller {
         $user = new User();
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
-        $user->password = Hash::make($request->input('password'));
+        if($with_password)
+            $user->password = Hash::make($request->input('password'));
         $user->locale = langManager()->getLocale(null);
         $user->save();
 
