@@ -94,6 +94,10 @@ class User extends Model implements HasLocalePreference {
         return $this->hasMany(Email::class);
     }
 
+    public function email_history() {
+        return $this->hasMany(EmailHistory::class);
+    }
+
     public function notifications() {
         return $this->hasMany(Notification::class);
     }
