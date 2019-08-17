@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\Update\BalanceUpdateMail;
+use App\Models\MailHistory;
 use App\Models\Notifications\Notification;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -87,7 +88,13 @@ class SendBalanceUpdates implements ShouldQueue {
                 new BalanceUpdateMail($user->buildEmailRecipients())
             );
 
-            // TODO: update email history time for user
+            // Update email history time
+            MailHistory::updateOrCreate([
+                'user_id' => $user->id,
+                'type' => MailHistory::TYPE_BALANCE_UPDATE,
+            ], [
+                'last_at' => now(),
+            ]);
         });
     }
 }
