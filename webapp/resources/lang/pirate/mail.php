@@ -128,8 +128,9 @@ return [
          */
         'balance' => [
             'subject' => 'Balance update for Barbapappa',
-            'subtitle' => 'Here be \'n update for yer Arrbapappa wallet balances',
+            'subtitle' => 'Here be \'n update for yer Arrbapappa wallet balances.',
             'pleaseTopUp' => 'Please top up yer wallets with negative balance now, and always make sure ye have enough available for th\' upcoming period.',
+            'noUpdateZeroBalance' => 'If th\' balance of all wallets be zero, ye nay receive any further periodic updates.',
         ],
     ],
 ];

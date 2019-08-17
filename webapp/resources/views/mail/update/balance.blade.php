@@ -19,7 +19,9 @@
 @endforeach
 
 @component('mail::text')
-@lang('mail.update.balance.pleaseTopUp')
+@lang('mail.update.balance.pleaseTopUp')<br>
+<br>
+@lang('mail.update.balance.noUpdateZeroBalance')
 @endcomponent
 
 @endcomponent
