@@ -20,6 +20,15 @@ class EmailHistory extends Model {
 
     protected $table = 'email_history';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'user_id', 'type', 'last_at',
+    ];
+
     protected $casts = [
         'last_at' => 'datetime',
     ];

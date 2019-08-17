@@ -4,18 +4,22 @@
     'subtitle' => __('mail.update.balance.subtitle'),
 ])
 
-{{-- @component('mail::text') --}}
-{{-- @lang('mail.auth.sessionLink.soon', ['expire' => 'null']) --}}
-{{-- @endcomponent --}}
+<br>
 
-{{-- @component('mail::button', ['url' => route('auth.login', ['token' => 'null'])]) --}}
-{{-- @lang('mail.auth.sessionLink.button') --}}
-{{-- @endcomponent --}}
+@foreach($data as $community)
+@component('mail::block')
+<b>{{ $community['name'] }}</b>  
+@foreach($community['economies'] as $economy)
+{{ $economy['name'] }}:
+@foreach($economy['wallets'] as $wallet)
+- <i>{{ $wallet['name'] }}:</i> {!! $wallet['balanceHtml'] !!}
+@endforeach
+@endforeach
+@endcomponent
+@endforeach
 
-{{-- @component('mail::text') --}}
-{{-- @lang('mail.auth.sessionLink.manual')<br> --}}
-
-{{-- {{ route('auth.login', ['token' => 'null']) }}<br> --}}
-{{-- @endcomponent --}}
+@component('mail::text')
+@lang('mail.update.balance.pleaseTopUp')
+@endcomponent
 
 @endcomponent

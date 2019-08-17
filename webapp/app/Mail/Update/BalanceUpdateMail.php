@@ -26,12 +26,19 @@ class BalanceUpdateMail extends PersonalizedEmail {
     const QUEUE = 'low';
 
     /**
+     * A list of wallet/economy data.
+     */
+    private $data;
+
+    /**
      * Constructor.
      *
      * @param EmailRecipient|EmailRecipient[] $recipient Email recipient.
+     * @param array Array with wallet/economy data for the user.
      */
-    public function __construct($recipient) {
+    public function __construct($recipient, $data) {
         parent::__construct($recipient, self::SUBJECT);
+        $this->data = $data;
     }
 
     /**
@@ -40,10 +47,9 @@ class BalanceUpdateMail extends PersonalizedEmail {
      * @return Mailable
      */
     public function build() {
-        // TODO: parse wallet data
-
         return parent::build()
-            ->markdown(self::VIEW);
+            ->markdown(self::VIEW)
+            ->with('data', $this->data);
     }
 
     /**

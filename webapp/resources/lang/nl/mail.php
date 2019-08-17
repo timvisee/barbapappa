@@ -127,8 +127,9 @@ return [
          * Balance update email.
          */
         'balance' => [
-            'subject' => 'Balans update voor Barbapappa',
-            'subtitle' => 'Hier volgt een overzicht voor je Barbapappa portemonnees',
+            'subject' => 'Balans update van Barbapappa',
+            'subtitle' => 'Hier volgt een overzicht van je Barbapappa portemonnees',
+            'pleaseTopUp' => 'Vul portemonnees met een negatieve balans nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',
         ],
     ],
 ];
