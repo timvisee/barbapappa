@@ -33,4 +33,4 @@
     @lang('misc.refresh')
 </a>
 
-&nbsp;&nbsp;<a href="{{ url()->current() }}">@lang('barpay::misc.iHaveNotPayed')</a>
+&nbsp;&nbsp;<a href="{{ url()->current() }}">@lang('barpay::misc.iHaveNotPaid')</a>
