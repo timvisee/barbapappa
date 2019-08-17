@@ -44,6 +44,23 @@ return [
     ],
 
     /**
+     * Authentication emails.
+     */
+    // TODO: use :app variable here, instead of Barbapappa
+    'auth' => [
+        /**
+         * Session link email.
+         */
+        'sessionLink' => [
+            'subject' => 'Inloggen op Barbapappa',
+            'subtitle' => 'Druk op de knop om in te loggen op je Barbapappa account.',
+            'soon' => 'De link verloopt **binnen :expire**, en kan één keer gebruikt worden.',
+            'button' => 'Inloggen op Barbapappa',
+            'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
+        ],
+    ],
+
+    /**
      * Password emails.
      */
     'password' => [
@@ -86,23 +103,6 @@ return [
         ],
     ],
 
-    /**
-     * Authentication emails.
-     */
-    // TODO: use :app variable here, instead of Barbapappa
-    'auth' => [
-        /**
-         * Session link email.
-         */
-        'sessionLink' => [
-            'subject' => 'Inloggen op Barbapappa',
-            'subtitle' => 'Druk op de knop om in te loggen op je Barbapappa account.',
-            'soon' => 'De link verloopt **binnen :expire**, en kan één keer gebruikt worden.',
-            'button' => 'Inloggen op Barbapappa',
-            'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
-        ],
-    ],
-
     'payment' => [
         'completed' => [
             'subject' => 'Betaling geaccepteerd',
@@ -116,6 +116,21 @@ return [
             'stateFailed' => 'Een betaling die je gestart hebt kon niet succesvol afgerond worden omdat de betaling is gefaald. Neem alsjeblieft contact met ons op als je denkt dat dit een fout is.',
             'stateRevoked' => 'Een betaling die je gestart hebt kon niet succesvol afgerond worden omdat de betaling is ingetrokken. Neem alsjeblieft contact met ons op als je denkt dat dit een fout is.',
             'stateRejected' => 'Een betaling die je gestart hebt kon niet succesvol afgerond worden omdat de betaling is afgekeurd. Neem alsjeblieft contact met ons op als je denkt dat dit een fout is.',
+        ],
+    ],
+
+    /**
+     * Update emails.
+     */
+    'update' => [
+        /**
+         * Balance update email.
+         */
+        'balance' => [
+            'subject' => 'Balans update van Barbapappa',
+            'subtitle' => 'Hier volgt een overzicht van je Barbapappa portemonnees.',
+            'pleaseTopUp' => 'Vul portemonnees met een negatieve balans nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',
+            'noUpdateZeroBalance' => 'Zodra de balans van al je portemonnees nul is, zul je geen periodieke updates meer ontvangen.',
         ],
     ],
 ];

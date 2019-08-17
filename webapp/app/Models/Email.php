@@ -39,7 +39,7 @@ class Email extends Model {
      * @return User The user.
      */
     public function user() {
-        return $this->belongsTo('App\Models\User');
+        return $this->belongsTo(User::class);
     }
 
     /**
@@ -48,7 +48,7 @@ class Email extends Model {
      * @return The email verifications.
      */
     public function verifications() {
-        return $this->hasMany('App\Models\EmailVerification');
+        return $this->hasMany(EmailVerification::class);
     }
 
     /**
