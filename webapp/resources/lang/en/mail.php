@@ -118,4 +118,17 @@ return [
             'stateRejected' => 'A payment you\'ve started could not be completed, because it has been rejected. If you believe this is an error, please contact us.',
         ],
     ],
+
+    /**
+     * Update emails.
+     */
+    'update' => [
+        /**
+         * Balance update email.
+         */
+        'update' => [
+            'subject' => 'Balance update for Barbapappa',
+            'subtitle' => 'Here is an update for your Barbapappa wallet balances',
+        ],
+    ],
 ];

@@ -18,6 +18,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EmailHistory extends Model {
 
+    protected $table = 'email_history';
+
+    protected $casts = [
+        'last_at' => 'datetime',
+    ];
+
     /**
      * Email type: user wallet balance update
      */
