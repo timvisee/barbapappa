@@ -17,7 +17,7 @@ return [
      */
     'bunq' => [
         'unknownPaymentRefund' => 'terugbetaling onbekende storting',
-        'payed' => 'betaald',
+        'paid' => 'betaald',
         'ibanCannotBeReceivingBunqAccount' => 'Kan geen IBAN zijn waarop betalingen worden ontvangen binnen deze applicatie.'
     ],
 

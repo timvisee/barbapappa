@@ -17,7 +17,7 @@ return [
      */
     'bunq' => [
         'unknownPaymentRefund' => 'unknown payment refund',
-        'payed' => 'payed',
+        'paid' => 'paid',
         'ibanCannotBeReceivingBunqAccount' => 'Cannot be an IBAN receiving payments on in this application.'
     ],
 

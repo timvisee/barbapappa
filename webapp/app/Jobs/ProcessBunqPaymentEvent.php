@@ -188,7 +188,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
             $account,
             $apiPayment,
             $to,
-            config('app.name') . ' ' . __('barpay::service.bunq.payed') . ': ' . $barPayment->getReference()
+            config('app.name') . ' ' . __('barpay::service.bunq.paid') . ': ' . $barPayment->getReference()
         );
     }
 
