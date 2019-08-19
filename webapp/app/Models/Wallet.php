@@ -30,7 +30,7 @@ class Wallet extends Model {
 
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
-    protected $table = "wallets";
+    protected $table = 'wallets';
 
     protected $fillable = [
         'economy_id',
@@ -254,5 +254,31 @@ class Wallet extends Model {
      */
     public function canDelete() {
         return $this->balance == 0;
+    }
+
+    /**
+     * Trace back the balance at the given date and time by walking through all
+     * transactions and mutations in reverse.
+     *
+     * This is a costly operation, especially when crossing longer periods. Use
+     * this with care.
+     *
+     * If a date in the future is given, the current balance is returned.
+     *
+     * @param \Carbon $at The date to trace and get the balance to.
+     *
+     * @return number The balance at the given time.
+     */
+    public function traceBalance($at) {
+        // Get all mutation changes in this period, and sum the amounts
+        $change = $this->mutations()
+            ->where('mutations.created_at', '>=', $at)
+            ->whereIn('state', Mutation::SETTLED)
+            ->get()
+            ->pluck('amount')
+            ->sum();
+
+        // Apply the delta to the current balance, return the result
+        return $this->balance + $change;
     }
 }

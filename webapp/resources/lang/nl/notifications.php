@@ -4,18 +4,18 @@ return [
     'paymentSettled' => [
         'kind' => 'Betaling',
         'message' => [
-            'completed' => 'Je :amount top-up is voltooid',
-            'revoked' => 'Je :amount top-up is ingetrokken',
-            'rejected' => 'Je :amount top-up is afgekeurd',
-            'failed' => 'Je :amount top-up is mislukt',
+            'completed' => 'Je :amount opwaardering is voltooid',
+            'revoked' => 'Je :amount opwaardering is ingetrokken',
+            'rejected' => 'Je :amount opwaardering is afgekeurd',
+            'failed' => 'Je :amount opwaardering is mislukt',
         ],
     ],
     'paymentRequiresUserAction' => [
         'kind' => 'Betaling',
-        'message' => 'Je :amount top-up vereist actie',
+        'message' => 'Je :amount opwaardering vereist actie',
     ],
     'paymentRequiresCommunityAction' => [
         'kind' => 'Betaling',
-        'message' => 'Een :amount top-up vereist je beoordeling',
+        'message' => 'Een :amount opwaardering vereist je beoordeling',
     ],
 ];

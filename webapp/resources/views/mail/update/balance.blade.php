@@ -12,7 +12,11 @@
 @foreach($community['economies'] as $economy)
 {{ $economy['name'] }}:
 @foreach($economy['wallets'] as $wallet)
-- <i>{{ $wallet['name'] }}:</i> {!! $wallet['balanceHtml'] !!}
+- {{ $wallet['name'] }}  
+  @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
+  @lang('misc.previously'): {!! $wallet['previousBalanceHtml'] !!} ({{ $wallet['previousPeriod'] }})  
+  [@lang('misc.topUp')]({{ $wallet['topUpUrl'] }})  
+  [@lang('misc.details')]({{ $wallet['url'] }})
 @endforeach
 @endforeach
 @endcomponent

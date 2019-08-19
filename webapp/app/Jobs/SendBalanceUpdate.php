@@ -70,15 +70,33 @@ class SendBalanceUpdate implements ShouldQueue {
             ->map(function($community) use($economies, $wallets) {
                 $economyData = $economies
                     ->where('community_id', $community->id)
-                    ->map(function($economy) use($wallets) {
+                    ->map(function($economy) use($community, $wallets) {
                         // Build the wallet data
                         $walletData = $wallets
                             ->get($economy->id)
-                            ->map(function($wallet) {
+                            ->map(function($wallet) use($community, $economy) {
+                                // Select a previous time, find it's balance
+                                $previous = now()->subMonth();
+                                $previousBalance = $wallet->traceBalance($previous);
+
+                                // Build the wallet data table
                                 return [
                                     'name' => $wallet->name,
                                     'balance' => $wallet->formatBalance(),
                                     'balanceHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
+                                    'previousBalance' => $previousBalance,
+                                    'previousBalanceHtml' => $wallet->currency->formatAmount($previousBalance, BALANCE_FORMAT_COLOR),
+                                    'previousPeriod' => $previous->diffForHumans(),
+                                    'url' => route('community.wallet.show', [
+                                        'communityId' => $community->human_id,
+                                        'economyId' => $economy->id,
+                                        'walletId' => $wallet->id,
+                                    ]),
+                                    'topUpUrl' => route('community.wallet.topUp', [
+                                        'communityId' => $community->human_id,
+                                        'economyId' => $economy->id,
+                                        'walletId' => $wallet->id,
+                                    ]),
                                 ];
                             });
 
