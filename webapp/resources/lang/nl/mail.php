@@ -127,10 +127,10 @@ return [
          * Balance update email.
          */
         'balance' => [
-            'subject' => 'Balans update van Barbapappa',
+            'subject' => 'Saldo update van Barbapappa',
             'subtitle' => 'Hier volgt een overzicht van je Barbapappa portemonnees.',
-            'pleaseTopUp' => 'Vul portemonnees met een negatieve balans nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',
-            'noUpdateZeroBalance' => 'Zodra de balans van al je portemonnees nul is, zul je geen periodieke updates meer ontvangen.',
+            'pleaseTopUp' => 'Vul portemonnees met een negatief saldo nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',
+            'noUpdateZeroBalance' => 'Zolang het saldo van al je portemonnees nul is, zul je geen periodieke updates ontvangen.',
         ],
     ],
 ];
