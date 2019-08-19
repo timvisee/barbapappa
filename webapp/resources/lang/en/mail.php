@@ -130,7 +130,7 @@ return [
             'subject' => 'Balance update for Barbapappa',
             'subtitle' => 'Here is an update for your Barbapappa wallet balances.',
             'pleaseTopUp' => 'Please top up any wallets with a negative balance now, and always make sure you\'ve enough available for the upcoming period.',
-            'noUpdateZeroBalance' => 'If the balance of all wallets is zero, you won\'t receive any further periodic updates.',
+            'noUpdateZeroBalance' => 'As soon as the the balance of all wallets is zero, you won\'t receive any further periodic updates.',
         ],
     ],
 ];

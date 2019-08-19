@@ -14,9 +14,9 @@
 @foreach($economy['wallets'] as $wallet)
 - {{ $wallet['name'] }}  
   @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
-  @lang('misc.previously'): {!! $wallet['balanceHtml'] !!} (30 days ago)  
-  @lang('misc.topUp')({{ $wallet['topUpUrl'] }})  
-  @lang('misc.details')({{ $wallet['url'] }})
+  @lang('misc.previously'): {!! $wallet['previousBalanceHtml'] !!} ({{ $wallet['previousPeriod'] }})  
+  [@lang('misc.topUp')]({{ $wallet['topUpUrl'] }})  
+  [@lang('misc.details')]({{ $wallet['url'] }})
 @endforeach
 @endforeach
 @endcomponent

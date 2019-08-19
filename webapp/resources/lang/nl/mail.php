@@ -130,7 +130,7 @@ return [
             'subject' => 'Saldo update van Barbapappa',
             'subtitle' => 'Hier volgt een overzicht van je Barbapappa portemonnees.',
             'pleaseTopUp' => 'Vul portemonnees met een negatief saldo nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',
-            'noUpdateZeroBalance' => 'Zolang het saldo van al je portemonnees nul is, zul je geen periodieke updates ontvangen.',
+            'noUpdateZeroBalance' => 'Zodra het saldo van al je portemonnees nul is, zul je geen periodieke updates ontvangen.',
         ],
     ],
 ];

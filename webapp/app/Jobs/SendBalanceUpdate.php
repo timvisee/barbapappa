@@ -75,10 +75,18 @@ class SendBalanceUpdate implements ShouldQueue {
                         $walletData = $wallets
                             ->get($economy->id)
                             ->map(function($wallet) use($community, $economy) {
+                                // Select a previous time, find it's balance
+                                $previous = now()->subMonth();
+                                $previousBalance = $wallet->traceBalance($previous);
+
+                                // Build the wallet data table
                                 return [
                                     'name' => $wallet->name,
                                     'balance' => $wallet->formatBalance(),
                                     'balanceHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
+                                    'previousBalance' => $previousBalance,
+                                    'previousBalanceHtml' => $wallet->currency->formatAmount($previousBalance, BALANCE_FORMAT_COLOR),
+                                    'previousPeriod' => $previous->diffForHumans(),
                                     'url' => route('community.wallet.show', [
                                         'communityId' => $community->human_id,
                                         'economyId' => $economy->id,
