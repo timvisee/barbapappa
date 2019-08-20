@@ -273,8 +273,7 @@ class Wallet extends Model {
         // Get all mutation changes in this period, and sum the amounts
         $change = $this->mutations()
             ->where('mutations.created_at', '>=', $at)
-            // TODO: is this state selection correct?
-            ->where('state', '<>', Mutation::STATE_FAILED)
+            ->where('state', Mutation::STATE_SUCCESS)
             ->sum('amount');
 
         // Apply the delta to the current balance, return the result
