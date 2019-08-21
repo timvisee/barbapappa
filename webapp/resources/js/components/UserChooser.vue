@@ -13,6 +13,7 @@
 
         <a v-for="user in users" v-on:click.prevent.stop="addSelected(user)" href="#" class="item">
             {{ user.first_name }} {{ user.last_name }}
+            <span v-if="user.me" class="subtle">(Me)</span>
         </a>
 
         <i v-if="!searching && users.length == 0" class="item">No users found for {{query}}...</i>

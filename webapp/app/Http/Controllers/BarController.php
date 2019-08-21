@@ -561,6 +561,12 @@ class BarController extends Controller {
         if(!$hasCurrent)
             $users[] = $user;
 
+        // Map extra fields in user object
+        $users = $users->map(function($u) use($user) {
+            $u->me = $u->id == $user->id;
+            return $u;
+        });
+
         return $users;
     }
 
