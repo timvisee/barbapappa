@@ -418,9 +418,12 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 
     // Bar specific, public
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
-        // Show, info
+        // Show, info, advanced buy
         Route::get('/', 'BarController@show')->name('bar.show');
         Route::get('/info', 'BarController@info')->name('bar.info');
+
+        // TODO: better define this route, and related
+        Route::get('/buy', 'BarController@buy')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');

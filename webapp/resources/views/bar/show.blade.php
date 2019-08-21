@@ -74,6 +74,12 @@
             <i class="item">@lang('pages.products.noProducts')</i>
         @endforelse
 
+        <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}"
+                class="ui bottom attached button">
+            {{-- TODO: translate --}}
+            Advanced buy
+        </a>
+
         <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
                 class="ui bottom attached button">
             @lang('misc.showAll')

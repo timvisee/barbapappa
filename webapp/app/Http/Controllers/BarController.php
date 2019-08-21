@@ -462,6 +462,22 @@ class BarController extends Controller {
             ->with('successHtml', $msg);
     }
 
+    /**
+     * Bar advanced buy page.
+     *
+     * @return Response
+     */
+    public function buy($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Show the bar page
+        return view('bar.buy')
+            ->with('economy', $bar->economy)
+            ->with('joined', $bar->isJoined($user));
+    }
+
     // TODO: describe
     // TODO: merges with recent product transactions
     // TODO: returns [transaction, currency, price]
