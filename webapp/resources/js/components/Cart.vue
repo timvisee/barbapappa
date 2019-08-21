@@ -14,7 +14,7 @@
                     <a v-on:click.stop.prevent="discard(item.user, product)"
                             class="ui red label" href="#">×</a>
 
-                    <div class="ui blue label">{{ product.product.price }}</div>
+                    <div class="ui blue label">{{ product.product.price_display }}</div>
                 </div>
             </div>
 
