@@ -478,6 +478,65 @@ class BarController extends Controller {
             ->with('joined', $bar->isJoined($user));
     }
 
+    /**
+     * API route for listing products in this bar, that a user can buy.
+     *
+     * // TODO: limit product fields returned here
+     *
+     * @return Response
+     */
+    public function apiBuyProducts($barId) {
+        // Get the bar, current user and the search query
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Build a list of preferred currencies for the user
+        // TODO: if there's only one currency, that is usable, use null to
+        //       greatly simplify product queries
+        $currencies = Self::userCurrencies($bar, $user);
+        $currency_ids = $currencies->pluck('id');
+
+        // Search, or use top products
+        $search = \Request::get('q');
+        if(!empty($search))
+            $products = $bar->economy->searchProducts($search, $currency_ids);
+        else
+            $products = $bar->economy->quickBuyProducts($currency_ids);
+
+        // Add formatted price fields
+        $products = $products->map(function($product) use($currencies) {
+            $product->price_display = $product->formatPrice($currencies);
+            return $product;
+        });
+
+        return $products;
+    }
+
+    /**
+     * API route for listing users in this bar, products can be bought for.
+     *
+     * // TODO: limit user fields returned here
+     *
+     * @return Response
+     */
+    public function apiBuyUsers($barId) {
+        // Get the bar, current user and the search query
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+        $search = \Request::query('q');
+
+        // Return a default user list, or search based on a given query
+        if(empty($search)) {
+            return [$user];
+            // TODO: include other recent users by default
+        } else
+            return $bar
+                ->users([], false)
+                ->search($search)
+                ->select(['users.id', 'first_name', 'last_name'])
+                ->get();
+    }
+
     // TODO: describe
     // TODO: merges with recent product transactions
     // TODO: returns [transaction, currency, price]
