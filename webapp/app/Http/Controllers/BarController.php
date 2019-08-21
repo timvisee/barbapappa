@@ -527,15 +527,25 @@ class BarController extends Controller {
 
         // Return a default user list, or search based on a given query
         if(empty($search)) {
-            return [$user];
+            $users = collect([$user]);
             // TODO: include other recent users by default
         } else
-            return $bar
+            $users = $bar
                 ->users([], false)
                 ->search($search)
                 ->select(['users.id', 'first_name', 'last_name'])
                 ->get();
+
+        // Always appent current user to list if not included
+        $hasCurrent = $users->contains(function($u) use($user) {
+            return $u->id == $user->id;
+        });
+        if(!$hasCurrent)
+            $users[] = $user;
+
+        return $users;
     }
+
 
     // TODO: describe
     // TODO: merges with recent product transactions

@@ -7,7 +7,7 @@
         <div class="item">
             <div class="ui transparent icon input">
                 <!-- TODO: translate this somehow -->
-                <input v-model="query" type="text" name="q" placeholder="Search products..." />
+                <input v-model="query" type="text" placeholder="Search products..." />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
                 <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon glyphicons glyphicons-search link"></i>
             </div>
@@ -45,6 +45,8 @@
 
             <div class="ui blue label">{{ product.product.price_display }}</div>
         </a>
+
+        <i v-if="!searching && products.length == 0" class="item">No products found for {{query}}...</i>
     </div>
 </template>
 
@@ -113,6 +115,6 @@
         },
         props: [
             'selected',
-        ]
+        ],
     }
 </script>

@@ -5,7 +5,7 @@
             <h5 class="ui item header">In cart</h5>
 
             <div v-for="item in cart">
-                <i class="ui item">For {{ item.user.name }}</i>
+                <i class="ui item">For {{ item.user.first_name }} {{ item.user.last_name }}</i>
                 <div v-for="product in item.products" class="item">
                     <span class="subtle">{{ product.quantity }}×</span>
 

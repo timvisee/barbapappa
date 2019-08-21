@@ -5,39 +5,33 @@
 
         <div class="item">
             <div class="ui transparent icon input">
-                <input type="text" name="q" placeholder="Search users..." />
-                <i class="icon glyphicons glyphicons-search link"></i>
+                <input v-model="query" type="text" placeholder="Search users..." />
+                <div v-if="searching" class="ui active inline tiny loader"></div>
+                <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon glyphicons glyphicons-search link"></i>
             </div>
         </div>
 
         <a v-for="user in users" v-on:click.prevent.stop="addSelected(user)" href="#" class="item">
-            {{ user.name }}
+            {{ user.first_name }} {{ user.last_name }}
         </a>
+
+        <i v-if="!searching && users.length == 0" class="item">No users found for {{query}}...</i>
     </div>
 </template>
 
 <script>
     export default {
-        // TODO: should this be located here?
         data() {
             return {
-                users: [
-                    {
-                        id: 51,
-                        name: 'Tim Visée',
-                    },
-                    {
-                        // TODO: specify a correct ID here
-                        id: 52,
-                        name: 'Other User',
-                    },
-                    {
-                        // TODO: specify a correct ID here
-                        id: 53,
-                        name: 'And another user',
-                    },
-                ],
+                query: '',
+                searching: true,
+                users: [],
             };
+        },
+        watch: {
+            query: function() {
+                this.search(this.query);
+            },
         },
         methods: {
             addSelected(user) {
@@ -60,6 +54,22 @@
                         item[0].products.push(JSON.parse(JSON.stringify(product)));
                 });
             },
+
+            // Search users with the given query
+            search(query = '') {
+                this.searching = true;
+                // TODO: set fixed URL here
+                // TODO: handle search failures!
+                fetch(`./buy/users?q=${encodeURIComponent(query)}`)
+                    .then(res => res.json())
+                    .then(res => {
+                        this.users = res;
+                        this.searching = false;
+                    });
+            },
+        },
+        mounted: function() {
+            this.search();
         },
         props: [
             'selected',
