@@ -57,10 +57,15 @@
 
             // Search users with the given query
             search(query = '') {
+                // Create a list of current products, to prioritize the user list
+                let products = JSON.stringify(this.selected.map(p =>
+                    p.product.id));
+
                 this.searching = true;
+
                 // TODO: set fixed URL here
                 // TODO: handle search failures!
-                fetch(`./buy/users?q=${encodeURIComponent(query)}`)
+                fetch(`./buy/users?q=${encodeURIComponent(query)}&product_ids=${encodeURIComponent(products)}`)
                     .then(res => res.json())
                     .then(res => {
                         this.users = res;

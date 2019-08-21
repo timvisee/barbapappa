@@ -8,6 +8,7 @@ use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Perms\BarRoles;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -524,11 +525,28 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
         $search = \Request::query('q');
+        $product_ids = json_decode(\Request::query('product_ids'));
 
         // Return a default user list, or search based on a given query
         if(empty($search)) {
+            // Add the current user
             $users = collect([$user]);
-            // TODO: include other recent users by default
+
+            // Build a list of users most likely to buy new products
+            // Specifically for selected products first, then fill gor any
+            $limit = 6;
+            if(!empty($product_ids))
+                $users = $users->merge($this->getProductBuyUserList(
+                    $bar,
+                    $limit,
+                    [$user->id],
+                    $product_ids
+                ));
+            $users = $users->merge($this->getProductBuyUserList(
+                $bar,
+                $limit - $users->count(),
+                $users->pluck('id')
+            ));
         } else
             $users = $bar
                 ->users([], false)
@@ -546,6 +564,43 @@ class BarController extends Controller {
         return $users;
     }
 
+    /**
+     * Get a list of users that are most likely to buy new products.
+     * This is shown in the advanced product buying page.
+     *
+     * A list of product IDs may be given to limit the most lickly buy hunting
+     * to just those products.
+     *
+     * @param Bar $bar The bar to get a list of users for.
+     * @parma int $limit The limit of users to return, might be less.
+     * @param int[]|null [$ignore_user_ids] List of user IDs to ignore.
+     * @param int[]|null [$product_ids] List of product IDs to prefer.
+     */
+    private function getProductBuyUserList(Bar $bar, $limit, $ignore_user_ids = null, $product_ids = null) {
+        // Return nothing if the limit is too low
+        if($limit <= 0)
+            return [];
+
+        // Find other users that recently made a transaction with these products
+        $query = $bar
+            ->transactions()
+            ->latest('mutations.updated_at')
+            ->whereNotIn('mutations.owner_id', $ignore_user_ids);
+
+        // Limit to specific product IDs
+        if(!empty($product_ids))
+            $query = $query->whereIn('mutations_product.product_id', $product_ids);
+
+        // Finalize query, get user IDs
+        $user_ids = $query->limit(100)
+            ->get(['mutations.owner_id'])
+            ->pluck('owner_id')
+            ->unique()
+            ->take($limit);
+
+        // Fetch and return the users
+        return User::whereIn('id', $user_ids)->get();
+    }
 
     // TODO: describe
     // TODO: merges with recent product transactions

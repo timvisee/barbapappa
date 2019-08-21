@@ -29,6 +29,8 @@
             <div class="ui blue label">{{ product.price_display }}</div>
         </a>
 
+        <i v-if="!searching && products.length == 0" class="item">No products found for {{query}}...</i>
+
         <a v-for="product in selected"
                 v-if="!isProductInResult(product.product)"
                 v-on:click.stop.prevent="select(product.product)"
@@ -45,8 +47,6 @@
 
             <div class="ui blue label">{{ product.product.price_display }}</div>
         </a>
-
-        <i v-if="!searching && products.length == 0" class="item">No products found for {{query}}...</i>
     </div>
 </template>
 
