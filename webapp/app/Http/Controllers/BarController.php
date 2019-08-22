@@ -618,29 +618,25 @@ class BarController extends Controller {
         // Get the bar, current user and the search query
         $bar = \Request::get('bar');
         $economy = $bar->economy;
-        $me = barauth()->getSessionUser();
         $cart = collect($request->post());
         $self = $this;
 
         // Do everything in a database transaction
-        DB::transaction(function() use($me, $bar, $economy, $cart, $self) {
+        DB::transaction(function() use($bar, $economy, $cart, $self) {
             // For each user, purchase the selected products
-            $cart->each(function($userItem) use($me, $bar, $economy, $self) {
+            $cart->each(function($userItem) use($bar, $economy, $self) {
                 $user = $userItem['user'];
                 $products = collect($userItem['products']);
 
-                // Only allow buying for yourself right now
-                if($user['id'] != $me->id)
-                    throw new \Exception('Cannot buy for other users right now');
-
-                // Retrieve product models from database
+                // Retrieve user and product models from database
+                $user = $bar->users()->findOrFail($user['id']);
                 $products = $products->map(function($product) use($economy) {
                     $product['product'] = $economy->products()->findOrFail($product['product']['id']);
                     return $product;
                 });
 
                 // Buy the products
-                $self->buyProducts($bar, $me, $products);
+                $self->buyProducts($bar, $user, $products);
             });
         });
     }
