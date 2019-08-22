@@ -62,16 +62,17 @@
                 let products = JSON.stringify(this.selected.map(p =>
                     p.product.id));
 
-                this.searching = true;
-
+                // Fetch the list of users, set searching state
                 // TODO: set fixed URL here
-                // TODO: handle search failures!
+                this.searching = true;
                 fetch(`./buy/users?q=${encodeURIComponent(query)}&product_ids=${encodeURIComponent(products)}`)
                     .then(res => res.json())
-                    .then(res => {
-                        this.users = res;
-                        this.searching = false;
-                    });
+                    .then(res => this.users = res)
+                    .catch(err => {
+                        alert('An error occurred while listing users');
+                        console.error(err);
+                    })
+                    .finally(() => this.searching = false);
             },
         },
         mounted: function() {

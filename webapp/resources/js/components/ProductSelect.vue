@@ -94,15 +94,17 @@
 
             // Search products with the given query
             search(query = '') {
-                this.searching = true;
+                // Fetch a list of products, set the searching state
                 // TODO: set fixed URL here
-                // TODO: handle search failures!
+                this.searching = true;
                 fetch(`./buy/products?q=${encodeURIComponent(query)}`)
                     .then(res => res.json())
-                    .then(res => {
-                        this.products = res;
-                        this.searching = false;
-                    });
+                    .then(res => this.products = res)
+                    .catch(err => {
+                        alert('An error occurred while listing products');
+                        console.error(err);
+                    })
+                    .finally(() => this.searching = false);
             },
 
             // Check if given product is in current search result list
