@@ -7,6 +7,7 @@ use App\Models\Bar;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Perms\BarRoles;
@@ -608,6 +609,42 @@ class BarController extends Controller {
         return User::whereIn('id', $user_ids)->get();
     }
 
+    /**
+     * API route for buying products in the users advanced buying cart.
+     *
+     * @return Response
+     */
+    public function apiBuyBuy(Request $request, $barId) {
+        // Get the bar, current user and the search query
+        $bar = \Request::get('bar');
+        $economy = $bar->economy;
+        $me = barauth()->getSessionUser();
+        $cart = collect($request->post());
+        $self = $this;
+
+        // Do everything in a database transaction
+        DB::transaction(function() use($me, $bar, $economy, $cart, $self) {
+            // For each user, purchase the selected products
+            $cart->each(function($userItem) use($me, $bar, $economy, $self) {
+                $user = $userItem['user'];
+                $products = collect($userItem['products']);
+
+                // Only allow buying for yourself right now
+                if($user['id'] != $me->id)
+                    throw new \Exception('Cannot buy for other users right now');
+
+                // Retrieve product models from database
+                $products = $products->map(function($product) use($economy) {
+                    $product['product'] = $economy->products()->findOrFail($product['product']['id']);
+                    return $product;
+                });
+
+                // Buy the products
+                $self->buyProducts($bar, $me, $products);
+            });
+        });
+    }
+
     // TODO: describe
     // TODO: merges with recent product transactions
     // TODO: returns [transaction, currency, price]
@@ -753,6 +790,133 @@ class BarController extends Controller {
                 $mut_product->decrementAmount($price);
                 $mut_product->mutationable()->increment('quantity');
             }
+
+            // Update the wallet balance
+            // TODO: do this by setting the mutation states instead
+            if(!$free)
+                $wallet->withdraw($price);
+
+            // Return the transaction
+            $out = $transaction;
+        });
+
+        // Return the transaction details
+        return [
+            'transaction' => $out,
+            'currency' => $currency,
+            'price' => $price,
+        ];
+    }
+
+    /**
+     * Buy the given list of products for the given user.
+     *
+     * @param Bar $bar The bar to buy the products in.
+     * @param User $user The user to buy the products for.
+     * @param array $products [[quantity: int, product: Product]] List of
+     *      products and quantities to buy.
+     */
+    // TODO: support paying in multiple currencies for different products at the same time
+    // TODO: make a request when paying for other users
+    function buyProducts(Bar $bar, User $user, $products) {
+        $products = collect($products);
+
+        // Build a list of preferred currencies for the user, filter currencies
+        // with no price
+        $currencies = Self::userCurrencies($bar, $user)
+            ->filter(function($currency) use($products) {
+                $product = $products[0]['product'];
+                return $product->prices->contains('currency_id', $currency->id);
+            });
+        if($currencies->isEmpty())
+            throw new \Exception("Could not quick buy product, no supported currencies");
+        $currency_ids = $currencies->pluck('id');
+
+        // Get or create a wallet for the user, get the price
+        $wallet = $user->getOrCreateWallet($bar->economy, $currencies);
+        $currency = $wallet->currency;
+
+        // Select the price for each product, find the total price
+        $products = $products->map(function($item) use($wallet) {
+            // The quantity must be 1 or more
+            if($item['quantity'] < 1)
+                throw new \Exception('Cannot buy product with quantity < 1');
+
+            // Select price for this product
+            $price = $item['product']
+                ->prices
+                ->whereStrict('currency_id', $wallet->economyCurrency->id)
+                ->first()
+                ->price;
+            if($price == null)
+                throw new \Exception('Product does not have price in selected currency');
+            $item['priceEach'] = $price * 1;
+            $item['priceTotal'] = $price * $item['quantity'];
+
+            return $item;
+        });
+        $price = $products->sum('priceTotal');
+
+        // TODO: notify user if wallet is created?
+
+        // Start a database transaction for the product transaction
+        // TODO: create a nice generic builder for the actions below
+        $out = null;
+        DB::transaction(function() use($bar, $products, $user, $wallet, $currency, $price, &$out) {
+            // Create the transaction or use last transaction
+            $transaction = $last_transaction ?? Transaction::create([
+                'state' => Transaction::STATE_SUCCESS,
+                'owner_id' => $user->id,
+            ]);
+
+            // Determine whether the product was free
+            $free = $price == 0;
+
+            // Create the wallet mutation unless product is free
+            $mut_wallet = null;
+            if(!$free) {
+                // Create a new wallet mutation or update the existing
+                $mut_wallet = $transaction
+                    ->mutations()
+                    ->create([
+                        'economy_id' => $bar->economy_id,
+                        'mutationable_id' => 0,
+                        'mutationable_type' => '',
+                        'amount' => $price,
+                        'currency_id' => $currency->id,
+                        'state' => Mutation::STATE_SUCCESS,
+                        'owner_id' => $user->id,
+                    ]);
+                $mut_wallet->setMutationable(
+                    MutationWallet::create([
+                        'wallet_id' => $wallet->id,
+                    ])
+                );
+            }
+
+            // Create a product mutation for each product type
+            $products->each(function($product) use($transaction, $bar, $currency, $user, $mut_wallet) {
+                // Create the product mutation
+                $mut_product = $transaction
+                    ->mutations()
+                    ->create([
+                        'economy_id' => $bar->economy_id,
+                        'mutationable_id' => 0,
+                        'mutationable_type' => '',
+                        'amount' => -$product['priceTotal'],
+                        'currency_id' => $currency->id,
+                        'state' => Mutation::STATE_SUCCESS,
+                        'owner_id' => $user->id,
+                        'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
+                    ]);
+                $mut_product->setMutationable(
+                    MutationProduct::create([
+                        'product_id' => $product['product']->id,
+                        'bar_id' => $bar->id,
+                        'quantity' => $product['quantity'],
+                    ])
+                );
+            });
 
             // Update the wallet balance
             // TODO: do this by setting the mutation states instead

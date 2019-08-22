@@ -21,6 +21,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         data() {
             return {
@@ -65,9 +67,8 @@
                 // Fetch the list of users, set searching state
                 // TODO: set fixed URL here
                 this.searching = true;
-                fetch(`./buy/users?q=${encodeURIComponent(query)}&product_ids=${encodeURIComponent(products)}`)
-                    .then(res => res.json())
-                    .then(res => this.users = res)
+                axios.get(`./buy/users?q=${encodeURIComponent(query)}&product_ids=${encodeURIComponent(products)}`)
+                    .then(res => this.users = res.data)
                     .catch(err => {
                         alert('An error occurred while listing users');
                         console.error(err);

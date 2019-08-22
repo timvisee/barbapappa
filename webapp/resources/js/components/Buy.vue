@@ -16,7 +16,7 @@
 
         <Product-Select :selected="selected"></Product-Select>
         <User-Chooser v-if="selected.length > 0" :selected="selected" :cart="cart"></User-Chooser>
-        <Cart v-if="cart.length > 0" :cart="cart"></Cart>
+        <Cart v-if="cart.length > 0" :selected="selected" :cart="cart"></Cart>
     </div>
 </template>
 

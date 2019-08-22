@@ -51,6 +51,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
         data() {
             return {
@@ -97,9 +99,8 @@
                 // Fetch a list of products, set the searching state
                 // TODO: set fixed URL here
                 this.searching = true;
-                fetch(`./buy/products?q=${encodeURIComponent(query)}`)
-                    .then(res => res.json())
-                    .then(res => this.products = res)
+                axios.get(`./buy/products?q=${encodeURIComponent(query)}`)
+                    .then(res => this.products = res.data)
                     .catch(err => {
                         alert('An error occurred while listing products');
                         console.error(err);

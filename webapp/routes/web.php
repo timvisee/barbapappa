@@ -427,6 +427,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         // TODO: this are API calls, move it somewhere else
         Route::get('/buy/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
         Route::get('/buy/users', 'BarController@apiBuyUsers')->middleware(BarController::permsUser()->middleware());
+        Route::post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');
