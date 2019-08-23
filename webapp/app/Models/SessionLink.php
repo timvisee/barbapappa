@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Mail;
  * @property-read User|null user
  * @property string token
  * @property Carbon|null expire_at
+ * @property string|null intended_url
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -83,11 +84,16 @@ class SessionLink extends Model {
      * @return SessionLink The session link object that was created.
      */
     public static function create(User $user) {
+        // Grab the intended URL if there is any
+        $intended_url = \Session::get('url.intended');
+        \Session::forget('url.intended');
+
         // TODO: generate expiry time from some configuration constant
         $link = new SessionLink();
         $link->user_id = $user->id;
         $link->token = Self::generateToken();
         $link->expire_at = now()->addSeconds(config('app.auth_session_link_expire'));
+        $link->intended_url = $intended_url;
         $link->save();
         return $link;
     }

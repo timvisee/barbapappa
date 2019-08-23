@@ -60,10 +60,9 @@ class AuthController extends Controller {
         // Consume the authentication link
         $link->consume($token);
 
-        // Redirect the user to the dashboard
-        // TODO: define a proper message here
+        // Redirect to the intended link, from session or session link
         return redirect()
-            ->intended(route('dashboard'))
+            ->intended($link->intended_url ?? route('dashboard'))
             ->with('success', __('auth.loggedIn'));
     }
 }
