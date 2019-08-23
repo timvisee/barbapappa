@@ -418,9 +418,16 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 
     // Bar specific, public
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
-        // Show, info
+        // Show, info, advanced buy
         Route::get('/', 'BarController@show')->name('bar.show');
         Route::get('/info', 'BarController@info')->name('bar.info');
+
+        // TODO: better define this route, and related
+        Route::get('/buy', 'BarController@buy')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
+        // TODO: this are API calls, move it somewhere else
+        Route::get('/buy/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
+        Route::get('/buy/users', 'BarController@apiBuyUsers')->middleware(BarController::permsUser()->middleware());
+        Route::post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');

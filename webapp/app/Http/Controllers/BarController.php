@@ -7,7 +7,9 @@ use App\Models\Bar;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
+use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Perms\BarRoles;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -462,6 +464,192 @@ class BarController extends Controller {
             ->with('successHtml', $msg);
     }
 
+    /**
+     * Bar advanced buy page.
+     *
+     * @return Response
+     */
+    public function buy($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Show the bar page
+        return view('bar.buy')
+            ->with('economy', $bar->economy)
+            ->with('joined', $bar->isJoined($user));
+    }
+
+    /**
+     * API route for listing products in this bar, that a user can buy.
+     *
+     * // TODO: limit product fields returned here
+     *
+     * @return Response
+     */
+    public function apiBuyProducts($barId) {
+        // Get the bar, current user and the search query
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Build a list of preferred currencies for the user
+        // TODO: if there's only one currency, that is usable, use null to
+        //       greatly simplify product queries
+        $currencies = Self::userCurrencies($bar, $user);
+        $currency_ids = $currencies->pluck('id');
+
+        // Search, or use top products
+        $search = \Request::get('q');
+        if(!empty($search))
+            $products = $bar->economy->searchProducts($search, $currency_ids);
+        else
+            $products = $bar->economy->quickBuyProducts($currency_ids);
+
+        // Add formatted price fields
+        $products = $products->map(function($product) use($currencies) {
+            $product->price_display = $product->formatPrice($currencies);
+            return $product;
+        });
+
+        return $products;
+    }
+
+    /**
+     * API route for listing users in this bar, products can be bought for.
+     *
+     * // TODO: limit user fields returned here
+     *
+     * @return Response
+     */
+    public function apiBuyUsers($barId) {
+        // Get the bar, current user and the search query
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+        $search = \Request::query('q');
+        $product_ids = json_decode(\Request::query('product_ids'));
+
+        // Return a default user list, or search based on a given query
+        if(empty($search)) {
+            // Add the current user
+            $users = collect([$user]);
+
+            // Build a list of users most likely to buy new products
+            // Specifically for selected products first, then fill gor any
+            $limit = 6;
+            if(!empty($product_ids))
+                $users = $users->merge($this->getProductBuyUserList(
+                    $bar,
+                    $limit,
+                    [$user->id],
+                    $product_ids
+                ));
+            $users = $users->merge($this->getProductBuyUserList(
+                $bar,
+                $limit - $users->count(),
+                $users->pluck('id')
+            ));
+        } else
+            $users = $bar
+                ->users([], false)
+                ->search($search)
+                ->select(['users.id', 'first_name', 'last_name'])
+                ->get();
+
+        // Always appent current user to list if not included
+        $hasCurrent = $users->contains(function($u) use($user) {
+            return $u->id == $user->id;
+        });
+        if(!$hasCurrent)
+            $users[] = $user;
+
+        // Map extra fields in user object
+        $users = $users->map(function($u) use($user) {
+            $u->me = $u->id == $user->id;
+            return $u;
+        });
+
+        return $users;
+    }
+
+    /**
+     * Get a list of users that are most likely to buy new products.
+     * This is shown in the advanced product buying page.
+     *
+     * A list of product IDs may be given to limit the most lickly buy hunting
+     * to just those products.
+     *
+     * @param Bar $bar The bar to get a list of users for.
+     * @parma int $limit The limit of users to return, might be less.
+     * @param int[]|null [$ignore_user_ids] List of user IDs to ignore.
+     * @param int[]|null [$product_ids] List of product IDs to prefer.
+     */
+    private function getProductBuyUserList(Bar $bar, $limit, $ignore_user_ids = null, $product_ids = null) {
+        // Return nothing if the limit is too low
+        if($limit <= 0)
+            return [];
+
+        // Find other users that recently made a transaction with these products
+        $query = $bar
+            ->transactions()
+            ->latest('mutations.updated_at')
+            ->whereNotIn('mutations.owner_id', $ignore_user_ids);
+
+        // Limit to specific product IDs
+        if(!empty($product_ids))
+            $query = $query->whereIn('mutations_product.product_id', $product_ids);
+
+        // Finalize query, get user IDs
+        $user_ids = $query->limit(100)
+            ->get(['mutations.owner_id'])
+            ->pluck('owner_id')
+            ->unique()
+            ->take($limit);
+
+        // Fetch and return the users
+        return User::whereIn('id', $user_ids)->get();
+    }
+
+    /**
+     * API route for buying products in the users advanced buying cart.
+     *
+     * @return Response
+     */
+    public function apiBuyBuy(Request $request, $barId) {
+        // Get the bar, current user and the search query
+        $bar = \Request::get('bar');
+        $economy = $bar->economy;
+        $cart = collect($request->post());
+        $self = $this;
+
+        // Do everything in a database transaction
+        $productCount = 0;
+        $userCount = $cart->count();
+        DB::transaction(function() use($bar, $economy, $cart, $self, &$productCount) {
+            // For each user, purchase the selected products
+            $cart->each(function($userItem) use($bar, $economy, $self, &$productCount) {
+                $user = $userItem['user'];
+                $products = collect($userItem['products']);
+
+                // Retrieve user and product models from database
+                $user = $bar->users()->findOrFail($user['id']);
+                $products = $products->map(function($product) use($economy) {
+                    $product['product'] = $economy->products()->findOrFail($product['product']['id']);
+                    return $product;
+                });
+
+                // Buy the products, increase product count
+                $result = $self->buyProducts($bar, $user, $products);
+                $productCount += $result['productCount'];
+            });
+        });
+
+        // Return some useful stats
+        return [
+            'productCount' => $productCount,
+            'userCount' => $userCount,
+        ];
+    }
+
     // TODO: describe
     // TODO: merges with recent product transactions
     // TODO: returns [transaction, currency, price]
@@ -620,6 +808,139 @@ class BarController extends Controller {
         // Return the transaction details
         return [
             'transaction' => $out,
+            'currency' => $currency,
+            'price' => $price,
+        ];
+    }
+
+    /**
+     * Buy the given list of products for the given user.
+     *
+     * @param Bar $bar The bar to buy the products in.
+     * @param User $user The user to buy the products for.
+     * @param array $products [[quantity: int, product: Product]] List of
+     *      products and quantities to buy.
+     */
+    // TODO: support paying in multiple currencies for different products at the same time
+    // TODO: make a request when paying for other users
+    function buyProducts(Bar $bar, User $user, $products) {
+        $products = collect($products);
+
+        // Build a list of preferred currencies for the user, filter currencies
+        // with no price
+        $currencies = Self::userCurrencies($bar, $user)
+            ->filter(function($currency) use($products) {
+                $product = $products[0]['product'];
+                return $product->prices->contains('currency_id', $currency->id);
+            });
+        if($currencies->isEmpty())
+            throw new \Exception("Could not quick buy product, no supported currencies");
+        $currency_ids = $currencies->pluck('id');
+
+        // Get or create a wallet for the user, get the price
+        $wallet = $user->getOrCreateWallet($bar->economy, $currencies);
+        $currency = $wallet->currency;
+
+        // Select the price for each product, find the total price
+        $products = $products->map(function($item) use($wallet) {
+            // The quantity must be 1 or more
+            if($item['quantity'] < 1)
+                throw new \Exception('Cannot buy product with quantity < 1');
+
+            // Select price for this product
+            $price = $item['product']
+                ->prices
+                ->whereStrict('currency_id', $wallet->economyCurrency->id)
+                ->first()
+                ->price;
+            if($price == null)
+                throw new \Exception('Product does not have price in selected currency');
+            $item['priceEach'] = $price * 1;
+            $item['priceTotal'] = $price * $item['quantity'];
+
+            return $item;
+        });
+        $price = $products->sum('priceTotal');
+
+        // TODO: notify user if wallet is created?
+
+        // Start a database transaction for the product transaction
+        // TODO: create a nice generic builder for the actions below
+        $out = null;
+        $productCount = 0;
+        DB::transaction(function() use($bar, $products, $user, $wallet, $currency, $price, &$out, &$productCount) {
+            // Create the transaction or use last transaction
+            $transaction = $last_transaction ?? Transaction::create([
+                'state' => Transaction::STATE_SUCCESS,
+                'owner_id' => $user->id,
+            ]);
+
+            // Determine whether the product was free
+            $free = $price == 0;
+
+            // Create the wallet mutation unless product is free
+            $mut_wallet = null;
+            if(!$free) {
+                // Create a new wallet mutation or update the existing
+                $mut_wallet = $transaction
+                    ->mutations()
+                    ->create([
+                        'economy_id' => $bar->economy_id,
+                        'mutationable_id' => 0,
+                        'mutationable_type' => '',
+                        'amount' => $price,
+                        'currency_id' => $currency->id,
+                        'state' => Mutation::STATE_SUCCESS,
+                        'owner_id' => $user->id,
+                    ]);
+                $mut_wallet->setMutationable(
+                    MutationWallet::create([
+                        'wallet_id' => $wallet->id,
+                    ])
+                );
+            }
+
+            // Create a product mutation for each product type
+            $products->each(function($product) use($transaction, $bar, $currency, $user, $mut_wallet, &$productCount) {
+                // Get the quantity for this product, increase product count
+                $quantity = $product['quantity'];
+                $productCount += $quantity;
+
+                // Create the product mutation
+                $mut_product = $transaction
+                    ->mutations()
+                    ->create([
+                        'economy_id' => $bar->economy_id,
+                        'mutationable_id' => 0,
+                        'mutationable_type' => '',
+                        'amount' => -$product['priceTotal'],
+                        'currency_id' => $currency->id,
+                        'state' => Mutation::STATE_SUCCESS,
+                        'owner_id' => $user->id,
+                        'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
+                    ]);
+                $mut_product->setMutationable(
+                    MutationProduct::create([
+                        'product_id' => $product['product']->id,
+                        'bar_id' => $bar->id,
+                        'quantity' => $quantity,
+                    ])
+                );
+            });
+
+            // Update the wallet balance
+            // TODO: do this by setting the mutation states instead
+            if(!$free)
+                $wallet->withdraw($price);
+
+            // Return the transaction
+            $out = $transaction;
+        });
+
+        // Return the transaction details
+        return [
+            'transaction' => $out,
+            'productCount' => $productCount,
             'currency' => $currency,
             'price' => $price,
         ];

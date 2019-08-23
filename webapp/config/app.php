@@ -257,6 +257,11 @@ return [
         Intervention\Validation\ValidationServiceProvider::class,
 
         /**
+         * Laravel to JavaScript localization.
+         */
+        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
+
+        /**
          * Custom service providers for Barbapappa.
          */
         App\Providers\LanguageManagerServiceProvider::class,

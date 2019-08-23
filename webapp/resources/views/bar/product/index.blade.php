@@ -3,7 +3,6 @@
 @section('title', __('pages.products.' . (empty(Request::input('q')) ? 'all' : 'search')))
 
 @php
-    use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\CommunityController;
 
     // Define menulinks

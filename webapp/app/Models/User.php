@@ -86,6 +86,31 @@ class User extends Model implements HasLocalePreference {
         }
     }
 
+    /**
+     * Scope a query to only include users relevant to the given search
+     * query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $search The search query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $search) {
+        // return $query
+        //     // ->selectRaw("CONCAT(users.first_name, ' ', users.last_name) AS name")
+        //     // ->where('name', 'LIKE', '%' . escape_like($search) . '%')
+        //     ->where('first_name', 'LIKE', '%' . escape_like($search) . '%')
+        //     ->orWhere('last_name', 'LIKE', '%' . escape_like($search) . '%');
+
+        // Search for each word separately in the first/last name fields
+        return $query->where(function($query) use($search) {
+            foreach(explode(' ', $search) as $word)
+                if(!empty($word))
+                    $query->where('first_name', 'LIKE', '%' . escape_like($word) . '%')
+                        ->orWhere('last_name', 'LIKE', '%' . escape_like($word) . '%');
+        });
+    }
+
     public function sessions() {
         return $this->hasMany(Session::class);
     }
