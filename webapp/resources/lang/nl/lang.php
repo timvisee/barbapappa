@@ -12,5 +12,4 @@ return [
     'visit' => 'Bezoek in het Nederlands',
 
     'unknownLanguage' => 'Onbekende taal',
-    'selectedLanguage' => 'De Nederlandse taal is geselecteerd.',
 ];

@@ -122,8 +122,7 @@ class PagesController extends Controller {
 
             // Redirect to the dashboard
             return redirect()
-                ->intended($request->query('redirect') ?? route('index'))
-                ->with('success', __('lang.selectedLanguage'));
+                ->intended($request->query('redirect') ?? route('index'));
 
         } else if(!empty($locale))
             $response = $response->with('error', __('lang.unknownLanguage'));

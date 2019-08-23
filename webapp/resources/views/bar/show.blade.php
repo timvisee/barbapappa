@@ -76,13 +76,12 @@
 
         <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}"
                 class="ui bottom attached button">
-            {{-- TODO: translate --}}
-            Advanced buy
+            @lang('pages.bar.advancedBuy.title')
         </a>
 
         <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
                 class="ui bottom attached button">
-            @lang('misc.showAll')
+            @lang('misc.catalog')
         </a>
     </div>
 

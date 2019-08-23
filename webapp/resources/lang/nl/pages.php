@@ -567,6 +567,7 @@ return [
             'orVisit' => 'Of bezoek',
         ],
         'advancedBuy' => [
+            'title' => 'Uitgebreid kopen',
             'tapProducts' => 'Druk op producten die je voor iemand wilt kopen.',
             'tapUsers' => 'Druk op leden om de producten toe te voegen.',
             'tapBuy' => 'Druk op de koop knop om de bestelling te voltooien.',
