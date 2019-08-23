@@ -11,7 +11,11 @@
             </div>
         </div>
 
-        <a v-for="user in users" v-on:click.prevent.stop="addSelected(user)" href="#" class="item">
+        <a v-for="user in users"
+                v-on:click.prevent.stop="addSelected(user)"
+                v-bind:class="{ disabled: buying }"
+                href="#"
+                class="item">
             {{ user.first_name }} {{ user.last_name }}
             <span v-if="user.me" class="subtle">(Me)</span>
         </a>
@@ -31,6 +35,11 @@
                 users: [],
             };
         },
+        props: [
+            'selected',
+            'cart',
+            'buying',
+        ],
         watch: {
             query: function() {
                 this.search(this.query);
@@ -38,6 +47,10 @@
         },
         methods: {
             addSelected(user) {
+                // Do not add products when currently buying
+                if(this.buying)
+                    return;
+
                 // Find the user object, or create a new one
                 let item = this.cart.filter(i => i.user.id == user.id);
                 if(item.length <= 0) {
@@ -79,9 +92,5 @@
         mounted: function() {
             this.search();
         },
-        props: [
-            'selected',
-            'cart',
-        ],
     }
 </script>

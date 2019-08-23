@@ -33,17 +33,10 @@
 </template>
 
 <script>
-    import axios from 'axios';
-
     export default {
-        data() {
-            return {
-                buying: false,
-            };
-        },
         props: [
-            'selected',
             'cart',
+            'buying',
         ],
         methods: {
             discard(user, product) {
@@ -70,26 +63,8 @@
                     .reduce((a, b) => a + b);
             },
 
-            // Commit the current cart as purchase
             buy() {
-                // Do not buy if already buying
-                if(this.buying)
-                    return;
-                this.buying = true;
-
-                axios.post('./buy', this.cart)
-                    .then(res => {
-                        // TODO: show success message
-
-                        // Clear the selected & cart
-                        this.selected.splice(0);
-                        this.cart.splice(0);
-                    })
-                    .catch(err => {
-                        alert('Failed to purchase products, an error occurred');
-                        console.error(err);
-                    })
-                    .finally(() => this.buying = false);
+                this.$emit('buy');
             },
         }
     }
