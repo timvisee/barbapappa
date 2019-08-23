@@ -571,7 +571,7 @@ return [
             'tapUsers' => 'Druk op leden om de producten toe te voegen.',
             'tapBuy' => 'Druk op de koop knop om de bestelling te voltooien.',
             'addToCartFor' => 'Voeg geselecteerde aan winkelwagen toe voor',
-            'searchUsers' => 'Zoek leden...',
+            'searchUsers' => 'Zoek leden',
             'noUsersFoundFor' => 'Geen leden gevonden voor :term',
             'inCart' => 'In winkelwagen',
             'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',

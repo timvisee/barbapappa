@@ -2,6 +2,14 @@
 
 @section('title', $bar->name)
 
+@php
+    $menulinks[] = [
+        'name' => __('pages.bar.backToBar'),
+        'link' => route('bar.show', ['barId' => $bar->human_id]),
+        'icon' => 'undo',
+    ];
+@endphp
+
 @push('scripts')
     {{-- TODO: is this required when compiling javascript files? --}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> --}}

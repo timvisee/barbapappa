@@ -1,7 +1,7 @@
 <template>
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">
-            {{ __('pages.bar.advancedBuy.addToCartFor') }}
+            {{ __('pages.bar.advancedBuythis.addToCartFor') }}
         </h5>
 
         <div class="item">

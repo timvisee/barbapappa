@@ -571,7 +571,7 @@ return [
             'tapUsers' => 'Tap users to add the selected products in cart for.',
             'tapBuy' => 'Tap the blue buy button to commit the purchase.',
             'addToCartFor' => 'Add selected to cart for',
-            'searchUsers' => 'Search users...',
+            'searchUsers' => 'Search users',
             'noUsersFoundFor' => 'No users found for :term',
             'inCart' => 'In cart',
             'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
