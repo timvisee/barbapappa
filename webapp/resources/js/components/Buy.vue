@@ -9,13 +9,13 @@
 
         <center>
             <p v-if="selected.length == 0 && cart.length == 0">
-                Tap products to buy for any user.
+                {{ __('pages.bar.advancedBuy.tapProducts') }}
             </p>
             <p v-else-if="cart.length == 0">
-                Tap users to add the selected products in cart for.
+                {{ __('pages.bar.advancedBuy.tapUsers') }}
             </p>
             <p v-else>
-                Press the blue buy button to commit the purchase.
+                {{ __('pages.bar.advancedBuy.tapBuy') }}
             </p>
         </center>
 
@@ -65,18 +65,12 @@
                 // Buy the products through an AJAX call
                 axios.post('./buy', this.cart)
                     .then(res => {
-                        // TODO: remove this response debug line
-                        console.log(res);
-
                         // Build the success message
-                        // TODO: specify some nicer dynamic text here
                         let products = res.data.productCount;
                         let users = res.data.userCount;
-                        let msg = 'Successfully bought ' + products + ' product(s)';
-                        if(users > 1)
-                            msg = msg + ' for ' + users + ' users';
-                        msg = msg + '.';
-                        this.successMessage = msg;
+                        this.successMessage = users <= 1
+                            ? this.langChoice('pages.bar.advancedBuy.boughtProducts#', products)
+                            : this.langChoice('pages.bar.advancedBuy.boughtProductsUsers#', products, {users});
 
                         // Clear the selected & cart
                         this.selected.splice(0);
@@ -90,6 +84,6 @@
                     })
                     .finally(() => this.buying = false);
             },
-        }
+        },
     }
 </script>

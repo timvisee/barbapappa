@@ -1,13 +1,11 @@
 <template>
     <div class="ui vertical menu fluid">
 
-        <!-- TODO: translate this somehow -->
-        <h5 class="ui item header">Select products</h5>
+        <h5 class="ui item header">{{ __('pages.products.select') }}</h5>
 
         <div class="item">
             <div class="ui transparent icon input">
-                <!-- TODO: translate this somehow -->
-                <input v-model="query" type="text" placeholder="Search products..." />
+                <input v-model="query" type="text" :placeholder="__('pages.products.search') + '...'" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
                 <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon glyphicons glyphicons-search link"></i>
             </div>
@@ -29,7 +27,9 @@
             <div class="ui blue label">{{ product.price_display }}</div>
         </a>
 
-        <i v-if="!searching && products.length == 0" class="item">No products found for {{query}}...</i>
+        <i v-if="!searching && products.length == 0" class="item">
+            {{ __('pages.products.noProductsFoundFor', {term: query}) }}...
+        </i>
 
         <a v-for="product in selected"
                 v-if="!isProductInResult(product.product)"
