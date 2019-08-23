@@ -11,7 +11,6 @@
 @endphp
 
 @push('scripts')
-    {{-- TODO: load vue separately, do not include in advancedbuy bundle? --}}
     <script type="text/javascript" src="{{ asset('js/advancedbuy.js') }}"></script>
 @endpush
 
