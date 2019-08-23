@@ -12,5 +12,4 @@ return [
     'visit' => 'Visit in English',
 
     'unknownLanguage' => 'Unknown language',
-    'selectedLanguage' => 'Selected the English language.',
 ];

@@ -567,6 +567,7 @@ return [
             'orVisit' => 'Or visit',
         ],
         'advancedBuy' => [
+            'title' => 'Advanced buy',
             'tapProducts' => 'Tap products to buy for any user.',
             'tapUsers' => 'Tap users to add the selected products in cart for.',
             'tapBuy' => 'Tap the blue buy button to commit the purchase.',

@@ -567,6 +567,7 @@ return [
             'orVisit' => 'Or see',
         ],
         'advancedBuy' => [
+            'title' => 'Advanced buy',
             'tapProducts' => 'Tap products to buy for any pirate.',
             'tapUsers' => 'Tap pirates to add the selected products in cart for.',
             'tapBuy' => 'Tap th\' blue buy button to commit the purchase.',
