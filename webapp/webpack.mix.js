@@ -75,6 +75,3 @@ mix.copy(
     'node_modules/semantic-ui-css/semantic.min.js',
     'public/js/semantic.min.js',
 );
-
-// Extract vendor libraries
-mix.extract();
