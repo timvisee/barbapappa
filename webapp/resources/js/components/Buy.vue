@@ -65,9 +65,18 @@
                 // Buy the products through an AJAX call
                 axios.post('./buy', this.cart)
                     .then(res => {
-                        // Show a success message
+                        // TODO: remove this response debug line
+                        console.log(res);
+
+                        // Build the success message
                         // TODO: specify some nicer dynamic text here
-                        this.successMessage = 'Successfully bought some product(s).';
+                        let products = res.data.productCount;
+                        let users = res.data.userCount;
+                        let msg = 'Successfully bought ' + products + ' product(s)';
+                        if(users > 1)
+                            msg = msg + ' for ' + users + ' users';
+                        msg = msg + '.';
+                        this.successMessage = msg;
 
                         // Clear the selected & cart
                         this.selected.splice(0);

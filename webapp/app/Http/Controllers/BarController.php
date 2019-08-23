@@ -622,9 +622,11 @@ class BarController extends Controller {
         $self = $this;
 
         // Do everything in a database transaction
-        DB::transaction(function() use($bar, $economy, $cart, $self) {
+        $productCount = 0;
+        $userCount = $cart->count();
+        DB::transaction(function() use($bar, $economy, $cart, $self, &$productCount) {
             // For each user, purchase the selected products
-            $cart->each(function($userItem) use($bar, $economy, $self) {
+            $cart->each(function($userItem) use($bar, $economy, $self, &$productCount) {
                 $user = $userItem['user'];
                 $products = collect($userItem['products']);
 
@@ -635,10 +637,17 @@ class BarController extends Controller {
                     return $product;
                 });
 
-                // Buy the products
-                $self->buyProducts($bar, $user, $products);
+                // Buy the products, increase product count
+                $result = $self->buyProducts($bar, $user, $products);
+                $productCount += $result['productCount'];
             });
         });
+
+        // Return some useful stats
+        return [
+            'productCount' => $productCount,
+            'userCount' => $userCount,
+        ];
     }
 
     // TODO: describe
@@ -858,7 +867,8 @@ class BarController extends Controller {
         // Start a database transaction for the product transaction
         // TODO: create a nice generic builder for the actions below
         $out = null;
-        DB::transaction(function() use($bar, $products, $user, $wallet, $currency, $price, &$out) {
+        $productCount = 0;
+        DB::transaction(function() use($bar, $products, $user, $wallet, $currency, $price, &$out, &$productCount) {
             // Create the transaction or use last transaction
             $transaction = $last_transaction ?? Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
@@ -891,7 +901,11 @@ class BarController extends Controller {
             }
 
             // Create a product mutation for each product type
-            $products->each(function($product) use($transaction, $bar, $currency, $user, $mut_wallet) {
+            $products->each(function($product) use($transaction, $bar, $currency, $user, $mut_wallet, &$productCount) {
+                // Get the quantity for this product, increase product count
+                $quantity = $product['quantity'];
+                $productCount += $quantity;
+
                 // Create the product mutation
                 $mut_product = $transaction
                     ->mutations()
@@ -909,7 +923,7 @@ class BarController extends Controller {
                     MutationProduct::create([
                         'product_id' => $product['product']->id,
                         'bar_id' => $bar->id,
-                        'quantity' => $product['quantity'],
+                        'quantity' => $quantity,
                     ])
                 );
             });
@@ -926,6 +940,7 @@ class BarController extends Controller {
         // Return the transaction details
         return [
             'transaction' => $out,
+            'productCount' => $productCount,
             'currency' => $currency,
             'price' => $price,
         ];
