@@ -1,11 +1,14 @@
 <template>
     <div class="ui vertical menu fluid">
-        <!-- TODO: translate this somehow -->
-        <h5 class="ui item header">Add selected to cart for</h5>
+        <h5 class="ui item header">
+            {{ __('pages.bar.advancedBuy.addToCartFor') }}
+        </h5>
 
         <div class="item">
             <div class="ui transparent icon input">
-                <input v-model="query" type="text" placeholder="Search users..." />
+                <input v-model="query"
+                        :placeholder="__('pages.bar.advancedBuy.searchUsers') + '...'"
+                        type="text" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
                 <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon glyphicons glyphicons-search link"></i>
             </div>
@@ -17,10 +20,12 @@
                 href="#"
                 class="item">
             {{ user.first_name }} {{ user.last_name }}
-            <span v-if="user.me" class="subtle">(Me)</span>
+            <span v-if="user.me" class="subtle">({{ __('misc.me') }})</span>
         </a>
 
-        <i v-if="!searching && users.length == 0" class="item">No users found for {{query}}...</i>
+        <i v-if="!searching && users.length == 0" class="item">
+            {{ __('pages.bar.advancedBuy.noUsersFoundFor', {term: query}) }}...
+        </i>
     </div>
 </template>
 

@@ -1,11 +1,10 @@
 <template>
     <div>
         <div class="ui vertical menu fluid">
-            <!-- TODO: translate this somehow -->
-            <h5 class="ui item header">In cart</h5>
+            <h5 class="ui item header">{{ __('pages.bar.advancedBuy.inCart') }}</h5>
 
             <div v-for="item in cart">
-                <i class="ui item">For {{ item.user.first_name }} {{ item.user.last_name }}</i>
+                <i class="ui item">{{ __('misc.for') }} {{ item.user.first_name }} {{ item.user.last_name }}</i>
                 <div v-for="product in item.products" class="item">
                     <span class="subtle">{{ product.quantity }}×</span>
 
@@ -23,8 +22,11 @@
                     v-bind:class="{ disabled: buying }"
                     href="#">
                 <span v-if="!buying">
-                    Buy
-                    <span v-if="cart.length > 0">{{ quantity() }} product(s)</span>
+                    {{
+                        cart.length <= 1
+                            ? langChoice('pages.bar.advancedBuy.buyProducts#', quantity())
+                            : langChoice('pages.bar.advancedBuy.buyProductsUsers#', quantity(), {users: this.cart.length})
+                    }}
                 </span>
                 <div v-else class="ui active inline inverted tiny loader"></div>
             </a>
