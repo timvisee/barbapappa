@@ -1,8 +1,6 @@
 window.Vue = require('vue');
 
-// TODO: compile to single file?
-
-const Buy = require('./components/Buy.vue').default;
+const Buy = require('./Buy').default;
 
 window.addEventListener('load', function() {
     // Configure some language mixins

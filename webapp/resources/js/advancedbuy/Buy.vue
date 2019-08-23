@@ -19,17 +19,15 @@
             </p>
         </center>
 
-        <Product-Select :selected="selected"></Product-Select>
-        <User-Chooser v-if="selected.length > 0" 
+        <Products :selected="selected" />
+        <Users v-if="selected.length > 0" 
                 :selected="selected"
                 :cart="cart"
-                :buying="buying">
-        </User-Chooser>
+                :buying="buying" />
         <Cart v-if="cart.length > 0"
                 v-on:buy="buy"
                 :cart="cart"
-                :buying="buying">
-        </Cart>
+                :buying="buying" />
     </div>
 </template>
 
@@ -37,14 +35,14 @@
     import axios from 'axios';
 
     const Cart = require('./Cart.vue').default;
-    const ProductSelect = require('./ProductSelect.vue').default;
-    const UserChooser = require('./UserChooser.vue').default;
+    const Products = require('./Products.vue').default;
+    const Users = require('./Users.vue').default;
 
     export default {
         components: {
             Cart,
-            ProductSelect,
-            UserChooser,
+            Products,
+            Users,
         },
         data() {
             return {

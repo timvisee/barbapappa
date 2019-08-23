@@ -34,7 +34,7 @@ mix.js(
     'resources/js/app.js',
     'public/js',
 ).js(
-    'resources/js/buy.js',
+    'resources/js/advancedbuy/advancedbuy.js',
     'public/js',
 ).sass(
     'resources/sass/app.scss',

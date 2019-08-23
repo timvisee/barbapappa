@@ -11,9 +11,8 @@
 @endphp
 
 @push('scripts')
-    {{-- TODO: is this required when compiling javascript files? --}}
-    {{-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> --}}
-    <script type="text/javascript" src="{{ asset('js/buy.js') }}"></script>
+    {{-- TODO: load vue separately, do not include in advancedbuy bundle? --}}
+    <script type="text/javascript" src="{{ asset('js/advancedbuy.js') }}"></script>
 @endpush
 
 @section('content')
@@ -25,10 +24,8 @@
     </div>
     <br>
 
-    <p>
-        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
-                class="ui button basic">
-            @lang('pages.bar.backToBar')
-        </a>
-    </p>
+    <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+            class="ui button basic">
+        @lang('pages.bar.backToBar')
+    </a>
 @endsection
