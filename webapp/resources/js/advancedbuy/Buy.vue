@@ -52,6 +52,10 @@
                 successMessage: undefined,
             };
         },
+        created() {
+            // Prevent accidental closing
+            window.addEventListener('beforeunload', this.onClose);
+        },
         methods: {
             // Commit the current cart as purchase
             buy() {
@@ -81,6 +85,19 @@
                         console.error(err);
                     })
                     .finally(() => this.buying = false);
+            },
+
+            onClose(event) {
+                // Do not prevent closing if nothing is selected
+                if(this.cart.length == 0 && this.selected.length == 0)
+                    return;
+
+                // Prevent closing the page, set a warning message
+                let msg = this.__('pages.bar.advancedBuy.pageCloseWarning');
+                console.log(msg);
+                event.preventDefault();
+                event.returnValue = msg;
+                return msg;
             },
         },
     }
