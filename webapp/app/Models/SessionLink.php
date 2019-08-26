@@ -77,6 +77,8 @@ class SessionLink extends Model {
 
     /**
      * Create a new session link for the given user.
+     * If there was any intended URL in the current session, it is included in
+     * the created session link to redirect the user to after authenticating.
      *
      * This will not send any mail to the user.
      *
@@ -88,7 +90,7 @@ class SessionLink extends Model {
         $intended_url = \Session::get('url.intended');
         \Session::forget('url.intended');
 
-        // TODO: generate expiry time from some configuration constant
+        // Create a session link for this user
         $link = new SessionLink();
         $link->user_id = $user->id;
         $link->token = Self::generateToken();
