@@ -28,7 +28,7 @@
         </a>
 
         <i v-if="!searching && products.length == 0" class="item">
-            {{ __('pages.products.noProductsFoundFor', {term: query}) }}...
+            {{ __('pages.products.noProductsFoundFor', {term: query}) }}
         </i>
 
         <a v-for="product in selected"
@@ -99,7 +99,7 @@
                 // Fetch a list of products, set the searching state
                 // TODO: set fixed URL here
                 this.searching = true;
-                axios.get(`./buy/products?q=${encodeURIComponent(query)}`)
+                axios.get(window.location.href + `/products?q=${encodeURIComponent(query)}`)
                     .then(res => this.products = res.data)
                     .catch(err => {
                         alert('An error occurred while listing products');

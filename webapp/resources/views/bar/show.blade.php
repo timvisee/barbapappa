@@ -41,16 +41,21 @@
     ];
 @endphp
 
+@push('scripts')
+    <script type="text/javascript" src="{{ asset('js/quickbuy.js') }}"></script>
+@endpush
+
 @section('content')
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
     {{-- Quick buy list --}}
-    <div class="ui vertical menu fluid">
+    <div id="quickbuy" class="ui vertical menu fluid">
         {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
             <div class="item">
                 <div class="ui transparent icon input">
                     {{ Form::text('q', Request::input('q'), [
+                        'id' => 'quickbuy-search',
                         'placeholder' => __('pages.products.search') . '...',
                     ]) }}
                     {{-- TODO: remove icon class? --}}
@@ -75,7 +80,7 @@
         @endforelse
 
         <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}"
-                class="ui bottom attached button">
+                class="ui attached button">
             @lang('pages.bar.advancedBuy.title')
         </a>
 
