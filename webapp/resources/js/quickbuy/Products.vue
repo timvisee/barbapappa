@@ -76,7 +76,7 @@
                 document.head.querySelector("meta[name=csrf-token]").content;
 
             // Search on load and focus the search field
-            this.search();
+            this.search(this.query);
             this.$refs.query.focus();
         },
     }
