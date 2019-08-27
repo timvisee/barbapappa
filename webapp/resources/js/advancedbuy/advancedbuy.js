@@ -14,10 +14,10 @@ window.addEventListener('load', function() {
 
     // Build the app
     const app = new Vue({
-        el: '#app',
+        el: '#advancedbuy',
         components: {
             Buy,
         },
-        template: '<Buy></Buy>',
+        template: '<Buy />',
     });
 });

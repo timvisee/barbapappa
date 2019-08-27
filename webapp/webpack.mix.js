@@ -34,6 +34,9 @@ mix.js(
     'resources/js/app.js',
     'public/js',
 ).js(
+    'resources/js/quickbuy/quickbuy.js',
+    'public/js',
+).js(
     'resources/js/advancedbuy/advancedbuy.js',
     'public/js',
 ).sass(

@@ -18,7 +18,7 @@
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
-    <div id="app">
+    <div id="advancedbuy">
         <div class="ui active centered inline loader"></div>
     </div>
     <br>
