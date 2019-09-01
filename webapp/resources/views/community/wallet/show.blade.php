@@ -10,15 +10,6 @@
         'icon' => 'undo',
     ];
     $menulinks[] = [
-        'name' => __('pages.transactions.title'),
-        'link' => route('community.wallet.transactions', [
-                'communityId' => $community->human_id,
-                'economyId' => $economy->id,
-                'walletId' => $wallet->id
-            ]),
-        'icon' => 'fees-payments',
-    ];
-    $menulinks[] = [
         'name' => __('misc.topUp'),
         'link' => route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]),
         'icon' => 'credit-card',
@@ -27,6 +18,15 @@
         'name' => __('pages.wallets.transfer'),
         'link' => route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]),
         'icon' => 'transfer',
+    ];
+    $menulinks[] = [
+        'name' => __('pages.transactions.title'),
+        'link' => route('community.wallet.transactions', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'walletId' => $wallet->id
+            ]),
+        'icon' => 'fees-payments',
     ];
 @endphp
 
@@ -46,49 +46,33 @@
         </div>
     </h2>
 
-    <table class="ui compact celled definition table">
-        <tbody>
-            <tr>
-                <td>@lang('misc.name')</td>
-                <td>{{ $wallet->name }}</td>
-            </tr>
-            <tr>
-                <td>@lang('misc.balance')</td>
-                <td>{!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}</td>
-            </tr>
-            <tr>
-                <td>@lang('misc.createdAt')</td>
-                <td>@include('includes.humanTimeDiff', ['time' => $wallet->created_at])</td>
-            </tr>
-            @if($wallet->created_at != $wallet->updated_at)
-                <tr>
-                    <td>@lang('misc.lastChanged')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $wallet->updated_at])</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+    <div class="ui divider hidden"></div>
 
-    <p>
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}
+            </div>
+            <div class="label">@lang('misc.balance')</div>
+        </div>
+    </div>
+
+    <div class="ui divider hidden"></div>
+
+    <center>
         <div class="ui buttons">
-            <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button secondary">
-                @lang('misc.rename')
+            <a href="{{ route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                    class="ui button green">
+                @lang('misc.topUp')
             </a>
-            <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button negative">
-                @lang('misc.delete')
+            <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                    class="ui button orange">
+                @lang('pages.wallets.transfer')
             </a>
         </div>
-        <a href="{{ route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                class="ui button basic">
-            @lang('misc.topUp')
-        </a>
-        <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                class="ui button basic">
-            @lang('pages.wallets.transfer')
-        </a>
-    </p>
+    </center>
+
+    <div class="ui divider hidden"></div>
 
     {{-- Transaction list --}}
     @include('transaction.include.list', [
@@ -106,10 +90,36 @@
         ],
     ])
 
-    <p>
-        <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-                class="ui button basic">
-            @lang('general.goBack')
+    <div class="ui divider hidden"></div>
+
+    <table class="ui compact celled definition table">
+        <tbody>
+            <tr>
+                <td>@lang('misc.createdAt')</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $wallet->created_at])</td>
+            </tr>
+            @if($wallet->created_at != $wallet->updated_at)
+                <tr>
+                    <td>@lang('misc.lastChanged')</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $wallet->updated_at])</td>
+                </tr>
+            @endif
+        </tbody>
+    </table>
+
+    <div class="ui buttons">
+        <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                class="ui button basic secondary">
+            @lang('misc.rename')
         </a>
-    </p>
+        <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                class="ui button basic negative">
+            @lang('misc.delete')
+        </a>
+    </div>
+
+    <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+            class="ui button basic">
+        @lang('general.goBack')
+    </a>
 @endsection
