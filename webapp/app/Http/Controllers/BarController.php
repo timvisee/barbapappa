@@ -98,7 +98,7 @@ class BarController extends Controller {
         $user = barauth()->getSessionUser();
 
         // Update the visit time for this member
-        $member = $bar->users(['visited_at'], false)
+        $member = $bar->members(['visited_at'], false)
             ->where('user_id', $user->id)
             ->first();
         if($member != null) {
@@ -162,15 +162,15 @@ class BarController extends Controller {
 
         // Gather some stats
         $memberCountHour = $bar
-            ->users()
+            ->members()
             ->wherePivot('visited_at', '>=', Carbon::now()->subHour())
             ->count();
         $memberCountDay = $bar
-            ->users()
+            ->members()
             ->wherePivot('visited_at', '>=', Carbon::now()->subDay())
             ->count();
         $memberCountMonth = $bar
-            ->users()
+            ->members()
             ->wherePivot('visited_at', '>=', Carbon::now()->subMonth())
             ->count();
         $productCount = $bar->economy->products()->count();
@@ -550,7 +550,7 @@ class BarController extends Controller {
             ));
         } else
             $users = $bar
-                ->users([], false)
+                ->members([], false)
                 ->search($search)
                 ->select(['users.id', 'first_name', 'last_name'])
                 ->get();
@@ -631,7 +631,7 @@ class BarController extends Controller {
                 $products = collect($userItem['products']);
 
                 // Retrieve user and product models from database
-                $user = $bar->users()->findOrFail($user['id']);
+                $user = $bar->members()->findOrFail($user['id']);
                 $products = $products->map(function($product) use($economy) {
                     $product['product'] = $economy->products()->findOrFail($product['product']['id']);
                     return $product;

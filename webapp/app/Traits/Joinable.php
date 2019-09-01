@@ -8,7 +8,7 @@ use App\Models\User;
  * A trait for models that are joinable.
  *
  * Implementing this requires a manyToMany relationship available through
- * `users()`.
+ * `members()`.
  *
  * TODO: only allow implementing on Eloquent models
  */
@@ -29,7 +29,7 @@ trait Joinable {
             $data['role'] = $role;
 
         // Attach
-        $this->users()->attach($user, $data);
+        $this->members()->attach($user, $data);
     }
 
     /**
@@ -39,7 +39,7 @@ trait Joinable {
      * @param User $user The user to leave.
      */
     public function leave(User $user) {
-        $this->users()->detach($user);
+        $this->members()->detach($user);
     }
 
     /**
@@ -52,7 +52,7 @@ trait Joinable {
     public function isJoined(User $user) {
         // Optimized query
         return $this
-            ->users()
+            ->members()
             ->limit(1)
             ->where('user_id', $user->id)
             ->count(['user_id']) == 1;

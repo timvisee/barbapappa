@@ -116,17 +116,17 @@ class Bar extends Model {
      * @param array [$pivotColumns] An array of pivot columns to include.
      * @param boolean [$withTimestamps=true] True to include timestamp columns.
      *
-     * @return Query for list of joined users.
+     * @return Query for list of users that are member.
      */
-    // TODO: rename this to members?
-    public function users($pivotColumns = ['role'], $withTimestamps = true) {
-        // Query relation
+    public function members($pivotColumns = ['role'], $withTimestamps = true) {
+        // Query relation with pivot model
         $query = $this->belongsToMany(
                 User::class,
                 'bar_member',
                 'bar_id',
                 'user_id'
-            );
+            )
+            ->using(BarMember::class);
 
         // With pivot columns
         if(!empty($pivotColumns))
@@ -145,7 +145,7 @@ class Bar extends Model {
      * @return int Member count.
      */
     public function memberCount() {
-        return $this->users([], false)->count();
+        return $this->members([], false)->count();
     }
 
     /**
