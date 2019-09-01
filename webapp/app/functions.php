@@ -429,3 +429,20 @@ if(!function_exists('name_case')) {
         return trim($name);
     }
 }
+
+if(!function_exists('normalize_price')) {
+    /**
+    * Normalize the given price value, into a float.
+    *
+    * This makes sure the comma and period is parsed well.
+    * A string format is converted into 
+    *
+    * @param string|number|float $price The price.
+    * @return float The normalized price.
+    *
+    * @throws \Exception Throws if the given price value was invalid.
+    */
+    function normalize_price($price): float {
+        return (float) str_replace(',', '.', $price);
+    }
+}

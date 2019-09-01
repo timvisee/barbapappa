@@ -460,7 +460,7 @@ class WalletController extends Controller {
                 Rule::in($services->pluck('id')),
             ],
         ]);
-        $amount = $request->input('amount');
+        $amount = normalize_price($request->input('amount'));
         $service = $services->firstWhere('id', $request->input('payment_service'));
 
         // Start a database transaction for the top-up

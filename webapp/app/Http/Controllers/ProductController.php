@@ -259,7 +259,7 @@ class ProductController extends Controller {
                                 ->first(),
                             'product_id' => $product->id,
                             'currency_id' => $currency->id,
-                            'price' => str_replace(',', '.', $request->input('price_' . $currency->id)),
+                            'price' => normalize_price($request->input('price_' . $currency->id)),
                         ];
                     })
                     ->toArray()
