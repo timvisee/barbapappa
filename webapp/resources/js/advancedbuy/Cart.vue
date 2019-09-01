@@ -19,16 +19,13 @@
 
             <a class="ui bottom attached primary button"
                     v-on:click.prevent.stop="buy()"
-                    v-bind:class="{ disabled: buying }"
+                    v-bind:class="{ disabled: buying, loading: buying }"
                     href="#">
-                <span v-if="!buying">
-                    {{
-                        cart.length <= 1
-                            ? langChoice('pages.bar.advancedBuy.buyProducts#', quantity())
-                            : langChoice('pages.bar.advancedBuy.buyProductsUsers#', quantity(), {users: this.cart.length})
-                    }}
-                </span>
-                <div v-else class="ui active inline inverted tiny loader"></div>
+                {{
+                    cart.length <= 1
+                        ? langChoice('pages.bar.advancedBuy.buyProducts#', quantity())
+                        : langChoice('pages.bar.advancedBuy.buyProductsUsers#', quantity(), {users: this.cart.length})
+                }}
             </a>
         </div>
     </div>
