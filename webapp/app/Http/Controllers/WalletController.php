@@ -312,7 +312,7 @@ class WalletController extends Controller {
                 Rule::in($toWallets->pluck('id')->push('new')),
             ],
         ]);
-        $amount = $request->input('amount');
+        $amount = normalize_price($request->input('amount'));
         $toWallet = $request->input('to_wallet');
         $newWallet = $toWallet == 'new';
 
