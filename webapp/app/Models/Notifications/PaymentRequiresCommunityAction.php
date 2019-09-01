@@ -53,7 +53,7 @@ class PaymentRequiresCommunityAction extends Model {
 
         // List all community managers
         $managers = $community
-            ->users()
+            ->members()
             ->wherePivot('role', '>=', CommunityRoles::MANAGER)
             ->get();
 

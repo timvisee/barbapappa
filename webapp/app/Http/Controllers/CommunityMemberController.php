@@ -30,7 +30,7 @@ class CommunityMemberController extends Controller {
     public function show($communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users(['role', 'visited_at'])->where('user_id', $memberId)->firstOrfail();
+        $member = $community->members(['role', 'visited_at'])->where('user_id', $memberId)->firstOrfail();
 
         return view('community.member.show')
             ->with('member', $member);
@@ -44,7 +44,7 @@ class CommunityMemberController extends Controller {
     public function edit($communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $community->members(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Current role must be higher than user role
         $config = Builder::build()->raw(CommunityRoles::SCOPE, $member->pivot->role)->inherit();
@@ -66,7 +66,7 @@ class CommunityMemberController extends Controller {
     public function doEdit(Request $request, $communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
+        $member = $community->members(['role'], true)->where('user_id', $memberId)->firstOrfail();
         $curRole = $member->pivot->role;
         $newRole = $request->input('role');
 
@@ -96,9 +96,9 @@ class CommunityMemberController extends Controller {
         // that role or higher, do not allow the change
         if($newRole < $curRole && $curRole > CommunityRoles::USER) {
             $hasOtherRanked = $community
-                ->users(['role'], true)
+                ->members(['role'], true)
                 ->where('user_id', '<>', $memberId)
-                ->where('community_user.role', '>=', $curRole)
+                ->where('community_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
             if(!$hasOtherRanked)
@@ -125,7 +125,7 @@ class CommunityMemberController extends Controller {
     public function delete($communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $community->members(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Do some delete checks, return on early response
         if(($return = $this->checkDelete($community, $member)) != null)
@@ -143,7 +143,7 @@ class CommunityMemberController extends Controller {
     public function doDelete(Request $request, $communityId, $memberId) {
         // Get the community, find the member
         $community = \Request::get('community');
-        $member = $community->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $community->members(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Validate confirmation when deleting authenticated member
         if($member->id == barauth()->getSessionUser()->id)
@@ -176,9 +176,9 @@ class CommunityMemberController extends Controller {
         // TODO: allow demote if manager/admin inherited from community
         if($curRole > CommunityRoles::USER) {
             $hasOtherRanked = $community
-                ->users(['role'], true)
+                ->members(['role'], true)
                 ->where('user_id', '<>', $member->id)
-                ->where('community_user.role', '>=', $curRole)
+                ->where('community_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
             if(!$hasOtherRanked)

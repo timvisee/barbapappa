@@ -6,7 +6,7 @@
     use \App\Perms\CommunityRoles;
 
     // Get all community members
-    $members = $community->users(['role'])->get();
+    $members = $community->members(['role'])->get();
 
     // Define menulinks
     $menulinks[] = [

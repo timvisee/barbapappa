@@ -6,7 +6,7 @@
     use \App\Perms\BarRoles;
 
     // Get all bar members
-    $members = $bar->users(['role'])->get();
+    $members = $bar->members(['role'])->get();
 
     // Define menulinks
     $menulinks[] = [

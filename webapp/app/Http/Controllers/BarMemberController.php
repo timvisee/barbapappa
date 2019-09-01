@@ -30,7 +30,7 @@ class BarMemberController extends Controller {
     public function show($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users(['role', 'visited_at'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->members(['role', 'visited_at'])->where('user_id', $memberId)->firstOrfail();
 
         return view('bar.member.show')
             ->with('member', $member);
@@ -44,7 +44,7 @@ class BarMemberController extends Controller {
     public function edit($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->members(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Current role must be higher than user role
         $config = Builder::build()->raw(BarRoles::SCOPE, $member->pivot->role)->inherit();
@@ -66,7 +66,7 @@ class BarMemberController extends Controller {
     public function doEdit(Request $request, $barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users(['role'], true)->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->members(['role'], true)->where('user_id', $memberId)->firstOrfail();
         $curRole = $member->pivot->role;
         $newRole = $request->input('role');
 
@@ -97,9 +97,9 @@ class BarMemberController extends Controller {
         // TODO: allow demote if manager/admin inherited from community
         if($newRole < $curRole && $curRole > BarRoles::USER) {
             $hasOtherRanked = $bar
-                ->users(['role'], true)
+                ->members(['role'], true)
                 ->where('user_id', '<>', $memberId)
-                ->where('bar_user.role', '>=', $curRole)
+                ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
             if(!$hasOtherRanked)
@@ -128,7 +128,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->members(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Do some delete checks, return on early response
         if(($return = $this->checkDelete($bar, $member)) != null)
@@ -148,7 +148,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->users(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->members(['role'])->where('user_id', $memberId)->firstOrfail();
 
         // Validate confirmation when deleting authenticated member
         if($member->id == barauth()->getSessionUser()->id)
@@ -181,9 +181,9 @@ class BarMemberController extends Controller {
         // TODO: allow demote if manager/admin inherited from community
         if($curRole > BarRoles::USER) {
             $hasOtherRanked = $bar
-                ->users(['role'], true)
+                ->members(['role'], true)
                 ->where('user_id', '<>', $member->id)
-                ->where('bar_user.role', '>=', $curRole)
+                ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
             if(!$hasOtherRanked)

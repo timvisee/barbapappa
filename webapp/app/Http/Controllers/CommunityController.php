@@ -79,7 +79,7 @@ class CommunityController extends Controller {
         $user = barauth()->getSessionUser();
 
         // Update the visit time for this member
-        $member = $community->users(['visited_at'], false)
+        $member = $community->members(['visited_at'], false)
             ->where('user_id', $user->id)
             ->first();
         if($member != null) {
@@ -118,15 +118,15 @@ class CommunityController extends Controller {
 
         // Gather some stats
         $memberCountHour = $community
-            ->users()
+            ->members()
             ->wherePivot('visited_at', '>=', Carbon::now()->subHour())
             ->count();
         $memberCountDay = $community
-            ->users()
+            ->members()
             ->wherePivot('visited_at', '>=', Carbon::now()->subDay())
             ->count();
         $memberCountMonth = $community
-            ->users()
+            ->members()
             ->wherePivot('visited_at', '>=', Carbon::now()->subMonth())
             ->count();
 
