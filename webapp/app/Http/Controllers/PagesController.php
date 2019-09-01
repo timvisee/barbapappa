@@ -85,7 +85,7 @@ class PagesController extends Controller {
     public function last() {
         // Obtain the users last bar ID, visit the page if any was found
         $bar = Bar::find(
-            \DB::table('bar_user')
+            \DB::table('bar_member')
                 ->where('user_id', barauth()->getSessionUser()->id)
                 ->whereNotNull('visited_at')
                 ->latest('visited_at')

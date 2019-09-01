@@ -143,7 +143,7 @@ class User extends Model implements HasLocalePreference {
         // Query relation
         $query = $this->belongsToMany(
                 'App\Models\Community',
-                'community_user',
+                'community_member',
                 'user_id',
                 'community_id'
             );
@@ -171,7 +171,7 @@ class User extends Model implements HasLocalePreference {
         // Query relation
         $query = $this->belongsToMany(
                 'App\Models\Bar',
-                'bar_user',
+                'bar_member',
                 'user_id',
                 'bar_id'
             );

@@ -123,7 +123,7 @@ class Bar extends Model {
         // Query relation
         $query = $this->belongsToMany(
                 User::class,
-                'bar_user',
+                'bar_member',
                 'bar_id',
                 'user_id'
             );

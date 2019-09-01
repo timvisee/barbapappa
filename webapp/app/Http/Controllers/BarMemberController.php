@@ -99,7 +99,7 @@ class BarMemberController extends Controller {
             $hasOtherRanked = $bar
                 ->users(['role'], true)
                 ->where('user_id', '<>', $memberId)
-                ->where('bar_user.role', '>=', $curRole)
+                ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
             if(!$hasOtherRanked)
@@ -183,7 +183,7 @@ class BarMemberController extends Controller {
             $hasOtherRanked = $bar
                 ->users(['role'], true)
                 ->where('user_id', '<>', $member->id)
-                ->where('bar_user.role', '>=', $curRole)
+                ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
             if(!$hasOtherRanked)

@@ -98,7 +98,7 @@ class CommunityMemberController extends Controller {
             $hasOtherRanked = $community
                 ->users(['role'], true)
                 ->where('user_id', '<>', $memberId)
-                ->where('community_user.role', '>=', $curRole)
+                ->where('community_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
             if(!$hasOtherRanked)
@@ -178,7 +178,7 @@ class CommunityMemberController extends Controller {
             $hasOtherRanked = $community
                 ->users(['role'], true)
                 ->where('user_id', '<>', $member->id)
-                ->where('community_user.role', '>=', $curRole)
+                ->where('community_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
             if(!$hasOtherRanked)

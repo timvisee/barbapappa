@@ -118,7 +118,7 @@ class Community extends Model {
         // Query relation
         $query = $this->belongsToMany(
                 User::class,
-                'community_user',
+                'community_member',
                 'community_id',
                 'user_id'
             );
