@@ -84,7 +84,7 @@ return [
     'none' => 'Geen',
     'amount' => 'Bedrag',
     'amountInCurrency' => 'Bedrag in :currency',
-    'state' => 'Staat',
+    'state' => 'Status',
     'type' => 'Type',
     'estimate' => 'Schatting',
     'createdBy' => 'Gemaakt door',

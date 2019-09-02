@@ -118,7 +118,7 @@ class Bar extends Model {
      *
      * @return Query for list of users that are member.
      */
-    public function members($pivotColumns = ['role'], $withTimestamps = true) {
+    public function members($pivotColumns = ['id', 'role'], $withTimestamps = true) {
         // Query relation with pivot model
         $query = $this->belongsToMany(
                 User::class,

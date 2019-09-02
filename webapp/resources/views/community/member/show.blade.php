@@ -50,11 +50,17 @@
     @if(perms(CommunityMemberController::permsManage()))
         <p>
             <div class="ui buttons">
-                <a href="{{ route('community.member.edit', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
+                <a href="{{ route('community.member.edit', [
+                    'communityId' => $community->human_id,
+                    'memberId' => $member->pivot->id,
+                ]) }}"
                         class="ui button secondary">
                     @lang('misc.edit')
                 </a>
-                <a href="{{ route('community.member.delete', ['communityId' => $community->human_id, 'memberId' => $member->id]) }}"
+                <a href="{{ route('community.member.delete', [
+                    'communityId' => $community->human_id,
+                    'memberId' => $member->pivot->id,
+                ]) }}"
                         class="ui button negative">
                     @lang('misc.delete')
                 </a>

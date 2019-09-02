@@ -5,9 +5,6 @@
 @php
     use \App\Perms\BarRoles;
 
-    // Get all bar members
-    $members = $bar->members(['role'])->get();
-
     // Define menulinks
     $menulinks[] = [
         'name' => __('pages.bar.backToBar'),
@@ -31,7 +28,10 @@
         --}}
 
         @forelse($members as $member)
-            <a href="{{ route('bar.member.show', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}" class="item">
+            <a href="{{ route('bar.member.show', [
+                'barId' => $bar->human_id,
+                'memberId' => $member->pivot->id,
+            ]) }}" class="item">
                 {{ $member->name }}
                 @if($member->pivot->role != 0)
                     ({{ BarRoles::roleName($member->pivot->role) }})

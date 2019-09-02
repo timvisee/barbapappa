@@ -19,7 +19,15 @@ class BarMemberController extends Controller {
      * @return Response
      */
     public function index() {
-        return view('bar.member.index');
+        // Get the bar, list it's members
+        $bar = \Request::get('bar');
+        $members = $bar
+            ->members(['id', 'role'])
+            ->orderBy('bar_member.role', 'DESC')
+            ->get();
+
+        return view('bar.member.index')
+            ->with('members', $members);
     }
 
     /**
@@ -30,7 +38,10 @@ class BarMemberController extends Controller {
     public function show($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->members(['role', 'visited_at'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar
+            ->members(['id', 'role', 'visited_at'])
+            ->where('bar_member.id', $memberId)
+            ->firstOrFail();
 
         return view('bar.member.show')
             ->with('member', $member);
@@ -44,7 +55,9 @@ class BarMemberController extends Controller {
     public function edit($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->members(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar->members(['id', 'role'])
+            ->where('bar_member.id', $memberId)
+            ->firstOrfail();
 
         // Current role must be higher than user role
         $config = Builder::build()->raw(BarRoles::SCOPE, $member->pivot->role)->inherit();
@@ -66,7 +79,10 @@ class BarMemberController extends Controller {
     public function doEdit(Request $request, $barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->members(['role'], true)->where('user_id', $memberId)->firstOrfail();
+        $member = $bar
+            ->members(['id', 'role'], true)
+            ->where('bar_member.id', $memberId)
+            ->firstOrfail();
         $curRole = $member->pivot->role;
         $newRole = $request->input('role');
 
@@ -97,8 +113,8 @@ class BarMemberController extends Controller {
         // TODO: allow demote if manager/admin inherited from community
         if($newRole < $curRole && $curRole > BarRoles::USER) {
             $hasOtherRanked = $bar
-                ->members(['role'], true)
-                ->where('user_id', '<>', $memberId)
+                ->members(['id', 'role'], true)
+                ->where('bar_member.id', '<>', $memberId)
                 ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();
@@ -128,7 +144,10 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->members(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar
+            ->members(['id', 'role'])
+            ->where('bar_member.id', $memberId)
+            ->firstOrfail();
 
         // Do some delete checks, return on early response
         if(($return = $this->checkDelete($bar, $member)) != null)
@@ -148,7 +167,10 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->members(['role'])->where('user_id', $memberId)->firstOrfail();
+        $member = $bar
+            ->members(['id', 'role'])
+            ->where('bar_member.id', $memberId)
+            ->firstOrfail();
 
         // Validate confirmation when deleting authenticated member
         if($member->id == barauth()->getSessionUser()->id)
@@ -181,8 +203,8 @@ class BarMemberController extends Controller {
         // TODO: allow demote if manager/admin inherited from community
         if($curRole > BarRoles::USER) {
             $hasOtherRanked = $bar
-                ->members(['role'], true)
-                ->where('user_id', '<>', $member->id)
+                ->members(['id', 'role'], true)
+                ->where('bar_member.id', '<>', $member->id)
                 ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)
                 ->exists();

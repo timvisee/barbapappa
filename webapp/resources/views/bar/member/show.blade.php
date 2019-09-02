@@ -50,11 +50,17 @@
     @if(perms(BarMemberController::permsManage()))
         <p>
             <div class="ui buttons">
-                <a href="{{ route('bar.member.edit', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
+                <a href="{{ route('bar.member.edit', [
+                    'barId' => $bar->human_id,
+                    'memberId' => $member->pivot->id
+                ]) }}"
                         class="ui button secondary">
                     @lang('misc.edit')
                 </a>
-                <a href="{{ route('bar.member.delete', ['barId' => $bar->human_id, 'memberId' => $member->id]) }}"
+                <a href="{{ route('bar.member.delete', [
+                    'barId' => $bar->human_id,
+                    'memberId' => $member->pivot->id,
+                ]) }}"
                         class="ui button negative">
                     @lang('misc.delete')
                 </a>
