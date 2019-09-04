@@ -26,22 +26,22 @@
             </tr>
             <tr>
                 <td>@lang('misc.role')</td>
-                <td>{{ CommunityRoles::roleName($member->pivot->role) }}</td>
+                <td>{{ CommunityRoles::roleName($member->role) }}</td>
             </tr>
-            @if($member->pivot->visited_at != null)
+            @if($member->visited_at != null)
                 <tr>
                     <td>@lang('pages.communityMembers.lastVisit')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => new Carbon($member->pivot->visited_at)])</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => new Carbon($member->visited_at)])</td>
                 </tr>
             @endif
             <tr>
                 <td>@lang('pages.communityMembers.memberSince')</td>
-                <td>@include('includes.humanTimeDiff', ['time' => $member->pivot->created_at])</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $member->created_at])</td>
             </tr>
-            @if($member->pivot->created_at != $member->pivot->updated_at)
+            @if($member->created_at != $member->updated_at)
                 <tr>
                     <td>@lang('misc.lastChanged')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $member->pivot->updated_at])</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $member->updated_at])</td>
                 </tr>
             @endif
         </tbody>
@@ -52,14 +52,14 @@
             <div class="ui buttons">
                 <a href="{{ route('community.member.edit', [
                     'communityId' => $community->human_id,
-                    'memberId' => $member->pivot->id,
+                    'memberId' => $member->id,
                 ]) }}"
                         class="ui button secondary">
                     @lang('misc.edit')
                 </a>
                 <a href="{{ route('community.member.delete', [
                     'communityId' => $community->human_id,
-                    'memberId' => $member->pivot->id,
+                    'memberId' => $member->id,
                 ]) }}"
                         class="ui button negative">
                     @lang('misc.delete')

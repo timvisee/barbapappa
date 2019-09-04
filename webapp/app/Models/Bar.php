@@ -110,6 +110,12 @@ class Bar extends Model {
         return $this->belongsTo(Economy::class);
     }
 
+    // TODO: document
+    // TODO: rename this to members
+    public function memberModels() {
+        return $this->hasMany(BarMember::class);
+    }
+
     /**
      * A list of users that joined this bar.
      *

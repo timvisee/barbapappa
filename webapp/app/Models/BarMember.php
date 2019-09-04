@@ -21,7 +21,39 @@ class BarMember extends Pivot {
 
     protected $table = 'bar_member';
 
-    public $incrementing = true;
+    protected $with = ['user'];
+
+    /**
+     * Get dynamic properties.
+     *
+     * @param string $name Property name.
+     *
+     * @return mixed|string Result.
+     */
+    public function __get($name) {
+        switch($name) {
+            case 'name':
+                return $this->user->name;
+            default:
+                return parent::__get($name);
+        }
+    }
+
+    /**
+     * Check whether dynamic properties exist.
+     *
+     * @param string $name Property name.
+     *
+     * @return bool True if exists, false if not.
+     */
+    public function __isset($name) {
+        switch($name) {
+            case 'name':
+                return true;
+            default:
+                return parent::__isset($name);
+        }
+    }
 
     /**
      * Get the member bar.

@@ -105,6 +105,12 @@ class Community extends Model {
         return $this->hasMany(BunqAccount::class);
     }
 
+    // TODO: document
+    // TODO: rename this to members
+    public function memberModels() {
+        return $this->hasMany(CommunityMember::class);
+    }
+
     /**
      * A list of users that joined this community.
      *

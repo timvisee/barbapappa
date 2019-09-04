@@ -30,11 +30,11 @@
         @forelse($members as $member)
             <a href="{{ route('bar.member.show', [
                 'barId' => $bar->human_id,
-                'memberId' => $member->pivot->id,
+                'memberId' => $member->id,
             ]) }}" class="item">
                 {{ $member->name }}
-                @if($member->pivot->role != 0)
-                    ({{ BarRoles::roleName($member->pivot->role) }})
+                @if($member->role != 0)
+                    ({{ BarRoles::roleName($member->role) }})
                 @endif
             </a>
         @empty

@@ -22,8 +22,8 @@ class BarMemberController extends Controller {
         // Get the bar, list it's members
         $bar = \Request::get('bar');
         $members = $bar
-            ->members(['id', 'role'])
-            ->orderBy('bar_member.role', 'DESC')
+            ->memberModels()
+            ->orderBy('role', 'DESC')
             ->get();
 
         return view('bar.member.index')
@@ -38,10 +38,7 @@ class BarMemberController extends Controller {
     public function show($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar
-            ->members(['id', 'role', 'visited_at'])
-            ->where('bar_member.id', $memberId)
-            ->firstOrFail();
+        $member = $bar->memberModels()->findOrFail($memberId);
 
         return view('bar.member.show')
             ->with('member', $member);
@@ -55,12 +52,10 @@ class BarMemberController extends Controller {
     public function edit($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->members(['id', 'role'])
-            ->where('bar_member.id', $memberId)
-            ->firstOrfail();
+        $member = $bar->memberModels()->findOrFail($memberId);
 
         // Current role must be higher than user role
-        $config = Builder::build()->raw(BarRoles::SCOPE, $member->pivot->role)->inherit();
+        $config = Builder::build()->raw(BarRoles::SCOPE, $member->role)->inherit();
         if(!perms($config))
             return redirect()
                 ->route('bar.member.show', ['barId' => $barId, 'memberId' => $memberId])
@@ -79,11 +74,8 @@ class BarMemberController extends Controller {
     public function doEdit(Request $request, $barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar
-            ->members(['id', 'role'], true)
-            ->where('bar_member.id', $memberId)
-            ->firstOrfail();
-        $curRole = $member->pivot->role;
+        $member = $bar->memberModels()->findOrFail($memberId);
+        $curRole = $member->role;
         $newRole = $request->input('role');
 
         // Current role must be higher than user role
@@ -125,8 +117,8 @@ class BarMemberController extends Controller {
         }
 
         // Set the role ID, save the member
-        $member->pivot->role = $newRole;
-        $member->pivot->save();
+        $member->role = $newRole;
+        $member->save();
 
         // Redirect to the show view after editing
         return redirect()
@@ -144,10 +136,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar
-            ->members(['id', 'role'])
-            ->where('bar_member.id', $memberId)
-            ->firstOrfail();
+        $member = $bar->memberModels()->firstOrFail($memberId);
 
         // Do some delete checks, return on early response
         if(($return = $this->checkDelete($bar, $member)) != null)
@@ -167,13 +156,10 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar
-            ->members(['id', 'role'])
-            ->where('bar_member.id', $memberId)
-            ->firstOrfail();
+        $member = $bar->memberModels()->firstOrFail($memberId);
 
         // Validate confirmation when deleting authenticated member
-        if($member->id == barauth()->getSessionUser()->id)
+        if($member->user_id == barauth()->getSessionUser()->id)
             $this->validate($request, ['confirm_self_delete' => 'accepted']);
 
         // Do some delete checks, return on early response
@@ -181,7 +167,7 @@ class BarMemberController extends Controller {
             return $return;
 
         // Delete the member
-        $bar->leave($member);
+        $bar->leave($member->user);
 
         // Redirect to the index page after deleting
         return redirect()
@@ -193,17 +179,20 @@ class BarMemberController extends Controller {
      * Do some checks before deleting a member.
      * Extracted into a separate method to prevent duplicate code.
      *
+     * @param Bar $bar The bar.
+     * @param BarMember $member The bar member.
+     *
      * @return null|Response Null to do nothing, or an early response.
      */
     private function checkDelete($bar, $member) {
         // Get the current role
-        $curRole = $member->pivot->role;
+        $curRole = $member->role;
 
         // Cannot delete last member with this (or higher) management role
         // TODO: allow demote if manager/admin inherited from community
         if($curRole > BarRoles::USER) {
             $hasOtherRanked = $bar
-                ->members(['id', 'role'], true)
+                ->memberModels()
                 ->where('bar_member.id', '<>', $member->id)
                 ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)

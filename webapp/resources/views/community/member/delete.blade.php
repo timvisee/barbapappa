@@ -16,10 +16,10 @@
     {!! Form::open(['action' => [
         'CommunityMemberController@doDelete',
         'communityId' => $community->human_id,
-        'memberId' => $member->pivot->id,
+        'memberId' => $member->id,
     ], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         {{-- Self delete confirmation checkbox --}}
-        @if($member->pivot->user_id == barauth()->getSessionUser()->id)
+        @if($member->user_id == barauth()->getSessionUser()->id)
             <div class="field {{ ErrorRenderer::hasError('confirm_self_delete') ? 'error' : '' }}">
                 <div class="ui checkbox">
                     {{ Form::checkbox('confirm_self_delete', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
@@ -35,7 +35,7 @@
         <div class="ui buttons">
             <a href="{{ route('community.member.show', [
                 'communityId' => $community->human_id,
-                'memberId' => $member->pivot->id,
+                'memberId' => $member->id,
             ]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')

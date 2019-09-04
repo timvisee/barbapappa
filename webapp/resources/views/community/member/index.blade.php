@@ -30,11 +30,11 @@
         @forelse($members as $member)
             <a href="{{ route('community.member.show', [
                 'communityId' => $community->human_id,
-                'memberId' => $member->pivot->id,
+                'memberId' => $member->id,
             ]) }}" class="item">
                 {{ $member->name }}
-                @if($member->pivot->role != 0)
-                    ({{ CommunityRoles::roleName($member->pivot->role) }})
+                @if($member->role != 0)
+                    ({{ CommunityRoles::roleName($member->role) }})
                 @endif
             </a>
         @empty
