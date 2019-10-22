@@ -105,9 +105,12 @@ class Community extends Model {
         return $this->hasMany(BunqAccount::class);
     }
 
-    // TODO: document
-    // TODO: rename this to members
-    public function memberModels() {
+    /**
+     * A list of community member models for users that joined this community.
+     *
+     * @return Query for list of community member models.
+     */
+    public function members() {
         return $this->hasMany(CommunityMember::class);
     }
 
@@ -119,7 +122,7 @@ class Community extends Model {
      *
      * @return Query for list of users that are member.
      */
-    public function members($pivotColumns = ['id', 'role'], $withTimestamps = true) {
+    public function memberUsers($pivotColumns = ['id', 'role'], $withTimestamps = true) {
         // Query relation with pivot model
         $query = $this->belongsToMany(
                 User::class,
@@ -146,7 +149,7 @@ class Community extends Model {
      * @return int Member count.
      */
     public function memberCount() {
-        return $this->members([], false)->count();
+        return $this->memberUsers([], false)->count();
     }
 
     /**

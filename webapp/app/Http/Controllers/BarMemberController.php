@@ -22,7 +22,7 @@ class BarMemberController extends Controller {
         // Get the bar, list it's members
         $bar = \Request::get('bar');
         $members = $bar
-            ->memberModels()
+            ->members()
             ->orderBy('role', 'DESC')
             ->get();
 
@@ -38,7 +38,7 @@ class BarMemberController extends Controller {
     public function show($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->memberModels()->findOrFail($memberId);
+        $member = $bar->members()->findOrFail($memberId);
 
         return view('bar.member.show')
             ->with('member', $member);
@@ -52,7 +52,7 @@ class BarMemberController extends Controller {
     public function edit($barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->memberModels()->findOrFail($memberId);
+        $member = $bar->members()->findOrFail($memberId);
 
         // Current role must be higher than user role
         $config = Builder::build()->raw(BarRoles::SCOPE, $member->role)->inherit();
@@ -74,7 +74,7 @@ class BarMemberController extends Controller {
     public function doEdit(Request $request, $barId, $memberId) {
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->memberModels()->findOrFail($memberId);
+        $member = $bar->members()->findOrFail($memberId);
         $curRole = $member->role;
         $newRole = $request->input('role');
 
@@ -105,7 +105,7 @@ class BarMemberController extends Controller {
         // TODO: allow demote if manager/admin inherited from community
         if($newRole < $curRole && $curRole > BarRoles::USER) {
             $hasOtherRanked = $bar
-                ->members(['id', 'role'], true)
+                ->memberUsers(['id', 'role'], true)
                 ->where('bar_member.id', '<>', $memberId)
                 ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)
@@ -136,7 +136,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->memberModels()->firstOrFail($memberId);
+        $member = $bar->members()->firstOrFail($memberId);
 
         // Do some delete checks, return on early response
         if(($return = $this->checkDelete($bar, $member)) != null)
@@ -156,7 +156,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->memberModels()->firstOrFail($memberId);
+        $member = $bar->members()->firstOrFail($memberId);
 
         // Validate confirmation when deleting authenticated member
         if($member->user_id == barauth()->getSessionUser()->id)
@@ -192,7 +192,7 @@ class BarMemberController extends Controller {
         // TODO: allow demote if manager/admin inherited from community
         if($curRole > BarRoles::USER) {
             $hasOtherRanked = $bar
-                ->memberModels()
+                ->members()
                 ->where('bar_member.id', '<>', $member->id)
                 ->where('bar_member.role', '>=', $curRole)
                 ->limit(1)

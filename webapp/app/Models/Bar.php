@@ -110,9 +110,12 @@ class Bar extends Model {
         return $this->belongsTo(Economy::class);
     }
 
-    // TODO: document
-    // TODO: rename this to members
-    public function memberModels() {
+    /**
+     * A list of bar member models for users that joined this bar.
+     *
+     * @return Query for list of bar member models.
+     */
+    public function members() {
         return $this->hasMany(BarMember::class);
     }
 
@@ -124,7 +127,7 @@ class Bar extends Model {
      *
      * @return Query for list of users that are member.
      */
-    public function members($pivotColumns = ['id', 'role'], $withTimestamps = true) {
+    public function memberUsers($pivotColumns = ['id', 'role'], $withTimestamps = true) {
         // Query relation with pivot model
         $query = $this->belongsToMany(
                 User::class,
@@ -151,7 +154,7 @@ class Bar extends Model {
      * @return int Member count.
      */
     public function memberCount() {
-        return $this->members([], false)->count();
+        return $this->memberUsers([], false)->count();
     }
 
     /**
