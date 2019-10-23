@@ -124,6 +124,7 @@ return [
         'cannotSelfEnroll' => 'You cannot join this community yourself, it is disabled.',
         'leaveQuestion' => 'Are you sure you want to leave this community?',
         'leftThisCommunity' => 'You left this community.',
+        'cannotLeaveStillBarMember' => 'You cannot leave this community, because you\'re still a member of a bar in this community',
         'protectedByCode' => 'This community is protected by a passcode. Request it at the community, or scan the community QR code if available.',
         'protectedByCodeFilled' => 'This community is protected by a passcode. We\'ve filled it in for you.',
         'incorrectCode' => 'Incorrect community code.',

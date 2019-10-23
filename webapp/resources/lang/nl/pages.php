@@ -124,6 +124,7 @@ return [
         'cannotSelfEnroll' => 'Je kunt jezelf niet inschrijven voor deze groep, de functie is uitgeschakeld.',
         'leaveQuestion' => 'Weet je zeker dat je je wilt uitschrijven bij deze groep?',
         'leftThisCommunity' => 'Je bent uitgeschreven bij deze groep.',
+        'cannotLeaveStillBarMember' => 'Je kunt deze groep niet verlaten, omdat je nog lid bent van een bar in deze groep.',
         'protectedByCode' => 'Deze groep is beveiligd met een code. Vraag er naar bij de groep, of scan de groep QR-code als deze beschikbaar is.',
         'protectedByCodeFilled' => 'Deze groep is beveiligd met een code. We hebben de code voor je ingevuld.',
         'incorrectCode' => 'Verkeerde groep code.',

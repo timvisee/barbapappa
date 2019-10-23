@@ -124,6 +124,7 @@ return [
         'leaveQuestion' => 'Ye be sure to sink th\' crew?',
         'cannotSelfEnroll' => 'Ye cannot join dis crew yerself, it be disabled.',
         'leftThisCommunity' => 'Ye sunk th\' crew.',
+        'cannotLeaveStillBarMember' => 'Ye nay leave dis crew, because yer still a member of a bar in dis crew',
         'protectedByCode' => 'Dis crew be protected by a secret. Request it at yer crew, or use yer binoculars to scan the crew Q-ARRRR code if available.',
         'protectedByCodeFilled' => 'Dis crew be protected by a secret. We filled it for ye.',
         'incorrectCode' => 'Crew code be incorrect.',
