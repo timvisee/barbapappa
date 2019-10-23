@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
+use App\Traits\Joinable;
 use App\Utils\EmailRecipient;
 use BarPay\Models\Service as PayService;
 use Carbon\Carbon;
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Mail;
  * @property Carbon updated_at
  */
 class Economy extends Model {
+
+    use Joinable;
 
     protected $fillable = ['name'];
 
@@ -161,6 +164,53 @@ class Economy extends Model {
      */
     public function paymentServices() {
         return $this->hasMany(PayService::class);
+    }
+
+    /**
+     * A list of economy member models for users that joined this economy.
+     *
+     * @return Query for list of economy member models.
+     */
+    public function members() {
+        return $this->hasMany(EconomyMember::class);
+    }
+
+    /**
+     * A list of users that joined this economy.
+     *
+     * @param array [$pivotColumns] An array of pivot columns to include.
+     * @param boolean [$withTimestamps=true] True to include timestamp columns.
+     *
+     * @return Query for list of users that are member.
+     */
+    public function memberUsers($pivotColumns = ['id'], $withTimestamps = true) {
+        // Query relation with pivot model
+        $query = $this->belongsToMany(
+                User::class,
+                'economy_member',
+                'economy_id',
+                'user_id'
+            )
+            ->using(EconomyMember::class);
+
+        // With pivot columns
+        if(!empty($pivotColumns))
+            $query = $query->withPivot($pivotColumns);
+
+        // With timestamps
+        if($withTimestamps)
+            $query = $query->withTimestamps();
+
+        return $query;
+    }
+
+    /**
+     * Count the members this economy has.
+     *
+     * @return int Member count.
+     */
+    public function memberCount() {
+        return $this->memberUsers([], false)->count();
     }
 
     /**
