@@ -345,7 +345,8 @@ class BarController extends Controller {
     public function doJoin(Request $request, $barId) {
         // Get the bar, community and user
         $bar = \Request::get('bar');
-        $community = \Request::get('community');
+        $community = $bar->community;
+        $economy = $bar->economy;
         $user = barauth()->getSessionUser();
 
         // Self enroll must be enabled
@@ -372,11 +373,12 @@ class BarController extends Controller {
             }
         }
 
-        // Join the community and bar
-        // TODO: join economy
-        DB::transaction(function() use($community, $bar, $user) {
+        // Join the community, economy and bar
+        DB::transaction(function() use($community, $economy, $bar, $user) {
             if(!$community->isJoined($user))
                 $community->join($user);
+            if(!$economy->isJoined($user))
+                $economy->join($user);
             $bar->join($user);
         });
 
@@ -419,14 +421,27 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
         $community = $bar->community;
+        $economy = $bar->economy;
 
         // Leave bar and community
-        // TODO: make sure user can actually leave this bar (economy and community)
-        DB::transaction(function() use($bar, $user, $community) {
+        // TODO: make sure user can actually leave this bar (with economy and community)
+        DB::transaction(function() use($bar, $user, $community, $economy) {
             // Leave the bar
             $bar->leave($user);
 
-            // TODO: leave economy
+            // Leave economy if not bar member anymore
+            if($economy->isJoined($user)) {
+                $barIds = $economy
+                    ->bars()
+                    ->select('id')
+                    ->pluck('id');
+                $memberInEconomyBars = BarMember::whereIn('bar_id', $barIds)
+                    ->where('user_id', $user->id)
+                    ->limit(1)
+                    ->count() > 0;
+                if(!$memberInEconomyBars)
+                    $economy->leave($user);
+            }
 
             // Leave community if not bar member anymore without special role
             if($community->isJoined($user) && $community->member($user)->role == 0) {
@@ -434,11 +449,11 @@ class BarController extends Controller {
                     ->bars()
                     ->select('id')
                     ->pluck('id');
-                $memberInOtherBars = BarMember::whereIn('bar_id', $barIds)
+                $memberInCommunityBars = BarMember::whereIn('bar_id', $barIds)
                     ->where('user_id', $user->id)
                     ->limit(1)
                     ->count() > 0;
-                if(!$memberInOtherBars)
+                if(!$memberInCommunityBars)
                     $community->leave($user);
             }
         });
