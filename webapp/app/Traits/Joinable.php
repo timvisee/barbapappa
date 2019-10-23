@@ -22,6 +22,8 @@ trait Joinable {
      * @param User $user The user to join.
      * @param int|null [$role=null] An optional role value to assign to the
      *      user.
+     *
+     *  @throws \Exception Throws if already joined.
      */
     public function join(User $user, $role = null) {
         // Build additional data object

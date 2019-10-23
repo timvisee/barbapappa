@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Bar;
+use App\Models\BarMember;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
@@ -371,20 +372,13 @@ class BarController extends Controller {
             }
         }
 
-        // Join the community
-        if(!$community->isJoined($user)) {
-            // TODO: ensure the user has permission to join this community
-
-            // Check whether to join their community
-            $joinCommunity = is_checked($request->input('join_community'));
-
-            // Join the community
-            if($joinCommunity)
+        // Join the community and bar
+        // TODO: join economy
+        DB::transaction(function() use($community, $bar, $user) {
+            if(!$community->isJoined($user))
                 $community->join($user);
-        }
-
-        // Join the user
-        $bar->join($user);
+            $bar->join($user);
+        });
 
         // Redirect to the bar page
         return redirect()
@@ -424,9 +418,30 @@ class BarController extends Controller {
         // Get the bar and user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
+        $community = $bar->community;
 
-        // Leave the user
-        $bar->leave($user);
+        // Leave bar and community
+        // TODO: make sure user can actually leave this bar (economy and community)
+        DB::transaction(function() use($bar, $user, $community) {
+            // Leave the bar
+            $bar->leave($user);
+
+            // TODO: leave economy
+
+            // Leave community if not member anymore in any of its bars
+            if($community->isJoined($user)) {
+                $barIds = $community
+                    ->bars()
+                    ->select('id')
+                    ->pluck('id');
+                $memberInOtherBars = BarMember::whereIn('bar_id', $barIds)
+                    ->where('user_id', $user->id)
+                    ->limit(1)
+                    ->count() > 0;
+                if(!$memberInOtherBars)
+                    $community->leave($user);
+            }
+        });
 
         // Redirect to the bar page
         return redirect()
