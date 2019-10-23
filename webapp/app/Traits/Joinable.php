@@ -60,4 +60,16 @@ trait Joinable {
             ->where('user_id', $user->id)
             ->count(['user_id']) == 1;
     }
+
+    /**
+     * Get a member.
+     *
+     * @param User $user The user to get.
+     * @return Memmber instance.
+     *
+     * @throws \Exception Throws if there's no member for this user.
+     */
+    public function member(User $user) {
+        return $this->members()->where('user_id', $user->id)->firstOrFail();
+    }
 }

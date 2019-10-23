@@ -428,8 +428,8 @@ class BarController extends Controller {
 
             // TODO: leave economy
 
-            // Leave community if not member anymore in any of its bars
-            if($community->isJoined($user)) {
+            // Leave community if not bar member anymore without special role
+            if($community->isJoined($user) && $community->member($user)->role == 0) {
                 $barIds = $community
                     ->bars()
                     ->select('id')
