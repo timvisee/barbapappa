@@ -63,6 +63,9 @@
     </div>
 
     @include('community.include.joinBanner')
+    @include('bar.include.list', [
+        'header' => __('pages.bars') . ' (' . count($bars) . ')',
+    ])
 
     @if($page == 'info')
         <p>
