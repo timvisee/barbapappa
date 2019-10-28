@@ -4,7 +4,7 @@
             <h5 class="ui item header">{{ __('pages.bar.advancedBuy.inCart') }}</h5>
 
             <div v-for="item in cart">
-                <i class="ui item">{{ __('misc.for') }} {{ item.user.first_name }} {{ item.user.last_name }}</i>
+                <i class="ui item">{{ __('misc.for') }} {{ item.user.name || __('misc.unknownUser') }}</i>
                 <div v-for="product in item.products" class="item">
                     <span class="subtle">{{ product.quantity }}×</span>
 

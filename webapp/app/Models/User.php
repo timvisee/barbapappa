@@ -420,45 +420,15 @@ class User extends Model implements HasLocalePreference {
      *
      * @return Wallet|null The primary wallet, or null if there is none.
      */
+    // TODO: this has been moved to EconomyManager, refactor usages
     public function getOrCreateWallet(Economy $economy, $econ_currencies, $error = true) {
-        // A currency must be given
-        if($econ_currencies->isEmpty()) {
-            if($error)
-                throw new \Exception("Failed to get or create wallet, no currencies given");
-            return null;
-        }
+        // The user must be economy member, get the economy member
+        if(!$economy->isJoined($this))
+            $economy->join($this);
+        $economy_member = $economy->members()->user($this)->firstOrFail();
 
-        // Get the economy member and fetch all user wallets
-        $user = barauth()->getUser();
-        $economy_member = $economy->members()->user($this)->first();
-        $wallets = $economy_member->wallets ?? collect();
-
-        // Find and return an existing wallet for any of the currencies in order
-        $wallet = $econ_currencies
-            ->map(function($c) use($wallets) {
-                return $wallets->firstWhere('currency_id', $c->currency_id);
-            })
-            ->filter(function($w) {
-                return $w != null;
-            })
-            ->first();
-        if($wallet != null)
-            return $wallet;
-
-        // Create a new wallet for the first currency that allows it
-        foreach($econ_currencies as $econ_currency) {
-            // Find the currency, skip if we cannot create a wallet for it
-            if(!$econ_currency->allow_wallet)
-                continue;
-
-            // Create and return a wallet
-            return $this->createWallet($economy, $econ_currency->currency_id);
-        }
-
-        // Throw a error if no wallet could be found/created or return null
-        if($error)
-            throw new \Exception("Failed to get or create wallet for any of given currencies");
-        return null;
+        // Route call to economy manager
+        return $economy_member->getOrCreateWallet($econ_currencies, $error);
     }
 
     /**
@@ -471,22 +441,15 @@ class User extends Model implements HasLocalePreference {
      *
      * @return Wallet The created wallet.
      */
-    // TODO: move this somewhere else?
+    // TODO: this has been moved to economy manager, refactor usages
     public function createWallet(Economy $economy, int $currency_id, $name = null) {
-        // The user must be economy member
+        // The user must be economy member, get the economy member
         if(!$economy->isJoined($this))
             $economy->join($this);
-
-        // Get the economy member
         $economy_member = $economy->members()->user($this)->firstOrFail();
 
         // Create the wallet
-        return $economy_member->wallets()->create([
-            'user_id' => $this->id,
-            'economy_id' => $economy->id,
-            'name' => $name ?? __('pages.wallets.nameDefault'),
-            'currency_id' => $currency_id,
-        ]);
+        return $economy_member->createWallet($currency_id, $name);
     }
 
     /**
