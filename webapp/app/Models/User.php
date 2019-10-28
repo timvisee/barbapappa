@@ -401,7 +401,7 @@ class User extends Model implements HasLocalePreference {
         //       is, or is the user wallet list already sorted?
 
         // Get the wallet with the biggest balance
-        return $economy->userWallets($this)->first();
+        return $economy->members()->user($user)->wallets()->first();
     }
 
     /**
@@ -428,8 +428,10 @@ class User extends Model implements HasLocalePreference {
             return null;
         }
 
-        // Get all user wallets
-        $wallets = $economy->userWallets($this)->get();
+        // Get the economy member and fetch all user wallets
+        $user = barauth()->getUser();
+        $economy_member = $economy->members()->user($this)->first();
+        $wallets = $economy_member->wallets ?? collect();
 
         // Find and return an existing wallet for any of the currencies in order
         $wallet = $econ_currencies
@@ -471,7 +473,16 @@ class User extends Model implements HasLocalePreference {
      */
     // TODO: move this somewhere else?
     public function createWallet(Economy $economy, int $currency_id, $name = null) {
-        return $this->wallets()->create([
+        // The user must be economy member
+        if(!$economy->isJoined($this))
+            $economy->join($this);
+
+        // Get the economy member
+        $economy_member = $economy->members()->user($this)->firstOrFail();
+
+        // Create the wallet
+        return $economy_member->wallets()->create([
+            'user_id' => $this->id,
             'economy_id' => $economy->id,
             'name' => $name ?? __('pages.wallets.nameDefault'),
             'currency_id' => $currency_id,

@@ -86,38 +86,6 @@ class Economy extends Model {
         return $this->hasMany(Wallet::class);
     }
 
-    /**
-     * Get a relation to the wallets created by the current logged in user in
-     * this economy.
-     *
-     * @param User|null [$user=null] The user, null to use the currently
-     *      authenticated user.
-     * @param bool [$sort=true] True to sort by relevance, yielding the most
-     *      relevant wallet first.
-     *
-     * @return A relation to the user wallets.
-     */
-    public function userWallets($user = null, $sort = true) {
-        // Use the currently authenticated user if null
-        if($user == null)
-            $user = barauth()->getUser();
-
-        // TODO: put primary wallet first
-        // TODO: properly sort here!
-
-        // Get the wallets and return
-        $query = $this
-            ->wallets()
-            ->where('user_id', $user->id);
-
-        // Sort by balance for now
-        if($sort)
-            $query = $query
-                ->orderBy('balance', 'DESC');
-
-        return $query;
-    }
-
     // /**
     //  * Get all the transactions that took place in this economy.
     //  *
@@ -235,8 +203,12 @@ class Economy extends Model {
      *      code and whether the value is approximate.
      */
     public function calcBalance() {
+        // Get the user and economy member if available
+        $user = barauth()->getUser();
+        $economy_member = $this->members()->user($user)->first();
+
         // Obtain the wallets, return zero with default currency if none
-        $wallets = $this->userWallets()->with('currency')->get();
+        $wallets = $economy_member != null ? $economy_member->wallets()->with('currency')->get() : collect();
         if($wallets->isEmpty())
             return [0, config('currency.default'), false];
 
@@ -274,8 +246,17 @@ class Economy extends Model {
      * @return boolean True if the user has a wallet, false if not.
      */
     public function userHasBalance() {
-        return $this
-            ->userWallets()
+        // Get the user and economy member if available
+        $user = barauth()->getUser();
+        $economy_member = $this->members()->user($user)->first();
+
+        // Return if user is not an economy member
+        if($economy_member == null)
+            return false;
+
+        // Count any wallets with non-zero balance
+        return $economy_member
+            ->wallets()
             ->where('balance', '<>', 0)
             ->limit(1)
             ->count() > 0;

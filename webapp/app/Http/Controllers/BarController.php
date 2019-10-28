@@ -1028,12 +1028,14 @@ class BarController extends Controller {
     static function userCurrencies($bar, $user) {
         // TODO: optimize queries here!
 
-        // Select the user
+        // Select the user, get the economy and economy member
         if($user === null)
             $user = barauth()->getUser();
+        $economy = $bar->economy;
+        $economy_member = $economy->members()->user($user)->firstOrFail();
 
         // Get the user wallets, sort by preferred
-        $wallets = $bar->economy->userWallets($user)->get();
+        $wallets = $economy_member->wallets;
         $currencies = $wallets
             ->map(function($w) use($bar) {
                 return $bar

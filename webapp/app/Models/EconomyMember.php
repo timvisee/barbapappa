@@ -55,6 +55,18 @@ class EconomyMember extends Pivot {
     }
 
     /**
+     * Scope to a specific user.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param User $user The user.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUser($query, User $user) {
+        return $query->where('user_id', $user->id);
+    }
+
+    /**
      * Get the member economy.
      *
      * @return Economy The economy.
