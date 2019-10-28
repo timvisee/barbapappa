@@ -734,7 +734,7 @@ class BarController extends Controller {
             ->first();
 
         // Get or create a wallet for the user, get the price
-        $wallet = $economy_member->getOrCreateWallet($bar->economy, $currencies);
+        $wallet = $economy_member->getOrCreateWallet($currencies);
         $currency = $wallet->currency;
         $price = $product
             ->prices
