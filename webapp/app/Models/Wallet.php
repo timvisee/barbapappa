@@ -19,10 +19,17 @@ use App\Utils\EmailRecipient;
  * This represents a user wallet in an economy.
  *
  * @property int id
+ * @property int economy_member_id
+ * @property-read EconomyMember economy_member
  * @property int economy_id
+ * @property-read Economy economy
+ * @property int user_id
+ * @property-read User user
  * @property string name
  * @property decimal balance
  * @property int currency_id
+ * @property-read Currency currency
+ * @property-read Currency economy_currency
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -33,10 +40,20 @@ class Wallet extends Model {
     protected $table = 'wallets';
 
     protected $fillable = [
+        'user_id',
         'economy_id',
         'name',
         'currency_id',
     ];
+
+    /**
+     * Get the economy member this wallet model is from.
+     *
+     * @return The economy member.
+     */
+    public function economyMember() {
+        return $this->belongsTo(EconomyMember::class);
+    }
 
     /**
      * Get the user this wallet model is from.

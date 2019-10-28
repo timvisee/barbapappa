@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property-read Economy economy
  * @property int user_id
  * @property-read user
+ * @property-read wallets
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -69,5 +70,16 @@ class EconomyMember extends Pivot {
      */
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the wallets that belong to this member.
+     *
+     * @return Relation to the member wallets.
+     */
+    public function wallets() {
+        return $this
+            ->hasMany(Wallet::class, 'economy_member_id')
+            ->orderBy('balance', 'DESC');
     }
 }
