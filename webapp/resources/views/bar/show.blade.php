@@ -137,7 +137,7 @@
                         @include('includes.humanTimeDiff', ['time' => $productMutation->updated_at ?? $productMutation->created_at, 'short' => true])
                     </span>
 
-                @if($linkTransaction)
+                @if($linkTransaction || $linkProduct)
                     </a>
                 @else
                     </div>
