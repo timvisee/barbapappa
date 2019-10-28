@@ -405,54 +405,6 @@ class User extends Model implements HasLocalePreference {
     }
 
     /**
-     * Get a wallet for this user in the given economy, that uses any of the
-     * given currencies. This attempts to find a wallet for each currency in
-     * order, and returns it if one is found.
-     *
-     * If no wallet is found, one will be created automatically using the first
-     * currency that allows this.
-     * Null is only returned if no wallet could be created.
-     *
-     * @param Economy $economy The wallet economy.
-     * @param [EconomyCurrency] $econ_currencies A list of EconomyCurrency IDs.
-     * @param bool [$error=true] True to throw an error if no wallet was found
-     *      or created. False to return null instead.
-     *
-     * @return Wallet|null The primary wallet, or null if there is none.
-     */
-    // TODO: this has been moved to EconomyManager, refactor usages
-    public function getOrCreateWallet(Economy $economy, $econ_currencies, $error = true) {
-        // The user must be economy member, get the economy member
-        if(!$economy->isJoined($this))
-            $economy->join($this);
-        $economy_member = $economy->members()->user($this)->firstOrFail();
-
-        // Route call to economy manager
-        return $economy_member->getOrCreateWallet($econ_currencies, $error);
-    }
-
-    /**
-     * Create a new wallet for the user.
-     *
-     * @param Economy $economy The economy to create the wallet in.
-     * @param int $currency_id The ID of the currency this wallet uses.
-     * @param string|null [$name=null] The name of the wallet, or null to use
-     *      the default.
-     *
-     * @return Wallet The created wallet.
-     */
-    // TODO: this has been moved to economy manager, refactor usages
-    public function createWallet(Economy $economy, int $currency_id, $name = null) {
-        // The user must be economy member, get the economy member
-        if(!$economy->isJoined($this))
-            $economy->join($this);
-        $economy_member = $economy->members()->user($this)->firstOrFail();
-
-        // Create the wallet
-        return $economy_member->createWallet($currency_id, $name);
-    }
-
-    /**
      * Get the email recipients for this user.
      *
      * @param string [$email] Optional email address to use exclusively. If none

@@ -687,8 +687,12 @@ class BarController extends Controller {
     // TODO: merges with recent product transactions
     // TODO: returns [transaction, currency, price]
     function quickBuyProduct(Bar $bar, $product) {
-        // Get some parameters
+        // Get the user, and economy member
         $user = barauth()->getUser();
+        $economy = $bar->economy;
+        if(!$economy->isJoined($user))
+            $economy->join($user);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
 
         // Build a list of preferred currencies for the user, filter currencies
         // with no price
@@ -730,7 +734,7 @@ class BarController extends Controller {
             ->first();
 
         // Get or create a wallet for the user, get the price
-        $wallet = $user->getOrCreateWallet($bar->economy, $currencies);
+        $wallet = $economy_member->getOrCreateWallet($bar->economy, $currencies);
         $currency = $wallet->currency;
         $price = $product
             ->prices
