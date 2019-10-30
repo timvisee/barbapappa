@@ -38,7 +38,7 @@ use App\Utils\EmailRecipient;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class Wallet extends Model {
+class BalanceImportChange extends Model {
 
     protected $table = 'balance_import_change';
 
@@ -89,40 +89,5 @@ class Wallet extends Model {
      */
     public function reviewer() {
         return $this->belongsTo(User::class, 'reviewer_id');
-    }
-
-    /**
-     * Get a relation to the mutation for the committed change in the user
-     * wallet, if this change has been committed.
-     *
-     * @return Relation to mutation.
-     */
-    public function mutation() {
-        return $this->belongsTo(Mutation::class);
-    }
-
-    /**
-     * Format the final balance at the time this change was snapshotted.
-     * This is the user balance on the external system we imported from.
-     *
-     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
-     *
-     * @return string|null Formatted balance.
-     */
-    public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
-        if($this->balance == null)
-            return null;
-        return $this->currency->formatAmount($this->balance, $format);
-    }
-
-    /**
-     * Format the cost of this change.
-     *
-     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The cost formatting type.
-     *
-     * @return string Formatted cost.
-     */
-    public function formatCost($format = BALANCE_FORMAT_PLAIN) {
-        return $this->currency->formatAmount($this->cost, $format);
     }
 }
