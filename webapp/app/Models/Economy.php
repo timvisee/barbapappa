@@ -86,6 +86,16 @@ class Economy extends Model {
         return $this->hasMany(Wallet::class);
     }
 
+    /**
+     * Get a relation to all configured balance import systems linked to this
+     * economy.
+     *
+     * @return List of balance import systems.
+     */
+    public function balanceImportSystems() {
+        return $this->hasMany(BalanceImportSystem::class);
+    }
+
     // /**
     //  * Get all the transactions that took place in this economy.
     //  *
