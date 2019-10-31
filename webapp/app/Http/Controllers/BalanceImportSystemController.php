@@ -18,8 +18,7 @@ class BalanceImportSystemController extends Controller {
      * @return Response
      */
     public function index(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the systems
-        $user = barauth()->getUser();
+        // Get the community, economy and systems
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $systems = $economy->BalanceImportSystems;
@@ -35,8 +34,7 @@ class BalanceImportSystemController extends Controller {
      * @return Response
      */
     public function create(Request $request, $communityId, $economyId) {
-        // Get the user, community
-        $user = barauth()->getUser();
+        // Get the community and economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
@@ -57,8 +55,7 @@ class BalanceImportSystemController extends Controller {
             'name' => 'required|' . ValidationDefaults::NAME,
         ]);
 
-        // Get the user, community
-        $user = barauth()->getUser();
+        // Get the community and economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
@@ -83,8 +80,7 @@ class BalanceImportSystemController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $systemId) {
-        // Get the user, community, find the system
-        $user = barauth()->getUser();
+        // Get the community, economy, find the system, list events
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
@@ -100,8 +96,7 @@ class BalanceImportSystemController extends Controller {
      * @return Response
      */
     public function edit($communityId, $economyId, $systemId) {
-        // Get the user, community, find the system
-        $user = barauth()->getUser();
+        // Get the community, economy, find the system
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
@@ -124,8 +119,7 @@ class BalanceImportSystemController extends Controller {
             'name' => 'required|' . ValidationDefaults::NAME,
         ]);
 
-        // Get the user, community, find the system
-        $user = barauth()->getUser();
+        // Get the community, economy, find the system
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
@@ -150,8 +144,7 @@ class BalanceImportSystemController extends Controller {
      * @return Response
      */
     public function delete($communityId, $economyId, $systemId) {
-        // Get the user, community, economy, find the system
-        $user = barauth()->getUser();
+        // Get the community, economy, find the system
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
@@ -177,8 +170,7 @@ class BalanceImportSystemController extends Controller {
      * @return Response
      */
     public function doDelete(Request $request, $communityId, $economyId, $systemId) {
-        // Get the user, community, economy, find the system
-        $user = barauth()->getUser();
+        // Get the community, economy, find the system
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);

@@ -340,6 +340,31 @@ return [
     ],
 
     /**
+     * Balance import event pages.
+     */
+    'balanceImportEvent' => [
+        'title' => 'Balansimportgebeurtenissen',
+        'event' => 'Gebeurtenis',
+        'events' => 'Gebeurtenissen',
+        'noEvents' => 'Geen gebeurtenissen...',
+        'events#' => '{0} Geen gebeurtenissen|{1} Gebeurtenis|[2,*] :count gebeurtenissen',
+        'manageEvent' => 'Beheer gebeurtenis',
+        'manageEvents' => 'Beheer gebeurtenissen',
+        'namePlaceholder' => '2019 Januari',
+        'newEvent' => 'Gebeurtenis toevoegen',
+        'editEvent' => 'Gebeurtenis aanpassen',
+        'deleteEvent' => 'Gebeurtenis verwijderen',
+        'created' => 'De balansimportgebeurtenis is aangemaakt.',
+        'changed' => 'De balansimportgebeurtenis is opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt deze balansimportgebeurtenis te verwijderen. Hiermee verwijder je ook alle geïmporteerde data. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'De balansimportgebeurtenis is verwijderd.',
+        'cannotDeleteHasChanges' => 'Kan deze gebeurtenis niet verwijderen, omdat het geimporteerde aanpassingen',
+        'backToEvents' => 'Terug naar gebeurtenissen',
+        'viewEvent' => 'Gebeurtenis bekijken',
+        'unknownEvent' => 'Onbekende gebeurtenis',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppBunqAccountController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\BalanceImportEventController;
 use App\Http\Controllers\BalanceImportSystemController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
@@ -290,7 +291,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     });
                 });
 
-                // Balance imports, require view perms
+                // Balance import systems, require view perms
                 Route::prefix('/imports')->middleware(BalanceImportSystemController::permsView()->middleware())->group(function() {
                     // Index
                     Route::get('/', 'BalanceImportSystemController@index')->name('community.economy.balanceimport.index');
@@ -312,6 +313,32 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::put('/edit', 'BalanceImportSystemController@doEdit')->name('community.economy.balanceimport.doEdit');
                             Route::get('/delete', 'BalanceImportSystemController@delete')->name('community.economy.balanceimport.delete');
                             Route::delete('/delete', 'BalanceImportSystemController@doDelete')->name('community.economy.balanceimport.doDelete');
+                        });
+
+                        // Balance import events, require view perms
+                        Route::prefix('/events')->middleware(BalanceImportEventController::permsView()->middleware())->group(function() {
+                            // Index
+                            Route::get('/', 'BalanceImportEventController@index')->name('community.economy.balanceimport.event.index');
+
+                            // Create, require manage perms
+                            Route::middleware(BalanceImportEventController::permsManage()->middleware())->group(function() {
+                                Route::get('/create', 'BalanceImportEventController@create')->name('community.economy.balanceimport.event.create');
+                                Route::post('/create', 'BalanceImportEventController@doCreate')->name('community.economy.balanceimport.event.doCreate');
+                            });
+
+                            // Specific
+                            Route::prefix('/{eventId}')->group(function() {
+                                // Show
+                                Route::get('/', 'BalanceImportEventController@show')->name('community.economy.balanceimport.event.show');
+
+                                // Edit/delete, require manager perms
+                                Route::middleware(BalanceImportEventController::permsManage()->middleware())->group(function() {
+                                    Route::get('/edit', 'BalanceImportEventController@edit')->name('community.economy.balanceimport.event.edit');
+                                    Route::put('/edit', 'BalanceImportEventController@doEdit')->name('community.economy.balanceimport.event.doEdit');
+                                    Route::get('/delete', 'BalanceImportEventController@delete')->name('community.economy.balanceimport.event.delete');
+                                    Route::delete('/delete', 'BalanceImportEventController@doDelete')->name('community.economy.balanceimport.event.doDelete');
+                                });
+                            });
                         });
                     });
                 });

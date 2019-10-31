@@ -1,0 +1,235 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Validator;
+
+use App\Helpers\ValidationDefaults;
+
+class BalanceImportEventController extends Controller {
+
+    /**
+     * Balance import event index page.
+     * This shows a list of registered balance import event for a balance import
+     * system.
+     *
+     * @return Response
+     */
+    public function index(Request $request, $communityId, $economyId, $systemId) {
+        // Get the community, economy, system and events
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $events = $system->events;
+
+        return view('community.economy.balanceimport.event.index')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('events', $events);
+    }
+
+    /**
+     * Balance import event creation page.
+     *
+     * @return Response
+     */
+    public function create(Request $request, $communityId, $economyId, $systemId) {
+        // Get the community, economy and find the system
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+
+        return view('community.economy.balanceimport.event.create')
+            ->with('economy', $economy)
+            ->with('system', $system);
+    }
+
+    /**
+     * Balance import event create endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doCreate(Request $request, $communityId, $economyId, $systemId) {
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
+
+        // Get the user, community
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+
+        // Create the balance import event
+        $event = $system->events()->create([
+            'name' => $request->input('name'),
+        ]);
+
+        // Redirect to the show view after creation
+        return redirect()
+            ->route('community.economy.balanceimport.event.show', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+                'eventId' => $event->id,
+            ])
+            ->with('success', __('pages.balanceImportEvent.created'));
+    }
+
+    /**
+     * Show a balance import event.
+     *
+     * @return Response
+     */
+    public function show($communityId, $economyId, $systemId, $eventId) {
+        // Get the community, economy, find the system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+
+        return view('community.economy.balanceimport.event.show')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event);
+    }
+
+    /**
+     * Edit a balance import event.
+     *
+     * @return Response
+     */
+    public function edit($communityId, $economyId, $systemId, $eventId) {
+        // Get the community, economy, find the system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+
+        return view('community.economy.balanceimport.event.edit')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event);
+    }
+
+    /**
+     * Balance import event update endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doEdit(Request $request, $communityId, $economyId, $systemId, $eventId) {
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
+
+        // Get the community, economy, find the system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+
+        // Update the properties
+        $event->name = $request->input('name');
+        $event->save();
+
+        // Redirect to the show view
+        return redirect()
+            ->route('community.economy.balanceimport.event.show', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+                'eventId' => $event->id,
+            ])
+            ->with('success', __('pages.balanceImportEvent.changed'));
+    }
+
+    /**
+     * Page for confirming the deletion of balance import event.
+     *
+     * @return Response
+     */
+    public function delete($communityId, $economyId, $systemId, $eventId) {
+        // Get the community, economy, find the system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+
+        // Do not allow deleting if there's any change
+        if($event->changes()->limit(1)->count() > 0)
+            return redirect()
+                ->route('community.economy.balanceimport.event.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                    'eventId' => $event->id,
+                ])
+                ->with('error', __('pages.balanceImportEvent.cannotDeleteHasChanges'));
+
+        return view('community.economy.balanceimport.event.delete')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event);
+    }
+
+    /**
+     * Delete the balance import event.
+     *
+     * @return Response
+     */
+    public function doDelete(Request $request, $communityId, $economyId, $systemId, $eventId) {
+        // Get the community, economy, find the system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+
+        // Do not allow deleting if there's any change
+        if($event->changes()->limit(1)->count() > 0)
+            return redirect()
+                ->route('community.economy.balanceimport.event.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                    'eventId' => $event->id,
+                ])
+                ->with('error', __('pages.balanceImportEvent.cannotDeleteHasChanges'));
+
+        // Delete the event
+        $event->delete();
+
+        // Redirect to the index page after deleting
+        return redirect()
+            ->route('community.economy.balanceimport.event.index', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+            ])
+            ->with('success', __('pages.balanceImportEvent.deleted'));
+    }
+
+    /**
+     * The permission required for viewing.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsView() {
+        return EconomyController::permsView();
+    }
+
+    /**
+     * The permission required for managing such as editing and deleting.
+     * @return PermsConfig The permission configuration.
+     */
+    public static function permsManage() {
+        return EconomyController::permsManage();
+    }
+}

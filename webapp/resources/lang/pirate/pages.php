@@ -340,6 +340,31 @@ return [
     ],
 
     /**
+     * Balance import event pages.
+     */
+    'balanceImportEvent' => [
+        'title' => 'Booty import events',
+        'event' => 'Event',
+        'events' => 'Events',
+        'noEvents' => 'Nay events...',
+        'events#' => '{0} Nay events|{1} Event|[2,*] :count events',
+        'manageEvent' => 'Manage event',
+        'manageEvents' => 'Manage events',
+        'namePlaceholder' => '2019 January',
+        'newEvent' => 'Add event',
+        'editEvent' => 'Edit event',
+        'deleteEvent' => 'Delete event',
+        'created' => 'The booty import event be added.',
+        'changed' => 'The booty import event be changed.',
+        'deleteQuestion' => 'Yer \'bout to sink dis booty import event. Dis will sink all related imports. Ye be sure ye want to continue?',
+        'deleted' => 'The booty import event be sunk.',
+        'cannotDeleteHasChanges' => 'Nay delete dis event, because it has imported changes',
+        'backToEvents' => 'Back to events',
+        'viewEvent' => 'View event',
+        'unknownEvent' => 'Unknown event',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [

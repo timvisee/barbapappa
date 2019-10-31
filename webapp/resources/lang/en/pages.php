@@ -340,6 +340,31 @@ return [
     ],
 
     /**
+     * Balance import event pages.
+     */
+    'balanceImportEvent' => [
+        'title' => 'Balance import events',
+        'event' => 'Event',
+        'events' => 'Events',
+        'noEvents' => 'No events...',
+        'events#' => '{0} No events|{1} Event|[2,*] :count events',
+        'manageEvent' => 'Manage event',
+        'manageEvents' => 'Manage events',
+        'namePlaceholder' => '2019 January',
+        'newEvent' => 'Add event',
+        'editEvent' => 'Edit event',
+        'deleteEvent' => 'Delete event',
+        'created' => 'The balance import event has been added.',
+        'changed' => 'The balance import event has been changed.',
+        'deleteQuestion' => 'You\'re about to delete this balance import event. This will delete all related imports with it. Are you sure you want to continue?',
+        'deleted' => 'The balance import event has been deleted.',
+        'cannotDeleteHasChanges' => 'Cannot delete this event, because it has imported changes',
+        'backToEvents' => 'Back to events',
+        'viewEvent' => 'View event',
+        'unknownEvent' => 'Unknown event',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
