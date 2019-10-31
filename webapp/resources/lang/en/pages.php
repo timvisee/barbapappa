@@ -315,6 +315,31 @@ return [
     ],
 
     /**
+     * Balance import system pages.
+     */
+    'balanceImport' => [
+        'title' => 'Balance import systems',
+        'system' => 'System',
+        'systems' => 'Systems',
+        'noSystems' => 'No systems...',
+        'systems#' => '{0} No systems|{1} System|[2,*] :count systems',
+        'manageSystem' => 'Manage system',
+        'manageSystems' => 'Manage systems',
+        'namePlaceholder' => 'Our paper system',
+        'newSystem' => 'Add system',
+        'editSystem' => 'Edit system',
+        'deleteSystem' => 'Delete system',
+        'created' => 'The balance import system has been added.',
+        'changed' => 'The balance import system has been changed.',
+        'deleteQuestion' => 'You\'re about to delete this balance import system. This will delete all related imports with it. Are you sure you want to continue?',
+        'deleted' => 'The balance import system has been deleted.',
+        'cannotDeleteHasEvents' => 'Cannot delete this system, because it has import events',
+        'backToSystems' => 'Back to systems',
+        'viewSystem' => 'View system',
+        'unknownSystem' => 'Unknown system',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [

@@ -21,7 +21,7 @@ class CreateBalanceImportEventTable extends Migration {
             $table->foreign('system_id')
                 ->references('id')
                 ->on('balance_import_system')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
         });
     }
 

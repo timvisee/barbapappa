@@ -315,6 +315,31 @@ return [
     ],
 
     /**
+     * Balance import system pages.
+     */
+    'balanceImport' => [
+        'title' => 'Booty import systems',
+        'system' => 'System',
+        'systems' => 'Systems',
+        'noSystems' => 'Nay systems...',
+        'systems#' => '{0} Nay systems|{1} System|[2,*] :count systems',
+        'manageSystem' => 'Manage system',
+        'manageSystems' => 'Manage systems',
+        'namePlaceholder' => 'Our paper system',
+        'newSystem' => 'Add system',
+        'editSystem' => 'Edit system',
+        'deleteSystem' => 'Delete system',
+        'created' => 'The booty import system be added.',
+        'changed' => 'The booty import system be changed.',
+        'deleteQuestion' => 'Yer \'bout to sink dis booty import system. Dis will sink all related imports. Ye be sure ye want to continue?',
+        'deleted' => 'The booty import system be sunk.',
+        'cannotDeleteHasEvents' => 'Nay delete dis system, because it has import events',
+        'backToSystems' => 'Back to systems',
+        'viewSystem' => 'View system',
+        'unknownSystem' => 'Unknown system',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [

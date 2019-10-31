@@ -28,6 +28,10 @@ class BalanceImportSystem extends Model {
 
     protected $table = 'balance_import_system';
 
+    protected $fillable = [
+        'name',
+    ];
+
     /**
      * Get a relation to the economy this import is part of.
      *
@@ -44,6 +48,6 @@ class BalanceImportSystem extends Model {
      * @return Relation to the events.
      */
     public function events() {
-        return $this->hasMany(BalanceImportEvent::class);
+        return $this->hasMany(BalanceImportEvent::class, 'system_id');
     }
 }

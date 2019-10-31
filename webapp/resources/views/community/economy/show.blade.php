@@ -89,6 +89,14 @@
                 class="ui button basic">
             @lang('pages.paymentService.manageServices')
         </a>
+
+        <a href="{{ route('community.economy.balanceimport.index', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id
+                ]) }}"
+                class="ui button basic">
+            @lang('pages.balanceImport.manageSystems')
+        </a>
     </p>
 
     @if(perms(EconomyCurrencyController::permsView()))

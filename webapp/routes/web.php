@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppBunqAccountController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\BalanceImportSystemController;
 use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
@@ -285,6 +286,32 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             // Route::put('/restore', 'PaymentServiceController@doRestore')->name('community.economy.payservice.doRestore');
                             Route::get('/delete', 'PaymentServiceController@delete')->name('community.economy.payservice.delete');
                             Route::delete('/delete', 'PaymentServiceController@doDelete')->name('community.economy.payservice.doDelete');
+                        });
+                    });
+                });
+
+                // Balance imports, require view perms
+                Route::prefix('/imports')->middleware(BalanceImportSystemController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'BalanceImportSystemController@index')->name('community.economy.balanceimport.index');
+
+                    // Create, require manage perms
+                    Route::middleware(BalanceImportSystemController::permsManage()->middleware())->group(function() {
+                        Route::get('/create', 'BalanceImportSystemController@create')->name('community.economy.balanceimport.create');
+                        Route::post('/create', 'BalanceImportSystemController@doCreate')->name('community.economy.balanceimport.doCreate');
+                    });
+
+                    // Specific
+                    Route::prefix('/{systemId}')->group(function() {
+                        // Show
+                        Route::get('/', 'BalanceImportSystemController@show')->name('community.economy.balanceimport.show');
+
+                        // Edit/delete, require manager perms
+                        Route::middleware(BalanceImportSystemController::permsManage()->middleware())->group(function() {
+                            Route::get('/edit', 'BalanceImportSystemController@edit')->name('community.economy.balanceimport.edit');
+                            Route::put('/edit', 'BalanceImportSystemController@doEdit')->name('community.economy.balanceimport.doEdit');
+                            Route::get('/delete', 'BalanceImportSystemController@delete')->name('community.economy.balanceimport.delete');
+                            Route::delete('/delete', 'BalanceImportSystemController@doDelete')->name('community.economy.balanceimport.doDelete');
                         });
                     });
                 });

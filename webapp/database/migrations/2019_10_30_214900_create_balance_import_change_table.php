@@ -29,11 +29,11 @@ class CreateBalanceImportChangeTable extends Migration {
             $table->foreign('event_id')
                 ->references('id')
                 ->on('balance_import_event')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->foreign('alias_id')
                 ->references('id')
                 ->on('balance_import_alias')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->foreign('creator_id')
                 ->references('id')
                 ->on('users')

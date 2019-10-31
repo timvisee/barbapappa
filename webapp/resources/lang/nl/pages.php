@@ -315,6 +315,31 @@ return [
     ],
 
     /**
+     * Balance import system pages.
+     */
+    'balanceImport' => [
+        'title' => 'Balansimportsystemen',
+        'system' => 'Systeem',
+        'systems' => 'Systemen',
+        'noSystems' => 'Geen systemen...',
+        'systems#' => '{0} Geen systemen|{1} Systeem|[2,*] :count systemen',
+        'manageSystem' => 'Beheer systeem',
+        'manageSystems' => 'Beheer systemen',
+        'namePlaceholder' => 'Ons systeem op papier',
+        'newSystem' => 'Systeem toevoegen',
+        'editSystem' => 'Systeem aanpassen',
+        'deleteSystem' => 'Systeem verwijderen',
+        'created' => 'Het balansimportsysteem is aangemaakt.',
+        'changed' => 'Het balansimportsysteem is opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt dit balansimportsysteem te verwijderen. Hiermee verwijder je ook alle gerelateerde geïmporteerde data. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'Het balansimportsysteem is verwijderd.',
+        'cannotDeleteHasEvents' => 'Kan dit systeme niet verwijderen, omdat het gebeurtenissen heeft',
+        'backToSystems' => 'Terug naar systemen',
+        'viewSystem' => 'Systeem bekijken',
+        'unknownSystem' => 'Onbekende systeem',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
