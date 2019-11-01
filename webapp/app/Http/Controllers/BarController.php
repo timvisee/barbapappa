@@ -430,7 +430,7 @@ class BarController extends Controller {
             // Leave the bar
             $bar->leave($user);
 
-            // Leave economy if not bar member anymore
+            // Leave economy if not bar member anymore and if member has no balance import alias
             if($economy->isJoined($user)) {
                 $barIds = $economy
                     ->bars()
@@ -440,7 +440,8 @@ class BarController extends Controller {
                     ->where('user_id', $user->id)
                     ->limit(1)
                     ->count() > 0;
-                if(!$memberInEconomyBars)
+                $memberHasAlias = $economy->members()->user($user)->firstOrFail()->alias_id != null;
+                if(!$memberHasAlias && !$memberInEconomyBars)
                     $economy->leave($user);
             }
 
@@ -593,8 +594,9 @@ class BarController extends Controller {
 
         // Set and limit fields to repsond with
         $members = $members->map(function($m) use($economy_member) {
-            // TODO: show member nickname or place holder name if null user
-            $m->name = $m->user->first_name . ' ' . $m->user->last_name;
+            $m->name = $m->user != null
+                ? $m->user->first_name . ' ' . $m->user->last_name
+                : $m->alias->name;
             $m->me = $m->id == $economy_member->id;
             return $m->only(['id', 'name', 'me']);
         });

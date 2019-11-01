@@ -114,6 +114,18 @@ class BalanceImportAlias extends Model {
             'email' => $email,
         ]);
 
+        // If there's are registered user, he must join economy, always link alias
+        if($user != null) {
+            if(!$economy->isJoined($user))
+                $economy->join($user);
+            $economy_member = $economy->members()->user($user)->firstOrFail();
+            $economy_member->alias_id = $alias->id;
+            $economy_member->save();
+        } else
+            $economy->members()->create([
+                'alias_id' => $alias->id,
+            ]);
+
         // TODO: create/link economy user for this alias
 
         return $alias;

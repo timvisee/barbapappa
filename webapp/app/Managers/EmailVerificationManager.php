@@ -4,8 +4,9 @@ namespace App\Managers;
 
 use App\Mail\Email\Verified;
 use App\Mail\Email\Verify;
-use App\Models\Email;
 use App\Models\BalanceImportAlias;
+use App\Models\EconomyMember;
+use App\Models\Email;
 use App\Models\EmailVerification;
 use App\Utils\EmailRecipient;
 use App\Utils\TokenGenerator;
@@ -116,9 +117,12 @@ class EmailVerificationManager {
         $email->verified_ip = Request::ip();
         $email->save();
 
-        // Link user to balance import aliasses
+        // Link user to balance import aliasses and to alias economy members
         BalanceImportAlias::where('email', $email->email)
             ->update(['user_id' => $email->user_id]);
+        $aliases = BalanceImportAlias::where('email', $email->email)->get();
+        foreach($aliases as $alias)
+            EconomyMember::where('alias_id', $alias->id)->update(['user_id' => $email->user_id]);
 
         try {
             // If the user only has one verified email address, send a success and welcome message

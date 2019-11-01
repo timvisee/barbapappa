@@ -16,6 +16,7 @@ class CreateEconomyMemberTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned();
             $table->integer('user_id')->unsigned();
+            $table->integer('alias_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('economy_id')
@@ -25,6 +26,10 @@ class CreateEconomyMemberTable extends Migration {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+            $table->foreign('alias_id')
+                ->references('id')
+                ->on('balance_import_alias')
                 ->onDelete('cascade');
 
             $table->unique(['economy_id', 'user_id']);

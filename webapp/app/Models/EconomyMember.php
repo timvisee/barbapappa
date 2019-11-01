@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
  * @property-read Economy economy
  * @property int user_id
  * @property-read user
+ * @property int alias_id
+ * @property-read alias
  * @property-read wallets
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -20,7 +22,9 @@ class EconomyMember extends Pivot {
 
     protected $table = 'economy_member';
 
-    protected $with = ['user'];
+    protected $with = ['user', 'alias'];
+
+    protected $fillable = ['alias_id'];
 
     /**
      * Get dynamic properties.
@@ -90,6 +94,12 @@ class EconomyMember extends Pivot {
                     if(!empty($word))
                         $query->whereExists(function($query) use($word) {
                             $query->selectRaw('1')
+                                ->from('balance_import_alias')
+                                ->whereRaw('balance_import_alias.id = economy_member.alias_id')
+                                ->where('name', 'LIKE', '%' . escape_like($word) . '%');
+                        })
+                        ->orWhereExists(function($query) use($word) {
+                            $query->selectRaw('1')
                                 ->from('users')
                                 ->whereRaw('users.id = economy_member.user_id')
                                 ->where(function($query) use($word) {
@@ -116,6 +126,15 @@ class EconomyMember extends Pivot {
      */
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the member alias.
+     *
+     * @return BalanceImportAlias The alias.
+     */
+    public function alias() {
+        return $this->belongsTo(BalanceImportAlias::class);
     }
 
     /**
