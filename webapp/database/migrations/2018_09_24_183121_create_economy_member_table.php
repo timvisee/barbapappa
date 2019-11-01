@@ -15,8 +15,8 @@ class CreateEconomyMemberTable extends Migration {
         Schema::create('economy_member', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->integer('alias_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('alias_id')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('economy_id')
@@ -32,7 +32,7 @@ class CreateEconomyMemberTable extends Migration {
                 ->on('balance_import_alias')
                 ->onDelete('restrict');
 
-            $table->unique(['economy_id', 'user_id']);
+            $table->unique(['economy_id', 'user_id', 'alias_id']);
         });
 
     }

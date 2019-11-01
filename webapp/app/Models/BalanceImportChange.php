@@ -52,6 +52,18 @@ class BalanceImportChange extends Model {
         'submitter_id',
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        // Cascade delete to import alias if it's not linked to other changes
+        static::deleted(function($model) {
+            $alias = $model->alias;
+            $hasOtherChanges = $alias->changes()->limit(1)->count() > 0;
+            if(!$hasOtherChanges)
+                $alias->delete();
+        });
+    }
+
     /**
      * A scope to limit to changes only accepted or not accepted.
      */

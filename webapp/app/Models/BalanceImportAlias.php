@@ -46,7 +46,7 @@ class BalanceImportAlias extends Model {
         // Cascade delete to economy members if it has no linked user
         static::deleting(function($model) {
             // TODO: do this through economy member class
-            foreach($model->economyMembers as $member) {
+            foreach($model->economyMembers()->get() as $member) {
                 if($member->user_id != null) {
                     $member->alias_id = null;
                     $member->save();
@@ -71,7 +71,7 @@ class BalanceImportAlias extends Model {
      * @return Relation to the economy members.
      */
     public function economyMembers() {
-        return $this->belongsTo(EconomyMember::class);
+        return $this->hasMany(EconomyMember::class, 'alias_id');
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Models\EmailVerification;
 use App\Utils\EmailRecipient;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 
@@ -117,12 +118,26 @@ class EmailVerificationManager {
         $email->verified_ip = Request::ip();
         $email->save();
 
-        // Link user to balance import aliasses and to alias economy members
-        BalanceImportAlias::where('email', $email->email)
-            ->update(['user_id' => $email->user_id]);
-        $aliases = BalanceImportAlias::where('email', $email->email)->get();
-        foreach($aliases as $alias)
-            EconomyMember::where('alias_id', $alias->id)->update(['user_id' => $email->user_id]);
+        DB::transaction(function() use($email) {
+            // Link user to balance import aliasses and to alias economy members
+            BalanceImportAlias::where('email', $email->email)
+                ->update(['user_id' => $email->user_id]);
+            $aliases = BalanceImportAlias::where('email', $email->email)->get();
+            foreach($aliases as $alias)
+                EconomyMember::where('alias_id', $alias->id)->update(['user_id' => $email->user_id]);
+
+            // Remove duplicate member entries, which do not have alias ID set
+            EconomyMember::where('user_id', $email->user_id)
+                ->whereNull('alias_id')
+                ->whereExists(function($query) {
+                    $query->selectRaw('1')
+                        ->fromRaw('economy_member AS other')
+                        ->whereRaw('economy_member.id != other.id')
+                        ->whereRaw('economy_member.economy_id = other.economy_id')
+                        ->whereRaw('economy_member.user_id = other.user_id');
+                })
+                ->delete();
+        });
 
         try {
             // If the user only has one verified email address, send a success and welcome message
