@@ -109,6 +109,7 @@ return [
     'me' => 'Me',
     'catalog' => 'Catalog',
     'unknownUser' => 'Unknown user',
+    'submitter' => 'Submitter',
     'accepted' => 'Accepted',
     'acceptedBy' => 'Accepted by',
     'acceptedAt' => 'Accepted at',

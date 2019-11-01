@@ -109,6 +109,7 @@ return [
     'me' => 'Ikzelf',
     'catalog' => 'Catalogus',
     'unknownUser' => 'Onbekende gebruiker',
+    'submitter' => 'Indiener',
     'accepted' => 'Geaccepteerd',
     'acceptedBy' => 'Geaccepteerd door',
     'acceptedAt' => 'Geaccepteerd om',
