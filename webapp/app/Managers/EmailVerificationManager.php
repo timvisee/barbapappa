@@ -99,7 +99,7 @@ class EmailVerificationManager {
             return new EmailVerifyResult(EmailVerifyResult::ERR_NO_TOKEN);
 
         // Get the email verification instance, make sure it's valid
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
+        /* @noinspection PhpDynamicAsStaticMethodCallInspection */
         $verification = EmailVerification::where('token', '=', trim($token))->first();
         if($verification == null)
             return new EmailVerifyResult(EmailVerifyResult::ERR_INVALID_TOKEN);
@@ -118,7 +118,7 @@ class EmailVerificationManager {
 
         // Link user to balance import aliasses
         BalanceImportAlias::where('email', $email->email)
-            ->update('user_id', $email->user_id);
+            ->update(['user_id' => $email->user_id]);
 
         try {
             // If the user only has one verified email address, send a success and welcome message
@@ -130,7 +130,6 @@ class EmailVerificationManager {
                 // Send the mailable
                 Mail::send($mailable);
             }
-
         } catch (\Exception $e) {}
 
         // Return the result
