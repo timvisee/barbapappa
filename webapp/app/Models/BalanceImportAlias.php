@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -132,26 +133,27 @@ class BalanceImportAlias extends Model {
             $name = $user->name;
         }
 
-        // Create a new alias for this email address
-        $alias = $economy->balanceImportAliasses()->create([
-            'user_id' => $user != null ? $user->id : null,
-            'name' => $name,
-            'email' => $email,
-        ]);
-
-        // If there's are registered user, he must join economy, always link alias
-        if($user != null) {
-            if(!$economy->isJoined($user))
-                $economy->join($user);
-            $economy_member = $economy->members()->user($user)->firstOrFail();
-            $economy_member->alias_id = $alias->id;
-            $economy_member->save();
-        } else
-            $economy->members()->create([
-                'alias_id' => $alias->id,
+        $alias = null;
+        DB::transaction(function() use($economy, $user, $name, $email, &$alias) {
+            // Create a new alias for this email address
+            $alias = $economy->balanceImportAliasses()->create([
+                'user_id' => $user != null ? $user->id : null,
+                'name' => $name,
+                'email' => $email,
             ]);
 
-        // TODO: create/link economy user for this alias
+            // If there's are registered user, he must join economy, always link alias
+            if($user != null) {
+                if(!$economy->isJoined($user))
+                    $economy->join($user);
+                $economy_member = $economy->members()->user($user)->firstOrFail();
+                $economy_member->alias_id = $alias->id;
+                $economy_member->save();
+            } else
+                $economy->members()->create([
+                    'alias_id' => $alias->id,
+                ]);
+        });
 
         return $alias;
     }
