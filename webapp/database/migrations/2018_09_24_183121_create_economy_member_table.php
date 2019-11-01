@@ -26,11 +26,11 @@ class CreateEconomyMemberTable extends Migration {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
             $table->foreign('alias_id')
                 ->references('id')
                 ->on('balance_import_alias')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
 
             $table->unique(['economy_id', 'user_id']);
         });

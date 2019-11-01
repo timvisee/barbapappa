@@ -50,6 +50,22 @@ class User extends Model implements HasLocalePreference {
         'password',
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        // Cascade delete to economy members if it has no linked import alias
+        static::deleting(function($model) {
+            // TODO: do this through economy member class
+            foreach($model->economyMembers as $member) {
+                if($member->alias_id != null) {
+                    $member->user_id = null;
+                    $member->save();
+                } else
+                    $member->delete();
+            }
+        });
+    }
+
     /**
      * Get dynamic properties.
      *
@@ -185,6 +201,15 @@ class User extends Model implements HasLocalePreference {
             $query = $query->withTimestamps();
 
         return $query;
+    }
+
+    /**
+     * Get a relation to all economy members this user is.
+     *
+     * @return Relation to economy members.
+     */
+    public function economyMembers() {
+        return $this->hasMany(EconomyMember::class);
     }
 
     /**

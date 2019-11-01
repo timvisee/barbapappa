@@ -40,6 +40,22 @@ class BalanceImportAlias extends Model {
         'user_id',
     ];
 
+    public static function boot() {
+        parent::boot();
+
+        // Cascade delete to economy members if it has no linked user
+        static::deleting(function($model) {
+            // TODO: do this through economy member class
+            foreach($model->economyMembers as $member) {
+                if($member->user_id != null) {
+                    $member->alias_id = null;
+                    $member->save();
+                } else
+                    $member->delete();
+            }
+        });
+    }
+
     /**
      * Get a relation to the economy this import is part of.
      *
@@ -47,6 +63,15 @@ class BalanceImportAlias extends Model {
      */
     public function economy() {
         return $this->belongsTo(Economy::class);
+    }
+
+    /**
+     * Get a relation to the linked economy members.
+     *
+     * @return Relation to the economy members.
+     */
+    public function economyMembers() {
+        return $this->belongsTo(EconomyMember::class);
     }
 
     /**
