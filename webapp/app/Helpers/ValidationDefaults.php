@@ -92,6 +92,12 @@ class ValidationDefaults {
     const PRICE = 'regex:/^(\d{0,8}([,.]\d{1,2})?)?$/';
 
     /**
+     * A price value, with two optional decimal digits, may be negative,
+     * positive or zero.
+     */
+    const PRICE_SIGNED = 'regex:/^(-?\d{0,8}([,.]\d{1,2})?)?$/';
+
+    /**
      * A price value, with two optional decimal digits, may only be positive.
      */
     const PRICE_POSITIVE = 'regex:/^('

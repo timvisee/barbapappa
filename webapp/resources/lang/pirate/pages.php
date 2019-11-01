@@ -350,7 +350,7 @@ return [
         'events#' => '{0} Nay events|{1} Event|[2,*] :count events',
         'manageEvent' => 'Manage event',
         'manageEvents' => 'Manage events',
-        'namePlaceholder' => '2019 January',
+        'namePlaceholder' => '2019',
         'newEvent' => 'Add event',
         'editEvent' => 'Edit event',
         'deleteEvent' => 'Delete event',
@@ -362,6 +362,42 @@ return [
         'backToEvents' => 'Back to events',
         'viewEvent' => 'View event',
         'unknownEvent' => 'Unknown event',
+    ],
+
+    /**
+     * Balance import change pages.
+     */
+    'balanceImportChange' => [
+        'title' => 'Booty import changes',
+        'change' => 'Change',
+        'changes' => 'Changes',
+        'noChanges' => 'Nay changes...',
+        'changes#' => '{0} Nay changes|{1} Change|[2,*] :count changes',
+        'manageChange' => 'Manage change',
+        'manageChanges' => 'Manage changes',
+        'newChange' => 'Import change',
+        'editChange' => 'Edit change',
+        'deleteChange' => 'Delete change',
+        'created' => 'The booty import change be imported.',
+        'changed' => 'The booty import change be changed.',
+        'deleteQuestion' => 'Yer \'bout to sink dis booty import change. Any mutation in a pirate\'s wallet as a result of dis change dat be committed already nay be reverted, and th\' wallet mutation is then unlinked. Dis will sink all related imports. Ye be sure ye want to continue?',
+        'deleted' => 'The booty import change be sunk.',
+        'backToChanges' => 'Back to changes',
+        'viewChange' => 'View change',
+        'unknownChange' => 'Unknown change',
+        'finalBalance' => 'Final balance',
+        'cost' => 'Cost',
+        'enterAliasNameEmail' => 'Enter th\' name \'nd e-bottle coordinate of th\' pirate yer importing booty for. The e-bottle coordinate be used to automatically link booty to th\' wallet of a registered pirate.',
+        'selectCurrency' => 'Select th\' currency for dis import.',
+        'balanceOrCostDescription' => 'Enter either th\' final balance or cost for th\' user.<br><br>For periodic balance imports, enter th\' final balance at time of the import event in th\' final balance field. On first import, th\' final balance be fully given to th\' user. On subsequent imports th\' difference between th\' last imported balance and th\' given final balance be given to th\' user.<br><br>For a one-time cost import, fill in th\' cost field to credit th\' user. Use a negative value to give the user balance. Dis has no effect on th\' tracked balance of periodic imports for dis user.',
+        'enterBalanceOrCost' => 'Provide either th\' final balance or cost.',
+    ],
+
+    /**
+     * Balance import alias pages.
+     */
+    'balanceImportAlias' => [
+        'newAliasMustProvideName' => 'Th\' given e-bottle coordinate nay be known, ye must provide a name.',
     ],
 
     /**
@@ -472,6 +508,7 @@ return [
         'to#' => '{0} To no mutations|{1} To 1 mutation|[2,*] To :count mutations',
         'dependsOn#' => '{0} Depends on no mutations|{1} Depends on mutation|[2,*] Depends on :count mutations',
         'dependentBy#' => '{0} Dependent by no mutations|{1} Dependent by mutation|[2,*] Dependent by :count mutations',
+        'viewMutation' => 'View mutation',
         'state' => [
             'pending' => 'Pendin\'',
             'processing' => 'Processin\'',

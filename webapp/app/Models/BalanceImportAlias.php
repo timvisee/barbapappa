@@ -34,6 +34,12 @@ class BalanceImportAlias extends Model {
 
     protected $table = 'balance_import_alias';
 
+    protected $fillable = [
+        'name',
+        'email',
+        'user_id',
+    ];
+
     /**
      * Get a relation to the economy this import is part of.
      *
@@ -59,5 +65,51 @@ class BalanceImportAlias extends Model {
      */
     public function changes() {
         return $this->hasMany(BalanceImportChange::class, 'alias_id');
+    }
+
+    /**
+     * Get or create a specific user alias in the given economy for the given
+     * name and email address.
+     *
+     * If the name of the user changes over time, it is automatically updated.
+     * If the alias already exists, the name is optional and may be null.
+     *
+     * If the alias does not exist and the name is null, no alias will be
+     * created and null is returned.
+     *
+     * @param Economy $economy The economy the alias is in.
+     * @param string|null $name The name of the user.
+     * @param string $email The email address of the alias.
+     * @return BalanceImportAlias|null The balance import alias.
+     */
+    public static function getOrCreate(Economy $economy, $name, $email) {
+        // Find the alias by this email address, update it and return
+        $alias = $economy
+            ->balanceImportAliasses()
+            ->where('email', $email)
+            ->first();
+        if($alias != null) {
+            // Update the name if it has changed
+            if(!empty($name) && $alias->name != $name) {
+                $alias->name = $name;
+                $alias->save();
+            }
+
+            return $alias;
+        }
+
+        // The name must be set
+        if(empty($name))
+            return null;
+
+        // Create a new alias for this email address
+        $alias = $economy->balanceImportAliasses()->create([
+            'name' => $name,
+            'email' => $email,
+        ]);
+
+        // TODO: create/link economy user for this alias
+
+        return $alias;
     }
 }

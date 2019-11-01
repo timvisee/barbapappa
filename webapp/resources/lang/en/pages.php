@@ -365,6 +365,42 @@ return [
     ],
 
     /**
+     * Balance import change pages.
+     */
+    'balanceImportChange' => [
+        'title' => 'Balance import changes',
+        'change' => 'Change',
+        'changes' => 'Changes',
+        'noChanges' => 'No changes...',
+        'changes#' => '{0} No changes|{1} Change|[2,*] :count changes',
+        'manageChange' => 'Manage change',
+        'manageChanges' => 'Manage changes',
+        'newChange' => 'Import change',
+        'editChange' => 'Edit change',
+        'deleteChange' => 'Delete change',
+        'created' => 'The balance import change has been imported.',
+        'changed' => 'The balance import change has been changed.',
+        'deleteQuestion' => 'You\'re about to delete this balance import change. Any mutation in a user wallet as a result of this change that is already committed will not be reverted, and the wallet mutation is then unlinked. Are you sure you want to continue?',
+        'deleted' => 'The balance import change has been deleted.',
+        'backToChanges' => 'Back to changes',
+        'viewChange' => 'View change',
+        'unknownChange' => 'Unknown change',
+        'finalBalance' => 'Final balance',
+        'cost' => 'Cost',
+        'enterAliasNameEmail' => 'Enter the name and e-mail address of the user you\'re importing the balance for. The e-mail address will be used to automatically link the balance to the wallet of a registered user.',
+        'selectCurrency' => 'Select the currency for this import.',
+        'balanceOrCostDescription' => 'Enter either the final balance or cost for the user.<br><br>For periodic balance imports, enter the final balance at the time of the import event in the final balance field. On first import, the final balance is fully given to the user. On subsequent imports the difference between the last imported balance and the given final balance is given to the user.<br><br>For a one-time cost import, fill in the cost field to credit the user. Use a negative value to give the user balance. This has no effect on the tracked balance of period imports for this user.',
+        'enterBalanceOrCost' => 'Provide either the final balance or cost.',
+    ],
+
+    /**
+     * Balance import alias pages.
+     */
+    'balanceImportAlias' => [
+        'newAliasMustProvideName' => 'The given email address is not known yet, you must provide a name.',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
@@ -472,6 +508,7 @@ return [
         'to#' => '{0} To no mutations|{1} To 1 mutation|[2,*] To :count mutations',
         'dependsOn#' => '{0} Depends on no mutations|{1} Depends on mutation|[2,*] Depends on :count mutations',
         'dependentBy#' => '{0} Dependent by no mutations|{1} Dependent by mutation|[2,*] Dependent by :count mutations',
+        'viewMutation' => 'View mutation',
         'state' => [
             'pending' => 'Pending',
             'processing' => 'Processing',

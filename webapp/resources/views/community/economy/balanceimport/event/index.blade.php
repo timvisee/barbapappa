@@ -44,7 +44,7 @@
         {{-- Balance import events --}}
         @forelse($events as $event)
             <a class="item"
-                    href="{{ route('community.economy.balanceimport.event.show', [
+                    href="{{ route('community.economy.balanceimport.change.index', [
                         // TODO: this is not efficient
                         'communityId' => $system->economy->community->human_id,
                         'economyId' => $system->economy_id,

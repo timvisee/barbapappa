@@ -24,9 +24,9 @@
             @lang('misc.add')
         </button>
         <a href="{{ route('community.economy.balanceimport.index', [
-            'communityId' => $community->human_id,
-            'economyId' => $economy->id,
-        ]) }}"
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                ]) }}"
                 class="ui button basic">
             @lang('general.cancel')
         </a>

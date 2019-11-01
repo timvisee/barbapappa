@@ -318,7 +318,7 @@ return [
      * Balance import system pages.
      */
     'balanceImport' => [
-        'title' => 'Balansimportsystemen',
+        'title' => 'Saldoimportsystemen',
         'system' => 'Systeem',
         'systems' => 'Systemen',
         'noSystems' => 'Geen systemen...',
@@ -329,10 +329,10 @@ return [
         'newSystem' => 'Systeem toevoegen',
         'editSystem' => 'Systeem aanpassen',
         'deleteSystem' => 'Systeem verwijderen',
-        'created' => 'Het balansimportsysteem is aangemaakt.',
-        'changed' => 'Het balansimportsysteem is opgeslagen.',
-        'deleteQuestion' => 'Je staat op het punt dit balansimportsysteem te verwijderen. Hiermee verwijder je ook alle gerelateerde geïmporteerde data. Weet je zeker dat je door wilt gaan?',
-        'deleted' => 'Het balansimportsysteem is verwijderd.',
+        'created' => 'Het saldoimportsysteem is aangemaakt.',
+        'changed' => 'Het saldoimportsysteem is opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt dit saldoimportsysteem te verwijderen. Hiermee verwijder je ook alle gerelateerde geïmporteerde data. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'Het saldoimportsysteem is verwijderd.',
         'cannotDeleteHasEvents' => 'Kan dit systeme niet verwijderen, omdat het gebeurtenissen heeft',
         'backToSystems' => 'Terug naar systemen',
         'viewSystem' => 'Systeem bekijken',
@@ -343,7 +343,7 @@ return [
      * Balance import event pages.
      */
     'balanceImportEvent' => [
-        'title' => 'Balansimportgebeurtenissen',
+        'title' => 'Saldoimportgebeurtenissen',
         'event' => 'Gebeurtenis',
         'events' => 'Gebeurtenissen',
         'noEvents' => 'Geen gebeurtenissen...',
@@ -354,14 +354,50 @@ return [
         'newEvent' => 'Gebeurtenis toevoegen',
         'editEvent' => 'Gebeurtenis aanpassen',
         'deleteEvent' => 'Gebeurtenis verwijderen',
-        'created' => 'De balansimportgebeurtenis is aangemaakt.',
-        'changed' => 'De balansimportgebeurtenis is opgeslagen.',
-        'deleteQuestion' => 'Je staat op het punt deze balansimportgebeurtenis te verwijderen. Hiermee verwijder je ook alle geïmporteerde data. Weet je zeker dat je door wilt gaan?',
-        'deleted' => 'De balansimportgebeurtenis is verwijderd.',
+        'created' => 'De saldoimportgebeurtenis is aangemaakt.',
+        'changed' => 'De saldoimportgebeurtenis is opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt deze saldoimportgebeurtenis te verwijderen. Hiermee verwijder je ook alle geïmporteerde data. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'De saldoimportgebeurtenis is verwijderd.',
         'cannotDeleteHasChanges' => 'Kan deze gebeurtenis niet verwijderen, omdat het geimporteerde aanpassingen',
         'backToEvents' => 'Terug naar gebeurtenissen',
         'viewEvent' => 'Gebeurtenis bekijken',
         'unknownEvent' => 'Onbekende gebeurtenis',
+    ],
+
+    /**
+     * Balance import change pages.
+     */
+    'balanceImportChange' => [
+        'title' => 'Saldoimportveranderingen',
+        'change' => 'Verandering',
+        'changes' => 'Veranderingen',
+        'noChanges' => 'Geen veranderingen...',
+        'changes#' => '{0} Geen veranderingen|{1} Verandering|[2,*] :count veranderingen',
+        'manageChange' => 'Beheer verandering',
+        'manageChanges' => 'Beheer veranderingen',
+        'newChange' => 'Verandering importeren',
+        'editChange' => 'Verandering aanpassen',
+        'deleteChange' => 'Verandering verwijderen',
+        'created' => 'De saldoimportverandering is geïmporteerd.',
+        'changed' => 'De saldoimportverandering is opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt deze saldoimportverandering te verwijderen. Een mutatie in een portemonnee van een gebruiker die al toegewijd is als resultaat van deze verandering zal niet worden teruggedraaid, en de portemonnee mutatie zal dan ontkoppeld worden. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'De saldoimportverandering is verwijderd.',
+        'backToChanges' => 'Terug naar veranderingen',
+        'viewChange' => 'Verandering bekijken',
+        'unknownChange' => 'Onbekende verandering',
+        'finalBalance' => 'Eindsaldo',
+        'cost' => 'Kosten',
+        'enterAliasNameEmail' => 'Vul de naam en het e-mailadres in voor de gebruiker voor wie je saldo importeert. Het e-mailadres zal gebruikt worden om automatisch het geïmporteerde saldo te koppelen aan de portemonnee van een geregistreerde gebruiker.',
+        'selectCurrency' => 'Selecteer het valuta voor deze import.',
+        'balanceOrCostDescription' => 'Vul het eindsaldo of de kosten voor de gebruiker in.<br><br>Voor periodieke saldoimports, vul het eindsaldo op het moment van de import gebeurtenis in het eindsaldo veld in. Bij de eerste import zal het eindsaldo volledig aan de gebruiker gegeven worden. Bij opvolgende imports zal het verschil tussen het laatste geimporteerde saldo en het eindsaldo aan de gebruiker gegeven worden.<br><br>Voor een enkele kostenopgave, vul het kosten veld in om aan de gebruiker te crediteren. Gebruik een negatief getal om saldo aan de gebruiker te geven. Dit heeft geen effect op het bijgehouden saldo voor periodieke imports voor deze gebruiker.',
+        'enterBalanceOrCost' => 'Vul alleen het eindsaldo of de kosten in.',
+    ],
+
+    /**
+     * Balance import alias pages.
+     */
+    'balanceImportAlias' => [
+        'newAliasMustProvideName' => 'Het gegeven e-mailadres is nog niet bekend, dus je moet een naam specificeren.',
     ],
 
     /**
@@ -472,6 +508,7 @@ return [
         'to#' => '{0} Naar geen mutaties|{1} Naar 1 mutatie|[2,*] Naar :count mutatie',
         'dependsOn#' => '{0} Afhankelijk van geen mutaties|{1} Afhankelijk van mutatie|[2,*] Afhankelijk van :count mutaties',
         'dependentBy#' => '{0} Afhankelijk door geen mutatiese |{1} Afhankelijk door mutatie|[2,*] Afhankelijk door :count mutaties',
+        'viewMutation' => 'Bekijk mutatie',
         'state' => [
             'pending' => 'In afwachting',
             'processing' => 'Bezig met verwerken',

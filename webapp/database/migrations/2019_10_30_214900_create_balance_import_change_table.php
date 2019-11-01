@@ -16,13 +16,13 @@ class CreateBalanceImportChangeTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('event_id')->unsigned();
             $table->integer('alias_id')->unsigned();
-            $table->decimal('cost')->default('0.00')->nullable(false);
             $table->decimal('balance')->default('0.00')->nullable();
+            $table->decimal('cost')->default('0.00')->nullable();
             $table->integer('currency_id')->unsigned();
-            $table->integer('creator_id')->unsigned()->nullable();
-            $table->integer('reviewer_id')->unsigned()->nullable();
+            $table->integer('submitter_id')->unsigned()->nullable();
+            $table->integer('accepter_id')->unsigned()->nullable();
+            $table->timestamp('accepted_at')->nullable();
             $table->integer('mutation_id')->unsigned()->nullable();
-            $table->timestamp('reviewed_at')->nullable();
             $table->timestamp('committed_at')->nullable();
             $table->timestamps();
 
@@ -34,11 +34,11 @@ class CreateBalanceImportChangeTable extends Migration {
                 ->references('id')
                 ->on('balance_import_alias')
                 ->onDelete('restrict');
-            $table->foreign('creator_id')
+            $table->foreign('submitter_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');
-            $table->foreign('reviewer_id')
+            $table->foreign('accepter_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');

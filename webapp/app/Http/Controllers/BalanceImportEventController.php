@@ -13,7 +13,7 @@ class BalanceImportEventController extends Controller {
 
     /**
      * Balance import event index page.
-     * This shows a list of registered balance import event for a balance import
+     * This shows a list of registered balance import events for a balance import
      * system.
      *
      * @return Response
@@ -60,8 +60,7 @@ class BalanceImportEventController extends Controller {
             'name' => 'required|' . ValidationDefaults::NAME,
         ]);
 
-        // Get the user, community
-        $user = barauth()->getUser();
+        // Get the community, find the economy and system
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);

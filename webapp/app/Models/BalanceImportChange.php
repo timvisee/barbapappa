@@ -23,14 +23,14 @@ use App\Utils\EmailRecipient;
  * @property-read BalanceImportEvent event
  * @property int alias_id
  * @property-read BalanceImportAlias alias
- * @property decimal cost
  * @property decimal balance
+ * @property decimal cost
  * @property int currency_id
  * @property-read Currency currency
- * @property int|null creator_id
- * @property-read User|null creator
- * @property int|null reviewer_id
- * @property-read User|null reviewer
+ * @property int|null submitter_id
+ * @property-read User|null submitter
+ * @property int|null accepter_id
+ * @property-read User|null accepter
  * @property int|null mutation_id
  * @property-read Mutation|null mutation
  * @property Carbon reviewed_at
@@ -41,6 +41,16 @@ use App\Utils\EmailRecipient;
 class BalanceImportChange extends Model {
 
     protected $table = 'balance_import_change';
+
+    protected $with = ['alias'];
+
+    protected $fillable = [
+        'alias_id',
+        'cost',
+        'balance',
+        'currency_id',
+        'submitter_id',
+    ];
 
     /**
      * Get a relation to the balance import event.
@@ -73,21 +83,60 @@ class BalanceImportChange extends Model {
     }
 
     /**
-     * Get a relation to the user that created this change.
+     * Get a relation to the user that submitted this change.
      *
-     * @return Relation to creator.
+     * @return Relation to submitter.
      */
-    public function creator() {
-        return $this->belongsTo(User::class, 'creator_id');
+    public function submitter() {
+        return $this->belongsTo(User::class, 'submitter_id');
     }
 
     /**
-     * Get a relation to the user that reviewed this change, if it has been
-     * reviewed.
+     * Get a relation to the user that accepted this change, if it has been
+     * accepted.
      *
      * @return Relation to reviewer.
      */
-    public function reviewer() {
-        return $this->belongsTo(User::class, 'reviewer_id');
+    public function accepter() {
+        return $this->belongsTo(User::class, 'accepter_id');
+    }
+
+    /**
+     * Format the balance for this change, returns null if there is no cost.
+     *
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     *
+     * @return string Formatted balance
+     */
+    public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
+        if($this->balance == null)
+            return null;
+        return $this->currency->formatAmount($this->balance, $format, ['neutral' => true]);
+    }
+
+    /**
+     * Format the cost for this change, returns null if there is no cost.
+     *
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     *
+     * @return string Formatted cost
+     */
+    public function formatCost($format = BALANCE_FORMAT_PLAIN) {
+        if($this->cost == null)
+            return null;
+        return $this->currency->formatAmount($this->cost, $format, ['neutral' => true]);
+    }
+
+    /**
+     * Format the amount for this change, returns zero if there's no amount.
+     *
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     *
+     * @return string Formatted amount
+     */
+    public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
+        return $this->currency->formatAmount($this->balance ?? -$this->cost ?? 0, $format, [
+            'neutral' => $this->balance != null,
+        ]);
     }
 }

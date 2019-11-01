@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppBunqAccountController;
 use App\Http\Controllers\AppController;
+use App\Http\Controllers\BalanceImportChangeController;
 use App\Http\Controllers\BalanceImportEventController;
 use App\Http\Controllers\BalanceImportSystemController;
 use App\Http\Controllers\BarController;
@@ -337,6 +338,30 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                                     Route::put('/edit', 'BalanceImportEventController@doEdit')->name('community.economy.balanceimport.event.doEdit');
                                     Route::get('/delete', 'BalanceImportEventController@delete')->name('community.economy.balanceimport.event.delete');
                                     Route::delete('/delete', 'BalanceImportEventController@doDelete')->name('community.economy.balanceimport.event.doDelete');
+                                });
+
+                                // Balance import changes, require view perms
+                                Route::prefix('/changes')->middleware(BalanceImportChangeController::permsView()->middleware())->group(function() {
+                                    // Index
+                                    Route::get('/', 'BalanceImportChangeController@index')->name('community.economy.balanceimport.change.index');
+
+                                    // Create, require manage perms
+                                    Route::middleware(BalanceImportChangeController::permsManage()->middleware())->group(function() {
+                                        Route::get('/create', 'BalanceImportChangeController@create')->name('community.economy.balanceimport.change.create');
+                                        Route::post('/create', 'BalanceImportChangeController@doCreate')->name('community.economy.balanceimport.change.doCreate');
+                                    });
+
+                                    // Specific
+                                    Route::prefix('/{changeId}')->group(function() {
+                                        // Show
+                                        Route::get('/', 'BalanceImportChangeController@show')->name('community.economy.balanceimport.change.show');
+
+                                        // Delete, require manager perms
+                                        Route::middleware(BalanceImportChangeController::permsManage()->middleware())->group(function() {
+                                            Route::get('/delete', 'BalanceImportChangeController@delete')->name('community.economy.balanceimport.change.delete');
+                                            Route::delete('/delete', 'BalanceImportChangeController@doDelete')->name('community.economy.balanceimport.change.doDelete');
+                                        });
+                                    });
                                 });
                             });
                         });

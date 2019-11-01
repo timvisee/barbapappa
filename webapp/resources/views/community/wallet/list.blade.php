@@ -49,7 +49,7 @@
                 'walletId' => $wallet->id,
             ]) }}" class="item">
                 {{ $wallet->name }}
-                {!! $wallet->formatBalance(BALANCE_FORMAT_LABEL); !!}
+                {!! $wallet->formatBalance(BALANCE_FORMAT_LABEL) !!}
             </a>
         @empty
             <div class="item">
