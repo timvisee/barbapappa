@@ -65,6 +65,16 @@
                     @lang('misc.delete')
                 </a>
             </div>
+
+            <a href="{{ route('community.economy.balanceimport.change.index', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $economy->id,
+                        'systemId' => $system->id,
+                        'eventId' => $event->id,
+                    ]) }}"
+                    class="ui button basic">
+                @lang('pages.balanceImportChange.changes')
+            </a>
         </p>
     @endif
 

@@ -53,6 +53,13 @@ class BalanceImportChange extends Model {
     ];
 
     /**
+     * A scope to limit to changes only accepted or not accepted.
+     */
+    public function scopeAccepted($query, $accepted = true) {
+        return $accepted ? $query->whereNotNull('accepted_at') : $query->whereNull('accepted_at');
+    }
+
+    /**
      * Get a relation to the balance import event.
      *
      * @return Relation to the balance import event.
@@ -137,6 +144,7 @@ class BalanceImportChange extends Model {
     public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
         return $this->currency->formatAmount($this->balance ?? -$this->cost ?? 0, $format, [
             'neutral' => $this->balance != null,
+            'color' => $this->accepted_at != null,
         ]);
     }
 }

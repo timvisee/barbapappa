@@ -25,13 +25,15 @@ class BalanceImportChangeController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
         $event = $system->events()->findOrFail($eventId);
-        $changes = $event->changes;
+        $unacceptedChanges = $event->changes()->accepted(false)->get();
+        $acceptedChanges = $event->changes()->accepted()->get();
 
         return view('community.economy.balanceimport.change.index')
             ->with('economy', $economy)
             ->with('system', $system)
             ->with('event', $event)
-            ->with('changes', $changes);
+            ->with('unacceptedChanges', $unacceptedChanges)
+            ->with('acceptedChanges', $acceptedChanges);
     }
 
     /**
@@ -115,12 +117,11 @@ class BalanceImportChangeController extends Controller {
 
         // Redirect to the show view after creation
         return redirect()
-            ->route('community.economy.balanceimport.change.show', [
+            ->route('community.economy.balanceimport.change.index', [
                 'communityId' => $communityId,
                 'economyId' => $economy->id,
                 'systemId' => $system->id,
                 'eventId' => $event->id,
-                'changeId' => $change->id,
             ])
             ->with('success', __('pages.balanceImportChange.created'));
     }

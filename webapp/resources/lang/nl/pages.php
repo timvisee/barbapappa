@@ -372,6 +372,10 @@ return [
         'change' => 'Verandering',
         'changes' => 'Veranderingen',
         'noChanges' => 'Geen veranderingen...',
+        'acceptedChanges' => 'Geaccepteerde veranderingen',
+        'unacceptedChanges' => 'Niet geaccepteerde veranderingen',
+        'noAcceptedChanges' => 'Geen geaccepteerde veranderingen...',
+        'noUnacceptedChanges' => 'Geen niet-geaccepteerde veranderingen...',
         'changes#' => '{0} Geen veranderingen|{1} Verandering|[2,*] :count veranderingen',
         'manageChange' => 'Beheer verandering',
         'manageChanges' => 'Beheer veranderingen',
@@ -391,6 +395,7 @@ return [
         'selectCurrency' => 'Selecteer het valuta voor deze import.',
         'balanceOrCostDescription' => 'Vul het eindsaldo of de kosten voor de gebruiker in.<br><br>Voor periodieke saldoimports, vul het eindsaldo op het moment van de import gebeurtenis in het eindsaldo veld in. Bij de eerste import zal het eindsaldo volledig aan de gebruiker gegeven worden. Bij opvolgende imports zal het verschil tussen het laatste geimporteerde saldo en het eindsaldo aan de gebruiker gegeven worden.<br><br>Voor een enkele kostenopgave, vul het kosten veld in om aan de gebruiker te crediteren. Gebruik een negatief getal om saldo aan de gebruiker te geven. Dit heeft geen effect op het bijgehouden saldo voor periodieke imports voor deze gebruiker.',
         'enterBalanceOrCost' => 'Vul alleen het eindsaldo of de kosten in.',
+        'hasUnacceptedMustCommit' => 'Sommige veranderingen zijn nog niet geaccepteerd, en zullen niet toegepast worden bij gebruikers totdat ze wel geaccepteerd zijn.',
     ],
 
     /**

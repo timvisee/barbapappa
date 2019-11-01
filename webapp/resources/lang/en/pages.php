@@ -372,6 +372,10 @@ return [
         'change' => 'Change',
         'changes' => 'Changes',
         'noChanges' => 'No changes...',
+        'acceptedChanges' => 'Accepted changes',
+        'unacceptedChanges' => 'Unaccepted changes',
+        'noAcceptedChanges' => 'No accepted changes...',
+        'noUnacceptedChanges' => 'No unaccepted changes...',
         'changes#' => '{0} No changes|{1} Change|[2,*] :count changes',
         'manageChange' => 'Manage change',
         'manageChanges' => 'Manage changes',
@@ -391,6 +395,7 @@ return [
         'selectCurrency' => 'Select the currency for this import.',
         'balanceOrCostDescription' => 'Enter either the final balance or cost for the user.<br><br>For periodic balance imports, enter the final balance at the time of the import event in the final balance field. On first import, the final balance is fully given to the user. On subsequent imports the difference between the last imported balance and the given final balance is given to the user.<br><br>For a one-time cost import, fill in the cost field to credit the user. Use a negative value to give the user balance. This has no effect on the tracked balance of period imports for this user.',
         'enterBalanceOrCost' => 'Provide either the final balance or cost.',
+        'hasUnacceptedMustCommit' => 'Some changes are not yet accepted, and will not be applied to users until they are.',
     ],
 
     /**
