@@ -99,15 +99,17 @@ class BalanceImportAlias extends Model {
         }
 
         // The name must be set, attempt to get through verified user email
+        $user_email = Email::verified()->where('email', $email)->first();
+        $user = $user_email != null ? $user_email->user : null;
         if(empty($name)) {
-            $user_email = Email::verified()->where('email', $email)->first();
             if($user_email == null)
                 return null;
-            $name = $user_email->user->name;
+            $name = $user->name;
         }
 
         // Create a new alias for this email address
         $alias = $economy->balanceImportAliasses()->create([
+            'user_id' => $user != null ? $user->id : null,
             'name' => $name,
             'email' => $email,
         ]);
