@@ -42,10 +42,8 @@ class CreateBalanceImportChangeTable extends Migration {
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');
-            $table->foreign('mutation_id')
-                ->references('id')
-                ->on('mutations')
-                ->onDelete('set null');
+
+            // Foreign key to mutation is created in mutation migration
         });
     }
 
