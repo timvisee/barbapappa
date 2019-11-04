@@ -18,10 +18,6 @@
         'method' => 'PUT',
         'class' => 'ui form'
     ]) !!}
-        <div class="ui warning message visible">
-            <span class="halflings halflings-warning-sign"></span>
-            @lang('misc.cannotBeUndone')
-        </div>
 
         <br />
 

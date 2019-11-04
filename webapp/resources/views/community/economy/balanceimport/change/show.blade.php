@@ -79,6 +79,12 @@
                     <td>@include('includes.humanTimeDiff', ['time' => $change->committed_at])</td>
                 </tr>
             @endif
+            @if($change->mutation_id != null)
+                <tr>
+                    <td>@lang('misc.deposited')</td>
+                    <td>{!!  $change->mutation->formatAmount(BALANCE_FORMAT_COLOR) !!}</td>
+                </tr>
+            @endif
             <tr>
                 <td>@lang('misc.createdAt')</td>
                 <td>@include('includes.humanTimeDiff', ['time' => $change->created_at])</td>

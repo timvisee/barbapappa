@@ -44,6 +44,8 @@ class CreateBalanceImportChangeTable extends Migration {
                 ->onDelete('set null');
 
             // Foreign key to mutation is created in mutation migration
+
+            $table->unique(['event_id', 'alias_id', 'created_at']);
         });
     }
 

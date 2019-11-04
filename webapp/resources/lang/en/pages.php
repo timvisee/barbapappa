@@ -389,7 +389,7 @@ return [
         'approveQuestion' => 'You\'re about to approve this balance import change. This will commit the balance change to the wallet of the user when available. Are you sure you want to continue?',
         'approved' => 'The balance import change has been approved and will be committed to the user in the background.',
         'undoQuestion' => 'You\'re about to undo this balance import change. This will set its state to non-approved, and will revert any committed balance changes in the user\'s wallet. Are you sure you want to continue?',
-        'undone' => 'The balance import change has been undone and is not approved anymore.',
+        'undone' => 'The balance import change has been undone.',
         'deleteQuestion' => 'You\'re about to delete this balance import change. Any mutation in a user wallet as a result of this change that is already committed will not be reverted, and the wallet mutation is then unlinked. Are you sure you want to continue?',
         'deleted' => 'The balance import change has been deleted.',
         'backToChanges' => 'Back to changes',

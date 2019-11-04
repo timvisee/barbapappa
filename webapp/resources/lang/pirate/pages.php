@@ -389,7 +389,7 @@ return [
         'approveQuestion' => 'Yer \'bout to approve dis booty import change. Dis will commit th\' booty change to the wallet of the user when available. Ye be sure ye want to continue?',
         'approved' => 'Th\' booty import change be approved and be committed to th\' user wallet in th\' background.',
         'undoQuestion' => 'Yer \'bout to undo dis booty import change. This will set its state to non-approved, and will revert any committed balance changes in th\' user\'s wallet. Ye be sure ye want to continue?',
-        'undone' => 'Th\' booty import change be undone and be non-approved.',
+        'undone' => 'Th\' booty import change be undone.',
         'deleteQuestion' => 'Yer \'bout to sink dis booty import change. Any mutation in a pirate\'s wallet as a result of dis change dat be committed already nay be reverted, and th\' wallet mutation is then unlinked. Dis will sink all related imports. Ye be sure ye want to continue?',
         'deleted' => 'Th\' booty import change be sunk.',
         'backToChanges' => 'Back to changes',
