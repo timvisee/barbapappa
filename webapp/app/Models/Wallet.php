@@ -74,7 +74,7 @@ class Wallet extends Model {
             'currency_id',
             'currency_id',
             'id'
-        )->where('economy_id', $this->economy_id);
+        )->where('economy_id', $this->economyMember->economy_id);
     }
 
     /**

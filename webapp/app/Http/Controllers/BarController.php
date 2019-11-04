@@ -914,7 +914,7 @@ class BarController extends Controller {
             // Create the transaction or use last transaction
             $transaction = $last_transaction ?? Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
-                'owner_id' => $user->id,
+                'owner_id' => $user != null ? $user->id : null,
             ]);
 
             // Determine whether the product was free
@@ -933,7 +933,7 @@ class BarController extends Controller {
                         'amount' => $price,
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
-                        'owner_id' => $user->id,
+                        'owner_id' => $user != null ? $user->id : null,
                     ]);
                 $mut_wallet->setMutationable(
                     MutationWallet::create([
@@ -958,7 +958,7 @@ class BarController extends Controller {
                         'amount' => -$product['priceTotal'],
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
-                        'owner_id' => $user->id,
+                        'owner_id' => $user != null ? $user->id : null,
                         'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
                     ]);
                 $mut_product->setMutationable(
