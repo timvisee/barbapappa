@@ -316,6 +316,7 @@ class BalanceImportChange extends Model {
             ->system
             ->changes()
             ->where('alias_id', $this->alias_id)
+            ->where('currency_id', $this->currency_id)
             ->where('balance', '!=', null)
             ->where('balance_import_change.created_at', '<', $this->created_at)
             ->latest('balance_import_change.created_at');
@@ -336,6 +337,7 @@ class BalanceImportChange extends Model {
             ->system
             ->changes()
             ->where('alias_id', $this->alias_id)
+            ->where('currency_id', $this->currency_id)
             ->where('balance', '!=', null)
             ->where('balance_import_change.created_at', '>', $this->created_at)
             ->oldest('balance_import_change.created_at');

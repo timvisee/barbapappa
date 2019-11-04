@@ -64,7 +64,7 @@ class BalanceImportSystem extends Model {
             'system_id',
             'event_id',
             'id',
-            'id',
+            'id'
         );
     }
 }
