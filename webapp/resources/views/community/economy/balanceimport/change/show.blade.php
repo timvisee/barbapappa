@@ -47,25 +47,25 @@
                 <td>@lang('misc.submitter')</td>
                 <td>{{ $change->submitter->name }}</td>
             </tr>
-            @if($change->accepted_at == null)
+            @if(!$change->isApproved())
                 <tr>
-                    <td>@lang('misc.accepted')</td>
+                    <td>@lang('misc.approved')</td>
                     <td>@lang('general.no')</td>
                 </tr>
             @else
                 <tr>
-                    <td>@lang('misc.acceptedBy')</td>
+                    <td>@lang('misc.approvedBy')</td>
                     <td>
-                        @if($change->accepter != null)
-                            {{ $change->accepter->name }}
+                        @if($change->approver != null)
+                            {{ $change->approver->name }}
                         @else
                             <i>@lang('misc.unknownUser')</i>
                         @endif
                     </td>
                 </tr>
                 <tr>
-                    <td>@lang('misc.acceptedAt')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $change->accepted_at])</td>
+                    <td>@lang('misc.approvedAt')</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $change->approved_at])</td>
                 </tr>
             @endif
             @if($change->committed_at == null)
@@ -76,7 +76,7 @@
             @else
                 <tr>
                     <td>@lang('misc.committedAt')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $change->committed])</td>
+                    <td>@include('includes.humanTimeDiff', ['time' => $change->committed_at])</td>
                 </tr>
             @endif
             <tr>
@@ -92,34 +92,56 @@
         </tbody>
     </table>
 
-    @if($change->mutation_id != null)
-        <p>
+    <p>
+        @if(perms(BalanceImportChangeController::permsManage()))
             <div class="ui buttons">
-                <a href="{{ route('transaction.mutation.show', [
-                            'transactionId' => $community->mutation->transaction_id,
-                            'mutationId' => $change->mutation_id,
-                        ]) }}"
-                        class="ui button basic">
-                    @lang('pages.mutations.viewMutation')
-                </a>
-            </div>
-        </p>
-    @endif
+                @if(!$change->isApproved())
+                    <a href="{{ route('community.economy.balanceimport.change.approve', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'systemId' => $system->id,
+                                'eventId' => $event->id,
+                                'changeId' => $change->id,
+                            ]) }}"
+                            class="ui button positive">
+                        @lang('misc.approve')
+                    </a>
 
-    @if(perms(BalanceImportChangeController::permsManage()))
-        <p>
-            <a href="{{ route('community.economy.balanceimport.change.delete', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                        'systemId' => $system->id,
-                        'eventId' => $event->id,
-                        'changeId' => $change->id,
+                    <a href="{{ route('community.economy.balanceimport.change.delete', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'systemId' => $system->id,
+                                'eventId' => $event->id,
+                                'changeId' => $change->id,
+                            ]) }}"
+                            class="ui button negative">
+                        @lang('misc.delete')
+                    </a>
+                @else
+                    <a href="{{ route('community.economy.balanceimport.change.undo', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'systemId' => $system->id,
+                                'eventId' => $event->id,
+                                'changeId' => $change->id,
+                            ]) }}"
+                            class="ui button basic negative">
+                        @lang('misc.undo')
+                    </a>
+                @endif
+            </div>
+        @endif
+
+        @if($change->mutation_id != null)
+            <a href="{{ route('transaction.mutation.show', [
+                        'transactionId' => $change->mutation->transaction_id,
+                        'mutationId' => $change->mutation_id,
                     ]) }}"
-                    class="ui button negative">
-                @lang('misc.delete')
+                    class="ui button basic">
+                @lang('pages.mutations.viewMutation')
             </a>
-        </p>
-    @endif
+        @endif
+    </p>
 
     <p>
         <a href="{{ route('community.economy.balanceimport.change.index', [

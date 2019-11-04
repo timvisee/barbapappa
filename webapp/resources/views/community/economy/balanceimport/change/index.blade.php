@@ -49,20 +49,20 @@
         </div>
     </h2>
 
-    @if(count($unacceptedChanges) > 0)
+    @if(count($unapprovedChanges) > 0)
         <div class="ui warning message visible">
             <span class="halflings halflings-warning-sign"></span>
-            @lang('pages.balanceImportChange.hasUnacceptedMustCommit')
+            @lang('pages.balanceImportChange.hasUnapprovedMustCommit')
         </div>
     @endif
 
     <div class="ui top vertical menu fluid">
         <h5 class="ui item header">
-            @lang('pages.balanceImportChange.unacceptedChanges')
+            @lang('pages.balanceImportChange.unapprovedChanges')
         </h5>
 
         {{-- Balance import changes --}}
-        @forelse($unacceptedChanges as $change)
+        @forelse($unapprovedChanges as $change)
             <a class="item"
                     href="{{ route('community.economy.balanceimport.change.show', [
                         // TODO: this is not efficient
@@ -82,16 +82,16 @@
                 {{-- </span> --}}
             </a>
         @empty
-            <i class="item">@lang('pages.balanceImportChange.noUnacceptedChanges')</i>
+            <i class="item">@lang('pages.balanceImportChange.noUnapprovedChanges')</i>
         @endforelse
 
-        @if(count($acceptedChanges) > 0)
+        @if(count($approvedChanges) > 0)
             <h5 class="ui item header">
-                @lang('pages.balanceImportChange.acceptedChanges')
+                @lang('pages.balanceImportChange.approvedChanges')
             </h5>
 
-            {{-- Balance import unaccepted changes --}}
-            @foreach($acceptedChanges as $change)
+            {{-- Balance import unapproved changes --}}
+            @foreach($approvedChanges as $change)
                 <a class="item"
                         href="{{ route('community.economy.balanceimport.change.show', [
                             // TODO: this is not efficient

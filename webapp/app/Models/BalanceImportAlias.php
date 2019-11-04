@@ -76,6 +76,17 @@ class BalanceImportAlias extends Model {
     }
 
     /**
+     * Get a relation to the linked economy members.
+     *
+     * @return Relation to the economy members.
+     */
+    public function economyMember(Economy $economy) {
+        return $this
+            ->hasMany(EconomyMember::class, 'alias_id')
+            ->where('economy_id', $economy->id);
+    }
+
+    /**
      * Get a relation to the user this alias is linked to.
      *
      * @return Relation to the user.

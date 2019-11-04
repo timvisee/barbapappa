@@ -25,15 +25,15 @@ class BalanceImportChangeController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
         $event = $system->events()->findOrFail($eventId);
-        $unacceptedChanges = $event->changes()->accepted(false)->get();
-        $acceptedChanges = $event->changes()->accepted()->get();
+        $unapprovedChanges = $event->changes()->approved(false)->get();
+        $approvedChanges = $event->changes()->approved(true)->get();
 
         return view('community.economy.balanceimport.change.index')
             ->with('economy', $economy)
             ->with('system', $system)
             ->with('event', $event)
-            ->with('unacceptedChanges', $unacceptedChanges)
-            ->with('acceptedChanges', $acceptedChanges);
+            ->with('unapprovedChanges', $unapprovedChanges)
+            ->with('approvedChanges', $approvedChanges);
     }
 
     /**
@@ -147,6 +147,181 @@ class BalanceImportChangeController extends Controller {
     }
 
     /**
+     * Page for approving balance import change.
+     *
+     * @return Response
+     */
+    public function approve($communityId, $economyId, $systemId, $eventId, $changeId) {
+        // Get the community, economy, find the system, event and change
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $change = $event->changes()->findOrFail($changeId);
+
+        // Must not be approved yet
+        if($change->isApproved())
+            return redirect()
+                ->route('community.economy.balanceimport.change.show', [
+                    'communityId' => $communityId,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                    'eventId' => $event->id,
+                    'changeId' => $change->id,
+                ]);
+
+        // Require previous change to be approved
+        if($change->balance != null) {
+            $previous = $change->previous()->first();
+            if($previous != null && !$previous->isApproved())
+                return redirect()
+                    ->back()
+                    ->with('error', __('pages.balanceImportChange.mustApprovePreviousFirst'));
+        }
+
+        return view('community.economy.balanceimport.change.approve')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event)
+            ->with('change', $change);
+    }
+
+    /**
+     * Approve the balance import change.
+     *
+     * @return Response
+     */
+    public function doApprove(Request $request, $communityId, $economyId, $systemId, $eventId, $changeId) {
+        // Get the community, economy, find the system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $change = $event->changes()->findOrFail($changeId);
+
+        // Must not be approved yet
+        if($change->isApproved())
+            return redirect()
+                ->route('community.economy.balanceimport.change.show', [
+                    'communityId' => $communityId,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                    'eventId' => $event->id,
+                    'changeId' => $change->id,
+                ]);
+
+        // Require previous change to be approved
+        if($change->balance != null) {
+            $previous = $change->previous()->first();
+            if($previous != null && !$previous->isApproved())
+                return redirect()
+                    ->back()
+                    ->with('error', __('pages.balanceImportChange.mustApprovePreviousFirst'));
+        }
+
+        // Approve the change
+        $change->approve();
+
+        // Redirect to the index page after approving
+        return redirect()
+            ->route('community.economy.balanceimport.change.index', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+                'eventId' => $event->id,
+            ])
+            ->with('success', __('pages.balanceImportChange.approved'));
+    }
+
+    /**
+     * Page for undoing balance import change.
+     *
+     * @return Response
+     */
+    public function undo($communityId, $economyId, $systemId, $eventId, $changeId) {
+        // Get the community, economy, find the system, event and change
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $change = $event->changes()->findOrFail($changeId);
+
+        // Must be approved
+        if(!$change->isApproved())
+            return redirect()
+                ->route('community.economy.balanceimport.change.show', [
+                    'communityId' => $communityId,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                    'eventId' => $event->id,
+                    'changeId' => $change->id,
+                ]);
+
+        // Require no newer approved changes to exist
+        if($change->balance != null) {
+            $followingApproved = $change->following()->whereNotNull('approved_at')->limit(1)->count() > 0;
+            if($followingApproved)
+                return redirect()
+                    ->back()
+                    ->with('error', __('pages.balanceImportChange.cannotUndoIfNewerApproved'));
+        }
+
+        return view('community.economy.balanceimport.change.undo')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event)
+            ->with('change', $change);
+    }
+
+    /**
+     * Undo the balance import change.
+     *
+     * @return Response
+     */
+    public function doUndo(Request $request, $communityId, $economyId, $systemId, $eventId, $changeId) {
+        // Get the community, economy, find the system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $change = $event->changes()->findOrFail($changeId);
+
+        // Must be approved
+        if(!$change->isApproved())
+            return redirect()
+                ->route('community.economy.balanceimport.change.show', [
+                    'communityId' => $communityId,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                    'eventId' => $event->id,
+                    'changeId' => $change->id,
+                ]);
+
+        // Require no newer approved changes to exist
+        if($change->balance != null) {
+            $followingApproved = $change->following()->whereNotNull('approved_at')->limit(1)->count() > 0;
+            if($followingApproved)
+                return redirect()
+                    ->back()
+                    ->with('error', __('pages.balanceImportChange.cannotUndoIfNewerApproved'));
+        }
+
+        // Undo the change
+        $change->undo();
+
+        // Redirect to the index page after undoing
+        return redirect()
+            ->route('community.economy.balanceimport.change.show', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+                'eventId' => $event->id,
+                'changeId' => $change->id,
+            ])
+            ->with('success', __('pages.balanceImportChange.undone'));
+    }
+
+    /**
      * Page for confirming the deletion of balance import change.
      *
      * @return Response
@@ -159,7 +334,11 @@ class BalanceImportChangeController extends Controller {
         $event = $system->events()->findOrFail($eventId);
         $change = $event->changes()->findOrFail($changeId);
 
-        // TODO: do not allow deleting if already committed?
+        // Require it not to be approved
+        if($change->isApproved())
+            return redirect()
+                ->back()
+                ->with('error', __('pages.balanceImportChange.cannotDeleteMustUndo'));
 
         return view('community.economy.balanceimport.change.delete')
             ->with('economy', $economy)
@@ -181,7 +360,11 @@ class BalanceImportChangeController extends Controller {
         $event = $system->events()->findOrFail($eventId);
         $change = $event->changes()->findOrFail($changeId);
 
-        // TODO: do not allow deleting if already committed?
+        // Require it not to be approved
+        if($change->isApproved())
+            return redirect()
+                ->back()
+                ->with('error', __('pages.balanceImportChange.cannotDeleteMustUndo'));
 
         // Delete the change
         $change->delete();

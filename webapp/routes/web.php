@@ -358,6 +358,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
                                         // Delete, require manager perms
                                         Route::middleware(BalanceImportChangeController::permsManage()->middleware())->group(function() {
+                                            Route::get('/approve', 'BalanceImportChangeController@approve')->name('community.economy.balanceimport.change.approve');
+                                            Route::put('/approve', 'BalanceImportChangeController@doApprove')->name('community.economy.balanceimport.change.doApprove');
+                                            Route::get('/undo', 'BalanceImportChangeController@undo')->name('community.economy.balanceimport.change.undo');
+                                            Route::put('/undo', 'BalanceImportChangeController@doUndo')->name('community.economy.balanceimport.change.doUndo');
                                             Route::get('/delete', 'BalanceImportChangeController@delete')->name('community.economy.balanceimport.change.delete');
                                             Route::delete('/delete', 'BalanceImportChangeController@doDelete')->name('community.economy.balanceimport.change.doDelete');
                                         });

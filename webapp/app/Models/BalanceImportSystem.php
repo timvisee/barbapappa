@@ -50,4 +50,21 @@ class BalanceImportSystem extends Model {
     public function events() {
         return $this->hasMany(BalanceImportEvent::class, 'system_id');
     }
+
+    /**
+     * Get a relation to all balance import changes in this system, that are in
+     * any of the system events.
+     *
+     * @return Relation to all changes.
+     */
+    public function changes() {
+        return $this->hasManyThrough(
+            BalanceImportChange::class,
+            BalanceImportEvent::class,
+            'system_id',
+            'event_id',
+            'id',
+            'id',
+        );
+    }
 }

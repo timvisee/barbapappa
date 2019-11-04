@@ -20,8 +20,8 @@ class CreateBalanceImportChangeTable extends Migration {
             $table->decimal('cost')->default('0.00')->nullable();
             $table->integer('currency_id')->unsigned();
             $table->integer('submitter_id')->unsigned()->nullable();
-            $table->integer('accepter_id')->unsigned()->nullable();
-            $table->timestamp('accepted_at')->nullable();
+            $table->integer('approver_id')->unsigned()->nullable();
+            $table->timestamp('approved_at')->nullable();
             $table->integer('mutation_id')->unsigned()->nullable();
             $table->timestamp('committed_at')->nullable();
             $table->timestamps();
@@ -38,7 +38,7 @@ class CreateBalanceImportChangeTable extends Migration {
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');
-            $table->foreign('accepter_id')
+            $table->foreign('approver_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');

@@ -16,7 +16,7 @@
         'method' => 'DELETE',
         'class' => 'ui form'
     ]) !!}
-        <div class="ui top attached warning message visible">
+        <div class="ui warning message visible">
             <span class="halflings halflings-warning-sign"></span>
             @lang('misc.cannotBeUndone')
         </div>

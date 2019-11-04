@@ -12,6 +12,7 @@ return [
 
     'yes' => 'Ja',
     'yesContinue' => 'Ja, ga door',
+    'yesApprove' => 'Ja, goedkeuren',
     'yesRestore' => 'Ja, herstellen',
     'yesRemove' => 'Ja, verwijder',
     'yesDelete' => 'Ja, verwijder',
