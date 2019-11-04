@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
+use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Models\Bar;
 use App\Models\BarMember;
 use App\Models\EconomyMember;
@@ -384,7 +385,7 @@ class BarController extends Controller {
 
             // Refresh economy member entries, and commit
             EconomyMember::refreshEconomyMembersForUser($user);
-            EconomyMember::tryCommitForUser($user);
+            CommitBalanceUpdatesForUser::dispatch($user->id);
         });
 
         // Redirect to the bar page

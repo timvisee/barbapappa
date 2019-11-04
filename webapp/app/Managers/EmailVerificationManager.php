@@ -2,6 +2,7 @@
 
 namespace App\Managers;
 
+use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Mail\Email\Verified;
 use App\Mail\Email\Verify;
 use App\Models\BalanceImportAlias;
@@ -125,7 +126,7 @@ class EmailVerificationManager {
 
             // Refresh the economy members for a user
             BalanceImportAlias::refreshEconomyMembersForUser($email->user);
-            BalanceImportAlias::tryCommitForUser($email->user);
+            CommitBalanceUpdatesForUser::dispatch($email->user_id);
         });
 
         try {
