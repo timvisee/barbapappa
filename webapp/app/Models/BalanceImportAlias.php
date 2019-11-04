@@ -168,4 +168,56 @@ class BalanceImportAlias extends Model {
 
         return $alias;
     }
+
+    /**
+     * Refresh the economy member entries for all aliases of a given user.
+     *
+     * This will ensure a single economy member is available in each economy for
+     * the given user and alias ID, and merges any duplicates.
+     * Missing economy members are created.
+     *
+     * It is highly recommended to run this for cleaning up after:
+     * - verifying a user's email address
+     * - adding a new economy member entry
+     * - creating a new alias
+     *
+     * @param User $user The user to refresh all economy members for.
+     * @throws \Exception Throws if not in a database transaction.
+     */
+    public static function refreshEconomyMembersForUser(User $user) {
+        // We must be in a database transaction
+        assert_transaction();
+
+        // Get all aliasses for the user
+        $aliases = BalanceImportAlias::where('user_id', $user->id)->get();
+        foreach($aliases as $alias) {
+            // Remove this alias from economy members being a different user
+            EconomyMember::where('user_id', '!=', $user->id)
+                ->whereNotNull('user_id')
+                ->where('alias_id', $alias->id)
+                ->update(['alias_id' => null]);
+
+            // Get all member entries for current user and alias and merge
+            $members = EconomyMember::where(function($query) use($alias, $user) {
+                    $query->where('economy_id', $alias->economy_id)
+                        ->where('user_id', $user->id);
+                })
+                ->orWhere(function($query) use($alias, $user) {
+                    $query->where('alias_id', $alias->id)
+                        ->whereNull('user_id')
+                        ->orWhere('user_id', $user->id);
+                })
+                ->orderBy('created_at', 'ASC')
+                ->get();
+            if($members->isEmpty())
+                continue;
+
+            // Set alias ID if not merged
+            $member = EconomyMember::mergeAll($members);
+            if($member->alias_id == null) {
+                $member->alias_id = $alias->id;
+                $member->save();
+            }
+        }
+    }
 }

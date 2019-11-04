@@ -123,34 +123,8 @@ class EmailVerificationManager {
             BalanceImportAlias::where('email', $email->email)
                 ->update(['user_id' => $email->user_id]);
 
-            // Set up single member entry for user and alias, migrate others
-            $aliases = BalanceImportAlias::where('email', $email->email)->get();
-            foreach($aliases as $alias) {
-                // Remove this alias from economy members being a different user
-                EconomyMember::where('user_id', '!=', $email->user_id)
-                    ->whereNotNull('user_id')
-                    ->where('alias_id', $alias->id)
-                    ->update(['alias_id' => null]);
-
-                // Get all member entries for current user and alias and merge
-                $members = EconomyMember::where(function($query) use($alias, $email) {
-                        $query->where('economy_id', $alias->economy_id)
-                            ->where('user_id', $email->user_id);
-                    })->orWhere(function($query) use($alias, $email) {
-                        $query->where('alias_id', $alias->id)
-                            ->whereNull('user_id')
-                            ->orWhere('user_id', $email->user_id);
-                    })->get();
-                if($members->isEmpty())
-                    continue;
-
-                // Set alias ID if not merged
-                $member = EconomyMember::mergeAll($members);
-                if($member->alias_id == null) {
-                    $member->alias_id = $alias->id;
-                    $member->save();
-                }
-            }
+            // Refresh the economy members for a user
+            BalanceImportAlias::refreshEconomyMembersForUser($email->user);
         });
 
         try {
