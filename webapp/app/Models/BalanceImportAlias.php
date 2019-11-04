@@ -227,12 +227,20 @@ class BalanceImportAlias extends Model {
      * @param User $user The user to commit the changes for.
      * @throws \Exception Throws if not in a database transaction.
      */
-    public static function commitForUser(User $user) {
+    public static function tryCommitForUser(User $user) {
+        Self::tryComitForAliases($user->balanceImportAliases()->pluck('id'));
+    }
+
+    /**
+     * Commit all uncommitted balance import changes for the given aliases, if
+     * possible.
+     *
+     * @param array $alias_ids List of balance import alias IDs.
+     * @throws \Exception Throws if not in a database transaction.
+     */
+    public static function tryCommitForAliases($alias_ids) {
         // We must be in a database transaction
         assert_transaction();
-
-        // Find all alias IDs for this user
-        $alias_ids = $user->balanceImportAliases()->pluck('id');
 
         // Get all uncommitted changes, and commit them
         $changes = BalanceImportChange::whereIn('alias_id', $alias_ids)

@@ -384,7 +384,7 @@ class BarController extends Controller {
 
             // Refresh economy member entries, and commit
             EconomyMember::refreshEconomyMembersForUser($user);
-            EconomyMember::commitForUser($user);
+            EconomyMember::tryCommitForUser($user);
         });
 
         // Redirect to the bar page

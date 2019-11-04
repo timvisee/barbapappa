@@ -173,9 +173,11 @@ class BalanceImportChange extends Model {
     /**
      * Approve this change.
      *
+     * @param bool [$commit=true] Commit if we can commit.
+     *
      * @throws \Exception Throws if the change had been approved already.
      */
-    public function approve() {
+    public function approve($commit = true) {
         $user = barauth()->getUser();
 
         // Make sure it isn't approved yet
@@ -190,14 +192,14 @@ class BalanceImportChange extends Model {
         }
 
         $change = $this;
-        DB::transaction(function() use($change, $user) {
+        DB::transaction(function() use($change, $user, $commit) {
             // Approve the change
             $change->approver_id = $user->id;
             $change->approved_at = now();
             $change->save();
 
             // Commit
-            if($change->shouldCommit())
+            if($commit && $change->shouldCommit())
                 $change->commit();
         });
     }

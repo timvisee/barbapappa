@@ -125,7 +125,7 @@ class EmailVerificationManager {
 
             // Refresh the economy members for a user
             BalanceImportAlias::refreshEconomyMembersForUser($email->user);
-            BalanceImportAlias::commitForUser($email->user);
+            BalanceImportAlias::tryCommitForUser($email->user);
         });
 
         try {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\CommitBalanceUpdatesForAliases;
 use App\Models\BalanceImportAlias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -277,7 +278,12 @@ class BalanceImportChangeController extends Controller {
         // Approve all changes
         DB::transaction(function() use($changes) {
             foreach($changes as $change)
-                $change->approve();
+                $change->approve(false);
+
+            // Commit changes in the background
+            CommitBalanceUpdatesForAliases::dispatch(
+                $changes->pluck('alias_id')->unique()
+            );
         });
 
         // Redirect to the index page after approving
