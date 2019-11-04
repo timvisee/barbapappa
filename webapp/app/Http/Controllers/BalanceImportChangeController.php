@@ -79,7 +79,7 @@ class BalanceImportChangeController extends Controller {
             'name' => 'nullable|' . ValidationDefaults::NAME,
             'email' => 'required|' . ValidationDefaults::EMAIL,
             'balance' => ['nullable', 'required_without:cost', ValidationDefaults::PRICE_SIGNED],
-            'cost' => ['nullable', 'required_without:balance', ValidationDefaults::PRICE_SIGNED],
+            'cost' => ['nullable', 'required_without:balance', ValidationDefaults::PRICE_NOT_ZERO],
         ]);
         $cost = $request->input('cost');
         $balance = $request->input('balance');
