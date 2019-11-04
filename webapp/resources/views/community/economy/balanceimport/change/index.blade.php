@@ -51,8 +51,17 @@
 
     @if(count($unapprovedChanges) > 0)
         <div class="ui warning message visible">
-            <span class="halflings halflings-warning-sign"></span>
-            @lang('pages.balanceImportChange.hasUnapprovedMustCommit')
+            <div class="header">@lang('pages.balanceImportChange.unapprovedChanges')</div>
+            <p>@lang('pages.balanceImportChange.hasUnapprovedMustCommit')</p>
+            <a href="{{ route('community.economy.balanceimport.change.approveall', [
+                        // TODO: this is not efficient
+                        'communityId' => $system->economy->community->human_id,
+                        'economyId' => $system->economy_id,
+                        'systemId' => $system->id,
+                        'eventId' => $event->id,
+                    ]) }}" class="ui button positive basic">
+                @lang('pages.balanceImportChange.approveAll')
+            </a>
         </div>
     @endif
 

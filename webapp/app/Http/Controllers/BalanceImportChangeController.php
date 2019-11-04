@@ -161,14 +161,7 @@ class BalanceImportChangeController extends Controller {
 
         // Must not be approved yet
         if($change->isApproved())
-            return redirect()
-                ->route('community.economy.balanceimport.change.show', [
-                    'communityId' => $communityId,
-                    'economyId' => $economy->id,
-                    'systemId' => $system->id,
-                    'eventId' => $event->id,
-                    'changeId' => $change->id,
-                ]);
+            return redirect()->back();
 
         // Require previous change to be approved
         if($change->balance != null) {
@@ -192,7 +185,7 @@ class BalanceImportChangeController extends Controller {
      * @return Response
      */
     public function doApprove(Request $request, $communityId, $economyId, $systemId, $eventId, $changeId) {
-        // Get the community, economy, find the system and event
+        // Get the community, economy, find the system, event and change
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
@@ -201,14 +194,7 @@ class BalanceImportChangeController extends Controller {
 
         // Must not be approved yet
         if($change->isApproved())
-            return redirect()
-                ->route('community.economy.balanceimport.change.show', [
-                    'communityId' => $communityId,
-                    'economyId' => $economy->id,
-                    'systemId' => $system->id,
-                    'eventId' => $event->id,
-                    'changeId' => $change->id,
-                ]);
+            return redirect()->back();
 
         // Require previous change to be approved
         if($change->balance != null) {
@@ -234,6 +220,78 @@ class BalanceImportChangeController extends Controller {
     }
 
     /**
+     * Page for approving all balance import changes.
+     *
+     * @return Response
+     */
+    public function approveAll($communityId, $economyId, $systemId, $eventId) {
+        // Get the community, economy, find the system, event and changes
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $changes = $event->changes()->approved(false)->get();
+
+        // Require all previous changes to be approved
+        foreach($changes as $change) {
+            if($change->balance != null) {
+                $previous = $change->previous()->first();
+                if($previous != null && !$previous->isApproved())
+                    return redirect()
+                        ->back()
+                        ->with('error', __('pages.balanceImportChange.mustApproveAllPreviousFirst'));
+            }
+        }
+
+        return view('community.economy.balanceimport.change.approveAll')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event)
+            ->with('changes', $changes);
+    }
+
+    /**
+     * Approve the balance import change.
+     *
+     * @return Response
+     */
+    public function doApproveAll(Request $request, $communityId, $economyId, $systemId, $eventId) {
+        // Get the community, economy, find the system, event and changes
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $changes = $event->changes()->approved(false)->get();
+
+        // Require all previous changes to be approved
+        foreach($changes as $change) {
+            if($change->balance != null) {
+                $previous = $change->previous()->first();
+                if($previous != null && !$previous->isApproved())
+                    return redirect()
+                        ->back()
+                        ->with('error', __('pages.balanceImportChange.mustApproveAllPreviousFirst'));
+            }
+        }
+
+        // Approve all changes
+        DB::transaction(function() use($changes) {
+            foreach($changes as $change)
+                $change->approve();
+        });
+
+        // Redirect to the index page after approving
+        return redirect()
+            ->route('community.economy.balanceimport.change.index', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+                'eventId' => $event->id,
+            ])
+            ->with('success', __('pages.balanceImportChange.approvedAll'));
+    }
+
+    /**
      * Page for undoing balance import change.
      *
      * @return Response
@@ -248,14 +306,7 @@ class BalanceImportChangeController extends Controller {
 
         // Must be approved
         if(!$change->isApproved())
-            return redirect()
-                ->route('community.economy.balanceimport.change.show', [
-                    'communityId' => $communityId,
-                    'economyId' => $economy->id,
-                    'systemId' => $system->id,
-                    'eventId' => $event->id,
-                    'changeId' => $change->id,
-                ]);
+            return redirect()->back();
 
         // Require no newer approved changes to exist
         if($change->balance != null) {
@@ -288,14 +339,7 @@ class BalanceImportChangeController extends Controller {
 
         // Must be approved
         if(!$change->isApproved())
-            return redirect()
-                ->route('community.economy.balanceimport.change.show', [
-                    'communityId' => $communityId,
-                    'economyId' => $economy->id,
-                    'systemId' => $system->id,
-                    'eventId' => $event->id,
-                    'changeId' => $change->id,
-                ]);
+            return redirect()->back();
 
         // Require no newer approved changes to exist
         if($change->balance != null) {

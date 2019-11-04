@@ -349,6 +349,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                                     Route::middleware(BalanceImportChangeController::permsManage()->middleware())->group(function() {
                                         Route::get('/create', 'BalanceImportChangeController@create')->name('community.economy.balanceimport.change.create');
                                         Route::post('/create', 'BalanceImportChangeController@doCreate')->name('community.economy.balanceimport.change.doCreate');
+                                        Route::get('/approve', 'BalanceImportChangeController@approveAll')->name('community.economy.balanceimport.change.approveall');
+                                        Route::put('/approve', 'BalanceImportChangeController@doApproveAll')->name('community.economy.balanceimport.change.doApproveall');
                                     });
 
                                     // Specific
