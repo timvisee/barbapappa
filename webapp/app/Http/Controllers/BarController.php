@@ -382,8 +382,9 @@ class BarController extends Controller {
                 $economy->join($user);
             $bar->join($user);
 
-            // Refresh economy member entries, link to alias if available
+            // Refresh economy member entries, and commit
             EconomyMember::refreshEconomyMembersForUser($user);
+            EconomyMember::commitForUser($user);
         });
 
         // Redirect to the bar page

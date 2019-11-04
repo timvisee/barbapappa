@@ -240,6 +240,15 @@ class User extends Model implements HasLocalePreference {
     }
 
     /**
+     * Get a relation to the balance import aliases for this user.
+     *
+     * @return Relation to balance import aliases.
+     */
+    public function balanceImportAliases() {
+        return $this->hasMany(BalanceImportAlias::class);
+    }
+
+    /**
      * Check whether this user has a password configured or not.
      *
      * @return boolean True if a password is configured, false if not.

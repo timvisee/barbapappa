@@ -189,8 +189,7 @@ class BalanceImportAlias extends Model {
         assert_transaction();
 
         // Get all aliasses for the user
-        $aliases = BalanceImportAlias::where('user_id', $user->id)->get();
-        foreach($aliases as $alias) {
+        foreach($user->balanceImportAliases as $alias) {
             // Remove this alias from economy members being a different user
             EconomyMember::where('user_id', '!=', $user->id)
                 ->whereNotNull('user_id')
@@ -219,5 +218,30 @@ class BalanceImportAlias extends Model {
                 $member->save();
             }
         }
+    }
+
+    /**
+     * Commit all uncommitted balance import changes for the given user, if
+     * possible.
+     *
+     * @param User $user The user to commit the changes for.
+     * @throws \Exception Throws if not in a database transaction.
+     */
+    public static function commitForUser(User $user) {
+        // We must be in a database transaction
+        assert_transaction();
+
+        // Find all alias IDs for this user
+        $alias_ids = $user->balanceImportAliases()->pluck('id');
+
+        // Get all uncommitted changes, and commit them
+        $changes = BalanceImportChange::whereIn('alias_id', $alias_ids)
+            ->orderBy('created_at', 'ASC')
+            ->whereNotNull('approved_at')
+            ->whereNull('committed_at')
+            ->whereNull('mutation_id')
+            ->get();
+        foreach($changes as $change)
+            $change->commit();
     }
 }

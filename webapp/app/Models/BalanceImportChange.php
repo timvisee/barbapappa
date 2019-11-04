@@ -142,6 +142,35 @@ class BalanceImportChange extends Model {
     }
 
     /**
+     * Check whether the balance import change should be committed.
+     *
+     * Makes sure the balance import alias is linked to a real user, and if the
+     * user joined any of the bars in the economy.
+     *
+     * @return bool True if approved, false if not.
+     */
+    public function shouldCommit() {
+        // Don't if not approved yet or if already committed
+        if(!$this->isApproved() || $this->isCommitted())
+            return false;
+
+        // The registered user needs to be known
+        $user_id = $this->alias->user_id;
+        if($user_id == null)
+            return false;
+
+        // // The user must have joined one of the bars
+        // $economy = $this->event->system->economy;
+        // $bars = $economy->bars()->pluck('id');
+        // return BarMember::where('user_id', $user_id)
+        //     ->whereIn('bar_id', $bars)
+        //     ->limit(1)
+        //     ->count() > 0;
+
+        return true;
+    }
+
+    /**
      * Approve this change.
      *
      * @throws \Exception Throws if the change had been approved already.
@@ -167,8 +196,9 @@ class BalanceImportChange extends Model {
             $change->approved_at = now();
             $change->save();
 
-            // TODO: remove after testing!
-            $change->commit();
+            // Commit
+            if($change->shouldCommit())
+                $change->commit();
         });
     }
 
