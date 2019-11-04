@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Economy member model.
@@ -220,5 +221,44 @@ class EconomyMember extends Pivot {
             'name' => $name ?? __('pages.wallets.nameDefault'),
             'currency_id' => $currency_id,
         ]);
+    }
+
+    /**
+     * Merge the given list of economy members into a single member.
+     *
+     * This will delete all but the first member.
+     *
+     * @param [EconomyMember] $members List of economy members.
+     * @return EconomyMember Returns the member everything is merged into.
+     */
+    public static function mergeAll($members) {
+        if($members->count() <= 1)
+            return $members[0];
+
+        // Members must not have conflicting user or alias IDs
+        $user_ids = $members->where('user_id', '!=', null)->pluck('user_id')->unique();
+        $alias_ids = $members->where('alias_id', '!=', null)->pluck('alias_id')->unique();
+        if($user_ids->count() > 1 || $alias_ids->count() > 1)
+            throw new \Exception("Attempting to merge economy members with conflicting user or alias IDs");
+
+        DB::transaction(function() use(&$members, $user_ids, $alias_ids) {
+            $member = $members[0];
+            $oldMembers = $members->slice(1);
+
+            // Set all properties on first member
+            $member->user_id = $user_ids[0];
+            $member->alias_id = $alias_ids[0];
+            $member->save();
+
+            // Move all wallets to first member
+            // TODO: properly merge wallets/transactions/mutations
+            foreach($oldMembers as $oldMember)
+                $oldMember->wallets()->update(['economy_member_id' => $member->id]);
+
+            // Destroy all other members
+            EconomyMember::destroy($oldMembers->pluck('id'));
+        });
+
+        return $members[0];
     }
 }
