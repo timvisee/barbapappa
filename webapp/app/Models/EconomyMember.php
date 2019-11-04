@@ -217,7 +217,6 @@ class EconomyMember extends Pivot {
     public function createWallet(int $currency_id, $name = null) {
         // Create the wallet
         return $this->wallets()->create([
-            'economy_id' => $this->economy_id,
             'name' => $name ?? __('pages.wallets.nameDefault'),
             'currency_id' => $currency_id,
         ]);

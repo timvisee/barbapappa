@@ -209,13 +209,14 @@ class Mutation extends Model {
             if($detail) {
                 // Get the wallet, it's name and build a link to it
                 $wallet = $this->mutationable->wallet;
-                $name = $wallet->name;
-                $link = '<a href="' . $wallet->getUrlShow() . '">' . e($name) . "</a>";
+                if($wallet != null) {
+                    $link = '<a href="' . $wallet->getUrlShow() . '">' . e($wallet->name) . "</a>";
 
-                // Return the description string including the wallet name/link
-                return __('pages.mutations.types.wallet' . $dir . 'Detail', ['wallet' => $link]);
-            } else
-                return __('pages.mutations.types.wallet' . $dir);
+                    // Return the description string including the wallet name/link
+                    return __('pages.mutations.types.wallet' . $dir . 'Detail', ['wallet' => $link]);
+                }
+            }
+            return __('pages.mutations.types.wallet' . $dir);
 
         case MutationProduct::class:
             if($detail) {

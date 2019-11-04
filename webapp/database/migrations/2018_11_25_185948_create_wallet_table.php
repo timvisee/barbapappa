@@ -15,10 +15,6 @@ class CreateWalletTable extends Migration {
         Schema::create('wallets', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_member_id')->unsigned();
-            // TODO: remove this?
-            $table->integer('user_id')->unsigned()->nullable();
-            // TODO: remove this?
-            $table->integer('economy_id')->unsigned();
             $table->string('name');
             $table->decimal('balance')->default('0.00');
             $table->integer('currency_id')->unsigned();
@@ -27,14 +23,6 @@ class CreateWalletTable extends Migration {
             $table->foreign('economy_member_id')
                 ->references('id')
                 ->on('economy_member')
-                ->onDelete('restrict');
-            $table->foreign('user_id')
-                ->references('id')
-                ->on('users')
-                ->onDelete('set null');
-            $table->foreign('economy_id')
-                ->references('id')
-                ->on('economies')
                 ->onDelete('restrict');
             $table->foreign('currency_id')
                 ->references('id')

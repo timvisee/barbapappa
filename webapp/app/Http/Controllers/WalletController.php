@@ -329,7 +329,7 @@ class WalletController extends Controller {
         DB::transaction(function() use($user, $economy, $economy_member, $currency, $amount, $wallet, $newWallet, &$toWallet, $toWallets) {
             // Create a new wallet or select an existing wallet
             if($newWallet)
-                $toWallet = $economy_member->createWallet($economy, $currency->id);
+                $toWallet = $economy_member->createWallet($currency->id);
             else
                 $toWallet = $toWallets->firstWhere('id', $toWallet);
 

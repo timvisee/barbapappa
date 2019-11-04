@@ -21,10 +21,6 @@ use App\Utils\EmailRecipient;
  * @property int id
  * @property int economy_member_id
  * @property-read EconomyMember economy_member
- * @property int economy_id
- * @property-read Economy economy
- * @property int user_id
- * @property-read User user
  * @property string name
  * @property decimal balance
  * @property int currency_id
@@ -40,8 +36,6 @@ class Wallet extends Model {
     protected $table = 'wallets';
 
     protected $fillable = [
-        'user_id',
-        'economy_id',
         'name',
         'currency_id',
     ];
@@ -53,24 +47,6 @@ class Wallet extends Model {
      */
     public function economyMember() {
         return $this->belongsTo(EconomyMember::class);
-    }
-
-    /**
-     * Get the user this wallet model is from.
-     *
-     * @return The user.
-     */
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the economy this wallet model is part of.
-     *
-     * @return The economy.
-     */
-    public function economy() {
-        return $this->belongsTo(Economy::class);
     }
 
     /**
@@ -175,9 +151,8 @@ class Wallet extends Model {
     // TODO: attempt to implement some eager loading of the economy model
     public function getUrlShow() {
         return route('community.wallet.show', [
-            // TODO: can we use $this->economy->community_id here?
-            'communityId' => $this->economy->community->human_id,
-            'economyId' => $this->economy_id,
+            'communityId' => $this->economyMember->economy->community->human_id,
+            'economyId' => $this->economyMember->economy_id,
             'walletId' => $this->id,
         ]);
     }
