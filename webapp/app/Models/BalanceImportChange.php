@@ -27,7 +27,7 @@ use App\Utils\EmailRecipient;
  * @property decimal balance
  * @property decimal cost
  * @property int currency_id
- * @property-read Currency currency
+ * @property-read EconomyCurrency currency
  * @property int|null submitter_id
  * @property-read User|null submitter
  * @property int|null approver_id
@@ -98,13 +98,10 @@ class BalanceImportChange extends Model {
     /**
      * Get the used currency.
      *
-     * This is not the economy currency as specified in the economy this change
-     * is related to.
-     *
      * @return Currency The currency.
      */
     public function currency() {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(EconomyCurrency::class);
     }
 
     /**
@@ -241,9 +238,8 @@ class BalanceImportChange extends Model {
 
         $economy = $this->event->system->economy;
         $currency = $this->currency;
-        $economyCurrency = $economy->currencies()->where('currency_id', $currency->id)->firstOrFail();
         $economyMember = $this->alias->economyMember($economy)->firstOrFail();
-        $wallet = $economyMember->getOrCreateWallet(collect([$economyCurrency]));
+        $wallet = $economyMember->getOrCreateWallet(collect([$currency]), true, true);
         $user = $economyMember->user;
 
         $change = $this;
@@ -262,7 +258,7 @@ class BalanceImportChange extends Model {
                     'mutationable_id' => 0,
                     'mutationable_type' => '',
                     'amount' => -$amount,
-                    'currency_id' => $currency->id,
+                    'currency_id' => $currency->currency_id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
                 ]);
@@ -280,7 +276,7 @@ class BalanceImportChange extends Model {
                     'mutationable_id' => 0,
                     'mutationable_type' => '',
                     'amount' => $amount,
-                    'currency_id' => $currency->id,
+                    'currency_id' => $currency->currency_id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
                     'depend_on' => $mut_wallet->id,
@@ -353,7 +349,7 @@ class BalanceImportChange extends Model {
     public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
         if($this->balance == null)
             return null;
-        return $this->currency->formatAmount($this->balance, $format, ['neutral' => true]);
+        return $this->currency->currency->formatAmount($this->balance, $format, ['neutral' => true]);
     }
 
     /**
@@ -366,7 +362,7 @@ class BalanceImportChange extends Model {
     public function formatCost($format = BALANCE_FORMAT_PLAIN) {
         if($this->cost == null)
             return null;
-        return $this->currency->formatAmount($this->cost, $format, ['neutral' => true]);
+        return $this->currency->currency->formatAmount($this->cost, $format, ['neutral' => true]);
     }
 
     /**
@@ -377,7 +373,7 @@ class BalanceImportChange extends Model {
      * @return string Formatted amount
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
-        return $this->currency->formatAmount($this->balance ?? -$this->cost ?? 0, $format, [
+        return $this->currency->currency->formatAmount($this->balance ?? -$this->cost ?? 0, $format, [
             'neutral' => $this->balance != null,
             'color' => $this->approved_at != null,
         ]);

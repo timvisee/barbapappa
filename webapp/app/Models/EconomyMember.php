@@ -160,10 +160,12 @@ class EconomyMember extends Pivot {
      * @param [EconomyCurrency] $econ_currencies A list of EconomyCurrency IDs.
      * @param bool [$error=true] True to throw an error if no wallet was found
      *      or created. False to return null instead.
+     * @param bool [$force=false] True to force wallet creation even if wallet
+     *      creation is disabled.
      *
      * @return Wallet|null The primary wallet, or null if there is none.
      */
-    public function getOrCreateWallet($econ_currencies, $error = true) {
+    public function getOrCreateWallet($econ_currencies, $error = true, $force = false) {
         // A currency must be given
         if($econ_currencies->isEmpty()) {
             if($error)
@@ -189,7 +191,7 @@ class EconomyMember extends Pivot {
         // Create a new wallet for the first currency that allows it
         foreach($econ_currencies as $econ_currency) {
             // Find the currency, skip if we cannot create a wallet for it
-            if(!$econ_currency->allow_wallet)
+            if(!$force && !$econ_currency->allow_wallet)
                 continue;
 
             // Create and return a wallet
@@ -215,8 +217,7 @@ class EconomyMember extends Pivot {
     public function createWallet(int $currency_id, $name = null) {
         // Create the wallet
         return $this->wallets()->create([
-            'user_id' => $this->id,
-            'economy_id' => $economy->id,
+            'economy_id' => $this->economy_id,
             'name' => $name ?? __('pages.wallets.nameDefault'),
             'currency_id' => $currency_id,
         ]);
