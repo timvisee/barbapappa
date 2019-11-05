@@ -250,6 +250,7 @@ class BalanceImportAlias extends Model {
             ->whereNull('mutation_id')
             ->get();
         foreach($changes as $change)
-            $change->commit();
+            if($change->shouldCommit())
+                $change->commit();
     }
 }
