@@ -5,19 +5,44 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-        {!! Form::open([
-            'action' => [
-                'BalanceImportChangeController@doCreate',
-                $community->human_id,
-                $economy->id,
-                $system->id,
-                $event->id,
-            ],
-            'method' => 'POST',
-            'class' => 'ui form'
-        ]) !!}
+    <div class="ui two item menu">
+        <a href="{{ route('community.economy.balanceimport.change.create', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                'eventId' => $event->id,
+                ]) }}"
+                class="item active">
+            @lang('misc.add')
+        </a>
+        <a href="{{ route('community.economy.balanceimport.change.importJson', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                'eventId' => $event->id,
+                ]) }}"
+                class="item">
+            @lang('misc.import')
+        </a>
+    </div>
+
+    <div class="ui hidden divider"></div>
+
+    {!! Form::open([
+        'action' => [
+            'BalanceImportChangeController@doCreate',
+            $community->human_id,
+            $economy->id,
+            $system->id,
+            $event->id,
+        ],
+        'method' => 'POST',
+        'class' => 'ui form'
+    ]) !!}
 
         <p>@lang('pages.balanceImportChange.enterAliasNameEmail')</p>
+
+        <div class="ui hidden divider"></div>
 
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ' (' .  __('general.optional') . '):') }}
@@ -31,7 +56,7 @@
             {{ ErrorRenderer::inline('email') }}
         </div>
 
-        <div class="ui divider"></div>
+        <div class="ui section divider"></div>
 
         <p>@lang('pages.balanceImportChange.balanceOrCostDescription')</p>
 
@@ -67,8 +92,10 @@
             </div>
         </div>
 
+        <div class="ui hidden divider"></div>
+
         <button class="ui button primary" type="submit" name="submit" value="">
-            @lang('misc.import')
+            @lang('misc.add')
         </button>
         <a href="{{ route('community.economy.balanceimport.change.index', [
                     'communityId' => $community->human_id,

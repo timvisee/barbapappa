@@ -16,6 +16,7 @@ return [
     'clone' => 'Clone',
     'addAndClone' => 'Add \'n Clone',
     'import' => 'Import',
+    'importAll' => 'Import all',
     'download' => 'Download',
     'edit' => 'Edit',
     'change' => 'Change',

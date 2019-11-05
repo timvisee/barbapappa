@@ -16,8 +16,8 @@ class CreateBalanceImportChangeTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('event_id')->unsigned();
             $table->integer('alias_id')->unsigned();
-            $table->decimal('balance')->default('0.00')->nullable();
-            $table->decimal('cost')->default('0.00')->nullable();
+            $table->decimal('balance')->default(null)->nullable();
+            $table->decimal('cost')->default(null)->nullable();
             $table->integer('currency_id')->unsigned();
             $table->integer('submitter_id')->unsigned()->nullable();
             $table->integer('approver_id')->unsigned()->nullable();

@@ -68,6 +68,7 @@
     <div class="ui top vertical menu fluid">
         <h5 class="ui item header">
             @lang('pages.balanceImportChange.unapprovedChanges')
+            ({{ count($unapprovedChanges) }})
         </h5>
 
         {{-- Balance import changes --}}
@@ -97,6 +98,7 @@
         @if(count($approvedChanges) > 0)
             <h5 class="ui item header">
                 @lang('pages.balanceImportChange.approvedChanges')
+                ({{ count($approvedChanges) }})
             </h5>
 
             {{-- Balance import unapproved changes --}}
@@ -125,15 +127,26 @@
 
     <p>
         @if(perms(BalanceImportChangeController::permsManage()))
-            <a href="{{ route('community.economy.balanceimport.change.create', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                        'systemId' => $system->id,
-                    'eventId' => $event->id,
-                    ]) }}"
-                    class="ui button basic positive">
-                @lang('misc.import')
-            </a>
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.balanceimport.change.create', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'systemId' => $system->id,
+                        'eventId' => $event->id,
+                        ]) }}"
+                        class="ui button positive">
+                    @lang('misc.add')
+                </a>
+                <a href="{{ route('community.economy.balanceimport.change.importJson', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'systemId' => $system->id,
+                        'eventId' => $event->id,
+                        ]) }}"
+                        class="ui button primary">
+                    @lang('misc.import')
+                </a>
+            </div>
         @endif
 
         <a href="{{ route('community.economy.balanceimport.event.show', [

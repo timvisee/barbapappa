@@ -16,6 +16,7 @@ return [
     'clone' => 'Dupliceren',
     'addAndClone' => 'Toevoegen & Dupliceren',
     'import' => 'Importeren',
+    'importAll' => 'Importeer alles',
     'download' => 'Downloaden',
     'edit' => 'Aanpassen',
     'change' => 'Aanpassen',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CommitBalanceUpdatesForAliases;
 use App\Models\BalanceImportAlias;
+use App\Models\EconomyCurrency;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -108,7 +109,7 @@ class BalanceImportChangeController extends Controller {
         }
 
         // Create the balance import change
-        $change = $event->changes()->create([
+        $event->changes()->create([
             'alias_id' => $alias->id,
             'balance' => $balance,
             'cost' => $cost,
@@ -125,6 +126,158 @@ class BalanceImportChangeController extends Controller {
                 'eventId' => $event->id,
             ])
             ->with('success', __('pages.balanceImportChange.created'));
+    }
+
+    /**
+     * Balance import change import JSON page.
+     *
+     * @return Response
+     */
+    public function importJson(Request $request, $communityId, $economyId, $systemId, $eventId) {
+        // Get the community and find the economy, system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $currencies = $economy->currencies;
+
+        return view('community.economy.balanceimport.change.importJson')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event)
+            ->with('currencies', $currencies);
+    }
+
+    /**
+     * Balance import change import JSON endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doImportJson(Request $request, $communityId, $economyId, $systemId, $eventId) {
+        // Get the user, community and find the economy, system and event
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $currencies = $economy->currencies;
+
+        // Validate root fields, parse the JSON data
+        $this->validate($request, [
+            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
+            'data' => 'required|json',
+        ]);
+        $currency_id = (int) $request->input('currency');
+        $allow_duplicate = is_checked($request->input('allow_duplicate'));
+        $data = json_decode($request->input('data'), true);
+
+        // Parse, validate and normalize each data object
+        $economy_symbol = EconomyCurrency::findOrFail($currency_id)->currency->symbol;
+        foreach($data as &$item) {
+            // Obtain the fields, normalize data
+            if($item['name'] != null)
+                $item['name'] = trim($item['name']);
+            if(empty($item['name']))
+                $item['name'] = null;
+            if($item['email'] != null)
+                $item['email'] = trim($item['email']);
+            if($item['balance_new'] != null)
+                $item['balance_new'] = trim(str_replace(' ', '', str_replace($economy_symbol, '', $item['balance_new'])));
+        }
+
+        // Validate raw fields
+        $validator = Validator::make($data, [
+            '*.name' => 'nullable|' . ValidationDefaults::NAME,
+            '*.email' => 'required|' . ValidationDefaults::EMAIL,
+            '*.balance_new' => ['nullable', ValidationDefaults::PRICE_SIGNED],
+        ]);
+
+        // Report errors on JSON data fields
+        if($validator->fails()) {
+            $messages = $validator->messages()->messages();
+            foreach($messages as $key => $msgs) {
+                $i = explode('.', $key, 2)[0];
+                $field = explode('.', $key, 2)[1];
+                $name = $key;
+                if(isset($data[$i]['email']))
+                    $name = '\'' . $data[$i]['email'] . '\'.' . $field;
+                foreach($msgs as $msg)
+                    add_session_error('data', $name . ': ' . $msg);
+            }
+            return redirect()->back()->withInput();
+        }
+
+        // Create user aliases
+        $alias_ids = [];
+        foreach($data as &$item) {
+            $name = $item['name'];
+            $email = $item['email'];
+
+            // Obtain the user alias, make sure it is created
+            $alias = BalanceImportAlias::getOrCreate(
+                $economy,
+                $name,
+                $email
+            );
+            if($alias == null && empty($name)) {
+                add_session_error('data', __('pages.balanceImportAlias.newJsonAliasMustProvideName', [
+                        'email' => $email,
+                    ]));
+                return redirect()->back()->withInput();
+            }
+
+            // Make sure alias ID is unique
+            if(in_array($alias->id, $alias_ids)) {
+                add_session_error('data', __('pages.balanceImportAlias.jsonHasDuplicateAlias', [
+                        'email' => $email,
+                    ]));
+                return redirect()->back()->withInput();
+            }
+            $alias_ids[] = $alias->id;
+
+            // Should not have duplicate aliases in event
+            if(!$allow_duplicate) {
+                $has_duplicate = $event
+                    ->changes()
+                    ->where('alias_id', $alias->id)
+                    ->whereNotNull('balance')
+                    ->limit(1)
+                    ->count() > 0;
+                if($has_duplicate) {
+                    add_session_error('data', __('pages.balanceImportAlias.aliasAlreadyInEvent', [
+                            'email' => $email,
+                        ]));
+                    return redirect()->back()->withInput();
+                }
+            }
+            $alias_ids[] = $alias->id;
+
+            $item['alias_id'] = $alias->id;
+        }
+
+        // Create the balance import changes
+        DB::transaction(function() use($economy, $data, $event, $currency_id, $user) {
+            foreach($data as $item) {
+                $change = $event->changes()->create([
+                    'alias_id' => $item['alias_id'],
+                    'balance' => normalize_price($item['balance_new']),
+                    'currency_id' => $currency_id,
+                    'submitter_id' => $user->id,
+                ]);
+            }
+        });
+
+        // Redirect to the show view after creation
+        return redirect()
+            ->route('community.economy.balanceimport.change.index', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+                'eventId' => $event->id,
+            ])
+            ->with('success', __('pages.balanceImportChange.importedJson'));
     }
 
     /**

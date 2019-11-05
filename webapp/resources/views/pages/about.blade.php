@@ -72,7 +72,7 @@
             <i>for providing Terms of Service & Privacy Policy</i>
 
             <span class="spacer x05"></span>
-            <a href="http://eloydegen.nl/" target="_blank">E. Degen</a><br />
+            <a href="http://eloydegen.com/" target="_blank">E. Degen</a><br />
             <i>who suggested the Barbapappa name</i>
         </p>
 
