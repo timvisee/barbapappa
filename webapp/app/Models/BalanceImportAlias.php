@@ -36,9 +36,9 @@ class BalanceImportAlias extends Model {
     protected $table = 'balance_import_alias';
 
     protected $fillable = [
+        'user_id',
         'name',
         'email',
-        'user_id',
     ];
 
     public static function boot() {
@@ -48,12 +48,24 @@ class BalanceImportAlias extends Model {
         static::deleting(function($model) {
             // TODO: do this through economy member class
             foreach($model->economyMembers()->get() as $member) {
-                if($member->user_id != null) {
-                    $member->alias_id = null;
-                    $member->save();
-                } else
+                if($member->user_id != null)
+                    $member->aliases()->detach();
+                else
                     $member->delete();
             }
+        });
+    }
+
+    /**
+     * A scope to limit to aliases that have any approved balance import change.
+     */
+    public function scopeHasApproved($query) {
+        $query->whereExists(function($query) {
+            $query->selectRaw('1')
+                ->from('balance_import_change')
+                ->whereRaw('balance_import_alias.id = balance_import_change.alias_id')
+                ->whereNotNull('approved_at')
+                ->where('approved_at', '<=', now());
         });
     }
 
@@ -72,18 +84,12 @@ class BalanceImportAlias extends Model {
      * @return Relation to the economy members.
      */
     public function economyMembers() {
-        return $this->hasMany(EconomyMember::class, 'alias_id');
-    }
-
-    /**
-     * Get a relation to the linked economy members.
-     *
-     * @return Relation to the economy members.
-     */
-    public function economyMember(Economy $economy) {
-        return $this
-            ->hasMany(EconomyMember::class, 'alias_id')
-            ->where('economy_id', $economy->id);
+        return $this->belongsToMany(
+            EconomyMember::class,
+            'economy_member_alias',
+            'alias_id',
+            'member_id'
+        )->where('economy_id', $this->economy_id);
     }
 
     /**
@@ -170,18 +176,18 @@ class BalanceImportAlias extends Model {
                 $economy->join($user);
 
             $economy_member = $economy->members()->user($user)->firstOrFail();
-            $economy_member->alias_id = $this->id;
-            $economy_member->save();
+            $economy_member->aliases()->syncWithoutDetaching([$this->id]);
         } else {
             $has_member = $economy
                 ->members()
-                ->where('alias_id', $this->id)
+                ->alias($this)
                 ->limit(1)
                 ->count() > 0;
             if(!$has_member)
-                $economy->members()->create([
-                    'alias_id' => $this->id,
-                ]);
+                $economy->members()
+                    ->create()
+                    ->aliases()
+                    ->attach($this->id);
         }
     }
 
@@ -193,16 +199,37 @@ class BalanceImportAlias extends Model {
      */
     public function deleteEconomyMember() {
         $economy = $this->economy;
+
+        // Delete econony members only having this alias
+        $alias = $this;
         $economy
             ->members()
-            ->where('alias_id', $this->id)
+            ->alias($this)
+            ->whereNotExists(function($query) use($alias) {
+                $query->selectRaw('1')
+                    ->from('economy_member_alias')
+                    ->whereRaw('economy_member.id = economy_member_alias.member_id')
+                    ->where('alias_id', '!=', $alias->id);
+            })
             ->whereNull('user_id')
             ->delete();
-        $economy
+
+        // Detach from economy members having user and/or other aliases
+        $members = $economy
             ->members()
-            ->where('alias_id', $this->id)
-            ->whereNotNull('user_id')
-            ->update(['alias_id' => null]);
+            ->alias($this)
+            ->where(function($query) use($alias) {
+                $query->whereNotNull('user_id')
+                    ->orWhereExists(function($query) use($alias) {
+                        $query->selectRaw('1')
+                            ->from('economy_member_alias')
+                            ->whereRaw('economy_member.id = economy_member_alias.member_id')
+                            ->where('alias_id', '!=', $alias->id);
+                    });
+            })
+            ->get();
+        foreach($members as $member)
+            $member->aliases()->detach($this->id);
     }
 
     /**
@@ -225,12 +252,15 @@ class BalanceImportAlias extends Model {
         assert_transaction();
 
         // Get all aliasses for the user
-        foreach($user->balanceImportAliases as $alias) {
+        $aliases = $user->balanceImportAliases()->hasApproved()->get();
+        foreach($aliases as $alias) {
             // Remove this alias from economy members being a different user
-            EconomyMember::where('user_id', '!=', $user->id)
+            $otherMembers = EconomyMember::where('user_id', '!=', $user->id)
                 ->whereNotNull('user_id')
-                ->where('alias_id', $alias->id)
-                ->update(['alias_id' => null]);
+                ->alias($alias)
+                ->get();
+            foreach($otherMembers as $otherMember)
+                $otherMember->aliases()->detach($alias->id);
 
             // Get all member entries for current user and alias and merge
             $members = EconomyMember::where(function($query) use($alias, $user) {
@@ -238,7 +268,7 @@ class BalanceImportAlias extends Model {
                         ->where('user_id', $user->id);
                 })
                 ->orWhere(function($query) use($alias, $user) {
-                    $query->where('alias_id', $alias->id)
+                    $query->alias($alias)
                         ->whereNull('user_id')
                         ->orWhere('user_id', $user->id);
                 })
@@ -247,12 +277,9 @@ class BalanceImportAlias extends Model {
             if($members->isEmpty())
                 continue;
 
-            // Set alias ID if not merged
+            // Merge all members, make sure alias ID is set
             $member = EconomyMember::mergeAll($members);
-            if($member->alias_id == null) {
-                $member->alias_id = $alias->id;
-                $member->save();
-            }
+            $member->aliases()->syncWithoutDetaching([$alias->id]);
         }
     }
 

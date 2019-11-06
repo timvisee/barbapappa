@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEconomyMemberTable extends Migration {
+class CreateEconomyMemberAliasTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,20 +12,22 @@ class CreateEconomyMemberTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('economy_member', function(Blueprint $table) {
+        Schema::create('economy_member_alias', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('economy_id')->unsigned();
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('member_id')->unsigned();
+            $table->integer('alias_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('economy_id')
+            $table->foreign('member_id')
                 ->references('id')
-                ->on('economies')
+                ->on('economy_member')
                 ->onDelete('cascade');
-            $table->foreign('user_id')
+            $table->foreign('alias_id')
                 ->references('id')
-                ->on('users')
+                ->on('balance_import_alias')
                 ->onDelete('restrict');
+
+            $table->unique(['member_id', 'alias_id']);
         });
 
     }
@@ -36,6 +38,6 @@ class CreateEconomyMemberTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('economy_member');
+        Schema::dropIfExists('economy_member_alias');
     }
 }

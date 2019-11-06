@@ -287,7 +287,7 @@ class BalanceImportChange extends Model {
 
         $economy = $this->event->system->economy;
         $currency = $this->currency;
-        $economyMember = $this->alias->economyMember($economy)->firstOrFail();
+        $economyMember = $this->alias->economyMembers()->firstOrFail();
         $wallet = $economyMember->getOrCreateWallet(collect([$currency]), true, true);
         $user = $economyMember->user;
 

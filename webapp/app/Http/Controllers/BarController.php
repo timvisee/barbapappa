@@ -446,12 +446,18 @@ class BarController extends Controller {
                     ->where('user_id', $user->id)
                     ->limit(1)
                     ->count() > 0;
-                $memberHasAlias = $economy->members()->user($user)->firstOrFail()->alias_id != null;
+                $memberHasAliases = $economy
+                    ->members()
+                    ->user($user)
+                    ->firstOrFail()
+                    ->aliases()
+                    ->limit(1)
+                    ->count() > 0;
                 if(!$memberInEconomyBars) {
-                    if(!$memberHasAlias)
-                        $economy->leave($user);
-                    else
+                    if($memberHasAliases)
                         $economy->members()->user($user)->limit(1)->update(['user_id' => null]);
+                    else
+                        $economy->leave($user);
                 }
             }
 
@@ -606,7 +612,7 @@ class BarController extends Controller {
         $members = $members->map(function($m) use($economy_member) {
             $m->name = $m->user != null
                 ? $m->user->first_name . ' ' . $m->user->last_name
-                : $m->alias->name;
+                : $m->aliases()->firstOrFail()->name;
             $m->me = $m->id == $economy_member->id;
             return $m->only(['id', 'name', 'me']);
         });

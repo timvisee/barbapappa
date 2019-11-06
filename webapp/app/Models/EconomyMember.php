@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -13,19 +13,16 @@ use Illuminate\Support\Facades\DB;
  * @property-read Economy economy
  * @property int user_id
  * @property-read user
- * @property int alias_id
- * @property-read alias
+ * @property-read aliases
  * @property-read wallets
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class EconomyMember extends Pivot {
+class EconomyMember extends Model {
 
     protected $table = 'economy_member';
 
-    protected $with = ['user', 'alias'];
-
-    protected $fillable = ['alias_id'];
+    protected $with = ['user', 'aliases'];
 
     /**
      * Get dynamic properties.
@@ -72,6 +69,23 @@ class EconomyMember extends Pivot {
     }
 
     /**
+     * Scope to a specific balance import alias.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param BalanceImportAlias $alias The alias.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeAlias($query, BalanceImportAlias $alias) {
+        return $query->whereExists(function($query) use($alias) {
+            $query->selectRaw('1')
+                ->from('economy_member_alias')
+                ->whereRaw('economy_member.id = economy_member_alias.member_id')
+                ->where('alias_id', $alias->id);
+        });
+    }
+
+    /**
      * Scope a query to only include economy members relevant to the given
      * search query.
      *
@@ -96,7 +110,8 @@ class EconomyMember extends Pivot {
                         $query->whereExists(function($query) use($word) {
                             $query->selectRaw('1')
                                 ->from('balance_import_alias')
-                                ->whereRaw('balance_import_alias.id = economy_member.alias_id')
+                                ->join('economy_member_alias', 'economy_member.id', 'economy_member_alias.member_id')
+                                ->whereRaw('balance_import_alias.id = economy_member_alias.alias_id')
                                 ->where('name', 'LIKE', '%' . escape_like($word) . '%');
                         })
                         ->orWhereExists(function($query) use($word) {
@@ -130,12 +145,17 @@ class EconomyMember extends Pivot {
     }
 
     /**
-     * Get the member alias.
+     * Get a relation to all economy member aliases.
      *
-     * @return BalanceImportAlias The alias.
+     * @return Relation to the aliases.
      */
-    public function alias() {
-        return $this->belongsTo(BalanceImportAlias::class);
+    public function aliases() {
+        return $this->belongsToMany(
+            BalanceImportAlias::class,
+            'economy_member_alias',
+            'member_id',
+            'alias_id',
+        );
     }
 
     /**
@@ -235,25 +255,32 @@ class EconomyMember extends Pivot {
         if($members->count() <= 1)
             return $members[0];
 
-        // Members must not have conflicting user or alias IDs
+        // List all collective member and alias IDs
         $user_ids = $members->where('user_id', '!=', null)->pluck('user_id')->unique();
-        $alias_ids = $members->where('alias_id', '!=', null)->pluck('alias_id')->unique();
-        if($user_ids->count() > 1 || $alias_ids->count() > 1)
-            throw new \Exception("Attempting to merge economy members with conflicting user or alias IDs");
+        $alias_ids = $members->flatMap(function($member) {
+            return $member->aliases()->pluck('balance_import_alias.id');
+        })->unique();
+
+        // Members must not have conflicting user ID
+        if($user_ids->count() > 1)
+            throw new \Exception("Attempting to merge economy members with conflicting user IDs");
+
+        // Sort member list, priority member entry with set user ID
+        $members = $members->sortByDesc('user_id')->values();
 
         DB::transaction(function() use(&$members, $user_ids, $alias_ids) {
-            $member = $members[0];
+            $newMember = $members[0];
             $oldMembers = $members->slice(1);
 
-            // Set all properties on first member
-            $member->user_id = $user_ids[0];
-            $member->alias_id = $alias_ids[0];
-            $member->save();
+            // Set all properties on first member, sync aliases
+            $newMember->user_id = $user_ids[0];
+            $newMember->save();
+            $newMember->aliases()->sync($alias_ids);
 
             // Move all wallets to first member
             // TODO: properly merge wallets/transactions/mutations
             foreach($oldMembers as $oldMember)
-                $oldMember->wallets()->update(['economy_member_id' => $member->id]);
+                $oldMember->wallets()->update(['economy_member_id' => $newMember->id]);
 
             // Destroy all other members
             EconomyMember::destroy($oldMembers->pluck('id'));

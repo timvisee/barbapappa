@@ -57,7 +57,7 @@ class User extends Model implements HasLocalePreference {
         static::deleting(function($model) {
             // TODO: do this through economy member class
             foreach($model->economyMembers as $member) {
-                if($member->alias_id != null) {
+                if($member->aliases()->limit(1)->count() > 0) {
                     $member->user_id = null;
                     $member->save();
                 } else
