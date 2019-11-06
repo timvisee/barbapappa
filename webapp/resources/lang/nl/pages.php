@@ -413,6 +413,7 @@ return [
         'hasUnapprovedMustCommit' => 'Sommige veranderingen zijn nog niet goedgekeurd, en zullen niet toegepast worden bij gebruikers.',
         'mustApprovePreviousFirst' => 'Je moet eerst de vorige saldoimportverandering met een saldo update goedkeuren.',
         'mustApproveAllPreviousFirst' => 'Je moet eerst alle vorige saldoimportverandering voor deze saldoimportveranderingen die je wilt goedkeuren met een saldo update goedkeuren.',
+        'cannotApproveWithFollowingApproved' => 'Je kunt een saldoimportverandering niet goedkeuren, als deze al een latere verandering heeft die goedgekeurd is.',
         'cannotDeleteMustUndo' => 'Je kunt een verandering die goedgekeurd is niet verwijderen. Je moet dit eerst ongedaan maken.',
         'cannotUndoIfNewerApproved' => 'Je kunt deze saldoimportverandering niet ongedaan maken, omdat er een nieuwe saldo verandering is die nog geaccepteerd is.',
     ],

@@ -413,6 +413,7 @@ return [
         'hasUnapprovedMustCommit' => 'Some changes are not yet approved, and will not be applied to users until they are.',
         'mustApprovePreviousFirst' => 'You must approve the previous balance import change that has a balance update first.',
         'mustApproveAllPreviousFirst' => 'You must approve the previous balance import changes for the changes you want to approve now that have a balance update first.',
+        'cannotApproveWithFollowingApproved' => 'You cannot approve a change, having a later change has already been approved.',
         'cannotDeleteMustUndo' => 'You cannot delete a change that is approved. You must undo it first.',
         'cannotUndoIfNewerApproved' => 'You cannot undo this balance import change, because there\'s a newer balance change for this user that is still accepted.',
     ],

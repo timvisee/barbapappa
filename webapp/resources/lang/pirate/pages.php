@@ -413,6 +413,7 @@ return [
         'hasUnapprovedMustCommit' => 'Some changes nay be approved, and nay be applied to users until they are.',
         'mustApprovePreviousFirst' => 'Ye must approve th\' previous booty import change that be a balance update first.',
         'mustApproveAllPreviousFirst' => 'Ye must approve all previous booty import changes for the changes ye want to approve now that be a balance update first.',
+        'cannotApproveWithFollowingApproved' => 'Ye nay approve a change, having a later change be approved already.',
         'cannotDeleteMustUndo' => 'Ye nay sink a change that be approved. Ye must undo it first.',
         'cannotUndoIfNewerApproved' => 'Ye nay undo dis booty import change, because there be a newer balance change for dis user that still be accepted.',
     ],

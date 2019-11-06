@@ -317,13 +317,18 @@ class BalanceImportChangeController extends Controller {
         if($change->isApproved())
             return redirect()->back();
 
-        // Require previous change to be approved
+        // Require previous change to be approved, and following not to be
         if($change->balance != null) {
             $previous = $change->previous()->first();
             if($previous != null && !$previous->isApproved())
                 return redirect()
                     ->back()
                     ->with('error', __('pages.balanceImportChange.mustApprovePreviousFirst'));
+            $following_approved = $change->following()->approved()->limit(1)->count() > 0;
+            if($following_approved)
+                return redirect()
+                    ->back()
+                    ->with('error', __('pages.balanceImportChange.cannotApproveWithFollowingApproved'));
         }
 
         return view('community.economy.balanceimport.change.approve')
@@ -350,13 +355,18 @@ class BalanceImportChangeController extends Controller {
         if($change->isApproved())
             return redirect()->back();
 
-        // Require previous change to be approved
+        // Require previous change to be approved, and following not to be
         if($change->balance != null) {
             $previous = $change->previous()->first();
             if($previous != null && !$previous->isApproved())
                 return redirect()
                     ->back()
                     ->with('error', __('pages.balanceImportChange.mustApprovePreviousFirst'));
+            $following_approved = $change->following()->approved()->limit(1)->count() > 0;
+            if($following_approved)
+                return redirect()
+                    ->back()
+                    ->with('error', __('pages.balanceImportChange.cannotApproveWithFollowingApproved'));
         }
 
         // Approve the change
@@ -386,7 +396,7 @@ class BalanceImportChangeController extends Controller {
         $event = $system->events()->findOrFail($eventId);
         $changes = $event->changes()->approved(false)->get();
 
-        // Require all previous changes to be approved
+        // Require all previous changes to be approved, and following not to be
         foreach($changes as $change) {
             if($change->balance != null) {
                 $previous = $change->previous()->first();
@@ -394,6 +404,11 @@ class BalanceImportChangeController extends Controller {
                     return redirect()
                         ->back()
                         ->with('error', __('pages.balanceImportChange.mustApproveAllPreviousFirst'));
+                $following_approved = $change->following()->approved()->limit(1)->count() > 0;
+                if($following_approved)
+                    return redirect()
+                        ->back()
+                        ->with('error', __('pages.balanceImportChange.cannotApproveWithFollowingApproved'));
             }
         }
 
@@ -417,7 +432,7 @@ class BalanceImportChangeController extends Controller {
         $event = $system->events()->findOrFail($eventId);
         $changes = $event->changes()->approved(false)->get();
 
-        // Require all previous changes to be approved
+        // Require all previous changes to be approved, and following not to be
         foreach($changes as $change) {
             if($change->balance != null) {
                 $previous = $change->previous()->first();
@@ -425,6 +440,11 @@ class BalanceImportChangeController extends Controller {
                     return redirect()
                         ->back()
                         ->with('error', __('pages.balanceImportChange.mustApproveAllPreviousFirst'));
+                $following_approved = $change->following()->approved()->limit(1)->count() > 0;
+                if($following_approved)
+                    return redirect()
+                        ->back()
+                        ->with('error', __('pages.balanceImportChange.cannotApproveWithFollowingApproved'));
             }
         }
 
