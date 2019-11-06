@@ -364,17 +364,18 @@ class Mutation extends Model {
      *
      * @param bool [$delete=false] True to delete the mutation model, false to
      *      leave it.
+     * @param bool [$force=false] True to attempt to force.
      *
      * @throws \Exception Throws if we cannot undo right now or if not in a
      *      transaction.
      */
     // TODO: delete by default, or set states back to pending?
-    public function undo($delete = false) {
+    public function undo($delete = false, $force = false) {
         // We must be in a database transaction
         assert_transaction();
 
         // Assert we can undo, then undo the mutationable
-        if(!$this->canUndo())
+        if(!$this->canUndo($force))
             throw new \Exception("Attempting to undo transaction mutation while this is not allowed");
         $this->mutationable->undo();
 
@@ -389,16 +390,20 @@ class Mutation extends Model {
      *
      * Time is not considered here.
      *
+     * @param bool [$force=false] True to check whether we can undo when
+     * forcing.
+     *
      * @return bool True if it can be undone, false if not.
      */
-    public function canUndo() {
+    public function canUndo($force = false) {
         switch($this->mutationable_type) {
-        case MutationMagic::class:
         case MutationWallet::class:
         case MutationProduct::class:
             return true;
         case MutationPayment::class:
             return false;
+        case MutationMagic::class:
+            return $force;
 
         default:
             throw new \Exception('Unknown mutation type');

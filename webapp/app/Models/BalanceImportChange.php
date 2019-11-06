@@ -228,7 +228,7 @@ class BalanceImportChange extends Model {
         DB::transaction(function() use($change) {
             // Undo any wallet mutation
             if($change->mutation_id != null)
-                $change->mutation->transaction->undo();
+                $change->mutation->transaction->undo(true);
 
             // Update approval status
             $change->approver_id = null;
