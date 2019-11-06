@@ -268,6 +268,14 @@ class BalanceImportChange extends Model {
             $amount = $this->balance - ($previous != null ? $previous->balance : 0);
         }
 
+        // Do not mutate for a zero amount
+        if($amount == 0) {
+            $this->committed_at = now();
+            $this->mutation_id = null;
+            $this->save();
+            return;
+        }
+
         $economy = $this->event->system->economy;
         $currency = $this->currency;
         $economyMember = $this->alias->economyMember($economy)->firstOrFail();
