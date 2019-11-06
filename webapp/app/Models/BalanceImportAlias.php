@@ -263,14 +263,14 @@ class BalanceImportAlias extends Model {
                 $otherMember->aliases()->detach($alias->id);
 
             // Get all member entries for current user and alias and merge
-            $members = EconomyMember::where(function($query) use($alias, $user) {
-                    $query->where('economy_id', $alias->economy_id)
-                        ->where('user_id', $user->id);
-                })
-                ->orWhere(function($query) use($alias, $user) {
-                    $query->alias($alias)
-                        ->whereNull('user_id')
-                        ->orWhere('user_id', $user->id);
+            $members = EconomyMember::where('economy_id', $alias->economy_id)
+                ->where(function($query) use($alias, $user) {
+                    $query->where('user_id', $user->id)
+                        ->orWhere(function($query) use($alias, $user) {
+                            $query->alias($alias)
+                                ->whereNull('user_id')
+                                ->orWhere('user_id', $user->id);
+                        });
                 })
                 ->orderBy('created_at', 'ASC')
                 ->get();
