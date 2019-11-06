@@ -144,29 +144,65 @@ class BalanceImportAlias extends Model {
             $name = $user->name;
         }
 
-        $alias = null;
-        DB::transaction(function() use($economy, $user, $name, $email, &$alias) {
-            // Create a new alias for this email address
-            $alias = $economy->balanceImportAliasses()->create([
-                'user_id' => $user != null ? $user->id : null,
-                'name' => $name,
-                'email' => $email,
-            ]);
+        // Create a new alias for this email address
+        return $economy->balanceImportAliasses()->create([
+            'user_id' => $user != null ? $user->id : null,
+            'name' => $name,
+            'email' => $email,
+        ]);
+    }
 
-            // If there's are registered user, he must join economy, always link alias
-            if($user != null) {
-                if(!$economy->isJoined($user))
-                    $economy->join($user);
-                $economy_member = $economy->members()->user($user)->firstOrFail();
-                $economy_member->alias_id = $alias->id;
-                $economy_member->save();
-            } else
+    /**
+     * Create an economy member for this alias if it doesn't exist.
+     *
+     * Should be called as soon as any of the balance import changes is
+     * accepted.
+     * This does nothing if there already is an economy member.
+     */
+    public function createEconomyMember() {
+        $economy = $this->economy;
+
+        // If there's are registered user, he must join economy, always link alias
+        if($this->user_id != null) {
+            $user = $this->user;
+
+            if(!$economy->isJoined($user))
+                $economy->join($user);
+
+            $economy_member = $economy->members()->user($user)->firstOrFail();
+            $economy_member->alias_id = $this->id;
+            $economy_member->save();
+        } else {
+            $has_member = $economy
+                ->members()
+                ->where('alias_id', $this->id)
+                ->limit(1)
+                ->count() > 0;
+            if(!$has_member)
                 $economy->members()->create([
-                    'alias_id' => $alias->id,
+                    'alias_id' => $this->id,
                 ]);
-        });
+        }
+    }
 
-        return $alias;
+    /**
+     * Delete all economy member entries for this alias.
+     *
+     * This will leave member entries also having a user, but it sets the
+     * reference to this alias to null.
+     */
+    public function deleteEconomyMember() {
+        $economy = $this->economy;
+        $economy
+            ->members()
+            ->where('alias_id', $this->id)
+            ->whereNull('user_id')
+            ->delete();
+        $economy
+            ->members()
+            ->where('alias_id', $this->id)
+            ->whereNotNull('user_id')
+            ->update(['alias_id' => null]);
     }
 
     /**

@@ -74,7 +74,7 @@ class BalanceImportChange extends Model {
      * A scope to limit to changes only approved or not approved.
      */
     public function scopeApproved($query, $approved = true) {
-        return $approved ? $query->whereNotNull('approved_at') : $query->whereNull('approved_at');
+        return $approved ? $query->whereNotNull('approved_at')->where('approved_at', '<=', now()) : $query->whereNull('approved_at');
     }
 
     /**
@@ -198,6 +198,9 @@ class BalanceImportChange extends Model {
             $change->approved_at = now();
             $change->save();
 
+            // Add the economy member
+            $change->alias->createEconomyMember();
+
             // Commit
             if($commit && $change->shouldCommit())
                 $change->commit();
@@ -233,6 +236,12 @@ class BalanceImportChange extends Model {
             $change->committed_at = null;
             $change->mutation_id = null;
             $change->save();
+
+            // Delete related economy member if there are no approved changes
+            $alias = $change->alias;
+            $hasApproved = $alias->changes()->approved()->limit(1)->count() > 0;
+            if(!$hasApproved)
+                $alias->deleteEconomyMember();
         });
     }
 
