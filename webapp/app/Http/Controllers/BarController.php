@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Jobs\CommitBalanceUpdatesForUser;
+use App\Models\BalanceImportAlias;
 use App\Models\Bar;
 use App\Models\BarMember;
 use App\Models\EconomyMember;
@@ -384,7 +385,7 @@ class BarController extends Controller {
             $bar->join($user);
 
             // Refresh economy member entries, and commit
-            EconomyMember::refreshEconomyMembersForUser($user);
+            BalanceImportAlias::refreshEconomyMembersForUser($user);
             CommitBalanceUpdatesForUser::dispatch($user->id);
         });
 
@@ -446,8 +447,12 @@ class BarController extends Controller {
                     ->limit(1)
                     ->count() > 0;
                 $memberHasAlias = $economy->members()->user($user)->firstOrFail()->alias_id != null;
-                if(!$memberHasAlias && !$memberInEconomyBars)
-                    $economy->leave($user);
+                if(!$memberInEconomyBars) {
+                    if(!$memberHasAlias)
+                        $economy->leave($user);
+                    else
+                        $economy->members()->user($user)->limit(1)->update(['user_id' => null]);
+                }
             }
 
             // Leave community if not bar member anymore without special role
