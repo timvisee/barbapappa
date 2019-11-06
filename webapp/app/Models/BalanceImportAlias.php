@@ -264,7 +264,7 @@ class BalanceImportAlias extends Model {
      * @throws \Exception Throws if not in a database transaction.
      */
     public static function tryCommitForUser(User $user) {
-        Self::tryComitForAliases($user->balanceImportAliases()->pluck('id'));
+        Self::tryCommitForAliases($user->balanceImportAliases()->pluck('id'));
     }
 
     /**
