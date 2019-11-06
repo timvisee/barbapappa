@@ -114,8 +114,8 @@ class EconomyMember extends Pivot {
                         $query->whereExists(function($query) use($word) {
                             $query->selectRaw('1')
                                 ->from('balance_import_alias')
-                                ->join('economy_member_alias', 'economy_member.id', 'economy_member_alias.member_id')
-                                ->whereRaw('balance_import_alias.id = economy_member_alias.alias_id')
+                                ->join('economy_member_alias', 'economy_member_alias.alias_id', 'balance_import_alias.id')
+                                ->whereRaw('economy_member.id = economy_member_alias.member_id')
                                 ->where('name', 'LIKE', '%' . escape_like($word) . '%');
                         })
                         ->orWhereExists(function($query) use($word) {
