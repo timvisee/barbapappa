@@ -158,7 +158,7 @@ class EconomyMember extends Pivot {
             BalanceImportAlias::class,
             'economy_member_alias',
             'member_id',
-            'alias_id',
+            'alias_id'
         );
     }
 
