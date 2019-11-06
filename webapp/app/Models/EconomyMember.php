@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -18,9 +18,13 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class EconomyMember extends Model {
+class EconomyMember extends Pivot {
 
     protected $table = 'economy_member';
+
+    protected $primaryKey = 'id';
+
+    public $incrementing = true;
 
     protected $with = ['user', 'aliases'];
 

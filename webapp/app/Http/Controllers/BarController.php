@@ -93,13 +93,13 @@ class BarController extends Controller {
      * @return Response
      */
     public function show($barId) {
-        // Show info page if user does not have user role
-        if(!perms(Self::permsUser()))
-            return $this->info($barId);
-
         // Get the bar and session user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
+
+        // Show info page if user does not have user role
+        if(!perms(Self::permsUser()) || !$bar->isJoined($user))
+            return $this->info($barId);
 
         // Update the visit time for this member
         $member = $bar->memberUsers(['visited_at'], false)
@@ -1064,7 +1064,7 @@ class BarController extends Controller {
         if($member === null)
             $member = barauth()->getUser();
         if(!($member instanceof EconomyMember))
-            $member = $economy->members()->user($member)->firstOrFail();
+            $member = $economy->members()->user($member)->first();
 
         // Get the user wallets, sort by preferred
         $wallets = $member->wallets;
