@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Mail\Update\BalanceUpdateMail;
 use App\Models\Community;
 use App\Models\Economy;
+use App\Models\EconomyMember;
 use App\Models\Notifications\Notification;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
@@ -51,13 +52,17 @@ class SendBalanceUpdate implements ShouldQueue {
         // Find the user
         $user = User::findOrFail($this->user_id);
 
-        // Collect wallet balances for user, group by economy
-        $wallets = $user
-            ->wallets
-            ->groupBy('economy_id');
+        // Collect user wallets
+        $wallets = $user->wallets;
+        if($wallets->isEmpty())
+            return;
+
+        // Get all economy members for the user wallets
+        $economyMemberIds = $wallets->pluck('economy_member_id')->unique();
+        $economyMembers = EconomyMember::whereIn('id', $economyMemberIds)->get();
 
         // Get all economies for the user wallets
-        $economyIds = $wallets->keys();
+        $economyIds = $economyMembers->pluck('economy_id')->unique();
         $economies = Economy::whereIn('id', $economyIds)->get();
 
         // Get all communities for the user wallet
@@ -67,13 +72,16 @@ class SendBalanceUpdate implements ShouldQueue {
         // Build the data object with all community/economy/wallet
         // information used in the balance mail template
         $data = $communities
-            ->map(function($community) use($economies, $wallets) {
+            ->map(function($community) use($economies, $economyMembers, $wallets) {
                 $economyData = $economies
                     ->where('community_id', $community->id)
-                    ->map(function($economy) use($community, $wallets) {
+                    ->map(function($economy) use($community, $economyMembers, $wallets) {
+                        // Find the economy member
+                        $member = $economyMembers->where('economy_id', $economy->id)->first();
+
                         // Build the wallet data
                         $walletData = $wallets
-                            ->get($economy->id)
+                            ->where('economy_member_id', $member->id)
                             ->map(function($wallet) use($community, $economy) {
                                 // Select a previous time, find it's balance
                                 $previous = now()->subMonth();

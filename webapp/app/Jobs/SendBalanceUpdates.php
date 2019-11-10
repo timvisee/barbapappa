@@ -67,14 +67,14 @@ class SendBalanceUpdates implements ShouldQueue {
                     ->from('wallets')
                     ->join('economy_member', 'economy_member.id', '=', 'wallets.economy_member_id')
                     ->whereRaw('economy_member.user_id = users.id')
-                    ->where('balance', '<>', 0);
+                    ->where('balance', '!=', 0);
             })
             ->whereNotExists(function($query) {
                 $query->selectRaw('1')
                     ->from('email_history')
                     ->whereRaw('email_history.user_id = users.id')
-                    ->whereNull('last_at')
-                    ->orWhere('last_at', '>=', now()->subSeconds(Self::UPDATE_INTERVAL - Self::UPDATE_INTERVAL_PLAY));
+                    ->whereNotNull('last_at')
+                    ->where('last_at', '>=', now()->subSeconds(Self::UPDATE_INTERVAL - Self::UPDATE_INTERVAL_PLAY));
             })
             ->get();
 
