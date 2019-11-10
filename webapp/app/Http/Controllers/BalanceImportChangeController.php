@@ -213,7 +213,7 @@ class BalanceImportChangeController extends Controller {
         $alias_ids = [];
         foreach($data as &$item) {
             $name = $item['name'];
-            $email = $item['email'];
+            $email = strtolower($item['email']);
 
             // Obtain the user alias, make sure it is created
             $alias = BalanceImportAlias::getOrCreate(

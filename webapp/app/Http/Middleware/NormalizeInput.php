@@ -18,6 +18,10 @@ class NormalizeInput extends TransformsRequest {
         if($key == 'first_name' || $key == 'last_name')
             return name_case($value);
 
+        // Lowercase email
+        if($key == 'email')
+            return strtolower($value);
+
         // Normalize IBANs and BICs
         if($key == 'iban' || $key == 'bic')
             return is_string($value)
