@@ -35,6 +35,8 @@ class Community extends Model {
 
     use HasPassword, HasSlug, Joinable;
 
+    protected $table = 'community';
+
     /**
      * The attributes that should be hidden for arrays.
      *

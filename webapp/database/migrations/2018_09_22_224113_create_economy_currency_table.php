@@ -23,11 +23,11 @@ class CreateEconomyCurrencyTable extends Migration {
 
             $table->foreign('economy_id')
                 ->references('id')
-                ->on('economies')
+                ->on('economy')
                 ->onDelete('cascade');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('currencies')
+                ->on('currency')
                 ->onDelete('restrict');
 
             $table->unique(['economy_id', 'currency_id']);

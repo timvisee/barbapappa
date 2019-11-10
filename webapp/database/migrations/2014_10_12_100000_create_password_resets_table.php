@@ -12,7 +12,7 @@ class CreatePasswordResetsTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('password_resets', function (Blueprint $table) {
+        Schema::create('password_reset', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('token');
@@ -22,7 +22,7 @@ class CreatePasswordResetsTable extends Migration {
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('cascade');
         });
     }
@@ -33,6 +33,6 @@ class CreatePasswordResetsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('password_resets');
+        Schema::dropIfExists('password_reset');
     }
 }

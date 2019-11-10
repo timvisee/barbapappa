@@ -33,7 +33,7 @@ class Service extends Model {
 
     use SoftDeletes;
 
-    protected $table = "services";
+    protected $table = 'service';
 
     protected $fillable = [
         'serviceable_id',

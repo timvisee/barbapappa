@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Mail;
  */
 class User extends Model implements HasLocalePreference {
 
+    protected $table = 'user';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -113,7 +115,7 @@ class User extends Model implements HasLocalePreference {
      */
     public function scopeSearch($query, $search) {
         // return $query
-        //     // ->selectRaw("CONCAT(users.first_name, ' ', users.last_name) AS name")
+        //     // ->selectRaw("CONCAT(user.first_name, ' ', users.last_name) AS name")
         //     // ->where('name', 'LIKE', '%' . escape_like($search) . '%')
         //     ->where('first_name', 'LIKE', '%' . escape_like($search) . '%')
         //     ->orWhere('last_name', 'LIKE', '%' . escape_like($search) . '%');

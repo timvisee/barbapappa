@@ -22,11 +22,11 @@ class CreateBalanceImportAliasTable extends Migration {
 
             $table->foreign('economy_id')
                 ->references('id')
-                ->on('economies')
+                ->on('economy')
                 ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('set null');
         });
     }

@@ -12,14 +12,14 @@ class CreateMutationPaymentTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('mutations_payment', function(Blueprint $table) {
+        Schema::create('mutation_payment', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('payment_id')->unsigned()->nullable(true);
             $table->timestamps();
 
             $table->foreign('payment_id')
                 ->references('id')
-                ->on('payments')
+                ->on('payment')
                 ->onDelete('set null');
         });
     }
@@ -30,6 +30,6 @@ class CreateMutationPaymentTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('mutations_payment');
+        Schema::dropIfExists('mutation_payment');
     }
 }

@@ -21,7 +21,7 @@ class CreateEmailHistoryTable extends Migration {
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('cascade');
         });
     }

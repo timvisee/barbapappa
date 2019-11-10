@@ -12,7 +12,7 @@ class CreateNotificationsPaymentRequiresUserTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('notifications_payment_requires_user', function (Blueprint $table) {
+        Schema::create('notification_payment_requires_user', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('payment_id')->unsigned();
             $table->timestamps();
@@ -20,7 +20,7 @@ class CreateNotificationsPaymentRequiresUserTable extends Migration {
             // TODO: cascade? should remove main notification type as well
             $table->foreign('payment_id')
                 ->references('id')
-                ->on('payments')
+                ->on('payment')
                 ->onDelete('cascade');
         });
     }
@@ -31,6 +31,6 @@ class CreateNotificationsPaymentRequiresUserTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('notifications_payment_requires_user');
+        Schema::dropIfExists('notification_payment_requires_user');
     }
 }

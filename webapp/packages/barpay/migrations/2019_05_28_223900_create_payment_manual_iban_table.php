@@ -35,7 +35,7 @@ class CreatePaymentManualIbanTable extends Migration {
 
             $table->foreign('assessor_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('set null');
         });
     }

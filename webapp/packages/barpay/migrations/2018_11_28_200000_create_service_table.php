@@ -12,7 +12,7 @@ class CreateServiceTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('services', function(Blueprint $table) {
+        Schema::create('service', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
             $table->morphs('serviceable');
@@ -25,11 +25,11 @@ class CreateServiceTable extends Migration {
 
             $table->foreign('economy_id')
                 ->references('id')
-                ->on('economies')
+                ->on('economy')
                 ->onDelete('set null');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('currencies')
+                ->on('currency')
                 ->onDelete('restrict');
 
             $table->index(['serviceable_id', 'serviceable_type']);
@@ -44,6 +44,6 @@ class CreateServiceTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('services');
+        Schema::dropIfExists('service');
     }
 }

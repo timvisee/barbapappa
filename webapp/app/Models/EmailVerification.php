@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class EmailVerification extends Model {
 
+    protected $table = 'email_verification';
+
     public function email() {
         return $this->belongsTo(Email::class);
     }

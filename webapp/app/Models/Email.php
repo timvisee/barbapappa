@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Email extends Model {
 
+    protected $table = 'email';
+
     /**
      * A scope for selecting only verified email addresses.
      */

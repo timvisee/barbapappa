@@ -41,7 +41,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class Payment extends Model {
 
-    protected $table = "payments";
+    protected $table = 'payment';
 
     /**
      * The character length of a payment reference.
@@ -112,10 +112,10 @@ class Payment extends Model {
         // Query mutation payment
         $query->whereExists(function($query) use($economies) {
             $query->selectRaw('1')
-                ->from('mutations_payment')
-                ->whereRaw('payments.id = mutations_payment.payment_id')
-                ->leftJoin('mutations', function($leftJoin) {
-                    $leftJoin->on('mutations_payment.id', '=', 'mutations.mutationable_id');
+                ->from('mutation_payment')
+                ->whereRaw('payment.id = mutation_payment.payment_id')
+                ->leftJoin('mutation', function($leftJoin) {
+                    $leftJoin->on('mutation_payment.id', '=', 'mutation.mutationable_id');
                 })
                 // TODO: enable this again once implemented!
                 // ->whereIn('economy_id', $economies)
@@ -149,7 +149,7 @@ class Payment extends Model {
                         $query->whereExists(function($p_query) use($query, $table, $paymentable_type) {
                             $p_query->selectRaw('1')
                                 ->from($table)
-                                ->whereRaw('payments.paymentable_id = ' . $table . '.id')
+                                ->whereRaw('payment.paymentable_id = ' . $table . '.id')
                                 ->where(function($p_query) use($query, $paymentable_type) {
                                     // Use paymentable specific scope for payment and
                                     // paymentable query builders
@@ -187,7 +187,7 @@ class Payment extends Model {
                         $query->whereExists(function($p_query) use($query, $table, $paymentable_type) {
                             $p_query->selectRaw('1')
                                 ->from($table)
-                                ->whereRaw('payments.paymentable_id = ' . $table . '.id')
+                                ->whereRaw('payment.paymentable_id = ' . $table . '.id')
                                 ->where(function($p_query) use($query, $paymentable_type) {
                                     // Use paymentable specific scope for payment and
                                     // paymentable query builders

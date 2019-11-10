@@ -12,7 +12,7 @@ class CreateEconomyTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('economies', function(Blueprint $table) {
+        Schema::create('economy', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('community_id')->unsigned();
             $table->string('name', 255)->nullable();
@@ -20,7 +20,7 @@ class CreateEconomyTable extends Migration {
 
             $table->foreign('community_id')
                 ->references('id')
-                ->on('communities')
+                ->on('community')
                 ->onDelete('cascade');
         });
     }
@@ -31,6 +31,6 @@ class CreateEconomyTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('economies');
+        Schema::dropIfExists('economy');
     }
 }
