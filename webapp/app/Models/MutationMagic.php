@@ -29,7 +29,7 @@ class MutationMagic extends Model {
 
     use Mutationable;
 
-    protected $table = "mutations_magic";
+    protected $table = 'mutation_magic';
 
     protected $fillable = [
         'description',

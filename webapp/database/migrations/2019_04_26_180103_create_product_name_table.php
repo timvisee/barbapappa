@@ -12,7 +12,7 @@ class CreateProductNameTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('product_names', function(Blueprint $table) {
+        Schema::create('product_name', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('product_id')->unsigned()->nullable(false);
             $table->string('locale', 32)->nullable(false);
@@ -21,7 +21,7 @@ class CreateProductNameTable extends Migration {
 
             $table->foreign('product_id')
                 ->references('id')
-                ->on('products')
+                ->on('product')
                 ->onDelete('cascade');
 
             $table->unique(['product_id', 'locale']);
@@ -34,6 +34,6 @@ class CreateProductNameTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('product_names');
+        Schema::dropIfExists('product_name');
     }
 }

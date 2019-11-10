@@ -62,7 +62,7 @@ class AppBunqAccountController extends Controller {
             'environment' => 'required|in:production,sandbox',
             'token' => 'required|' . ValidationDefaults::BUNQ_TOKEN,
             'account_holder' => 'required|' . ValidationDefaults::NAME,
-            'iban' => 'required|iban|regex:/[A-Z]{2}\d\dBUNQ[0-9]+/|unique:bunq_accounts,iban',
+            'iban' => 'required|iban|regex:/[A-Z]{2}\d\dBUNQ[0-9]+/|unique:bunq_account,iban',
             'bic' => 'nullable|bic',
             'confirm' => 'accepted',
         ], [

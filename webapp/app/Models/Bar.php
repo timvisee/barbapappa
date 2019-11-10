@@ -36,6 +36,8 @@ class Bar extends Model {
     use HasPassword, HasSlug, Joinable;
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
+    protected $table = 'bar';
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -182,7 +184,7 @@ class Bar extends Model {
      * @return int Number of unique transactions.
      */
     public function transactionCount() {
-        return $this->transactions()->count('transactions.id');
+        return $this->transactions()->count('transaction.id');
     }
 
     /**

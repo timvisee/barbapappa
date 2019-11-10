@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotificationsPaymentSettledTable extends Migration {
+class CreateNotificationPaymentRequiresUserTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateNotificationsPaymentSettledTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('notifications_payment_settled', function (Blueprint $table) {
+        Schema::create('notification_payment_requires_user', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('payment_id')->unsigned();
             $table->timestamps();
@@ -20,7 +20,7 @@ class CreateNotificationsPaymentSettledTable extends Migration {
             // TODO: cascade? should remove main notification type as well
             $table->foreign('payment_id')
                 ->references('id')
-                ->on('payments')
+                ->on('payment')
                 ->onDelete('cascade');
         });
     }
@@ -31,6 +31,6 @@ class CreateNotificationsPaymentSettledTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('notifications_payment_settled');
+        Schema::dropIfExists('notification_payment_requires_user');
     }
 }

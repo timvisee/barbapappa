@@ -129,7 +129,7 @@ class ValidationDefaults {
      */
     public static function communitySlug($community = null) {
         // Build the uniqueness rule, ignore the current if given
-        $unique = Rule::unique('communities', 'slug');
+        $unique = Rule::unique('community', 'slug');
         if(!empty($community))
             $unique = $unique->ignore($community->id);
 
@@ -144,7 +144,7 @@ class ValidationDefaults {
      */
     public static function barSlug($bar = null) {
         // Build the uniqueness rule, ignore the current if given
-        $unique = Rule::unique('bars', 'slug');
+        $unique = Rule::unique('bar', 'slug');
         if(!empty($bar))
             $unique = $unique->ignore($bar->id);
 
@@ -159,7 +159,7 @@ class ValidationDefaults {
      * @param int $community The community this configuration is built for.  @return Rule The validation rule.
      */
     public static function communityEconomy(Community $community) {
-        return Rule::exists('economies', 'id')
+        return Rule::exists('economy', 'id')
             ->where(function($query) use($community) {
                 // Scope to the current community
                 return $query->where('community_id', $community->id);

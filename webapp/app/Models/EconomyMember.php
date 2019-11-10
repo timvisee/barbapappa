@@ -101,7 +101,7 @@ class EconomyMember extends Pivot {
     public function scopeSearch($query, $search) {
         // TODO: search for nicknames and a-like as well (members with null user)
         // return $query
-        //     // ->selectRaw("CONCAT(users.first_name, ' ', users.last_name) AS name")
+        //     // ->selectRaw("CONCAT(user.first_name, ' ', users.last_name) AS name")
         //     // ->where('name', 'LIKE', '%' . escape_like($search) . '%')
         //     ->where('first_name', 'LIKE', '%' . escape_like($search) . '%')
         //     ->orWhere('last_name', 'LIKE', '%' . escape_like($search) . '%');
@@ -120,8 +120,8 @@ class EconomyMember extends Pivot {
                         })
                         ->orWhereExists(function($query) use($word) {
                             $query->selectRaw('1')
-                                ->from('users')
-                                ->whereRaw('users.id = economy_member.user_id')
+                                ->from('user')
+                                ->whereRaw('user.id = economy_member.user_id')
                                 ->where(function($query) use($word) {
                                     $query->where('first_name', 'LIKE', '%' . escape_like($word) . '%')
                                         ->orWhere('last_name', 'LIKE', '%' . escape_like($word) . '%');

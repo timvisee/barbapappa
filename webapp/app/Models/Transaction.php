@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\DB;
  */
 class Transaction extends Model {
 
-    protected $table = "transactions";
+    protected $table = 'transaction';
 
     protected $with = ['mutations'];
 
@@ -108,8 +108,8 @@ class Transaction extends Model {
             $query = $query
                 ->whereExists(function($query) use($perspective) {
                     $query->selectRaw('1')
-                        ->from('mutations_wallet')
-                        ->whereRaw('mutations.mutationable_id = mutations_wallet.id')
+                        ->from('mutation_wallet')
+                        ->whereRaw('mutation.mutationable_id = mutation_wallet.id')
                         ->where('wallet_id', $perspective->id);
                 });
         }

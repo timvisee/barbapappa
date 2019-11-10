@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateSessionsTable extends Migration {
+class CreatePasswordResetTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,17 +12,17 @@ class CreateSessionsTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('sessions', function (Blueprint $table) {
+        Schema::create('password_reset', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('token');
-            $table->ipAddress('created_ip');
-            $table->timestamp('expire_at')->nullable();
+            $table->boolean('used')->default(false);
+            $table->timestamp('expire_at');
             $table->timestamps();
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('cascade');
         });
     }
@@ -33,6 +33,6 @@ class CreateSessionsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset');
     }
 }

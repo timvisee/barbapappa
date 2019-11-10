@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProductPrice extends Model {
 
-    protected $table = "product_prices";
+    protected $table = 'product_price';
 
     protected $fillable = [
         'product_id',

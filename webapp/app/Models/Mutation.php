@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class Mutation extends Model {
 
-    protected $table = "mutations";
+    protected $table = 'mutation';
 
     protected $fillable = [
         'economy_id',

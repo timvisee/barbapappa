@@ -29,7 +29,7 @@ class PaymentRequiresCommunityAction extends Model {
 
     use Notificationable;
 
-    protected $table = "notifications_payment_requires_community";
+    protected $table = 'notification_payment_requires_community';
 
     protected $with = ['notification'];
 

@@ -12,7 +12,7 @@ class CreateEmailVerificationTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('email_verifications', function(Blueprint $table) {
+        Schema::create('email_verification', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('email_id')->unsigned();
             $table->string('token')->unique();
@@ -21,7 +21,7 @@ class CreateEmailVerificationTable extends Migration {
 
             $table->foreign('email_id')
                 ->references('id')
-                ->on('emails')
+                ->on('email')
                 ->onDelete('cascade');
         });
     }
@@ -32,6 +32,6 @@ class CreateEmailVerificationTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('email_verifications');
+        Schema::dropIfExists('email_verification');
     }
 }

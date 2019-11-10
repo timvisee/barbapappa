@@ -31,7 +31,7 @@ class MutationProduct extends Model {
 
     use Mutationable;
 
-    protected $table = "mutations_product";
+    protected $table = 'mutation_product';
 
     protected $with = ['product'];
 

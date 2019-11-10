@@ -33,7 +33,7 @@ class Wallet extends Model {
 
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
-    protected $table = 'wallets';
+    protected $table = 'wallet';
 
     protected $fillable = [
         'name',
@@ -264,7 +264,7 @@ class Wallet extends Model {
     public function traceBalance($at) {
         // Get all mutation changes in this period, and sum the amounts
         $change = $this->mutations()
-            ->where('mutations.created_at', '>=', $at)
+            ->where('mutation.created_at', '>=', $at)
             ->where('state', Mutation::STATE_SUCCESS)
             ->sum('amount');
 

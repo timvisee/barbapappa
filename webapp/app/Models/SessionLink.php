@@ -25,6 +25,8 @@ class SessionLink extends Model {
 
     // TODO: use global scope to limit to non-expired tokens
 
+    protected $table = 'session_link';
+
     /**
      * The length in characters of reset tokens.
      * @type int

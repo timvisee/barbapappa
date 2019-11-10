@@ -12,7 +12,7 @@ class CreateBunqAccountTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('bunq_accounts', function(Blueprint $table) {
+        Schema::create('bunq_account', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('community_id')->unsigned()->nullable(true);
             $table->boolean('enabled')->default(true)->nullable(false);
@@ -31,7 +31,7 @@ class CreateBunqAccountTable extends Migration {
 
             $table->foreign('community_id')
                 ->references('id')
-                ->on('communities')
+                ->on('community')
                 ->onDelete('restrict');
         });
     }
@@ -42,6 +42,6 @@ class CreateBunqAccountTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('bunq_accounts');
+        Schema::dropIfExists('bunq_account');
     }
 }

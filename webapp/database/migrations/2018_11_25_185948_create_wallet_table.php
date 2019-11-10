@@ -12,7 +12,7 @@ class CreateWalletTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('wallets', function(Blueprint $table) {
+        Schema::create('wallet', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_member_id')->unsigned();
             $table->string('name');
@@ -26,7 +26,7 @@ class CreateWalletTable extends Migration {
                 ->onDelete('restrict');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('currencies')
+                ->on('currency')
                 ->onDelete('restrict');
         });
     }
@@ -37,6 +37,6 @@ class CreateWalletTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('wallets');
+        Schema::dropIfExists('wallet');
     }
 }

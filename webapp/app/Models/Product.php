@@ -29,7 +29,7 @@ class Product extends Model {
 
     use SoftDeletes;
 
-    protected $table = "products";
+    protected $table = 'product';
 
     protected $fillable = ['economy_id', 'type', 'name', 'enabled'];
 
@@ -95,8 +95,8 @@ class Product extends Model {
             ->where('name', 'LIKE', '%' . escape_like($search) . '%')
             ->orWhereExists(function($query) use($search) {
                 $query->selectRaw('1')
-                    ->from('product_names')
-                    ->whereRaw('products.id = product_names.product_id')
+                    ->from('product_name')
+                    ->whereRaw('product.id = product_name.product_id')
                     ->where('name', 'LIKE', '%' . escape_like($search) . '%');
             });
     }
@@ -122,8 +122,8 @@ class Product extends Model {
         return $query
             ->whereExists(function($query) use($currency_ids) {
                 $query->selectRaw('1')
-                    ->from('product_prices')
-                    ->whereRaw('products.id = product_prices.product_id')
+                    ->from('product_price')
+                    ->whereRaw('product.id = product_price.product_id')
                     ->whereIn('currency_id', $currency_ids);
             });
     }

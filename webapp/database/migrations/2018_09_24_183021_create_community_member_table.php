@@ -22,11 +22,11 @@ class CreateCommunityMemberTable extends Migration {
 
             $table->foreign('community_id')
                 ->references('id')
-                ->on('communities')
+                ->on('community')
                 ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('cascade');
 
             $table->unique(['community_id', 'user_id']);

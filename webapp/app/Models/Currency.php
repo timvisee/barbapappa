@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class Currency extends Model {
 
-    protected $table = "currencies";
+    protected $table = 'currency';
 
     /**
      * Get dynamic properties.
