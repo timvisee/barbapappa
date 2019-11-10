@@ -12,7 +12,7 @@ class CreatePaymentTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('payments', function(Blueprint $table) {
+        Schema::create('payment', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('state')->unsigned()->nullable(false);
             $table->integer('service_id')->unsigned()->nullable(true);
@@ -25,15 +25,15 @@ class CreatePaymentTable extends Migration {
 
             $table->foreign('service_id')
                 ->references('id')
-                ->on('services')
+                ->on('service')
                 ->onDelete('set null');
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('set null');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('currencies')
+                ->on('currency')
                 ->onDelete('restrict');
 
             $table->index(['paymentable_id', 'paymentable_type']);
@@ -46,6 +46,6 @@ class CreatePaymentTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('payments');
+        Schema::dropIfExists('payment');
     }
 }

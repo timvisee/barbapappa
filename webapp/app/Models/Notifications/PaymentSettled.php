@@ -28,7 +28,7 @@ class PaymentSettled extends Model {
 
     use Notificationable;
 
-    protected $table = "notifications_payment_settled";
+    protected $table = 'notification_payment_settled';
 
     protected $with = ['notification'];
 

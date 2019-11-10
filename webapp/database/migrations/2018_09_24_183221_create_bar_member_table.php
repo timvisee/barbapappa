@@ -22,11 +22,11 @@ class CreateBarMemberTable extends Migration {
 
             $table->foreign('bar_id')
                 ->references('id')
-                ->on('bars')
+                ->on('bar')
                 ->onDelete('cascade');
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('cascade');
 
             $table->unique(['bar_id', 'user_id']);

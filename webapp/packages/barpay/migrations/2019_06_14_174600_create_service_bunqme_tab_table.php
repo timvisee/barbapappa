@@ -24,7 +24,7 @@ class CreateServiceBunqMeTabTable extends Migration {
 
             $table->foreign('bunq_account_id')
                 ->references('id')
-                ->on('bunq_accounts')
+                ->on('bunq_account')
                 ->onDelete('restrict');
         });
     }

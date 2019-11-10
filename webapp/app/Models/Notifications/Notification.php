@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class Notification extends Model {
 
-    protected $table = "notifications";
+    protected $table = 'notification';
 
     protected $casts = [
         'read_at' => 'datetime',

@@ -12,7 +12,7 @@ class CreateSessionLinkTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('session_links', function(Blueprint $table) {
+        Schema::create('session_link', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('token')->unique();
@@ -22,7 +22,7 @@ class CreateSessionLinkTable extends Migration {
 
             $table->foreign('user_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('cascade');
         });
     }
@@ -33,6 +33,6 @@ class CreateSessionLinkTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('session_links');
+        Schema::dropIfExists('session_link');
     }
 }

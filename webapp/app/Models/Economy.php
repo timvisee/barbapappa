@@ -27,6 +27,8 @@ class Economy extends Model {
 
     use Joinable;
 
+    protected $table = 'economy';
+
     protected $fillable = ['name'];
 
     /**
@@ -328,8 +330,8 @@ class Economy extends Model {
             $lastProducts = $lastProducts
                 ->whereExists(function($query) {
                     $query->selectRaw('1')
-                        ->from('mutations')
-                        ->whereRaw('mutations.mutationable_id = mutations_product.id');
+                        ->from('mutation')
+                        ->whereRaw('mutation.mutationable_id = mutation_product.id');
                 });
         if($exclude_product_ids != null)
             $lastProducts = $lastProducts->whereNotIn('product_id', $exclude_product_ids);
@@ -341,7 +343,7 @@ class Economy extends Model {
         $productCounts = DB::table(DB::raw("({$lastProducts->toSql()}) AS m"))
             ->mergeBindings($lastProducts->getQuery())
             ->select(DB::raw('SUM(quantity)'))
-            ->whereRaw('m.product_id = products.id');
+            ->whereRaw('m.product_id = product.id');
 
         // Select the top bought products
         $products = Product::select('*')
@@ -388,8 +390,8 @@ class Economy extends Model {
             ->distinct()
             ->whereExists(function($query) {
                 $query->selectRaw('1')
-                    ->from('mutations')
-                    ->whereRaw('mutations.mutationable_id = mutations_product.id');
+                    ->from('mutation')
+                    ->whereRaw('mutation.mutationable_id = mutation_product.id');
             })
             ->whereNotIn('product_id', $exclude_product_ids)
             ->latest()

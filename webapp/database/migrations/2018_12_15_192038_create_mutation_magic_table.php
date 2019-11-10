@@ -12,7 +12,7 @@ class CreateMutationMagicTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('mutations_magic', function(Blueprint $table) {
+        Schema::create('mutation_magic', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('description', 2048)->nullable(true)->default(null);
             $table->timestamps();
@@ -25,6 +25,6 @@ class CreateMutationMagicTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('mutations_magic');
+        Schema::dropIfExists('mutation_magic');
     }
 }

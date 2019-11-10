@@ -20,7 +20,7 @@ class CreateBalanceImportSystemTable extends Migration {
 
             $table->foreign('economy_id')
                 ->references('id')
-                ->on('economies')
+                ->on('economy')
                 ->onDelete('cascade');
         });
     }

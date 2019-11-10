@@ -29,7 +29,7 @@ class MutationPayment extends Model {
 
     use Mutationable;
 
-    protected $table = "mutations_payment";
+    protected $table = 'mutation_payment';
 
     protected $with = ['payment'];
 

@@ -12,7 +12,7 @@ class CreateBarTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('bars', function(Blueprint $table) {
+        Schema::create('bar', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('community_id')->unsigned();
             $table->integer('economy_id')->unsigned();
@@ -27,11 +27,11 @@ class CreateBarTable extends Migration {
 
             $table->foreign('community_id')
                 ->references('id')
-                ->on('communities')
+                ->on('community')
                 ->onDelete('cascade');
             $table->foreign('economy_id')
                 ->references('id')
-                ->on('economies')
+                ->on('economy')
                 ->onDelete('restrict');
         });
     }
@@ -42,6 +42,6 @@ class CreateBarTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('bars');
+        Schema::dropIfExists('bar');
     }
 }

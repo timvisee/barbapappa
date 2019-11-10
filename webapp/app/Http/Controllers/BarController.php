@@ -642,16 +642,16 @@ class BarController extends Controller {
         // Find other users that recently made a transaction with these products
         $query = $bar
             ->transactions()
-            ->latest('mutations.updated_at')
-            ->whereNotIn('mutations.owner_id', $ignore_user_ids);
+            ->latest('mutation.updated_at')
+            ->whereNotIn('mutation.owner_id', $ignore_user_ids);
 
         // Limit to specific product IDs
         if(!empty($product_ids))
-            $query = $query->whereIn('mutations_product.product_id', $product_ids);
+            $query = $query->whereIn('mutation_product.product_id', $product_ids);
 
         // Finalize query, get member IDs
         $user_ids = $query->limit(100)
-            ->get(['mutations.owner_id'])
+            ->get(['mutation.owner_id'])
             ->pluck('owner_id')
             ->unique()
             ->take($limit);
@@ -735,9 +735,9 @@ class BarController extends Controller {
             ->where('created_at', '>=', Carbon::now()->subSeconds(config('bar.quick_buy_merge_timeout')))
             ->whereNotExists(function($query) use($bar) {
                 $query->selectRaw('1')
-                    ->fromRaw('mutations')
-                    ->leftJoin('mutations_product', 'mutations_product.id', '=', 'mutations.mutationable_id')
-                    ->whereRaw('mutations.transaction_id = transactions.id')
+                    ->fromRaw('mutation')
+                    ->leftJoin('mutation_product', 'mutation_product.id', '=', 'mutation.mutationable_id')
+                    ->whereRaw('mutation.transaction_id = transaction.id')
                     ->where(function($query) {
                         $query->where('mutationable_type', '<>', MutationWallet::class)
                             ->orWhere('amount', '<=', 0);
@@ -745,7 +745,7 @@ class BarController extends Controller {
                     ->where(function($query) use($bar) {
                         $query->where('mutationable_type', '<>', MutationProduct::class)
                             ->orWhere('amount', '>', 0)
-                            ->orWhere('mutations_product.bar_id', '<>', $bar->id);
+                            ->orWhere('mutation_product.bar_id', '<>', $bar->id);
                     });
             })
             ->latest()
@@ -784,8 +784,8 @@ class BarController extends Controller {
                     ->where('mutationable_type', MutationWallet::class)
                     ->whereExists(function($query) use($wallet) {
                         $query->selectRaw('1')
-                            ->from('mutations_wallet')
-                            ->whereRaw('mutations.mutationable_id = mutations_wallet.id')
+                            ->from('mutation_wallet')
+                            ->whereRaw('mutation.mutationable_id = mutation_wallet.id')
                             ->where('wallet_id', $wallet->id);
                     })
                     ->first();
@@ -818,8 +818,8 @@ class BarController extends Controller {
                 ->where('mutationable_type', Mutationproduct::class)
                 ->whereExists(function($query) use($product) {
                     $query->selectRaw('1')
-                        ->from('mutations_product')
-                        ->whereRaw('mutations.mutationable_id = mutations_product.id')
+                        ->from('mutation_product')
+                        ->whereRaw('mutation.mutationable_id = mutation_product.id')
                         ->where('product_id', $product->id);
                 })
                 ->first();

@@ -12,7 +12,7 @@ class CreateMutationProductTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('mutations_product', function(Blueprint $table) {
+        Schema::create('mutation_product', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('product_id')->unsigned()->nullable(true);
             $table->integer('bar_id')->unsigned()->nullable(true);
@@ -21,11 +21,11 @@ class CreateMutationProductTable extends Migration {
 
             $table->foreign('product_id')
                 ->references('id')
-                ->on('products')
+                ->on('product')
                 ->onDelete('set null');
             $table->foreign('bar_id')
                 ->references('id')
-                ->on('bars')
+                ->on('bar')
                 ->onDelete('set null');
         });
     }
@@ -36,6 +36,6 @@ class CreateMutationProductTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('mutations_product');
+        Schema::dropIfExists('mutation_product');
     }
 }

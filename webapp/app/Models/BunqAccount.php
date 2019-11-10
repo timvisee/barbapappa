@@ -46,7 +46,7 @@ class BunqAccount extends Model {
      */
     const BUNQ_SESSION_EXPIRY_RENEW_PERIOD = ApiContext::TIME_TO_SESSION_EXPIRY_MINIMUM_SECONDS;
 
-    protected $table = 'bunq_accounts';
+    protected $table = 'bunq_account';
 
     protected $casts = [
         'deleted_at' => 'datetime',

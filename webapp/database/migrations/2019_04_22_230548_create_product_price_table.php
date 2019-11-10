@@ -12,7 +12,7 @@ class CreateProductPriceTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('product_prices', function(Blueprint $table) {
+        Schema::create('product_price', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('product_id')->unsigned()->nullable(false);
             $table->integer('currency_id')->unsigned()->nullable(false);
@@ -21,7 +21,7 @@ class CreateProductPriceTable extends Migration {
 
             $table->foreign('product_id')
                 ->references('id')
-                ->on('products')
+                ->on('product')
                 ->onDelete('cascade');
             $table->foreign('currency_id')
                 ->references('id')
@@ -36,6 +36,6 @@ class CreateProductPriceTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('product_prices');
+        Schema::dropIfExists('product_price');
     }
 }

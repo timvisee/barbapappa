@@ -28,7 +28,7 @@ class PaymentRequiresUserAction extends Model {
 
     use Notificationable;
 
-    protected $table = "notifications_payment_requires_user";
+    protected $table = 'notification_payment_requires_user';
 
     protected $with = ['notification'];
 

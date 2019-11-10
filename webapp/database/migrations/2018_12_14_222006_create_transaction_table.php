@@ -12,7 +12,7 @@ class CreateTransactionTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('transactions', function(Blueprint $table) {
+        Schema::create('transaction', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('description')->nullable(true)->default(null);
             $table->integer('state')->unsigned()->nullable(false);
@@ -22,11 +22,11 @@ class CreateTransactionTable extends Migration {
 
             $table->foreign('reference_to')
                 ->references('id')
-                ->on('transactions')
+                ->on('transaction')
                 ->onDelete('set null');
             $table->foreign('owner_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('set null');
         });
     }
@@ -37,6 +37,6 @@ class CreateTransactionTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('transaction');
     }
 }

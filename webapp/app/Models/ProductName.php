@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProductName extends Model {
 
-    protected $table = "product_names";
+    protected $table = 'product_name';
 
     protected $fillable = [
         'product_id',

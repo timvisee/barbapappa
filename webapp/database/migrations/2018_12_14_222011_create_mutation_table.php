@@ -12,7 +12,7 @@ class CreateMutationTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('mutations', function(Blueprint $table) {
+        Schema::create('mutation', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('transaction_id')->unsigned();
             $table->integer('economy_id')->unsigned()->nullable(true);
@@ -26,23 +26,23 @@ class CreateMutationTable extends Migration {
 
             $table->foreign('transaction_id')
                 ->references('id')
-                ->on('transactions')
+                ->on('transaction')
                 ->onDelete('cascade');
             $table->foreign('economy_id')
                 ->references('id')
-                ->on('economies')
+                ->on('economy')
                 ->onDelete('set null');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('currencies')
+                ->on('currency')
                 ->onDelete('restrict');
             $table->foreign('depend_on')
                 ->references('id')
-                ->on('mutations')
+                ->on('mutation')
                 ->onDelete('set null');
             $table->foreign('owner_id')
                 ->references('id')
-                ->on('users')
+                ->on('user')
                 ->onDelete('set null');
         });
 
@@ -50,7 +50,7 @@ class CreateMutationTable extends Migration {
         Schema::table('balance_import_change', function (Blueprint $table) {
             $table->foreign('mutation_id')
                 ->references('id')
-                ->on('mutations')
+                ->on('mutation')
                 ->onDelete('set null');
         });
     }
@@ -66,6 +66,6 @@ class CreateMutationTable extends Migration {
             $table->dropForeign(['mutation_id']);
         });
 
-        Schema::dropIfExists('mutations');
+        Schema::dropIfExists('mutation');
     }
 }
