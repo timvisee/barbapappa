@@ -18,14 +18,14 @@ return [
          */
         'verify' => [
             'subject' => 'E-mail verificatie',
-            'subjectRegistered' => 'Registratie & e-mail verificatie',
+            'subjectRegistered' => ':app registratie & e-mail verificatie',
             'subtitle' => 'Je staat op het punt je e-mailadres te verifiëren.',
             'subtitleRegistered' => 'Je account is bijna klaar voor gebruik.',
             'registered' => 'Bedankt voor het registreren van een account.',
             'addNewEmail' => 'Je hebt zojuist een nieuw e-mailadres aan je account toegevoegd.',
-            'verifyBeforeUseAccount' => 'Voordat je onze service kunt gebruiken, moet je je e-mailadres verifiëren.',
+            'verifyBeforeUseAccount' => 'Voordat je onze service volledig kunt gebruiken, moet je je e-mailadres verifiëren.',
             'verifyBeforeUseEmail' => 'Voordat je het op onze service kunt gebruiken, moet je het verifiëren.',
-            'soon' => 'Doe dit alsjeblieft zo snel mogelijk, de verificatie link verloopt **binnen :expire**.',
+            'soon' => 'Doe dit zo snel mogelijk, de verificatie link verloopt **binnen :expire**.',
             'clickButtonToVerify' => 'Klik op de onderstaande knop om je e-mailadres te verifieren.',
             'verifyButton' => 'Verifiëer je e-mailadres',
             'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
