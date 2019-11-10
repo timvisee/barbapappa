@@ -2,13 +2,17 @@
 
 namespace App\Managers;
 
+use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Mail\Email\Verified;
 use App\Mail\Email\Verify;
+use App\Models\BalanceImportAlias;
+use App\Models\EconomyMember;
 use App\Models\Email;
 use App\Models\EmailVerification;
 use App\Utils\EmailRecipient;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 
@@ -98,7 +102,7 @@ class EmailVerificationManager {
             return new EmailVerifyResult(EmailVerifyResult::ERR_NO_TOKEN);
 
         // Get the email verification instance, make sure it's valid
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
+        /* @noinspection PhpDynamicAsStaticMethodCallInspection */
         $verification = EmailVerification::where('token', '=', trim($token))->first();
         if($verification == null)
             return new EmailVerifyResult(EmailVerifyResult::ERR_INVALID_TOKEN);
@@ -110,10 +114,20 @@ class EmailVerificationManager {
         if($email->isVerified())
             return new EmailVerifyResult(EmailVerifyResult::ERR_ALREADY_VERIFIED);
 
-        // Set the verification state of the email address
-        $email->verified_at = Carbon::now();
-        $email->verified_ip = Request::ip();
-        $email->save();
+        DB::transaction(function() use($email) {
+            // Set the verification state of the email address
+            $email->verified_at = Carbon::now();
+            $email->verified_ip = Request::ip();
+            $email->save();
+
+            // Link user to balance import aliasses and to alias economy members
+            BalanceImportAlias::where('email', $email->email)
+                ->update(['user_id' => $email->user_id]);
+
+            // Refresh the economy members for a user
+            BalanceImportAlias::refreshEconomyMembersForUser($email->user);
+            CommitBalanceUpdatesForUser::dispatch($email->user_id);
+        });
 
         try {
             // If the user only has one verified email address, send a success and welcome message
@@ -125,7 +139,6 @@ class EmailVerificationManager {
                 // Send the mailable
                 Mail::send($mailable);
             }
-
         } catch (\Exception $e) {}
 
         // Return the result

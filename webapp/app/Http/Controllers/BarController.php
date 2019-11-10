@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
+use App\Jobs\CommitBalanceUpdatesForUser;
+use App\Models\BalanceImportAlias;
 use App\Models\Bar;
+use App\Models\BarMember;
+use App\Models\EconomyMember;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
@@ -89,16 +93,16 @@ class BarController extends Controller {
      * @return Response
      */
     public function show($barId) {
-        // Show info page if user does not have user role
-        if(!perms(Self::permsUser()))
-            return $this->info($barId);
-
         // Get the bar and session user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
 
+        // Show info page if user does not have user role
+        if(!perms(Self::permsUser()) || !$bar->isJoined($user))
+            return $this->info($barId);
+
         // Update the visit time for this member
-        $member = $bar->members(['visited_at'], false)
+        $member = $bar->memberUsers(['visited_at'], false)
             ->where('user_id', $user->id)
             ->first();
         if($member != null) {
@@ -162,15 +166,15 @@ class BarController extends Controller {
 
         // Gather some stats
         $memberCountHour = $bar
-            ->members()
+            ->memberUsers()
             ->wherePivot('visited_at', '>=', Carbon::now()->subHour())
             ->count();
         $memberCountDay = $bar
-            ->members()
+            ->memberUsers()
             ->wherePivot('visited_at', '>=', Carbon::now()->subDay())
             ->count();
         $memberCountMonth = $bar
-            ->members()
+            ->memberUsers()
             ->wherePivot('visited_at', '>=', Carbon::now()->subMonth())
             ->count();
         $productCount = $bar->economy->products()->count();
@@ -344,7 +348,8 @@ class BarController extends Controller {
     public function doJoin(Request $request, $barId) {
         // Get the bar, community and user
         $bar = \Request::get('bar');
-        $community = \Request::get('community');
+        $community = $bar->community;
+        $economy = $bar->economy;
         $user = barauth()->getSessionUser();
 
         // Self enroll must be enabled
@@ -371,20 +376,18 @@ class BarController extends Controller {
             }
         }
 
-        // Join the community
-        if(!$community->isJoined($user)) {
-            // TODO: ensure the user has permission to join this community
-
-            // Check whether to join their community
-            $joinCommunity = is_checked($request->input('join_community'));
-
-            // Join the community
-            if($joinCommunity)
+        // Join the community, economy and bar
+        DB::transaction(function() use($community, $economy, $bar, $user) {
+            if(!$community->isJoined($user))
                 $community->join($user);
-        }
+            if(!$economy->isJoined($user))
+                $economy->join($user);
+            $bar->join($user);
 
-        // Join the user
-        $bar->join($user);
+            // Refresh economy member entries, and commit
+            BalanceImportAlias::refreshEconomyMembersForUser($user);
+            CommitBalanceUpdatesForUser::dispatch($user->id);
+        });
 
         // Redirect to the bar page
         return redirect()
@@ -424,9 +427,54 @@ class BarController extends Controller {
         // Get the bar and user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
+        $community = $bar->community;
+        $economy = $bar->economy;
 
-        // Leave the user
-        $bar->leave($user);
+        // Leave bar and community
+        // TODO: make sure user can actually leave this bar (with economy and community)
+        DB::transaction(function() use($bar, $user, $community, $economy) {
+            // Leave the bar
+            $bar->leave($user);
+
+            // Leave economy if not bar member anymore and if member has no balance import alias
+            if($economy->isJoined($user)) {
+                $barIds = $economy
+                    ->bars()
+                    ->select('id')
+                    ->pluck('id');
+                $memberInEconomyBars = BarMember::whereIn('bar_id', $barIds)
+                    ->where('user_id', $user->id)
+                    ->limit(1)
+                    ->count() > 0;
+                $memberHasAliases = $economy
+                    ->members()
+                    ->user($user)
+                    ->firstOrFail()
+                    ->aliases()
+                    ->limit(1)
+                    ->count() > 0;
+                if(!$memberInEconomyBars) {
+                    if($memberHasAliases)
+                        $economy->members()->user($user)->limit(1)->update(['user_id' => null]);
+                    else
+                        $economy->leave($user);
+                }
+            }
+
+            // Leave community if not bar member anymore without special role
+            if($community->isJoined($user) && $community->member($user)->role == 0) {
+                $barIds = $community
+                    ->bars()
+                    ->select('id')
+                    ->pluck('id');
+                $memberInCommunityBars = BarMember::whereIn('bar_id', $barIds)
+                    ->where('user_id', $user->id)
+                    ->limit(1)
+                    ->count() > 0;
+                if(!$memberInCommunityBars)
+                    $community->leave($user);
+            }
+        });
 
         // Redirect to the bar page
         return redirect()
@@ -515,64 +563,65 @@ class BarController extends Controller {
     }
 
     /**
-     * API route for listing users in this bar, products can be bought for.
+     * API route for listing economy members in this bar, products can be bought for.
      *
-     * // TODO: limit user fields returned here
+     * // TODO: limit member fields returned here
      *
      * @return Response
      */
-    public function apiBuyUsers($barId) {
+    public function apiBuyMembers($barId) {
         // Get the bar, current user and the search query
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
+        $economy = $bar->economy;
+        $economy_member = $economy->members()->user($user)->firstOrFail();
         $search = \Request::query('q');
         $product_ids = json_decode(\Request::query('product_ids'));
 
         // Return a default user list, or search based on a given query
         if(empty($search)) {
-            // Add the current user
-            $users = collect([$user]);
+            // Add the current member
+            $members = collect([$economy_member]);
 
-            // Build a list of users most likely to buy new products
+            // Build a list of members most likely to buy new products
             // Specifically for selected products first, then fill gor any
             $limit = 6;
             if(!empty($product_ids))
-                $users = $users->merge($this->getProductBuyUserList(
+                $members = $members->merge($this->getProductBuyMemberList(
                     $bar,
                     $limit,
                     [$user->id],
                     $product_ids
                 ));
-            $users = $users->merge($this->getProductBuyUserList(
+            $members = $members->merge($this->getProductBuyMemberList(
                 $bar,
-                $limit - $users->count(),
-                $users->pluck('id')
+                $limit - $members->count(),
+                $members->pluck('user_id')
             ));
         } else
-            $users = $bar
-                ->members([], false)
-                ->search($search)
-                ->select(['users.id', 'first_name', 'last_name'])
-                ->get();
+            $members = $economy->members()->search($search)->get();
 
         // Always appent current user to list if not included
-        $hasCurrent = $users->contains(function($u) use($user) {
-            return $u->id == $user->id;
+        $hasCurrent = $members->contains(function($m) use($economy_member) {
+            return $m->id == $economy_member->id;
         });
         if(!$hasCurrent)
-            $users[] = $user;
+            $members[] = $economy_member;
 
-        // Map extra fields in user object
-        $users = $users->map(function($u) use($user) {
-            $u->me = $u->id == $user->id;
-            return $u;
+        // Set and limit fields to repsond with
+        $members = $members->map(function($m) use($economy_member) {
+            $m->name = $m->user != null
+                ? $m->user->first_name . ' ' . $m->user->last_name
+                : $m->aliases()->firstOrFail()->name;
+            $m->me = $m->id == $economy_member->id;
+            return $m->only(['id', 'name', 'me']);
         });
 
-        return $users;
+        return $members;
     }
 
     /**
-     * Get a list of users that are most likely to buy new products.
+     * Get a list of economy members that are most likely to buy new products.
      * This is shown in the advanced product buying page.
      *
      * A list of product IDs may be given to limit the most lickly buy hunting
@@ -582,8 +631,10 @@ class BarController extends Controller {
      * @parma int $limit The limit of users to return, might be less.
      * @param int[]|null [$ignore_user_ids] List of user IDs to ignore.
      * @param int[]|null [$product_ids] List of product IDs to prefer.
+     *
+     * @return EconomyMember[]
      */
-    private function getProductBuyUserList(Bar $bar, $limit, $ignore_user_ids = null, $product_ids = null) {
+    private function getProductBuyMemberList(Bar $bar, $limit, $ignore_user_ids = null, $product_ids = null) {
         // Return nothing if the limit is too low
         if($limit <= 0)
             return [];
@@ -598,15 +649,15 @@ class BarController extends Controller {
         if(!empty($product_ids))
             $query = $query->whereIn('mutations_product.product_id', $product_ids);
 
-        // Finalize query, get user IDs
+        // Finalize query, get member IDs
         $user_ids = $query->limit(100)
             ->get(['mutations.owner_id'])
             ->pluck('owner_id')
             ->unique()
             ->take($limit);
 
-        // Fetch and return the users
-        return User::whereIn('id', $user_ids)->get();
+        // Fetch and return the members for these users
+        return $bar->economy->members()->whereIn('user_id', $user_ids)->get();
     }
 
     /**
@@ -631,14 +682,14 @@ class BarController extends Controller {
                 $products = collect($userItem['products']);
 
                 // Retrieve user and product models from database
-                $user = $bar->members()->findOrFail($user['id']);
+                $member = $economy->members()->findOrFail($user['id']);
                 $products = $products->map(function($product) use($economy) {
                     $product['product'] = $economy->products()->findOrFail($product['product']['id']);
                     return $product;
                 });
 
                 // Buy the products, increase product count
-                $result = $self->buyProducts($bar, $user, $products);
+                $result = $self->buyProducts($bar, $member, $products);
                 $productCount += $result['productCount'];
             });
         });
@@ -654,8 +705,12 @@ class BarController extends Controller {
     // TODO: merges with recent product transactions
     // TODO: returns [transaction, currency, price]
     function quickBuyProduct(Bar $bar, $product) {
-        // Get some parameters
+        // Get the user, and economy member
         $user = barauth()->getUser();
+        $economy = $bar->economy;
+        if(!$economy->isJoined($user))
+            $economy->join($user);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
 
         // Build a list of preferred currencies for the user, filter currencies
         // with no price
@@ -697,7 +752,7 @@ class BarController extends Controller {
             ->first();
 
         // Get or create a wallet for the user, get the price
-        $wallet = $user->getOrCreateWallet($bar->economy, $currencies);
+        $wallet = $economy_member->getOrCreateWallet($currencies);
         $currency = $wallet->currency;
         $price = $product
             ->prices
@@ -817,18 +872,18 @@ class BarController extends Controller {
      * Buy the given list of products for the given user.
      *
      * @param Bar $bar The bar to buy the products in.
-     * @param User $user The user to buy the products for.
+     * @param EconomyMember $economy_member The economy member to buy the products for.
      * @param array $products [[quantity: int, product: Product]] List of
      *      products and quantities to buy.
      */
     // TODO: support paying in multiple currencies for different products at the same time
     // TODO: make a request when paying for other users
-    function buyProducts(Bar $bar, User $user, $products) {
+    function buyProducts(Bar $bar, EconomyMember $economy_member, $products) {
         $products = collect($products);
 
-        // Build a list of preferred currencies for the user, filter currencies
+        // Build a list of preferred currencies for the member, filter currencies
         // with no price
-        $currencies = Self::userCurrencies($bar, $user)
+        $currencies = Self::userCurrencies($bar, $economy_member)
             ->filter(function($currency) use($products) {
                 $product = $products[0]['product'];
                 return $product->prices->contains('currency_id', $currency->id);
@@ -837,8 +892,8 @@ class BarController extends Controller {
             throw new \Exception("Could not quick buy product, no supported currencies");
         $currency_ids = $currencies->pluck('id');
 
-        // Get or create a wallet for the user, get the price
-        $wallet = $user->getOrCreateWallet($bar->economy, $currencies);
+        // Get or create a wallet for the economy member, get the price
+        $wallet = $economy_member->getOrCreateWallet($currencies);
         $currency = $wallet->currency;
 
         // Select the price for each product, find the total price
@@ -864,6 +919,9 @@ class BarController extends Controller {
 
         // TODO: notify user if wallet is created?
 
+        // Get the user
+        $user = $economy_member->user;
+
         // Start a database transaction for the product transaction
         // TODO: create a nice generic builder for the actions below
         $out = null;
@@ -872,7 +930,7 @@ class BarController extends Controller {
             // Create the transaction or use last transaction
             $transaction = $last_transaction ?? Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
-                'owner_id' => $user->id,
+                'owner_id' => $user != null ? $user->id : null,
             ]);
 
             // Determine whether the product was free
@@ -891,7 +949,7 @@ class BarController extends Controller {
                         'amount' => $price,
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
-                        'owner_id' => $user->id,
+                        'owner_id' => $user != null ? $user->id : null,
                     ]);
                 $mut_wallet->setMutationable(
                     MutationWallet::create([
@@ -916,7 +974,7 @@ class BarController extends Controller {
                         'amount' => -$product['priceTotal'],
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
-                        'owner_id' => $user->id,
+                        'owner_id' => $user != null ? $user->id : null,
                         'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
                     ]);
                 $mut_product->setMutationable(
@@ -990,24 +1048,29 @@ class BarController extends Controller {
      * prices are available in different currencies.
      *
      * @param Bar $bar The bar the user is in.
-     * @param User $user|null The user or null for the current user.
+     * @param EconomyMemberUser $user|null The user or null for the current user.
      *
      * @return [EconomyCurrency] A list of preferred currencies.
      */
+    // TODO: only support economy member here, not user
     // TODO: move this function to some other class, user class?
-    static function userCurrencies($bar, $user) {
+    static function userCurrencies($bar, $member) {
         // TODO: optimize queries here!
 
-        // Select the user
-        if($user === null)
-            $user = barauth()->getUser();
+        // Get the economy
+        $economy = $bar->economy;
+
+        // Select the user, get the economy and economy member
+        if($member === null)
+            $member = barauth()->getUser();
+        if(!($member instanceof EconomyMember))
+            $member = $economy->members()->user($member)->first();
 
         // Get the user wallets, sort by preferred
-        $wallets = $bar->economy->userWallets($user)->get();
+        $wallets = $member->wallets;
         $currencies = $wallets
-            ->map(function($w) use($bar) {
-                return $bar
-                    ->economy
+            ->map(function($w) use($economy) {
+                return $economy
                     ->currencies()
                     ->where('currency_id', $w->currency_id)
                     ->first();
@@ -1019,8 +1082,7 @@ class BarController extends Controller {
 
         // Add other available currencies to list user has no wallet for yet
         // TODO: somehow sort this by relevance, or let bar owners sort
-        $barCurrencies = $bar
-            ->economy
+        $barCurrencies = $economy
             ->currencies()
             ->where('enabled', true)
             ->where('allow_wallet', true)

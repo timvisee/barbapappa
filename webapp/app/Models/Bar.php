@@ -111,6 +111,15 @@ class Bar extends Model {
     }
 
     /**
+     * A list of bar member models for users that joined this bar.
+     *
+     * @return Query for list of bar member models.
+     */
+    public function members() {
+        return $this->hasMany(BarMember::class);
+    }
+
+    /**
      * A list of users that joined this bar.
      *
      * @param array [$pivotColumns] An array of pivot columns to include.
@@ -118,7 +127,7 @@ class Bar extends Model {
      *
      * @return Query for list of users that are member.
      */
-    public function members($pivotColumns = ['role'], $withTimestamps = true) {
+    public function memberUsers($pivotColumns = ['id', 'role'], $withTimestamps = true) {
         // Query relation with pivot model
         $query = $this->belongsToMany(
                 User::class,
@@ -145,7 +154,7 @@ class Bar extends Model {
      * @return int Member count.
      */
     public function memberCount() {
-        return $this->members([], false)->count();
+        return $this->memberUsers([], false)->count();
     }
 
     /**

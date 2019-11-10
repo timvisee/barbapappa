@@ -19,10 +19,13 @@ use App\Utils\EmailRecipient;
  * This represents a user wallet in an economy.
  *
  * @property int id
- * @property int economy_id
+ * @property int economy_member_id
+ * @property-read EconomyMember economy_member
  * @property string name
  * @property decimal balance
  * @property int currency_id
+ * @property-read Currency currency
+ * @property-read Currency economy_currency
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -33,27 +36,17 @@ class Wallet extends Model {
     protected $table = 'wallets';
 
     protected $fillable = [
-        'economy_id',
         'name',
         'currency_id',
     ];
 
     /**
-     * Get the user this wallet model is from.
+     * Get the economy member this wallet model is from.
      *
-     * @return The user.
+     * @return The economy member.
      */
-    public function user() {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the economy this wallet model is part of.
-     *
-     * @return The economy.
-     */
-    public function economy() {
-        return $this->belongsTo(Economy::class);
+    public function economyMember() {
+        return $this->belongsTo(EconomyMember::class);
     }
 
     /**
@@ -81,7 +74,7 @@ class Wallet extends Model {
             'currency_id',
             'currency_id',
             'id'
-        )->where('economy_id', $this->economy_id);
+        )->where('economy_id', $this->economyMember->economy_id);
     }
 
     /**
@@ -158,9 +151,8 @@ class Wallet extends Model {
     // TODO: attempt to implement some eager loading of the economy model
     public function getUrlShow() {
         return route('community.wallet.show', [
-            // TODO: can we use $this->economy->community_id here?
-            'communityId' => $this->economy->community->human_id,
-            'economyId' => $this->economy_id,
+            'communityId' => $this->economyMember->economy->community->human_id,
+            'economyId' => $this->economyMember->economy_id,
             'walletId' => $this->id,
         ]);
     }

@@ -124,6 +124,7 @@ return [
         'cannotSelfEnroll' => 'Je kunt jezelf niet inschrijven voor deze groep, de functie is uitgeschakeld.',
         'leaveQuestion' => 'Weet je zeker dat je je wilt uitschrijven bij deze groep?',
         'leftThisCommunity' => 'Je bent uitgeschreven bij deze groep.',
+        'cannotLeaveStillBarMember' => 'Je kunt deze groep niet verlaten, omdat je nog lid bent van een bar in deze groep.',
         'protectedByCode' => 'Deze groep is beveiligd met een code. Vraag er naar bij de groep, of scan de groep QR-code als deze beschikbaar is.',
         'protectedByCodeFilled' => 'Deze groep is beveiligd met een code. We hebben de code voor je ingevuld.',
         'incorrectCode' => 'Verkeerde groep code.',
@@ -158,8 +159,8 @@ return [
         'posterBarPreferred' => 'Het is vaak de voorkeur om een poster voor een bar te maken in plaats van voor een groep, omdat gebruikers die lid worden van een groep geen toegang hebben tot het kopen van producten zonder eerst ook lid te worden van een bar. Bezoek de beheers hub van een specifieke bar om daar een poster voor te creëren.',
         'poster' => [
             'thisCommunityUses' => 'Deze groep gebruikt',
-            'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties',
-            'scanQr' => 'scan de QR code met je telefoon, wordt lid en doe een aankoop',
+            'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties:',
+            'scanQr' => 'scan de QR code met je telefoon, word lid en doe een aankoop',
             'orVisit' => 'Of bezoek',
         ],
     ],
@@ -314,6 +315,121 @@ return [
     ],
 
     /**
+     * Balance import system pages.
+     */
+    'balanceImport' => [
+        'title' => 'Saldoimportsystemen',
+        'system' => 'Systeem',
+        'systems' => 'Systemen',
+        'noSystems' => 'Geen systemen...',
+        'systems#' => '{0} Geen systemen|{1} Systeem|[2,*] :count systemen',
+        'manageSystem' => 'Beheer systeem',
+        'manageSystems' => 'Beheer systemen',
+        'namePlaceholder' => 'Ons systeem op papier',
+        'newSystem' => 'Systeem toevoegen',
+        'editSystem' => 'Systeem aanpassen',
+        'deleteSystem' => 'Systeem verwijderen',
+        'created' => 'Het saldoimportsysteem is aangemaakt.',
+        'changed' => 'Het saldoimportsysteem is opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt dit saldoimportsysteem te verwijderen. Hiermee verwijder je ook alle gerelateerde geïmporteerde data. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'Het saldoimportsysteem is verwijderd.',
+        'cannotDeleteHasEvents' => 'Kan dit systeme niet verwijderen, omdat het gebeurtenissen heeft',
+        'backToSystems' => 'Terug naar systemen',
+        'viewSystem' => 'Systeem bekijken',
+        'unknownSystem' => 'Onbekende systeem',
+    ],
+
+    /**
+     * Balance import event pages.
+     */
+    'balanceImportEvent' => [
+        'title' => 'Saldoimportgebeurtenissen',
+        'event' => 'Gebeurtenis',
+        'events' => 'Gebeurtenissen',
+        'noEvents' => 'Geen gebeurtenissen...',
+        'events#' => '{0} Geen gebeurtenissen|{1} Gebeurtenis|[2,*] :count gebeurtenissen',
+        'manageEvent' => 'Beheer gebeurtenis',
+        'manageEvents' => 'Beheer gebeurtenissen',
+        'namePlaceholder' => '2019 Januari',
+        'newEvent' => 'Gebeurtenis toevoegen',
+        'editEvent' => 'Gebeurtenis aanpassen',
+        'deleteEvent' => 'Gebeurtenis verwijderen',
+        'created' => 'De saldoimportgebeurtenis is aangemaakt.',
+        'changed' => 'De saldoimportgebeurtenis is opgeslagen.',
+        'deleteQuestion' => 'Je staat op het punt deze saldoimportgebeurtenis te verwijderen. Hiermee verwijder je ook alle geïmporteerde data. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'De saldoimportgebeurtenis is verwijderd.',
+        'cannotDeleteHasChanges' => 'Kan deze gebeurtenis niet verwijderen, omdat het geimporteerde aanpassingen',
+        'backToEvents' => 'Terug naar gebeurtenissen',
+        'viewEvent' => 'Gebeurtenis bekijken',
+        'unknownEvent' => 'Onbekende gebeurtenis',
+    ],
+
+    /**
+     * Balance import change pages.
+     */
+    'balanceImportChange' => [
+        'title' => 'Saldoimportveranderingen',
+        'change' => 'Verandering',
+        'changes' => 'Veranderingen',
+        'noChanges' => 'Geen veranderingen...',
+        'approvedChanges' => 'Goedgekeurde veranderingen',
+        'unapprovedChanges' => 'Niet gekeurde veranderingen',
+        'noApprovedChanges' => 'Geen gekeurde veranderingen...',
+        'noUnapprovedChanges' => 'Geen niet-gekeurde veranderingen...',
+        'changes#' => '{0} Geen veranderingen|{1} Verandering|[2,*] :count veranderingen',
+        'manageChange' => 'Beheer verandering',
+        'manageChanges' => 'Beheer veranderingen',
+        'newChange' => 'Verandering toevoegen',
+        'importJsonChanges' => 'JSON verandering importeren',
+        'editChange' => 'Verandering aanpassen',
+        'approveChange' => 'Verandering goedkeuren',
+        'approveAll' => 'Alles goedkeuren',
+        'undoChange' => 'Verandering ongedaan maken',
+        'deleteChange' => 'Verandering verwijderen',
+        'created' => 'De saldoimportverandering is geïmporteerd.',
+        'importedJson' => 'De JSON saldoimportveranderingen zijn geimporteerd.',
+        'changed' => 'De saldoimportverandering is opgeslagen.',
+        'approveQuestion' => 'Je staat op het punt deze saldoimportverandering goed te keuren. Dit past de saldoverandering toe in de portemonnee van de gebruiker zodra de gebruiker zich inschrijft bij een gekoppelde bar. Weet je zeker dat je door wilt gaan?',
+        'approved' => 'De saldoimportgebeurtenis is goedgekeurd en zal in de achtergrond toegepast worden bij de gebruiker.',
+        'approveAllQuestion' => 'Je staat op het punt alle saldoimportverandering goed te keuren in de \':event\' gebeurtenis. Dit past de saldoveranderingen toe in de portemonnee van de gebruiker zodra de gebruiker zich inschrijft bij een gekoppelde bar. Weet je zeker dat je door wilt gaan?',
+        'approvedAll' => 'De saldoimportgebeurtenissen zijn goedgekeurd en zullen in de achtergrond toegepast worden bij de gebruiker.',
+        'undoQuestion' => 'Je staat op het punt om deze saldoimportverandering ongedaan te maken. Dit zal de status op niet-goedgekeurd zetten, en toegepaste saldo aanpassingen bij de gebruiker zullen teruggedraaid worden. Weet je zeker dat je door wilt gaan?',
+        'undone' => 'The balance import change has been undone.',
+        'deleteQuestion' => 'Je staat op het punt deze saldoimportverandering te verwijderen. Een mutatie in een portemonnee van een gebruiker die al toegewijd is als resultaat van deze verandering zal niet worden teruggedraaid, en de portemonnee mutatie zal dan ontkoppeld worden. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'De saldoimportverandering is verwijderd.',
+        'backToChanges' => 'Terug naar veranderingen',
+        'viewChange' => 'Verandering bekijken',
+        'unknownChange' => 'Onbekende verandering',
+        'finalBalance' => 'Eindsaldo',
+        'jsonData' => 'JSON data',
+        'cost' => 'Kosten',
+        'enterAliasNameEmail' => 'Vul de naam en het e-mailadres in voor de gebruiker voor wie je saldo importeert. Het e-mailadres zal gebruikt worden om automatisch het geïmporteerde saldo te koppelen aan de portemonnee van een geregistreerde gebruiker.',
+        'selectCurrency' => 'Selecteer het valuta voor deze import.',
+        'balanceOrCostDescription' => 'Vul het eindsaldo of de kosten voor de gebruiker in.<br><br>Voor periodieke saldoimports, vul het eindsaldo op het moment van de import gebeurtenis in het eindsaldo veld in. Bij de eerste import zal het eindsaldo volledig aan de gebruiker gegeven worden. Bij opvolgende imports zal het verschil tussen het laatste geimporteerde saldo en het eindsaldo aan de gebruiker gegeven worden.<br><br>Voor een enkele kostenopgave, vul het kosten veld in om aan de gebruiker te crediteren. Gebruik een negatief getal om saldo aan de gebruiker te geven. Dit heeft geen effect op het bijgehouden saldo voor periodieke imports voor deze gebruiker.',
+        'enterBalanceOrCost' => 'Vul alleen het eindsaldo of de kosten in.',
+        'importJsonDescription' => 'Importeer periodieke saldo updates vanuit JSON data.<br><br>Voor periodieke saldoimports, vul het eindsaldo op het moment van de import gebeurtenis in het eindsaldo veld in. Bij de eerste import zal het eindsaldo volledig aan de gebruiker gegeven worden. Bij opvolgende imports zal het verschil tussen het laatste geimporteerde saldo en het eindsaldo aan de gebruiker gegeven worden.',
+        'importJsonFieldsDescription' => 'Configureer de veldnamen die voor elke gebruiker gebruikt worden in de JSON data.',
+        'importJsonDataDescription' => 'Vul de JSON data in. Dit moet een JSON array zijn met objecten, waarbij elk object de hierboven geconfigureerde velden bevat.',
+        'hasUnapprovedMustCommit' => 'Sommige veranderingen zijn nog niet goedgekeurd, en zullen niet toegepast worden bij gebruikers.',
+        'mustApprovePreviousFirst' => 'Je moet eerst de vorige saldoimportverandering met een saldo update goedkeuren.',
+        'mustApproveAllPreviousFirst' => 'Je moet eerst alle vorige saldoimportverandering voor deze saldoimportveranderingen die je wilt goedkeuren met een saldo update goedkeuren.',
+        'cannotApproveWithFollowingApproved' => 'Je kunt een saldoimportverandering niet goedkeuren, als deze al een latere verandering heeft die goedgekeurd is.',
+        'cannotDeleteMustUndo' => 'Je kunt een verandering die goedgekeurd is niet verwijderen. Je moet dit eerst ongedaan maken.',
+        'cannotUndoIfNewerApproved' => 'Je kunt deze saldoimportverandering niet ongedaan maken, omdat er een nieuwe saldo verandering is die nog geaccepteerd is.',
+    ],
+
+    /**
+     * Balance import alias pages.
+     */
+    'balanceImportAlias' => [
+        'newAliasMustProvideName' => 'Het gegeven e-mailadres is nog niet bekend, dus je moet een naam specificeren.',
+        'newJsonAliasMustProvideName' => 'Het gegeven e-mailadres \':email\' is nog niet bekend, het naam veld mist voor deze gebruiker.',
+        'jsonHasDuplicateAlias' => 'De JSON data bevat meerdere items voor \':email\'.',
+        'aliasAlreadyInEvent' => 'De gebruiker \':email\' heeft al een verandering in deze gebeurtenis',
+        'allowAddingSameUserMultiple' => 'Sta toe dezelfde gebruiker meer dan eens toe te voegen in deze gebeurtenis (Niet aangeraden)',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
@@ -421,6 +537,7 @@ return [
         'to#' => '{0} Naar geen mutaties|{1} Naar 1 mutatie|[2,*] Naar :count mutatie',
         'dependsOn#' => '{0} Afhankelijk van geen mutaties|{1} Afhankelijk van mutatie|[2,*] Afhankelijk van :count mutaties',
         'dependentBy#' => '{0} Afhankelijk door geen mutatiese |{1} Afhankelijk door mutatie|[2,*] Afhankelijk door :count mutaties',
+        'viewMutation' => 'Bekijk mutatie',
         'state' => [
             'pending' => 'In afwachting',
             'processing' => 'Bezig met verwerken',
@@ -562,8 +679,8 @@ return [
         'showCodeOnPoster' => 'Toon code om lid te worden op de poster',
         'poster' => [
             'thisBarUses' => 'Deze bar gebruikt',
-            'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties',
-            'scanQr' => 'scan de QR code met je telefoon, wordt lid en doe een aankoop',
+            'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties:',
+            'scanQr' => 'scan de QR code met je telefoon, word lid en doe een aankoop',
             'orVisit' => 'Of bezoek',
         ],
         'advancedBuy' => [

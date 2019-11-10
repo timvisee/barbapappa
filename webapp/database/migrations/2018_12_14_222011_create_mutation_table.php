@@ -45,6 +45,14 @@ class CreateMutationTable extends Migration {
                 ->on('users')
                 ->onDelete('set null');
         });
+
+        // Link balance import changes to mutations
+        Schema::table('balance_import_change', function (Blueprint $table) {
+            $table->foreign('mutation_id')
+                ->references('id')
+                ->on('mutations')
+                ->onDelete('set null');
+        });
     }
 
     /**
@@ -53,6 +61,11 @@ class CreateMutationTable extends Migration {
      * @return void
      */
     public function down() {
+        // Linked balance import changes to mutations
+        Schema::table('balance_import_change', function (Blueprint $table) {
+            $table->dropForeign(['mutation_id']);
+        });
+
         Schema::dropIfExists('mutations');
     }
 }

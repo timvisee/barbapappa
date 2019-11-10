@@ -65,7 +65,8 @@ class SendBalanceUpdates implements ShouldQueue {
         $users = User::whereExists(function($query) {
                 $query->selectRaw('1')
                     ->from('wallets')
-                    ->whereRaw('wallets.user_id = users.id')
+                    ->join('economy_member', 'economy_member.id', '=', 'wallets.economy_member_id')
+                    ->whereRaw('economy_member.user_id = users.id')
                     ->where('balance', '<>', 0);
             })
             ->whereNotExists(function($query) {

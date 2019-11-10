@@ -38,22 +38,6 @@
             </div>
         @endif
 
-        @if(!$community->isJoined(barauth()->getSessionUser()))
-            <br>
-            <div class="inline field">
-                <div class="ui toggle checkbox">
-                    {{ Form::checkbox('join_community', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
-                    {{ Form::label('join_community', __('pages.bar.alsoJoinCommunity') . ': ' . $community->name) }}
-                </div>
-                {{ ErrorRenderer::inline('join_community') }}
-            </div>
-        @else
-            <p>
-                @lang('pages.bar.alreadyJoinedTheirCommunity'):
-                {{ $community->name }}
-            </p>
-        @endif
-
         <br />
 
         <div class="ui buttons">

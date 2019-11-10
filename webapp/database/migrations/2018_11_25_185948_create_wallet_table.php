@@ -14,20 +14,15 @@ class CreateWalletTable extends Migration {
     public function up() {
         Schema::create('wallets', function(Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('user_id')->unsigned();
-            $table->integer('economy_id')->unsigned();
+            $table->integer('economy_member_id')->unsigned();
             $table->string('name');
             $table->decimal('balance')->default('0.00');
             $table->integer('currency_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('user_id')
+            $table->foreign('economy_member_id')
                 ->references('id')
-                ->on('users')
-                ->onDelete('restrict');
-            $table->foreign('economy_id')
-                ->references('id')
-                ->on('economies')
+                ->on('economy_member')
                 ->onDelete('restrict');
             $table->foreign('currency_id')
                 ->references('id')

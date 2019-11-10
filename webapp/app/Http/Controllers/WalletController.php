@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
 use App\Models\EconomyCurrency;
+use App\Models\EconomyMember;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
+use App\Models\Wallet;
 use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\CommunityRoles;
 use Illuminate\Http\Request;
@@ -29,12 +31,20 @@ class WalletController extends Controller {
      */
     public function index($communityId) {
         // Get the community, find the economies
+        $user = barauth()->getUser();
         $community = \Request::get('community');
         // TODO: only get community economies having at least one bar or user wallet
-        $economies = $community->economies();
+        $economies = $community->economies()->get();
+
+        // Add user wallet count to economy objects
+        $economies = $economies->map(function($economy) use($user) {
+            $member = $economy->members()->user($user)->first();
+            $economy->user_wallet_count = $member != null ? $member->wallets()->count() : 0;
+            return $economy;
+        });
 
         return view('community.wallet.index')
-            ->with('economies', $economies->get());
+            ->with('economies', $economies);
     }
 
     /**
@@ -43,15 +53,18 @@ class WalletController extends Controller {
      * @return Response
      */
     public function list($communityId, $economyId) {
-        // Get the user, community, find economy and user wallets
+        // Get the user, community, find economy, economy member and user wallets
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallets = $economy->userWallets($user)->with('currency')->with('currency');
+        $economy_member = $economy->members()->user($user)->first();
+        $wallets = $economy_member != null
+            ? $economy_member->wallets()->get()
+            : [];
 
         return view('community.wallet.list')
             ->with('economy', $economy)
-            ->with('wallets', $wallets->get());
+            ->with('wallets', $wallets);
     }
 
     /**
@@ -66,9 +79,9 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member
             ->wallets()
-            ->where('economy_id', $economyId)
             ->findOrFail($walletId);
         $transactions = $wallet->lastTransactions();
 
@@ -110,10 +123,18 @@ class WalletController extends Controller {
      * @return Response
      */
     public function doCreate(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the economy and wallet
+        // Get the user, community, find the economy
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+
+        // Ensure user is economy member, get the member
+        if(!$economy->isJoined($user))
+            $economy->join($user);
+        $economy_member = $economy
+            ->members()
+            ->where('user_id', $user->id)
+            ->firstOrFail();
 
         // Validate
         $this->validate($request, [
@@ -125,9 +146,9 @@ class WalletController extends Controller {
         $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
 
         // Create the wallet
-        // TODO: create wallet through model!
-        $wallet = $user->wallets()->create([
-            'economy_id' => $economyId,
+        $wallet = $economy_member->wallets()->create([
+            'economy_id' => $economy->id,
+            'user_id' => $user->id,
             'name' => $request->input('name'),
             'currency_id' => $currencyId,
         ]);
@@ -144,14 +165,12 @@ class WalletController extends Controller {
      * @return Response
      */
     public function edit($communityId, $economyId, $walletId) {
-        // Get the user, community, find economy and wallet
+        // Get the user, community, find economy, economy member and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
 
         // Show the edit view
         return view('community.wallet.edit')
@@ -169,10 +188,8 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
 
         // Validate
         $this->validate($request, [
@@ -199,10 +216,8 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
 
         // Make sure there's exactly zero balance
         if($wallet->balance != 0.00) {
@@ -232,10 +247,10 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member
             ->wallets()
             ->where('balance', 0.00)
-            ->where('economy_id', $economyId)
             ->findOrFail($walletId);
 
         // TODO: ensure there are no other constraints that prevent deleting the
@@ -262,13 +277,10 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $toWallets = $economy_member
             ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
-        $toWallets = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
             ->where('currency_id', $wallet->currency_id)
             ->where('id', '<>', $walletId)
             ->get();
@@ -292,13 +304,10 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $toWallets = $economy_member
             ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
-        $toWallets = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
             ->where('currency_id', $wallet->currency_id)
             ->where('id', '<>', $walletId)
             ->get();
@@ -317,10 +326,10 @@ class WalletController extends Controller {
         $newWallet = $toWallet == 'new';
 
         // Start a database transaction for the wallet transaction
-        DB::transaction(function() use($user, $economy, $currency, $amount, $wallet, $newWallet, &$toWallet, $toWallets) {
+        DB::transaction(function() use($user, $economy, $economy_member, $currency, $amount, $wallet, $newWallet, &$toWallet, $toWallets) {
             // Create a new wallet or select an existing wallet
             if($newWallet)
-                $toWallet = $user->createWallet($economy, $currency->id);
+                $toWallet = $economy_member->createWallet($currency->id);
             else
                 $toWallet = $toWallets->firstWhere('id', $toWallet);
 
@@ -396,10 +405,8 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
 
         return view('community.wallet.transferUser')
             ->with('economy', $economy)
@@ -418,10 +425,8 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
         $services = $economy->paymentServices()->supportsDeposit()->get();
 
         // TODO: return error if there are no usable services, user can't top-up
@@ -445,10 +450,8 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
         $services = $economy->paymentServices()->supportsDeposit()->get();
         $currency = $wallet->currency;
 
@@ -531,10 +534,8 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $wallet = $user
-            ->wallets()
-            ->where('economy_id', $economyId)
-            ->findOrFail($walletId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
         $transactions = $wallet->transactions();
 
         return view('community.wallet.transactions')

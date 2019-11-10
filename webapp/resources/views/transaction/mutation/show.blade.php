@@ -64,7 +64,7 @@
         $data = $mutation->mutationable;
     @endphp
     @if($data != null)
-        @if($data instanceof MutationWallet)
+        @if($data instanceof MutationWallet && $data->wallet_id != null)
             @php
                 // Extend page links
                 $menulinks[] = [

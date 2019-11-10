@@ -325,20 +325,22 @@ class Transaction extends Model {
      *
      * A database transaction must be active.
      *
+     * @param bool [$force=false] True to attempt to force.
+     *
      * @throws \Exception Throws if we cannot undo right now or if not in a
      *      database transaction.
      */
-    public function undo() {
+    public function undo($force = false) {
         // We must be in a database transaction
         assert_transaction();
 
         // Assert we can undo
-        if(!$this->canUndo())
+        if(!$this->canUndo($force))
             throw new \Exception("Attempting to undo transaction while this is not allowed");
 
         // Undo all mutations, and delete them
-        $this->mutations->each(function($m) {
-            $m->undo(true);
+        $this->mutations->each(function($m) use($force) {
+            $m->undo(true, $force);
         });
 
         // Delete this transaction
@@ -351,20 +353,22 @@ class Transaction extends Model {
      *
      * This check is expensive.
      *
+     * @param bool [$force=false] True to check if we can udno when forcing.
+     *
      * @return bool True if it can be undone, false if not.
      */
-    public function canUndo() {
+    public function canUndo($force = false) {
         // TODO: has permission?
 
         // All mutations must be undoable
-        $canUndo = $this->mutations->every(function($m) {
-            return $m->canUndo();
+        $canUndo = $this->mutations->every(function($m) use($force) {
+            return $m->canUndo($force);
         });
         if(!$canUndo)
             return false;
 
         // Assert the max lifetime for undoing, return result
-        return !$this
+        return $force || !$this
             ->created_at
             ->copy()
             ->addSeconds(Self::UNDO_MAX_LIFETIME)

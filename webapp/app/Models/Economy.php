@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
+use App\Traits\Joinable;
 use App\Utils\EmailRecipient;
 use BarPay\Models\Service as PayService;
 use Carbon\Carbon;
@@ -23,6 +24,8 @@ use Illuminate\Support\Facades\Mail;
  * @property Carbon updated_at
  */
 class Economy extends Model {
+
+    use Joinable;
 
     protected $fillable = ['name'];
 
@@ -84,35 +87,23 @@ class Economy extends Model {
     }
 
     /**
-     * Get a relation to the wallets created by the current logged in user in
-     * this economy.
+     * Get a relation to all configured balance import systems linked to this
+     * economy.
      *
-     * @param User|null [$user=null] The user, null to use the currently
-     *      authenticated user.
-     * @param bool [$sort=true] True to sort by relevance, yielding the most
-     *      relevant wallet first.
-     *
-     * @return A relation to the user wallets.
+     * @return List of balance import systems.
      */
-    public function userWallets($user = null, $sort = true) {
-        // Use the currently authenticated user if null
-        if($user == null)
-            $user = barauth()->getUser();
+    public function balanceImportSystems() {
+        return $this->hasMany(BalanceImportSystem::class);
+    }
 
-        // TODO: put primary wallet first
-        // TODO: properly sort here!
-
-        // Get the wallets and return
-        $query = $this
-            ->wallets()
-            ->where('user_id', $user->id);
-
-        // Sort by balance for now
-        if($sort)
-            $query = $query
-                ->orderBy('balance', 'DESC');
-
-        return $query;
+    /**
+     * Get a relation to all configured balance import aliasses linked to this
+     * economy.
+     *
+     * @return List of balance import aliasses.
+     */
+    public function balanceImportAliasses() {
+        return $this->hasMany(BalanceImportAlias::class);
     }
 
     // /**
@@ -164,6 +155,53 @@ class Economy extends Model {
     }
 
     /**
+     * A list of economy member models for users that joined this economy.
+     *
+     * @return Query for list of economy member models.
+     */
+    public function members() {
+        return $this->hasMany(EconomyMember::class);
+    }
+
+    /**
+     * A list of users that joined this economy.
+     *
+     * @param array [$pivotColumns] An array of pivot columns to include.
+     * @param boolean [$withTimestamps=true] True to include timestamp columns.
+     *
+     * @return Query for list of users that are member.
+     */
+    public function memberUsers($pivotColumns = ['id'], $withTimestamps = true) {
+        // Query relation with pivot model
+        $query = $this->belongsToMany(
+                User::class,
+                'economy_member',
+                'economy_id',
+                'user_id'
+            )
+            ->using(EconomyMember::class);
+
+        // With pivot columns
+        if(!empty($pivotColumns))
+            $query = $query->withPivot($pivotColumns);
+
+        // With timestamps
+        if($withTimestamps)
+            $query = $query->withTimestamps();
+
+        return $query;
+    }
+
+    /**
+     * Count the members this economy has.
+     *
+     * @return int Member count.
+     */
+    public function memberCount() {
+        return $this->memberUsers([], false)->count();
+    }
+
+    /**
      * Go through all wallets of the current user in this economy, and calculate
      * the total balance.
      *
@@ -185,8 +223,12 @@ class Economy extends Model {
      *      code and whether the value is approximate.
      */
     public function calcBalance() {
+        // Get the user and economy member if available
+        $user = barauth()->getUser();
+        $economy_member = $this->members()->user($user)->first();
+
         // Obtain the wallets, return zero with default currency if none
-        $wallets = $this->userWallets()->with('currency')->get();
+        $wallets = $economy_member != null ? $economy_member->wallets()->with('currency')->get() : collect();
         if($wallets->isEmpty())
             return [0, config('currency.default'), false];
 
@@ -224,8 +266,17 @@ class Economy extends Model {
      * @return boolean True if the user has a wallet, false if not.
      */
     public function userHasBalance() {
-        return $this
-            ->userWallets()
+        // Get the user and economy member if available
+        $user = barauth()->getUser();
+        $economy_member = $this->members()->user($user)->first();
+
+        // Return if user is not an economy member
+        if($economy_member == null)
+            return false;
+
+        // Count any wallets with non-zero balance
+        return $economy_member
+            ->wallets()
             ->where('balance', '<>', 0)
             ->limit(1)
             ->count() > 0;

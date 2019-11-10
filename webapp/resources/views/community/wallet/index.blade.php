@@ -44,7 +44,7 @@
                 {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}
 
                 <span class="sub-label">
-                    {{ trans_choice('pages.wallets.#wallets', $economy->userWallets->count()) }}
+                    {{ trans_choice('pages.wallets.#wallets', $economy->user_wallet_count) }}
                 </span>
             </a>
         @empty

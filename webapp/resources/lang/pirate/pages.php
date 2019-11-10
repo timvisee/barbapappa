@@ -124,6 +124,7 @@ return [
         'leaveQuestion' => 'Ye be sure to sink th\' crew?',
         'cannotSelfEnroll' => 'Ye cannot join dis crew yerself, it be disabled.',
         'leftThisCommunity' => 'Ye sunk th\' crew.',
+        'cannotLeaveStillBarMember' => 'Ye nay leave dis crew, because yer still a member of a bar in dis crew',
         'protectedByCode' => 'Dis crew be protected by a secret. Request it at yer crew, or use yer binoculars to scan the crew Q-ARRRR code if available.',
         'protectedByCodeFilled' => 'Dis crew be protected by a secret. We filled it for ye.',
         'incorrectCode' => 'Crew code be incorrect.',
@@ -314,6 +315,121 @@ return [
     ],
 
     /**
+     * Balance import system pages.
+     */
+    'balanceImport' => [
+        'title' => 'Booty import systems',
+        'system' => 'System',
+        'systems' => 'Systems',
+        'noSystems' => 'Nay systems...',
+        'systems#' => '{0} Nay systems|{1} System|[2,*] :count systems',
+        'manageSystem' => 'Manage system',
+        'manageSystems' => 'Manage systems',
+        'namePlaceholder' => 'Our paper system',
+        'newSystem' => 'Add system',
+        'editSystem' => 'Edit system',
+        'deleteSystem' => 'Delete system',
+        'created' => 'The booty import system be added.',
+        'changed' => 'The booty import system be changed.',
+        'deleteQuestion' => 'Yer \'bout to sink dis booty import system. Dis will sink all related imports. Ye be sure ye want to continue?',
+        'deleted' => 'The booty import system be sunk.',
+        'cannotDeleteHasEvents' => 'Nay delete dis system, because it has import events',
+        'backToSystems' => 'Back to systems',
+        'viewSystem' => 'View system',
+        'unknownSystem' => 'Unknown system',
+    ],
+
+    /**
+     * Balance import event pages.
+     */
+    'balanceImportEvent' => [
+        'title' => 'Booty import events',
+        'event' => 'Event',
+        'events' => 'Events',
+        'noEvents' => 'Nay events...',
+        'events#' => '{0} Nay events|{1} Event|[2,*] :count events',
+        'manageEvent' => 'Manage event',
+        'manageEvents' => 'Manage events',
+        'namePlaceholder' => '2019',
+        'newEvent' => 'Add event',
+        'editEvent' => 'Edit event',
+        'deleteEvent' => 'Delete event',
+        'created' => 'The booty import event be added.',
+        'changed' => 'The booty import event be changed.',
+        'deleteQuestion' => 'Yer \'bout to sink dis booty import event. Dis will sink all related imports. Ye be sure ye want to continue?',
+        'deleted' => 'The booty import event be sunk.',
+        'cannotDeleteHasChanges' => 'Nay delete dis event, because it has imported changes',
+        'backToEvents' => 'Back to events',
+        'viewEvent' => 'View event',
+        'unknownEvent' => 'Unknown event',
+    ],
+
+    /**
+     * Balance import change pages.
+     */
+    'balanceImportChange' => [
+        'title' => 'Booty import changes',
+        'change' => 'Change',
+        'changes' => 'Changes',
+        'noChanges' => 'Nay changes...',
+        'approvedChanges' => 'Approved changes',
+        'unapprovedChanges' => 'Unapproved changes',
+        'noApprovedChanges' => 'No approved changes...',
+        'noUnapprovedChanges' => 'No unapproved changes...',
+        'changes#' => '{0} Nay changes|{1} Change|[2,*] :count changes',
+        'manageChange' => 'Manage change',
+        'manageChanges' => 'Manage changes',
+        'newChange' => 'Add change',
+        'importJsonChanges' => 'Import JSON changes',
+        'editChange' => 'Edit change',
+        'approveChange' => 'Approve change',
+        'approveAll' => 'Approve all',
+        'undoChange' => 'Undo change',
+        'deleteChange' => 'Delete change',
+        'created' => 'Th\' booty import change be imported.',
+        'importedJson' => 'Th\' JSON booty import changes be imported.',
+        'changed' => 'Th\' booty import change be changed.',
+        'approveQuestion' => 'Yer \'bout to approve dis booty import change. Dis will commit th\' booty change to the wallet of the user when available. Ye be sure ye want to continue?',
+        'approved' => 'Th\' booty import change be approved and be committed to th\' user wallet in th\' background.',
+        'approveAllQuestion' => 'Yer \'bout to approve all booty import change in th\' \':event\' event. Dis will commit all booty change to the wallet of the user when available. Ye be sure ye want to continue?',
+        'approvedAll' => 'Th\' booty import changes be approved and be committed to th\' user wallet in th\' background.',
+        'undoQuestion' => 'Yer \'bout to undo dis booty import change. This will set its state to non-approved, and will revert any committed balance changes in th\' user\'s wallet. Ye be sure ye want to continue?',
+        'undone' => 'Th\' booty import change be undone.',
+        'deleteQuestion' => 'Yer \'bout to sink dis booty import change. Any mutation in a pirate\'s wallet as a result of dis change dat be committed already nay be reverted, and th\' wallet mutation is then unlinked. Dis will sink all related imports. Ye be sure ye want to continue?',
+        'deleted' => 'Th\' booty import change be sunk.',
+        'backToChanges' => 'Back to changes',
+        'viewChange' => 'View change',
+        'unknownChange' => 'Unknown change',
+        'finalBalance' => 'Final balance',
+        'jsonData' => 'JSON data',
+        'cost' => 'Cost',
+        'enterAliasNameEmail' => 'Enter th\' name \'nd e-bottle coordinate of th\' pirate yer importing booty for. The e-bottle coordinate be used to automatically link booty to th\' wallet of a registered pirate.',
+        'selectCurrency' => 'Select th\' currency for dis import.',
+        'balanceOrCostDescription' => 'Enter either th\' final balance or cost for th\' user.<br><br>For periodic balance imports, enter th\' final balance at time of the import event in th\' final balance field. On first import, th\' final balance be fully given to th\' user. On subsequent imports th\' difference between th\' last imported balance and th\' given final balance be given to th\' user.<br><br>For a one-time cost import, fill in th\' cost field to credit th\' user. Use a negative value to give the user balance. Dis has no effect on th\' tracked balance of periodic imports for dis user.',
+        'enterBalanceOrCost' => 'Provide either th\' final balance or cost.',
+        'importJsonDescription' => 'Import periodic balance updates from JSON data.<br><br>On first import, th\' final balance be fully given to th\' user. On subsequent imports th\' difference between th\' last imported balance and th\' given final balance be given to th\' user.',
+        'importJsonFieldsDescription' => 'Configure th\' field names used in JSON data for each user.',
+        'importJsonDataDescription' => 'Enter JSON data. Must be a JSON array with objects, each having fields as configured above.',
+        'hasUnapprovedMustCommit' => 'Some changes nay be approved, and nay be applied to users until they are.',
+        'mustApprovePreviousFirst' => 'Ye must approve th\' previous booty import change that be a balance update first.',
+        'mustApproveAllPreviousFirst' => 'Ye must approve all previous booty import changes for the changes ye want to approve now that be a balance update first.',
+        'cannotApproveWithFollowingApproved' => 'Ye nay approve a change, having a later change be approved already.',
+        'cannotDeleteMustUndo' => 'Ye nay sink a change that be approved. Ye must undo it first.',
+        'cannotUndoIfNewerApproved' => 'Ye nay undo dis booty import change, because there be a newer balance change for dis user that still be accepted.',
+    ],
+
+    /**
+     * Balance import alias pages.
+     */
+    'balanceImportAlias' => [
+        'newAliasMustProvideName' => 'Th\' given e-bottle coordinate nay be known, ye must provide a name.',
+        'newJsonAliasMustProvideName' => 'Th\' given e-bottle coordinate \':email\' nay be known, missing name field for dis user.',
+        'jsonHasDuplicateAlias' => 'Th\' JSON data contains multiple items for \':email\'.',
+        'aliasAlreadyInEvent' => 'Th\' user \':email\' already has a change in dis event',
+        'allowAddingSameUserMultiple' => 'Allow adding th\' same user more than once in current event (Not recommended)',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
@@ -421,6 +537,7 @@ return [
         'to#' => '{0} To no mutations|{1} To 1 mutation|[2,*] To :count mutations',
         'dependsOn#' => '{0} Depends on no mutations|{1} Depends on mutation|[2,*] Depends on :count mutations',
         'dependentBy#' => '{0} Dependent by no mutations|{1} Dependent by mutation|[2,*] Dependent by :count mutations',
+        'viewMutation' => 'View mutation',
         'state' => [
             'pending' => 'Pendin\'',
             'processing' => 'Processin\'',

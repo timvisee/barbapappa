@@ -124,6 +124,7 @@ return [
         'cannotSelfEnroll' => 'You cannot join this community yourself, it is disabled.',
         'leaveQuestion' => 'Are you sure you want to leave this community?',
         'leftThisCommunity' => 'You left this community.',
+        'cannotLeaveStillBarMember' => 'You cannot leave this community, because you\'re still a member of a bar in this community',
         'protectedByCode' => 'This community is protected by a passcode. Request it at the community, or scan the community QR code if available.',
         'protectedByCodeFilled' => 'This community is protected by a passcode. We\'ve filled it in for you.',
         'incorrectCode' => 'Incorrect community code.',
@@ -314,6 +315,121 @@ return [
     ],
 
     /**
+     * Balance import system pages.
+     */
+    'balanceImport' => [
+        'title' => 'Balance import systems',
+        'system' => 'System',
+        'systems' => 'Systems',
+        'noSystems' => 'No systems...',
+        'systems#' => '{0} No systems|{1} System|[2,*] :count systems',
+        'manageSystem' => 'Manage system',
+        'manageSystems' => 'Manage systems',
+        'namePlaceholder' => 'Our paper system',
+        'newSystem' => 'Add system',
+        'editSystem' => 'Edit system',
+        'deleteSystem' => 'Delete system',
+        'created' => 'The balance import system has been added.',
+        'changed' => 'The balance import system has been changed.',
+        'deleteQuestion' => 'You\'re about to delete this balance import system. This will delete all related imports with it. Are you sure you want to continue?',
+        'deleted' => 'The balance import system has been deleted.',
+        'cannotDeleteHasEvents' => 'Cannot delete this system, because it has import events',
+        'backToSystems' => 'Back to systems',
+        'viewSystem' => 'View system',
+        'unknownSystem' => 'Unknown system',
+    ],
+
+    /**
+     * Balance import event pages.
+     */
+    'balanceImportEvent' => [
+        'title' => 'Balance import events',
+        'event' => 'Event',
+        'events' => 'Events',
+        'noEvents' => 'No events...',
+        'events#' => '{0} No events|{1} Event|[2,*] :count events',
+        'manageEvent' => 'Manage event',
+        'manageEvents' => 'Manage events',
+        'namePlaceholder' => '2019 January',
+        'newEvent' => 'Add event',
+        'editEvent' => 'Edit event',
+        'deleteEvent' => 'Delete event',
+        'created' => 'The balance import event has been added.',
+        'changed' => 'The balance import event has been changed.',
+        'deleteQuestion' => 'You\'re about to delete this balance import event. This will delete all related imports with it. Are you sure you want to continue?',
+        'deleted' => 'The balance import event has been deleted.',
+        'cannotDeleteHasChanges' => 'Cannot delete this event, because it has imported changes',
+        'backToEvents' => 'Back to events',
+        'viewEvent' => 'View event',
+        'unknownEvent' => 'Unknown event',
+    ],
+
+    /**
+     * Balance import change pages.
+     */
+    'balanceImportChange' => [
+        'title' => 'Balance import changes',
+        'change' => 'Change',
+        'changes' => 'Changes',
+        'noChanges' => 'No changes...',
+        'approvedChanges' => 'Approved changes',
+        'unapprovedChanges' => 'Unapproved changes',
+        'noApprovedChanges' => 'No approved changes...',
+        'noUnapprovedChanges' => 'No unapproved changes...',
+        'changes#' => '{0} No changes|{1} Change|[2,*] :count changes',
+        'manageChange' => 'Manage change',
+        'manageChanges' => 'Manage changes',
+        'newChange' => 'Add change',
+        'importJsonChanges' => 'Import JSON changes',
+        'editChange' => 'Edit change',
+        'approveChange' => 'Approve change',
+        'approveAll' => 'Approve all',
+        'undoChange' => 'Undo change',
+        'deleteChange' => 'Delete change',
+        'created' => 'The balance import change has been imported.',
+        'importedJson' => 'The JSON balance import changes have been imported.',
+        'changed' => 'The balance import change has been changed.',
+        'approveQuestion' => 'You\'re about to approve this balance import change. This will commit the balance change to the wallet of the user when available. Are you sure you want to continue?',
+        'approved' => 'The balance import change has been approved and will be committed to the user in the background.',
+        'approveAllQuestion' => 'You\'re about to approve all balance import changes in the \':event\' event. This will commit the balance changes to the wallet of the user when available. Are you sure you want to continue?',
+        'approvedAll' => 'The balance import changes have been approved and will be committed to the user in the background.',
+        'undoQuestion' => 'You\'re about to undo this balance import change. This will set its state to non-approved, and will revert any committed balance changes in the user\'s wallet. Are you sure you want to continue?',
+        'undone' => 'The balance import change has been undone.',
+        'deleteQuestion' => 'You\'re about to delete this balance import change. Any mutation in a user wallet as a result of this change that is already committed will not be reverted, and the wallet mutation is then unlinked. Are you sure you want to continue?',
+        'deleted' => 'The balance import change has been deleted.',
+        'backToChanges' => 'Back to changes',
+        'viewChange' => 'View change',
+        'unknownChange' => 'Unknown change',
+        'finalBalance' => 'Final balance',
+        'jsonData' => 'JSON data',
+        'cost' => 'Cost',
+        'enterAliasNameEmail' => 'Enter the name and e-mail address of the user you\'re importing the balance for. The e-mail address will be used to automatically link the balance to the wallet of a registered user.',
+        'selectCurrency' => 'Select the currency for this import.',
+        'balanceOrCostDescription' => 'Enter either the final balance or cost for the user.<br><br>For periodic balance imports, enter the final balance at the time of the import event in the final balance field. On first import, the final balance is fully given to the user. On subsequent imports the difference between the last imported balance and the given final balance is given to the user.<br><br>For a one-time cost import, fill in the cost field to credit the user. Use a negative value to give the user balance. This has no effect on the tracked balance of period imports for this user.',
+        'enterBalanceOrCost' => 'Provide either the final balance or cost.',
+        'importJsonDescription' => 'Import periodic balance updates from JSON data.<br><br>On first import, the final balance is fully given to the user. On subsequent imports the difference between the last imported balance and the given final balance is given to the user.',
+        'importJsonFieldsDescription' => 'Configure the field names used in the JSON data for each user.',
+        'importJsonDataDescription' => 'Enter the JSON data. Must be a JSON array with objects, each having the fields as configured above.',
+        'hasUnapprovedMustCommit' => 'Some changes are not yet approved, and will not be applied to users until they are.',
+        'mustApprovePreviousFirst' => 'You must approve the previous balance import change that has a balance update first.',
+        'mustApproveAllPreviousFirst' => 'You must approve the previous balance import changes for the changes you want to approve now that have a balance update first.',
+        'cannotApproveWithFollowingApproved' => 'You cannot approve a change, having a later change has already been approved.',
+        'cannotDeleteMustUndo' => 'You cannot delete a change that is approved. You must undo it first.',
+        'cannotUndoIfNewerApproved' => 'You cannot undo this balance import change, because there\'s a newer balance change for this user that is still accepted.',
+    ],
+
+    /**
+     * Balance import alias pages.
+     */
+    'balanceImportAlias' => [
+        'newAliasMustProvideName' => 'The given email address is not known yet, you must provide a name.',
+        'newJsonAliasMustProvideName' => 'The given email address \':email\' is not known yet, missing name field for this user.',
+        'jsonHasDuplicateAlias' => 'The JSON data contains multiple items for \':email\'.',
+        'aliasAlreadyInEvent' => 'The user \':email\' already has a change in this event',
+        'allowAddingSameUserMultiple' => 'Allow adding the same user more than once in the current event (Not recommended)',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
@@ -421,6 +537,7 @@ return [
         'to#' => '{0} To no mutations|{1} To 1 mutation|[2,*] To :count mutations',
         'dependsOn#' => '{0} Depends on no mutations|{1} Depends on mutation|[2,*] Depends on :count mutations',
         'dependentBy#' => '{0} Dependent by no mutations|{1} Dependent by mutation|[2,*] Dependent by :count mutations',
+        'viewMutation' => 'View mutation',
         'state' => [
             'pending' => 'Pending',
             'processing' => 'Processing',

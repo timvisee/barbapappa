@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
+use App\Models\BarMember;
 use App\Models\Community;
 use App\Models\Economy;
 use App\Perms\AppRoles;
@@ -79,7 +80,7 @@ class CommunityController extends Controller {
         $user = barauth()->getSessionUser();
 
         // Update the visit time for this member
-        $member = $community->members(['visited_at'], false)
+        $member = $community->memberUsers(['visited_at'], false)
             ->where('user_id', $user->id)
             ->first();
         if($member != null) {
@@ -118,15 +119,15 @@ class CommunityController extends Controller {
 
         // Gather some stats
         $memberCountHour = $community
-            ->members()
+            ->memberUsers()
             ->wherePivot('visited_at', '>=', Carbon::now()->subHour())
             ->count();
         $memberCountDay = $community
-            ->members()
+            ->memberUsers()
             ->wherePivot('visited_at', '>=', Carbon::now()->subDay())
             ->count();
         $memberCountMonth = $community
-            ->members()
+            ->memberUsers()
             ->wherePivot('visited_at', '>=', Carbon::now()->subMonth())
             ->count();
 
@@ -339,6 +340,20 @@ class CommunityController extends Controller {
         // Get the community and user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
+
+        // Check whether user is member in any community bar
+        // TODO: do this check on community leave page as well
+        $barIds = $community->bars()->pluck('id');
+        $isBarMember = BarMember::where('user_id', $user->id)
+            ->whereIn('bar_id', $barIds)
+            ->limit(1)
+            ->count() > 0;
+        if($isBarMember) {
+            return redirect()
+                ->route('community.show', ['communityId' => $communityId])
+                ->with('error', __('pages.community.cannotLeaveStillBarMember'));
+            return;
+        }
 
         // Leave the user
         $community->leave($user);

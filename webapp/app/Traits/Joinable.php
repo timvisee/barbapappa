@@ -8,9 +8,10 @@ use App\Models\User;
  * A trait for models that are joinable.
  *
  * Implementing this requires a manyToMany relationship available through
- * `members()`.
+ * `memberUsers()`.
  *
  * TODO: only allow implementing on Eloquent models
+ * TODO: use `members()` implementation
  */
 trait Joinable {
 
@@ -21,6 +22,8 @@ trait Joinable {
      * @param User $user The user to join.
      * @param int|null [$role=null] An optional role value to assign to the
      *      user.
+     *
+     *  @throws \Exception Throws if already joined.
      */
     public function join(User $user, $role = null) {
         // Build additional data object
@@ -29,7 +32,7 @@ trait Joinable {
             $data['role'] = $role;
 
         // Attach
-        $this->members()->attach($user, $data);
+        $this->memberUsers()->attach($user, $data);
     }
 
     /**
@@ -39,7 +42,7 @@ trait Joinable {
      * @param User $user The user to leave.
      */
     public function leave(User $user) {
-        $this->members()->detach($user);
+        $this->memberUsers()->detach($user);
     }
 
     /**
@@ -52,9 +55,21 @@ trait Joinable {
     public function isJoined(User $user) {
         // Optimized query
         return $this
-            ->members()
+            ->memberUsers()
             ->limit(1)
             ->where('user_id', $user->id)
             ->count(['user_id']) == 1;
+    }
+
+    /**
+     * Get a member.
+     *
+     * @param User $user The user to get.
+     * @return Memmber instance.
+     *
+     * @throws \Exception Throws if there's no member for this user.
+     */
+    public function member(User $user) {
+        return $this->members()->where('user_id', $user->id)->firstOrFail();
     }
 }

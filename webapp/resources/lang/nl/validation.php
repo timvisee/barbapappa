@@ -140,6 +140,8 @@ return [
         'choice' => 'keuze',
         'confirm' => 'bevestiging',
         'confirm_transfer' => 'bevestiging',
+        'cost' => 'kosten',
+        'balance' => 'saldo',
     ],
 
 ];

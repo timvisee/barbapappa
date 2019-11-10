@@ -19,7 +19,7 @@
                 v-bind:class="{ disabled: buying }"
                 href="#"
                 class="item">
-            {{ user.first_name }} {{ user.last_name }}
+            {{ user.name || __('misc.unknownUser') }}
             <span v-if="user.me" class="subtle">({{ __('misc.me') }})</span>
         </a>
 
@@ -85,7 +85,7 @@
                 // Fetch the list of users, set searching state
                 // TODO: set fixed URL here
                 this.searching = true;
-                axios.get(window.location.href + `/users?q=${encodeURIComponent(query)}&product_ids=${encodeURIComponent(products)}`)
+                axios.get(window.location.href + `/members?q=${encodeURIComponent(query)}&product_ids=${encodeURIComponent(products)}`)
                     .then(res => this.users = res.data)
                     .catch(err => {
                         alert('An error occurred while listing users');
