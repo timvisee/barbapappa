@@ -120,7 +120,7 @@ If money is subtracted from a users wallet, the mutation `money` field will be p
 Therefore if money is added to a users wallet, the mutation `money` field will be negative.
 
 #### Wallet mutation model
-`mutations_wallet`:  
+`mutation_wallet`:  
 - `id`: index
 - `mutation_id`: reference to the super mutation
 - `wallet_id`: reference to the related wallet

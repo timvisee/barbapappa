@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotificationsPaymentRequiresUserTable extends Migration {
+class CreatePasswordResetTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,15 +12,17 @@ class CreateNotificationsPaymentRequiresUserTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('notification_payment_requires_user', function (Blueprint $table) {
+        Schema::create('password_reset', function (Blueprint $table) {
             $table->increments('id')->unsigned();
-            $table->integer('payment_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+            $table->string('token');
+            $table->boolean('used')->default(false);
+            $table->timestamp('expire_at');
             $table->timestamps();
 
-            // TODO: cascade? should remove main notification type as well
-            $table->foreign('payment_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('payment')
+                ->on('user')
                 ->onDelete('cascade');
         });
     }
@@ -31,6 +33,6 @@ class CreateNotificationsPaymentRequiresUserTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('notification_payment_requires_user');
+        Schema::dropIfExists('password_reset');
     }
 }

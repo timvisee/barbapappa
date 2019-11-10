@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNotificationsPaymentRequiresCommunityTable extends Migration {
+class CreateNotificationPaymentRequiresUserTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateNotificationsPaymentRequiresCommunityTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('notification_payment_requires_community', function (Blueprint $table) {
+        Schema::create('notification_payment_requires_user', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('payment_id')->unsigned();
             $table->timestamps();
@@ -31,6 +31,6 @@ class CreateNotificationsPaymentRequiresCommunityTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('notification_payment_requires_community');
+        Schema::dropIfExists('notification_payment_requires_user');
     }
 }
