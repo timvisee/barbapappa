@@ -218,7 +218,14 @@ class User extends Model implements HasLocalePreference {
      * @return The wallets.
      */
     public function wallets() {
-        return $this->hasMany(Wallet::class);
+        return $this->hasManyThrough(
+            Wallet::class,
+            EconomyMember::class,
+            'user_id',
+            'economy_member_id',
+            'id',
+            'id'
+        );
     }
 
     /**
