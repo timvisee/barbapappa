@@ -51,8 +51,8 @@ class ExpirePayment implements ShouldQueue {
             if($payment != null && !$payment->isInProgress())
                 return;
 
-            // Expire the payment
-            $payment->setState(Payment::STATE_REVOKED);
+            // Settle the payment, expire it
+            $payment->settle(Payment::STATE_REVOKED);
         });
     }
 }
