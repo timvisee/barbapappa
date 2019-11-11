@@ -85,6 +85,95 @@
         </div>
     </h2>
 
+    {{-- Checklist --}}
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">@lang('pages.community.checklist')</h5>
+        @if(perms(EconomyController::permsManage()))
+            <a href="{{ route('community.economy.create', ['communityId' => $community->human_id]) }}" class="item">
+                @if($hasEconomy)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                1. @lang('pages.economies.createEconomy')
+            </a>
+        @else
+            <div class="item disabled">
+                @if($hasEconomy)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                1. @lang('pages.economies.createEconomy')
+            </div>
+        @endif
+        @if($hasEconomy && perms(EconomyController::permsManage()))
+            <a href="{{ route('community.economy.currency.create', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $firstEconomy->id,
+                    ]) }}" class="item">
+                @if($hasCurrency)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                2. @lang('pages.currencies.createCurrency')
+            </a>
+        @else
+            <div class="item disabled">
+                @if($hasCurrency)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                2. @lang('pages.currencies.createCurrency')
+            </div>
+        @endif
+        @if($hasCurrency && perms(CommunityController::permsAdminister()))
+            <a href="{{ route('bar.create', ['communityId' => $community->human_id]) }}" class="item">
+                @if($hasBar)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                3. @lang('pages.bar.createBar')
+            </a>
+        @else
+            <div class="item disabled">
+                @if($hasBar)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                3. @lang('pages.bar.createBar')
+            </div>
+        @endif
+    </div>
+
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.community')</h5>
         @if(perms(CommunityController::permsAdminister()))

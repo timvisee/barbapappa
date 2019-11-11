@@ -163,6 +163,7 @@ return [
             'scanQr' => 'scan de QR code met je telefoon, word lid en doe een aankoop',
             'orVisit' => 'Of bezoek',
         ],
+        'checklist' => 'Groep checklist',
     ],
 
     /**

@@ -163,6 +163,7 @@ return [
             'scanQr' => 'scan the QR code with your phone to join and make a purchase',
             'orVisit' => 'Or visit',
         ],
+        'checklist' => 'Community checklist',
     ],
 
     /**

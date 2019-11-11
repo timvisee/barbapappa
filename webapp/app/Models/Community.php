@@ -82,6 +82,18 @@ class Community extends Model {
     }
 
     /**
+     * Get a relation to all economy currencies in all economies.
+     *
+     * @return Relation of currencies.
+     */
+    public function currencies() {
+        return $this->hasManyThrough(
+            EconomyCurrency::class,
+            Economy::class
+        );
+    }
+
+    /**
      * Get a list of bars that are part of this community.
      *
      * @return List of bars.

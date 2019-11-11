@@ -163,6 +163,7 @@ return [
             'scanQr' => 'scan the QR code below to join and make a purchase',
             'orVisit' => 'Or see',
         ],
+        'checklist' => 'Crew checklist',
     ],
 
     /**
