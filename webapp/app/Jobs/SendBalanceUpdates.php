@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Mail\Update\BalanceUpdateMail;
 use App\Models\EmailHistory;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
