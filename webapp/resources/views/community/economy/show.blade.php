@@ -36,6 +36,14 @@
         ]),
         'icon' => 'credit-card',
     ];
+    $menulinks[] = [
+        'name' => __('pages.balanceImport.manageSystems'),
+        'link' => route('community.economy.balanceimport.index', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id
+        ]),
+        'icon' => 'file-import',
+    ];
 @endphp
 
 @section('content')
