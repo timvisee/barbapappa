@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Traits\Joinable;
@@ -208,6 +209,91 @@ class Economy extends Model {
      */
     public function memberCount() {
         return $this->memberUsers([], false)->count();
+    }
+
+    /**
+     * Let the given user join this economy.
+     * This automatically joins the user in the related community.
+     *
+     * @param User $user The user to join.
+     *
+     * @throws \Exception Throws if already joined.
+     */
+    public function join(User $user) {
+        $community = $this->community;
+        $economy = $this;
+
+        // Join the community and economy
+        DB::transaction(function() use($community, $economy, $user) {
+            if(!$community->isJoined($user))
+                $community->join($user);
+            $economy->memberJoin($user);
+
+            // Refresh economy member entries, and commit
+            BalanceImportAlias::refreshEconomyMembersForUser($user);
+            CommitBalanceUpdatesForUser::dispatch($user->id);
+        });
+    }
+
+    /**
+     * Let the given user leave this economy.
+     * Note: this throws an error if the user has not joined.
+     *
+     * @param User $user The user to leave.
+     */
+    public function leave(User $user) {
+        $community = $this->community;
+        $economy = $this;
+
+        // User must not be joined
+        if(!$economy->isJoined($user))
+            throw new Exception("Unable to leave economy, not a member");
+
+        // Leave economy
+        // TODO: make sure user can actually leave this economy (with community)
+        DB::transaction(function() use($user, $community, $economy) {
+            // Leave economy if member has no balance import alias
+            $memberHasAliases = $economy
+                ->members()
+                ->user($user)
+                ->firstOrFail()
+                ->aliases()
+                ->limit(1)
+                ->count() > 0;
+            if($memberHasAliases)
+                $economy->members()->user($user)->limit(1)->update(['user_id' => null]);
+            else
+                $economy->memberLeave($user);
+
+            // Leave community if user is orphan
+            if($community->isJoined($user))
+                $community->leaveIfOrphan($user);
+        });
+    }
+
+    /**
+     * Let the given user leave this community, if it's an orphan.
+     *
+     * The user will leave if:
+     * - it has not joined any economy bars
+     *
+     * @param User $user The user to leave if orphan.
+     * @throws \Exception Throws if the user is not joined.
+     */
+    public function leaveIfOrphan(User $user) {
+        // User must not be a bar member
+        $barIds = $this
+            ->bars()
+            ->select('id')
+            ->pluck('id');
+        $memberInEconomyBars = BarMember::whereIn('bar_id', $barIds)
+            ->where('user_id', $user->id)
+            ->limit(1)
+            ->count() > 0;
+        if($memberInEconomyBars)
+            return;
+
+        $this->leave($user);
     }
 
     /**
