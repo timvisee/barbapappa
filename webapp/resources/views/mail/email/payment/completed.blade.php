@@ -21,7 +21,7 @@
         $details[] = [
             'key' => __('misc.wallet'),
             'valueHtml' => '<a href="' . route('community.wallet.show', [
-                    'communityId' => $wallet->economy->community->human_id,
+                    'communityId' => $wallet->economyMember->economy->community->human_id,
                     'economyId' => $wallet->economy_id,
                     'walletId' => $wallet->id,
                 ]) . '">' . $wallet->name . '</a>',
