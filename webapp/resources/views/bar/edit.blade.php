@@ -62,7 +62,7 @@
             <p>@lang('pages.bar.economyDescription')</p>
         </div>
 
-        <div class="field {{ ErrorRenderer::hasError('economy') ? 'error' : '' }}">
+        <div class="field disabled {{ ErrorRenderer::hasError('economy') ? 'error' : '' }}">
             {{ Form::label('economy', __('pages.community.economy')) }}
 
             <div class="ui fluid selection dropdown">

@@ -286,7 +286,7 @@ class BarController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'economy' => ['required', ValidationDefaults::communityEconomy($community)],
+            // 'economy' => ['required', ValidationDefaults::communityEconomy($community)],
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::barSlug($bar),
             'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
@@ -296,7 +296,7 @@ class BarController extends Controller {
         ]);
 
         // Change the name properties
-        $bar->economy_id = $request->input('economy');
+        // $bar->economy_id = $request->input('economy');
         $bar->name = $request->input('name');
         $bar->slug = $request->has('slug') ? $request->input('slug') : null;
         $bar->description = $request->input('description');
