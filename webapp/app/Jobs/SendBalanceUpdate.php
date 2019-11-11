@@ -37,7 +37,7 @@ class SendBalanceUpdate implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct($user_id) {
+    public function __construct(int $user_id) {
         // Set queue
         $this->onQueue(Self::QUEUE);
         $this->user_id = $user_id;
