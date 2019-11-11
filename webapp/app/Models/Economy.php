@@ -85,7 +85,14 @@ class Economy extends Model {
      * @return The wallets.
      */
     public function wallets() {
-        return $this->hasMany(Wallet::class);
+        return $this->hasManyThrough(
+            Wallet::class,
+            EconomyMember::class,
+            'economy_id',
+            'economy_member_id',
+            'id',
+            'id'
+        );
     }
 
     /**

@@ -34,6 +34,7 @@ use Illuminate\Support\Facades\Mail;
 class Community extends Model {
 
     use HasPassword, HasSlug, Joinable;
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     protected $table = 'community';
 
@@ -95,7 +96,10 @@ class Community extends Model {
      * @return The wallets.
      */
     public function wallets() {
-        return $this->hasManyThrough(Wallet::class, Economy::class);
+        return $this->hasManyDeepFromRelations(
+            $this->economies(),
+            (new Economy)->wallets()
+        );
     }
 
     /**

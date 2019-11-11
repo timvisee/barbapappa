@@ -109,7 +109,7 @@ class Wallet extends Model {
         return $this
             ->hasManyDeepFromRelations(
                 $this->mutations(),
-                (new \App\Models\Mutation)->transaction()
+                (new Mutation)->transaction()
             )
             ->distinct()
             ->latest();
