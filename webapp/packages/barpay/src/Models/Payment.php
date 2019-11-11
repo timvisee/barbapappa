@@ -201,6 +201,43 @@ class Payment extends Model {
     }
 
     /**
+     * A scope for selecting payments that should expire.
+     *
+     * This does not return payments that are already completed.
+     *
+     * @param Builder $query Query builder.
+     */
+    public function scopeToExpire($query) {
+        $query->inProgress(true)
+            ->where(function($query) {
+                // For each paymentable type, attempt to select expired payments
+                foreach(Self::PAYMENTABLES as $paymentable_type) {
+                    $query->orWhere(function($query) use($paymentable_type) {
+                        // Limit to current paymentable
+                        $query->where('paymentable_type', $paymentable_type);
+
+                        // Get table for paymentable
+                        $table = (new $paymentable_type)->getTable();
+
+                        // Create query builder for paymentable
+                        $query->whereExists(function($p_query) use($query, $table, $paymentable_type) {
+                            $p_query->selectRaw('1')
+                                ->from($table)
+                                ->whereRaw('payment.paymentable_id = ' . $table . '.id')
+                                ->where(function($p_query) use($query, $paymentable_type) {
+                                    // Use paymentable specific scope for payment and
+                                    // paymentable query builders
+                                    // TODO: use a real paymentable scope here,
+                                    // without main payment query
+                                    $paymentable_type::scopeToExpire($query, $p_query);
+                                });
+                        });
+                    });
+                }
+            });
+    }
+
+    /**
      * Get the relation to the used service linked to this payment.
      *
      * @return Relation to the used service.
