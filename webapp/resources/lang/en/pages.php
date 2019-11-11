@@ -163,6 +163,7 @@ return [
             'scanQr' => 'scan the QR code with your phone to join and make a purchase',
             'orVisit' => 'Or visit',
         ],
+        'checklist' => 'Community checklist',
     ],
 
     /**
@@ -245,6 +246,7 @@ return [
         'noProductsFoundFor' => 'No products found for :term...',
         'manageProduct' => 'Manage product',
         'manageProducts' => 'Manage products',
+        'addProducts' => 'Add products',
         'newProduct' => 'New product',
         'cloneProduct' => 'Clone product',
         'editProduct' => 'Edit product',
@@ -698,6 +700,7 @@ return [
             'boughtProductsUsers#' => '{0} Bought no products for :users users.|{1} Bought product for :users users.|[2,*] Bought :count products for :users users.',
             'pageCloseWarning' => 'You have selected products or have products in cart that have not been bought yet. You must add a product selection to at least one user and tap the Buy button to commit the purchase, or the selection will be lost.',
         ],
+        'checklist' => 'Bar checklist',
     ],
 
     /**

@@ -215,9 +215,12 @@ class BarController extends Controller {
         // Get the bar
         $bar = \Request::get('bar');
 
+        $economy = $bar->economy;
+
         // Show the bar management page
         return view('bar.manage')
-            ->with('economy', $bar->economy);
+            ->with('economy', $economy)
+            ->with('hasProduct', $economy->products()->limit(1)->count() > 0);
     }
 
     /**

@@ -146,10 +146,19 @@ class CommunityController extends Controller {
     public function manage($communityId) {
         // Get the community
         $community = \Request::get('community');
+        $bars = $community->bars()->get();
+
+        $hasEconomy = $community->economies()->limit(1)->count() > 0;
+        $hasCurrency = $hasEconomy
+            && $community->currencies()->limit(1)->count() > 0;
 
         // Show the community management page
         return view('community.manage')
-            ->with('bars', $community->bars()->get());
+            ->with('bars', $bars)
+            ->with('hasEconomy', $hasEconomy)
+            ->with('hasCurrency', $hasCurrency)
+            ->with('firstEconomy', $community->economies()->first())
+            ->with('hasBar', !$bars->isEmpty());
     }
 
     /**

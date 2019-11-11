@@ -83,6 +83,41 @@
         </div>
     </h2>
 
+    {{-- Checklist --}}
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">@lang('pages.bar.checklist')</h5>
+        @if(perms(ProductController::permsManage()))
+            <a href="{{ route('community.economy.product.create', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+            ]) }}" class="item">
+                @if($hasProduct)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                1. @lang('pages.products.addProducts')
+            </a>
+        @else
+            <div class="item disabled">
+                @if($hasProduct)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                1. @lang('pages.products.addProducts')
+            </div>
+        @endif
+    </div>
+
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.bar')</h5>
         @if(perms(BarController::permsAdminister()))
