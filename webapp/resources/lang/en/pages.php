@@ -432,6 +432,13 @@ return [
     ],
 
     /**
+     * Economy finance pages.
+     */
+    'finance' => [
+        'title' => 'Economy finances',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [

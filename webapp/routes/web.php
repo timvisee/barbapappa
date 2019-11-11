@@ -11,6 +11,7 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyCurrencyController;
+use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
 
@@ -374,6 +375,12 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             });
                         });
                     });
+                });
+
+                // Financial reports
+                Route::prefix('/finance')->middleware(FinanceController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'FinanceController@overview')->name('community.economy.finance.overview');
                 });
             });
         });
