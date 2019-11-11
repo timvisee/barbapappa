@@ -246,6 +246,7 @@ return [
         'noProductsFoundFor' => 'Geen producten gevonden voor :term...',
         'manageProduct' => 'Beheer product',
         'manageProducts' => 'Beheer producten',
+        'addProducts' => 'Producten toevoegen',
         'newProduct' => 'Nieuw product',
         'cloneProduct' => 'Dupliceer product',
         'editProduct' => 'Product aanpassen',
@@ -699,6 +700,7 @@ return [
             'boughtProductsUsers#' => '{0} Geen producten gekocht voor :users leden.|{1} Eén product gekocht voor :users leden.|[2,*] :count producten gekocht voor :users leden.',
             'pageCloseWarning' => 'Je hebt producten geselecteerd of hebt producten in de winkelwagen die nog niet gekocht zijn. Je moet geselecteerde producten eerst aan tenminste één gebruiker toevoegen en daarna op de Koop knop drukken om de bestelling te voltooien, of de selectie gaat verloren.',
         ],
+        'checklist' => 'Bar checklist',
     ],
 
     /**

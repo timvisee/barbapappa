@@ -9,6 +9,7 @@
     use App\Http\Controllers\CommunityController;
     use App\Http\Controllers\CommunityMemberController;
     use App\Http\Controllers\EconomyController;
+    use App\Http\Controllers\EconomyCurrencyController;
 
     // Define menulinks
     if(perms(CommunityController::permsAdminister())) {
@@ -115,7 +116,7 @@
                 1. @lang('pages.economies.createEconomy')
             </div>
         @endif
-        @if($hasEconomy && perms(EconomyController::permsManage()))
+        @if($hasEconomy && perms(EconomyCurrencyController::permsManage()))
             <a href="{{ route('community.economy.currency.create', [
                         'communityId' => $community->human_id,
                         'economyId' => $firstEconomy->id,
@@ -145,7 +146,7 @@
                 2. @lang('pages.currencies.createCurrency')
             </div>
         @endif
-        @if($hasCurrency && perms(CommunityController::permsAdminister()))
+        @if($hasCurrency && perms(BarController::permsCreate()))
             <a href="{{ route('bar.create', ['communityId' => $community->human_id]) }}" class="item">
                 @if($hasBar)
                     <div class="ui green small label">

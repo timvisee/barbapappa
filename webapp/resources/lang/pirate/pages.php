@@ -246,6 +246,7 @@ return [
         'noProductsFoundFor' => 'Nay products for :term...',
         'manageProduct' => 'Manage product',
         'manageProducts' => 'Manage products',
+        'addProducts' => 'Add products',
         'newProduct' => 'New product',
         'cloneProduct' => 'Clone product',
         'editProduct' => 'Edit product',
@@ -699,6 +700,7 @@ return [
             'boughtProductsUsers#' => '{0} Bought no products for :users pirates.|{1} Bought 1 product for :users pirates.|[2,*] Bought :count products for :users pirates.',
             'pageCloseWarning' => 'Ye selected products or has products in cart that have not been bought yet. Ye must add a product selection to at least one pirate and tap th\' Buy button to commit th\' purchase, or the selection will be lost.',
         ],
+        'checklist' => 'Bar checklist',
     ],
 
     /**
