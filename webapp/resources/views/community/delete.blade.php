@@ -37,7 +37,12 @@
                 <div class="field {{ ErrorRenderer::hasError('confirm_name') ? 'error' : '' }}">
                     {{ Form::hidden('confirm_name_base', $community->name) }}
                     {{ Form::label('confirm_name', __('pages.community.exactCommunityNameVerify') . ':') }}
-                    {{ Form::text('confirm_name', '', ['placeholder' => $community->name]) }}
+                    <div class="ui labeled input">
+                        <div class="ui label">
+                            @lang('misc.iWantToDelete')
+                        </div>
+                        {{ Form::text('confirm_name', '', ['placeholder' => $community->name]) }}
+                    </div>
                     {{ ErrorRenderer::inline('confirm_name') }}
                     <br />
                     {{ ErrorRenderer::inline('confirm_name') }}
