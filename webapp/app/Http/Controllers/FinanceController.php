@@ -27,10 +27,27 @@ class FinanceController extends Controller {
         $paymentsProgressing = $economy->payments()->inProgress()->get();
         $paymentProgressingSum = $economy->sumAmounts($paymentsProgressing, 'money');
 
+        // Gether balance for every member
+        $members = $economy->members;
+        $memberData = $members
+            ->map(function($member) {
+                return [
+                    'member' => $member,
+                    'balance' => $member->sumBalance(),
+                ];
+            })
+            ->filter(function($data) {
+                return $data['balance']->amount != 0;
+            })
+            ->sortByDesc(function($data) {
+                return $data['balance']->amount;
+            });
+
         return view('community.economy.finance.overview')
             ->with('economy', $economy)
             ->with('walletSum', $walletSum)
-            ->with('paymentProgressingSum', $paymentProgressingSum);
+            ->with('paymentProgressingSum', $paymentProgressingSum)
+            ->with('memberData', $memberData);
     }
 
     /**

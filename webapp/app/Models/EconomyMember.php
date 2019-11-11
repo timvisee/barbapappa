@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\MoneyAmount;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon updated_at
  */
 class EconomyMember extends Pivot {
+
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     protected $table = 'economy_member';
 
@@ -38,7 +41,9 @@ class EconomyMember extends Pivot {
     public function __get($name) {
         switch($name) {
             case 'name':
-                return $this->user->name;
+                return $this->user != null
+                    ? $this->user->first_name . ' ' . $this->user->last_name
+                    : $this->aliases()->firstOrFail()->name;
             default:
                 return parent::__get($name);
         }
@@ -163,6 +168,16 @@ class EconomyMember extends Pivot {
     }
 
     /**
+     * Get a relation to all balance import changes for this user.
+     */
+    public function balanceImportChanges() {
+        return $this->hasManyDeepFromRelations(
+            $this->aliases(),
+            (new BalanceImportAlias)->changes()
+        );
+    }
+
+    /**
      * Get the wallets that belong to this member.
      *
      * @return Relation to the member wallets.
@@ -171,6 +186,24 @@ class EconomyMember extends Pivot {
         return $this
             ->hasMany(Wallet::class, 'economy_member_id')
             ->orderBy('balance', 'DESC');
+    }
+
+    /**
+     * Create a new wallet for this economy member.
+     *
+     * @param int $currency_id The ID of the currency this wallet uses.
+     * @param string|null [$name=null] The name of the wallet, or null to use
+     *      the default.
+     *
+     * @return Wallet The created wallet.
+     */
+    // TODO: move this somewhere else?
+    public function createWallet(int $currency_id, $name = null) {
+        // Create the wallet
+        return $this->wallets()->create([
+            'name' => $name ?? __('pages.wallets.nameDefault'),
+            'currency_id' => $currency_id,
+        ]);
     }
 
     /**
@@ -230,21 +263,18 @@ class EconomyMember extends Pivot {
     }
 
     /**
-     * Create a new wallet for this economy member.
+     * Sum all balances for this member.
      *
-     * @param int $currency_id The ID of the currency this wallet uses.
-     * @param string|null [$name=null] The name of the wallet, or null to use
-     *      the default.
-     *
-     * @return Wallet The created wallet.
+     * @return MoneyAmount The cummulative balance of this member.
      */
-    // TODO: move this somewhere else?
-    public function createWallet(int $currency_id, $name = null) {
-        // Create the wallet
-        return $this->wallets()->create([
-            'name' => $name ?? __('pages.wallets.nameDefault'),
-            'currency_id' => $currency_id,
-        ]);
+    public function sumBalance() {
+        // TODO: sum imported balance as well
+        if($this->wallets->isNotEmpty())
+            return Economy::sumAmounts($this->wallets, 'balance');
+
+        // TODO: handle cost items, last balance by system
+        $changes = $this->balanceImportChanges;
+        return Economy::sumAmounts($changes, 'balance');
     }
 
     /**

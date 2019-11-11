@@ -23,7 +23,7 @@ class MoneyAmount {
      * The amount.
      * @var decimal
      */
-    private $amount;
+    public $amount;
 
     /**
      * Whether the amount is approximate.
@@ -42,6 +42,15 @@ class MoneyAmount {
         $this->currencyCode = $currencyCode;
         $this->amount = $amount;
         $this->approximate = $approximate;
+    }
+
+    /**
+     * Create a money amount instance being zero with the default currency.
+     *
+     * @return MoneyAmount Zero amount.
+     */
+    public static function zero() {
+        return new MoneyAmount(config('currency.default'), 0, false);
     }
 
     /**

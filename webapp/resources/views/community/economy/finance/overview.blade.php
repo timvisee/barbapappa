@@ -52,32 +52,31 @@
         </div>
     </div>
 
-    {{--<div class="ui vertical menu fluid">--}}
-    {{--    {1{----}}
-    {{--        <div class="item">--}}
-    {{--            <div class="ui transparent icon input">--}}
-    {{--                {{ Form::text('search', '', ['placeholder' => 'Search bars...']) }}--}}
-    {{--                <i class="icon glyphicons glyphicons-search link"></i>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    --}1}--}}
+    <h3 class="ui horizontal divider header">
+        @lang('misc.members')
+    </h3>
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">
+            @lang('pages.finance.membersWithNonZeroBalance')
+            ({{ count($memberData) }})
+        </h5>
+        @forelse($memberData as $member)
+            <div class="item">
+                {{ $member['member']->name }}
+                {!! $member['balance']->formatAmount(BALANCE_FORMAT_LABEL) !!}
 
-    {{--    @forelse($members as $member)--}}
-    {{--        <a href="{{ route('bar.member.show', [--}}
-    {{--            'barId' => $bar->human_id,--}}
-    {{--            'memberId' => $member->id,--}}
-    {{--        ]) }}" class="item">--}}
-    {{--            {{ $member->name }}--}}
-    {{--            @if($member->role != 0)--}}
-    {{--                ({{ BarRoles::roleName($member->role) }})--}}
-    {{--            @endif--}}
-    {{--        </a>--}}
-    {{--    @empty--}}
-    {{--        <div class="item">--}}
-    {{--            <i>@lang('pages.barMembers.noMembers')</i>--}}
-    {{--        </div>--}}
-    {{--    @endforelse--}}
-    {{--</div>--}}
+                @if($member['member']->user_id == null)
+                    <span class="sub-label">
+                        @lang('pages.finance.fromBalanceImport')
+                    </span>
+                @endif
+            </div>
+        @empty
+            <div class="item">
+                <i>@lang('pages.barMembers.noMembers')</i>
+            </div>
+        @endforelse
+    </div>
 
     <div class="ui divider hidden"></div>
 

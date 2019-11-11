@@ -438,6 +438,8 @@ return [
         'title' => 'Financieel rapport',
         'walletSum' => 'Cumulatief saldo',
         'paymentsInProgress' => 'In verwerking',
+        'fromBalanceImport' => 'vanuit saldoimport',
+        'membersWithNonZeroBalance' => 'Leden met niet-nul saldo',
     ],
 
     /**

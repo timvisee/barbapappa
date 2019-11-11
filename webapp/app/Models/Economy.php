@@ -327,10 +327,11 @@ class Economy extends Model {
      *
      * @return MoneyAmount The summed amount.
      */
+    // TODO: move this to some utilty class, maybe into MoneyAmount
     public static function sumAmounts($models, string $amountKey) {
         // Return zero if no models are given
         if($models->isEmpty())
-            return [0, config('currency.default'), false];
+            return MoneyAmount::zero();
 
         // Build a map with per currency sums
         $sums = [];
@@ -340,7 +341,7 @@ class Economy extends Model {
         }
 
         // Find the currency with the biggest difference from zero, is it approx
-        $currency = null;
+        $currency = key($sums);
         $diff = 0;
         foreach($sums as $c => $b)
             if(abs($b) > $diff) {

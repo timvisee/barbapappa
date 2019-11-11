@@ -553,9 +553,7 @@ class BarController extends Controller {
 
         // Set and limit fields to repsond with
         $members = $members->map(function($m) use($economy_member) {
-            $m->name = $m->user != null
-                ? $m->user->first_name . ' ' . $m->user->last_name
-                : $m->aliases()->firstOrFail()->name;
+            $m->name = $m->name;
             $m->me = $m->id == $economy_member->id;
             return $m->only(['id', 'name', 'me']);
         });
