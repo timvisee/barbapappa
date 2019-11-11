@@ -42,13 +42,11 @@ class UpdatePaymentStates implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // Update steps for all in-progress payments
+        // Update state of payments waiting for community action
         Payment::inProgress()
+            ->scopeRequireCommunityAction()
             ->each(function($payment) {
-                // Set state if community admin must check payment
-                if($payment->paymentable_type == PaymentManualIban::class)
-                    if($payment->paymentable->checkRequiresCommunityAction())
-                        $payment->setState(Payment::STATE_PENDING_COMMUNITY);
+                $payment->setState(Payment::STATE_PENDING_COMMUNITY);
             });
     }
 }
