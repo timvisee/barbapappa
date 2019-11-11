@@ -12,6 +12,7 @@ use App\Utils\SlugUtils;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -157,6 +158,51 @@ class Bar extends Model {
      */
     public function memberCount() {
         return $this->memberUsers([], false)->count();
+    }
+
+    /**
+     * Let the given user join this bar.
+     * This automatically joins the user in the related community and economy.
+     *
+     * @param User $user The user to join.
+     * @param int|null [$role=null] An optional role value to assign to the
+     *      user.
+     *
+     * @throws \Exception Throws if already joined.
+     */
+    public function join(User $user, $role = null) {
+        $economy = $this->economy;
+        $bar = $this;
+
+        // Join the community, economy and bar
+        DB::transaction(function() use($economy, $bar, $user) {
+            if(!$economy->isJoined($user))
+                $economy->join($user);
+            $bar->memberJoin($user);
+        });
+    }
+
+    /**
+     * Let the given user leave this bar.
+     * Note: this throws an error if the user has not joined.
+     *
+     * @param User $user The user to leave.
+     */
+    public function leave(User $user) {
+        $community = $this->community;
+        $economy = $this->economy;
+        $bar = $this;
+
+        // Leave bar and economy
+        // TODO: make sure user can actually leave this bar (with economy and community)
+        DB::transaction(function() use($bar, $user, $community, $economy) {
+            // Leave the bar
+            $bar->memberLeave($user);
+
+            // Leave economy if orphan
+            if($economy->isJoined($user))
+                $economy->leaveIfOrphan($user);
+        });
     }
 
     /**

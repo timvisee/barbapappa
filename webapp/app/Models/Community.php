@@ -159,6 +159,59 @@ class Community extends Model {
     }
 
     /**
+     * Let the given user join this community.
+     *
+     * @param User $user The user to join.
+     * @param int|null [$role=null] An optional role value to assign to the
+     *      user.
+     *
+     * @throws \Exception Throws if already joined.
+     */
+    public function join(User $user, $role = null) {
+        $this->memberJoin($user, $role);
+    }
+
+    /**
+     * Let the given user leave this community.
+     * Note: this throws an error if the user has not joined.
+     *
+     * @param User $user The user to leave.
+     */
+    public function leave(User $user) {
+        $this->memberLeave($user);
+    }
+
+    /**
+     * Let the given user leave this community, if it's an orphan.
+     *
+     * The user will leave if:
+     * - it has not joined any community bars
+     * - it has no special community role
+     *
+     * @param User $user The user to leave if orphan.
+     * @throws \Exception Throws if the user is not joined.
+     */
+    public function leaveIfOrphan(User $user) {
+        // User must not have special role
+        if($this->member($user)->role != 0)
+            return;
+
+        // User must not be a bar member
+        $barIds = $this
+            ->bars()
+            ->select('id')
+            ->pluck('id');
+        $memberInCommunityBars = BarMember::whereIn('bar_id', $barIds)
+            ->where('user_id', $user->id)
+            ->limit(1)
+            ->count() > 0;
+        if($memberInCommunityBars)
+            return;
+
+        $this->leave($user);
+    }
+
+    /**
      * Get the localized community description.
      *
      * @return string|null Localized community description, or null if none is

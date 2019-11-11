@@ -25,7 +25,7 @@ trait Joinable {
      *
      *  @throws \Exception Throws if already joined.
      */
-    public function join(User $user, $role = null) {
+    public function memberJoin(User $user, $role = null) {
         // Build additional data object
         $data = [];
         if($role !== null)
@@ -41,7 +41,7 @@ trait Joinable {
      *
      * @param User $user The user to leave.
      */
-    public function leave(User $user) {
+    public function memberLeave(User $user) {
         $this->memberUsers()->detach($user);
     }
 
