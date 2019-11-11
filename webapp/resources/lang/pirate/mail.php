@@ -18,13 +18,13 @@ return [
          */
         'verify' => [
             'subject' => 'E-bottle check',
-            'subjectRegistered' => 'New ship & e-bottle check',
+            'subjectRegistered' => ':app new ship & e-bottle check',
             'subtitle' => 'You be \'bout to check yer e-bottle address',
             'subtitleRegistered' => 'Yer ship be almost sailable.',
             'registered' => 'Ahoy mate for entering a new ship.',
             'addNewEmail' => 'Ye just entered a new e-bottle address to yer ship.',
             'verifyBeforeUseAccount' => 'Before ye use our seas, be need to verify ye e-bottle address.',
-            'verifyBeforeUseEmail' => 'Before ye can use it on our seas, be need to verify it.',
+            'verifyBeforeUseEmail' => 'Before ye can fully use it on our seas, be need to verify it.',
             'soon' => 'Please do dis as soon as possible, th\' verification link sinks **within :expire**.',
             'clickButtonToVerify' => 'Please click th\' following button be verify yer e-bottle address.',
             'verifyButton' => 'Verify yer e-bottle address',

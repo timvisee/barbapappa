@@ -59,7 +59,8 @@ class Verify extends PersonalizedEmail {
         // Construct the parent, dynamically figure out the subject
         parent::__construct(
             $recipient,
-            $justRegistered ? self::SUBJECT_REGISTERED : self::SUBJECT
+            $justRegistered ? self::SUBJECT_REGISTERED : self::SUBJECT,
+            ['app' => config('app.name')]
         );
 
         $this->token = $emailVerification->token;
