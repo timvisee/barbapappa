@@ -61,7 +61,7 @@ class CommunityController extends Controller {
 
         // Redirect the user to the community page
         return redirect()
-            ->route('community.show', ['communityId' => $community->human_id])
+            ->route('community.manage', ['communityId' => $community->human_id])
             ->with('success', __('pages.community.created'));
     }
 

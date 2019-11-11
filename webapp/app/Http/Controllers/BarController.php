@@ -83,7 +83,7 @@ class BarController extends Controller {
 
         // Redirect the user to the account overview page
         return redirect()
-            ->route('bar.show', ['barId' => $bar->human_id])
+            ->route('bar.manage', ['barId' => $bar->human_id])
             ->with('success', __('pages.bar.created'));
     }
 
@@ -1035,7 +1035,7 @@ class BarController extends Controller {
 
         // Redirect to the index page after deleting
         return redirect()
-            ->route('community.show', ['communityId' => $bar->community->human_id])
+            ->route('community.manage', ['communityId' => $bar->community->human_id])
             ->with('success', __('pages.bar.deleted'));
     }
 
