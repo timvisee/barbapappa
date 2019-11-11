@@ -436,6 +436,8 @@ return [
      */
     'finance' => [
         'title' => 'Financieel rapport',
+        'walletSum' => 'Cumulatief saldo',
+        'paymentsInProgress' => 'In verwerking',
     ],
 
     /**

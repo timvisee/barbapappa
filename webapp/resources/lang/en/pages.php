@@ -435,7 +435,9 @@ return [
      * Economy finance pages.
      */
     'finance' => [
-        'title' => 'Economy finances',
+        'title' => 'Financial report',
+        'walletSum' => 'Cumulative balance',
+        'paymentsInProgress' => 'In progress',
     ],
 
     /**

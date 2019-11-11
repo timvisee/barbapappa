@@ -435,7 +435,9 @@ return [
      * Economy finance pages.
      */
     'finance' => [
-        'title' => 'Booty finances',
+        'title' => 'Financial report',
+        'walletSum' => 'Cumulative balance',
+        'paymentsInProgress' => 'In progress',
     ],
 
     /**
@@ -445,7 +447,7 @@ return [
         'title' => 'bunq accounts',
         'bunqAccount' => 'bunq account',
         'description' => 'Click on one of yer bunq accounts to manage it, or add a new one.',
-        'noWallets' => 'Yer nay be any bunq accounts added yet...',
+        'noAccounts' => 'Yer nay be any bunq accounts added yet...',
         'addAccount' => 'Add bunq account',
         'descriptionPlaceholder' => 'bunq account for automating bar payments',
         'tokenDescription' => 'Create a new API key in the developer section of th\' bunq app on yer handheld phoning device, and enter the freshly created token in dis field. Th\' token must never be shared with anyone else.',

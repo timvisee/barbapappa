@@ -28,6 +28,30 @@
         </div>
     </h2>
 
+    <h3 class="ui horizontal divider header">
+        @lang('pages.wallets.title')
+    </h3>
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $walletSum->formatAmount(BALANCE_FORMAT_COLOR) !!}
+            </div>
+            <div class="label">@lang('pages.finance.walletSum')</div>
+        </div>
+    </div>
+
+    <h3 class="ui horizontal divider header">
+        @lang('pages.payments.title')
+    </h3>
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $paymentProgressingSum->formatAmount(BALANCE_FORMAT_COLOR) !!}
+            </div>
+            <div class="label">@lang('pages.finance.paymentsInProgress')</div>
+        </div>
+    </div>
+
     {{--<div class="ui vertical menu fluid">--}}
     {{--    {1{----}}
     {{--        <div class="item">--}}
@@ -55,8 +79,12 @@
     {{--    @endforelse--}}
     {{--</div>--}}
 
-    <a href="{{ route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-            class="ui button basic">
-        @lang('pages.economies.backToEconomy')
-    </a>
+    <div class="ui divider hidden"></div>
+
+    <p>
+        <a href="{{ route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                class="ui button basic">
+            @lang('pages.economies.backToEconomy')
+        </a>
+    </p>
 @endsection

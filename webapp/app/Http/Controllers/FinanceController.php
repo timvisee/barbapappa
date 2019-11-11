@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 
 use App\Helpers\ValidationDefaults;
-use App\Models\Product;
 
 class FinanceController extends Controller {
 
@@ -23,8 +22,15 @@ class FinanceController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
+        $wallets = $economy->wallets;
+        $walletSum = $economy->sumAmounts($wallets, 'balance');
+        $paymentsProgressing = $economy->payments()->inProgress()->get();
+        $paymentProgressingSum = $economy->sumAmounts($paymentsProgressing, 'money');
+
         return view('community.economy.finance.overview')
-            ->with('economy', $economy);
+            ->with('economy', $economy)
+            ->with('walletSum', $walletSum)
+            ->with('paymentProgressingSum', $paymentProgressingSum);
     }
 
     /**
