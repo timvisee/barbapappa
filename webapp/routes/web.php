@@ -520,7 +520,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 });
 
 // Transactions
-Route::prefix('/transactions')->middleware('auth')->group(function() {
+Route::prefix('/transactions')->middleware(['auth', 'selectTransaction'])->group(function() {
     // Index
     // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
 

@@ -79,4 +79,20 @@ class MutationProduct extends Model {
      * @param int $newState The new, current state.
      */
     public function applyState(Mutation $mutation, int $oldState, int $newState) {}
+
+    /**
+     * Find a list of communities this transaction took part in.
+     *
+     * This will return the community the product is in if known.
+     * It will attempt to find the community by the linked bar otherwise.
+     *
+     * @return Collection List of communities, may be empty.
+     */
+    public function findCommunities() {
+        if($this->product != null)
+            return collect([$this->product->economy->community]);
+        if($this->bar != null)
+            return collect([$this->bar->community]);
+        return collect();
+    }
 }

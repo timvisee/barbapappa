@@ -457,4 +457,16 @@ class Mutation extends Model {
         // Decrement the amount
         $this->decrement('amount', $amount);
     }
+
+    /**
+     * Find a list of communities this mutation took part in.
+     *
+     * For example, if this is a wallet mutation, the community the
+     * wallet is in will be part of the returned list.
+     *
+     * @return Collection List of communities, may be empty.
+     */
+    public function findCommunities() {
+        return $this->mutationable->findCommunities();
+    }
 }

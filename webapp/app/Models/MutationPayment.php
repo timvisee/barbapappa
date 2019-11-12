@@ -60,4 +60,15 @@ class MutationPayment extends Model {
     public function applyState(Mutation $mutation, int $oldState, int $newState) {
         // TODO: the new state must be related to the payment state
     }
+
+    /**
+     * Find a list of communities this mutation took part in.
+     *
+     * This will always be empty for this type of transaction.
+     *
+     * @return Collection List of communities, may be empty.
+     */
+    public function findCommunities() {
+        return collect();
+    }
 }
