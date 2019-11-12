@@ -197,20 +197,22 @@
 
     {{-- Action buttons --}}
     @if($payment->isInProgress())
-        <div class="ui buttons">
-            @if($payment->isInProgress())
-                <a href="{{ route('payment.pay', ['paymentId' => $payment->id]) }}"
-                        class="ui button positive">
-                    @lang('misc.progress')
-                </a>
-            @endif
-            @if($payment->canCancel())
-                <a href="{{ route('payment.cancel', ['paymentId' => $payment->id]) }}"
-                        class="ui button negative">
-                    @lang('general.cancel')
-                </a>
-            @endif
-        </div>
+        <p>
+            <div class="ui buttons">
+                @if($payment->isInProgress())
+                    <a href="{{ route('payment.pay', ['paymentId' => $payment->id]) }}"
+                            class="ui button positive">
+                        @lang('misc.progress')
+                    </a>
+                @endif
+                @if($payment->canCancel())
+                    <a href="{{ route('payment.cancel', ['paymentId' => $payment->id]) }}"
+                            class="ui button negative">
+                        @lang('general.cancel')
+                    </a>
+                @endif
+            </div>
+        </p>
     @endif
 
     <p>

@@ -22,7 +22,6 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function index(Request $request) {
-        // Get the user, community, find the products
         $user = barauth()->getUser();
 
         // Get payments in different stages
@@ -63,16 +62,10 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function show($paymentId) {
-        // TODO: do some advanced permission checking here!
-
-        // Get the payment, find it's transaction
-        $payment = Payment::findOrFail($paymentId);
+        // Get the user, find the payment and transaction
+        $user = barauth()->getUser();
+        $payment = $user->payments()->findOrFail($paymentId);
         $transaction = $payment->findTransaction();
-
-        // // Check permission
-        // // TODO: check this permission in middleware, redirect to login
-        // if(!Self::hasPermission($transaction))
-        //     return response(view('noPermission'));
 
         // Force update the payment state
         $payment->updateState();
@@ -88,16 +81,10 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function pay($paymentId) {
-        // TODO: do some advanced permission checking here!
-
-        // Get the payment and paymentable
-        $payment = Payment::findOrFail($paymentId);
+        // Get the user, find the payment and paymentable
+        $user = barauth()->getUser();
+        $payment = $user->payments()->findOrFail($paymentId);
         $paymentable = $payment->paymentable;
-
-        // // Check permission
-        // // TODO: check this permission in middleware, redirect to login
-        // if(!Self::hasPermission($transaction))
-        //     return response(view('noPermission'));
 
         // Force update the payment state
         $payment->updateState();
@@ -122,20 +109,14 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function doPay(Request $request, $paymentId) {
-        // TDO: do some advanced permission checking here!
-
-        // Get the payment and paymentable
-        $payment = Payment::findOrFail($paymentId);
+        // Get the user, find the payment and paymentable
+        $user = barauth()->getUser();
+        $payment = $user->payments()->findOrFail($paymentId);
         $paymentable = $payment->paymentable;
 
         // If the payment is not in progress anymore, redirect to show page
         if(!$payment->isInProgress())
             return redirect()->route('payment.show', ['paymentId' => $payment->id]);
-
-        // // Check permission
-        // // TODO: check this permission in middleware, redirect to login
-        // if(!Self::hasPermission($transaction))
-        //     return response(view('noPermission'));
 
         // Build the response
         $response = redirect()->route('payment.pay', ['paymentId' => $payment->id]);
@@ -155,15 +136,9 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function cancel($paymentId) {
-        // TODO: do some advanced permission checking here!
-
-        // Get the payment
-        $payment = Payment::findOrFail($paymentId);
-
-        // // Check permission
-        // // TODO: check this permission in middleware, redirect to login
-        // if(!Self::hasPermission($transaction))
-        //     return response(view('noPermission'));
+        // Get the user, find the payment
+        $user = barauth()->getUser();
+        $payment = $user->payments()->findOrFail($paymentId);
 
         // We must be able to cancel
         if(!$payment->canCancel())
@@ -181,15 +156,9 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function doCancel(Request $request, $paymentId) {
-        // TDO: do some advanced permission checking here!
-
-        // Get the payment and paymentable
-        $payment = Payment::findOrFail($paymentId);
-
-        // // Check permission
-        // // TODO: check this permission in middleware, redirect to login
-        // if(!Self::hasPermission($transaction))
-        //     return response(view('noPermission'));
+        // Get the user, find the payment
+        $user = barauth()->getUser();
+        $payment = $user->payments()->findOrFail($paymentId);
 
         // We must be able to cancel
         if(!$payment->canCancel())
@@ -238,20 +207,15 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function approve($paymentId) {
-        // TODO: do some advanced permission checking here!
-
-        // Get the payment
-        $payment = Payment::requireCommunityAction()->findOrFail($paymentId);
+        // Get the payment, find the paymentable
+        $payment = Payment::canManage()
+            ->requireCommunityAction()
+            ->findOrFail($paymentId);
         $paymentable = $payment->paymentable;
 
         // If the payment is not in progress anymore, redirect to show page
         if(!$payment->isInProgress())
             return redirect()->route('payment.show', ['paymentId' => $payment->id]);
-
-        // // Check permission
-        // // TODO: check this permission in middleware, redirect to login
-        // if(!Self::hasPermission($transaction))
-        //     return response(view('noPermission'));
 
         // Build the response
         $response = view('payment.approve')
@@ -268,20 +232,15 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function doApprove(Request $request, $paymentId) {
-        // TODO: do some advanced permission checking here!
-
-        // Get the payment
-        $payment = Payment::requireCommunityAction()->findOrFail($paymentId);
+        // Get the payment, find the paymentable
+        $payment = Payment::canManage()
+            ->requireCommunityAction()
+            ->findOrFail($paymentId);
         $paymentable = $payment->paymentable;
 
         // If the payment is not in progress anymore, redirect to show page
         if(!$payment->isInProgress())
             return redirect()->route('payment.show', ['paymentId' => $payment->id]);
-
-        // // Check permission
-        // // TODO: check this permission in middleware, redirect to login
-        // if(!Self::hasPermission($transaction))
-        //     return response(view('noPermission'));
 
         // Build the response
         $response = redirect()->route('payment.approveList');
