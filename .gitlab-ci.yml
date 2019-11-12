@@ -1,9 +1,9 @@
 image: php:7.3
 
 stages:
-  - test
   - deploy-staging
   - deploy-production
+  - test
 
 cache:
   paths:
