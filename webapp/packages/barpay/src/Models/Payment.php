@@ -16,6 +16,8 @@ use App\Models\Notifications\PaymentRequiresCommunityAction;
 use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Perms\CommunityRoles;
+use App\Perms\AppRoles;
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -104,22 +106,29 @@ class Payment extends Model {
      * manager or administrator by the currently authenticated user.
      *
      * @param Builder $query Query builder.
+     * @param User $user The user to manage the payments.
      */
-    public function scopeCanManage($query) {
-        // TODO: properly select economies user can manage!
-        $economies = [];
+    public function scopeCanManage($query, $user = null) {
+        // Select the user
+        if($user == null)
+            $user = barauth()->getUser();
+        if($user == null)
+            throw new Exception("Failed to filter managable payments, current user is unknown");
 
-        // Query mutation payment
-        $query->whereExists(function($query) use($economies) {
+        // Allow if user is application admin
+        if(perms(AppRoles::presetAdmin()))
+            return;
+
+        // Check whether user has manage permission in related community
+        $query->whereExists(function($query) use($user) {
             $query->selectRaw('1')
-                ->from('mutation_payment')
-                ->whereRaw('payment.id = mutation_payment.payment_id')
-                ->leftJoin('mutation', function($leftJoin) {
-                    $leftJoin->on('mutation_payment.id', '=', 'mutation.mutationable_id');
-                })
-                // TODO: enable this again once implemented!
-                // ->whereIn('economy_id', $economies)
-                ;
+                ->from('service')
+                ->whereRaw('payment.service_id = service.id')
+                ->join('economy', 'economy.id', 'service.economy_id')
+                ->join('community', 'community.id', 'economy.community_id')
+                ->join('community_member', 'community_member.community_id', 'community.id')
+                ->where('community_member.user_id', $user->id)
+                ->where('community_member.role', '>=', CommunityRoles::MANAGER);
         });
     }
 

@@ -21,9 +21,7 @@ class NotificationController extends Controller {
      */
     public function index(Request $request) {
         // List notifications
-        list($notificationsUnread, $notifications) = Notification::visible()
-            // TODO: set this as default scope
-            ->get()
+        list($notificationsUnread, $notifications) = Notification::get()
             ->partition(function($n) {
                 return $n->read_at == null;
             });
