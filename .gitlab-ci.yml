@@ -93,7 +93,7 @@ deploy_staging:
 
     # Node modules are not required to run in production, create tarball
     - rm -rf node_modules
-    - cp ../deploy/ci ./
+    - cp ../ci/deploy ./
     - tar -czf production.tar.gz *
 
     # Move files to server, and deploy
@@ -122,7 +122,7 @@ deploy_production:
 
     # Node modules are not required to run in production, create tarball
     - rm -rf node_modules
-    - cp ../deploy/ci ./
+    - cp ../ci/deploy ./
     - tar -czf production.tar.gz *
 
     # Move files to server, and deploy
