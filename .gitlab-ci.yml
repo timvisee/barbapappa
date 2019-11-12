@@ -1,11 +1,9 @@
 image: php:7.3
 
-services:
-  - mariadb:latest
-
-variables:
-  MYSQL_DATABASE: barapp
-  MYSQL_ROOT_PASSWORD: secret
+stages:
+  - test
+  - deploy-staging
+  - deploy-production
 
 cache:
   paths:
@@ -34,33 +32,91 @@ before_script:
   - pecl install xdebug
   - docker-php-ext-enable xdebug
 
-  # Change into webapp directory, set up .env file
-  - cd webapp/
-  - cp .env.gitlab-ci .env
-
   # Install Composer and project dependencies
   - curl -sS https://getcomposer.org/installer | php
   - php composer.phar install
+  - php composer.phar dumpautoload -o
 
-  # Install and build frontend dependencies
-  - npm install
-  - npm run dev
-
-  # Generate an application key, re-cache, migrate and seed database
-  - php artisan key:generate
-  - php artisan config:cache
-  - php artisan migrate --seed
-
-  # Configure currencies
-  - php artisan currency:manage add EUR
-  - php artisan currency:manage add USD
-  - php artisan currency:update
+  # Change into webapp directory
+  - cd webapp/
 
 # PHPUnit test job
 test:
+  stage: test
   artifacts:
     paths:
       - coverage/
+  services:
+    - mariadb:latest
+  variables:
+    MYSQL_DATABASE: barapp
+    MYSQL_ROOT_PASSWORD: secret
   script:
+    # Set up env file for testing
+    - cp .env.gitlab-ci .env
+
+    # Install and build frontend dependencies
+    - npm install
+    - npm run dev
+
+    # Generate an application key, re-cache, migrate and seed database
+    - php artisan key:generate
+    - php artisan config:cache
+    - php artisan route:cache
+
+    # Migrate and configure currencies
+    - php artisan migrate --seed
+    - php artisan currency:manage add EUR
+    - php artisan currency:manage add USD
+    - php artisan currency:update
+
     # Run PHPUnit tests
     - php vendor/bin/phpunit --coverage-text --colors=never
+
+# Deploy to staging
+deploy_staging:
+  stage: deploy-staging
+  when: manual
+  only:
+    - /^v(\d+\.)*\d+$/
+  environment:
+    name: staging
+    url: https://staging.barbapappa.app
+  script:
+    # Install and build frontend dependencies
+    - npm install
+    - npm run production
+
+    # TODO: run commands on server:
+    # TODO: - copy files to server
+    # TODO: - stop queue
+    # TODO: - put site in maintenance mode
+    # TODO: - copy new files to live dir
+    # TODO: - config/route cache
+    # TODO: - run migrate
+    # TODO: - disable maintenance mode
+    # TODO: - start queue
+
+# Deploy to production
+deploy_production:
+  stage: deploy-production
+  when: manual
+  only:
+    - /^v(\d+\.)*\d+$/
+  environment:
+    name: production
+    url: https://barbapappa.app
+  script:
+    # Install and build frontend dependencies
+    - npm install
+    - npm run production
+
+    # TODO: run commands on server:
+    # TODO: - copy files to server
+    # TODO: - stop queue
+    # TODO: - put site in maintenance mode
+    # TODO: - copy new files to live dir
+    # TODO: - config/route cache
+    # TODO: - run migrate
+    # TODO: - disable maintenance mode
+    # TODO: - start queue
