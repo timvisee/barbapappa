@@ -27,6 +27,7 @@ rm -rf ./live/public; cp -r ./new/public ./live/
 rm -rf ./live/resources; cp -r ./new/resources ./live/
 rm -rf ./live/routes; cp -r ./new/routes ./live/
 rm -rf ./live/vendor; cp -r ./new/vendor ./live/
+cp ./new/artisan ./live/
 
 # Add missing directories, configure permissions
 echo "Configuring directories..."
