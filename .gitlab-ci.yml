@@ -34,8 +34,7 @@ before_script:
 
   # Install Composer and project dependencies
   - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar install
-  - php composer.phar dumpautoload -o
+  - php composer.phar install --optimize-autoloader --no-dev
 
   # Change into webapp directory
   - cd webapp/
@@ -78,45 +77,45 @@ deploy_staging:
   stage: deploy-staging
   when: manual
   only:
+    - deploy
     - /^v(\d+\.)*\d+$/
   environment:
     name: staging
     url: https://staging.barbapappa.app
   script:
+    # Install required tools
+    - apt-get update -yqq
+    - apt-get install sshpass -yqq
+
     # Install and build frontend dependencies
     - npm install
     - npm run production
 
-    # TODO: run commands on server:
-    # TODO: - copy files to server
-    # TODO: - stop queue
-    # TODO: - put site in maintenance mode
-    # TODO: - copy new files to live dir
-    # TODO: - config/route cache
-    # TODO: - run migrate
-    # TODO: - disable maintenance mode
-    # TODO: - start queue
+    # Move files to server, and deploy
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/staging.barbapappa.app; rm -rf ./new; mkdir ./new'"
+    - "sshpass -p $DEPLOY_SSH_PASS scp -oStrictHostKeyChecking=no -r ./* $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST:/var/customers/webs/timvisee/staging.barbapappa.app/new/"
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/staging.barbapappa.app; ./new/ci/deploy; rm -rf ./new'"
 
 # Deploy to production
 deploy_production:
   stage: deploy-production
   when: manual
   only:
+    - deploy
     - /^v(\d+\.)*\d+$/
   environment:
     name: production
     url: https://barbapappa.app
   script:
+    # Install required tools
+    - apt-get update -yqq
+    - apt-get install sshpass -yqq
+
     # Install and build frontend dependencies
     - npm install
     - npm run production
 
-    # TODO: run commands on server:
-    # TODO: - copy files to server
-    # TODO: - stop queue
-    # TODO: - put site in maintenance mode
-    # TODO: - copy new files to live dir
-    # TODO: - config/route cache
-    # TODO: - run migrate
-    # TODO: - disable maintenance mode
-    # TODO: - start queue
+    # Move files to server, and deploy
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/barbapappa.app; rm -rf ./new; mkdir ./new'"
+    - "sshpass -p $DEPLOY_SSH_PASS scp -oStrictHostKeyChecking=no -r ./* $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST:/var/customers/webs/timvisee/barbapappa.app/new/"
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/barbapappa.app; ./new/ci/deploy; rm -rf ./new'"
