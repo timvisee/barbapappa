@@ -47,7 +47,7 @@ if(!function_exists('perms')) {
      */
     function perms($config = null, $request = null) {
         if($config !== null)
-            return app('perms')->evaluate($config, $request !== null ? $request : request());
+            return app('perms')->evaluateRequest($config, $request !== null ? $request : request());
         else
             return app('perms');
     }
