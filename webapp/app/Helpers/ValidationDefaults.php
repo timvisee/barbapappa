@@ -180,7 +180,7 @@ class ValidationDefaults {
      * @return Array An array of validation rules.
      */
     public static function economyCurrency(Economy $economy, $unique = true) {
-        $rules = [Rule::exists('economy_currency', 'id')];
+        $rules = [Rule::exists('economy_currency', 'currency_id')];
 
         if($unique)
             $rules[] = Rule::unique('economy_currency', 'currency_id')

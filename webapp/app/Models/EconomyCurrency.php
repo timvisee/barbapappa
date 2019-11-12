@@ -32,7 +32,7 @@ use App\Utils\EmailRecipient;
  */
 class EconomyCurrency extends Model {
 
-    protected $table = "economy_currencies";
+    protected $table = 'economy_currency';
 
     protected $fillable = [
         'enabled',
