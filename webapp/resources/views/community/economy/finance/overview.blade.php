@@ -28,6 +28,8 @@
         </div>
     </h2>
 
+    <p>@lang('pages.finance.description')</p>
+
     <h3 class="ui horizontal divider header">
         @lang('pages.wallets.title')
     </h3>

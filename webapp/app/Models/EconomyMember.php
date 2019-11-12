@@ -268,13 +268,54 @@ class EconomyMember extends Pivot {
      * @return MoneyAmount The cummulative balance of this member.
      */
     public function sumBalance() {
-        // TODO: sum imported balance as well
+        // Return wallet balances
         if($this->wallets->isNotEmpty())
             return Economy::sumAmounts($this->wallets, 'balance');
 
-        // TODO: handle cost items, last balance by system
-        $changes = $this->balanceImportChanges;
-        return Economy::sumAmounts($changes, 'balance');
+        // TODO: sum approved but not committed balance imports as well
+        // // Select last accepted but not commited balance import change in each
+        // // system for this user
+        // $member = $this;
+        // $changes = $member->balanceImportChanges()
+        //     // ->selectRaw('balance_import_change.*')
+        //     ->join('balance_import_event AS e1', 'balance_import_change.event_id', 'e1.id')
+        //     ->where('balance_import_change.id', function($query) use($member) {
+        //         $query->fromRaw('balance_import_change c2')
+        //             ->select('c2.id')
+        //             ->join('balance_import_event AS e2', 'c2.event_id', 'e2.id')
+        //             ->whereColumn('e1.system_id', 'e2.system_id')
+        //             ->whereColumn('balance_import_change.alias_id', 'c2.alias_id')
+        //             ->whereNotNull('c2.balance')
+        //             ->whereNotNull('c2.approved_at')
+        //             ->whereNull('c2.committed_at')
+        //             ->orderBy('c2.created_at', 'DESC')
+        //             ->limit(1);
+        //     })
+        //     ->whereNotNull('balance_import_change.balance')
+        //     ->whereNotNull('balance_import_change.approved_at')
+        //     ->whereNull('balance_import_change.committed_at')
+        //     ->groupBy('e1.system_id', 'alias_id');
+
+        // SQL PoC:
+        // SELECT * FROM balance_import_change c1
+        // JOIN balance_import_event e1 ON c1.event_id = e1.id
+        // WHERE c1.id = (
+        //     SELECT c2.id FROM balance_import_change c2
+        //     JOIN balance_import_event e2 ON c2.event_id = e2.id
+        //     WHERE e1.system_id = e2.system_id
+        //         AND c1.alias_id = c2.alias_id
+        //         AND c2.balance IS NOT NULL
+        //         AND c2.approved_at IS NOT NULL
+        //         AND c2.committed_at IS NULL
+        //     ORDER BY c2.created_at DESC
+        //     LIMIT 1
+        // )
+        // AND c1.balance IS NOT NULL
+        // AND c1.approved_at IS NOT NULL
+        // AND c1.committed_at IS NULL
+        // GROUP BY system_id, alias_id;
+
+        return MoneyAmount::zero();
     }
 
     /**
