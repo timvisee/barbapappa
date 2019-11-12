@@ -93,12 +93,13 @@ deploy_staging:
 
     # Node modules are not required to run in production, create tarball
     - rm -rf node_modules
+    - cp ../deploy/ci ./
     - tar -czf production.tar.gz *
 
     # Move files to server, and deploy
     - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/staging.barbapappa.app; rm -rf ./new; mkdir ./new'"
     - "sshpass -p $DEPLOY_SSH_PASS scp -oStrictHostKeyChecking=no ./production.tar.gz $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST:/var/customers/webs/timvisee/staging.barbapappa.app/new/"
-    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/staging.barbapappa.app/new; tar -xzf production.tar.gz; cd ..; ./new/ci/deploy; rm -rf ./new'"
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/staging.barbapappa.app/new; tar -xzf production.tar.gz; cd ..; ./new/deploy; rm -rf ./new'"
 
 # Deploy to production
 deploy_production:
@@ -121,9 +122,10 @@ deploy_production:
 
     # Node modules are not required to run in production, create tarball
     - rm -rf node_modules
+    - cp ../deploy/ci ./
     - tar -czf production.tar.gz *
 
     # Move files to server, and deploy
     - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/barbapappa.app; rm -rf ./new; mkdir ./new'"
     - "sshpass -p $DEPLOY_SSH_PASS scp -oStrictHostKeyChecking=no ./production.tar.gz $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST:/var/customers/webs/timvisee/barbapappa.app/new/"
-    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/barbapappa.app/new; tar -xzf production.tar.gz; cd ..; ./new/ci/deploy; rm -rf ./new'"
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/barbapappa.app/new; tar -xzf production.tar.gz; cd ..; ./new/deploy; rm -rf ./new'"
