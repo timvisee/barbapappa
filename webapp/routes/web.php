@@ -96,7 +96,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
     Route::redirect('/', '/explore');
 
     // Require app administrator to create a community
-    Route::middleware(CommunityController::permsCreate()->middleware())->group(function() {
+    Route::prefix('/-')->middleware(CommunityController::permsCreate()->middleware())->group(function() {
         Route::get('/create', 'CommunityController@create')->name('community.create');
         Route::post('/', 'CommunityController@doCreate')->name('community.doCreate');
     });
@@ -505,7 +505,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
     Route::redirect('/', '/explore/bars');
 
     // Require app administrator to create a bar
-    Route::middleware(['selectCommunity', BarController::permsCreate()->middleware()])->group(function() {
+    Route::prefix('/-')->middleware(['selectCommunity', BarController::permsCreate()->middleware()])->group(function() {
         Route::get('/create/{communityId}', 'BarController@create')->name('bar.create');
         Route::post('/create/{communityId}', 'BarController@doCreate')->name('bar.doCreate');
     });
