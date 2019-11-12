@@ -12,6 +12,7 @@ use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyCurrencyController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\MagicController;
 use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
 
@@ -635,13 +636,8 @@ Route::prefix('/ajax')->name('ajax.')->group(function() {
 });
 
 // Magic routes
-Route::get('/__heartbeat__', function() { return 'OK'; });
-Route::get('/__version__', function() { return [
-    'version' => config('app.version_name'),
-    'version_code' => config('app.version_code'),
-    'source' => config('app.source'),
-    'env' => config('app.env'),
-]; });
+Route::get('/__heartbeat__', 'MagicController@heartbeat')->name('magic.heartbeat');
+Route::get('/__version__', 'MagicController@version')->name('magic.version');
 
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');
