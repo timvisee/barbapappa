@@ -23,6 +23,7 @@ rm -rf ./live/app; cp -r ./new/app ./live/
 rm -rf ./live/bootstrap; cp -r ./new/bootstrap ./live/
 rm -rf ./live/config; cp -r ./new/config ./live/
 rm -rf ./live/database; cp -r ./new/database ./live/
+rm -rf ./live/packages; cp -r ./new/packages ./live/
 rm -rf ./live/public; cp -r ./new/public ./live/
 rm -rf ./live/resources; cp -r ./new/resources ./live/
 rm -rf ./live/routes; cp -r ./new/routes ./live/
