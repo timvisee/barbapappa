@@ -32,10 +32,10 @@ cp ./new/artisan ./live/
 
 # Add missing directories, configure permissions
 echo "Configuring directories..."
-mkdir -p ./live/storage
+#mkdir -p ./live/storage
 mkdir -p ./live/bootstrap/cache
-find ./live/storage -type f -exec chmod 644 {} \; 
-find ./live/storage -type d -exec chmod 755 {} \; 
+#find ./live/storage -type f -exec chmod 644 {} \; 
+#find ./live/storage -type d -exec chmod 755 {} \; 
 find ./live/bootstrap/cache -type f -exec chmod 644 {} \; 
 find ./live/bootstrap/cache -type d -exec chmod 755 {} \; 
 #chown -R timvisee:timvisee ./live/storage
