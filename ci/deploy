@@ -12,7 +12,7 @@ fi
 
 # Bring site down
 echo "Bringing live site down..."
-php ./live/artisan down
+php ./live/artisan down || true
 
 # TODO: stop queue workers?
 

@@ -37,7 +37,8 @@ before_script:
 
   # Install Composer and project dependencies
   - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar install --optimize-autoloader --no-dev
+  # - php composer.phar install --optimize-autoloader --no-dev
+  - php composer.phar install --optimize-autoloader
 
 # PHPUnit test job
 test:
