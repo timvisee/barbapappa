@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\MoneyAmount;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +20,8 @@ use Illuminate\Support\Facades\DB;
  * @property Carbon updated_at
  */
 class EconomyMember extends Pivot {
+
+    use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     protected $table = 'economy_member';
 
@@ -38,7 +41,9 @@ class EconomyMember extends Pivot {
     public function __get($name) {
         switch($name) {
             case 'name':
-                return $this->user->name;
+                return $this->user != null
+                    ? $this->user->first_name . ' ' . $this->user->last_name
+                    : $this->aliases()->firstOrFail()->name;
             default:
                 return parent::__get($name);
         }
@@ -163,6 +168,16 @@ class EconomyMember extends Pivot {
     }
 
     /**
+     * Get a relation to all balance import changes for this user.
+     */
+    public function balanceImportChanges() {
+        return $this->hasManyDeepFromRelations(
+            $this->aliases(),
+            (new BalanceImportAlias)->changes()
+        );
+    }
+
+    /**
      * Get the wallets that belong to this member.
      *
      * @return Relation to the member wallets.
@@ -171,6 +186,24 @@ class EconomyMember extends Pivot {
         return $this
             ->hasMany(Wallet::class, 'economy_member_id')
             ->orderBy('balance', 'DESC');
+    }
+
+    /**
+     * Create a new wallet for this economy member.
+     *
+     * @param int $currency_id The ID of the currency this wallet uses.
+     * @param string|null [$name=null] The name of the wallet, or null to use
+     *      the default.
+     *
+     * @return Wallet The created wallet.
+     */
+    // TODO: move this somewhere else?
+    public function createWallet(int $currency_id, $name = null) {
+        // Create the wallet
+        return $this->wallets()->create([
+            'name' => $name ?? __('pages.wallets.nameDefault'),
+            'currency_id' => $currency_id,
+        ]);
     }
 
     /**
@@ -230,21 +263,59 @@ class EconomyMember extends Pivot {
     }
 
     /**
-     * Create a new wallet for this economy member.
+     * Sum all balances for this member.
      *
-     * @param int $currency_id The ID of the currency this wallet uses.
-     * @param string|null [$name=null] The name of the wallet, or null to use
-     *      the default.
-     *
-     * @return Wallet The created wallet.
+     * @return MoneyAmount The cummulative balance of this member.
      */
-    // TODO: move this somewhere else?
-    public function createWallet(int $currency_id, $name = null) {
-        // Create the wallet
-        return $this->wallets()->create([
-            'name' => $name ?? __('pages.wallets.nameDefault'),
-            'currency_id' => $currency_id,
-        ]);
+    public function sumBalance() {
+        // Return wallet balances
+        if($this->wallets->isNotEmpty())
+            return Economy::sumAmounts($this->wallets, 'balance');
+
+        // TODO: sum approved but not committed balance imports as well
+        // // Select last accepted but not commited balance import change in each
+        // // system for this user
+        // $member = $this;
+        // $changes = $member->balanceImportChanges()
+        //     // ->selectRaw('balance_import_change.*')
+        //     ->join('balance_import_event AS e1', 'balance_import_change.event_id', 'e1.id')
+        //     ->where('balance_import_change.id', function($query) use($member) {
+        //         $query->fromRaw('balance_import_change c2')
+        //             ->select('c2.id')
+        //             ->join('balance_import_event AS e2', 'c2.event_id', 'e2.id')
+        //             ->whereColumn('e1.system_id', 'e2.system_id')
+        //             ->whereColumn('balance_import_change.alias_id', 'c2.alias_id')
+        //             ->whereNotNull('c2.balance')
+        //             ->whereNotNull('c2.approved_at')
+        //             ->whereNull('c2.committed_at')
+        //             ->orderBy('c2.created_at', 'DESC')
+        //             ->limit(1);
+        //     })
+        //     ->whereNotNull('balance_import_change.balance')
+        //     ->whereNotNull('balance_import_change.approved_at')
+        //     ->whereNull('balance_import_change.committed_at')
+        //     ->groupBy('e1.system_id', 'alias_id');
+
+        // SQL PoC:
+        // SELECT * FROM balance_import_change c1
+        // JOIN balance_import_event e1 ON c1.event_id = e1.id
+        // WHERE c1.id = (
+        //     SELECT c2.id FROM balance_import_change c2
+        //     JOIN balance_import_event e2 ON c2.event_id = e2.id
+        //     WHERE e1.system_id = e2.system_id
+        //         AND c1.alias_id = c2.alias_id
+        //         AND c2.balance IS NOT NULL
+        //         AND c2.approved_at IS NOT NULL
+        //         AND c2.committed_at IS NULL
+        //     ORDER BY c2.created_at DESC
+        //     LIMIT 1
+        // )
+        // AND c1.balance IS NOT NULL
+        // AND c1.approved_at IS NOT NULL
+        // AND c1.committed_at IS NULL
+        // GROUP BY system_id, alias_id;
+
+        return MoneyAmount::zero();
     }
 
     /**

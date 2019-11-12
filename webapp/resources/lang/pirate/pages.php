@@ -432,13 +432,25 @@ return [
     ],
 
     /**
+     * Economy finance pages.
+     */
+    'finance' => [
+        'title' => 'Financial report',
+        'walletSum' => 'Cumulative balance',
+        'paymentsInProgress' => 'In progress',
+        'fromBalanceImport' => 'from booty import',
+        'membersWithNonZeroBalance' => 'Members with non-zero balance',
+        'description' => 'Dis shows a simple financial report for th\' current booty state. Pirates from booty imports, that nay be registered and joined dis booty, are currently not listed.',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
         'title' => 'bunq accounts',
         'bunqAccount' => 'bunq account',
         'description' => 'Click on one of yer bunq accounts to manage it, or add a new one.',
-        'noWallets' => 'Yer nay be any bunq accounts added yet...',
+        'noAccounts' => 'Yer nay be any bunq accounts added yet...',
         'addAccount' => 'Add bunq account',
         'descriptionPlaceholder' => 'bunq account for automating bar payments',
         'tokenDescription' => 'Create a new API key in the developer section of th\' bunq app on yer handheld phoning device, and enter the freshly created token in dis field. Th\' token must never be shared with anyone else.',

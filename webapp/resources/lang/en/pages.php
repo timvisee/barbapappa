@@ -432,6 +432,18 @@ return [
     ],
 
     /**
+     * Economy finance pages.
+     */
+    'finance' => [
+        'title' => 'Financial report',
+        'walletSum' => 'Cumulative balance',
+        'paymentsInProgress' => 'In progress',
+        'fromBalanceImport' => 'from balance import',
+        'membersWithNonZeroBalance' => 'Members with non-zero balance',
+        'description' => 'This shows a simple financial report for the current economy state. Users from balance imports, that have not registered and joined this economy, are currently not listed here.',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
