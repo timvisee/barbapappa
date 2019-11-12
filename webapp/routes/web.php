@@ -44,11 +44,11 @@ Route::middleware('auth')->group(function() {
 
 // Authentication routes
 Route::get('/login', 'LoginController@login')->name('login');
-Route::post('/login', 'LoginController@doLogin');
+Route::middleware('throttle:10,1')->post('/login', 'LoginController@doLogin');
 Route::get('/login/email', 'LoginController@email')->name('login.email');
-Route::post('/login/email', 'LoginController@doEmail');
+Route::middleware('throttle:10,1')->post('/login/email', 'LoginController@doEmail');
 Route::get('/register', 'RegisterController@register')->name('register');
-Route::post('/register', 'RegisterController@doRegister');
+Route::middleware('throttle:4,1')->post('/register', 'RegisterController@doRegister');
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 Route::prefix('/password')->group(function() {
     Route::get('/change', 'PasswordChangeController@change')->name('password.change');
@@ -56,16 +56,16 @@ Route::prefix('/password')->group(function() {
     Route::get('/disable', 'PasswordChangeController@disable')->name('password.disable');
     Route::post('/disable', 'PasswordChangeController@doDisable')->name('password.disable');
     Route::get('/request', 'PasswordForgetController@request')->name('password.request');
-    Route::post('/request', 'PasswordForgetController@doRequest');
+    Route::middleware('throttle:4,1')->post('/request', 'PasswordForgetController@doRequest');
     Route::get('/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
-    Route::post('/reset', 'PasswordResetController@doReset');
+    Route::middleware('throttle:4,1')->post('/reset', 'PasswordResetController@doReset');
 });
-Route::post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinue');
-Route::get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
+Route::middleware('throttle:4,1')->post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinue');
+Route::middleware('throttle:4,1')->get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
 
 // Email routes
 Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('email.verify');
-Route::post('/email/verify', 'EmailVerifyController@doVerify');
+Route::middleware('throttle:4,1')->post('/email/verify', 'EmailVerifyController@doVerify');
 
 // Account routes
 Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(function() {
@@ -111,7 +111,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
         // Join/leave
         Route::get('/join', 'CommunityController@join')->name('community.join');
-        Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');
+        Route::middleware('throttle:4,1')->post('/join', 'CommunityController@doJoin')->name('community.doJoin');
         Route::get('/leave', 'CommunityController@leave')->name('community.leave');
         Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
     });
@@ -451,11 +451,11 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         // TODO: this are API calls, move it somewhere else
         Route::get('/buy/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
         Route::get('/buy/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
-        Route::post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
+        Route::middleware('throttle:10,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');
-        Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');
+        Route::middleware('throttle:4,1')->post('/join', 'BarController@doJoin')->name('bar.doJoin');
         Route::get('/leave', 'BarController@leave')->name('bar.leave');
         Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
     });
@@ -495,7 +495,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         });
 
         // Quick buy products
-        Route::post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
+        Route::middleware('throttle:20,1')->post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
 
         // Bar members, require view perms
         Route::prefix('/members')->middleware(BarMemberController::permsView()->middleware())->group(function() {
@@ -520,7 +520,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 });
 
 // Transactions
-Route::prefix('/transactions')->middleware(['auth', 'selectTransaction'])->group(function() {
+Route::prefix('/transactions')->middleware(['throttle:60,1', 'auth', 'selectTransaction'])->group(function() {
     // Index
     // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
 
@@ -548,23 +548,8 @@ Route::prefix('/transactions')->middleware(['auth', 'selectTransaction'])->group
     });
 });
 
-// Notifications
-Route::prefix('/notifications')->middleware('auth')->group(function() {
-    // Index
-    Route::get('/', 'NotificationController@index')->name('notification.index');
-
-    // Mark all notifications as read
-    Route::post('/mark-all-as-read', 'NotificationController@doMarkAllRead')->name('notification.doMarkAllRead');
-
-    // Specific
-    Route::prefix('/{notificationId}')->group(function() {
-        // Action
-        Route::get('/action/{action}', 'NotificationController@action')->name('notification.action');
-    });
-});
-
 // Payments
-Route::prefix('/payments')->middleware('auth')->group(function() {
+Route::prefix('/payments')->middleware(['throttle:60,1', 'auth'])->group(function() {
     // Index
     Route::get('/', 'PaymentController@index')->name('payment.index');
 
@@ -593,6 +578,21 @@ Route::prefix('/payments')->middleware('auth')->group(function() {
         // Cancel
         Route::get('/cancel', 'PaymentController@cancel')->name('payment.cancel');
         Route::delete('/cancel', 'PaymentController@doCancel')->name('payment.doCancel');
+    });
+});
+
+// Notifications
+Route::prefix('/notifications')->middleware('auth')->group(function() {
+    // Index
+    Route::get('/', 'NotificationController@index')->name('notification.index');
+
+    // Mark all notifications as read
+    Route::post('/mark-all-as-read', 'NotificationController@doMarkAllRead')->name('notification.doMarkAllRead');
+
+    // Specific
+    Route::prefix('/{notificationId}')->group(function() {
+        // Action
+        Route::get('/action/{action}', 'NotificationController@action')->name('notification.action');
     });
 });
 
