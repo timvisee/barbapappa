@@ -32,12 +32,12 @@ before_script:
   - pecl install xdebug
   - docker-php-ext-enable xdebug
 
+  # Change into webapp directory
+  - cd webapp/
+
   # Install Composer and project dependencies
   - curl -sS https://getcomposer.org/installer | php
   - php composer.phar install --optimize-autoloader --no-dev
-
-  # Change into webapp directory
-  - cd webapp/
 
 # PHPUnit test job
 test:
