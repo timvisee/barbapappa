@@ -47,8 +47,10 @@ class Notification extends Model {
 
         // Add global scopes
         static::addGlobalScope('user', function(Builder $builder) {
-            if(($user = barauth()->getUser()) != null)
-                $builder->forUser($user);
+            $user = barauth()->getUser();
+            if($user == null)
+                throw new Exception("Unable to filter notifications for user, current user is unknown");
+            $builder->forUser($user);
         });
         static::addGlobalScope('visible', function(Builder $builder) {
             $builder->visible();
