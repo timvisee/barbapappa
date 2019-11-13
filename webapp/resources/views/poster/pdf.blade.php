@@ -54,7 +54,9 @@
 <body>
     <h1>@lang('pages.' . $type . '.poster.this' . ucfirst($type) . 'Uses')</h1>
 
-    <img class="logo" src="{{ asset('img/logo/logo_nowrap_600dpi.png') }}" />
+    <img class="logo" src="data:image/png;base64,{{
+        base64_encode(file_get_contents(base_path() . '/public/img/logo/logo_nowrap_600dpi.png'))
+    }}" />
 
     <p class="description">
         @lang('pages.' . $type . '.poster.toDigitallyManage')<br>
