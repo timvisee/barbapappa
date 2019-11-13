@@ -97,6 +97,7 @@ return [
         'title' => 'Ontdek',
         'exploreBars' => 'Ontdek bars',
         'exploreCommunities' => 'Ontdek groepen',
+        'exploreBoth' => 'Ontdek groepen & bars',
     ],
 
     /**

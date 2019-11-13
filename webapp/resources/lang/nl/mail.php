@@ -36,8 +36,9 @@ return [
          */
         'verified' => [
             'subject' => 'Starten met :app',
-            'subtitle' => 'Allereerst, welkom bij de club!',
+            'subtitle' => 'Allereerst, welkom!',
             'accountReady' => 'Je e-mailadres is zojuist geverifiëerd en je account is klaar voor gebruik.',
+            'visitExplore' => 'Als je nog geen lid bent van een groep of bar, bezoek de Ontdek pagina om je in te schrijven en deze toe te voegen aan je persoonlijke dashboard.',
             'startUsingSeeDashboard' => 'Neem een kijkje op je gepersonaliseerde dashboard om te starten met :app.',
             'configureEmailPreferences' => 'Bekijk het e-mailvoorkeuren paneel om in te stellen hoevaak je e-mailupdates ontvangt van :app',
         ]

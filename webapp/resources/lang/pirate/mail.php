@@ -38,6 +38,7 @@ return [
             'subject' => 'Sail wit :app',
             'subtitle' => 'First, sail ho to th\' crew!',
             'accountReady' => 'Yer e-bottle coordinate has just be verified n\' yer ship be now to sail.',
+            'visitExplore' => 'If ye nay be member of a crew or bar yet, visit th\' Explore page to join one and add it to yer personal dashboard.',
             'startUsingSeeDashboard' => 'To sail wit :app, navigate to yer pirate dashboard.',
             'configureEmailPreferences' => 'To mend th\' sails \'bout how often ye receive e-bottle parchments from :app, navigate to yer e-bottle preferences panel.',
         ]

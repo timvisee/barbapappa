@@ -15,6 +15,14 @@
 @endcomponent
 
 @component('mail::text')
+@lang('mail.email.verified.visitExplore', ['app' => config('app.name')])
+@endcomponent
+
+@component('mail::button', ['url' => route('explore.community')])
+@lang('pages.explore.exploreBoth')
+@endcomponent
+
+@component('mail::text')
 @lang('mail.email.verified.configureEmailPreferences', ['app' => config('app.name')])
 @endcomponent
 

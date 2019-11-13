@@ -36,8 +36,9 @@ return [
          */
         'verified' => [
             'subject' => 'Start using :app',
-            'subtitle' => 'First of all, welcome to the club!',
+            'subtitle' => 'First of all, welcome!',
             'accountReady' => 'Your email address has just been verified and your account is now ready.',
+            'visitExplore' => 'If you aren\'t member of a community or bar yet, visit the Explore page to join one and add it to your personal dashboard.',
             'startUsingSeeDashboard' => 'To start using :app, take a look at your personalized dashboard.',
             'configureEmailPreferences' => 'To configure how often you receive email updates from :app, check out your email preferences panel.',
         ]

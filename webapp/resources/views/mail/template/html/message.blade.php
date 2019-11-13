@@ -6,7 +6,7 @@
 
         @if(isset($subtitle))
             @slot('lead')
-                {{ $subtitle }}
+                {!! $subtitle !!}
             @endslot
         @endif
     @endcomponent

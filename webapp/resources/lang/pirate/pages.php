@@ -97,6 +97,7 @@ return [
         'title' => 'Explore',
         'exploreBars' => 'Explore bars',
         'exploreCommunities' => 'Explore crews',
+        'exploreBoth' => 'Explore communities & bars',
     ],
 
     /**
