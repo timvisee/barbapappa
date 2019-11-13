@@ -118,6 +118,7 @@ return [
     'committed' => 'Committed',
     'committedAt' => 'Committed at',
     'iWantToDelete' => 'I want to sink',
+    'donate' => 'Donate',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

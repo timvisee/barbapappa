@@ -15,7 +15,6 @@ return [
     'requestPasswordReset' => 'Request password reset',
     'changePassword' => 'Change password',
     'changePasswordDescription' => 'To change your password, fill in the fields below.',
-    'about' => 'About',
 
     /**
      * App pages.
@@ -849,5 +848,30 @@ return [
         'description' => 'You took a wrong turn.<br />You don\'t have enough permission to access this content.',
         'notLoggedIn' => 'Not logged in',
         'notLoggedInDescription' => 'You\'re currently not logged in. You may want to login to get proper access rights.',
+    ],
+
+    /**
+     * About page.
+     */
+    'about' => [
+        'title' => 'About',
+        'aboutUs' => 'About us',
+        'description' => ':app is a digital bar management application to facilitate a user-controlled platform for purchase processing, payment handling and inventory management.<br><br>:app is a fully automated solution for small self-managed bars and communities, to take away the hassle of manually registering purcahses using telly marks on paper.<br><br>For any interest in using this platform for your own community, be sure to send us a message!',
+        'developedBy' => 'The project is developed & maintained by',
+        'sourceDescription' => 'I make the software that I develop open-source. The complete project with its source code is available free of charge, for everyone. I believe it is important to allow anybody to inspect, modify, improve, contribute, and verify without restrictions.',
+        'sourceAt' => 'The latest source code can be found on GitLab',
+        'withLicense' => 'It is released with the following license',
+        'usedTechnologies' => 'Some awesome technologies that are used include',
+        'noteLaravel' => 'backend framework',
+        'noteSemanticUi' => 'frontend theming framework',
+        'noteGlyphicons' => 'icons & symbols',
+        'noteFlags' => 'flags',
+        'noteJQuery' => 'simplifies JavaScript',
+        'noteGetTerms' => 'terms & privacy policy template',
+        'noteEDegen' => 'suggested \'Barbapappa\'',
+        'otherResources' => 'Other awesome resources include',
+        'donate' => 'A lot of effort went into this project.<br>Want to donate me a coffee?',
+        'thanks' => 'Thank you for using this product.<br>Thank you for being awesome.',
+        'copyright' => 'Copyright © :app :year.<br>All rights reserved.',
     ],
 ];

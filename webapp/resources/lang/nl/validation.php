@@ -144,6 +144,7 @@ return [
         'balance' => 'saldo',
         'confirm_name' => 'naam bevestiging',
         'confirm_delete' => 'verwijder bevestiging',
+        'wallet' => 'portemonnee',
     ],
 
 ];

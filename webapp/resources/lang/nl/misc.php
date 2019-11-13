@@ -119,6 +119,7 @@ return [
     'committed' => 'Toegepast',
     'committedAt' => 'Toegepast om',
     'iWantToDelete' => 'Ik verwijder',
+    'donate' => 'Doneren',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',

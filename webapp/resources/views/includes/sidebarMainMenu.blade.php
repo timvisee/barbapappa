@@ -70,7 +70,7 @@
             <a href="{{ route('about') }}"
                     class="item {{ Route::currentRouteName() == 'about' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-heart-empty"></i>
-                @lang('pages.about')
+                @lang('pages.about.title')
             </a>
             <a href="{{ route('terms') }}"
                     class="item {{ Route::currentRouteName() == 'terms' ? ' active' : '' }}">

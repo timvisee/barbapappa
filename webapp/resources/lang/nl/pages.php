@@ -15,7 +15,6 @@ return [
     'requestPasswordReset' => 'Wachtwoord reset aanvragen',
     'changePassword' => 'Wachtwoord veranderen',
     'changePasswordDescription' => 'Vul de onderstaande velden in om je wachtwoord te veranderen.',
-    'about' => 'Over',
 
     /**
      * App pages.
@@ -848,5 +847,30 @@ return [
         'description' => 'Je hebt een verkeerde afslag genomen.<br />Je hebt niet genoeg rechten voor deze inhoud.',
         'notLoggedIn' => 'Niet ingelogd',
         'notLoggedInDescription' => 'Je bent op dit moment niet ingelogd. Log in om jouw juiste rechten te verkrijgen.',
+    ],
+
+    /**
+     * About page.
+     */
+    'about' => [
+        'title' => 'Over',
+        'aboutUs' => 'About us',
+        'description' => ':app is een digitaal bar management applicatie om een gebruikergecontroleerd platform te faciliteren voor aankoopverwerking, betaalverwerking en inventarisbeheer.<br><br>:app is een volledig geautomatiseerd platform voor kleine zelfbeheerde bars en groepen, om gedoe met handmatig bijhouden van aankopen door middel van turven op papier weg te nemen.<br><br>Voor interesse in het gebruik van dit platform voor je eigen bar of groep, stuur ons een berichtje!',
+        'developedBy' => 'Dit project wordt ontwikkeld & beheerd door',
+        'sourceDescription' => 'Ik maak de software die ik ontwikkel open-source. Het complete project met alle broncode is gratis beschikbaar, voor iedereen. Ik geloof er in dat het belangrijk is om iedereen toegang te geven tot het inspecteren, aanpassen, verbeteren, bijdragen en verifiëren zonder restricties.',
+        'sourceAt' => 'De laatste broncode is te vinden op GitLab',
+        'withLicense' => 'Dit project is uitgebracht onder de volgende licentie',
+        'usedTechnologies' => 'Een aantal awesome technologieën die gebruikt zijn',
+        'noteLaravel' => 'backend framework',
+        'noteSemanticUi' => 'frontend theming framework',
+        'noteGlyphicons' => 'iconen & symbolen',
+        'noteFlags' => 'vlaggetjes',
+        'noteJQuery' => 'versimpelt JavaScript',
+        'noteGetTerms' => 'voorwaarden & privacy policy template',
+        'noteEDegen' => 'suggestie \'Barbapappa\'',
+        'otherResources' => 'Andere awesome bronnen zijn',
+        'donate' => 'Er is veel werk gestoken in dit project.<br>Wil je me een koffie doneren?',
+        'thanks' => 'Bedankt voor het gebruik maken van dit project,<br>dat is geweldig!',
+        'copyright' => 'Copyright © :app :year.<br>Alle rechten voorbehouden.',
     ],
 ];
