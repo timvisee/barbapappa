@@ -5,7 +5,7 @@
 @section('content')
     <div class="highlight-box">
         <h2 class="ui header">@lang('misc.welcomeTo')</h2>
-        {{ logo()->element(true, ['class' => 'logo']) }}
+        {{ logo()->element(true, false, ['class' => 'logo']) }}
     </div>
 
     @if(config('app.auth_session_link'))

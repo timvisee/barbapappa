@@ -13,7 +13,7 @@
         @endphp
 
         <a href="{{ route($homeRoute) }}" title="{{ $homeRouteName }}">
-            {{ logo()->element(false) }}
+            {{ logo()->element(false, false) }}
         </a>
     </h1>
 
