@@ -102,6 +102,7 @@ return [
     'product' => 'Product',
     'payment' => 'Payment',
     'assets' => 'Assets',
+    'pay' => 'Pay',
     'topUp' => 'Top-up',
     'deposit' => 'Deposit',
     'deposited' => 'Deposited',

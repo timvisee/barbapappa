@@ -102,6 +102,7 @@ return [
     'product' => 'Product',
     'payment' => 'Betaling',
     'assets' => 'Middelen',
+    'pay' => 'Betalen',
     'topUp' => 'Opwaarderen',
     'deposit' => 'Storten',
     'deposited' => 'Gestort',

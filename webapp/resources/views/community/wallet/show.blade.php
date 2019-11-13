@@ -63,7 +63,7 @@
         <div class="ui buttons">
             <a href="{{ route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
                     class="ui button green">
-                @lang('misc.topUp')
+                @lang('misc.pay')
             </a>
             <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
                     class="ui button orange">
