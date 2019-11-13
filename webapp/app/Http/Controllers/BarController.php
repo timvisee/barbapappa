@@ -993,18 +993,20 @@ class BarController extends Controller {
      * The list may be used to determine what product price to show if multiple
      * prices are available in different currencies.
      *
-     * @param Bar $bar The bar the user is in.
+     * @param Economy|Bar $economy The economy the user is in.
      * @param EconomyMemberUser $user|null The user or null for the current user.
      *
      * @return [EconomyCurrency] A list of preferred currencies.
      */
+    // TODO: economy (or bar) param is obsolete because of member
     // TODO: only support economy member here, not user
     // TODO: move this function to some other class, user class?
-    static function userCurrencies($bar, $member) {
+    static function userCurrencies($economy, $member) {
         // TODO: optimize queries here!
 
         // Get the economy
-        $economy = $bar->economy;
+        if($economy instanceof Bar)
+            $economy = $economy->economy;
 
         // Select the user, get the economy and economy member
         if($member === null)
