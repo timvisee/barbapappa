@@ -202,10 +202,12 @@ class BunqAccount extends Model {
             $message = __('pages.bunqAccounts.noHttpsNoCallbacks');
 
         // Set the filters
-        NotificationFilterUrlMonetaryAccount::create(
-            $this->monetary_account_id,
-            $filters
-        );
+        try {
+            NotificationFilterUrlMonetaryAccount::create(
+                $this->monetary_account_id,
+                $filters
+            );
+        } catch(\Error $e) {}
 
         return $message;
     }
