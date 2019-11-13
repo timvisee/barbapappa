@@ -6,6 +6,7 @@
 return [
     'pages' => 'Pagina\'s',
     'emailPreferences' => 'E-mailvoorkeuren',
+    'emailPreferencesNotYetImplemented' => 'E-mailvoorkeuren zijn nog niet geimplementeerd, kom hier later voor terug.',
     // TODO: move to misc?
     'communities' => 'Groepen',
     // TODO: move to misc?

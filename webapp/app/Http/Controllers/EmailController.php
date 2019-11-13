@@ -223,4 +223,14 @@ class EmailController extends Controller {
             ->route('account.emails', ['userId' => $userId])
             ->with('success', __('pages.accountPage.email.deleted'));
     }
+
+    /**
+     * Email preferences page.
+     *
+     * @return Response
+     */
+    public function preferences() {
+        return (new PagesController)->index()
+            ->with('info', __('pages.emailPreferencesNotYetImplemented'));
+    }
 }
