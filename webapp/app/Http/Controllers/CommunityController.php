@@ -284,6 +284,11 @@ class CommunityController extends Controller {
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
 
+        // Redirect to the community page if the user has already joined
+        if($community->isJoined($user))
+            return redirect()
+                ->route('community.show', ['communityId' => $communityId]);
+
         // Self enroll must be enabled
         if(!$community->self_enroll)
             return redirect()
