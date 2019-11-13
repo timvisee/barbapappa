@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\App;
 
 abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
 
@@ -63,8 +64,13 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         if($this->recipients->pluck('user')->unique()->count() > 1)
             throw new \Exception('Failed to send mailable, sending to recipients being different users, should send separately');
 
-        // Gather recipient user, determine subject
+        // Gather recipient user, force set application locale for email
         $user = $this->recipients->first()->getUser();
+        $locale = $user->preferredLocale();
+        if(isset($locale))
+            App::setLocale($locale);
+
+        // Format subject
         $subject = trans($this->subjectKey, $this->subjectValues);
 
         // Build the mailable
