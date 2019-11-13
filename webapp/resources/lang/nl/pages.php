@@ -800,7 +800,7 @@ return [
      */
     'privacy' => [
         'title' => 'Privacy',
-        'description' => 'Wanneer je onze service gebruikt, vertrouw je ons met je gegevens. We begrijpen dat dit een grote verantwoordelijkheid is.<br />Het privacybeleid (Privacy Policy) hieronder is bedoeld om je te helpen begrijpen hoe we jouw gegevens beheren.',
+        'description' => 'Wanneer je onze service gebruikt, vertrouw je ons met je gegevens. We begrijpen dat dit een grote verantwoordelijkheid is.<br><br>Het privacybeleid (Privacy Policy) hieronder is bedoeld om je te helpen begrijpen hoe we jouw gegevens beheren.',
         'onlyEnglishNote' => 'Het privacybeleid (Privacy Policy) is alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over ons privacybeleid (Privacy Policy) of over jouw privacy, neem gerust contact met ons op.',
@@ -822,7 +822,7 @@ return [
      */
     'license' => [
         'title' => 'Licentie',
-        'description' => 'Het Barbapappa software project is uitgebracht onder de GNU GPL-3.0 licentie (License). Deze licentie beschrijft wat wel en niet is toegestaan met de broncode van dit project.<br />Lees de volledige licentie hieronder, of check de licentie samenvatting voor een snel overzicht.',
+        'description' => 'Het Barbapappa software project is open-source, en is uitgebracht onder de GNU GPL-3.0 licentie (License). Deze licentie beschrijft wat wel en niet is toegestaan met de publieke broncode voor dit softwareproject. Deze licentie betreft niet de gebruiksinformatie verwerkt binnen deze applicatie.<br><br>Lees de volledige licentie hieronder, of check de licentie samenvatting voor een snel overzicht.',
         'onlyEnglishNote' => 'De licentie (License) is alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over de gebruikte licentie (License), neem gerust contact met ons op. Je kunt de licentie ook bekijken in platte text leesbaar op elk willekeurig apparaat.',
@@ -855,7 +855,7 @@ return [
      */
     'about' => [
         'title' => 'Over',
-        'aboutUs' => 'About us',
+        'aboutUs' => 'Over ons',
         'description' => ':app is een digitaal bar management applicatie om een gebruikergecontroleerd platform te faciliteren voor aankoopverwerking, betaalverwerking en inventarisbeheer.<br><br>:app is een volledig geautomatiseerd platform voor kleine zelfbeheerde bars en groepen, om gedoe met handmatig bijhouden van aankopen door middel van turven op papier weg te nemen.<br><br>Voor interesse in het gebruik van dit platform voor je eigen bar of groep, stuur ons een berichtje!',
         'developedBy' => 'Dit project wordt ontwikkeld & beheerd door',
         'sourceDescription' => 'Ik maak de software die ik ontwikkel open-source. Het complete project met alle broncode is gratis beschikbaar, voor iedereen. Ik geloof er in dat het belangrijk is om iedereen toegang te geven tot het inspecteren, aanpassen, verbeteren, bijdragen en verifiëren zonder restricties.',

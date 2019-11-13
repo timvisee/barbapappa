@@ -19,18 +19,20 @@
 <h4>2. Use License</h4>
 <ol type="a">
     <li>
-        Permission is granted to temporarily download one copy of the
-        materials (information or software) on {{ $app }}'s website
-        for personal, non-commercial transitory viewing only. This is
-        the grant of a license, not a transfer of title, and under this
-        license you may not:
+        Permission is granted to download a copy of the materials (information)
+        on {{ $app }}'s website. This is the grant of a license,
+        not a transfer of title, and under this license you may not:
         <ol type="i">
-            <li>modify or copy the materials;</li>
-            <li>use the materials for any commercial purpose, or for any public display (commercial or non-commercial);</li>
-            <li>attempt to decompile or reverse engineer any software contained on {{ $app }}'s website;</li>
-            <li>remove any copyright or other proprietary notations from the materials; or</li>
-            <li>transfer the materials to another person or "mirror" the materials on any other server.</li>
+            <li>use the materials for any commercial purpose, or for any public
+                display (commercial or non-commercial) unless otherwise noted;</li>
+            <li>remove any copyright or other proprietary notations from the materials</li>
         </ol>
+    </li>
+    <li>
+        Permission is granted to download a copy of the source code (software)
+        for the {{ $app }} application. The source code may be used within lawful
+        means as described in the included <a href="{{ route('license') }}">GNU GPL-3.0</a>
+        license.
     </li>
     <li>
         This license shall automatically terminate if you violate any
