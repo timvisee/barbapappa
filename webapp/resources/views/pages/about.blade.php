@@ -1,112 +1,129 @@
 @extends('layouts.app')
 
-@section('title', __('pages.about'))
+@section('title', __('pages.about.title'))
 
 @section('content')
     <div class="highlight-box">
         <h2 class="ui header">@yield('title')</h2>
         {{ logo()->element(true, ['class' => 'logo']) }}
-        <p>{{ config('app.version_name') }} <span style="color: darkgray;">({{ config('app.version_code') }})</span></p>
+        <p><i>{{ config('app.version_name') }} <span class="subtle">({{ config('app.version_code') }})</span></i></p>
     </div>
 
-    <div class="align-center">
-        <div class="page-divider">
-            <span class="line"></span>
+    <div class="margin-center align-center" style="max-width: 400px;">
+        <p>@lang('pages.about.description', ['app' => config('app.name')])</p>
+        <div class="ui list">
+            <a href="{{ route('contact') }}" class="item">@lang('pages.contact.contactUs')</a>
+        </div>
+
+        <h3 class="ui horizontal divider header">
             <i class="glyphicons glyphicons-user scale"></i>
-            <span class="line"></span>
+        </h3>
+
+        <p>@lang('pages.about.developedBy'):</p>
+        <div class="ui list">
+            <div class="item">
+                <a href="https://timvisee.com" target="_blank">Tim Visée</a>
+                —
+                <a href="https://timvisee.com" target="_blank">timvisee.com</a>
+            </div>
         </div>
 
-        <p>
-            <h5>The project is developed and maintained by</h5>
-            <span class="spacer x05"></span>
-            <a href="https://timvisee.com" target="_blank">Tim Vis&eacute;e</a>
-            <span class="spacer x05"></span>
-            <a href="https://timvisee.com" target="_blank">timvisee.com</a>
-        </p>
-
-        <div class="page-divider">
-            <span class="line"></span>
+        <h3 class="ui horizontal divider header">
             <i class="glyphicons glyphicons-lab scale"></i>
-            <span class="line"></span>
+        </h3>
+
+        <p>@lang('pages.about.sourceDescription')</p>
+
+        <p>@lang('pages.about.sourceAt'):</p>
+        <div class="ui list">
+            <a class="item" href="{{ config('app.source') }}" target="_blank">GitLab</a>
+            <div class="item">
+                <a class="item" href="https://github.com/timvisee/barbapappa" target="_blank">GitHub</a>
+                <span class="subtle">(mirror)</a>
+            </div>
         </div>
 
-        <p>
-            <h5>The source code and a development overview is available at</h5>
-            <span class="spacer x05"></span>
-            <a href="{{ config('app.source') }}">GitLab</a>
-            <span class="spacer x05"></span>
-            <a href="https://github.com/timvisee/barbapappa">GitHub (mirror)</a>
-
-            <span class="spacer"></span>
-
-            <h5>Some awesome technologies that have been used are</h5>
-
-            <span class="spacer x05"></span>
-            <a href="https://laravel.com/" target="_blank">Laravel</a><br />
-            <i>as backend framework</i>
-
-            <span class="spacer x05"></span>
-            <a href="https://semantic-ui.com" target="_blank">Semantic UI</a><br />
-            <i>as frontend theming framework</i>
-
-            <span class="spacer x05"></span>
-            <a href="https://glyphicons.com/" target="_blank">Glyphicons</a>
-            <i class="halflings halflings-heart" style="color: #b80000;"></i><br />
-            <i>for icons and symbols</i>
-
-            <span class="spacer x05"></span>
-            <a href="http://flag-icon-css.lip.is/" target="_blank">flag-icon-css</a>
-            <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span><br />
-            <i>for flag icons</i>
-
-            <span class="spacer x05"></span>
-            <a href="https://jquery.com/" target="_blank">jQuery</a><br />
-            <i>for simplifying JavaScript</i>
-
-            <span class="spacer"></span>
-
-            <h5>Some resources that have been used are</h5>
-
-            <span class="spacer x05"></span>
-            <a href="https://getterms.io/" target="_blank">GetTerms.io</a><br />
-            <i>for providing Terms of Service & Privacy Policy</i>
-
-            <span class="spacer x05"></span>
-            <a href="http://eloydegen.com/" target="_blank">E. Degen</a><br />
-            <i>who suggested the Barbapappa name</i>
-        </p>
-
-        <div class="page-divider">
-            <span class="line"></span>
-            <i class="glyphicons glyphicons-notes-2 scale"></i>
-            <span class="line"></span>
+        <p>@lang('pages.about.withLicense'):</p>
+        <div class="ui list">
+            <a href="{{ route('license') }}" class="item">GNU GPL-3.0</a>
         </div>
 
-        <p>
-            <h5>Released under the license</h5>
-            <span class="spacer x05"></span>
-            <a href="{{ route('license') }}">GNU GPL-3.0</a><br />
-            <i>(open-source)</i>
-        </p>
+        <h3 class="ui horizontal divider header">
+            <i class="glyphicons glyphicons-star-empty scale"></i>
+        </h3>
 
-        <div class="page-divider">
-            <span class="line"></span>
+        <p>@lang('pages.about.usedTechnologies'):</p>
+        <div class="ui list">
+            <div class="item">
+                <a href="https://laravel.com/" target="_blank">Laravel</a>
+                —
+                <i>@lang('pages.about.noteLaravel')</i>
+            </div>
+            <div class="item">
+                <a href="https://semantic-ui.com" target="_blank">Semantic UI</a>
+                —
+                <i>@lang('pages.about.noteSemanticUi')</i>
+            </div>
+            <div class="item">
+                <a href="https://glyphicons.com/" target="_blank">Glyphicons</a>
+                —
+                <i>@lang('pages.about.noteGlyphicons')</i>&nbsp;
+                <i class="halflings halflings-heart" style="color: #b80000;"></i>
+            </div>
+            <div class="item">
+                <a href="http://flag-icon-css.lip.is/" target="_blank">flag-icon-css</a>
+                —
+                <i>@lang('pages.about.noteFlags')</i>&nbsp;
+                <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span><br />
+            </div>
+            <div class="item">
+                <a href="https://jquery.com/" target="_blank">jQuery</a>
+                —
+                <i>@lang('pages.about.noteJQuery')</i>
+            </div>
+        </div>
+
+        <p>@lang('pages.about.otherResources'):</p>
+        <div class="ui list">
+            <div class="item">
+                <a href="https://getterms.io/" target="_blank">GetTerms.io</a>
+                —
+                <i>@lang('pages.about.noteGetTerms')</i>
+            </div>
+            <div class="item">
+                <a href="http://eloydegen.com/" target="_blank">E. Degen</a>
+                —
+                <i>@lang('pages.about.noteEDegen')</i>
+            </div>
+        </div>
+
+        <h3 class="ui horizontal divider header">
+            <i class="glyphicons glyphicons-donate scale"></i>
+        </h3>
+
+        <p>@lang('pages.about.donate')</p>
+        <div class="ui list">
+            <a href="https://timvisee.com/donate" target="_blank" class="item">
+                @lang('misc.donate')
+            </a>
+        </div>
+
+        <h3 class="ui horizontal divider header">
             <i class="glyphicons glyphicons-heart-empty scale"></i>
-            <span class="line"></span>
-        </div>
+        </h3>
 
         <p>
-            Thank you for using this product.
-            <span class="spacer x05"></span>
-            Thank you for being awesome. <i class="halflings halflings-sunglasses" ></i>
+            @lang('pages.about.thanks')
+            <i class="halflings halflings-sunglasses" ></i>
         </p>
 
-        <br><br>
+        <br>
 
         <p>
-            Copyright &copy; Barbapappa {{ date('Y') }}.
-            <span class="spacer x05"></span>
-            All rights reserved.
+            @lang('pages.about.copyright', [
+                'app' => config('app.name'),
+                'year' => date('Y'),
+            ])
         </p>
     </div>
 @endsection

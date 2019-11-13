@@ -11,7 +11,7 @@
     @if(config('app.auth_session_link'))
         {!! Form::open(['action' => ['AuthController@doContinue'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        <p>@lang('pages.index.emailAndContinue')</p>
+        <p class="align-center">@lang('pages.index.emailAndContinue')</p>
 
         <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
             {{ Form::label('email', __('account.email') . ':') }}
@@ -21,7 +21,6 @@
             </div>
             {{ ErrorRenderer::inline('email') }}
         </div>
-        <br>
 
         {!! Form::close() !!}
     @else
@@ -34,4 +33,10 @@
             </div>
         </div>
     @endif
+
+    <br>
+
+    <div class="ui link list">
+        <a href="{{ route('about') }}" class="item align-center">@lang('pages.about.aboutUs')</a>
+    </div>
 @endsection

@@ -15,9 +15,6 @@ return [
     'requestPasswordReset' => 'Request passcode reset',
     'changePassword' => 'Change passcode',
     'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny, fresh n\' new passcode to take abroad.',
-    'about' => '\'bout',
-    'contact' => 'Contact',
-    'contactUs' => 'Contact us',
 
     /**
      * App pages.
@@ -824,12 +821,23 @@ return [
      */
     'license' => [
         'title' => 'License',
-        'description' => 'Th\' ARRbapAPPa software project be released under th\' GNU GPL-3.0 license. Dis license maps what ye are and nay be allowed to do with th\' source code of dis project.<br />Read th\' full license below, o\' check out th\' summary for dis license as quick summary.',
+        'description' => 'Th\' Arrbapappa software project be released under th\' GNU GPL-3.0 license. Dis license maps what ye are and nay be allowed to do with th\' source code of dis project.<br />Read th\' full license below, o\' check out th\' summary for dis license as quick summary.',
         'onlyEnglishNote' => 'Note th\' license only be available in landlubber English, although it applies to our seas in any speak.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If ye have any further questions about our license, be sure to ship us a bottle message. Ye can also check th\' plain text license readable on any ship.',
         'plainTextLicense' => 'Plain text license',
         'licenseSummary' => 'License summary',
+    ],
+
+    /**
+     * Contact page.
+     */
+    'contact' => [
+        'title' => 'Contact',
+        'contactUs' => 'Contact us',
+        'description' => 'Ye can use any of th\' following channels to contact th\' administrator that is running dis ship.<br>Please ask th\' administrators of yer crew for support first, and attempt to solve any problems with them.<br>Please describe yer question and/or problem carefully. Any GDRP inquiries can be requested through these channels as well.',
+        'issuesDescription' => 'Dis ship is open-source, and its schematics are
+        therefore openly available.<br>For bugs in dis ship, please check the \'Issues\' list to see if it has been registered already.<br>If it isn\'t yet, ye may create a new issue on the issues overview page. Alternatively, ye can send an e-bottle message describing the issue to the coordinate below, which will immediately add th\' issue to th\' list as well without having to create a GitLab account.',
     ],
 
     /**
@@ -840,5 +848,30 @@ return [
         'description' => 'Ye compass be upside down, ye sailed th\' wrong seas.<br />Ye nay be access to this sea.',
         'notLoggedIn' => 'Nay entered',
         'notLoggedInDescription' => 'Ye nay be entered. Ye may enter yer ship to get proper access rights.',
+    ],
+
+    /**
+     * About page.
+     */
+    'about' => [
+        'title' => 'About',
+        'aboutUs' => 'About us',
+        'description' => ':app be a digital bar management application to facilitate a pirate-controlled sea for purchase processing, payment handling and treasure management.<br><br>:app be a fully automated solution for small self-managed bars and crews, to take away hassle of manually registering purcahses using telly marks on yer paper.<br><br>For any interest in using dis platform for yer own crew, sure to send us a message!',
+        'developedBy' => 'Dis project be developed & maintained by',
+        'sourceDescription' => 'I make th\' software that I develop open-source. Th\' complete project with its source code be available free of charge, for all pirates. I believe it be important to allow any pirate to inspect, modify, improve, contribute, and verify without restrictions.',
+        'sourceAt' => 'Latest source code be available on GitLab',
+        'withLicense' => 'Released with th\' following license',
+        'usedTechnologies' => 'Some awesome technologies be used include',
+        'noteLaravel' => 'backend framework',
+        'noteSemanticUi' => 'frontend theming framework',
+        'noteGlyphicons' => 'icons & symbols',
+        'noteFlags' => 'pirateflags',
+        'noteJQuery' => 'simplifies JavaScript',
+        'noteGetTerms' => 'terms & piracy policy template',
+        'noteEDegen' => 'suggested \'Arrbapappa\'',
+        'otherResources' => 'Other awesome resources include',
+        'donate' => 'A lot of effort went into dis project.<br>Want to donate me a beer?',
+        'thanks' => 'Thank ye for using dis product.<br>Thank ye for being awesome.',
+        'copyright' => 'Copyright © :app :year.<br>All rights reserved.',
     ],
 ];

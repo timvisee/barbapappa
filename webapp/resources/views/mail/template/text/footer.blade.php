@@ -4,4 +4,4 @@
 @lang('pages.terms.title'): {{ route('terms') }}
 @lang('pages.privacy.title'): {{ route('privacy') }}
 @lang('pages.emailPreferences'): {{ route('email.preferences') }}
-@lang('pages.contact'): {{ route('contact') }}
+@lang('pages.contact.title'): {{ route('contact') }}

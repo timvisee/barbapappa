@@ -70,7 +70,7 @@
             <a href="{{ route('about') }}"
                     class="item {{ Route::currentRouteName() == 'about' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-heart-empty"></i>
-                @lang('pages.about')
+                @lang('pages.about.title')
             </a>
             <a href="{{ route('terms') }}"
                     class="item {{ Route::currentRouteName() == 'terms' ? ' active' : '' }}">
@@ -89,7 +89,7 @@
             <a href="{{ route('contact') }}"
                     class="item {{ Route::currentRouteName() == 'contact' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-send"></i>
-                @lang('pages.contact')
+                @lang('pages.contact.title')
             </a>
             <a href="{{ route('language') }}"
                     class="item {{ Route::currentRouteName() == 'language' ? ' active' : '' }}">

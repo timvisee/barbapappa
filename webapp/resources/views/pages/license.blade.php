@@ -35,5 +35,5 @@
     <h3 class="ui header">@lang('pages.license.questions')</h3>
     <p>@lang('pages.license.questionsDescription')</p>
     <a href="{{ route('license.raw') }}" class="ui button basic">@lang('pages.license.plainTextLicense')</a>
-    <a href="{{ route('contact') }}" class="ui button basic">@lang('pages.contactUs')</a>
+    <a href="{{ route('contact') }}" class="ui button basic">@lang('pages.contact.contactUs')</a>
 @endsection

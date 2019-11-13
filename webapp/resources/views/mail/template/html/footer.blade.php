@@ -30,7 +30,7 @@
                                 </a>
                                 &nbsp;&nbsp;&middot;&nbsp;&nbsp;
                                 <a href="{{ route('contact') }}" style="color: #2BA6CB; text-decoration: none;">
-                                    @lang('pages.contact')
+                                    @lang('pages.contact.title')
                                 </a>
                             </p>
                         </center>
