@@ -18,6 +18,8 @@
         </span>
     </div>
 
+    <div class="ui divider hidden"></div>
+
     <p>@lang('pages.contact.issuesDescription')</p>
 
     <div class="ui bulleted list">

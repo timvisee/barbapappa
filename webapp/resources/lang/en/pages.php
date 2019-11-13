@@ -836,9 +836,9 @@ return [
     'contact' => [
         'title' => 'Contact',
         'contactUs' => 'Contact us',
-        'description' => 'You can use any of the following channels to contact the administrator that is running this website.<br>Please ask the administrators of your community for support first, and attempt to solve any problems with them.<br>Please describe your question and/or problem carefully. Any GDRP inquiries can be requested through these channels as well.',
+        'description' => 'You can use any of the following channels to contact the administrator that is running this website. Please ask the administrators of your community for support first, and attempt to solve any problems with them.<br><br>Please describe your question and/or problem carefully. Any GDRP inquiries can be requested through these channels as well.',
         'issuesDescription' => 'This application is open-source, and its development process is
-        therefore open.<br>For bugs in this application, please check the \'Issues\' list to see if it has been registered already.<br>If it isn\'t yet, you can create a new issue on the issues overview page. Alternatively, you can send an email describing the issue to the address below, which will immediately add the issue to the list as well without having to create a GitLab account.',
+        therefore open. For bugs in this application, please check the \'Issues\' list to see if it has been registered already.<br><br>If it isn\'t yet, you can create a new issue on the issues overview page. Alternatively, you can send an email describing the issue to the address below, which will immediately add the issue to the list as well without having to create a GitLab account.',
     ],
 
     /**

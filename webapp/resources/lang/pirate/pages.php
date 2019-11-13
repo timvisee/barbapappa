@@ -836,7 +836,7 @@ return [
     'contact' => [
         'title' => 'Contact',
         'contactUs' => 'Contact us',
-        'description' => 'Ye can use any of th\' following channels to contact th\' administrator that is running dis ship.<br>Please ask th\' administrators of yer crew for support first, and attempt to solve any problems with them.<br>Please describe yer question and/or problem carefully. Any GDRP inquiries can be requested through these channels as well.',
+        'description' => 'Ye can use any of th\' following channels to contact th\' administrator that is running dis ship. Please ask th\' administrators of yer crew for support first, and attempt to solve any problems with them.<br><br>Please describe yer question and/or problem carefully. Any GDRP inquiries can be requested through these channels as well.',
         'issuesDescription' => 'Dis ship is open-source, and its schematics are
         therefore openly available.<br>For bugs in dis ship, please check the \'Issues\' list to see if it has been registered already.<br>If it isn\'t yet, ye may create a new issue on the issues overview page. Alternatively, ye can send an e-bottle message describing the issue to the coordinate below, which will immediately add th\' issue to th\' list as well without having to create a GitLab account.',
     ],
