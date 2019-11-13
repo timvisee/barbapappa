@@ -54,20 +54,26 @@
 <body>
     <h1>@lang('pages.' . $type . '.poster.this' . ucfirst($type) . 'Uses')</h1>
 
-    <img class="logo" src="{{ asset('img/logo/logo_nowrap_600dpi.png') }}" />
+    <p>
+        <img class="logo" src="data:image/png;base64,{{
+            base64_encode(file_get_contents(base_path() . '/public/img/logo/logo_nowrap_600dpi.png'))
+        }}" />
+    </p>
 
     <p class="description">
         @lang('pages.' . $type . '.poster.toDigitallyManage')<br>
         @lang('pages.' . $type . '.poster.scanQr')
     </p>
 
-    <img src="data:image/png;base64,{{ base64_encode(
-        QrCode::format('png')
-            ->size(700)
-            ->margin(1)
-            ->errorCorrection('Q')
-            ->generate($qr_url)
-        ) }}">
+    <p>
+        <img src="data:image/png;base64,{{ base64_encode(
+            QrCode::format('png')
+                ->size(700)
+                ->margin(1)
+                ->errorCorrection('Q')
+                ->generate($qr_url)
+            ) }}">
+    </p>
 
     <div class="footer">
         <table>
