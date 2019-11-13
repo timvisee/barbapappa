@@ -207,7 +207,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
             $to,
             $apiPayment->getAmount(),
             $description
-        )->delay(now()->addSecond());
+        )->delay(now()->addSeconds(3));
     }
 
     /**
