@@ -43,6 +43,7 @@ find ./live/bootstrap/cache -type d -exec chmod 755 {} \;
 
 # Cache config and routes
 echo "Caching..."
+php ./live/artisan cache:clear
 php ./live/artisan config:cache
 php ./live/artisan route:cache
 
