@@ -352,6 +352,11 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
 
+        // Redirect to the bar page if the user has already joined
+        if($bar->isJoined($user))
+            return redirect()
+                ->route('bar.show', ['barId' => $barId]);
+
         // Self enroll must be enabled
         if(!$bar->self_enroll)
             return redirect()
