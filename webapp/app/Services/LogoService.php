@@ -30,6 +30,11 @@ class LogoService {
     const LOGO_NOWRAP = 'logo_nowrap.svg';
 
     /**
+     * The default logo file that is not wrapped for in email messages.
+     */
+    const LOGO_NOWRAP_EMAIL = 'logo_nowrap_email.png';
+
+    /**
      * Application instance.
      * @var Application
      */
@@ -48,33 +53,40 @@ class LogoService {
      * Get the filename for the logo.
      *
      * @param bool $wrap=false True to get the wrapped logo, false to get the unwrapped.
+     * @param bool $email=false True to get the unwrapped logo for email.
      * @return string Logo filename.
      */
-    private function getLogoFilename($wrap = false) {
+    private function getLogoFilename($wrap = false, $email = false) {
         // Build the translation node
-        $logoFilenameNode = 'app.logo.' . ($wrap ? '' : 'no') . 'wrapFilename';
+        if($email)
+            $logoFilenameNode = 'app.logo.nowrapEmailFilename';
+        elseif($wrap)
+            $logoFilenameNode = 'app.logo.wrapFilename';
+        else
+            $logoFilenameNode = 'app.logo.nowrapFilename';
 
         // Return the file name from a language file
         if (Lang::has($logoFilenameNode))
             return trans($logoFilenameNode);
 
         // Return the default
-        return $wrap ? self::LOGO_WRAP : self::LOGO_NOWRAP;
+        return $email ? self::LOGO_NOWRAP_EMAIL : ($wrap ? self::LOGO_WRAP : self::LOGO_NOWRAP);
     }
 
     /**
      * Get the asset path for the logo.
      *
      * @param bool $wrap=false True to get the wrapped logo, false to get the unwrapped.
+     * @param bool $email=false True to get the unwrapped logo for email.
      * @return string Logo asset path.
      */
-    private function getLogoAssetPath($wrap) {
+    private function getLogoAssetPath($wrap, $email) {
         // Build the translation node
         $pathNode = 'app.logo.path';
 
         // Return the custom path, or the default
         return (Lang::has($pathNode) ? trans($pathNode) : self::BASE_PATH)
-            . $this->getLogoFilename($wrap);
+            . $this->getLogoFilename($wrap, $email);
     }
 
     /**
@@ -83,20 +95,22 @@ class LogoService {
      * Get the public URL for the logo asset.
      *
      * @param bool $wrap=false True to get the wrapped logo, false to get the unwrapped.
+     * @param bool $email=false True to get the unwrapped logo for email.
      * @return string Public URL for the logo asset.
      */
-    public function url($wrap = false) {
-        return $this->getLogoUrl($wrap);
+    public function url($wrap = false, $email = false) {
+        return $this->getLogoUrl($wrap, $email);
     }
 
     /**
      * Get the public URL for the logo asset.
      *
      * @param bool $wrap=false True to get the wrapped logo, false to get the unwrapped.
+     * @param bool $email=false True to get the unwrapped logo for email.
      * @return string Public URL for the logo asset.
      */
-    public function getLogoUrl($wrap = false) {
-        return asset($this->getLogoAssetPath($wrap));
+    public function getLogoUrl($wrap = false, $email = false) {
+        return asset($this->getLogoAssetPath($wrap, $email));
     }
 
     /**
@@ -105,25 +119,27 @@ class LogoService {
      * Get the HTML element to render the application logo.
      *
      * @param bool $wrap=false True to render the wrapped logo, false to render the unwrapped.
+     * @param bool $email=false True to get the unwrapped logo for email.
      * @param array $attributes=[] An array with optional attributes.
      *
      * @return HtmlString The element as HTML string.
      */
-    public function element($wrap = false, $attributes = []) {
-        return $this->getLogoElement($wrap, $attributes);
+    public function element($wrap = false, $email = false, $attributes = []) {
+        return $this->getLogoElement($wrap, $email, $attributes);
     }
 
     /**
      * Get the HTML element to render the application logo.
      *
      * @param bool $wrap=false True to render the wrapped logo, false to render the unwrapped.
+     * @param bool $email=false True to get the unwrapped logo for email.
      * @param array $attributes=[] An array with optional attributes.
      *
      * @return HtmlString The element as HTML string.
      */
-    public function getLogoElement($wrap = false, $attributes = []) {
+    public function getLogoElement($wrap = false, $email = false, $attributes = []) {
         // Set the source
-        $attributes['src'] = $this->getLogoUrl($wrap);
+        $attributes['src'] = $this->getLogoUrl($wrap, $email);
 
         // Set the alt if not set
         if(array_key_exists('alt', $attributes))

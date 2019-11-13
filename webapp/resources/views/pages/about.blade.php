@@ -5,7 +5,7 @@
 @section('content')
     <div class="highlight-box">
         <h2 class="ui header">@yield('title')</h2>
-        {{ logo()->element(true, ['class' => 'logo']) }}
+        {{ logo()->element(true, false, ['class' => 'logo']) }}
         <p><i>{{ config('app.version_name') }} <span class="subtle">({{ config('app.version_code') }})</span></i></p>
     </div>
 
