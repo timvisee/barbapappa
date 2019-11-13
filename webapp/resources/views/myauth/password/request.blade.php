@@ -15,7 +15,10 @@
 
         <div>
             <button class="ui button primary" type="submit">@lang('account.resetPassword')</button>
-            <a href="{{ route('login') }}" class="ui button basic">@lang('auth.login')</a>
+
+            <div class="ui link list">
+                <a href="{{ route('login') }}" class="item">@lang('auth.login')</a>
+            </div>
         </div>
 
     {!! Form::close() !!}

@@ -62,11 +62,13 @@
 
     <div>
         <button class="ui button primary" type="submit">@lang('auth.register')</button>
-        @if(config('app.auth_session_link'))
-            <a href="{{ route('login.email') }}" class="ui button basic">@lang('auth.login')</a>
-        @else
-            <a href="{{ route('login') }}" class="ui button basic">@lang('auth.login')</a>
-        @endif
+        <div class="ui link list">
+            @if(config('app.auth_session_link'))
+                <a href="{{ route('login.email') }}" class="item">@lang('auth.login')</a>
+            @else
+                <a href="{{ route('login') }}" class="item">@lang('auth.login')</a>
+            @endif
+        </div>
     </div>
 
     {!! Form::close() !!}

@@ -24,8 +24,11 @@
         @if(config('app.auth_session_link'))
             <a href="{{ route('login.email') }}" class="ui button basic">@lang('auth.loginEmail')</a>
         @endif
-        <a href="{{ route('password.request') }}" class="ui button basic">@lang('auth.forgotPassword')</a>
-        <a href="{{ route('register') }}" class="ui button basic">@lang('auth.register')</a>
+
+        <div class="ui link list">
+            <a href="{{ route('password.request') }}" class="item">@lang('auth.forgotPassword')</a>
+            <a href="{{ route('register') }}" class="item">@lang('auth.register')</a>
+        </div>
     </div>
 
     {!! Form::close() !!}
