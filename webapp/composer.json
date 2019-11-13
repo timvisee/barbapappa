@@ -19,7 +19,7 @@
         "barpay": "dev-76-payment-processing",
         "barryvdh/laravel-debugbar": "^3.2.3",
         "barryvdh/laravel-dompdf": "^0.8.4",
-        "bunq/sdk_php": "^1.10.0",
+        "bunq/sdk_php": "^1.12.1",
         "intervention/validation": "^1.2",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "~1.0",

@@ -16,7 +16,6 @@ use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
 use bunq\Model\Generated\Endpoint\Event;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\NotificationFilter;
 use bunq\Model\Generated\Object\Pointer;
 use bunq\Util\BunqEnumApiEnvironmentType;
 

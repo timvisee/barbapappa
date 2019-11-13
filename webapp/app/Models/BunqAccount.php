@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Crypt;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\NotificationFilter;
+use bunq\Model\Generated\Endpoint\NotificationFilterUrlMonetaryAccount;
+use bunq\Model\Generated\Object\NotificationFilterUrl;
 
 /**
  * bunq account model.
@@ -189,33 +190,24 @@ class BunqAccount extends Model {
         // Build a list of filters to use if we have HTTPS, error otherwise
         $filters = [];
         if(is_url_secure()) {
-            $filters[] = new NotificationFilter(
-                'URL',
-                route('callback.bunq'),
-                'PAYMENT'
+            $filters[] = new NotificationFilterUrl(
+                'PAYMENT',
+                route('callback.bunq')
             );
-            $filters[] = new NotificationFilter(
-                'URL',
-                route('callback.bunq'),
-                'BUNQME_TAB'
+            $filters[] = new NotificationFilterUrl(
+                'BUNQME_TAB',
+                route('callback.bunq')
             );
         } else
             $message = __('pages.bunqAccounts.noHttpsNoCallbacks');
 
         // Set the filters
-        MonetaryAccountBank::update(
-            $this->monetary_account_id,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            $filters,
-            null,
-            []
-        );
+        try {
+            NotificationFilterUrlMonetaryAccount::create(
+                $this->monetary_account_id,
+                $filters
+            );
+        } catch(\Error $e) {}
 
         return $message;
     }
