@@ -89,7 +89,7 @@
             <a href="{{ route('contact') }}"
                     class="item {{ Route::currentRouteName() == 'contact' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-send"></i>
-                @lang('pages.contact')
+                @lang('pages.contact.title')
             </a>
             <a href="{{ route('language') }}"
                     class="item {{ Route::currentRouteName() == 'language' ? ' active' : '' }}">

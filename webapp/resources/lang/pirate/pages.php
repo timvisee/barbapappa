@@ -16,8 +16,6 @@ return [
     'changePassword' => 'Change passcode',
     'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny, fresh n\' new passcode to take abroad.',
     'about' => '\'bout',
-    'contact' => 'Contact',
-    'contactUs' => 'Contact us',
 
     /**
      * App pages.
@@ -830,6 +828,17 @@ return [
         'questionsDescription' => 'If ye have any further questions about our license, be sure to ship us a bottle message. Ye can also check th\' plain text license readable on any ship.',
         'plainTextLicense' => 'Plain text license',
         'licenseSummary' => 'License summary',
+    ],
+
+    /**
+     * Contact page.
+     */
+    'contact' => [
+        'title' => 'Contact',
+        'contactUs' => 'Contact us',
+        'description' => 'Ye can use any of th\' following channels to contact th\' administrator that is running dis ship.<br>Please ask th\' administrators of yer crew for support first, and attempt to solve any problems with them.<br>Please describe yer question and/or problem carefully. Any GDRP inquiries can be requested through these channels as well.',
+        'issuesDescription' => 'Dis ship is open-source, and its schematics are
+        therefore openly available.<br>For bugs in dis ship, please check the \'Issues\' list to see if it has been registered already.<br>If it isn\'t yet, ye may create a new issue on the issues overview page. Alternatively, ye can send an e-bottle message describing the issue to the coordinate below, which will immediately add th\' issue to th\' list as well without having to create a GitLab account.',
     ],
 
     /**

@@ -16,8 +16,6 @@ return [
     'changePassword' => 'Wachtwoord veranderen',
     'changePasswordDescription' => 'Vul de onderstaande velden in om je wachtwoord te veranderen.',
     'about' => 'Over',
-    'contact' => 'Contact',
-    'contactUs' => 'Neem contact op',
 
     /**
      * App pages.
@@ -830,6 +828,16 @@ return [
         'questionsDescription' => 'Als je verdere vragen hebt over de gebruikte licentie (License), neem gerust contact met ons op. Je kunt de licentie ook bekijken in platte text leesbaar op elk willekeurig apparaat.',
         'plainTextLicense' => 'Licentie in platte text',
         'licenseSummary' => 'Licentie samenvatting (Engels)',
+    ],
+
+    /**
+     * Contact page.
+     */
+    'contact' => [
+        'title' => 'Contact',
+        'contactUs' => 'Neem contact op',
+        'description' => 'Je kunt de volgende kanalen gebruiken om contact op te nemen met de website administrator.<br>Vraag eerst de administrators binnen je groep om hulp, en probeer eventuele problemen eerst met hun op te lossen.<br>Beschrijf je vraag en/of probleem alsjeblieft zo goed mogelijk. Een AVG (GDPR) aanvraag kan ook gestuurd worden via deze kanalen.',
+        'issuesDescription' => 'Deze applicatie is open-source, en het ontwikkelprocess is daarom open.<br>Check eerst de \'Issues\' lijst om te zien of eventuele bugs die je gevonden hebt al geregistreerd zijn.<br>Als de bug nog niet bekend is, kun je een nieuwe issue aanmaken via de issues pagina. Of je kunt een e-mail sturen naar het onderstaande adres waarin je de bug in detail beschrijft, en er zal direct een issue voor aangemaakt worden, zonder dat je daarvoor een GitLab account aan hoeft te maken.',
     ],
 
     /**

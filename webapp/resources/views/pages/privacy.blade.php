@@ -12,5 +12,5 @@
 
     <h3 class="ui header">@lang('pages.privacy.questions')</h3>
     <p>@lang('pages.privacy.questionsDescription')</p>
-    <a href="{{ route('contact') }}" class="ui button basic">@lang('pages.contactUs')</a>
+    <a href="{{ route('contact') }}" class="ui button basic">@lang('pages.contact.contactUs')</a>
 @endsection
