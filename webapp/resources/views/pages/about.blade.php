@@ -52,12 +52,12 @@
             <span class="spacer x05"></span>
             <a href="https://glyphicons.com/" target="_blank">Glyphicons</a>
             <i class="halflings halflings-heart" style="color: #b80000;"></i><br />
-            <i>for these icons and symbols</i>
+            <i>for icons and symbols</i>
 
             <span class="spacer x05"></span>
             <a href="http://flag-icon-css.lip.is/" target="_blank">flag-icon-css</a>
             <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span><br />
-            <i>for these flag icons</i>
+            <i>for flag icons</i>
 
             <span class="spacer x05"></span>
             <a href="https://jquery.com/" target="_blank">jQuery</a><br />
@@ -101,11 +101,7 @@
             Thank you for being awesome. <i class="halflings halflings-sunglasses" ></i>
         </p>
 
-        <div class="page-divider">
-            <span class="line"></span>
-            <i class="glyphicons glyphicons-copyright-mark scale"></i>
-            <span class="line"></span>
-        </div>
+        <br><br>
 
         <p>
             Copyright &copy; Barbapappa {{ date('Y') }}.

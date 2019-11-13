@@ -31,7 +31,7 @@ return [
      */
     'index' => [
         'title' => 'Hoofdpagina',
-        'emailAndContinue' => 'Vul je e-mailadres in om in te loggen of te registreren en ga verder.',
+        'emailAndContinue' => 'Vul je e-mailadres in om in te loggen of te registreren.',
     ],
 
     /**

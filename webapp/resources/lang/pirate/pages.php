@@ -31,7 +31,7 @@ return [
      */
     'index' => [
         'title' => 'Home port',
-        'emailAndContinue' => 'Enter yer email address to login or register and continue.',
+        'emailAndContinue' => 'Enter yer email address to login or register.',
     ],
 
     /**

@@ -31,7 +31,7 @@ return [
      */
     'index' => [
         'title' => 'Home page',
-        'emailAndContinue' => 'Enter your email address to login or register and continue.',
+        'emailAndContinue' => 'Enter your email address to login or register.',
     ],
 
     /**
