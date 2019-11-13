@@ -1,11 +1,9 @@
 image: php:7.3
 
-services:
-  - mariadb:latest
-
-variables:
-  MYSQL_DATABASE: barapp
-  MYSQL_ROOT_PASSWORD: secret
+stages:
+  - test
+  - deploy-staging
+  - deploy-production
 
 cache:
   paths:
@@ -34,33 +32,100 @@ before_script:
   - pecl install xdebug
   - docker-php-ext-enable xdebug
 
-  # Change into webapp directory, set up .env file
+  # Change into webapp directory
   - cd webapp/
-  - cp .env.gitlab-ci .env
 
   # Install Composer and project dependencies
   - curl -sS https://getcomposer.org/installer | php
-  - php composer.phar install
-
-  # Install and build frontend dependencies
-  - npm install
-  - npm run dev
-
-  # Generate an application key, re-cache, migrate and seed database
-  - php artisan key:generate
-  - php artisan config:cache
-  - php artisan migrate --seed
-
-  # Configure currencies
-  - php artisan currency:manage add EUR
-  - php artisan currency:manage add USD
-  - php artisan currency:update
+  # - php composer.phar install --optimize-autoloader --no-dev
+  - php composer.phar install --optimize-autoloader
 
 # PHPUnit test job
 test:
+  stage: test
   artifacts:
     paths:
       - coverage/
+  services:
+    - mariadb:latest
+  variables:
+    MYSQL_DATABASE: barapp
+    MYSQL_ROOT_PASSWORD: secret
   script:
+    # Set up env file for testing
+    - cp .env.gitlab-ci .env
+
+    # Install and build frontend dependencies
+    - npm install
+    - npm run dev
+
+    # Generate an application key, re-cache, migrate and seed database
+    - php artisan key:generate
+    - php artisan config:cache
+    - php artisan route:cache
+
+    # Migrate and configure currencies
+    - php artisan migrate --seed
+    - php artisan currency:manage add EUR
+    - php artisan currency:manage add USD
+    - php artisan currency:update
+
     # Run PHPUnit tests
     - php vendor/bin/phpunit --coverage-text --colors=never
+
+# Deploy to staging
+deploy_staging:
+  stage: deploy-staging
+  only:
+    - deploy
+    - /^v(\d+\.)*\d+$/
+  environment:
+    name: staging
+    url: https://staging.barbapappa.app
+  script:
+    # Install required tools
+    - apt-get update -yqq
+    - apt-get install sshpass -yqq
+
+    # Install and build frontend dependencies
+    - npm install
+    - npm run production
+
+    # Node modules are not required to run in production, create tarball
+    - rm -rf node_modules
+    - cp ../ci/deploy ./
+    - tar -czf production.tar.gz *
+
+    # Move files to server, and deploy
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/staging.barbapappa.app; rm -rf ./new; mkdir ./new'"
+    - "sshpass -p $DEPLOY_SSH_PASS scp -oStrictHostKeyChecking=no ./production.tar.gz $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST:/var/customers/webs/timvisee/staging.barbapappa.app/new/"
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/staging.barbapappa.app/new; tar -xzf production.tar.gz; cd ..; ./new/deploy; rm -rf ./new'"
+
+# Deploy to production
+deploy_production:
+  stage: deploy-production
+  when: manual
+  only:
+    - deploy
+    - /^v(\d+\.)*\d+$/
+  environment:
+    name: production
+    url: https://barbapappa.app
+  script:
+    # Install required tools
+    - apt-get update -yqq
+    - apt-get install sshpass -yqq
+
+    # Install and build frontend dependencies
+    - npm install
+    - npm run production
+
+    # Node modules are not required to run in production, create tarball
+    - rm -rf node_modules
+    - cp ../ci/deploy ./
+    - tar -czf production.tar.gz *
+
+    # Move files to server, and deploy
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/barbapappa.app; rm -rf ./new; mkdir ./new'"
+    - "sshpass -p $DEPLOY_SSH_PASS scp -oStrictHostKeyChecking=no ./production.tar.gz $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST:/var/customers/webs/timvisee/barbapappa.app/new/"
+    - "sshpass -p $DEPLOY_SSH_PASS ssh -oStrictHostKeyChecking=no $DEPLOY_SSH_USER@$DEPLOY_SSH_HOST 'cd /var/customers/webs/timvisee/barbapappa.app/new; tar -xzf production.tar.gz; cd ..; ./new/deploy; rm -rf ./new'"

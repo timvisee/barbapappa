@@ -1,0 +1,63 @@
+#!/bin/bash
+
+set -e
+
+echo "Deploying site..."
+
+# .env file must be available
+if [[ ! -f ./live/.env ]]; then
+    echo "ERROR: Missing ./live/.env file!"
+    exit 1
+fi
+
+# Bring site down
+echo "Bringing live site down..."
+php ./live/artisan down || true
+
+# TODO: stop queue workers?
+
+# Replace site with new files
+echo "Moving new site..."
+mkdir -p ./live/
+rm -rf ./live/app; cp -r ./new/app ./live/
+rm -rf ./live/bootstrap; cp -r ./new/bootstrap ./live/
+rm -rf ./live/config; cp -r ./new/config ./live/
+rm -rf ./live/database; cp -r ./new/database ./live/
+rm -rf ./live/packages; cp -r ./new/packages ./live/
+rm -rf ./live/public; cp -r ./new/public ./live/
+rm -rf ./live/resources; cp -r ./new/resources ./live/
+rm -rf ./live/routes; cp -r ./new/routes ./live/
+rm -rf ./live/vendor; cp -r ./new/vendor ./live/
+cp ./new/artisan ./live/
+
+# Add missing directories, configure permissions
+echo "Configuring directories..."
+#mkdir -p ./live/storage
+mkdir -p ./live/bootstrap/cache
+#find ./live/storage -type f -exec chmod 644 {} \; 
+#find ./live/storage -type d -exec chmod 755 {} \; 
+find ./live/bootstrap/cache -type f -exec chmod 644 {} \; 
+find ./live/bootstrap/cache -type d -exec chmod 755 {} \; 
+#chown -R timvisee:timvisee ./live/storage
+#chown -R timvisee:timvisee ./live/bootstrap/cache
+
+# Cache config and routes
+echo "Caching..."
+php ./live/artisan cache:clear
+php ./live/artisan config:cache
+php ./live/artisan route:cache
+
+# Migrate
+echo "Migrating..."
+php ./live/artisan migrate --force
+
+# Bring site up
+echo "Bringing site back up..."
+php ./live/artisan up
+
+# Restart queues
+echo "Restarting queues..."
+# TODO: make sure workers actually restart
+php ./live/artisan queue:restart
+
+echo "Site successfully deployed!"

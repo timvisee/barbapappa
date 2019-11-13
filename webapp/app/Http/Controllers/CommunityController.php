@@ -61,7 +61,7 @@ class CommunityController extends Controller {
 
         // Redirect the user to the community page
         return redirect()
-            ->route('community.show', ['communityId' => $community->human_id])
+            ->route('community.manage', ['communityId' => $community->human_id])
             ->with('success', __('pages.community.created'));
     }
 
@@ -146,10 +146,19 @@ class CommunityController extends Controller {
     public function manage($communityId) {
         // Get the community
         $community = \Request::get('community');
+        $bars = $community->bars()->get();
+
+        $hasEconomy = $community->economies()->limit(1)->count() > 0;
+        $hasCurrency = $hasEconomy
+            && $community->currencies()->limit(1)->count() > 0;
 
         // Show the community management page
         return view('community.manage')
-            ->with('bars', $community->bars()->get());
+            ->with('bars', $bars)
+            ->with('hasEconomy', $hasEconomy)
+            ->with('hasCurrency', $hasCurrency)
+            ->with('firstEconomy', $community->economies()->first())
+            ->with('hasBar', !$bars->isEmpty());
     }
 
     /**
@@ -274,6 +283,11 @@ class CommunityController extends Controller {
         // Get the community and user
         $community = \Request::get('community');
         $user = barauth()->getSessionUser();
+
+        // Redirect to the community page if the user has already joined
+        if($community->isJoined($user))
+            return redirect()
+                ->route('community.show', ['communityId' => $communityId]);
 
         // Self enroll must be enabled
         if(!$community->self_enroll)

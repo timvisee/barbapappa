@@ -31,7 +31,7 @@ return [
      */
     'index' => [
         'title' => 'Home port',
-        'emailAndContinue' => 'Enter yer email address to login or register and continue.',
+        'emailAndContinue' => 'Enter yer email address to login or register.',
     ],
 
     /**
@@ -163,6 +163,7 @@ return [
             'scanQr' => 'scan the QR code below to join and make a purchase',
             'orVisit' => 'Or see',
         ],
+        'checklist' => 'Crew checklist',
     ],
 
     /**
@@ -245,6 +246,7 @@ return [
         'noProductsFoundFor' => 'Nay products for :term...',
         'manageProduct' => 'Manage product',
         'manageProducts' => 'Manage products',
+        'addProducts' => 'Add products',
         'newProduct' => 'New product',
         'cloneProduct' => 'Clone product',
         'editProduct' => 'Edit product',
@@ -430,13 +432,25 @@ return [
     ],
 
     /**
+     * Economy finance pages.
+     */
+    'finance' => [
+        'title' => 'Financial report',
+        'walletSum' => 'Cumulative balance',
+        'paymentsInProgress' => 'In progress',
+        'fromBalanceImport' => 'from booty import',
+        'membersWithNonZeroBalance' => 'Members with non-zero balance',
+        'description' => 'Dis shows a simple financial report for th\' current booty state. Pirates from booty imports, that nay be registered and joined dis booty, are currently not listed.',
+    ],
+
+    /**
      * bunq account pages.
      */
     'bunqAccounts' => [
         'title' => 'bunq accounts',
         'bunqAccount' => 'bunq account',
         'description' => 'Click on one of yer bunq accounts to manage it, or add a new one.',
-        'noWallets' => 'Yer nay be any bunq accounts added yet...',
+        'noAccounts' => 'Yer nay be any bunq accounts added yet...',
         'addAccount' => 'Add bunq account',
         'descriptionPlaceholder' => 'bunq account for automating bar payments',
         'tokenDescription' => 'Create a new API key in the developer section of th\' bunq app on yer handheld phoning device, and enter the freshly created token in dis field. Th\' token must never be shared with anyone else.',
@@ -698,6 +712,7 @@ return [
             'boughtProductsUsers#' => '{0} Bought no products for :users pirates.|{1} Bought 1 product for :users pirates.|[2,*] Bought :count products for :users pirates.',
             'pageCloseWarning' => 'Ye selected products or has products in cart that have not been bought yet. Ye must add a product selection to at least one pirate and tap th\' Buy button to commit th\' purchase, or the selection will be lost.',
         ],
+        'checklist' => 'Bar checklist',
     ],
 
     /**

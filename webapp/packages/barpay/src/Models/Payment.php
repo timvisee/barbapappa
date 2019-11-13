@@ -16,6 +16,8 @@ use App\Models\Notifications\PaymentRequiresCommunityAction;
 use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Perms\CommunityRoles;
+use App\Perms\AppRoles;
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -104,22 +106,29 @@ class Payment extends Model {
      * manager or administrator by the currently authenticated user.
      *
      * @param Builder $query Query builder.
+     * @param User $user The user to manage the payments.
      */
-    public function scopeCanManage($query) {
-        // TODO: properly select economies user can manage!
-        $economies = [];
+    public function scopeCanManage($query, $user = null) {
+        // Select the user
+        if($user == null)
+            $user = barauth()->getUser();
+        if($user == null)
+            throw new Exception("Failed to filter managable payments, current user is unknown");
 
-        // Query mutation payment
-        $query->whereExists(function($query) use($economies) {
+        // Allow if user is application admin
+        if(perms(AppRoles::presetAdmin()))
+            return;
+
+        // Check whether user has manage permission in related community
+        $query->whereExists(function($query) use($user) {
             $query->selectRaw('1')
-                ->from('mutation_payment')
-                ->whereRaw('payment.id = mutation_payment.payment_id')
-                ->leftJoin('mutation', function($leftJoin) {
-                    $leftJoin->on('mutation_payment.id', '=', 'mutation.mutationable_id');
-                })
-                // TODO: enable this again once implemented!
-                // ->whereIn('economy_id', $economies)
-                ;
+                ->from('service')
+                ->whereRaw('payment.service_id = service.id')
+                ->join('economy', 'economy.id', 'service.economy_id')
+                ->join('community', 'community.id', 'economy.community_id')
+                ->join('community_member', 'community_member.community_id', 'community.id')
+                ->where('community_member.user_id', $user->id)
+                ->where('community_member.role', '>=', CommunityRoles::MANAGER);
         });
     }
 
@@ -197,6 +206,43 @@ class Payment extends Model {
                                 });
                         });
                     });
+            });
+    }
+
+    /**
+     * A scope for selecting payments that should expire.
+     *
+     * This does not return payments that are already completed.
+     *
+     * @param Builder $query Query builder.
+     */
+    public function scopeToExpire($query) {
+        $query->inProgress(true)
+            ->where(function($query) {
+                // For each paymentable type, attempt to select expired payments
+                foreach(Self::PAYMENTABLES as $paymentable_type) {
+                    $query->orWhere(function($query) use($paymentable_type) {
+                        // Limit to current paymentable
+                        $query->where('paymentable_type', $paymentable_type);
+
+                        // Get table for paymentable
+                        $table = (new $paymentable_type)->getTable();
+
+                        // Create query builder for paymentable
+                        $query->whereExists(function($p_query) use($query, $table, $paymentable_type) {
+                            $p_query->selectRaw('1')
+                                ->from($table)
+                                ->whereRaw('payment.paymentable_id = ' . $table . '.id')
+                                ->where(function($p_query) use($query, $paymentable_type) {
+                                    // Use paymentable specific scope for payment and
+                                    // paymentable query builders
+                                    // TODO: use a real paymentable scope here,
+                                    // without main payment query
+                                    $paymentable_type::scopeToExpire($query, $p_query);
+                                });
+                        });
+                    });
+                }
             });
     }
 

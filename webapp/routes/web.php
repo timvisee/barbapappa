@@ -11,6 +11,8 @@ use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyCurrencyController;
+use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\MagicController;
 use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
 
@@ -25,7 +27,7 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-// Regular page routes
+// Regular public pages
 Route::get('/', 'PagesController@index')->name('index');
 Route::get('/about', 'PagesController@about')->name('about');
 Route::get('/contact', 'PagesController@contact')->name('contact');
@@ -34,18 +36,20 @@ Route::get('/privacy', 'PagesController@privacy')->name('privacy');
 Route::get('/license', 'PagesController@license')->name('license');
 Route::get('/license/raw', 'PagesController@licenseRaw')->name('license.raw');
 Route::get('/language/{locale?}', 'PagesController@language')->name('language');
-Route::middleware('auth')->get('/last', 'PagesController@last')->name('last');
 
-// Dashboard route
-Route::middleware('auth')->get('/dashboard', 'DashboardController@index')->name('dashboard');
+// Regular authenticated pages
+Route::middleware('auth')->group(function() {
+    Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    Route::get('/last', 'PagesController@last')->name('last');
+});
 
 // Authentication routes
 Route::get('/login', 'LoginController@login')->name('login');
-Route::post('/login', 'LoginController@doLogin');
+Route::middleware('throttle:10,1')->post('/login', 'LoginController@doLogin');
 Route::get('/login/email', 'LoginController@email')->name('login.email');
-Route::post('/login/email', 'LoginController@doEmail');
+Route::middleware('throttle:10,1')->post('/login/email', 'LoginController@doEmail');
 Route::get('/register', 'RegisterController@register')->name('register');
-Route::post('/register', 'RegisterController@doRegister');
+Route::middleware('throttle:4,1')->post('/register', 'RegisterController@doRegister');
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 Route::prefix('/password')->group(function() {
     Route::get('/change', 'PasswordChangeController@change')->name('password.change');
@@ -53,16 +57,16 @@ Route::prefix('/password')->group(function() {
     Route::get('/disable', 'PasswordChangeController@disable')->name('password.disable');
     Route::post('/disable', 'PasswordChangeController@doDisable')->name('password.disable');
     Route::get('/request', 'PasswordForgetController@request')->name('password.request');
-    Route::post('/request', 'PasswordForgetController@doRequest');
+    Route::middleware('throttle:4,1')->post('/request', 'PasswordForgetController@doRequest');
     Route::get('/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
-    Route::post('/reset', 'PasswordResetController@doReset');
+    Route::middleware('throttle:4,1')->post('/reset', 'PasswordResetController@doReset');
 });
-Route::post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinue');
-Route::get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
+Route::middleware('throttle:4,1')->post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinue');
+Route::middleware('throttle:4,1')->get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
 
 // Email routes
 Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('email.verify');
-Route::post('/email/verify', 'EmailVerifyController@doVerify');
+Route::middleware('throttle:4,1')->post('/email/verify', 'EmailVerifyController@doVerify');
 
 // Account routes
 Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(function() {
@@ -95,7 +99,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
     Route::redirect('/', '/explore');
 
     // Require app administrator to create a community
-    Route::middleware(CommunityController::permsCreate()->middleware())->group(function() {
+    Route::prefix('/-')->middleware(CommunityController::permsCreate()->middleware())->group(function() {
         Route::get('/create', 'CommunityController@create')->name('community.create');
         Route::post('/', 'CommunityController@doCreate')->name('community.doCreate');
     });
@@ -108,7 +112,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
         // Join/leave
         Route::get('/join', 'CommunityController@join')->name('community.join');
-        Route::post('/join', 'CommunityController@doJoin')->name('community.doJoin');
+        Route::middleware('throttle:4,1')->post('/join', 'CommunityController@doJoin')->name('community.doJoin');
         Route::get('/leave', 'CommunityController@leave')->name('community.leave');
         Route::post('/leave', 'CommunityController@doLeave')->name('community.doLeave');
     });
@@ -375,6 +379,12 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                         });
                     });
                 });
+
+                // Financial reports
+                Route::prefix('/finance')->middleware(FinanceController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'FinanceController@overview')->name('community.economy.finance.overview');
+                });
             });
         });
 
@@ -414,80 +424,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     // Top-up pages
                     Route::get('/top-up', 'WalletController@topUp')->name('community.wallet.topUp');
                     Route::post('/top-up', 'WalletController@doTopUp')->name('community.wallet.topUp');
-
-                    // // Supported economy currencies
-                    // Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
-                    //     // Index
-                    //     Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
-
-                    //     // Create, require manage perms
-                    //     Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
-                    //         Route::get('/add', 'EconomyCurrencyController@create')->name('community.economy.currency.create');
-                    //         Route::post('/', 'EconomyCurrencyController@doCreate')->name('community.economy.currency.doCreate');
-                    //     });
-
-                    //     // Specific
-                    //     Route::prefix('/{economyCurrencyId}')->group(function() {
-                    //         // Show
-                    //         Route::get('/', 'EconomyCurrencyController@show')->name('community.economy.currency.show');
-
-                    //         // Edit/delete, require manager perms
-                    //         Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
-                    //             Route::get('/edit', 'EconomyCurrencyController@edit')->name('community.economy.currency.edit');
-                    //             Route::put('/edit', 'EconomyCurrencyController@doEdit')->name('community.economy.currency.doEdit');
-                    //             Route::get('/remove', 'EconomyCurrencyController@delete')->name('community.economy.currency.delete');
-                    //             Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
-                    //         });
-                    //     });
-                    // });
                 });
             });
-
-            // // Create, require manage perms
-            // Route::middleware(EconomyController::permsManage()->middleware())->group(function() {
-            //     Route::get('/create', 'EconomyController@create')->name('community.economy.create');
-            //     Route::post('/', 'EconomyController@doCreate')->name('community.economy.doCreate');
-            // });
-
-            // // Specific
-            // Route::prefix('/{economyId}')->group(function() {
-            //     // Show
-            //     Route::get('/', 'EconomyController@show')->name('community.economy.show');
-
-            //     // Edit/delete, require manager perms
-            //     Route::middleware(EconomyController::permsManage()->middleware())->group(function() {
-            //         Route::get('/edit', 'EconomyController@edit')->name('community.economy.edit');
-            //         Route::put('/edit', 'EconomyController@doEdit')->name('community.economy.doEdit');
-            //         Route::get('/delete', 'EconomyController@delete')->name('community.economy.delete');
-            //         Route::delete('/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
-            //     });
-
-            //     // Supported economy currencies
-            //     Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
-            //         // Index
-            //         Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
-
-            //         // Create, require manage perms
-            //         Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
-            //             Route::get('/add', 'EconomyCurrencyController@create')->name('community.economy.currency.create');
-            //             Route::post('/', 'EconomyCurrencyController@doCreate')->name('community.economy.currency.doCreate');
-            //         });
-
-            //         // Specific
-            //         Route::prefix('/{economyCurrencyId}')->group(function() {
-            //             // Show
-            //             Route::get('/', 'EconomyCurrencyController@show')->name('community.economy.currency.show');
-
-            //             // Edit/delete, require manager perms
-            //             Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
-            //                 Route::get('/edit', 'EconomyCurrencyController@edit')->name('community.economy.currency.edit');
-            //                 Route::put('/edit', 'EconomyCurrencyController@doEdit')->name('community.economy.currency.doEdit');
-            //                 Route::get('/remove', 'EconomyCurrencyController@delete')->name('community.economy.currency.delete');
-            //                 Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
-            //             });
-            //         });
-            //     });
-            // });
         });
     });
 });
@@ -498,7 +436,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
     Route::redirect('/', '/explore/bars');
 
     // Require app administrator to create a bar
-    Route::middleware(['selectCommunity', BarController::permsCreate()->middleware()])->group(function() {
+    Route::prefix('/-')->middleware(['selectCommunity', BarController::permsCreate()->middleware()])->group(function() {
         Route::get('/create/{communityId}', 'BarController@create')->name('bar.create');
         Route::post('/create/{communityId}', 'BarController@doCreate')->name('bar.doCreate');
     });
@@ -514,11 +452,11 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         // TODO: this are API calls, move it somewhere else
         Route::get('/buy/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
         Route::get('/buy/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
-        Route::post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
+        Route::middleware('throttle:10,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');
-        Route::post('/join', 'BarController@doJoin')->name('bar.doJoin');
+        Route::middleware('throttle:4,1')->post('/join', 'BarController@doJoin')->name('bar.doJoin');
         Route::get('/leave', 'BarController@leave')->name('bar.leave');
         Route::post('/leave', 'BarController@doLeave')->name('bar.doLeave');
     });
@@ -558,7 +496,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         });
 
         // Quick buy products
-        Route::post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
+        Route::middleware('throttle:20,1')->post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
 
         // Bar members, require view perms
         Route::prefix('/members')->middleware(BarMemberController::permsView()->middleware())->group(function() {
@@ -583,30 +521,20 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 });
 
 // Transactions
-Route::prefix('/transactions')->middleware('auth')->group(function() {
+Route::prefix('/transactions')->middleware(['throttle:60,1', 'auth', 'selectTransaction'])->group(function() {
     // Index
     // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
 
     // Specific
-    // TODO: find transaction, check permission
     Route::prefix('/{transactionId}')->group(function() {
         // Show
         Route::get('/', 'TransactionController@show')->name('transaction.show');
-
-        // // Edit/delete, require manager perms
-        // Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
-        //     Route::get('/edit', 'EconomyCurrencyController@edit')->name('community.economy.currency.edit');
-        //     Route::put('/edit', 'EconomyCurrencyController@doEdit')->name('community.economy.currency.doEdit');
-        //     Route::get('/remove', 'EconomyCurrencyController@delete')->name('community.economy.currency.delete');
-        //     Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
-        // });
 
         // Undo
         Route::get('/undo', 'TransactionController@undo')->name('transaction.undo');
         Route::delete('/undo', 'TransactionController@doUndo')->name('transaction.doUndo');
 
         // Transaction mutations
-        // TODO: add a permission check
         // Route::prefix('/mutations')->middleware(MutationController::permsView()->middleware())->group(function() {
         Route::prefix('/mutations')->group(function() {
             // Index
@@ -616,36 +544,13 @@ Route::prefix('/transactions')->middleware('auth')->group(function() {
             Route::prefix('/{mutationId}')->group(function() {
                 // Show
                 Route::get('/', 'MutationController@show')->name('transaction.mutation.show');
-
-                // // Edit/delete, require manage perms
-                // Route::middleware(MutationController::permsManage()->middleware())->group(function() {
-                //     Route::get('/edit', 'MutationController@edit')->name('bar.member.edit');
-                //     Route::put('/edit', 'MutationController@doEdit')->name('bar.member.doEdit');
-                //     Route::get('/delete', 'MutationController@delete')->name('bar.member.delete');
-                //     Route::delete('/delete', 'MutationController@doDelete')->name('bar.member.doDelete');
-                // });
             });
         });
     });
 });
 
-// Notifications
-Route::prefix('/notifications')->middleware('auth')->group(function() {
-    // Index
-    Route::get('/', 'NotificationController@index')->name('notification.index');
-
-    // Mark all notifications as read
-    Route::post('/mark-all-as-read', 'NotificationController@doMarkAllRead')->name('notification.doMarkAllRead');
-
-    // Specific
-    Route::prefix('/{notificationId}')->group(function() {
-        // Action
-        Route::get('/action/{action}', 'NotificationController@action')->name('notification.action');
-    });
-});
-
 // Payments
-Route::prefix('/payments')->middleware('auth')->group(function() {
+Route::prefix('/payments')->middleware(['throttle:60,1', 'auth'])->group(function() {
     // Index
     Route::get('/', 'PaymentController@index')->name('payment.index');
 
@@ -674,6 +579,21 @@ Route::prefix('/payments')->middleware('auth')->group(function() {
         // Cancel
         Route::get('/cancel', 'PaymentController@cancel')->name('payment.cancel');
         Route::delete('/cancel', 'PaymentController@doCancel')->name('payment.doCancel');
+    });
+});
+
+// Notifications
+Route::prefix('/notifications')->middleware('auth')->group(function() {
+    // Index
+    Route::get('/', 'NotificationController@index')->name('notification.index');
+
+    // Mark all notifications as read
+    Route::post('/mark-all-as-read', 'NotificationController@doMarkAllRead')->name('notification.doMarkAllRead');
+
+    // Specific
+    Route::prefix('/{notificationId}')->group(function() {
+        // Action
+        Route::get('/action/{action}', 'NotificationController@action')->name('notification.action');
     });
 });
 
@@ -716,13 +636,8 @@ Route::prefix('/ajax')->name('ajax.')->group(function() {
 });
 
 // Magic routes
-Route::get('/__heartbeat__', function() { return 'OK'; });
-Route::get('/__version__', function() { return [
-    'version' => config('app.version_name'),
-    'version_code' => config('app.version_code'),
-    'source' => config('app.source'),
-    'env' => config('app.env'),
-]; });
+Route::get('/__heartbeat__', 'MagicController@heartbeat')->name('magic.heartbeat');
+Route::get('/__version__', 'MagicController@version')->name('magic.version');
 
 // TODO: Routes to implement
 Route::get('/email/preferences', 'DashboardController@index')->name('email.preferences');

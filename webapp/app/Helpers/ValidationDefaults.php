@@ -180,10 +180,10 @@ class ValidationDefaults {
      * @return Array An array of validation rules.
      */
     public static function economyCurrency(Economy $economy, $unique = true) {
-        $rules = [Rule::exists('economy_currencies', 'id')];
+        $rules = [Rule::exists('economy_currency', 'currency_id')];
 
         if($unique)
-            $rules[] = Rule::unique('economy_currencies', 'currency_id')
+            $rules[] = Rule::unique('economy_currency', 'currency_id')
                     ->where(function($query) use($economy) {
                         // Scope to the current economy
                         return $query->where('economy_id', $economy->id);
@@ -205,7 +205,7 @@ class ValidationDefaults {
      */
     public static function walletEconomyCurrency(Economy $economy) {
         return [
-            Rule::exists('economy_currencies', 'id')
+            Rule::exists('economy_currency', 'id')
                 ->where(function($query) use($economy) {
                     // Scope to the current economy and to allowed wallet creation
                     return $query

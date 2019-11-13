@@ -52,6 +52,12 @@ class PaymentManualIban extends Model {
     public const TRANSFER_DELAY_MAX = 30 * 24 * 60 * 60;
 
     /**
+     * The number of seconds the transaction will expire after, if the user
+     * didn't transfer any money.
+     */
+    public const EXPIRE_UNTRANSFERRED = 30 * 24 * 60 * 60;
+
+    /**
      * The controller to use for this paymentable.
      */
     public const CONTROLLER = PaymentManualIbanController::class;
@@ -112,6 +118,19 @@ class PaymentManualIban extends Model {
                 $query->where('checked_at', '<', now()->subSeconds(Self::TRANSFER_CHECK_RETRY))
                     ->orWhere('checked_at', null);
             });
+    }
+
+    /**
+     * A scope for selecting payments that should expire.
+     *
+     * @param Builder $query Query builder for the payment.
+     * @param Builder $paymentable_query Query builder for the corresponding
+     *      paymentable.
+     */
+    public static function scopeToExpire($query, $paymentable_query) {
+        $paymentable_query
+            ->whereNull('transferred_at')
+            ->where('created_at', '<=', now()->subSeconds(Self::EXPIRE_UNTRANSFERRED));
     }
 
     /**

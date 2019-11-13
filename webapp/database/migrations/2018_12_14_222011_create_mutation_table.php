@@ -44,6 +44,8 @@ class CreateMutationTable extends Migration {
                 ->references('id')
                 ->on('user')
                 ->onDelete('set null');
+
+            $table->index(['mutationable_id', 'mutationable_type']);
         });
 
         // Link balance import changes to mutations

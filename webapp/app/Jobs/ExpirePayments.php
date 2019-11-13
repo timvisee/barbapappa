@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Jobs\ExpirePayment;
 use BarPay\Models\Payment;
-use BarPay\Models\PaymentManualIban;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,13 +11,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Update the states payments are in.
- *
- * For some payments, it's state may change after a period of time because it
- * has to be verified by a community administrator. This job ensures these
- * states are changed.
+ * Check for payments that should expire, and schedule a job to expire them.
  */
-class UpdatePaymentStates implements ShouldQueue {
+class ExpirePayments implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -42,11 +38,12 @@ class UpdatePaymentStates implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // Update state of payments waiting for community action
-        Payment::inProgress()
-            ->requireCommunityAction()
-            ->each(function($payment) {
-                $payment->setState(Payment::STATE_PENDING_COMMUNITY);
-            });
+        // List all payments to expire
+        $payments = Payment::toExpire()->get();
+
+        // Schedule a job to expire each payment
+        $payments->each(function($payment) {
+            ExpirePayment::dispatch($payment->id);
+        });
     }
 }

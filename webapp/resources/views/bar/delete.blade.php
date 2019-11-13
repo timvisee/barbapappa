@@ -16,7 +16,12 @@
             <div class="field {{ ErrorRenderer::hasError('confirm_name') ? 'error' : '' }}">
                 {{ Form::hidden('confirm_name_base', $bar->name) }}
                 {{ Form::label('confirm_name', __('pages.bar.exactBarNameVerify') . ':') }}
-                {{ Form::text('confirm_name', '', ['placeholder' => $bar->name]) }}
+                <div class="ui labeled input">
+                    <div class="ui label">
+                        @lang('misc.iWantToDelete')
+                    </div>
+                    {{ Form::text('confirm_name', '', ['placeholder' => $bar->name]) }}
+                </div>
                 {{ ErrorRenderer::inline('confirm_name') }}
                 <br />
                 {{ ErrorRenderer::inline('confirm_name') }}

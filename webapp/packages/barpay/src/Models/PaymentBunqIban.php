@@ -50,6 +50,18 @@ class PaymentBunqIban extends Model {
      */
     public const LANG_ROOT = 'barpay::payment.bunqiban';
 
+    /**
+     * The number of seconds the transaction will expire after, if the user
+     * didn't transfer any money.
+     */
+    public const EXPIRE_UNTRANSFERRED = 30 * 24 * 60 * 60;
+
+    /**
+     * The number of seconds the transaction will expire after, if the user did
+     * transfer money.
+     */
+    public const EXPIRE_TRANSFERRED = 30 * 24 * 60 * 60;
+
     const STEP_TRANSFER = 'transfer';
     const STEP_RECEIPT = 'receipt';
 
@@ -90,6 +102,25 @@ class PaymentBunqIban extends Model {
     public static function scopeRequireCommunityAction($query, $paymentable_query) {
         // Do not include this for community action
         $paymentable_query->whereRaw('1 = 2');
+    }
+
+    /**
+     * A scope for selecting payments that should expire.
+     *
+     * @param Builder $query Query builder for the payment.
+     * @param Builder $paymentable_query Query builder for the corresponding
+     *      paymentable.
+     */
+    public static function scopeToExpire($query, $paymentable_query) {
+        $paymentable_query
+            ->where(function($query) {
+                $query->whereNull('transferred_at')
+                    ->where('created_at', '<=', now()->subSeconds(Self::EXPIRE_UNTRANSFERRED));
+            })
+            ->orWhere(function($query) {
+                $query->whereNotNull('transferred_at')
+                    ->where('transferred_at', '<=', now()->subSeconds(Self::EXPIRE_TRANSFERRED));
+            });
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Jobs\ExpireNotifications;
 use App\Jobs\ProcessAllBunqAccountEvents;
 use App\Jobs\SendBalanceUpdates;
 use App\Jobs\UpdatePaymentStates;
+use App\Jobs\ExpirePayments;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -42,6 +43,10 @@ class Kernel extends ConsoleKernel {
         // Process all pending bunq events twice a day
         $schedule->job(new ProcessAllBunqAccountEvents)
             ->twiceDaily(0, 12);
+
+        // Expire payments
+        $schedule->job(new ExpirePayments)
+            ->hourly();
     }
 
     /**

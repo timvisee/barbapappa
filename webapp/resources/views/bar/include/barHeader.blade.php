@@ -19,7 +19,7 @@
                         'economyId' => $economy->id
                     ]) }}"
                     class="balance">
-                {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}
+                {!! $economy->formatUserBalance(BALANCE_FORMAT_LABEL) !!}
             </a>
         </div>
     @endif

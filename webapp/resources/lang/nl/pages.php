@@ -31,7 +31,7 @@ return [
      */
     'index' => [
         'title' => 'Hoofdpagina',
-        'emailAndContinue' => 'Vul je e-mailadres in om in te loggen of te registreren en ga verder.',
+        'emailAndContinue' => 'Vul je e-mailadres in om in te loggen of te registreren.',
     ],
 
     /**
@@ -163,6 +163,7 @@ return [
             'scanQr' => 'scan de QR code met je telefoon, word lid en doe een aankoop',
             'orVisit' => 'Of bezoek',
         ],
+        'checklist' => 'Groep checklist',
     ],
 
     /**
@@ -245,6 +246,7 @@ return [
         'noProductsFoundFor' => 'Geen producten gevonden voor :term...',
         'manageProduct' => 'Beheer product',
         'manageProducts' => 'Beheer producten',
+        'addProducts' => 'Producten toevoegen',
         'newProduct' => 'Nieuw product',
         'cloneProduct' => 'Dupliceer product',
         'editProduct' => 'Product aanpassen',
@@ -427,6 +429,18 @@ return [
         'jsonHasDuplicateAlias' => 'De JSON data bevat meerdere items voor \':email\'.',
         'aliasAlreadyInEvent' => 'De gebruiker \':email\' heeft al een verandering in deze gebeurtenis',
         'allowAddingSameUserMultiple' => 'Sta toe dezelfde gebruiker meer dan eens toe te voegen in deze gebeurtenis (Niet aangeraden)',
+    ],
+
+    /**
+     * Economy finance pages.
+     */
+    'finance' => [
+        'title' => 'Financieel rapport',
+        'walletSum' => 'Cumulatief saldo',
+        'paymentsInProgress' => 'In verwerking',
+        'fromBalanceImport' => 'vanuit saldoimport',
+        'membersWithNonZeroBalance' => 'Leden met niet-nul saldo',
+        'description' => 'Hier zie je een simpel financieel overzicht van de huidige economie staat. Gebruikers van saldoimports, die nog niet geregistreerd zijn en nog geen deel uitmaken van deze economie worden hier nog niet getoond.',
     ],
 
     /**
@@ -698,6 +712,7 @@ return [
             'boughtProductsUsers#' => '{0} Geen producten gekocht voor :users leden.|{1} Eén product gekocht voor :users leden.|[2,*] :count producten gekocht voor :users leden.',
             'pageCloseWarning' => 'Je hebt producten geselecteerd of hebt producten in de winkelwagen die nog niet gekocht zijn. Je moet geselecteerde producten eerst aan tenminste één gebruiker toevoegen en daarna op de Koop knop drukken om de bestelling te voltooien, of de selectie gaat verloren.',
         ],
+        'checklist' => 'Bar checklist',
     ],
 
     /**

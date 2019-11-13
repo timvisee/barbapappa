@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use App\Perms\CommunityRoles;
 
 /**
  * Transaction model.
@@ -358,7 +360,9 @@ class Transaction extends Model {
      * @return bool True if it can be undone, false if not.
      */
     public function canUndo($force = false) {
-        // TODO: has permission?
+        // User must have manage permissions
+        if(!$this->hasManagePermission())
+            return false;
 
         // All mutations must be undoable
         $canUndo = $this->mutations->every(function($m) use($force) {
@@ -373,5 +377,99 @@ class Transaction extends Model {
             ->copy()
             ->addSeconds(Self::UNDO_MAX_LIFETIME)
             ->isPast();
+    }
+
+    /**
+     * Find a list of communities this transaction took part in.
+     *
+     * For example, if the transaction has a wallet mutation, the community the
+     * wallet is in will be part of the returned list.
+     *
+     * @return Collection List of communities, may be empty.
+     */
+    public function findCommunities() {
+        return $this
+            ->mutations
+            ->flatMap(function($mutation) {
+                return $mutation->findCommunities();
+            })
+            ->filter(function($mutation) {
+                return $mutation != null;
+            })
+            ->unique('id');
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to view this
+     * transaction.
+     *
+     * @return boolean True if the user can view this transaction, false if not.
+     */
+    public function hasViewPermission() {
+        return $this->hasPermission(false);
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to manage
+     * this transaction.
+     *
+     * @return boolean True if the user can manage this transaction, false if not.
+     */
+    public function hasManagePermission() {
+        return $this->hasPermission(true);
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to view this
+     * transaction.
+     *
+     * Note: this is expensive.
+     *
+     * @param bool [$manage=true] True to check for management permissions,
+     *      false for just viewing permission.
+     * @return boolean True if the user can view this transaction, false if not.
+     */
+    private function hasPermission($manage = true) {
+        // The user must be authenticated
+        $barauth = barauth();
+        if(!$barauth->isAuth())
+            return false;
+        $user = $barauth->getUser();
+
+        // User is fine if he owns the transaction
+        if($this->owner_id == $user->id)
+            return true;
+
+        // User is fine if it owns any mutation
+        $ownsMutation = $this
+            ->mutations
+            ->filter(function($mutation) use($user) {
+                return $mutation->owner_id == $user->id;
+            })
+            ->take(1)
+            ->count() > 0;
+        if($ownsMutation)
+            return true;
+
+        // User is fine if it owns any of the wallets
+        $isWalletOwner = $this
+            ->mutations()
+            ->where('mutationable_type', MutationWallet::class)
+            ->join('mutation_wallet', 'mutation.mutationable_id', 'mutation_wallet.id')
+            ->join('wallet', 'mutation_wallet.wallet_id', 'wallet.id')
+            ->join('economy_member', 'wallet.economy_member_id', 'economy_member.id')
+            ->where('economy_member.user_id', $user->id)
+            ->limit(1)
+            ->count() > 0;
+        if($isWalletOwner)
+            return true;
+
+        // Find all communities this transaction is part of, fine if manager in any
+        $communities = $this->findCommunities();
+        foreach($communities as $community)
+            if(app('perms')->evaluate(CommunityRoles::presetManager(), $community, null))
+                return true;
+
+        return false;
     }
 }

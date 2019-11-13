@@ -36,6 +36,22 @@
         ]),
         'icon' => 'credit-card',
     ];
+    $menulinks[] = [
+        'name' => __('pages.balanceImport.manageSystems'),
+        'link' => route('community.economy.balanceimport.index', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id
+        ]),
+        'icon' => 'file-import',
+    ];
+    $menulinks[] = [
+        'name' => __('pages.finance.title'),
+        'link' => route('community.economy.finance.overview', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id
+        ]),
+        'icon' => 'charts',
+    ];
 @endphp
 
 @section('content')
@@ -96,6 +112,14 @@
                 ]) }}"
                 class="ui button basic">
             @lang('pages.balanceImport.manageSystems')
+        </a>
+
+        <a href="{{ route('community.economy.finance.overview', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id
+                ]) }}"
+                class="ui button basic">
+            @lang('pages.finance.title')
         </a>
     </p>
 

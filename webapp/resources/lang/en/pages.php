@@ -31,7 +31,7 @@ return [
      */
     'index' => [
         'title' => 'Home page',
-        'emailAndContinue' => 'Enter your email address to login or register and continue.',
+        'emailAndContinue' => 'Enter your email address to login or register.',
     ],
 
     /**
@@ -163,6 +163,7 @@ return [
             'scanQr' => 'scan the QR code with your phone to join and make a purchase',
             'orVisit' => 'Or visit',
         ],
+        'checklist' => 'Community checklist',
     ],
 
     /**
@@ -245,6 +246,7 @@ return [
         'noProductsFoundFor' => 'No products found for :term...',
         'manageProduct' => 'Manage product',
         'manageProducts' => 'Manage products',
+        'addProducts' => 'Add products',
         'newProduct' => 'New product',
         'cloneProduct' => 'Clone product',
         'editProduct' => 'Edit product',
@@ -427,6 +429,18 @@ return [
         'jsonHasDuplicateAlias' => 'The JSON data contains multiple items for \':email\'.',
         'aliasAlreadyInEvent' => 'The user \':email\' already has a change in this event',
         'allowAddingSameUserMultiple' => 'Allow adding the same user more than once in the current event (Not recommended)',
+    ],
+
+    /**
+     * Economy finance pages.
+     */
+    'finance' => [
+        'title' => 'Financial report',
+        'walletSum' => 'Cumulative balance',
+        'paymentsInProgress' => 'In progress',
+        'fromBalanceImport' => 'from balance import',
+        'membersWithNonZeroBalance' => 'Members with non-zero balance',
+        'description' => 'This shows a simple financial report for the current economy state. Users from balance imports, that have not registered and joined this economy, are currently not listed here.',
     ],
 
     /**
@@ -698,6 +712,7 @@ return [
             'boughtProductsUsers#' => '{0} Bought no products for :users users.|{1} Bought product for :users users.|[2,*] Bought :count products for :users users.',
             'pageCloseWarning' => 'You have selected products or have products in cart that have not been bought yet. You must add a product selection to at least one user and tap the Buy button to commit the purchase, or the selection will be lost.',
         ],
+        'checklist' => 'Bar checklist',
     ],
 
     /**

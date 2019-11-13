@@ -16,7 +16,10 @@
     <div>
         <button class="ui button primary" type="submit">@lang('auth.login')</button>
         <a href="{{ route('login') }}" class="ui button basic">@lang('auth.loginPassword')</a>
-        <a href="{{ route('register') }}" class="ui button basic">@lang('auth.register')</a>
+
+        <div class="ui link list">
+            <a href="{{ route('register') }}" class="item">@lang('auth.register')</a>
+        </div>
     </div>
 
     {!! Form::close() !!}

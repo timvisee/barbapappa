@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
-use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Models\BalanceImportAlias;
 use App\Models\Bar;
 use App\Models\BarMember;
@@ -83,7 +82,7 @@ class BarController extends Controller {
 
         // Redirect the user to the account overview page
         return redirect()
-            ->route('bar.show', ['barId' => $bar->human_id])
+            ->route('bar.manage', ['barId' => $bar->human_id])
             ->with('success', __('pages.bar.created'));
     }
 
@@ -216,9 +215,12 @@ class BarController extends Controller {
         // Get the bar
         $bar = \Request::get('bar');
 
+        $economy = $bar->economy;
+
         // Show the bar management page
         return view('bar.manage')
-            ->with('economy', $bar->economy);
+            ->with('economy', $economy)
+            ->with('hasProduct', $economy->products()->limit(1)->count() > 0);
     }
 
     /**
@@ -287,7 +289,7 @@ class BarController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'economy' => ['required', ValidationDefaults::communityEconomy($community)],
+            // 'economy' => ['required', ValidationDefaults::communityEconomy($community)],
             'name' => 'required|' . ValidationDefaults::NAME,
             'slug' => 'nullable|' . ValidationDefaults::barSlug($bar),
             'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
@@ -297,7 +299,7 @@ class BarController extends Controller {
         ]);
 
         // Change the name properties
-        $bar->economy_id = $request->input('economy');
+        // $bar->economy_id = $request->input('economy');
         $bar->name = $request->input('name');
         $bar->slug = $request->has('slug') ? $request->input('slug') : null;
         $bar->description = $request->input('description');
@@ -348,9 +350,12 @@ class BarController extends Controller {
     public function doJoin(Request $request, $barId) {
         // Get the bar, community and user
         $bar = \Request::get('bar');
-        $community = $bar->community;
-        $economy = $bar->economy;
         $user = barauth()->getSessionUser();
+
+        // Redirect to the bar page if the user has already joined
+        if($bar->isJoined($user))
+            return redirect()
+                ->route('bar.show', ['barId' => $barId]);
 
         // Self enroll must be enabled
         if(!$bar->self_enroll)
@@ -376,18 +381,8 @@ class BarController extends Controller {
             }
         }
 
-        // Join the community, economy and bar
-        DB::transaction(function() use($community, $economy, $bar, $user) {
-            if(!$community->isJoined($user))
-                $community->join($user);
-            if(!$economy->isJoined($user))
-                $economy->join($user);
-            $bar->join($user);
-
-            // Refresh economy member entries, and commit
-            BalanceImportAlias::refreshEconomyMembersForUser($user);
-            CommitBalanceUpdatesForUser::dispatch($user->id);
-        });
+        // Join the bar
+        $bar->join($user);
 
         // Redirect to the bar page
         return redirect()
@@ -424,57 +419,10 @@ class BarController extends Controller {
     public function doLeave($barId) {
         // TODO: make sure the user can leave the bar
 
-        // Get the bar and user
+        // Get the bar and user, leave
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
-        $community = $bar->community;
-        $economy = $bar->economy;
-
-        // Leave bar and community
-        // TODO: make sure user can actually leave this bar (with economy and community)
-        DB::transaction(function() use($bar, $user, $community, $economy) {
-            // Leave the bar
-            $bar->leave($user);
-
-            // Leave economy if not bar member anymore and if member has no balance import alias
-            if($economy->isJoined($user)) {
-                $barIds = $economy
-                    ->bars()
-                    ->select('id')
-                    ->pluck('id');
-                $memberInEconomyBars = BarMember::whereIn('bar_id', $barIds)
-                    ->where('user_id', $user->id)
-                    ->limit(1)
-                    ->count() > 0;
-                $memberHasAliases = $economy
-                    ->members()
-                    ->user($user)
-                    ->firstOrFail()
-                    ->aliases()
-                    ->limit(1)
-                    ->count() > 0;
-                if(!$memberInEconomyBars) {
-                    if($memberHasAliases)
-                        $economy->members()->user($user)->limit(1)->update(['user_id' => null]);
-                    else
-                        $economy->leave($user);
-                }
-            }
-
-            // Leave community if not bar member anymore without special role
-            if($community->isJoined($user) && $community->member($user)->role == 0) {
-                $barIds = $community
-                    ->bars()
-                    ->select('id')
-                    ->pluck('id');
-                $memberInCommunityBars = BarMember::whereIn('bar_id', $barIds)
-                    ->where('user_id', $user->id)
-                    ->limit(1)
-                    ->count() > 0;
-                if(!$memberInCommunityBars)
-                    $community->leave($user);
-            }
-        });
+        $bar->leave($user);
 
         // Redirect to the bar page
         return redirect()
@@ -610,9 +558,7 @@ class BarController extends Controller {
 
         // Set and limit fields to repsond with
         $members = $members->map(function($m) use($economy_member) {
-            $m->name = $m->user != null
-                ? $m->user->first_name . ' ' . $m->user->last_name
-                : $m->aliases()->firstOrFail()->name;
+            $m->name = $m->name;
             $m->me = $m->id == $economy_member->id;
             return $m->only(['id', 'name', 'me']);
         });
@@ -1035,7 +981,7 @@ class BarController extends Controller {
 
         // Redirect to the index page after deleting
         return redirect()
-            ->route('community.show', ['communityId' => $bar->community->human_id])
+            ->route('community.manage', ['communityId' => $bar->community->human_id])
             ->with('success', __('pages.bar.deleted'));
     }
 

@@ -142,6 +142,8 @@ return [
         'confirm_transfer' => 'bevestiging',
         'cost' => 'kosten',
         'balance' => 'saldo',
+        'confirm_name' => 'naam bevestiging',
+        'confirm_delete' => 'verwijder bevestiging',
     ],
 
 ];

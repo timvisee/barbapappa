@@ -56,4 +56,15 @@ class MutationMagic extends Model {
      * @param int $newState The new, current state.
      */
     public function applyState(Mutation $mutation, int $oldState, int $newState) {}
+
+    /**
+     * Find a list of communities this mutation took part in.
+     *
+     * This will always be empty for this type of transaction.
+     *
+     * @return Collection List of communities, may be empty.
+     */
+    public function findCommunities() {
+        return collect();
+    }
 }

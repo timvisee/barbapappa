@@ -47,8 +47,7 @@ class Notification extends Model {
 
         // Add global scopes
         static::addGlobalScope('user', function(Builder $builder) {
-            if(($user = barauth()->getUser()) != null)
-                $builder->forUser($user);
+            $builder->forUser(barauth()->getUser());
         });
         static::addGlobalScope('visible', function(Builder $builder) {
             $builder->visible();
@@ -67,9 +66,10 @@ class Notification extends Model {
      * A scope for notifications targeted to the given user.
      *
      * @param \Builder $query The query builder.
+     * @param User|null $user The user to scope for.
      */
-    public function scopeForUser($query, User $user) {
-        return $query->where('user_id', $user->id);
+    public function scopeForUser($query, $user) {
+        return $query->where('user_id', $user != null ? $user->id : null);
     }
 
     /**

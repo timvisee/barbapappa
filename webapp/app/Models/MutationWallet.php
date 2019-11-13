@@ -100,4 +100,17 @@ class MutationWallet extends Model {
                 $this->wallet->withdraw(-$mutation->amount);
         }
     }
+
+    /**
+     * Find a list of communities this transaction took part in.
+     *
+     * This will return the community the wallet is in if known.
+     *
+     * @return Collection List of communities, may be empty.
+     */
+    public function findCommunities() {
+        if($this->wallet != null)
+            return collect([$this->wallet->economyMember->economy->community]);
+        return collect();
+    }
 }

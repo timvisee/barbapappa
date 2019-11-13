@@ -13,4 +13,16 @@
             'payments' => $payments,
         ]],
     ])
+
+    <p>
+        <a class="ui button primary"
+                href="{{ route('dashboard') }}"
+                title="@lang('pages.dashboard.title')">
+            @lang('pages.dashboard.title')
+        </a>
+        <a href="{{ route('payment.index') }}"
+                class="ui button basic">
+            @lang('pages.payments.backToPayments')
+        </a>
+    </p>
 @endsection

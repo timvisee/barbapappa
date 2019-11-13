@@ -36,7 +36,7 @@ class CreateBalanceImportChangeTable extends Migration {
                 ->onDelete('restrict');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('economy_currencies')
+                ->on('economy_currency')
                 ->onDelete('cascade');
             $table->foreign('submitter_id')
                 ->references('id')

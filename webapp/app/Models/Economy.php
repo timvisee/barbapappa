@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Traits\Joinable;
 use App\Utils\EmailRecipient;
+use App\Utils\MoneyAmount;
+use BarPay\Models\Payment as PayPayment;
 use BarPay\Models\Service as PayService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -85,7 +88,14 @@ class Economy extends Model {
      * @return The wallets.
      */
     public function wallets() {
-        return $this->hasMany(Wallet::class);
+        return $this->hasManyThrough(
+            Wallet::class,
+            EconomyMember::class,
+            'economy_id',
+            'economy_member_id',
+            'id',
+            'id'
+        );
     }
 
     /**
@@ -157,6 +167,22 @@ class Economy extends Model {
     }
 
     /**
+     * Get a relation to all payments made with services in this economy.
+     *
+     * @return Relation to payments.
+     */
+    public function payments() {
+        return $this->hasManyThrough(
+            PayPayment::class,
+            PayService::class,
+            'economy_id',
+            'service_id',
+            'id',
+            'id'
+        );
+    }
+
+    /**
      * A list of economy member models for users that joined this economy.
      *
      * @return Query for list of economy member models.
@@ -204,8 +230,93 @@ class Economy extends Model {
     }
 
     /**
-     * Go through all wallets of the current user in this economy, and calculate
-     * the total balance.
+     * Let the given user join this economy.
+     * This automatically joins the user in the related community.
+     *
+     * @param User $user The user to join.
+     *
+     * @throws \Exception Throws if already joined.
+     */
+    public function join(User $user) {
+        $community = $this->community;
+        $economy = $this;
+
+        // Join the community and economy
+        DB::transaction(function() use($community, $economy, $user) {
+            if(!$community->isJoined($user))
+                $community->join($user);
+            $economy->memberJoin($user);
+
+            // Refresh economy member entries, and commit
+            BalanceImportAlias::refreshEconomyMembersForUser($user);
+            CommitBalanceUpdatesForUser::dispatch($user->id);
+        });
+    }
+
+    /**
+     * Let the given user leave this economy.
+     * Note: this throws an error if the user has not joined.
+     *
+     * @param User $user The user to leave.
+     */
+    public function leave(User $user) {
+        $community = $this->community;
+        $economy = $this;
+
+        // User must not be joined
+        if(!$economy->isJoined($user))
+            throw new Exception("Unable to leave economy, not a member");
+
+        // Leave economy
+        // TODO: make sure user can actually leave this economy (with community)
+        DB::transaction(function() use($user, $community, $economy) {
+            // Leave economy if member has no balance import alias
+            $memberHasAliases = $economy
+                ->members()
+                ->user($user)
+                ->firstOrFail()
+                ->aliases()
+                ->limit(1)
+                ->count() > 0;
+            if($memberHasAliases)
+                $economy->members()->user($user)->limit(1)->update(['user_id' => null]);
+            else
+                $economy->memberLeave($user);
+
+            // Leave community if user is orphan
+            if($community->isJoined($user))
+                $community->leaveIfOrphan($user);
+        });
+    }
+
+    /**
+     * Let the given user leave this community, if it's an orphan.
+     *
+     * The user will leave if:
+     * - it has not joined any economy bars
+     *
+     * @param User $user The user to leave if orphan.
+     * @throws \Exception Throws if the user is not joined.
+     */
+    public function leaveIfOrphan(User $user) {
+        // User must not be a bar member
+        $barIds = $this
+            ->bars()
+            ->select('id')
+            ->pluck('id');
+        $memberInEconomyBars = BarMember::whereIn('bar_id', $barIds)
+            ->where('user_id', $user->id)
+            ->limit(1)
+            ->count() > 0;
+        if($memberInEconomyBars)
+            return;
+
+        $this->leave($user);
+    }
+
+    /**
+     * Go through the given list of models, and sum all money amounts in a
+     * shared currency.
      *
      * This method automatically selects the best currency to return in, and
      * notes whether the returned value is approximate or not. Balances in other
@@ -214,35 +325,23 @@ class Economy extends Model {
      * returned value is approximate, which is true when multiple currencies
      * ware summed.
      *
-     * If no wallet is created, zero is returned in the default currency.
-     *
-     * Example return:
-     * ```php
-     * [1.23, 'EUR', true] // 1.23 euro, approximately
-     * ```
-     *
-     * @return [$balance, $currency, $approximate] The balance, chosen currency
-     *      code and whether the value is approximate.
+     * @return MoneyAmount The summed amount.
      */
-    public function calcBalance() {
-        // Get the user and economy member if available
-        $user = barauth()->getUser();
-        $economy_member = $this->members()->user($user)->first();
-
-        // Obtain the wallets, return zero with default currency if none
-        $wallets = $economy_member != null ? $economy_member->wallets()->with('currency')->get() : collect();
-        if($wallets->isEmpty())
-            return [0, config('currency.default'), false];
+    // TODO: move this to some utilty class, maybe into MoneyAmount
+    public static function sumAmounts($models, string $amountKey) {
+        // Return zero if no models are given
+        if($models->isEmpty())
+            return MoneyAmount::zero();
 
         // Build a map with per currency sums
         $sums = [];
-        foreach($wallets as $wallet) {
-            $currency = $wallet->currency->code;
-            $sums[$wallet->currency->code] = ($sums[$wallet->currency->code] ?? 0) + $wallet->balance;
+        foreach($models as $model) {
+            $currency = $model->currency->code;
+            $sums[$currency] = ($sums[$currency] ?? 0) + $model->$amountKey;
         }
 
         // Find the currency with the biggest difference from zero, is it approx
-        $currency = null;
+        $currency = key($sums);
         $diff = 0;
         foreach($sums as $c => $b)
             if(abs($b) > $diff) {
@@ -258,7 +357,32 @@ class Economy extends Model {
             })
             ->sum();
 
-        return [$balance, $currency, $approximate];
+        return new MoneyAmount($currency, $balance, $approximate);
+    }
+
+    /**
+     * Go through all wallets of the current user in this economy, and calculate
+     * the total balance.
+     *
+     * This method automatically selects the best currency to return in, and
+     * notes whether the returned value is approximate or not. Balances in other
+     * currencies are automatically converted using the latest known exchange
+     * rates from the currencies table. The method also notes whether the
+     * returned value is approximate, which is true when multiple currencies
+     * ware summed.
+     *
+     * If no wallet is created, zero is returned in the default currency.
+     *
+     * @return MoneyAmount The summed user balance.
+     */
+    public function calcUserBalance() {
+        // Get the user and economy member if available
+        $user = barauth()->getUser();
+        $economy_member = $this->members()->user($user)->first();
+
+        // Obtain the wallets, return zero with default currency if none
+        $wallets = $economy_member != null ? $economy_member->wallets()->with('currency')->get() : collect();
+        return Self::sumAmounts($wallets, 'balance');
     }
 
     /**
@@ -286,21 +410,14 @@ class Economy extends Model {
 
     /**
      * Calcualte and format the total balance for all the wallets in this
-     * economy for the current user. See `$this->calcBalance()`.
+     * economy for the current user. See `$this->calcUserBalance()`.
      *
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
      *
      * @return string Formatted balance
      */
-    public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
-        // Obtain balance information
-        $out = $this->calcBalance();
-        $balance = $out[0];
-        $currency = $out[1];
-        $prefix = $out[2] ? '&asymp; ' : '';
-
-        // Format the balance
-        return balance($balance, $currency, $format, ['prefix' => $prefix]);
+    public function formatUserBalance($format = BALANCE_FORMAT_PLAIN) {
+        return $this->calcUserBalance()->formatAmount($format);
     }
 
     /**

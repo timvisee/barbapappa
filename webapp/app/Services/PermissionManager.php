@@ -6,11 +6,13 @@ use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+use App\Models\Bar;
+use App\Models\Community;
 use App\Models\User;
 use App\Perms\AppRoles;
 use App\Perms\BarRoles;
-use App\Perms\CommunityRoles;
 use App\Perms\Builder\Config as PermsConfig;
+use App\Perms\CommunityRoles;
 
 class PermissionManager {
 
@@ -52,10 +54,11 @@ class PermissionManager {
      *
      * @param string|PermsConfig $config The roles configuration string, or a part of a
      *      role string. This defines what permission a user must have.
-     * @param Request $request The users request.
+     * @param Community|null $community The community to check for.
+     * @param Bar|null $bar The bar to check for.
      * @return boolean `True` if the user has proper permissions, `false` if not.
      */
-    public function evaluate($config, Request $request) {
+    public function evaluate($config, $community, $bar) {
         // Parse the configuration, a role configuration must be specified
         if($config instanceof PermsConfig)
             $config = $config->build();
@@ -81,9 +84,9 @@ class PermissionManager {
             if($scope == 'app')
                 $allowed = $this->evaluateScopeApp($role_id);
             else if($scope == 'community')
-                $allowed = $this->evaluateScopeCommunity($role_id, $request);
+                $allowed = $this->evaluateScopeCommunity($role_id, $community);
             else if($scope == 'bar')
-                $allowed = $this->evaluateScopeBar($role_id, $request);
+                $allowed = $this->evaluateScopeBar($role_id, $bar);
             else
                 throw new \Exception(
                     'Could not evaluate permission, unknown permission scope specified'
@@ -96,6 +99,26 @@ class PermissionManager {
 
         // Return whether the user is allowed (this should always be true)
         return $allowed;
+    }
+
+    /**
+     * Evaluate the given roles string, and evaulate whether the user has
+     * permisison or not.
+     *
+     * If multiple roles are given, separated by a space, only one has to
+     * evaluate to true. This logic is working in an OR configuration.
+     *
+     * @param string|PermsConfig $config The roles configuration string, or a part of a
+     *      role string. This defines what permission a user must have.
+     * @param Request $request The users request.
+     * @return boolean `True` if the user has proper permissions, `false` if not.
+     */
+    public function evaluateRequest($config, Request $request) {
+        return $this->evaluate(
+            $config,
+            $request->get('community'),
+            $request->get('bar')
+        );
     }
 
     /**
@@ -133,10 +156,10 @@ class PermissionManager {
      * not the ID of a different permission scope.
      *
      * @param int $role The ID of the role to evaluate.
-     * @param Request $request The user request.
+     * @param Community|null $community The community to check for.
      * @return boolean `True` if the user has permission, `false` if not.
      */
-    private function evaluateScopeCommunity($role, Request $request) {
+    private function evaluateScopeCommunity($role, Community $community) {
         // A role must be specified
         if(empty($role) && $role !== "0" && $role !== 0)
             throw new \Exception("Unable to evaluate role, none specified");
@@ -150,7 +173,6 @@ class PermissionManager {
 
         // Get current community and users role if set, use cache or query
         if(!empty($user)) {
-            $community = $request->get('community');
             if(!empty($community)) {
                 if(isset($this->communityUserRoles[$user->id][$community->id]))
                     $user_role = $this->communityUserRoles[$user->id][$community->id];
@@ -177,10 +199,10 @@ class PermissionManager {
      * not the ID of a different permission scope.
      *
      * @param int $role The ID of the role to evaluate.
-     * @param Request $request The user request.
+     * @param Bar|null $bar The bar to check for.
      * @return boolean `True` if the user has permission, `false` if not.
      */
-    private function evaluateScopeBar($role, Request $request) {
+    private function evaluateScopeBar($role, Bar $bar) {
         // A role must be specified
         if(empty($role) && $role !== "0" && $role !== 0)
             throw new \Exception("Unable to evaluate role, none specified");
@@ -194,7 +216,6 @@ class PermissionManager {
 
         // Get current bar and users role if set, use cache or query
         if(!empty($user)) {
-            $bar = $request->get('bar');
             if(!empty($bar)) {
                 if(isset($this->barUserRoles[$user->id][$bar->id]))
                     $user_role = $this->barUserRoles[$user->id][$bar->id];

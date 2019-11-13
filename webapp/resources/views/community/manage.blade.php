@@ -9,6 +9,7 @@
     use App\Http\Controllers\CommunityController;
     use App\Http\Controllers\CommunityMemberController;
     use App\Http\Controllers\EconomyController;
+    use App\Http\Controllers\EconomyCurrencyController;
 
     // Define menulinks
     if(perms(CommunityController::permsAdminister())) {
@@ -84,6 +85,95 @@
             </a>
         </div>
     </h2>
+
+    {{-- Checklist --}}
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">@lang('pages.community.checklist')</h5>
+        @if(perms(EconomyController::permsManage()))
+            <a href="{{ route('community.economy.create', ['communityId' => $community->human_id]) }}" class="item">
+                @if($hasEconomy)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                1. @lang('pages.economies.createEconomy')
+            </a>
+        @else
+            <div class="item disabled">
+                @if($hasEconomy)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                1. @lang('pages.economies.createEconomy')
+            </div>
+        @endif
+        @if($hasEconomy && perms(EconomyCurrencyController::permsManage()))
+            <a href="{{ route('community.economy.currency.create', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $firstEconomy->id,
+                    ]) }}" class="item">
+                @if($hasCurrency)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                2. @lang('pages.currencies.createCurrency')
+            </a>
+        @else
+            <div class="item disabled">
+                @if($hasCurrency)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                2. @lang('pages.currencies.createCurrency')
+            </div>
+        @endif
+        @if($hasCurrency && perms(BarController::permsCreate()))
+            <a href="{{ route('bar.create', ['communityId' => $community->human_id]) }}" class="item">
+                @if($hasBar)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                3. @lang('pages.bar.createBar')
+            </a>
+        @else
+            <div class="item disabled">
+                @if($hasBar)
+                    <div class="ui green small label">
+                        <span class="halflings halflings-ok"></span>
+                    </div>
+                @else
+                    <div class="ui red small label">
+                        <span class="halflings halflings-remove"></span>
+                    </div>
+                @endif
+                3. @lang('pages.bar.createBar')
+            </div>
+        @endif
+    </div>
 
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.community')</h5>
