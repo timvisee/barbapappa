@@ -523,6 +523,44 @@ class WalletController extends Controller {
     }
 
     /**
+     * Economy wallet top-up page.
+     *
+     * @return Response
+     */
+    public function topUpEconomy($communityId, $economyId) {
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+
+        // Get a list of preferred user currencies
+        $currencies = BarController::userCurrencies($economy, $economy_member);
+        if($currencies->isEmpty())
+            return redirect()
+                ->route('community.wallet.list', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                ]);
+
+        // Get or create a user wallet
+        $wallet = $economy_member->getOrCreateWallet($currencies, false);
+        if($wallet == null)
+            return redirect()
+                ->route('community.wallet.list', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                ]);
+
+        return redirect()
+            ->route('community.wallet.topUp', [
+                'communityId' => $communityId,
+                'economyId' => $economyId,
+                'walletId' => $wallet->id,
+            ]);
+    }
+
+    /**
      * Show user wallet transactions.
      *
      * @return Response

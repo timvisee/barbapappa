@@ -49,10 +49,11 @@
         </a>
 
         @if($can_disable)
-            &nbsp;&nbsp;
-            <a href="{{ route('password.disable') }}">
-                @lang('pages.passwordDisable.title')
-            </a>
+            <div class="ui link list">
+                <a href="{{ route('password.disable') }}" class="item">
+                    @lang('pages.passwordDisable.title')
+                </a>
+            </div>
         @endif
 
     {!! Form::close() !!}
