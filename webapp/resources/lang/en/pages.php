@@ -46,7 +46,7 @@ return [
      * Last page.
      */
     'last' => [
-        'title' => 'Visit last',
+        'title' => 'Back to bar',
         'noLast' => 'You haven\'t visited a bar yet, visit one now!',
     ],
 

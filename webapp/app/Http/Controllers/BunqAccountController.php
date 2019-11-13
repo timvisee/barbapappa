@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Jobs\ProcessBunqAccountEvents;
 use App\Models\BunqAccount;
+use App\Scopes\EnabledScope;
 use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -36,8 +37,10 @@ class BunqAccountController extends Controller {
     public function index(Request $request, $communityId) {
         $user = barauth()->getUser();
         $community = \Request::get('community');
-        // TODO: also list disabled accounts
-        $accounts = $community->bunqAccounts;
+        $accounts = $community
+            ->bunqAccounts()
+            ->withoutGlobalScope(new EnabledScope)
+            ->get();
 
         return view('community.bunqAccount.index')
             ->with('accounts', $accounts);
@@ -231,7 +234,10 @@ class BunqAccountController extends Controller {
     public function show($communityId, $accountId) {
         // Get the community, find the bunq account
         $community = \Request::get('community');
-        $account = $community->bunqAccounts()->findOrFail($accountId);
+        $account = $community
+            ->bunqAccounts()
+            ->withoutGlobalScope(new EnabledScope)
+            ->findOrFail($accountId);
 
         return view('community.bunqAccount.show')
             ->with('account', $account);
@@ -283,7 +289,10 @@ class BunqAccountController extends Controller {
     public function edit($communityId, $accountId) {
         // Get the community, find the bunq account
         $community = \Request::get('community');
-        $account = $community->bunqAccounts()->findOrFail($accountId);
+        $account = $community
+            ->bunqAccounts()
+            ->withoutGlobalScope(new EnabledScope)
+            ->findOrFail($accountId);
 
         return view('community.bunqAccount.edit')
             ->with('account', $account);
@@ -303,7 +312,10 @@ class BunqAccountController extends Controller {
 
         // Get the community, find the bunq account
         $community = \Request::get('community');
-        $account = $community->bunqAccounts()->findOrFail($accountId);
+        $account = $community
+            ->bunqAccounts()
+            ->withoutGlobalScope(new EnabledScope)
+            ->findOrFail($accountId);
 
         // Validate
         $request->validate([
