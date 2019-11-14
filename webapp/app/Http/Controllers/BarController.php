@@ -422,6 +422,26 @@ class BarController extends Controller {
         // Get the bar and user, leave
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
+
+        // Don't allow user to leave if user has wallet
+        $hasWallet = $bar
+            ->economy
+            ->member($user)
+            ->wallets()
+            ->limit(1)
+            ->count() > 0;
+        $inOtherCommunityBars = $bar
+            ->community
+            ->bars()
+            ->where('economy_id', $bar->economy_id)
+            ->where('id', '<>', $bar->id)
+            ->limit(1)
+            ->count();
+        if($hasWallet && !$inOtherCommunityBars)
+            return redirect()
+                ->route('bar.show', ['barId' => $barId])
+                ->with('error', __('pages.bar.cannotLeaveHasWallets'));
+
         $bar->leave($user);
 
         // Redirect to the bar page

@@ -669,6 +669,7 @@ return [
         'cannotSelfEnroll' => 'You cannot join this bar yourself, it is disabled.',
         'leaveQuestion' => 'Are you sure you want to leave this bar?',
         'leftThisBar' => 'You left this bar.',
+        'cannotLeaveHasWallets' => 'You cannot leave this bar while you have a wallet in it.',
         'protectedByCode' => 'This bar is protected by a passcode. Request it at the bar, or scan the bar QR code if available.',
         'protectedByCodeFilled' => 'This bar is protected by a passcode. We\'ve filled it in for you.',
         'incorrectCode' => 'Incorrect bar code.',

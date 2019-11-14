@@ -669,6 +669,7 @@ return [
         'cannotSelfEnroll' => 'Ye cannot join dis bar yerself, it be disabled.',
         'leaveQuestion' => 'Ye be sure to sink th\' bar?',
         'leftThisBar' => 'Ye sunk th\' bar.',
+        'cannotLeaveHasWallets' => 'Ye nay leave dis bar while ye have a wallet in it.',
         'protectedByCode' => 'Dis bar be protected by a secret. Request it at yer bar, or use yer spyglass to scan the bar Q-ARRRR code if available.',
         'protectedByCodeFilled' => 'Dis bar be protected by a secret. We filled it for ye.',
         'incorrectCode' => 'Bar code be incorrect.',
