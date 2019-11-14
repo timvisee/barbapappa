@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
+use App\Models\BalanceImportChange;
 use App\Models\Currency;
 use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\CommunityRoles;
@@ -170,7 +171,32 @@ class CurrencyController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
 
-        // TODO: ensure deletion is allowed
+        // Check some requirements
+        $hasCurrency = $economy->wallets()->where('currency_id', $currencyId)->limit(1)->count() > 0;
+        if($hasCurrency)
+            return redirect()
+                ->back()
+                ->with('error', __('pages.currencies.cannotDeleteHasWallet'));
+        $hasMutation = $economy->mutations()->where('currency_id', $currencyId)->limit(1)->count() > 0;
+        if($hasMutation)
+            return redirect()
+                ->back()
+                ->with('error', __('pages.currencies.cannotDeleteHasMutation'));
+        $hasPayment = $economy->payments()->where('payment.currency_id', $currencyId)->limit(1)->count() > 0;
+        if($hasPayment)
+            return redirect()
+                ->back()
+                ->with('error', __('pages.currencies.cannotDeleteHasPayment'));
+        $hasService = $economy->paymentServices()->where('currency_id', $currencyId)->limit(1)->count() > 0;
+        if($hasService)
+            return redirect()
+                ->back()
+                ->with('error', __('pages.currencies.cannotDeleteHasService'));
+        $hasChange = BalanceImportChange::where('currency_id', $currencyId)->limit(1)->count() > 0;
+        if($hasChange)
+            return redirect()
+                ->back()
+                ->with('error', __('pages.currencies.cannotDeleteHasChange'));
 
         // Delete the economy currency configuration
         $currency->delete();

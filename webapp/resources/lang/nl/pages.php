@@ -240,6 +240,11 @@ return [
         'format' => 'Valuta formaat',
         'formatPlaceholder' => '€1.0,00',
         'exampleNotation' => 'Voorbeeld notatie',
+        'cannotDeleteHasWallet' => 'Je kunt deze valuta niet verwijderen, omdat een portemonnee gebruik maakt van deze valuta.',
+        'cannotDeleteHasMutation' => 'Je kunt deze valuta niet verwijderen, omdat een transactie gebruik maakt van deze valuta.',
+        'cannotDeleteHasPayment' => 'Je kunt deze valuta niet verwijderen, omdat een betaling gebruik maakt van deze valuta.',
+        'cannotDeleteHasService' => 'Je kunt deze valuta niet verwijderen, omdat een betaalservice gebruik maakt van deze valuta.',
+        'cannotDeleteHasChange' => 'Je kunt deze valuta niet verwijderen, omdat een balansimportverandering gebruik maakt van deze valuta.',
     ],
 
     /**

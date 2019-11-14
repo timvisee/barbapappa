@@ -240,6 +240,11 @@ return [
         'format' => 'Currency format',
         'formatPlaceholder' => '€1.0,00',
         'exampleNotation' => 'Example notation',
+        'cannotDeleteHasWallet' => 'Ye nay delete dis currency, because a wallet exists using dis currency.',
+        'cannotDeleteHasMutation' => 'Ye nay delete dis currency, because a transaction exists using dis currency.',
+        'cannotDeleteHasPayment' => 'Ye nay delete dis currency, because a payment exists using dis currency.',
+        'cannotDeleteHasService' => 'Ye nay delete dis currency, because a payment service exists using dis currency.',
+        'cannotDeleteHasChange' => 'Ye nay delete dis currency, because a booty import change exists using dis currency.',
     ],
 
     /**
