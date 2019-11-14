@@ -170,6 +170,7 @@ if(!function_exists('balance')) {
      *
      * @return string Formatted balance.
      */
+    // TODO: fully move all usages into `Currency->format`, then remove this
     function balance($balance, $currency, $format = BALANCE_FORMAT_PLAIN, $options = []) {
         // Take parameters out of options, use defaults
         $prefix = $options['prefix'] ?? null;

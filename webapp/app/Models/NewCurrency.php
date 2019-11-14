@@ -93,12 +93,73 @@ class NewCurrency extends Model {
     }
 
     /**
+     * Format the given balance.
+     *
+     * @param decimal $value The value.
+     * @param int [$format=BALANCE_FORMAT_PLAIN] The balance formatting rules.
+     * @param array [$options=null] An array of options.
+     *
+     * @return string Formatted balance.
+     */
+    function format($value, $format = BALANCE_FORMAT_PLAIN, $options = []) {
+        // Take parameters out of options, use defaults
+        $prefix = $options['prefix'] ?? null;
+        $neutral = $options['neutral'] ?? false;
+        $color = $options['color'] ?? true;
+
+        // If neutrally formatting, always show positive number
+        if($neutral)
+            $balance = abs($balance);
+
+        // Format the balance
+        $out = $this->formatBasic($value);
+
+        // Prefix
+        if(!empty($prefix))
+            $out = $prefix . $out;
+
+        // Add color for negative values
+        switch($format) {
+            case null:
+            case BALANCE_FORMAT_PLAIN:
+                break;
+            case BALANCE_FORMAT_COLOR:
+                if(!$color) {}
+                else if($neutral)
+                    // TODO: style instead of giving an explicit neutral color
+                    $out = '<span style="color: #2185d0;">' . $out . '</span>';
+                else if($balance < 0)
+                    $out = '<span style="color: red;">' . $out . '</span>';
+                else if($balance > 0)
+                    $out = '<span style="color: green;">' . $out . '</span>';
+                break;
+            case BALANCE_FORMAT_LABEL:
+                // TODO: may want to add horizontal class to labels
+                if(!$color)
+                    $out = '<div class="ui label">' . $out . '</div>';
+                else if($neutral)
+                    $out = '<div class="ui blue label">' . $out . '</div>';
+                else if($balance < 0)
+                    $out = '<div class="ui red label">' . $out . '</div>';
+                else if($balance > 0)
+                    $out = '<div class="ui green label">' . $out . '</div>';
+                else
+                    $out = '<div class="ui label">' . $out . '</div>';
+                break;
+            default:
+                throw new \Exception("Invalid balance format type given");
+        }
+
+        return $out;
+    }
+
+    /**
      * Format the given value as this currency.
      *
-     * @param float $value The value to format.
+     * @param decimal $value The value to format.
      * @return string The formatted value.
      */
-    public function format($value) {
+    public function formatBasic($value) {
         // Get the measurement format
         $format = $this->format;
 
