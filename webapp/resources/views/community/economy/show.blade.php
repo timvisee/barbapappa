@@ -4,7 +4,7 @@
 
 @php
     use \App\Http\Controllers\EconomyController;
-    use \App\Http\Controllers\NewCurrencyController;
+    use \App\Http\Controllers\CurrencyController;
 
     // Define menulinks
     $menulinks[] = [
@@ -123,7 +123,7 @@
         </a>
     </p>
 
-    @if(perms(NewCurrencyController::permsView()))
+    @if(perms(CurrencyController::permsView()))
         <div class="ui divider hidden"></div>
 
         @include('community.economy.include.currencyList', [

@@ -996,7 +996,7 @@ class BarController extends Controller {
      * @param Economy|Bar $economy The economy the user is in.
      * @param EconomyMemberUser $user|null The user or null for the current user.
      *
-     * @return [NewCurrency] A list of preferred currencies.
+     * @return [Currency] A list of preferred currencies.
      */
     // TODO: economy (or bar) param is obsolete because of member
     // TODO: only support economy member here, not user

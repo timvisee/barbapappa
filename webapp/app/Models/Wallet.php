@@ -24,7 +24,7 @@ use App\Utils\EmailRecipient;
  * @property string name
  * @property decimal balance
  * @property int currency_id
- * @property-read NewCurrency currency
+ * @property-read Currency currency
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -54,7 +54,7 @@ class Wallet extends Model {
      * @return Relation to currency.
      */
     public function currency() {
-        return $this->belongsTo(NewCurrency::class);
+        return $this->belongsTo(Currency::class);
     }
 
     /**

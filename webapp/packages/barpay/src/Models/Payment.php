@@ -8,7 +8,7 @@ use App\Http\Controllers\CommunityController;
 use App\Mail\Email\Payment\Completed;
 use App\Mail\Email\Payment\Failed;
 use App\Models\Community;
-use App\Models\NewCurrency;
+use App\Models\Currency;
 use App\Models\Economy;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
@@ -38,7 +38,7 @@ use Illuminate\Support\Facades\Mail;
  * @property string|null reference
  * @property decimal amount
  * @property int currency_id
- * @property-read NewCurrency currency
+ * @property-read Currency currency
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -271,7 +271,7 @@ class Payment extends Model {
      * @return Relation to the currency.
      */
     public function currency() {
-        return $this->belongsTo(NewCurrency::class);
+        return $this->belongsTo(Currency::class);
     }
 
     /**
@@ -471,13 +471,13 @@ class Payment extends Model {
      * Start a new payment with the given service, currency and amount.
      *
      * @param Service $service The payment service to use.
-     * @param NewCurrency $currency The currency to use.
+     * @param Currency $currency The currency to use.
      * @param float $amount The payment amount.
      * @param User $user User the payment is for.
      *
      * @return Payment The created payment.
      */
-    public static function startNew(Service $service, NewCurrency $currency, float $amount, User $user) {
+    public static function startNew(Service $service, Currency $currency, float $amount, User $user) {
         // We must be in a database transaction
         assert_transaction();
 

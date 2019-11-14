@@ -29,7 +29,7 @@ class CreateServiceTable extends Migration {
                 ->onDelete('set null');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('new_currency')
+                ->on('currency')
                 ->onDelete('restrict');
 
             $table->index(['serviceable_id', 'serviceable_type']);

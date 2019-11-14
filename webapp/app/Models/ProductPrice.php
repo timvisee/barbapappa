@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int product_id
  * @property-read Product product
  * @property int currency_id
- * @property-read NewCurrency currency
+ * @property-read Currency currency
  * @property decimal price
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -44,7 +44,7 @@ class ProductPrice extends Model {
      * @return Relation to the currency.
      */
     public function currency() {
-        return $this->belongsTo(NewCurrency::class);
+        return $this->belongsTo(Currency::class);
     }
 
     /**

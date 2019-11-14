@@ -3,7 +3,7 @@
 namespace BarPay\Models;
 
 use App\Models\BunqAccount;
-use App\Models\NewCurrency;
+use App\Models\Currency;
 use BarPay\Controllers\ServiceBunqMeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -68,11 +68,11 @@ class ServiceBunqMeTab extends Model {
     /**
      * Check whether the given currency is supported.
      *
-     * @param NewCurrency $currency The currenty to check.
+     * @param Currency $currency The currenty to check.
      *
      * @return bool True if supported, false if not.
      */
-    public static function isSupportedCurrency(NewCurrency $currency) {
+    public static function isSupportedCurrency(Currency $currency) {
         return $currency->code == 'EUR';
     }
 }

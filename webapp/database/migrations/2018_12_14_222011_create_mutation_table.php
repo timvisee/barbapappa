@@ -34,7 +34,7 @@ class CreateMutationTable extends Migration {
                 ->onDelete('set null');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('new_currency')
+                ->on('currency')
                 ->onDelete('restrict');
             $table->foreign('depend_on')
                 ->references('id')

@@ -3,7 +3,7 @@
 @section('title', __('pages.currencies.title'))
 
 @php
-    use \App\Http\Controllers\NewCurrencyController;
+    use \App\Http\Controllers\CurrencyController;
 
     // Define menulinks
     $menulinks[] = [
@@ -54,7 +54,7 @@
         </div>
     @endif
 
-    @if(perms(NewCurrencyController::permsManage()))
+    @if(perms(CurrencyController::permsManage()))
         <a href="{{ route('community.economy.currency.create', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                 class="ui button basic positive">
             @lang('misc.add')

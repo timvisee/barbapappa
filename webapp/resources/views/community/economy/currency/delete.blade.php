@@ -26,7 +26,7 @@
     <br />
 
     {!! Form::open(['action' => [
-        'NewCurrencyController@doDelete',
+        'CurrencyController@doDelete',
         'communityId' => $community->human_id,
         'economyId' => $economy->id,
         'currencyId' => $currency->id

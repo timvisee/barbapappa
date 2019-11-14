@@ -5,7 +5,7 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    {!! Form::open(['action' => ['NewCurrencyController@doEdit', $community->human_id, $economy->id, $currency->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['CurrencyController@doEdit', $community->human_id, $economy->id, $currency->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
         <p>@lang('pages.currencies.enabledDescription')</p>
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">

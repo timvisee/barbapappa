@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Validation\Rule;
 
-use \App\Models\NewCurrency;
+use \App\Models\Currency;
 use \App\Models\Community;
 use \App\Models\Economy;
 use \App\Perms\AppRoles;
@@ -189,7 +189,7 @@ class ValidationDefaults {
     // TODO: do not return array here
     public static function currency(Economy $economy) {
         return [
-            Rule::exists('new_currency', 'id')->where('economy_id', $economy->id),
+            Rule::exists('currency', 'id')->where('economy_id', $economy->id),
         ];
     }
 
@@ -207,14 +207,14 @@ class ValidationDefaults {
      */
     public static function currencyCode(Economy $economy, $new = true) {
         $rules = [
-            Rule::in(NewCurrency::currencyCodeList()),
+            Rule::in(Currency::currencyCodeList()),
         ];
 
         // Test against database
         if($new)
-            $rules[] = Rule::unique('new_currency', 'code')->where('economy_id', $economy->id);
+            $rules[] = Rule::unique('currency', 'code')->where('economy_id', $economy->id);
         else
-            $rules[] = Rule::exists('new_currency', 'code')->where('economy_id', $economy->id);
+            $rules[] = Rule::exists('currency', 'code')->where('economy_id', $economy->id);
 
         return $rules;
     }
@@ -231,7 +231,7 @@ class ValidationDefaults {
     // TODO: do not return array here
     public static function walletCurrency(Economy $economy) {
         return [
-            Rule::exists('new_currency', 'id')
+            Rule::exists('currency', 'id')
                 ->where('economy_id', $economy->id)
                 ->where('allow_wallet', true),
         ];

@@ -27,7 +27,7 @@ use App\Utils\EmailRecipient;
  * @property decimal balance
  * @property decimal cost
  * @property int currency_id
- * @property-read NewCurrency currency
+ * @property-read Currency currency
  * @property int|null submitter_id
  * @property-read User|null submitter
  * @property int|null approver_id
@@ -98,10 +98,10 @@ class BalanceImportChange extends Model {
     /**
      * Get a relation to the used currency.
      *
-     * @return NewCurrency The currency.
+     * @return Currency The currency.
      */
     public function currency() {
-        return $this->belongsTo(NewCurrency::class);
+        return $this->belongsTo(Currency::class);
     }
 
     /**

@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Mail;
  * @property-read mixed mutationable
  * @property decimal amount
  * @property int currency_id
- * @property-read NewCurrency currency
+ * @property-read Currency currency
  * @property int state
  * @property int|null depend_on
  * @property Mutation|null depend
@@ -140,7 +140,7 @@ class Mutation extends Model {
      * @return Relation to the used currency.
      */
     public function currency() {
-        return $this->belongsTo(NewCurrency::class);
+        return $this->belongsTo(Currency::class);
     }
 
     /**

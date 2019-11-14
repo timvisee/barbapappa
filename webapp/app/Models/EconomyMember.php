@@ -215,7 +215,7 @@ class EconomyMember extends Pivot {
      * currency that allows this.
      * Null is only returned if no wallet could be created.
      *
-     * @param [NewCurrency] $currencies A list of NewCurrency IDs.
+     * @param [Currency] $currencies A list of Currency IDs.
      * @param bool [$error=true] True to throw an error if no wallet was found
      *      or created. False to return null instead.
      * @param bool [$force=false] True to force wallet creation even if wallet

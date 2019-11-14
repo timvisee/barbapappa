@@ -69,7 +69,7 @@ class Economy extends Model {
      * @return List of economies.
      */
     public function currencies() {
-        return $this->hasMany(NewCurrency::class);
+        return $this->hasMany(Currency::class);
     }
 
     /**
@@ -363,7 +363,7 @@ class Economy extends Model {
             })
             ->sum();
 
-        // TODO: use NewCurrency in MoneyAmount
+        // TODO: use Currency in MoneyAmount
         return new MoneyAmount($code, $balance, $approximate);
     }
 
@@ -437,7 +437,7 @@ class Economy extends Model {
      * @param array|null [$exclude_product_ids=null] A list of product IDs to
      *      exclude from the search.
      * @param int $limit The maximum number of products to return.
-     * @param [int]|null [$currency_ids=null] A list of NewCurrency IDs
+     * @param [int]|null [$currency_ids=null] A list of Currency IDs
      *      returned products must have a price configured in in at least one of
      *      them.
      *
@@ -497,7 +497,7 @@ class Economy extends Model {
      * @param array $exclude_product_ids A list of product IDs to exclude from
      *      the search.
      * @param int $limit The maximum number of products to return.
-     * @param [int]|null $currency_ids A list of NewCurrency IDs returned
+     * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
      *
      * @return array An array of product models that were found.
@@ -544,7 +544,7 @@ class Economy extends Model {
      *
      * TODO: define in detail what steps are taken to generate this list
      *
-     * @param [int]|null $currency_ids A list of NewCurrency IDs returned
+     * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
      *
      * @return array A list of products.
@@ -623,7 +623,7 @@ class Economy extends Model {
      * If the given query is empty or null, all products are returned.
      *
      * @param string|null [$search=null] The query string.
-     * @param [int]|null $currency_ids A list of NewCurrency IDs returned
+     * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
      *
      * @return array A list of products matching the query.

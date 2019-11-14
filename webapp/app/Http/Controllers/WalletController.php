@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
-use App\Models\NewCurrency;
+use App\Models\Currency;
 use App\Models\EconomyMember;
 use App\Models\Mutation;
 use App\Models\MutationPayment;

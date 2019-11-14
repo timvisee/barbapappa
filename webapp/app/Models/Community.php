@@ -88,7 +88,7 @@ class Community extends Model {
      */
     public function currencies() {
         return $this->hasManyThrough(
-            NewCurrency::class,
+            Currency::class,
             Economy::class
         );
     }
