@@ -411,7 +411,7 @@ class BalanceImportChange extends Model {
     public function formatCost($format = BALANCE_FORMAT_PLAIN) {
         if($this->cost == null)
             return null;
-        return $this->currency->formatAmount($this->cost, $format);
+        return $this->currency->format($this->cost, $format);
     }
 
     /**
@@ -422,7 +422,7 @@ class BalanceImportChange extends Model {
      * @return string Formatted amount
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
-        return $this->currency->formatAmount($this->balance ?? -$this->cost ?? 0, $format, [
+        return $this->currency->format($this->balance ?? -$this->cost ?? 0, $format, [
             'color' => $this->approved_at != null,
         ]);
     }
