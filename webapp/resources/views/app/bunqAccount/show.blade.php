@@ -39,13 +39,13 @@
             </tr>
             <tr>
                 <td>@lang('barpay::misc.iban')</td>
-                <td>{{ $account->iban }}</td>
+                <td>{{ format_iban($account->iban) }}</td>
             </tr>
             <tr>
                 <td>@lang('barpay::misc.bic')</td>
                 <td>
                     @if(!empty($account->bic))
-                        {{ $account->bic }}
+                        {{ format_bic($account->bic) }}
                     @else
                         <i>@lang('misc.unspecified')</i>
                     @endif
