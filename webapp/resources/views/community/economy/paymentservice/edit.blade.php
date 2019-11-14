@@ -38,7 +38,7 @@
             {{ Form::label('currency', __('misc.currency')) }}
 
             <div class="ui fluid selection dropdown">
-                {{ Form::hidden('currency', $currencies->firstWhere('currency_id', $service->currency_id)->id) }}
+                {{ Form::hidden('currency', $currencies->firstWhere('id', $service->currency_id)->id) }}
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.pleaseSpecify')</div>

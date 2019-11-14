@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -32,6 +34,8 @@ use App\Utils\EmailRecipient;
  * @property Carbon updated_at
  */
 class NewCurrency extends Model {
+
+    use SoftDeletes;
 
     protected $table = 'new_currency';
 
@@ -109,7 +113,7 @@ class NewCurrency extends Model {
 
         // If neutrally formatting, always show positive number
         if($neutral)
-            $balance = abs($balance);
+            $value = abs($value);
 
         // Format the balance
         $out = $this->formatBasic($value);
@@ -128,9 +132,9 @@ class NewCurrency extends Model {
                 else if($neutral)
                     // TODO: style instead of giving an explicit neutral color
                     $out = '<span style="color: #2185d0;">' . $out . '</span>';
-                else if($balance < 0)
+                else if($value < 0)
                     $out = '<span style="color: red;">' . $out . '</span>';
-                else if($balance > 0)
+                else if($value > 0)
                     $out = '<span style="color: green;">' . $out . '</span>';
                 break;
             case BALANCE_FORMAT_LABEL:
@@ -139,9 +143,9 @@ class NewCurrency extends Model {
                     $out = '<div class="ui label">' . $out . '</div>';
                 else if($neutral)
                     $out = '<div class="ui blue label">' . $out . '</div>';
-                else if($balance < 0)
+                else if($value < 0)
                     $out = '<div class="ui red label">' . $out . '</div>';
-                else if($balance > 0)
+                else if($value > 0)
                     $out = '<div class="ui green label">' . $out . '</div>';
                 else
                     $out = '<div class="ui label">' . $out . '</div>';
@@ -188,7 +192,8 @@ class NewCurrency extends Model {
         $value = number_format($value, $decimals, $decimal, $thousand);
 
         // Apply the formatted measurement
-        if($include_symbol)
+        // TODO: get this from somewhere
+        if($include_symbol ?? true)
             $value = preg_replace($valRegex, $value, $format);
 
         // Return value

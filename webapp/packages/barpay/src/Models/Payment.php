@@ -8,7 +8,7 @@ use App\Http\Controllers\CommunityController;
 use App\Mail\Email\Payment\Completed;
 use App\Mail\Email\Payment\Failed;
 use App\Models\Community;
-use App\Models\Currency;
+use App\Models\NewCurrency;
 use App\Models\Economy;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
@@ -16,8 +16,8 @@ use App\Models\Notifications\PaymentRequiresCommunityAction;
 use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Perms\CommunityRoles;
 use App\Perms\AppRoles;
+use App\Perms\CommunityRoles;
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Mail;
  * @property string|null reference
  * @property decimal amount
  * @property int currency_id
+ * @property-read NewCurrency currency
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -265,12 +266,12 @@ class Payment extends Model {
     }
 
     /**
-     * Get the used currency.
+     * Get a relation to the currency.
      *
-     * @return The currency.
+     * @return Relation to the currency.
      */
     public function currency() {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(NewCurrency::class);
     }
 
     /**
@@ -301,7 +302,7 @@ class Payment extends Model {
             $options['color'] = false;
         else if(!$this->isInProgress())
             $options['neutral'] = false;
-        return $this->currency->formatAmount($this->money, $format, $options);
+        return $this->currency->format($this->money, $format, $options);
     }
 
     /**
@@ -470,13 +471,13 @@ class Payment extends Model {
      * Start a new payment with the given service, currency and amount.
      *
      * @param Service $service The payment service to use.
-     * @param Currency $currency The currency to use.
+     * @param NewCurrency $currency The currency to use.
      * @param float $amount The payment amount.
      * @param User $user User the payment is for.
      *
      * @return Payment The created payment.
      */
-    public static function startNew(Service $service, Currency $currency, float $amount, User $user) {
+    public static function startNew(Service $service, NewCurrency $currency, float $amount, User $user) {
         // We must be in a database transaction
         assert_transaction();
 

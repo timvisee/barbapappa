@@ -27,7 +27,7 @@ use App\Utils\EmailRecipient;
  * @property decimal balance
  * @property decimal cost
  * @property int currency_id
- * @property-read EconomyCurrency currency
+ * @property-read NewCurrency currency
  * @property int|null submitter_id
  * @property-read User|null submitter
  * @property int|null approver_id
@@ -96,12 +96,12 @@ class BalanceImportChange extends Model {
     }
 
     /**
-     * Get the used currency.
+     * Get a relation to the used currency.
      *
-     * @return Currency The currency.
+     * @return NewCurrency The currency.
      */
     public function currency() {
-        return $this->belongsTo(EconomyCurrency::class);
+        return $this->belongsTo(NewCurrency::class);
     }
 
     /**
@@ -307,7 +307,7 @@ class BalanceImportChange extends Model {
                     'mutationable_id' => 0,
                     'mutationable_type' => '',
                     'amount' => -$amount,
-                    'currency_id' => $currency->currency_id,
+                    'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
                 ]);
@@ -325,7 +325,7 @@ class BalanceImportChange extends Model {
                     'mutationable_id' => 0,
                     'mutationable_type' => '',
                     'amount' => $amount,
-                    'currency_id' => $currency->currency_id,
+                    'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
                     'owner_id' => $user->id,
                     'depend_on' => $mut_wallet->id,
@@ -398,7 +398,7 @@ class BalanceImportChange extends Model {
     public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
         if($this->balance == null)
             return null;
-        return $this->currency->currency->formatAmount($this->balance, $format);
+        return $this->currency->format($this->balance, $format);
     }
 
     /**
@@ -411,7 +411,7 @@ class BalanceImportChange extends Model {
     public function formatCost($format = BALANCE_FORMAT_PLAIN) {
         if($this->cost == null)
             return null;
-        return $this->currency->currency->formatAmount($this->cost, $format);
+        return $this->currency->formatAmount($this->cost, $format);
     }
 
     /**
@@ -422,7 +422,7 @@ class BalanceImportChange extends Model {
      * @return string Formatted amount
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
-        return $this->currency->currency->formatAmount($this->balance ?? -$this->cost ?? 0, $format, [
+        return $this->currency->formatAmount($this->balance ?? -$this->cost ?? 0, $format, [
             'color' => $this->approved_at != null,
         ]);
     }

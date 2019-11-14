@@ -2,7 +2,7 @@
 
 namespace BarPay\Models;
 
-use App\Models\Currency;
+use App\Models\NewCurrency;
 use App\Models\Economy;
 use App\Models\User;
 use App\Scopes\EnabledScope;
@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property-read mixed serviceable
  * @property boolean enabled
  * @property int currency_id
- * @property-read Currency currency
+ * @property-read NewCurrency currency
  * @property boolean deposit
  * @property boolean withdraw
  * @property Carbon|null deleted_at
@@ -179,13 +179,13 @@ class Service extends Model {
     /**
      * Start a new payment with this service.
      *
-     * @param Currency $currency The currency to use.
+     * @param NewCurrency $currency The currency to use.
      * @param float $amount The payment amount.
      * @param User $user User the payment is for.
      *
      * @return Payment The created payment.
      */
-    public function startPayment(Currency $currency, float $amount, User $user) {
+    public function startPayment(NewCurrency $currency, float $amount, User $user) {
         return Payment::startNew($this, $currency, $amount, $user);
     }
 }

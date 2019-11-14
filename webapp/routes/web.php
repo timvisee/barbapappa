@@ -215,7 +215,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::delete('/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
                 });
 
-                // Supported economy currencies
+                // Supported currencies
                 Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
                     // Index
                     Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');

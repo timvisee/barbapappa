@@ -33,7 +33,7 @@ class CreatePaymentTable extends Migration {
                 ->onDelete('set null');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('currency')
+                ->on('new_currency')
                 ->onDelete('restrict');
 
             $table->index(['paymentable_id', 'paymentable_type']);

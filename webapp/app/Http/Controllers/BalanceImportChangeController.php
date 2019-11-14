@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CommitBalanceUpdatesForAliases;
 use App\Models\BalanceImportAlias;
-use App\Models\EconomyCurrency;
+use App\Models\NewCurrency;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -72,11 +72,10 @@ class BalanceImportChangeController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
         $event = $system->events()->findOrFail($eventId);
-        $currencies = $economy->currencies;
 
         // Validate
         $this->validate($request, [
-            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
+            'currency' => array_merge(['required'], ValidationDefaults::currency($economy)),
             'name' => 'nullable|' . ValidationDefaults::NAME,
             'email' => 'required|' . ValidationDefaults::EMAIL,
             'balance' => ['nullable', 'required_without:cost', ValidationDefaults::PRICE_SIGNED],
@@ -166,7 +165,7 @@ class BalanceImportChangeController extends Controller {
 
         // Validate root fields, parse the JSON data
         $this->validate($request, [
-            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
+            'currency' => array_merge(['required'], ValidationDefaults::currency($economy)),
             'data' => 'required|json',
         ]);
         $currency_id = (int) $request->input('currency');
@@ -174,7 +173,7 @@ class BalanceImportChangeController extends Controller {
         $data = json_decode($request->input('data'), true);
 
         // Parse, validate and normalize each data object
-        $economy_symbol = EconomyCurrency::findOrFail($currency_id)->currency->symbol;
+        $economy_symbol = $economy->currencies()->findOrFail($currency_id)->symbol;
         foreach($data as &$item) {
             // Obtain the fields, normalize data
             if($item['name'] != null)

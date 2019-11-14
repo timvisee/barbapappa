@@ -21,13 +21,17 @@ use Illuminate\Support\Facades\Mail;
  *
  * @property int id
  * @property int transaction_id
+ * @property-read Transaction transaction
  * @property int mutationable_id
  * @property string mutationable_type
+ * @property-read Mutationable mutationable
  * @property-read mixed mutationable
  * @property decimal amount
  * @property int currency_id
+ * @property-read NewCurrency currency
  * @property int state
  * @property int|null depend_on
+ * @property Mutation|null depend
  * @property int|null owner_id
  * @property-read User|null owner
  * @property Carbon created_at
@@ -131,15 +135,12 @@ class Mutation extends Model {
     }
 
     /**
-     * Get the used currency.
+     * Get a relation to the used currency.
      *
-     * This is not the economy currency as specified in the current economy.
-     * Rather it's a direct link to the currency used for this mutation.
-     *
-     * @return The currency.
+     * @return Relation to the used currency.
      */
     public function currency() {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(NewCurrency::class);
     }
 
     /**
@@ -253,7 +254,7 @@ class Mutation extends Model {
         // Gray if failed
         if($this->state == Self::STATE_FAILED)
             $options['color'] = false;
-        return balance($this->amount, $this->currency->code, $format, $options);
+        return $this->currency->format($this->amount, $format, $options);
     }
 
     /**

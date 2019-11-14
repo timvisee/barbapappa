@@ -26,7 +26,7 @@ class CreateWalletTable extends Migration {
                 ->onDelete('restrict');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('currency')
+                ->on('new_currency')
                 ->onDelete('restrict');
         });
     }

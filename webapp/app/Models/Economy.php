@@ -64,12 +64,12 @@ class Economy extends Model {
     }
 
     /**
-     * Get a list of economy currencies.
+     * Get a list of economies.
      *
-     * @return List of supported currencies.
+     * @return List of economies.
      */
     public function currencies() {
-        return $this->hasMany(EconomyCurrency::class);
+        return $this->hasMany(NewCurrency::class);
     }
 
     /**
@@ -336,28 +336,35 @@ class Economy extends Model {
         // Build a map with per currency sums
         $sums = [];
         foreach($models as $model) {
-            $currency = $model->currency->code;
-            $sums[$currency] = ($sums[$currency] ?? 0) + $model->$amountKey;
+            $code = $model->currency->code;
+            $sums[$code] = ($sums[$code] ?? 0) + $model->$amountKey;
         }
 
         // Find the currency with the biggest difference from zero, is it approx
-        $currency = key($sums);
+        $code = key($sums);
         $diff = 0;
         foreach($sums as $c => $b)
             if(abs($b) > $diff) {
-                $currency = $c;
+                $code = $c;
                 $diff = abs($b);
             }
         $approximate = count($sums) > 1;
 
         // Sum the balance, convert other currencies
         $balance = collect($sums)
-            ->map(function($b, $c) use($currency) {
-                return $currency == $c ? $b : currency($b, $c, $currency, false);
+            ->map(function($b, $c) use($code) {
+                if($code == $c)
+                    return $b;
+
+                // Convert currencies in a different balance
+                // TODO: convert currencies
+                throw new Exception('Unable to convert currency here, not yet implemented');
+                return currency($b, $c, $code, false);
             })
             ->sum();
 
-        return new MoneyAmount($currency, $balance, $approximate);
+        // TODO: use NewCurrency in MoneyAmount
+        return new MoneyAmount($code, $balance, $approximate);
     }
 
     /**
@@ -430,7 +437,7 @@ class Economy extends Model {
      * @param array|null [$exclude_product_ids=null] A list of product IDs to
      *      exclude from the search.
      * @param int $limit The maximum number of products to return.
-     * @param [int]|null [$currency_ids=null] A list of EconomyCurrency IDs
+     * @param [int]|null [$currency_ids=null] A list of NewCurrency IDs
      *      returned products must have a price configured in in at least one of
      *      them.
      *
@@ -490,7 +497,7 @@ class Economy extends Model {
      * @param array $exclude_product_ids A list of product IDs to exclude from
      *      the search.
      * @param int $limit The maximum number of products to return.
-     * @param [int]|null $currency_ids A list of EconomyCurrency IDs returned
+     * @param [int]|null $currency_ids A list of NewCurrency IDs returned
      *      products must have a price configured in in at least one of them.
      *
      * @return array An array of product models that were found.
@@ -537,7 +544,7 @@ class Economy extends Model {
      *
      * TODO: define in detail what steps are taken to generate this list
      *
-     * @param [int]|null $currency_ids A list of EconomyCurrency IDs returned
+     * @param [int]|null $currency_ids A list of NewCurrency IDs returned
      *      products must have a price configured in in at least one of them.
      *
      * @return array A list of products.
@@ -616,7 +623,7 @@ class Economy extends Model {
      * If the given query is empty or null, all products are returned.
      *
      * @param string|null [$search=null] The query string.
-     * @param [int]|null $currency_ids A list of EconomyCurrency IDs returned
+     * @param [int]|null $currency_ids A list of NewCurrency IDs returned
      *      products must have a price configured in in at least one of them.
      *
      * @return array A list of products matching the query.
