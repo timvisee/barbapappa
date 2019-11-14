@@ -45,7 +45,7 @@ class FinanceController extends Controller {
                 ];
             })
             ->filter(function($data) {
-                return $data['balance']->amount != 0;
+                return $data['balance'] != null && $data['balance']->amount != 0;
             })
             ->sortByDesc(function($data) {
                 return $data['balance']->amount;

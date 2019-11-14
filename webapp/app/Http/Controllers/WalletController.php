@@ -423,7 +423,12 @@ class WalletController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
-        $services = $economy->paymentServices()->supportsDeposit()->get();
+        $currency = $wallet->currency;
+        $services = $economy
+            ->paymentServices()
+            ->supportsCurrency($currency)
+            ->supportsDeposit()
+            ->get();
 
         // TODO: return error if there are no usable services, user can't top-up
 
@@ -448,8 +453,12 @@ class WalletController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
-        $services = $economy->paymentServices()->supportsDeposit()->get();
         $currency = $wallet->currency;
+        $services = $economy
+            ->paymentServices()
+            ->supportsCurrency($currency)
+            ->supportsDeposit()
+            ->get();
 
         // Validate
         $this->validate($request, [
