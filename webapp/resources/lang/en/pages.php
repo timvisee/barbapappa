@@ -240,6 +240,11 @@ return [
         'format' => 'Currency format',
         'formatPlaceholder' => '€1.0,00',
         'exampleNotation' => 'Example notation',
+        'cannotDeleteHasWallet' => 'You cannot delete this currency, because a wallet exists using this currency.',
+        'cannotDeleteHasMutation' => 'You cannot delete this currency, because a transaction exists using this currency.',
+        'cannotDeleteHasPayment' => 'You cannot delete this currency, because a payment exists using this currency.',
+        'cannotDeleteHasService' => 'You cannot delete this currency, because a payment service exists using this currency.',
+        'cannotDeleteHasChange' => 'You cannot delete this currency, because a balance import change exists using this currency.',
     ],
 
     /**
