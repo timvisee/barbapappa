@@ -3,7 +3,7 @@
 @section('title', $economy->name)
 
 @php
-    use \App\Http\Controllers\EconomyCurrencyController;
+    use \App\Http\Controllers\NewCurrencyController;
 @endphp
 
 @section('content')
@@ -16,7 +16,7 @@
             {{ ErrorRenderer::inline('name') }}
         </div>
 
-        @if(perms(EconomyCurrencyController::permsView()))
+        @if(perms(NewCurrencyController::permsView()))
             <div class="ui divider hidden"></div>
 
             @include('community.economy.include.currencyList', [

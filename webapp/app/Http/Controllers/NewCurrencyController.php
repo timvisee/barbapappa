@@ -8,14 +8,14 @@ use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
-use App\Models\EconomyCurrency;
+use App\Models\NewCurrency;
 use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\CommunityRoles;
 
-class EconomyCurrencyController extends Controller {
+class NewCurrencyController extends Controller {
 
     /**
-     * Economy currency for community economy index.
+     * Currency for community economy index.
      *
      * @return Response
      */
@@ -36,11 +36,11 @@ class EconomyCurrencyController extends Controller {
      *
      * @return Response
      */
-    public function show($communityId, $economyId, $economyCurrencyId) {
+    public function show($communityId, $economyId, $currencyId) {
         // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
 
         return view('community.economy.currency.show')
             ->with('economy', $economy)
@@ -48,27 +48,17 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * Add a new economy currency for a community economy.
+     * Add a new currency for a community economy.
      *
      * @return Response
      */
     public function create($communityId, $economyId) {
-        // Get the community, find economy, query currencies
+        // Get the community, find economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $usedCurrencies = $economy->currencies()->withDisabled()->pluck('currency_id');
-        $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
-
-        // Make sure there's a currency that can be added
-        if($currencies->isEmpty()) {
-            return redirect()
-                ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economyId])
-                ->with('error', __('pages.currencies.' . ($usedCurrencies->isNotEmpty() ? 'noMoreCurrenciesToAdd' : 'noCurrenciesToAdd')));
-        }
 
         return view('community.economy.currency.create')
-            ->with('economy', $economy)
-            ->with('currencies', $currencies);
+            ->with('economy', $economy);
     }
 
     /**
@@ -77,24 +67,26 @@ class EconomyCurrencyController extends Controller {
      * @return Response
      */
     public function doCreate(Request $request, $communityId, $economyId) {
-        // Get the community, find economy, query currencies
+        // Get the community, find economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $usedCurrencies = $economy->currencies()->withDisabled()->pluck('currency_id');
-        $currencies = Currency::whereNotIn('id', $usedCurrencies)->get();
 
         // Validate
         $this->validate($request, [
-            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy)),
+            'name' => ValidationDefaults::NAME,
+            'code' => array_merge(['nullable'], ValidationDefaults::currencyCode($economy, true)),
+            'symbol' => ValidationDefaults::CURRENCY_SYMBOL,
+            'format' => ValidationDefaults::CURRENCY_FORMAT,
         ]);
 
         // Create the economy currency configuration and save
         $currency = $economy->currencies()->create([
+            'name' => $request->input('name'),
+            'code' => $request->input('code'),
+            'symbol' => $request->input('symbol'),
+            'format' => $request->input('format'),
             'enabled' => is_checked($request->input('enabled')),
-            'currency_id' => $request->input('currency'),
             'allow_wallet' => is_checked($request->input('allow_wallet')),
-            // TODO: define the proper value here
-            'product_price_default' => 1,
         ]);
 
         // Redirect to the show view after creation
@@ -104,15 +96,15 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * The edit page for a economy currency of an economy.
+     * The edit page for a currency of an economy.
      *
      * @return Response
      */
-    public function edit($communityId, $economyId, $economyCurrencyId) {
+    public function edit($communityId, $economyId, $currencyId) {
         // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
 
         // Show the edit view
         return view('community.economy.currency.edit')
@@ -121,23 +113,27 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * Edit a economy currency of an economy.
+     * Edit a currency of an economy.
      *
      * @return Response
      */
-    public function doEdit(Request $request, $communityId, $economyId, $economyCurrencyId) {
-        // TODO: validate future price default property
-        // // Validate
-        // $this->validate($request, [
-        //     'name' => 'required|' . ValidationDefaults::NAME,
-        // ]);
-
+    public function doEdit(Request $request, $communityId, $economyId, $currencyId) {
         // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
+
+        // Validate
+        $this->validate($request, [
+            'name' => ValidationDefaults::NAME,
+            'symbol' => ValidationDefaults::CURRENCY_SYMBOL,
+            'format' => ValidationDefaults::CURRENCY_FORMAT,
+        ]);
 
         // Update the properties
+        $currency->name = $request->input('name');
+        $currency->symbol = $request->input('symbol');
+        $currency->format = $request->input('format');
         $currency->enabled = is_checked($request->input('enabled'));
         $currency->allow_wallet = is_checked($request->input('allow_wallet'));
         $currency->save();
@@ -149,15 +145,15 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * The page to delete a economy currency of an economy.
+     * The page to delete a currency of an economy.
      *
      * @return Response
      */
-    public function delete($communityId, $economyId, $economyCurrencyId) {
+    public function delete($communityId, $economyId, $currencyId) {
         // Get the community, and the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
 
         return view('community.economy.currency.delete')
             ->with('economy', $economy)
@@ -165,15 +161,15 @@ class EconomyCurrencyController extends Controller {
     }
 
     /**
-     * Delete a economy currency of an economy.
+     * Delete a currency of an economy.
      *
      * @return Response
      */
-    public function doDelete($communityId, $economyId, $economyCurrencyId) {
+    public function doDelete($communityId, $economyId, $currencyId) {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($economyCurrencyId);
+        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
 
         // TODO: ensure deletion is allowed
 

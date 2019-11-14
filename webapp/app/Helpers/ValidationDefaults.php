@@ -88,6 +88,16 @@ class ValidationDefaults {
     const DESCRIPTION = 'string|max:2048';
 
     /**
+     * A currency symbol.
+     */
+    const CURRENCY_SYMBOL = 'string|min:1|max:25';
+
+    /**
+     * A currency format.
+     */
+    const CURRENCY_FORMAT = 'string|min:1|max:50';
+
+    /**
      * A price value, with two optional decimal digits, may be zero.
      */
     const PRICE = 'regex:/^(\d{0,8}([,.]\d{1,2})?)?$/';
@@ -195,16 +205,16 @@ class ValidationDefaults {
      *
      * @return Array An array of validation rules.
      */
-    public static function currencyCode(Economy $economy, $unique = true) {
+    public static function currencyCode(Economy $economy, $new = true) {
         $rules = [
             Rule::in(NewCurrency::currencyCodeList()),
         ];
 
         // Test against database
         if($new)
-            $rules[] = Rule::exists('new_currency', 'code')->where('economy_id', $economy->id);
-        else
             $rules[] = Rule::unique('new_currency', 'code')->where('economy_id', $economy->id);
+        else
+            $rules[] = Rule::exists('new_currency', 'code')->where('economy_id', $economy->id);
 
         return $rules;
     }

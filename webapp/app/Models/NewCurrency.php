@@ -39,6 +39,15 @@ class NewCurrency extends Model {
 
     protected $table = 'new_currency';
 
+    protected $fillable = [
+        'name',
+        'code',
+        'symbol',
+        'format',
+        'enabled',
+        'allow_wallet',
+    ];
+
     protected $casts = [
         'deleted_at' => 'datetime',
     ];

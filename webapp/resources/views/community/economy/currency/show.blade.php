@@ -3,7 +3,7 @@
 @section('title', $currency->name)
 
 @php
-    use \App\Http\Controllers\EconomyCurrencyController;
+    use \App\Http\Controllers\NewCurrencyController;
 
     // Define menulinks
     $menulinks[] = [
@@ -26,6 +26,16 @@
                 <td>@lang('misc.currency')</td>
                 <td>{{ $currency->displayName }}</td>
             </tr>
+            @if($currency->code != null)
+                <tr>
+                    <td>@lang('pages.currencies.code')</td>
+                    <td>{{ $currency->code }}</td>
+                </tr>
+            @endif
+            <tr>
+                <td>@lang('pages.currencies.exampleNotation')</td>
+                <td>{{ $currency->format(1234.56) }}</td>
+            </tr>
             <tr>
                 <td>@lang('pages.currencies.allowWallets')</td>
                 <td>{{ yesno($currency->allow_wallet) }}</td>
@@ -44,12 +54,12 @@
     </table>
 
     <p>
-        @if(perms(EconomyCurrencyController::permsManage()))
+        @if(perms(NewCurrencyController::permsManage()))
             <div class="ui buttons">
                 <a href="{{ route('community.economy.currency.edit', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id,
-                    'economyCurrencyId' => $currency->id
+                    'currencyId' => $currency->id
                 ]) }}"
                         class="ui button secondary">
                     @lang('misc.change')
@@ -57,7 +67,7 @@
                 <a href="{{ route('community.economy.currency.delete', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id,
-                    'economyCurrencyId' => $currency->id
+                    'currencyId' => $currency->id
                 ]) }}"
                         class="ui button negative">
                     @lang('misc.remove')

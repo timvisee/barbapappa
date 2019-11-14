@@ -10,7 +10,7 @@ use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
-use App\Http\Controllers\EconomyCurrencyController;
+use App\Http\Controllers\NewCurrencyController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\MagicController;
 use App\Http\Controllers\PaymentServiceController;
@@ -216,27 +216,27 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 });
 
                 // Supported currencies
-                Route::prefix('/currencies')->middleware(EconomyCurrencyController::permsView()->middleware())->group(function() {
+                Route::prefix('/currencies')->middleware(NewCurrencyController::permsView()->middleware())->group(function() {
                     // Index
-                    Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
+                    Route::get('/', 'NewCurrencyController@index')->name('community.economy.currency.index');
 
                     // Create, require manage perms
-                    Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
-                        Route::get('/add', 'EconomyCurrencyController@create')->name('community.economy.currency.create');
-                        Route::post('/', 'EconomyCurrencyController@doCreate')->name('community.economy.currency.doCreate');
+                    Route::middleware(NewCurrencyController::permsManage()->middleware())->group(function() {
+                        Route::get('/add', 'NewCurrencyController@create')->name('community.economy.currency.create');
+                        Route::post('/', 'NewCurrencyController@doCreate')->name('community.economy.currency.doCreate');
                     });
 
                     // Specific
-                    Route::prefix('/{economyCurrencyId}')->group(function() {
+                    Route::prefix('/{currencyId}')->group(function() {
                         // Show
-                        Route::get('/', 'EconomyCurrencyController@show')->name('community.economy.currency.show');
+                        Route::get('/', 'NewCurrencyController@show')->name('community.economy.currency.show');
 
                         // Edit/delete, require manager perms
-                        Route::middleware(EconomyCurrencyController::permsManage()->middleware())->group(function() {
-                            Route::get('/edit', 'EconomyCurrencyController@edit')->name('community.economy.currency.edit');
-                            Route::put('/edit', 'EconomyCurrencyController@doEdit')->name('community.economy.currency.doEdit');
-                            Route::get('/remove', 'EconomyCurrencyController@delete')->name('community.economy.currency.delete');
-                            Route::delete('/remove', 'EconomyCurrencyController@doDelete')->name('community.economy.currency.doDelete');
+                        Route::middleware(NewCurrencyController::permsManage()->middleware())->group(function() {
+                            Route::get('/edit', 'NewCurrencyController@edit')->name('community.economy.currency.edit');
+                            Route::put('/edit', 'NewCurrencyController@doEdit')->name('community.economy.currency.doEdit');
+                            Route::get('/remove', 'NewCurrencyController@delete')->name('community.economy.currency.delete');
+                            Route::delete('/remove', 'NewCurrencyController@doDelete')->name('community.economy.currency.doDelete');
                         });
                     });
                 });
@@ -527,7 +527,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 // Transactions
 Route::prefix('/transactions')->middleware(['throttle:60,1', 'auth', 'selectTransaction'])->group(function() {
     // Index
-    // Route::get('/', 'EconomyCurrencyController@index')->name('community.economy.currency.index');
+    // Route::get('/', 'TransactionController@index')->name('community.economy.currency.index');
 
     // Specific
     Route::prefix('/{transactionId}')->group(function() {
