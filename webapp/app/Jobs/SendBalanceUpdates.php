@@ -80,16 +80,20 @@ class SendBalanceUpdates implements ShouldQueue {
         // Send an update to each listed user
         $users->each(function($user) {
             DB::transaction(function() use($user) {
-                // Schedule a job to send the balance update for the user
-                SendBalanceUpdate::dispatch($user->id);
-
                 // Update email history time
-                EmailHistory::updateOrCreate([
+                $history = EmailHistory::updateOrCreate([
                     'user_id' => $user->id,
                     'type' => EmailHistory::TYPE_BALANCE_UPDATE,
                 ], [
                     'last_at' => now(),
                 ]);
+
+                // Do not send the first time, if create/update time are the same
+                if($history->created_at == $history->updated_at)
+                    return;
+
+                // Schedule a job to send the balance update for the user
+                SendBalanceUpdate::dispatch($user->id);
             });
         });
     }
