@@ -91,4 +91,21 @@ class NewCurrency extends Model {
     public function economy() {
         return $this->belongsTo(Economy::class);
     }
+
+    /**
+     * Get a list of known currency codes following ISO 4217.
+     * These are stored in 'resources/data/currency-codes.txt'.
+     *
+     * @return array
+     */
+    public static function currencyCodeList() {
+        return array_filter(explode(
+                "\n",
+                file_get_contents(resource_path('data/currency-codes.txt'))
+            ),
+            function($item) {
+                return !empty(trim($item));
+            }
+        );
+    }
 }
