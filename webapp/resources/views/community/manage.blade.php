@@ -9,7 +9,7 @@
     use App\Http\Controllers\CommunityController;
     use App\Http\Controllers\CommunityMemberController;
     use App\Http\Controllers\EconomyController;
-    use App\Http\Controllers\EconomyCurrencyController;
+    use App\Http\Controllers\CurrencyController;
 
     // Define menulinks
     if(perms(CommunityController::permsAdminister())) {
@@ -116,7 +116,7 @@
                 1. @lang('pages.economies.createEconomy')
             </div>
         @endif
-        @if($hasEconomy && perms(EconomyCurrencyController::permsManage()))
+        @if($hasEconomy && perms(CurrencyController::permsManage()))
             <a href="{{ route('community.economy.currency.create', [
                         'communityId' => $community->human_id,
                         'economyId' => $firstEconomy->id,

@@ -92,6 +92,17 @@ class Service extends Model {
     public function scopeState($query, $state) {
         return $query->where('state', $state);
     }
+    /**
+     * Scope a query to filter services that support a given currency.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param Currency $currency The currency.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSupportsCurrency($query, Currency $currency) {
+        return $query->where('currency_id', $currency->id);
+    }
 
     /**
      * Scope a query to filter services that don't allow depositing money to

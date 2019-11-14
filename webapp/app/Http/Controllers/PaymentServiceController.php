@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
-use App\Models\EconomyCurrency;
 use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -53,7 +52,7 @@ class PaymentServiceController extends Controller {
             $currencies = $economy
                 ->currencies
                 ->filter(function($currency) use($serviceable_type) {
-                    return $serviceable_type::isSupportedCurrency($currency->currency);
+                    return $serviceable_type::isSupportedCurrency($currency);
                 });
         }
 
@@ -79,13 +78,13 @@ class PaymentServiceController extends Controller {
         // Validate service and serviceable fields
         $request->validate([
             'serviceable' => ['required', Rule::in(PayService::SERVICEABLES)],
-            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
+            'currency' => array_merge(['required'], ValidationDefaults::currency($economy)),
             'withdraw' => 'required_without:deposit',
         ]);
         ($serviceable_type::CONTROLLER)::validateCreate($request);
 
-        // Find the selected economy currency, get it's currency ID
-        $currency = EconomyCurrency::findOrFail($request->input('currency'))->currency;
+        // Find the selected currency, get it's currency ID
+        $currency = $economy->currencies()->findOrFail($request->input('currency'));
         if(!$serviceable_type::isSupportedCurrency($currency))
             throw new \Exception('Unsupported currency type');
         $currencyId = $currency->id;
@@ -158,7 +157,7 @@ class PaymentServiceController extends Controller {
         $currencies = $economy
             ->currencies
             ->filter(function($currency) use($serviceable) {
-                return $serviceable::isSupportedCurrency($currency->currency);
+                return $serviceable::isSupportedCurrency($currency);
             });
 
         return view('community.economy.paymentservice.edit')
@@ -189,14 +188,13 @@ class PaymentServiceController extends Controller {
 
         // Validate service and serviceable fields
         $request->validate([
-            'currency' => array_merge(['required'], ValidationDefaults::economyCurrency($economy, false)),
+            'currency' => array_merge(['required'], ValidationDefaults::currency($economy)),
             'withdraw' => 'required_without:deposit',
         ]);
         ($serviceable::CONTROLLER)::validateCreate($request);
 
-        // Find the selected economy currency, get it's currency ID
-        // TODO: did we get Currency id from form? Should be economycurren?
-        $currency = EconomyCurrency::findOrFail($request->input('currency'))->currency;
+        // Find the selected currency, get it's currency ID
+        $currency = $economy->currencies()->findOrFail($request->input('currency'));
         if(!$serviceable::isSupportedCurrency($currency))
             throw new \Exception('Unsupported currency type');
         $currencyId = $currency->id;

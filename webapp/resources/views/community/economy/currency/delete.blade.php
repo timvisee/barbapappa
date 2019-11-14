@@ -11,7 +11,7 @@
     <a href="{{ route('community.economy.currency.edit', [
         'communityId' => $community->human_id,
         'economyId' => $economy->id,
-        'economyCurrencyId' => $currency->id
+        'currencyId' => $currency->id
     ]) }}">
         @lang('pages.currencies.change')
     </a>
@@ -26,16 +26,16 @@
     <br />
 
     {!! Form::open(['action' => [
-        'EconomyCurrencyController@doDelete',
+        'CurrencyController@doDelete',
         'communityId' => $community->human_id,
         'economyId' => $economy->id,
-        'economyCurrencyId' => $currency->id
+        'currencyId' => $currency->id
     ], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         <div class="ui buttons">
             <a href="{{ route('community.economy.currency.show', [
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id,
-                'economyCurrencyId' => $currency->id
+                'currencyId' => $currency->id
             ]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')

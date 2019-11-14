@@ -27,8 +27,7 @@
         "mariuzzo/laravel-js-localization": "^1.4",
         "sentry/sentry-laravel": "^1.0.2",
         "simplesoftwareio/simple-qrcode": "^2.0",
-        "staudenmeir/eloquent-has-many-deep": "^1.8",
-        "torann/currency": "1.0.14"
+        "staudenmeir/eloquent-has-many-deep": "^1.8"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

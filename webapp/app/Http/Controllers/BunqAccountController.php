@@ -122,6 +122,7 @@ class BunqAccountController extends Controller {
         // Must use euro and have a zero balance
         $balance = $monetaryAccount->getBalance();
         \Debugbar::info($balance);
+        // TODO: assert list of supported currencies somewhere
         if($balance->getCurrency() != 'EUR') {
             add_session_error('iban', __('pages.bunqAccounts.onlyEuroSupported'));
             return redirect()->back()->withInput();

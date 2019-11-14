@@ -82,13 +82,13 @@ class Community extends Model {
     }
 
     /**
-     * Get a relation to all economy currencies in all economies.
+     * Get a relation all currencies in economies in this community.
      *
      * @return Relation of currencies.
      */
     public function currencies() {
         return $this->hasManyThrough(
-            EconomyCurrency::class,
+            Currency::class,
             Economy::class
         );
     }

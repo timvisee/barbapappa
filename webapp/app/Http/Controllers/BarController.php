@@ -443,7 +443,7 @@ class BarController extends Controller {
         // Quick buy the product, format the price
         $details = $this->quickBuyProduct($bar, $product);
         $transaction = $details['transaction'];
-        $cost = balance($details['price'], $details['currency']->code);
+        $cost = $details['currency']->format($details['price']);
 
         // Build a success message
         $msg = __('pages.bar.boughtProductForPrice', [
@@ -702,7 +702,7 @@ class BarController extends Controller {
         $currency = $wallet->currency;
         $price = $product
             ->prices
-            ->whereStrict('currency_id', $wallet->economyCurrency->id)
+            ->whereStrict('currency_id', $currency->id)
             ->first()
             ->price;
 
@@ -843,7 +843,7 @@ class BarController extends Controller {
         $currency = $wallet->currency;
 
         // Select the price for each product, find the total price
-        $products = $products->map(function($item) use($wallet) {
+        $products = $products->map(function($item) use($wallet, $currency) {
             // The quantity must be 1 or more
             if($item['quantity'] < 1)
                 throw new \Exception('Cannot buy product with quantity < 1');
@@ -851,7 +851,7 @@ class BarController extends Controller {
             // Select price for this product
             $price = $item['product']
                 ->prices
-                ->whereStrict('currency_id', $wallet->economyCurrency->id)
+                ->whereStrict('currency_id', $currency->id)
                 ->first()
                 ->price;
             if($price == null)
@@ -996,7 +996,7 @@ class BarController extends Controller {
      * @param Economy|Bar $economy The economy the user is in.
      * @param EconomyMemberUser $user|null The user or null for the current user.
      *
-     * @return [EconomyCurrency] A list of preferred currencies.
+     * @return [Currency] A list of preferred currencies.
      */
     // TODO: economy (or bar) param is obsolete because of member
     // TODO: only support economy member here, not user
@@ -1018,10 +1018,7 @@ class BarController extends Controller {
         $wallets = $member->wallets;
         $currencies = $wallets
             ->map(function($w) use($economy) {
-                return $economy
-                    ->currencies()
-                    ->where('currency_id', $w->currency_id)
-                    ->first();
+                return $economy->currencies()->find($w->currency_id);
             })
             ->filter(function($c) {
                 return $c != null && $c->enabled;

@@ -65,12 +65,14 @@
         @forelse($memberData as $member)
             <div class="item">
                 {{ $member['member']->name }}
-                {!! $member['balance']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                @if($member['balance'] != null)
+                    {!! $member['balance']->formatAmount(BALANCE_FORMAT_LABEL) !!}
 
-                @if($member['member']->user_id == null)
-                    <span class="sub-label">
-                        @lang('pages.finance.fromBalanceImport')
-                    </span>
+                    @if($member['member']->user_id == null)
+                        <span class="sub-label">
+                            @lang('pages.finance.fromBalanceImport')
+                        </span>
+                    @endif
                 @endif
             </div>
         @empty

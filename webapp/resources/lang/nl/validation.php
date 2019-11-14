@@ -145,6 +145,8 @@ return [
         'confirm_name' => 'naam bevestiging',
         'confirm_delete' => 'verwijder bevestiging',
         'wallet' => 'portemonnee',
+        'symbol' => 'symbool',
+        'format' => 'formaat',
     ],
 
 ];

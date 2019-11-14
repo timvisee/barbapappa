@@ -39,7 +39,7 @@ The economy currency model also has an `enabled` field to define whether the cur
 If the field is set to `false` (and thus is disabled), the currency should be hidden from users and product prices.
 
 ### Economy currency model
-`economy_currency`:
+`currency`:
 - `id`: index
 - `economy_id`: reference to an economy
 - `enabled`: true if enabled and visible, false if disabled and not visible

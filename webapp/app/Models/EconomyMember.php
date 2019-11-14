@@ -215,7 +215,7 @@ class EconomyMember extends Pivot {
      * currency that allows this.
      * Null is only returned if no wallet could be created.
      *
-     * @param [EconomyCurrency] $econ_currencies A list of EconomyCurrency IDs.
+     * @param [Currency] $currencies A list of Currency IDs.
      * @param bool [$error=true] True to throw an error if no wallet was found
      *      or created. False to return null instead.
      * @param bool [$force=false] True to force wallet creation even if wallet
@@ -223,9 +223,9 @@ class EconomyMember extends Pivot {
      *
      * @return Wallet|null The primary wallet, or null if there is none.
      */
-    public function getOrCreateWallet($econ_currencies, $error = true, $force = false) {
+    public function getOrCreateWallet($currencies, $error = true, $force = false) {
         // A currency must be given
-        if($econ_currencies->isEmpty()) {
+        if($currencies->isEmpty()) {
             if($error)
                 throw new \Exception("Failed to get or create wallet, no currencies given");
             return null;
@@ -235,9 +235,9 @@ class EconomyMember extends Pivot {
         $wallets = $this->wallets ?? collect();
 
         // Find and return an existing wallet for any of the currencies in order
-        $wallet = $econ_currencies
+        $wallet = $currencies
             ->map(function($c) use($wallets) {
-                return $wallets->firstWhere('currency_id', $c->currency_id);
+                return $wallets->firstWhere('currency_id', $c->id);
             })
             ->filter(function($w) {
                 return $w != null;
@@ -247,13 +247,13 @@ class EconomyMember extends Pivot {
             return $wallet;
 
         // Create a new wallet for the first currency that allows it
-        foreach($econ_currencies as $econ_currency) {
+        foreach($currencies as $currency) {
             // Find the currency, skip if we cannot create a wallet for it
-            if(!$force && !$econ_currency->allow_wallet)
+            if(!$force && !$currency->allow_wallet)
                 continue;
 
             // Create and return a wallet
-            return $this->createWallet($econ_currency->currency_id);
+            return $this->createWallet($currency->id);
         }
 
         // Throw a error if no wallet could be found/created or return null
@@ -265,7 +265,7 @@ class EconomyMember extends Pivot {
     /**
      * Sum all balances for this member.
      *
-     * @return MoneyAmount The cummulative balance of this member.
+     * @return MoneyAmount|null The cummulative balance of this member.
      */
     public function sumBalance() {
         // Return wallet balances
@@ -315,7 +315,7 @@ class EconomyMember extends Pivot {
         // AND c1.committed_at IS NULL
         // GROUP BY system_id, alias_id;
 
-        return MoneyAmount::zero();
+        return null;
     }
 
     /**

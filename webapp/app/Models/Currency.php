@@ -2,32 +2,60 @@
 
 namespace App\Models;
 
-use App\Mail\Password\Reset;
-use App\Managers\PasswordResetManager;
-use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
+use App\Mail\Password\Reset;
+use App\Managers\PasswordResetManager;
+use App\Scopes\EnabledScope;
+use App\Utils\EmailRecipient;
+
 /**
  * Currency model.
  *
- * @property-read int id
- * @property-read string name
- * @property-read string displayName
- * @property-read string code
- * @property-read string symbol
- * @property-read string format
- * @property-read string exchange_rate
- * @property-read boolean active
- * @property-read Carbon created_at
- * @property-read Carbon updated_at
+ * This defines the currencies available in an economy.
+ *
+ * @property int id
+ * @property int economy_id
+ * @property-read Economy economy
+ * @property string name
+ * @property string|null code
+ * @property string symbol
+ * @property string format
+ * @property bool enabled
+ * @property bool allow_wallet
+ * @property Carbon deleted_at
+ * @property Carbon created_at
+ * @property Carbon updated_at
  */
 class Currency extends Model {
 
+    use SoftDeletes;
+
     protected $table = 'currency';
+
+    protected $fillable = [
+        'name',
+        'code',
+        'symbol',
+        'format',
+        'enabled',
+        'allow_wallet',
+    ];
+
+    protected $casts = [
+        'deleted_at' => 'datetime',
+    ];
+
+    public static function boot() {
+        parent::boot();
+        static::addGlobalScope(new EnabledScope);
+    }
 
     /**
      * Get dynamic properties.
@@ -62,35 +90,139 @@ class Currency extends Model {
     }
 
     /**
-     * Get the economy currency entries for bars, that use this currency.
-     * Note that this might also return disabled currency support entries.
-     *
-     * @return The list of economy currency entries.
+     * Disable the enabled scope, and also return the disabled entities.
      */
-    public function economyCurrencies() {
-        return $this->hasMany('App\Models\EconomyCurrency');
+    public function scopeWithDisabled($query) {
+        return $query->withoutGlobalScope(EnabledScope::class);
     }
 
     /**
-     * Get the wallets created by users that use this currency.
+     * Get a relation to the economy this currency is in.
      *
-     * @return The wallets.
+     * @return Relation to the economy.
      */
-    public function wallets() {
-        return $this->hasMany('App\Models\Wallet');
+    public function economy() {
+        return $this->belongsTo(Economy::class);
     }
 
     /**
-     * Format the given amount as human readable text using the proper currency
-     * format.
+     * Format the given balance.
      *
-     * @param decimal $amount The amount to format.
-     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
-     * @param array [$options=[]] Formatting options.
+     * @param decimal $value The value.
+     * @param int [$format=BALANCE_FORMAT_PLAIN] The balance formatting rules.
+     * @param array [$options=null] An array of options.
      *
-     * @return string Formatted amount.
+     * @return string Formatted balance.
      */
-    public function formatAmount($amount, $format = BALANCE_FORMAT_PLAIN, $options = []) {
-        return balance($amount, $this->code, $format, $options);
+    function format($value, $format = BALANCE_FORMAT_PLAIN, $options = []) {
+        // Take parameters out of options, use defaults
+        $prefix = $options['prefix'] ?? null;
+        $neutral = $options['neutral'] ?? false;
+        $color = $options['color'] ?? true;
+
+        // If neutrally formatting, always show positive number
+        if($neutral)
+            $value = abs($value);
+
+        // Format the balance
+        $out = $this->formatBasic($value);
+
+        // Prefix
+        if(!empty($prefix))
+            $out = $prefix . $out;
+
+        // Add color for negative values
+        switch($format) {
+            case null:
+            case BALANCE_FORMAT_PLAIN:
+                break;
+            case BALANCE_FORMAT_COLOR:
+                if(!$color) {}
+                else if($neutral)
+                    // TODO: style instead of giving an explicit neutral color
+                    $out = '<span style="color: #2185d0;">' . $out . '</span>';
+                else if($value < 0)
+                    $out = '<span style="color: red;">' . $out . '</span>';
+                else if($value > 0)
+                    $out = '<span style="color: green;">' . $out . '</span>';
+                break;
+            case BALANCE_FORMAT_LABEL:
+                // TODO: may want to add horizontal class to labels
+                if(!$color)
+                    $out = '<div class="ui label">' . $out . '</div>';
+                else if($neutral)
+                    $out = '<div class="ui blue label">' . $out . '</div>';
+                else if($value < 0)
+                    $out = '<div class="ui red label">' . $out . '</div>';
+                else if($value > 0)
+                    $out = '<div class="ui green label">' . $out . '</div>';
+                else
+                    $out = '<div class="ui label">' . $out . '</div>';
+                break;
+            default:
+                throw new \Exception("Invalid balance format type given");
+        }
+
+        return $out;
+    }
+
+    /**
+     * Format the given value as this currency.
+     *
+     * @param decimal $value The value to format.
+     * @return string The formatted value.
+     */
+    public function formatBasic($value) {
+        // Get the measurement format
+        $format = $this->format;
+
+        // Value Regex
+        $valRegex = '/([0-9].*|)[0-9]/';
+
+        // Match decimal and thousand separators
+        preg_match_all('/[\s\',.!]/', $format, $separators);
+        if($thousand = Arr::get($separators, '0.0', null))
+            if($thousand == '!')
+                $thousand = '';
+        $decimal = Arr::get($separators, '0.1', null);
+
+        // Match format for decimals count
+        preg_match($valRegex, $format, $valFormat);
+        $valFormat = Arr::get($valFormat, 0, 0);
+
+        // Count decimals length
+        $decimals = $decimal ? strlen(substr(strrchr($valFormat, $decimal), 1)) : 0;
+
+        // Do we have a negative value?
+        if($negative = $value < 0 ? '-' : '')
+            $value = $value * -1;
+
+        // Format the value
+        $value = number_format($value, $decimals, $decimal, $thousand);
+
+        // Apply the formatted measurement
+        // TODO: get this from somewhere
+        if($include_symbol ?? true)
+            $value = preg_replace($valRegex, $value, $format);
+
+        // Return value
+        return $negative . $value;
+    }
+
+    /**
+     * Get a list of known currency codes following ISO 4217.
+     * These are stored in 'resources/data/currency-codes.txt'.
+     *
+     * @return array
+     */
+    public static function currencyCodeList() {
+        return array_filter(explode(
+                "\n",
+                file_get_contents(resource_path('data/currency-codes.txt'))
+            ),
+            function($item) {
+                return !empty(trim($item));
+            }
+        );
     }
 }

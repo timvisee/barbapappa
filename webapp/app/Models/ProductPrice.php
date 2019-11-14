@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int product_id
  * @property-read Product product
  * @property int currency_id
- * @property-read EconomyCurrency currency
+ * @property-read Currency currency
  * @property decimal price
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -39,12 +39,12 @@ class ProductPrice extends Model {
     }
 
     /**
-     * Get the relation to the economy currency this price belongs to.
+     * Get a relation to the currency.
      *
-     * @return Relation to the economy currency this price belongs to.
+     * @return Relation to the currency.
      */
     public function currency() {
-        return $this->belongsTo(EconomyCurrency::class);
+        return $this->belongsTo(Currency::class);
     }
 
     /**
@@ -56,8 +56,10 @@ class ProductPrice extends Model {
      *
      * @return string Formatted price.
      */
+    // TODO: use options array instead of neutral param here
     public function formatPrice($format = BALANCE_FORMAT_PLAIN, $neutral = true) {
-        // TODO: optimize this currency->currency chain
-        return balance($this->price, $this->currency->currency->code, $format, null, $neutral);
+        return $this->currency->format($this->price, $format, [
+            'neutral' => $neutral,
+        ]);
     }
 }

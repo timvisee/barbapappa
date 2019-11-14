@@ -25,7 +25,7 @@ class CreateProductPriceTable extends Migration {
                 ->onDelete('cascade');
             $table->foreign('currency_id')
                 ->references('id')
-                ->on('economy_currency')
+                ->on('currency')
                 ->onDelete('cascade');
         });
     }

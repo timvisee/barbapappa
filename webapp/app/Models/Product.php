@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-// TODO: use EnabledScope (currently used in EconomyCurrency)
+// TODO: enable EnabledScope by default
 
 /**
  * Product model.
@@ -105,11 +105,11 @@ class Product extends Model {
      * Scope a query to only include products having a price in any of the given
      * currencies.
      *
-     * The currencies must be a single, or a list of EconomyCurrency IDs.
+     * The currencies must be a single, or a list of Currency IDs.
      * If null is given, this scope will not filter.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param [int]|null $currency_ids A list of `EconomyCurrency` IDs.
+     * @param [int]|null $currency_ids A list of `Currency` IDs.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -170,7 +170,7 @@ class Product extends Model {
      * returned.
      *
      * TODO: should we use currency IDs instead
-     * @param [EconomyCurrency] $currencies An ordered list of preferred currencies.
+     * @param [Currency] $currencies An ordered list of preferred currencies.
      *
      * @return ProductPrice|null The product price or null if none is found.
      */
@@ -202,7 +202,7 @@ class Product extends Model {
      * list of preferred currencies must be given.
      *
      * TODO: should we use currency IDs instead
-     * @param [EconomyCurrency] $currencies An ordered list of preferred currencies.
+     * @param [Currency] $currencies An ordered list of preferred currencies.
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
      * @param array [$options=[]] A list of formatting options.
      *
@@ -216,7 +216,6 @@ class Product extends Model {
             return null;
 
         // Render the price and return
-        // TODO: optimize this currency->currency chain
-        return balance($price->price, $price->currency->currency->code, $format, $options);
+        return $price->currency->format($price->price, $format, $options);
     }
 }

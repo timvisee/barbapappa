@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
-use App\Models\EconomyCurrency;
 use App\Models\EconomyMember;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
@@ -139,18 +138,15 @@ class WalletController extends Controller {
         // Validate
         $this->validate($request, [
             'name' => 'required|' . ValidationDefaults::NAME,
-            'currency' => array_merge(['required'], ValidationDefaults::walletEconomyCurrency($economy)),
+            'currency' => array_merge(['required'], ValidationDefaults::walletCurrency($economy)),
         ]);
-
-        // Find the selected economy currency, get it's currency ID
-        $currencyId = EconomyCurrency::findOrFail($request->input('currency'))->currency_id;
 
         // Create the wallet
         $wallet = $economy_member->wallets()->create([
             'economy_id' => $economy->id,
             'user_id' => $user->id,
             'name' => $request->input('name'),
-            'currency_id' => $currencyId,
+            'currency_id' => (int) $request->input('currency'),
         ]);
 
         // Redirect to the show view after creation
@@ -222,7 +218,7 @@ class WalletController extends Controller {
         // Make sure there's exactly zero balance
         if($wallet->balance != 0.00) {
             // Format the zero balance
-            $zero = balance(0.00, $wallet->currency->code);
+            $zero = $wallet->currency->format(0.0);
 
             return redirect()
                 ->route('community.wallet.show', ['communityId' => $communityId, 'economyId' => $economyId, 'walletId' => $walletId])
@@ -388,7 +384,7 @@ class WalletController extends Controller {
                 'walletId' => $toWallet->id,
             ])
             ->with('success', __('pages.wallets.successfullyTransferredAmount', [
-                'amount' => $wallet->currency->formatAmount($amount),
+                'amount' => $wallet->currency->format($amount),
                 'wallet' => $toWallet->name,
             ]));
     }
@@ -427,7 +423,12 @@ class WalletController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
-        $services = $economy->paymentServices()->supportsDeposit()->get();
+        $currency = $wallet->currency;
+        $services = $economy
+            ->paymentServices()
+            ->supportsCurrency($currency)
+            ->supportsDeposit()
+            ->get();
 
         // TODO: return error if there are no usable services, user can't top-up
 
@@ -452,8 +453,12 @@ class WalletController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
-        $services = $economy->paymentServices()->supportsDeposit()->get();
         $currency = $wallet->currency;
+        $services = $economy
+            ->paymentServices()
+            ->supportsCurrency($currency)
+            ->supportsDeposit()
+            ->get();
 
         // Validate
         $this->validate($request, [

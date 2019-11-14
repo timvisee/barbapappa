@@ -4,6 +4,7 @@ namespace App\Helpers;
 
 use Illuminate\Validation\Rule;
 
+use \App\Models\Currency;
 use \App\Models\Community;
 use \App\Models\Economy;
 use \App\Perms\AppRoles;
@@ -87,6 +88,16 @@ class ValidationDefaults {
     const DESCRIPTION = 'string|max:2048';
 
     /**
+     * A currency symbol.
+     */
+    const CURRENCY_SYMBOL = 'string|min:1|max:25';
+
+    /**
+     * A currency format.
+     */
+    const CURRENCY_FORMAT = 'string|min:1|max:50';
+
+    /**
      * A price value, with two optional decimal digits, may be zero.
      */
     const PRICE = 'regex:/^(\d{0,8}([,.]\d{1,2})?)?$/';
@@ -167,51 +178,62 @@ class ValidationDefaults {
     }
 
     /**
-     * Build the economy currency validation configuration.
-     *
-     * This checks whether the submitted currency within an economy is unique,
-     * and not yet configured.
+     * A validator for a currency ID in an economy.
      *
      * Note: this function returns an array of validation rules.
      *
-     * @param int $economy The economy this configuration is built for.
-     * @param bool [$unique=true] True to do the unique check, false if not.
+     * @param Economy $economy The economy the currency ID must be in.
      *
      * @return Array An array of validation rules.
      */
-    public static function economyCurrency(Economy $economy, $unique = true) {
-        $rules = [Rule::exists('economy_currency', 'currency_id')];
+    // TODO: do not return array here
+    public static function currency(Economy $economy) {
+        return [
+            Rule::exists('currency', 'id')->where('economy_id', $economy->id),
+        ];
+    }
 
-        if($unique)
-            $rules[] = Rule::unique('economy_currency', 'currency_id')
-                    ->where(function($query) use($economy) {
-                        // Scope to the current economy
-                        return $query->where('economy_id', $economy->id);
-                    });
+    /**
+     * A validator for a currency code in an economy.
+     * The currency code must be in the currency code list as well.
+     *
+     * Note: this function returns an array of validation rules.
+     *
+     * @param Economy $economy The economy the currency code must be in.
+     * @param bool [$new=false] True if the currency code must not exist in the
+     *      economy yet.
+     *
+     * @return Array An array of validation rules.
+     */
+    public static function currencyCode(Economy $economy, $new = true) {
+        $rules = [
+            Rule::in(Currency::currencyCodeList()),
+        ];
+
+        // Test against database
+        if($new)
+            $rules[] = Rule::unique('currency', 'code')->where('economy_id', $economy->id);
+        else
+            $rules[] = Rule::exists('currency', 'code')->where('economy_id', $economy->id);
 
         return $rules;
     }
 
     /**
-     * Build the wallet currency validation configuration.
-     *
-     * This checks whether the submitted currency for a wallet exists and allows
-     * wallet creation.
+     * A validator for a currency ID in an economy, that a user must be able to
+     * create a wallet for.
      *
      * Note: this function returns an array of validation rules.
      *
-     * @param int $economy The economy this configuration is built for.
+     * @param Economy $economy The economy the ID must be in.
      * @return Array An array of validation rules.
      */
-    public static function walletEconomyCurrency(Economy $economy) {
+    // TODO: do not return array here
+    public static function walletCurrency(Economy $economy) {
         return [
-            Rule::exists('economy_currency', 'id')
-                ->where(function($query) use($economy) {
-                    // Scope to the current economy and to allowed wallet creation
-                    return $query
-                        ->where('economy_id', $economy->id)
-                        ->where('allow_wallet', true);
-                }),
+            Rule::exists('currency', 'id')
+                ->where('economy_id', $economy->id)
+                ->where('allow_wallet', true),
         ];
     }
 

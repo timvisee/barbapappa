@@ -25,7 +25,6 @@ use App\Utils\EmailRecipient;
  * @property decimal balance
  * @property int currency_id
  * @property-read Currency currency
- * @property-read Currency economy_currency
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -50,31 +49,12 @@ class Wallet extends Model {
     }
 
     /**
-     * Get the used currency.
+     * Get a relation to the wallet currency.
      *
-     * This is not the economy currency as specified in the current economy.
-     * Rather it's a direct link to the currency used for this wallet.
-     *
-     * @return The currency.
+     * @return Relation to currency.
      */
     public function currency() {
         return $this->belongsTo(Currency::class);
-    }
-
-    /**
-     * Get a relation to the economy currency used in this wallet.
-     *
-     * @return A relation to the economy currency.
-     */
-    public function economyCurrency() {
-        return $this->hasOneThrough(
-            EconomyCurrency::class,
-            Currency::class,
-            'id',
-            'currency_id',
-            'currency_id',
-            'id'
-        )->where('economy_id', $this->economyMember->economy_id);
     }
 
     /**
@@ -140,7 +120,7 @@ class Wallet extends Model {
      * @return string Formatted balance
      */
     public function formatBalance($format = BALANCE_FORMAT_PLAIN) {
-        return $this->currency->formatAmount($this->balance, $format);
+        return $this->currency->format($this->balance, $format);
     }
 
     /**

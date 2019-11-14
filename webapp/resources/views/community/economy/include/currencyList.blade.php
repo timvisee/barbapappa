@@ -7,7 +7,7 @@
                 href="{{ route('community.economy.currency.show', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id,
-                    'economyCurrencyId' => $currency->id
+                    'currencyId' => $currency->id
                 ]) }}">
             {{ $currency->displayName}}
         </a>

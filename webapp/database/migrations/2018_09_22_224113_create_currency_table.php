@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEconomyCurrencyTable extends Migration {
+class CreateCurrencyTable extends Migration {
 
     /**
      * Run the migrations.
@@ -12,25 +12,24 @@ class CreateEconomyCurrencyTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('economy_currency', function(Blueprint $table) {
+        Schema::create('currency', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('economy_id')->unsigned();
-            $table->integer('currency_id')->unsigned();
+            $table->string('name');
+            $table->string('code', 10)->nullable();
+            $table->string('symbol', 25);
+            $table->string('format', 50);
             $table->boolean('enabled')->default(true);
             $table->boolean('allow_wallet')->default(true);
-            $table->integer('product_price_default')->defaults(3);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('economy_id')
                 ->references('id')
                 ->on('economy')
                 ->onDelete('cascade');
-            $table->foreign('currency_id')
-                ->references('id')
-                ->on('currency')
-                ->onDelete('restrict');
 
-            $table->unique(['economy_id', 'currency_id']);
+            $table->unique(['economy_id', 'code']);
         });
     }
 
@@ -40,6 +39,6 @@ class CreateEconomyCurrencyTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::dropIfExists('economy_currency');
+        Schema::dropIfExists('currency');
     }
 }

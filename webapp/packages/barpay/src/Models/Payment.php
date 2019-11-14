@@ -16,8 +16,8 @@ use App\Models\Notifications\PaymentRequiresCommunityAction;
 use App\Models\Notifications\PaymentRequiresUserAction;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Perms\CommunityRoles;
 use App\Perms\AppRoles;
+use App\Perms\CommunityRoles;
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Mail;
  * @property string|null reference
  * @property decimal amount
  * @property int currency_id
+ * @property-read Currency currency
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -265,9 +266,9 @@ class Payment extends Model {
     }
 
     /**
-     * Get the used currency.
+     * Get a relation to the currency.
      *
-     * @return The currency.
+     * @return Relation to the currency.
      */
     public function currency() {
         return $this->belongsTo(Currency::class);
@@ -301,7 +302,7 @@ class Payment extends Model {
             $options['color'] = false;
         else if(!$this->isInProgress())
             $options['neutral'] = false;
-        return $this->currency->formatAmount($this->money, $format, $options);
+        return $this->currency->format($this->money, $format, $options);
     }
 
     /**
