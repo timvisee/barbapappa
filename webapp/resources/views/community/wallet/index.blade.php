@@ -41,7 +41,7 @@
                         'economyId' => $economy->id,
                     ]) }}" class="item">
                 {{ $economy->name }}
-                {!! $economy->formatBalance(BALANCE_FORMAT_LABEL) !!}
+                {!! $economy->formatUserBalance(BALANCE_FORMAT_LABEL) !!}
 
                 <span class="sub-label">
                     {{ trans_choice('pages.wallets.#wallets', $economy->user_wallet_count) }}

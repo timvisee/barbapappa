@@ -429,7 +429,8 @@ class Economy extends Model {
      * @return string Formatted balance
      */
     public function formatUserBalance($format = BALANCE_FORMAT_PLAIN) {
-        return $this->calcUserBalance()->formatAmount($format);
+        $balance = $this->calcUserBalance();
+        return $balance != null ? $balance->formatAmount($format) : $balance;
     }
 
     /**
