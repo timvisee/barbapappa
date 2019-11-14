@@ -66,9 +66,6 @@ test:
 
     # Migrate and configure currencies
     - php artisan migrate --seed
-    - php artisan currency:manage add EUR
-    - php artisan currency:manage add USD
-    - php artisan currency:update
 
     # Run PHPUnit tests
     - php vendor/bin/phpunit --coverage-text --colors=never
