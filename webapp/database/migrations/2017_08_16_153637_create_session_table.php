@@ -15,7 +15,7 @@ class CreateSessionTable extends Migration {
         Schema::create('session', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
-            $table->string('token');
+            $table->string('token')->index();
             $table->ipAddress('created_ip');
             $table->timestamp('expire_at')->nullable();
             $table->timestamps();
