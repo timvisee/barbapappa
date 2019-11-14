@@ -237,7 +237,7 @@ class EconomyMember extends Pivot {
         // Find and return an existing wallet for any of the currencies in order
         $wallet = $currencies
             ->map(function($c) use($wallets) {
-                return $wallets->firstWhere('currency_id', $c->currency_id);
+                return $wallets->firstWhere('currency_id', $c->id);
             })
             ->filter(function($w) {
                 return $w != null;
