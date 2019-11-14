@@ -265,7 +265,7 @@ class EconomyMember extends Pivot {
     /**
      * Sum all balances for this member.
      *
-     * @return MoneyAmount The cummulative balance of this member.
+     * @return MoneyAmount|null The cummulative balance of this member.
      */
     public function sumBalance() {
         // Return wallet balances
@@ -315,7 +315,7 @@ class EconomyMember extends Pivot {
         // AND c1.committed_at IS NULL
         // GROUP BY system_id, alias_id;
 
-        return MoneyAmount::zero();
+        return null;
     }
 
     /**

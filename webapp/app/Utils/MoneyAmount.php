@@ -14,10 +14,10 @@ use App\Models\Currency;
 class MoneyAmount {
 
     /**
-     * The currency code.
+     * The currency.
      * @var Currency
      */
-    private $currencyCode;
+    private $currency;
 
     /**
      * The amount.
@@ -34,12 +34,12 @@ class MoneyAmount {
     /**
      * Constructor.
      *
-     * @param string $currencyCode The currency code.
+     * @param Currency $currency The currency.
      * @param decimal $amount The amount.
      * @param bool [$approximate=false] Whether the amount is approximate.
      */
-    public function __construct(string $currencyCode, $amount, bool $approximate = false) {
-        $this->currencyCode = $currencyCode;
+    public function __construct(Currency $currency, $amount, bool $approximate = false) {
+        $this->currency = $currency;
         $this->amount = $amount;
         $this->approximate = $approximate;
     }
@@ -47,10 +47,11 @@ class MoneyAmount {
     /**
      * Create a money amount instance being zero with the default currency.
      *
+     * @param Currency $currency The currency.
      * @return MoneyAmount Zero amount.
      */
-    public static function zero() {
-        return new MoneyAmount(config('currency.default'), 0, false);
+    public static function zero(Currency $currency) {
+        return new MoneyAmount($currency, 0, false);
     }
 
     /**
@@ -62,6 +63,8 @@ class MoneyAmount {
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
         $prefix = $this->approximate ? '&asymp; ' : '';
-        return balance($this->amount, $this->currencyCode, $format, ['prefix' => $prefix]);
+        return $this
+            ->currency
+            ->format($this->amount, $format, ['prefix' => $prefix]);
     }
 }

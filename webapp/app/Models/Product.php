@@ -216,6 +216,6 @@ class Product extends Model {
             return null;
 
         // Render the price and return
-        return balance($price->price, $price->currency->code, $format, $options);
+        return $price->currency->format($price->price, $format, $options);
     }
 }

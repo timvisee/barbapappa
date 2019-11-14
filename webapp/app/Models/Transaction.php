@@ -244,8 +244,7 @@ class Transaction extends Model {
             $options['neutral'] = true;
 
         // TODO: choose the correct currency here based on transactions
-        // return balance($cost, $this->currency->code, $format);
-        return balance($cost, 'EUR', $format, $options);
+        return $this->mutations->first()->currency->format($cost, $format, $options);
     }
 
     /**

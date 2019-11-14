@@ -331,7 +331,7 @@ class Economy extends Model {
     public static function sumAmounts($models, string $amountKey) {
         // Return zero if no models are given
         if($models->isEmpty())
-            return MoneyAmount::zero();
+            return null;
 
         // Build a map with per currency sums
         $sums = [];
@@ -358,13 +358,18 @@ class Economy extends Model {
 
                 // Convert currencies in a different balance
                 // TODO: convert currencies
-                throw new Exception('Unable to convert currency here, not yet implemented');
-                return currency($b, $c, $code, false);
+                // throw new Exception('Unable to convert currency here, not yet implemented');
+                // return currency($b, $c, $code, false);
+                return $b;
             })
             ->sum();
 
-        // TODO: use Currency in MoneyAmount
-        return new MoneyAmount($code, $balance, $approximate);
+        // Find the currency that matches this code
+        foreach($models as $model)
+            if($model->currency->code == $code)
+                $currency = $model->currency;
+
+        return new MoneyAmount($currency, $balance, $approximate);
     }
 
     /**

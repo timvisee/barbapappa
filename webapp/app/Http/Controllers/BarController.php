@@ -443,7 +443,7 @@ class BarController extends Controller {
         // Quick buy the product, format the price
         $details = $this->quickBuyProduct($bar, $product);
         $transaction = $details['transaction'];
-        $cost = balance($details['price'], $details['currency']->code);
+        $cost = $details['currency']->format($details['price']);
 
         // Build a success message
         $msg = __('pages.bar.boughtProductForPrice', [

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 
 use App\Helpers\ValidationDefaults;
+use App\Utils\MoneyAmount;
 
 class FinanceController extends Controller {
 
@@ -22,10 +23,17 @@ class FinanceController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
+        // Get the first currency, must have one
+        $firstCurrency = $economy->currencies()->first();
+        if($firstCurrency == null)
+            return redirect()
+                ->back()
+                ->with('error', __('pages.currencies.noCurrencies'));
+
         $wallets = $economy->wallets;
-        $walletSum = $economy->sumAmounts($wallets, 'balance');
+        $walletSum = $economy->sumAmounts($wallets, 'balance') ?? MoneyAmount::zero($firstCurrency);
         $paymentsProgressing = $economy->payments()->inProgress()->get();
-        $paymentProgressingSum = $economy->sumAmounts($paymentsProgressing, 'money');
+        $paymentProgressingSum = $economy->sumAmounts($paymentsProgressing, 'money') ?? MoneyAmount::zero($firstCurrency);
 
         // Gether balance for every member
         $members = $economy->members;
