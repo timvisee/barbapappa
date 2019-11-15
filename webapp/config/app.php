@@ -20,6 +20,10 @@ return [
     'version_name' => '0.1.0-snapshot',
     'version_code' => 1,
 
+    'author' => 'Tim Visée',
+    'description' => 'Bar management application to manage transactions and inventory',
+    'keywords' => 'bar, barbapappa, barapp, management, payment, community',
+
     /**
      * Application source location.
      */
