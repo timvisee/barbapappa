@@ -64,19 +64,27 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         if($this->recipients->pluck('user')->unique()->count() > 1)
             throw new \Exception('Failed to send mailable, sending to recipients being different users, should send separately');
 
+        // Set recipient
+        $this->to($this->recipients);
+
         // Gather recipient user, force set application locale for email
         $user = $this->recipients->first()->getUser();
         $locale = $user->preferredLocale();
         if(isset($locale))
             App::setLocale($locale);
 
-        // Format subject
+        // Format and set subject
         $subject = trans($this->subjectKey, $this->subjectValues);
+        $this->subject($subject);
 
-        // Build the mailable
+        // Add unsubscribe link
+        $this->withSwiftMessage(function($message) {
+            $message->getHeaders()
+                ->addTextHeader('List-Unsubscribe', '<' . route('email.preferences') . '>');
+        });
+
+        // Finalize building mailable
         return $this
-            ->to($this->recipients)
-            ->subject($subject)
             ->onQueue($this->getWorkerQueue())
             ->locale($user)
             ->with('user', $user)

@@ -143,7 +143,7 @@ class LogoService {
 
         // Set the alt if not set
         if(!array_key_exists('alt', $attributes))
-            $attributes['alt'] = config('app.name') . ' ' . __('misc.logo');
+            $attributes['alt'] = config('app.name') . ' ' . strtolower(__('misc.logo'));
 
         // Build the HTML string and return it
         return new HtmlString('<img' . $this->attributes($attributes) . ' />');
