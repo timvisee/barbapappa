@@ -142,7 +142,7 @@ class LogoService {
         $attributes['src'] = $this->getLogoUrl($wrap, $email);
 
         // Set the alt if not set
-        if(array_key_exists('alt', $attributes))
+        if(!array_key_exists('alt', $attributes))
             $attributes['alt'] = config('app.name') . ' ' . __('misc.logo');
 
         // Build the HTML string and return it
