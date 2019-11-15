@@ -74,7 +74,6 @@ test:
 deploy_staging:
   stage: deploy-staging
   only:
-    - deploy
     - /^v(\d+\.)*\d+$/
   environment:
     name: staging
@@ -103,7 +102,6 @@ deploy_production:
   stage: deploy-production
   when: manual
   only:
-    - deploy
     - /^v(\d+\.)*\d+$/
   environment:
     name: production
