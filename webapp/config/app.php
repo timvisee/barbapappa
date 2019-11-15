@@ -17,7 +17,7 @@ return [
     /**
      * Application version name and code.
      */
-    'version_name' => '0.1.0-snapshot',
+    'version_name' => '0.1.0',
     'version_code' => 1,
 
     'author' => 'Tim Visée',
