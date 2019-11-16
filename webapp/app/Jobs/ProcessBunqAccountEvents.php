@@ -73,26 +73,27 @@ class ProcessBunqAccountEvents implements ShouldQueue {
 
     /**
      * Retry this job once after a few seconds, if no new bunq events were found.
+     * This specifies how many more times to retry.
      *
      * @var bool
      */
-    private $retryIfNone;
+    private $retryCountIfNone;
 
     /**
      * Create a new job instance.
      *
      * @param BunqAccount $account The account to handle new events for.
-     * @param bool [$retryIfNone=false] Retry this job once after a few
-     *      seconds, if no new events were found when running it the first time.
+     * @param bool [$retryCountIfNone=0] Retry this job for this many times after
+     *      a few seconds, if no new events were found when running it the first time.
      *
      * @return void
      */
-    public function __construct(BunqAccount $account, bool $retryIfNone = false) {
+    public function __construct(BunqAccount $account, int $retryCountIfNone = 0) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
         $this->accountId = $account->id;
-        $this->retryIfNone = $retryIfNone;
+        $this->retryCountIfNone = $retryCountIfNone;
     }
 
     /**
@@ -187,8 +188,8 @@ class ProcessBunqAccountEvents implements ShouldQueue {
         });
 
         // If no events were found, reschedule job after a few seconds
-        if($this->retryIfNone && $events->isEmpty()) {
-            Self::dispatch($account, false)
+        if($this->retryCountIfNone > 0 && $events->isEmpty()) {
+            Self::dispatch($account, $this->retryCountIfNone - 1)
                 ->delay(now()->addSeconds(Self::EMPTY_RETRY_AFTER));
             return;
         }

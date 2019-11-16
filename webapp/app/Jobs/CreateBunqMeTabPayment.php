@@ -112,7 +112,16 @@ class CreateBunqMeTabPayment implements ShouldQueue {
         $paymentable->save();
 
         // Immediately cancel if payment is not in progress anymore
-        if(!$payment->isInProgress())
+        if(!$payment->isInProgress()) {
             CancelBunqMeTabPayment::dispatch($account, $bunqMeTabId);
+            return;
+        }
+
+        // Schedule some jobs to continiously check whether the payment
+        // succeeded, this is a temporary solution to quickly approve payments
+        // because the bunq API doesn't properly invoke callbacks
+        // See: https://gitlab.com/timvisee/barbapappa/issues/294
+        ProcessBunqAccountEvents::dispatch($account, 6 * 10)
+            ->delay(now()->addSeconds(15));
     }
 }
