@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Crypt;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
-use bunq\Model\Core\NotificationFilterUrlMonetaryAccountInternal;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
+use bunq\Model\Generated\Endpoint\NotificationFilterUrlMonetaryAccount;
 use bunq\Model\Generated\Object\NotificationFilterUrl;
 
 /**
@@ -202,10 +202,12 @@ class BunqAccount extends Model {
             $message = __('pages.bunqAccounts.noHttpsNoCallbacks');
 
         // Set the filters
-        NotificationFilterUrlMonetaryAccountInternal::createWithListResponse(
-            $this->monetary_account_id,
-            $filters
-        );
+        try {
+            NotificationFilterUrlMonetaryAccount::create(
+                $this->monetary_account_id,
+                $filters
+            );
+        } catch(\Error $e) {}
 
         return $message;
     }
