@@ -49,6 +49,8 @@ class SessionLinkMail extends PersonalizedEmail {
      * @return Mailable
      */
     public function build() {
+        // Localize expire time, force set correct locale for this
+        $this->configureLocale();
         $expire = now()
             ->addSeconds(config('app.auth_session_link_expire') + 1)
             ->longAbsoluteDiffForHumans();
