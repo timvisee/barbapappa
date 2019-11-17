@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Utils\EmailRecipient;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -70,8 +71,10 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         // Gather recipient user, force set application locale for email
         $user = $this->recipients->first()->getUser();
         $locale = $user->preferredLocale();
-        if(isset($locale))
+        if(isset($locale)) {
             App::setLocale($locale);
+            Carbon::setLocale('nl_NL');
+        }
 
         // Format and set subject
         $subject = trans($this->subjectKey, $this->subjectValues);
