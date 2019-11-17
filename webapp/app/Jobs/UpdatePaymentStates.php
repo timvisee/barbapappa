@@ -45,6 +45,7 @@ class UpdatePaymentStates implements ShouldQueue {
         // Update state of payments waiting for community action
         Payment::inProgress()
             ->requireCommunityAction()
+            ->where('state', '!=', Payment::STATE_PENDING_COMMUNITY)
             ->each(function($payment) {
                 $payment->setState(Payment::STATE_PENDING_COMMUNITY);
             });
