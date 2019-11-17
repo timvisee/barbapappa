@@ -885,18 +885,18 @@ class BarController extends Controller {
 
         // TODO: notify user if wallet is created?
 
-        // Get the user
-        $user = $economy_member->user;
+        // Get the user ID
+        $user_id = $economy_member->user_id;
 
         // Start a database transaction for the product transaction
         // TODO: create a nice generic builder for the actions below
         $out = null;
         $productCount = 0;
-        DB::transaction(function() use($bar, $products, $user, $wallet, $currency, $price, &$out, &$productCount) {
+        DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, &$out, &$productCount) {
             // Create the transaction or use last transaction
             $transaction = $last_transaction ?? Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
-                'owner_id' => $user != null ? $user->id : null,
+                'owner_id' => $user_id,
             ]);
 
             // Determine whether the product was free
@@ -915,7 +915,7 @@ class BarController extends Controller {
                         'amount' => $price,
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
-                        'owner_id' => $user != null ? $user->id : null,
+                        'owner_id' => $user_id,
                     ]);
                 $mut_wallet->setMutationable(
                     MutationWallet::create([
@@ -925,7 +925,7 @@ class BarController extends Controller {
             }
 
             // Create a product mutation for each product type
-            $products->each(function($product) use($transaction, $bar, $currency, $user, $mut_wallet, &$productCount) {
+            $products->each(function($product) use($transaction, $bar, $currency, $user_id, $mut_wallet, &$productCount) {
                 // Get the quantity for this product, increase product count
                 $quantity = $product['quantity'];
                 $productCount += $quantity;
@@ -940,7 +940,7 @@ class BarController extends Controller {
                         'amount' => -$product['priceTotal'],
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
-                        'owner_id' => $user != null ? $user->id : null,
+                        'owner_id' => $user_id,
                         'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
                     ]);
                 $mut_product->setMutationable(
