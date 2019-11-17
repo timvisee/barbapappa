@@ -50,6 +50,8 @@ class Request extends PersonalizedEmail {
      * @return Mailable
      */
     public function build() {
+        // Localize expire time, force set correct locale for this
+        $this->configureLocale();
         $expire = now()
             ->addSeconds(PasswordResetManager::EXPIRE_AFTER + 1)
             ->longAbsoluteDiffForHumans();

@@ -2,6 +2,7 @@
 
 namespace App\Mail\Email;
 
+use Carbon\Carbon;
 use App\Mail\PersonalizedEmail;
 use App\Managers\EmailVerificationManager;
 use App\Models\EmailVerification;
@@ -73,6 +74,8 @@ class Verify extends PersonalizedEmail {
      * @return Mailable
      */
     public function build() {
+        // Localize expire time, force set correct locale for this
+        $this->configureLocale();
         $expire = now()
             ->addSeconds(EmailVerificationManager::EXPIRE_AFTER + 1)
             ->longAbsoluteDiffForHumans();

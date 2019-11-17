@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Utils\EmailRecipient;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -48,6 +49,35 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         $this->recipients = collect([$recipients])->flatten();
         $this->subjectKey = $subjectKey;
         $this->subjectValues = $subjectValues;
+
+        // There must be at least one recipient
+        if($this->recipients->isEmpty())
+            throw new \Exception('No recipients specified for mailable');
+
+        // All email recipients must have the same target user
+        if($this->recipients->pluck('user')->unique()->count() > 1)
+            throw new \Exception('Failed to send mailable, sending to recipients being different users, should send separately');
+    }
+
+    /**
+     * Configure the locale to use in this mailable.
+     *
+     * This will set the application locale.
+     *
+     * @param User $user The user instance if known.
+     */
+    public function configureLocale($user = null) {
+        // Get the user, find their preferred locale
+        if($user == null)
+            $user = $this->recipients->first()->getUser();
+        $locale = $user->preferredLocale();
+
+        // Configure locale
+        if(isset($locale)) {
+            App::setLocale($locale);
+            Carbon::setLocale($locale);
+        }
+        $this->locale($user);
     }
 
     /**
@@ -56,22 +86,12 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
      * @return Mailable
      */
     public function build() {
-        // There must be at least one recipient
-        if($this->recipients->isEmpty())
-            throw new \Exception('No recipients specified for mailable');
-
-        // All email recipients must have the same target user
-        if($this->recipients->pluck('user')->unique()->count() > 1)
-            throw new \Exception('Failed to send mailable, sending to recipients being different users, should send separately');
-
         // Set recipient
         $this->to($this->recipients);
 
         // Gather recipient user, force set application locale for email
         $user = $this->recipients->first()->getUser();
-        $locale = $user->preferredLocale();
-        if(isset($locale))
-            App::setLocale($locale);
+        $this->configureLocale($user);
 
         // Format and set subject
         $subject = trans($this->subjectKey, $this->subjectValues);
@@ -86,7 +106,6 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         // Finalize building mailable
         return $this
             ->onQueue($this->getWorkerQueue())
-            ->locale($user)
             ->with('user', $user)
             ->with('subject', $subject);
     }
