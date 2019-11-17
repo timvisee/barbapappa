@@ -458,10 +458,11 @@ class Economy extends Model {
         $lastProducts = MutationProduct::select('product_id', 'quantity');
         if($mutation_ids != null)
             $lastProducts = $lastProducts
-                ->whereExists(function($query) {
+                ->whereExists(function($query) use($mutation_ids) {
                     $query->selectRaw('1')
                         ->from('mutation')
-                        ->whereRaw('mutation.mutationable_id = mutation_product.id');
+                        ->whereRaw('mutation.mutationable_id = mutation_product.id')
+                        ->whereIn('mutation.id', $mutation_ids);
                 });
         if($exclude_product_ids != null)
             $lastProducts = $lastProducts->whereNotIn('product_id', $exclude_product_ids);
