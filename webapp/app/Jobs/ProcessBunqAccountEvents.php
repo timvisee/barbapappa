@@ -54,7 +54,7 @@ class ProcessBunqAccountEvents implements ShouldQueue {
      *
      * @var int
      */
-    const EVENT_INTERVAL = 2;
+    const EVENT_INTERVAL = 3;
 
     /**
      * The number of seconds to wait for retrying this job once, when no new
@@ -62,7 +62,7 @@ class ProcessBunqAccountEvents implements ShouldQueue {
      *
      * @var int
      */
-    const EMPTY_RETRY_AFTER = 10;
+    const EMPTY_RETRY_AFTER = 15;
 
     /**
      * The ID of a bunq account model to handle new events for.

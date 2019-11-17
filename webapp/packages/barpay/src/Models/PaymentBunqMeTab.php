@@ -70,6 +70,15 @@ class PaymentBunqMeTab extends Model {
     const STEP_RECEIPT = 'receipt';
 
     /**
+     * Number of seconds to delay cancelling the bunq me tab request on state
+     * change.
+     * This small delay is used to minimize API rate limiting.
+     *
+     * @var int
+     */
+    const CANCEL_DELAY = 3;
+
+    /**
      * An ordered list of steps in this payment.
      */
     public const STEPS = [
@@ -249,7 +258,8 @@ class PaymentBunqMeTab extends Model {
         case Payment::STATE_FAILED:
             // Cancel the BunqMe Tab over on bunqs side
             if($this->bunq_tab_id != null)
-                CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id);
+                CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id)
+                    ->delay(now()->addSeconds(Self::CANCEL_DELAY));
             break;
 
         default:

@@ -27,6 +27,14 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
     const QUEUE = 'high';
 
     /**
+     * Number of seconds to delay payment forwards.
+     * This small delay is used to minimize API rate limiting.
+     *
+     * @var int
+     */
+    const FORWARD_DELAY = 6;
+
+    /**
      * The number of seconds to wait before retrying the job.
      * The bunq API has a 30-second cooldown when throttling.
      *
@@ -34,7 +42,14 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
      */
     public $retryAfter = 32;
 
+    /**
+     * The bunq account ID.
+     */
     private $accountId;
+
+    /**
+     * The bunq me tab ID to process.
+     */
     private $tabId;
 
     /**
@@ -146,6 +161,6 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
             $to,
             $amount,
             config('app.name') . ' ' . __('barpay::service.bunq.paid') . ': ' . $barPayment->getReference()
-        )->delay(now()->addSecond());
+        )->delay(now()->addSeconds(Self::FORWARD_DELAY));
     }
 }

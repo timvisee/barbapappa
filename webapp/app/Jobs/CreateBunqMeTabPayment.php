@@ -23,6 +23,14 @@ class CreateBunqMeTabPayment implements ShouldQueue {
     const QUEUE = 'high';
 
     /**
+     * Number of seconds to delay cancelling the bunq me tab request on failure.
+     * This small delay is used to minimize API rate limiting.
+     *
+     * @var int
+     */
+    const CANCEL_DELAY = 3;
+
+    /**
      * The number of seconds to wait before retrying the job.
      * The bunq API has a 30-second cooldown when throttling.
      *
@@ -113,7 +121,8 @@ class CreateBunqMeTabPayment implements ShouldQueue {
 
         // Immediately cancel if payment is not in progress anymore
         if(!$payment->isInProgress()) {
-            CancelBunqMeTabPayment::dispatch($account, $bunqMeTabId);
+            CancelBunqMeTabPayment::dispatch($account, $bunqMeTabId)
+                ->delay(now()->addSeconds(Self::CANCEL_DELAY));
             return;
         }
     }
