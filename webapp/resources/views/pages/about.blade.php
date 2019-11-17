@@ -6,7 +6,18 @@
     <div class="highlight-box">
         <h2 class="ui header">@yield('title')</h2>
         {{ logo()->element(true, false, ['class' => 'logo']) }}
-        <p><i>{{ config('app.version_name') }} <span class="subtle">({{ config('app.version_code') }})</span></i></p>
+        <p>
+            <i>
+                @if(!empty($sourceVersionPage = config('app.sourceVersionPage')))
+                    <a href="{{ str_replace('{}', config('app.version_name'), $sourceVersionPage) }}" target="_blank">
+                        {{ config('app.version_name') }}
+                    </a>
+                @else
+                    {{ config('app.version_name') }}
+                @endif
+                <span class="subtle">({{ config('app.version_code') }})</span>
+            </i>
+        </p>
     </div>
 
     <div class="margin-center align-center" style="max-width: 400px;">

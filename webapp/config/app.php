@@ -28,6 +28,7 @@ return [
      * Application source location.
      */
     'source' => 'https://gitlab.com/timvisee/barbapappa',
+    'sourceVersionPage' => 'https://gitlab.com/timvisee/barbapappa/-/tags/v{}',
 
     /*
     |--------------------------------------------------------------------------
