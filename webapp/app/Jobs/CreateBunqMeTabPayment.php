@@ -116,12 +116,5 @@ class CreateBunqMeTabPayment implements ShouldQueue {
             CancelBunqMeTabPayment::dispatch($account, $bunqMeTabId);
             return;
         }
-
-        // Schedule some jobs to continiously check whether the payment
-        // succeeded, this is a temporary solution to quickly approve payments
-        // because the bunq API doesn't properly invoke callbacks
-        // See: https://gitlab.com/timvisee/barbapappa/issues/294
-        ProcessBunqAccountEvents::dispatch($account, 6 * 10)
-            ->delay(now()->addSeconds(15));
     }
 }
