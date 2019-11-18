@@ -53,9 +53,9 @@ Route::middleware('throttle:4,1')->post('/register', 'RegisterController@doRegis
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 Route::prefix('/password')->group(function() {
     Route::get('/change', 'PasswordChangeController@change')->name('password.change');
-    Route::post('/change', 'PasswordChangeController@doChange')->name('password.change');
+    Route::middleware('throttle:5,1')->post('/change', 'PasswordChangeController@doChange')->name('password.change');
     Route::get('/disable', 'PasswordChangeController@disable')->name('password.disable');
-    Route::post('/disable', 'PasswordChangeController@doDisable')->name('password.disable');
+    Route::middleware('throttle:5,1')->post('/disable', 'PasswordChangeController@doDisable')->name('password.disable');
     Route::get('/request', 'PasswordForgetController@request')->name('password.request');
     Route::middleware('throttle:4,1')->post('/request', 'PasswordForgetController@doRequest');
     Route::get('/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
