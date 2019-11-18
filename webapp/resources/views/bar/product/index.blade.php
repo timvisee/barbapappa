@@ -42,8 +42,9 @@
                     {{ Form::text('q', Request::input('q'), [
                         'placeholder' => __('pages.products.search') . '...',
                     ]) }}
-                    {{-- TODO: remove icon class? --}}
-                    <i class="icon glyphicons glyphicons-search link"></i>
+                    <i class="icon link">
+                        <span class="glyphicons glyphicons-search"></span>
+                    </i>
                 </div>
             </div>
         {!! Form::close() !!}

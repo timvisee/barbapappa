@@ -23,3 +23,7 @@ p .glyphicons {
   float: right;
 }
 
+// Icon in search boxes
+.ui.vertical.menu i.icon .glyphicons {
+    line-height: 0.5rem;
+}

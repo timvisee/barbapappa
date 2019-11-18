@@ -22,7 +22,9 @@
             <div class="item">
                 <div class="ui transparent icon input">
                     {{ Form::text('search', '', ['placeholder' => 'Search communities...']) }}
-                    <i class="icon glyphicons glyphicons-search link"></i>
+                    <i class="icon link">
+                        <span class="glyphicons glyphicons-search"></span>
+                    </i>
                 </div>
             </div>
         --}}

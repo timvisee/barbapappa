@@ -10,7 +10,9 @@
                         :placeholder="__('pages.bar.advancedBuy.searchUsers') + '...'"
                         type="text" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
-                <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon glyphicons glyphicons-search link"></i>
+                <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon link">
+                    <span class="glyphicons glyphicons-search"></span>
+                </i>
             </div>
         </div>
 
