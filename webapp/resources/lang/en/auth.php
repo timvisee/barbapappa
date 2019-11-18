@@ -15,7 +15,7 @@ return [
     /**
      * Authentication related messages.
      */
-    'authRequired' => 'You must be logged in to view this page.',
+    'authRequired' => 'Please login or register to continue.',
     'guestRequired' => 'You can\'t visit this page while you\'re logged in.',
     'unauthorized' => 'You are unauthorized to view this page.',
     'passwordChanged' => 'Your password has been changed.',

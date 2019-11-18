@@ -15,7 +15,7 @@ return [
     /**
      * Authentication related messages.
      */
-    'authRequired' => 'Ye must be aboard to spot dis page.',
+    'authRequired' => 'Please login or register to aboard.',
     'guestRequired' => 'Ye ship must be sunk to view dis page.',
     'unauthorized' => 'Ye be unauthorized to view dis page.',
     'passwordChanged' => 'Yer passcode be changed.',

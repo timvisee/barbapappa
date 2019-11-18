@@ -15,7 +15,7 @@ return [
     /**
      * Authentication related messages.
      */
-    'authRequired' => 'Je moet ingelogd zijn om deze pagina te bekijken.',
+    'authRequired' => 'Log in of registreer je om verder te gaan.',
     'guestRequired' => 'Je kunt deze pagina niet bekijken als je bent ingelogd.',
     'unauthorized' => 'Je bent onbevoegd deze pagina te bekijken.',
     'passwordChanged' => 'Je wachtwoord is aangepast.',
