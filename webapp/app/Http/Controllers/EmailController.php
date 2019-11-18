@@ -101,6 +101,81 @@ class EmailController extends Controller {
     }
 
     /**
+     * Show a list of email addresses to the user that still need verification.
+     *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     */
+    public function unverified(Request $request, $userId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+        $user = barauth()->getUser();
+
+        // List the unverified addresses
+        $emails = $user->emails()->unverified()->get();
+        if($emails->isEmpty())
+            return redirect()
+                ->route('account.emails', ['userId' => $userId])
+                ->with('success', __('pages.accountPage.email.allVerified'));
+
+        $anyVerified = $user->emails()->verified()->limit(1)->count() > 0;
+
+        return view('account.email.unverified')
+            ->with('anyVerified', $anyVerified)
+            ->with('emails', $emails);
+    }
+
+    /**
+     * Send a verification email to all email addresses.
+     *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     */
+    public function doVerifyAll(Request $request, $userId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+        $user = barauth()->getUser();
+
+        // List the unverified addresses
+        $emails = $user->emails()->unverified()->get();
+        if($emails->isEmpty())
+            return redirect()
+                ->route('account.emails', ['userId' => $userId])
+                ->with('success', __('pages.accountPage.email.allVerified'));
+
+        // Send the verification emails
+        foreach($emails as $email)
+            EmailVerificationManager::createAndSend($email, false);
+
+        return redirect()->route('account.emails.verified', ['userId' => $userId]);
+    }
+
+    /**
+     * Landing page after sending a verification email to all unverified
+     * addresses. This page should be shown until all are actually verified.
+     *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     */
+    public function verified(Request $request, $userId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+        $user = barauth()->getUser();
+
+        // List unverified emails, redirect to last bar if there are none
+        $emails = $user->emails()->unverified()->get();
+        if($emails->isEmpty())
+            return redirect()->route('last');
+
+        // Keep showing current page until all email addresses are verified
+        return view('account.email.verified')
+            ->with('emails', $emails);
+    }
+
+    /**
      * Resend a verification email.
      *
      * @param Request $request The request.

@@ -52,6 +52,11 @@ class User extends Model implements HasLocalePreference {
         'password',
     ];
 
+    /**
+     * Request users to verify their email address after this number of seconds.
+     */
+    const REQUEST_MAIL_VERIFY_AFTER = 7 * 24 * 60 * 60;
+
     public static function boot() {
         parent::boot();
 
@@ -275,6 +280,21 @@ class User extends Model implements HasLocalePreference {
         return $this->emails()
                 ->where('verified_at', '!=', null)
                 ->first() != null;
+    }
+
+    /**
+     * Check whether the user must validate their e-mail address now.
+     *
+     * @return bool True if the user should verify their e-mail address right
+     * now.
+     */
+    public function needsToVerifyEmail() {
+        return $this
+            ->emails()
+            ->unverified()
+            ->where('created_at', '<=', now()->subSeconds(Self::REQUEST_MAIL_VERIFY_AFTER))
+            ->limit(1)
+            ->count() > 0;
     }
 
     /**

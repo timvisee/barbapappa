@@ -39,8 +39,10 @@ return [
     'sessionLinkSentOrPassword' => 'We sent you a magic link to :email. Click it to sign in or enter your password.',
     'unrecognizedEmailRegister' => 'We do not recognize your email address yet. Please register an account to start using :app.',
 
+    'mustVerifyEmail' => 'You must verify your email address to fully use our service.',
+
     /*
-    | TODO: Are these properties still required?
+    | TODO: Are these properties still required/used?
     |
     |--------------------------------------------------------------------------
     | Authentication Language Lines

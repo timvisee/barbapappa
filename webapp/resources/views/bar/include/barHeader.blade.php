@@ -1,3 +1,14 @@
+{{-- Request email verification if not verified after a week --}}
+@if($mustVerify)
+    <div class="ui warning message">
+        <span class="halflings halflings-warning-sign icon"></span>
+        @lang('auth.mustVerifyEmail')
+        <a href="{{ route('account.emails.unverified', [
+            'userId' => barauth()->getUser()->id,
+        ]) }}">@lang('misc.verifyNow')</a>.
+    </div>
+@endif
+
 <h2 class="ui header bar-header">
     <div>
         @if($joined)
@@ -43,6 +54,4 @@
             </div>
         @endif
     @endif
-
-
 </h2>

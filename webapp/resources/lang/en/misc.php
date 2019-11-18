@@ -120,6 +120,7 @@ return [
     'committedAt' => 'Committed at',
     'iWantToDelete' => 'I want to delete',
     'donate' => 'Donate',
+    'verifyNow' => 'Verify now',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'trashingCanBeUndone' => 'The item will be trashed. This operation can be reverted, by restoring the item from the trash.',
