@@ -39,6 +39,8 @@ return [
     'sessionLinkSentOrPassword' => 'We hebben je een magische link gestuurd naar :email. Klik er op om in te loggen of vul je wachtwoord in.',
     'unrecognizedEmailRegister' => 'We herkennen je e-mailadres nog niet. Registreer een account om gebruik te maken van :app.',
 
+    'mustVerifyEmail' => 'Verifieer je e-mailadres om volledig gebruik te maken van onze service.',
+
     /*
     | TODO: Are these properties still required?
     |

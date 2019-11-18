@@ -132,6 +132,7 @@ class BarController extends Controller {
         return view('bar.show')
             ->with('economy', $bar->economy)
             ->with('joined', $bar->isJoined($user))
+            ->with('mustVerify', $user->needsToVerifyEmail())
             ->with('products', $products)
             ->with('currencies', $currencies)
             ->with('productMutations', $productMutations->get());
@@ -151,7 +152,8 @@ class BarController extends Controller {
         return view('bar.info')
             ->with('economy', $bar->economy)
             ->with('page', last(explode('.', \Request::route()->getName())))
-            ->with('joined', $bar->isJoined($user));
+            ->with('joined', $bar->isJoined($user))
+            ->with('mustVerify', $user->needsToVerifyEmail());
     }
 
     /**
@@ -493,7 +495,8 @@ class BarController extends Controller {
         // Show the bar page
         return view('bar.buy')
             ->with('economy', $bar->economy)
-            ->with('joined', $bar->isJoined($user));
+            ->with('joined', $bar->isJoined($user))
+            ->with('mustVerify', $user->needsToVerifyEmail());
     }
 
     /**

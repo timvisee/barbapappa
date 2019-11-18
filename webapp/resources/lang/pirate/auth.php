@@ -39,6 +39,8 @@ return [
     'sessionLinkSentOrPassword' => 'We sent ye a magic link to :email. Click it to sign in or enter your password.',
     'unrecognizedEmailRegister' => 'We nay recognize yer e-bottle address yet. Please register an account to start using :app.',
 
+    'mustVerifyEmail' => 'Ye must verify yer e-bottle coordinate to fully use our service.',
+
     /*
     | TODO: Are these properties still required?
     | TODO: Translate these.
