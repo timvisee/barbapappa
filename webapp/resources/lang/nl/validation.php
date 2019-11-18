@@ -145,6 +145,7 @@ return [
         'confirm_name' => 'naam bevestiging',
         'confirm_delete' => 'verwijder bevestiging',
         'wallet' => 'portemonnee',
+        'to_wallet' => 'naar portemonnee',
         'symbol' => 'symbool',
         'format' => 'formaat',
     ],
