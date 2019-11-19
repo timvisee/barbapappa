@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int id
  * @property int user_id
+ * @property-read User user
  * @property string email
  * @property Carbon|null verified_at
  * @property string|null verified_ip

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Managers\PasswordResetManager;
 use App\Models\Email;
+use App\Models\SessionLink;
 use Illuminate\Http\Request;
 
 class PasswordForgetController extends Controller {
@@ -30,6 +31,20 @@ class PasswordForgetController extends Controller {
         // Get the email address
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         $email = Email::where('email', '=', $request->input('email'))->first();
+
+        // Send login link if user has no password
+        if(($user = $email->user) != null) {
+            if(!$user->hasPassword()) {
+                // Create and send session link
+                $link = SessionLink::create($user, route('password.change'));
+                $link->sendMail($email->email);
+
+                // Redirect to index, show success message
+                return redirect()
+                    ->route('index')
+                    ->with('success', __('auth.sessionLinkSent', ['email' => $request->input('email')]));
+            }
+        }
 
         // Create the verification and send the email if an email address is found
         if($email != null)

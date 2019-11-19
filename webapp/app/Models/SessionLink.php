@@ -85,11 +85,13 @@ class SessionLink extends Model {
      * This will not send any mail to the user.
      *
      * @param User $user The user to create the link for.
+     * @parma string|null $intended_url A custom intended URL, null to use default.
      * @return SessionLink The session link object that was created.
      */
-    public static function create(User $user) {
+    public static function create(User $user, $intended_url = null) {
         // Grab the intended URL if there is any
-        $intended_url = \Session::get('url.intended');
+        if($intended_url == null)
+            $intended_url = \Session::get('url.intended');
         \Session::forget('url.intended');
 
         // Create a session link for this user
