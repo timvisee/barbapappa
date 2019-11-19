@@ -36,7 +36,15 @@
                     </td>
                     <td>
                         @if(!$email->isVerified())
-                            <a href="{{ route('account.emails.reverify', ['userId' => $user->id, 'emailId' => $email->id]) }}" class="ui button small secondary">@lang('pages.accountPage.email.resendVerify')</a>
+                            {!! Form::open(['action' => [
+                                'EmailController@reverify',
+                                $user->id,
+                                'emailId' => $email->id
+                            ], 'method' => 'POST', 'class' => 'display-inline']) !!}
+                                <button class="ui button small secondary" type="submit">
+                                    @lang('pages.accountPage.email.resendVerify')
+                                </button>
+                            {!! Form::close() !!}
                         @endif
 
                         <a href="{{ route('account.emails.delete', ['userId' => $user->id, 'emailId' => $email->id]) }}" class="ui button small basic">@lang('misc.delete')</a>

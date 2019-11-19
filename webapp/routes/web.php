@@ -79,7 +79,7 @@ Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(f
         Route::get('/unverified', 'EmailController@unverified')->name('account.emails.unverified');
         Route::middleware('throttle:3,1')->post('/unverified', 'EmailController@doVerifyAll')->name('account.emails.doVerifyAll');
         Route::get('/verified', 'EmailController@verified')->name('account.emails.verified');
-        Route::middleware('throttle:5,1')->get('/reverify/{emailId}', 'EmailController@reverify')->name('account.emails.reverify');
+        Route::middleware('throttle:5,1')->post('/reverify/{emailId}', 'EmailController@reverify')->name('account.emails.reverify');
         Route::get('/delete/{emailId}', 'EmailController@delete')->name('account.emails.delete');
         Route::delete('/delete/{emailId}', 'EmailController@doDelete')->name('account.emails.doDelete');
     });

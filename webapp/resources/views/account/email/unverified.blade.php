@@ -34,12 +34,13 @@
         @endforeach
     </div>
 
-    {!! Form::open(['action' => ['EmailController@doVerifyAll', $user->id], 'method' => 'POST']) !!}
-        <button class="ui button primary small"
+    {!! Form::open(['action' => [
+        'EmailController@doVerifyAll',
+        $user->id,
+    ], 'method' => 'POST', 'class' => 'display-inline']) !!}
+        <button class="ui button primary"
             type="submit">{{ trans_choice('pages.accountPage.email.verify#', count($emails)) }}</button>
     {!! Form::close() !!}
-
-    <br>
 
     <a href="{{ route('account', ['userId' => $user->id]) }}"
             class="ui button basic">
