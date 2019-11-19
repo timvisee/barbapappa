@@ -732,6 +732,7 @@ return [
             'inCart' => 'In cart',
             'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
             'buyProductsUsers#' => '{0} Buy no products for :users pirates|{1} Buy product for :users pirates|[2,*] Buy :count products for :users pirates',
+            'pressToConfirm' => 'Tap again to confirm',
             'boughtProducts#' => '{0} Bought no products.|{1} Bought 1 product.|[2,*] Bought :count products.',
             'boughtProductsUsers#' => '{0} Bought no products for :users pirates.|{1} Bought 1 product for :users pirates.|[2,*] Bought :count products for :users pirates.',
             'pageCloseWarning' => 'Ye selected products or has products in cart that have not been bought yet. Ye must add a product selection to at least one pirate and tap th\' Buy button to commit th\' purchase, or the selection will be lost.',
