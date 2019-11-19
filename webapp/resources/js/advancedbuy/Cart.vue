@@ -22,9 +22,11 @@
                     v-bind:class="{ disabled: buying, loading: buying }"
                     href="#">
                 {{
-                    cart.length <= 1
-                        ? langChoice('pages.bar.advancedBuy.buyProducts#', quantity())
-                        : langChoice('pages.bar.advancedBuy.buyProductsUsers#', quantity(), {users: this.cart.length})
+                    confirming
+                        ? __('pages.bar.advancedBuy.pressToConfirm')
+                        : (cart.length <= 1
+                            ? langChoice('pages.bar.advancedBuy.buyProducts#', quantity())
+                            : langChoice('pages.bar.advancedBuy.buyProductsUsers#', quantity(), {users: this.cart.length}))
                 }}
             </a>
         </div>
@@ -37,6 +39,17 @@
             'cart',
             'buying',
         ],
+        data: function() {
+            return {
+                confirming: false,
+                confirmingTimer: null,
+            };
+        },
+        watch: {
+            cart: function() {
+                this.setConfirming(false);
+            },
+        },
         methods: {
             discard(user, product) {
                 // Find the user item
@@ -51,6 +64,8 @@
                 // Remove the whole user if there are no products left
                 if(item.products.length <= 0)
                     this.cart.splice(this.cart.findIndex(i => i.user.id == user.id), 1);
+
+                this.setConfirming(false);
             },
 
             quantity() {
@@ -63,7 +78,27 @@
             },
 
             buy() {
+                if(this.confirming !== true) {
+                    this.setConfirming(true);
+                    return;
+                }
+
                 this.$emit('buy');
+                this.setConfirming(false);
+            },
+
+            setConfirming(confirming = true) {
+                // Cancel any pending confirming timers
+                if(this.confirmingTimer != null)
+                    clearTimeout(this.confirmingTimer);
+
+                // Set confirming state, add reset timer
+                this.confirming = !!confirming;
+                if(this.confirming)
+                    this.confirmingTimer = setTimeout(() => {
+                        this.confirming = false;
+                        this.confirmingTimer = null;
+                    }, 4000);
             },
         }
     }
