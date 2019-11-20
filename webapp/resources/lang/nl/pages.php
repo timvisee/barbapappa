@@ -30,6 +30,7 @@ return [
     'index' => [
         'title' => 'Hoofdpagina',
         'emailAndContinue' => 'Vul je e-mailadres in om in te loggen of te registreren.',
+        'backToIndex' => 'Terug naar hoofdpagina',
     ],
 
     /**
@@ -80,7 +81,7 @@ return [
             'resendVerify' => 'Verificatie opnieuw versturen',
             'unverified#' => '{0} Geen ongeverifiëerde e-mails|{1} Ongeverifiëerde e-mail|[2,*] :count ongeverifiëerde e-mails',
             'verify#' => '{0} Verifiëer geen e-mailadres|{1} Verifiëer e-mailadres|[2,*] Verifiëer :count e-mailadressen',
-            'verifiedDescription' => 'We hebben je verificatie bericht gestuurd naar je ongeverifiëerde e-mailadressen. Klik op de link in dit bericht om het verificatieproces te voltooien.<br><br>Als je binnen 5 minuten geen bericht hebt ontvangen, controleer dan de spam map van je inbox en markeer het bericht als niet-spam.',
+            'verifiedDescription' => 'We hebben je verificatie bericht gestuurd naar je ongeverifiëerde e-mailadressen. Klik op de link in dit bericht om het verificatieproces te voltooien.',
             'iVerifiedAll' => 'Ik heb alles geverifiëerd',
             'verifySent' => 'Een nieuwe verificatie-e-mail zal zo spoedig mogelijk verzonden worden.',
             'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',

@@ -35,8 +35,7 @@ return [
     'loggedOut' => 'You\'ve been logged out.',
 
     'sessionLinkUnknown' => 'Failed to sign in. Expired or invalid session link.',
-    'sessionLinkSent' => 'We sent you a magic link to :email. Click it to sign in.',
-    'sessionLinkSentOrPassword' => 'We sent you a magic link to :email. Click it to sign in or enter your password.',
+    'sessionLinkSent' => 'We sent you a magic link to :email. Click on the link to sign in.',
     'unrecognizedEmailRegister' => 'We do not recognize your email address yet. Please register an account to start using :app.',
 
     'mustVerifyEmail' => 'You must verify your email address to fully use our service.',

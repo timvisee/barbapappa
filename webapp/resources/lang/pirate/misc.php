@@ -120,6 +120,7 @@ return [
     'iWantToDelete' => 'I want to sink',
     'donate' => 'Donate',
     'verifyNow' => 'Verify now',
+    'emailNotReceivedCheckSpam' => 'If ye nay receive a message in 2 minutes, please check yer spam folder and mark th\' messages as not-spam.',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

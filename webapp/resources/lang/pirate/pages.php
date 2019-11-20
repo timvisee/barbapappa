@@ -30,6 +30,7 @@ return [
     'index' => [
         'title' => 'Home port',
         'emailAndContinue' => 'Enter yer email address to login or register.',
+        'backToIndex' => 'Back to home page',
     ],
 
     /**
@@ -80,7 +81,7 @@ return [
             'resendVerify' => 'Sally forth verification',
             'unverified#' => '{0} No unverified emails|{1} Unverified email|[2,*] :count unverified emails',
             'verify#' => '{0} Verify no e-bottle coordinates|{1} Verify e-bottle coordinate|[2,*] Verify :count e-bottle coordinates',
-            'verifiedDescription' => 'We sent a new verification message to yer unverified e-bottle coordinates. Tap th\' link in th\' message to complete verification.<br><br>If ye nay receive a message, please check yer spam folder.',
+            'verifiedDescription' => 'We sent a new verification message to yer unverified e-bottle coordinates. Tap th\' link in th\' message to complete verification.',
             'iVerifiedAll' => 'I verified all',
             'verifySent' => 'A fresh verification e-bottle be sally forth.',
             'alreadyVerified' => 'Th\' e-bottle coordinate be verified.',

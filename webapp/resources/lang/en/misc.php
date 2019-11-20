@@ -121,6 +121,7 @@ return [
     'iWantToDelete' => 'I want to delete',
     'donate' => 'Donate',
     'verifyNow' => 'Verify now',
+    'emailNotReceivedCheckSpam' => 'If you don\'t receive a message within 2 minutes, please check the spam folder of your inbox and mark the messages as not-spam.',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'trashingCanBeUndone' => 'The item will be trashed. This operation can be reverted, by restoring the item from the trash.',
