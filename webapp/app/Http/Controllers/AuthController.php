@@ -34,7 +34,8 @@ class AuthController extends Controller {
 
         // Show session link sent page
         return view('myauth.loginSentSession')
-            ->with('email', $email);
+            ->with('email', $email)
+            ->with('loginWithPassword', $email->user->hasPassword());
     }
 
     /**

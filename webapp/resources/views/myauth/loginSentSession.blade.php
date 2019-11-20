@@ -14,6 +14,11 @@
     <div class="ui hidden divider"></div>
 
     <div class="ui link list">
+        @if($loginWithPassword ?? false)
+            <a href="{{ route('login') }}" class="item">
+                @lang('auth.loginPassword')
+            </a>
+        @endif
         <a href="{{ route('index') }}" class="item">
             @lang('pages.index.backToIndex')
         </a>
