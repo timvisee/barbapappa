@@ -35,8 +35,7 @@ return [
     'loggedOut' => 'Ye ship be sunk.',
 
     'sessionLinkUnknown' => 'Failed to sign in. Expired or invalid session link.',
-    'sessionLinkSent' => 'We sent ye a magic link to :email. Click it to sign in.',
-    'sessionLinkSentOrPassword' => 'We sent ye a magic link to :email. Click it to sign in or enter your password.',
+    'sessionLinkSent' => 'We sent ye a magic link to :email. Click on the link to sign in.',
     'unrecognizedEmailRegister' => 'We nay recognize yer e-bottle address yet. Please register an account to start using :app.',
 
     'mustVerifyEmail' => 'Ye must verify yer e-bottle coordinate to fully use our service.',

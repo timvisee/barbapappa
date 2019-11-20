@@ -30,6 +30,7 @@ return [
     'index' => [
         'title' => 'Home page',
         'emailAndContinue' => 'Enter your email address to login or register.',
+        'backToIndex' => 'Back to home page',
     ],
 
     /**
@@ -80,7 +81,7 @@ return [
             'resendVerify' => 'Resend verification',
             'unverified#' => '{0} No unverified emails|{1} Unverified email|[2,*] :count unverified emails',
             'verify#' => '{0} Verify no email addresses|{1} Verify email address|[2,*] Verify :count email addresses',
-            'verifiedDescription' => 'We sent a new verification message to your unverified email addresses. Click the link in the message to complete verification.<br><br>If you don\'t receive a message within 5 minutes, please check the spam folder of your inbox and mark the messages as not-spam.',
+            'verifiedDescription' => 'We sent a new verification message to your unverified email addresses. Click the link in the message to complete verification.',
             'iVerifiedAll' => 'I verified all',
             'verifySent' => 'A new verification email will be sent shortly.',
             'alreadyVerified' => 'This email address has already been verified.',

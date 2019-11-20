@@ -85,9 +85,8 @@ class LoginController extends Controller {
         $link = SessionLink::create($email->user);
         $link->sendMail($request->input('email'));
 
-        // Redirect to index, show success message
-        return redirect()
-            ->route('index')
-            ->with('success', __('auth.sessionLinkSent', ['email' => $request->input('email')]));
+        // Show session link sent page
+        return view('myauth.loginSentSession')
+            ->with('email', $email);
     }
 }

@@ -1,19 +1,14 @@
 @extends('layouts.app')
 
-@section('title', __('pages.accountPage.email.verifyEmails'))
-
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.accountPage.backToAccount'),
-        'link' => route('account', ['userId' => $user->id]),
-        'icon' => 'undo',
-    ];
-@endphp
+@section('title', __('pages.accountPage.email.sentSessionLinkTitle'))
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
-    <p>@lang('pages.accountPage.email.verifiedDescription')</p>
+    <p>
+        @lang('pages.accountPage.email.verifiedDescription')<br>
+        <br>
+        @lang('misc.emailNotReceivedCheckSpam')
+    </p>
 
     <div class="ui hidden divider"></div>
 
