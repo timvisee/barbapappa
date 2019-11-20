@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.accountPage.email.sentSessionLinkTitle'))
+@section('title', __('pages.accountPage.email.verifyEmails'))
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
