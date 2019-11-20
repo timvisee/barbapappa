@@ -232,6 +232,7 @@ class ValidationDefaults {
     public static function walletCurrency(Economy $economy) {
         return [
             Rule::exists('currency', 'id')
+                ->where('enabled', true)
                 ->where('economy_id', $economy->id)
                 ->where('allow_wallet', true),
         ];

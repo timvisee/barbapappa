@@ -23,7 +23,7 @@ class CurrencyController extends Controller {
         // Get the community, find economy, query currencies
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currencies = $economy->currencies()->withDisabled()->get();
+        $currencies = $economy->currencies()->get();
 
         return view('community.economy.currency.index')
             ->with('economy', $economy)
@@ -40,7 +40,7 @@ class CurrencyController extends Controller {
         // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
+        $currency = $economy->currencies()->findOrFail($currencyId);
 
         return view('community.economy.currency.show')
             ->with('economy', $economy)
@@ -104,7 +104,7 @@ class CurrencyController extends Controller {
         // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
+        $currency = $economy->currencies()->findOrFail($currencyId);
 
         // Show the edit view
         return view('community.economy.currency.edit')
@@ -121,7 +121,7 @@ class CurrencyController extends Controller {
         // Get the community, find economy and economy currency
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
+        $currency = $economy->currencies()->findOrFail($currencyId);
 
         // Validate
         $this->validate($request, [
@@ -153,7 +153,7 @@ class CurrencyController extends Controller {
         // Get the community, and the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
+        $currency = $economy->currencies()->findOrFail($currencyId);
 
         return view('community.economy.currency.delete')
             ->with('economy', $economy)
@@ -169,7 +169,7 @@ class CurrencyController extends Controller {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $currency = $economy->currencies()->withDisabled()->findOrFail($currencyId);
+        $currency = $economy->currencies()->findOrFail($currencyId);
 
         // Check some requirements
         $hasCurrency = $economy->wallets()->where('currency_id', $currencyId)->limit(1)->count() > 0;
