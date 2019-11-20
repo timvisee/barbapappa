@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -40,6 +41,35 @@ class Wallet extends Model {
     ];
 
     /**
+     * Scope to wallets that are compatible with the given wallet.
+     *
+     * This filters the wallet by the used currency.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param Currency|int $currency The currency or currency ID.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCurrency($query, $currency) {
+        return $query->where(
+            'currency_id',
+            $currency instanceof Currency ? $currency->id : $currency
+        );
+    }
+
+    /**
+     * Scope to wallets that use the given currency.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param Wallet $wallet The wallet they must be compatible with.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCompatibleWith($query, Wallet $wallet) {
+        return $query->currency($wallet->currency_id);
+    }
+
+    /**
      * Get the economy member this wallet model is from.
      *
      * @return The economy member.
@@ -71,7 +101,7 @@ class Wallet extends Model {
                 $this->hasMany(MutationWallet::class),
                 (new MutationWallet)->mutation()
             )
-            ->latest();
+            ->latest('mutation.created_at');
     }
 
     /**
@@ -212,6 +242,36 @@ class Wallet extends Model {
         // Increment the balance
         $this->withdraw($amount);
         $wallet->deposit($amount);
+    }
+
+    /**
+     * Migrate all transactions from this wallet, to the target wallet.
+     *
+     * This also changes the balance in both balance to reflect the transferred
+     * transactions.
+     *
+     * @param Wallet $target The target wallet.
+     */
+    public function migrateTransactions(Wallet $target) {
+        $self = $this;
+        DB::transaction(function() use(&$self, $target) {
+            // Query the amount
+            $amount = -$self->mutations()->sum('amount');
+
+            // Move transactions to target wallet
+            $self->mutations()->update([
+                'mutation_wallet.wallet_id' => $target->id,
+            ]);
+
+            // Update wallet balances
+            if($amount > 0) {
+                $self->withdraw($amount);
+                $target->deposit($amount);
+            } else if($amount < 0) {
+                $self->deposit(-$amount);
+                $target->withdraw(-$amount);
+            }
+        });
     }
 
     /**

@@ -185,7 +185,7 @@ class EconomyMember extends Pivot {
     public function wallets() {
         return $this
             ->hasMany(Wallet::class, 'economy_member_id')
-            ->orderBy('balance', 'DESC');
+            ->orderBy('wallet.balance', 'DESC');
     }
 
     /**
@@ -325,6 +325,9 @@ class EconomyMember extends Pivot {
      *
      * @param [EconomyMember] $members List of economy members.
      * @return EconomyMember Returns the member everything is merged into.
+     *
+     * @throws \Exception Throws if merging failed due to incorrect wallet
+     *      balance.
      */
     public static function mergeAll($members) {
         if($members->count() <= 1)
@@ -352,10 +355,23 @@ class EconomyMember extends Pivot {
             $newMember->save();
             $newMember->aliases()->sync($alias_ids);
 
-            // Move all wallets to first member
-            // TODO: properly merge wallets/transactions/mutations
-            foreach($oldMembers as $oldMember)
-                $oldMember->wallets()->update(['economy_member_id' => $newMember->id]);
+            // Migrate all wallets to the new member
+            foreach($oldMembers as $oldMember) {
+                foreach($oldMember->wallets as $oldWallet) {
+                    // Find compatible wallet on final user to migrate to
+                    $wallet = $newMember->wallets()->compatibleWith($oldWallet)->first();
+                    if($wallet != null) {
+                        $oldWallet->migrateTransactions($wallet);
+                        if($oldWallet->balance != 0)
+                            throw new \Exception('Cannot migrate wallet transactions and delete, should have balance of 0 after migration transactions');
+                        $oldWallet->delete();
+                    } else {
+                        // No wallet to migrate to, just move this to player
+                        $oldWallet->economy_member_id = $newMember->id;
+                        $oldWallet->save();
+                    }
+                }
+            }
 
             // Destroy all other members
             EconomyMember::destroy($oldMembers->pluck('id'));

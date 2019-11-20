@@ -274,7 +274,7 @@ class BalanceImportAlias extends Model {
                                 ->orWhere('user_id', $user->id);
                         });
                 })
-                ->orderBy('created_at', 'ASC')
+                ->orderBy('economy_member.created_at', 'ASC')
                 ->get();
             if($members->isEmpty())
                 continue;
@@ -309,7 +309,7 @@ class BalanceImportAlias extends Model {
 
         // Get all uncommitted changes, and commit them
         $changes = BalanceImportChange::whereIn('alias_id', $alias_ids)
-            ->orderBy('created_at', 'ASC')
+            ->orderBy('balance_import_change.created_at', 'ASC')
             ->whereNotNull('approved_at')
             ->whereNull('committed_at')
             ->whereNull('mutation_id')
