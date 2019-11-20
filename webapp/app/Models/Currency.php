@@ -52,11 +52,6 @@ class Currency extends Model {
         'deleted_at' => 'datetime',
     ];
 
-    public static function boot() {
-        parent::boot();
-        static::addGlobalScope(new EnabledScope);
-    }
-
     /**
      * Get dynamic properties.
      *
@@ -90,10 +85,10 @@ class Currency extends Model {
     }
 
     /**
-     * Disable the enabled scope, and also return the disabled entities.
+     * Limit to enabled currencies.
      */
-    public function scopeWithDisabled($query) {
-        return $query->withoutGlobalScope(EnabledScope::class);
+    public function scopeEnabled($query) {
+        (new EnabledScope)->apply($query, $this);
     }
 
     /**

@@ -101,7 +101,7 @@ class WalletController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
 
         // List the currencies an user can create a wallet for
-        $currencies = $economy->currencies()->where('allow_wallet', true)->get();
+        $currencies = $economy->currencies()->enabled()->where('allow_wallet', true)->get();
 
         // Show an error if an user can't create a wallet
         if($currencies->isEmpty()) {
