@@ -110,7 +110,7 @@ class EmailController extends Controller {
         // To edit a different user, ensure we have administrator privileges
         if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
             return response(view('noPermission'));
-        $user = barauth()->getUser();
+        $user = User::findOrFail($userId);
 
         // List the unverified addresses
         $emails = $user->emails()->unverified()->get();
@@ -136,7 +136,7 @@ class EmailController extends Controller {
         // To edit a different user, ensure we have administrator privileges
         if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
             return response(view('noPermission'));
-        $user = barauth()->getUser();
+        $user = User::findOrFail($userId);
 
         // List the unverified addresses
         $emails = $user->emails()->unverified()->get();
@@ -163,7 +163,7 @@ class EmailController extends Controller {
         // To edit a different user, ensure we have administrator privileges
         if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
             return response(view('noPermission'));
-        $user = barauth()->getUser();
+        $user = User::findOrFail($userId);
 
         // List unverified emails, redirect to last bar if there are none
         $emails = $user->emails()->unverified()->get();
