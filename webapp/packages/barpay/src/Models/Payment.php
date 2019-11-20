@@ -418,6 +418,10 @@ class Payment extends Model {
      * @return string Display name based on serviceable type.
      */
     public function displayName() {
+        // Show generic payment service name if unknown
+        if($this->service_id == null)
+            return __('barpay::service.unknown.name');
+
         // TODO: this is very inefficient, fix this!
         return $this->service->displayName();
     }

@@ -5,6 +5,13 @@
  */
 return [
     /**
+     * An unknown payment.
+     */
+    'unknown' => [
+        'name' => 'Payment',
+    ],
+
+    /**
      * IBAN transfer service with manual check.
      */
     'manualiban' => [

@@ -143,10 +143,12 @@
                 <td>@lang('misc.state')</td>
                 <td>{{ $payment->stateName() }}</td>
             </tr>
-            <tr>
-                <td>@lang('pages.paymentService.serviceType')</td>
-                <td>{{ $payment->service->displayName() }}</td>
-            </tr>
+            @if($payment->service_id != null)
+                <tr>
+                    <td>@lang('pages.paymentService.serviceType')</td>
+                    <td>{{ $payment->service->displayName() }}</td>
+                </tr>
+            @endif
             @if($payment->user_id == barauth()->getUser()->id)
                 <tr>
                     <td>@lang('misc.user')</td>
