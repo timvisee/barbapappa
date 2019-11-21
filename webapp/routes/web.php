@@ -406,6 +406,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 Route::get('/create', 'WalletController@create')->name('community.wallet.create');
                 Route::post('/create', 'WalletController@doCreate')->name('community.wallet.doCreate');
 
+                // Merge pages
+                Route::get('/merge', 'WalletController@merge')->name('community.wallet.merge');
+                Route::post('/merge', 'WalletController@doMerge')->name('community.wallet.doMerge');
+
                 // Quick top-up economy
                 Route::get('/top-up', 'WalletController@topUpEconomy')->name('community.wallet.topUpEconomy');
 
