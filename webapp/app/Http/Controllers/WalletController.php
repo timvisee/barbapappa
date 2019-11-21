@@ -262,6 +262,132 @@ class WalletController extends Controller {
     }
 
     /**
+     * Wallet merge page.
+     *
+     * @return Response
+     */
+    public function merge($communityId, $economyId) {
+        // Get the user, community, find economy, economy member and user wallets
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $currencyWallets = $economy_member
+            ->wallets()
+            ->get()
+            ->groupBy('currency_id')
+            ->filter(function($group) {
+                return $group->count() > 1;
+            });
+
+        // Must have a group to merge wallets in
+        if($currencyWallets->isEmpty())
+            return redirect()
+                ->route('community.wallet.list', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                ])
+                ->with('info', __('pages.wallets.noWalletsToMerge'));
+
+        // Create array with group objects having currency and wallets
+        $currencies = Currency::whereIn('id', $currencyWallets->keys())->get();
+        $walletGroups = [];
+        foreach($currencyWallets as $currency_id => $wallets) {
+            $walletGroups[] = [
+                'currency_id' => $currency_id,
+                'currency' => $currencies->firstWhere('id', $currency_id),
+                'wallets' => $wallets,
+            ];
+        }
+
+        return view('community.wallet.merge')
+            ->with('economy', $economy)
+            ->with('walletGroups', $walletGroups);
+    }
+
+    /**
+     * Do merge wallets page.
+     *
+     * @return Response
+     */
+    public function doMerge(Request $request, $communityId, $economyId) {
+        // Get the user, community, find economy, economy member and user wallets
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $currencyWallets = $economy_member
+            ->wallets()
+            ->get()
+            ->groupBy('currency_id')
+            ->filter(function($group) {
+                return $group->count() > 1;
+            });
+
+        // Must have a group to merge wallets in
+        if($currencyWallets->isEmpty())
+            return redirect()
+                ->route('community.wallet.list', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                ])
+                ->with('info', __('pages.wallets.noWalletsToMerge'));
+
+        // Validate and group the wallets to merge
+        $mergeWallets = [];
+        foreach($currencyWallets as $currency_id => $wallets) {
+            $toMerge = collect();
+            foreach($wallets as $wallet)
+                if(is_checked($request->input($currency_id . '_' . $wallet->id . '_merge')))
+                    $toMerge->push($wallet);
+
+            // Continue if none selected, error if 1 selected
+            if(empty($toMerge))
+                continue;
+            if(count($toMerge) == 1) {
+                // Get the currency
+                $currency = Currency::find($currency_id);
+                add_session_error(
+                    $currency_id . '_group',
+                    __('pages.wallets.mustSelectTwoToMerge', [
+                        'currency' => $currency->name,
+                    ])
+                );
+                return redirect()
+                    ->back()
+                    ->withInput();
+            }
+
+            // Add to list to merge
+            $mergeWallets[] = $toMerge;
+        }
+
+        // Merge selected grouped wallets
+        $mergeTotal = 0;
+        DB::transaction(function() use(&$mergeTotal, $mergeWallets) {
+            foreach($mergeWallets as $wallets) {
+                // Merge the selected wallets
+                $newWallet = $wallets->first();
+                foreach($wallets->slice(1) as $oldWallet) {
+                    $oldWallet->migrateTransactions($newWallet);
+                    if($oldWallet->balance != 0)
+                        throw new \Exception('failed to merge wallets, balance != 0');
+                    $oldWallet->delete();
+                }
+
+                $mergeTotal += $wallets->count();
+            }
+        });
+
+        return redirect()
+            ->route('community.wallet.list', [
+                'communityId' => $communityId,
+                'economyId' => $economyId,
+            ])
+            ->with('success', trans_choice('pages.wallets.mergedWallets#', $mergeTotal) . '.');
+    }
+
+    /**
      * Show the wallet transfer page.
      *
      * @return Response

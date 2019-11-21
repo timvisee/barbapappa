@@ -86,8 +86,8 @@ return [
             'verifySent' => 'Een nieuwe verificatie-e-mail zal zo spoedig mogelijk verzonden worden.',
             'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',
             'allVerified' => 'Al je e-mailadressen zijn geverifiëerd.',
-            'cannotDeleteMustHaveOne' => 'Je kunt dit e-mailadres niet verwijderen, je moet tenminste één adres hebben.',
-            'cannotDeleteMustHaveVerified' => 'Je kunt dit e-mailadres niet verwijderen, je moet tenminste één geverifiëerd adres hebben.',
+            'cannotDeleteMustHaveOne' => 'Je kunt dit e-mailadres niet verwijderen, je moet ten minste één adres hebben.',
+            'cannotDeleteMustHaveVerified' => 'Je kunt dit e-mailadres niet verwijderen, je moet ten minste één geverifiëerd adres hebben.',
             'deleted' => 'Het e-mailadres is verwijderd.',
             'deleteQuestion' => 'Weet je zeker dat je dit e-mailadres wilt verwijderen?',
             'backToEmails' => 'Terug naar e-mails',
@@ -223,7 +223,7 @@ return [
      */
     'currencies' => [
         'title' => 'Valuta\'s',
-        'description' => 'Op deze pagina zie je een overzicht van de ingestelde valuta\'s voor deze economie.<br>Tenminste één valuta moet ingeschakeld zijn om de economie te kunnen gebruiken voor een bar.<br>Voeg een nieuwe valuta toe, of klik op een valuta om deze te beheren.',
+        'description' => 'Op deze pagina zie je een overzicht van de ingestelde valuta\'s voor deze economie.<br>Ten minste één valuta moet ingeschakeld zijn om de economie te kunnen gebruiken voor een bar.<br>Voeg een nieuwe valuta toe, of klik op een valuta om deze te beheren.',
         'change' => 'Valuta aanpassen',
         'noCurrencies' => 'Deze economie heeft geen valuta\'s',
         'createCurrency' => 'Valuta toevoegen',
@@ -503,7 +503,7 @@ return [
     'wallets' => [
         'title' => 'Portemonnees',
         'description' => 'Klik op één van je portemonnees om deze te beheren, of maak een nieuwe aan.',
-        'walletEconomies' => 'Portemonee economieën',
+        'walletEconomies' => 'Portemonnee economieën',
         'yourWallets' => 'Jouw portemonnees',
         '#wallets' => '{0} Geen portemonnees|{1} 1 portemonnee|[2,*] :count portemonnees',
         'economySelectDescription' => 'Portemonnees voor deze groep zijn onderverdeeld per economie.<br>Selecteer een economie om je portemonnees te beheren.',
@@ -519,6 +519,11 @@ return [
         'cannotCreateNoCurrencies' => 'Je kunt nu geen portemonnee aanmaken. De groep administrator heeft geen valuta geconfigureerd waarbij dit is toegestaan.',
         'all' => 'Alle portemonnees',
         'view' => 'Bekijk portemonnee',
+        'noWalletsToMerge' => 'Je hebt geen portemonnees die je samen kunt voegen.',
+        'mergeWallets' => 'Portemonnees samenvoegen',
+        'mergeDescription' => 'Selecteer voor elk valuta de portemonnees die je samen wilt voegen.',
+        'mustSelectTwoToMerge' => 'Selecteer ten minste twee :currency portemonnees om samen te voegen.',
+        'mergedWallets#' => '{0} Geen portemonnees samengevoegd|{1} Eén portemonnee samengevoegd|[2,*] :count portemonnees samengevoegd',
         'transfer' => 'Overboeken',
         'transferToSelf' => 'Overboeken naar portemonnee',
         'transferToUser' => 'Overboeken naar gebruiker',
@@ -528,7 +533,7 @@ return [
         'topUpNow' => 'Nu betalen',
         'successfullyTransferredAmount' => ':amount succesvol overgeboekt naar :wallet',
         'backToWallet' => 'Terug naar portemonnee',
-        'walletTransactions' => 'Portemonee transacties',
+        'walletTransactions' => 'Portemonnee transacties',
     ],
 
     /**
@@ -736,7 +741,7 @@ return [
             'pressToConfirm' => 'Tik om te bevestigen',
             'boughtProducts#' => '{0} Geen producten gekocht.|{1} Eén product gekocht.|[2,*] :count producten gekocht.',
             'boughtProductsUsers#' => '{0} Geen producten gekocht voor :users leden.|{1} Eén product gekocht voor :users leden.|[2,*] :count producten gekocht voor :users leden.',
-            'pageCloseWarning' => 'Je hebt producten geselecteerd of hebt producten in de winkelwagen die nog niet gekocht zijn. Je moet geselecteerde producten eerst aan tenminste één gebruiker toevoegen en daarna op de Koop knop drukken om de bestelling te voltooien, of de selectie gaat verloren.',
+            'pageCloseWarning' => 'Je hebt producten geselecteerd of hebt producten in de winkelwagen die nog niet gekocht zijn. Je moet geselecteerde producten eerst aan ten minste één gebruiker toevoegen en daarna op de Koop knop drukken om de bestelling te voltooien, of de selectie gaat verloren.',
         ],
         'checklist' => 'Bar checklist',
     ],

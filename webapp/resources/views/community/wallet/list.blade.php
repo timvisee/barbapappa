@@ -66,10 +66,13 @@
         @lang('misc.create')
     </a>
 
+    <a href="{{ route('community.wallet.merge', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+            class="ui button basic">
+        @lang('misc.merge')
+    </a>
+
     <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
             class="ui button basic">
         @lang('pages.community.goTo')
     </a>
-
-    {{-- TODO: list transactions for the user here --}}
 @endsection

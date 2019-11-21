@@ -122,7 +122,7 @@ class Wallet extends Model {
                 (new Mutation)->transaction()
             )
             ->distinct()
-            ->latest();
+            ->latest('transaction.created_at');
     }
 
     /**
