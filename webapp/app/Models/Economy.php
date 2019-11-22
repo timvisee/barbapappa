@@ -516,15 +516,20 @@ class Economy extends Model {
 
         // TODO: use join to limit economy instead
 
-        // Find all recent product mutations in order
+        // Build a sub query for selecting the last 100 product mutations
         $product_ids = MutationProduct::select('product_id')
-            ->distinct()
-            ->whereExists(function($query) {
-                $query->selectRaw('1')
-                    ->from('mutation')
-                    ->whereRaw('mutation.mutationable_id = mutation_product.id');
-            })
-            ->whereNotIn('product_id', $exclude_product_ids)
+            ->distinct();
+        if($mutation_ids != null)
+            $product_ids = $product_ids
+                ->whereExists(function($query) use($mutation_ids) {
+                    $query->selectRaw('1')
+                        ->from('mutation')
+                        ->whereRaw('mutation.mutationable_id = mutation_product.id')
+                        ->whereIn('mutation.id', $mutation_ids);
+                });
+        if($exclude_product_ids != null)
+            $product_ids = $product_ids->whereNotIn('product_id', $exclude_product_ids);
+        $product_ids = $product_ids
             ->latest()
             ->limit($limit)
             ->get()
