@@ -619,7 +619,9 @@ class BarController extends Controller {
             $query = $query->whereIn('mutation_product.product_id', $product_ids);
 
         // Finalize query, get member IDs
-        $user_ids = $query->limit(100)
+        $user_ids = $query
+            ->orderBy('mutation_product.quantity', 'DESC')
+            ->limit(100)
             ->get(['mutation.owner_id'])
             ->pluck('owner_id')
             ->unique()
