@@ -264,15 +264,19 @@
                             @endif
                         </td>
                     </tr>
-                    @if($transaction->owner_id != null && $transaction->owner_id != barauth()->getUser()->id)
-                        <tr>
-                            <td>@lang('misc.initiatedBy')</td>
-                            <td>{{ $transaction->owner->name }}</td>
-                        </tr>
-                    @endif
                     <tr>
                         <td>@lang('misc.state')</td>
                         <td>{{ $mutation->stateName() }}</td>
+                    </tr>
+                    <tr>
+                        <td>@lang('misc.owner')</td>
+                        <td>
+                            @if($mutation->owner != null)
+                                {{ $mutation->owner->name }}
+                            @else
+                                <i>@lang('misc.unknownUser')</i>
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td>@lang('misc.firstSeen')</td>

@@ -160,6 +160,16 @@
                         <td>{{ $transaction->stateName() }}</td>
                     </tr>
                     <tr>
+                        <td>@lang('misc.owner')</td>
+                        <td>
+                            @if($transaction->owner != null)
+                                {{ $transaction->owner->name }}
+                            @else
+                                <i>@lang('misc.unknownUser')</i>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
                         <td>@lang('misc.firstSeen')</td>
                         <td>@include('includes.humanTimeDiff', ['time' => $transaction->created_at])</td>
                     </tr>

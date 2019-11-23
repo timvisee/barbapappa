@@ -93,11 +93,11 @@
     <p>
         <div class="ui buttons">
             <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button basic secondary">
+                    class="ui button secondary">
                 @lang('misc.rename')
             </a>
             <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button basic negative">
+                    class="ui button negative">
                 @lang('misc.delete')
             </a>
         </div>
