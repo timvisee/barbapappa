@@ -89,151 +89,6 @@
 
     <div class="ui divider hidden"></div>
 
-    {{-- Metadata for transaction types --}}
-    @php
-        // TODO: eager load data.wallet.economy here to improve performance!
-        $data = $mutation->mutationable;
-    @endphp
-    @if($data != null)
-        @if($data instanceof MutationWallet && $data->wallet_id != null)
-            @php
-                // Extend page links
-                $menulinks[] = [
-                    'name' => __('pages.wallets.view'),
-                    'link' => $data->wallet->getUrlShow(),
-                    'icon' => 'wallet',
-                ];
-            @endphp
-
-            <p>
-                {{-- TODO: inefficient querying here, improve this! --}}
-                <a href="{{ $data->wallet->getUrlShow() }}"
-                        class="ui button basic">
-                    @lang('pages.wallets.view')
-                </a>
-            </p>
-        @elseif($data instanceof MutationProduct)
-            @php
-                // Extend page links
-                $menulinks[] = [
-                    'name' => __('pages.products.viewProduct'),
-                    'link' => route('bar.product.show', [
-                            'barId' => $data->bar->human_id,
-                            'productId' => $data->product_id,
-                        ]),
-                    'icon' => 'shopping-bag',
-                ];
-                $menulinks[] = [
-                    'name' => __('pages.bar.viewBar'),
-                    'link' => route('bar.show', [
-                            'barId' => $data->bar->human_id,
-                        ]),
-                    'icon' => 'beer',
-                ];
-            @endphp
-
-            <div class="ui top vertical menu fluid">
-                <h5 class="ui item header">@lang('misc.product')</h5>
-
-                @php
-                    // Get the product
-                    $product = $data->product()->withTrashed()->first();
-                    $trashed = $product == null || $product->trashed();
-                @endphp
-
-                <a class="item"
-                        href="{{ !$trashed ? route('bar.product.show', [
-                            'barId' => $data->bar->human_id,
-                            'productId' => $data->product_id,
-                        ]) : '#'}}">
-                    @if($data->quantity != 1)
-                        <span class="subtle">{{ $data->quantity }}×</span>
-                    @endif
-                    {{ $product != null ? $product->displayName() : __('pages.products.unknownProduct') }}
-                    <span class="subtle">
-                        @ {{ $data->bar->name }}
-                    </span>
-
-                    {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
-                </a>
-            </div>
-        @elseif($data instanceof MutationPayment)
-            @php
-                // Extend page links
-                $menulinks[] = [
-                    'name' => __('pages.payments.viewPayment'),
-                    'link' => route('payment.show', [
-                        'paymentId' => $data->payment_id,
-                    ]),
-                    'icon' => 'credit-card',
-                ];
-            @endphp
-
-            <div class="ui top vertical menu fluid">
-                <h5 class="ui item header">@lang('misc.payment')</h5>
-
-                @php
-                    // Get the payment
-                    $payment = $data->payment;
-                @endphp
-
-                <a class="item"
-                        href="{{ $payment != null ? route('payment.show', [
-                            'paymentId' => $payment->id,
-                        ]) : '#'}}">
-                    {{ $payment != null ? $payment->displayName() : __('pages.payments.unknownPayment') }}
-                    <span class="subtle">
-                        ({{ $payment->stateName() }})
-                    </span>
-
-                    {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
-
-                    <span class="sub-label">
-                        @include('includes.humanTimeDiff', ['time' => $payment->updated_at ?? $payment->created_at])
-                    </span>
-                </a>
-            </div>
-        @else
-            <table class="ui compact celled definition table">
-                <tbody>
-                    <tr>
-                        <td>@lang('misc.description')</td>
-                        <td>
-                            @if($data->description)
-                                {{ $data->description }}
-                            @else
-                                <i>@lang('misc.none')</i>
-                            @endif
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        @endif
-    @endif
-
-    {{-- Dependencies and dependents --}}
-    @php
-        $dependOn = $mutation->dependOn;
-        $dependents = $mutation->dependents;
-
-        $dependGroups = [];
-        if($dependOn != null)
-            $dependGroups[] = [
-                'header' => trans_choice('pages.mutations.dependsOn#', 1),
-                'mutations' => [$dependOn],
-            ];
-        if($dependents->isNotEmpty())
-            $dependGroups[] = [
-                'header' => trans_choice('pages.mutations.dependentBy#', count($dependents)),
-                'mutations' => $dependents,
-            ];
-    @endphp
-    @if(count($dependGroups) > 0)
-        @include('transaction.mutation.include.list', [
-            'groups' => $dependGroups,
-        ])
-    @endif
-
     <p>
         <a href="{{ route('transaction.show', ['transactionId' => $transaction->id]) }}"
                 class="ui button basic">
@@ -247,6 +102,151 @@
             @lang('misc.details')
         </div>
         <div class="content">
+            {{-- Metadata for transaction types --}}
+            @php
+                // TODO: eager load data.wallet.economy here to improve performance!
+                $data = $mutation->mutationable;
+            @endphp
+            @if($data != null)
+                @if($data instanceof MutationWallet && $data->wallet_id != null)
+                    @php
+                        // Extend page links
+                        $menulinks[] = [
+                            'name' => __('pages.wallets.view'),
+                            'link' => $data->wallet->getUrlShow(),
+                            'icon' => 'wallet',
+                        ];
+                    @endphp
+
+                    <p>
+                        {{-- TODO: inefficient querying here, improve this! --}}
+                        <a href="{{ $data->wallet->getUrlShow() }}"
+                                class="ui button basic">
+                            @lang('pages.wallets.view')
+                        </a>
+                    </p>
+                @elseif($data instanceof MutationProduct)
+                    @php
+                        // Extend page links
+                        $menulinks[] = [
+                            'name' => __('pages.products.viewProduct'),
+                            'link' => route('bar.product.show', [
+                                    'barId' => $data->bar->human_id,
+                                    'productId' => $data->product_id,
+                                ]),
+                            'icon' => 'shopping-bag',
+                        ];
+                        $menulinks[] = [
+                            'name' => __('pages.bar.viewBar'),
+                            'link' => route('bar.show', [
+                                    'barId' => $data->bar->human_id,
+                                ]),
+                            'icon' => 'beer',
+                        ];
+                    @endphp
+
+                    <div class="ui top vertical menu fluid">
+                        <h5 class="ui item header">@lang('misc.product')</h5>
+
+                        @php
+                            // Get the product
+                            $product = $data->product()->withTrashed()->first();
+                            $trashed = $product == null || $product->trashed();
+                        @endphp
+
+                        <a class="item"
+                                href="{{ !$trashed ? route('bar.product.show', [
+                                    'barId' => $data->bar->human_id,
+                                    'productId' => $data->product_id,
+                                ]) : '#'}}">
+                            @if($data->quantity != 1)
+                                <span class="subtle">{{ $data->quantity }}×</span>
+                            @endif
+                            {{ $product != null ? $product->displayName() : __('pages.products.unknownProduct') }}
+                            <span class="subtle">
+                                @ {{ $data->bar->name }}
+                            </span>
+
+                            {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
+                        </a>
+                    </div>
+                @elseif($data instanceof MutationPayment)
+                    @php
+                        // Extend page links
+                        $menulinks[] = [
+                            'name' => __('pages.payments.viewPayment'),
+                            'link' => route('payment.show', [
+                                'paymentId' => $data->payment_id,
+                            ]),
+                            'icon' => 'credit-card',
+                        ];
+                    @endphp
+
+                    <div class="ui top vertical menu fluid">
+                        <h5 class="ui item header">@lang('misc.payment')</h5>
+
+                        @php
+                            // Get the payment
+                            $payment = $data->payment;
+                        @endphp
+
+                        <a class="item"
+                                href="{{ $payment != null ? route('payment.show', [
+                                    'paymentId' => $payment->id,
+                                ]) : '#'}}">
+                            {{ $payment != null ? $payment->displayName() : __('pages.payments.unknownPayment') }}
+                            <span class="subtle">
+                                ({{ $payment->stateName() }})
+                            </span>
+
+                            {!! $mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
+
+                            <span class="sub-label">
+                                @include('includes.humanTimeDiff', ['time' => $payment->updated_at ?? $payment->created_at])
+                            </span>
+                        </a>
+                    </div>
+                @else
+                    <table class="ui compact celled definition table">
+                        <tbody>
+                            <tr>
+                                <td>@lang('misc.description')</td>
+                                <td>
+                                    @if($data->description)
+                                        {{ $data->description }}
+                                    @else
+                                        <i>@lang('misc.none')</i>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                @endif
+            @endif
+
+            {{-- Dependencies and dependents --}}
+            @php
+                $dependOn = $mutation->dependOn;
+                $dependents = $mutation->dependents;
+
+                $dependGroups = [];
+                if($dependOn != null)
+                    $dependGroups[] = [
+                        'header' => trans_choice('pages.mutations.dependsOn#', 1),
+                        'mutations' => [$dependOn],
+                    ];
+                if($dependents->isNotEmpty())
+                    $dependGroups[] = [
+                        'header' => trans_choice('pages.mutations.dependentBy#', count($dependents)),
+                        'mutations' => $dependents,
+                    ];
+            @endphp
+            @if(count($dependGroups) > 0)
+                @include('transaction.mutation.include.list', [
+                    'groups' => $dependGroups,
+                ])
+            @endif
+
             <table class="ui compact celled definition table">
                 <tbody>
                     <tr>

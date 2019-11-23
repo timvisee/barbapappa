@@ -74,10 +74,12 @@
     <div class="ui divider hidden"></div>
 
     @if($transaction->canUndo())
-        <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id]) }}"
-                class="ui button basic">
-            @lang('misc.undo')
-        </a>
+        <p>
+            <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id]) }}"
+                    class="ui button basic">
+                @lang('misc.undo')
+            </a>
+        </p>
     @endif
 
     {{-- TODO: some action buttons --}}
@@ -94,49 +96,49 @@
     {{--     </div> --}}
     {{-- </p> --}}
 
-    {{-- Mutation list --}}
-    @include('transaction.mutation.include.list', [
-        'groups' => [
-            [
-                'header' => trans_choice('pages.mutations.from#', $fromMutations->count()),
-                'mutations' => $fromMutations,
-            ],
-            [
-                'header' => trans_choice('pages.mutations.to#', $toMutations->count()),
-                'mutations' => $toMutations,
-            ],
-        ],
-    ])
-
-    {{-- Transaction references --}}
-    @php
-        $referencedTo = $transaction->referencedTo;
-        $referencedBy = $transaction->referencedBy;
-
-        $referenceGroups = [];
-        if($referencedTo != null)
-            $referenceGroups[] = [
-                'header' => trans_choice('pages.transactions.referencedTo#', 1),
-                'transactions' => [$referencedTo],
-            ];
-        if($referencedBy->isNotEmpty())
-            $referenceGroups[] = [
-                'header' => trans_choice('pages.transactions.referencedBy#', count($referencedBy)),
-                'transactions' => $referencedBy,
-            ];
-    @endphp
-    @if(count($referenceGroups) > 0)
-        @include('transaction.include.list', [
-            'groups' => $referenceGroups,
-        ])
-    @endif
-
     <div class="ui fluid accordion">
         <div class="title">
             <i class="dropdown icon"></i>
             @lang('misc.details')
         </div>
         <div class="content">
+            {{-- Mutation list --}}
+            @include('transaction.mutation.include.list', [
+                'groups' => [
+                    [
+                        'header' => trans_choice('pages.mutations.from#', $fromMutations->count()),
+                        'mutations' => $fromMutations,
+                    ],
+                    [
+                        'header' => trans_choice('pages.mutations.to#', $toMutations->count()),
+                        'mutations' => $toMutations,
+                    ],
+                ],
+            ])
+
+            {{-- Transaction references --}}
+            @php
+                $referencedTo = $transaction->referencedTo;
+                $referencedBy = $transaction->referencedBy;
+
+                $referenceGroups = [];
+                if($referencedTo != null)
+                    $referenceGroups[] = [
+                        'header' => trans_choice('pages.transactions.referencedTo#', 1),
+                        'transactions' => [$referencedTo],
+                    ];
+                if($referencedBy->isNotEmpty())
+                    $referenceGroups[] = [
+                        'header' => trans_choice('pages.transactions.referencedBy#', count($referencedBy)),
+                        'transactions' => $referencedBy,
+                    ];
+            @endphp
+            @if(count($referenceGroups) > 0)
+                @include('transaction.include.list', [
+                    'groups' => $referenceGroups,
+                ])
+            @endif
+
             <table class="ui compact celled definition table">
                 <tbody>
                     <tr>
