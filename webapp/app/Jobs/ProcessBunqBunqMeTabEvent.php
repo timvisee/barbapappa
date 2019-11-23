@@ -160,7 +160,11 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
             $account,
             $to,
             $amount,
-            config('app.name') . ' ' . __('barpay::service.bunq.paid') . ': ' . $barPayment->getReference()
+            config('app.name')
+                . ' '
+                . __('barpay::service.bunq.paid', [], config('app.locale'))
+                . ': '
+                . $barPayment->getReference()
         )->delay(now()->addSeconds(Self::FORWARD_DELAY));
     }
 }
