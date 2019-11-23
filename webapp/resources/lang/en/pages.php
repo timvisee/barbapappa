@@ -561,9 +561,9 @@ return [
             'failed' => 'Failed',
         ],
         'descriptions' => [
-            'fromWalletToProduct' => 'Payment for product(s) with wallet',
-            'toProduct' => 'Payment for product(s)',
-            'fromPaymentToWallet' => 'Deposit to wallet from external account',
+            'fromWalletToProduct' => 'Purchased product(s)',
+            'toProduct' => 'Purchased product(s)',
+            'fromPaymentToWallet' => 'Deposit to wallet',
             'fromWalletToWallet' => 'Transfer between wallets',
             'toWallet' => 'Deposit to wallet',
             'fromWallet' => 'Withdrawal from wallet',
@@ -599,6 +599,8 @@ return [
             'productFromDetail' => 'Received money for :products',
             'paymentTo' => 'Withdrawal to external account',
             'paymentFrom' => 'Deposit from external account',
+            'paymentToDetail' => 'Withdrawal via :payment',
+            'paymentFromDetail' => 'Deposit via :payment',
         ],
     ],
 

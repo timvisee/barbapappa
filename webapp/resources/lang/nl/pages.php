@@ -561,9 +561,9 @@ return [
             'failed' => 'Mislukt',
         ],
         'descriptions' => [
-            'fromWalletToProduct' => 'Betaling voor product(en) met portemonnee',
-            'toProduct' => 'Betaling voor producten',
-            'fromPaymentToWallet' => 'Storting naar portemonnee vanaf externe rekening',
+            'fromWalletToProduct' => 'Aankoop product(en)',
+            'toProduct' => 'Aankoop product(en)',
+            'fromPaymentToWallet' => 'Storting naar portemonnee',
             'fromWalletToWallet' => 'Overboeking tussen portemonnees',
             'toWallet' => 'Storting naar portemonnee',
             'fromWallet' => 'Opname vanaf portemonnee',
@@ -599,6 +599,8 @@ return [
             'productFromDetail' => 'Geld ontvangen voor :products',
             'paymentTo' => 'Opname naar extern account',
             'paymentFrom' => 'Storting vanaf extern account',
+            'paymentToDetail' => 'Opname via :payment',
+            'paymentFromDetail' => 'Storting via :payment',
         ],
     ],
 

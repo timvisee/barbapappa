@@ -56,7 +56,9 @@
 
     <div class="ui divider hidden"></div>
 
-    {{-- Payment state icon --}}
+    <p class="align-center" title="@lang('misc.description')">{{ $payment->service->displayName() }}</p>
+
+    {{-- State icon --}}
     <div class="ui one small statistics">
         @switch($payment->state)
             @case(Payment::STATE_INIT)
@@ -137,39 +139,6 @@
 
     <div class="ui divider hidden"></div>
 
-    <table class="ui compact celled definition table">
-        <tbody>
-            <tr>
-                <td>@lang('misc.state')</td>
-                <td>{{ $payment->stateName() }}</td>
-            </tr>
-            @if($payment->service_id != null)
-                <tr>
-                    <td>@lang('pages.paymentService.serviceType')</td>
-                    <td>{{ $payment->service->displayName() }}</td>
-                </tr>
-            @endif
-            @if($payment->user_id == barauth()->getUser()->id)
-                <tr>
-                    <td>@lang('misc.user')</td>
-                    <td>{{ $payment->user->name }}</td>
-                </tr>
-            @endif
-            <tr>
-                <td>@lang('misc.initiatedAt')</td>
-                <td>@include('includes.humanTimeDiff', ['time' => $payment->created_at])</td>
-            </tr>
-            @if($payment->created_at != $payment->updated_at)
-                <tr>
-                    <td>@lang('misc.lastChanged')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $payment->updated_at])</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
-
-    <div class="ui divider hidden"></div>
-
     {{-- Show link to transaction --}}
     @if(!empty($transaction))
         <div class="ui top vertical menu fluid">
@@ -194,8 +163,6 @@
             </a>
         </div>
     @endif
-
-    <div class="ui divider hidden"></div>
 
     {{-- Action buttons --}}
     @if($payment->isInProgress())
@@ -228,4 +195,47 @@
             @lang('pages.payments.backToPayments')
         </a>
     </p>
+
+    <div class="ui fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            @lang('misc.details')
+        </div>
+        <div class="content">
+            <table class="ui compact celled definition table">
+                <tbody>
+                    <tr>
+                        <td>@lang('misc.state')</td>
+                        <td>{{ $payment->stateName() }}</td>
+                    </tr>
+                    @if($payment->service_id != null)
+                        <tr>
+                            <td>@lang('pages.paymentService.serviceType')</td>
+                            <td>{{ $payment->service->displayName() }}</td>
+                        </tr>
+                    @endif
+                    @if($payment->user_id == barauth()->getUser()->id)
+                        <tr>
+                            <td>@lang('misc.user')</td>
+                            <td>{{ $payment->user->name }}</td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td>@lang('misc.initiatedAt')</td>
+                        <td>@include('includes.humanTimeDiff', ['time' => $payment->created_at])</td>
+                    </tr>
+                    @if($payment->created_at != $payment->updated_at)
+                        <tr>
+                            <td>@lang('misc.lastChanged')</td>
+                            <td>@include('includes.humanTimeDiff', ['time' => $payment->updated_at])</td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td>@lang('misc.reference')</td>
+                        <td><code class="literal">payment#{{ $payment->id }}</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endsection
