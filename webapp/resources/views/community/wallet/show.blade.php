@@ -90,36 +90,62 @@
         ],
     ])
 
-    <div class="ui divider hidden"></div>
+    <p>
+        <div class="ui buttons">
+            <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                    class="ui button basic secondary">
+                @lang('misc.rename')
+            </a>
+            <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                    class="ui button basic negative">
+                @lang('misc.delete')
+            </a>
+        </div>
+    </p>
 
-    <table class="ui compact celled definition table">
-        <tbody>
-            <tr>
-                <td>@lang('misc.createdAt')</td>
-                <td>@include('includes.humanTimeDiff', ['time' => $wallet->created_at])</td>
-            </tr>
-            @if($wallet->created_at != $wallet->updated_at)
-                <tr>
-                    <td>@lang('misc.lastChanged')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $wallet->updated_at])</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+    <p>
+        <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                class="ui button basic">
+            @lang('general.goBack')
+        </a>
+    </p>
 
-    <div class="ui buttons">
-        <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                class="ui button basic secondary">
-            @lang('misc.rename')
-        </a>
-        <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                class="ui button basic negative">
-            @lang('misc.delete')
-        </a>
+    <div class="ui fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            @lang('misc.details')
+        </div>
+        <div class="content">
+            <table class="ui compact celled definition table">
+                <tbody>
+                    <tr>
+                        <td>@lang('misc.name')</td>
+                        <td>{{ $wallet->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>@lang('misc.balance')</td>
+                        <td>{!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}</td>
+                    </tr>
+                    <tr>
+                        <td>@lang('misc.owner')</td>
+                        <td>{{ $wallet->economyMember->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>@lang('misc.createdAt')</td>
+                        <td>@include('includes.humanTimeDiff', ['time' => $wallet->created_at])</td>
+                    </tr>
+                    @if($wallet->created_at != $wallet->updated_at)
+                        <tr>
+                            <td>@lang('misc.lastChanged')</td>
+                            <td>@include('includes.humanTimeDiff', ['time' => $wallet->updated_at])</td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td>@lang('misc.reference')</td>
+                        <td><code class="literal">wallet#{{ $wallet->id }}</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-
-    <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
-            class="ui button basic">
-        @lang('general.goBack')
-    </a>
 @endsection

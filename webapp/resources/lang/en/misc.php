@@ -53,6 +53,7 @@ return [
     'descriptiveName' => 'Descriptive name',
     'reference' => 'Reference',
     'user' => 'User',
+    'owner' => 'Owner',
     'fromUser' => 'From user',
     'role' => 'Role',
     'createdAt' => 'Created at',

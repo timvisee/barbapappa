@@ -53,6 +53,7 @@ return [
     'descriptiveName' => 'Beschrijvende naam',
     'reference' => 'Referentie',
     'user' => 'Gebruiker',
+    'owner' => 'Eigenaar',
     'fromUser' => 'Van gebruiker',
     'role' => 'Rol',
     'createdAt' => 'Gemaakt op',
