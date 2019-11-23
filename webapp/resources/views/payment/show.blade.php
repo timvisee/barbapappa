@@ -56,7 +56,7 @@
 
     <div class="ui divider hidden"></div>
 
-    {{-- Payment state icon --}}
+    {{-- State icon --}}
     <div class="ui one small statistics">
         @switch($payment->state)
             @case(Payment::STATE_INIT)

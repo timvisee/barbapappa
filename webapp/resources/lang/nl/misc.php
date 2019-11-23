@@ -51,6 +51,7 @@ return [
     'public' => 'Publiek',
     'name' => 'Naam',
     'descriptiveName' => 'Beschrijvende naam',
+    'reference' => 'Referentie',
     'user' => 'Gebruiker',
     'fromUser' => 'Van gebruiker',
     'role' => 'Rol',
