@@ -599,6 +599,8 @@ return [
             'productFromDetail' => 'Received booty for :products',
             'paymentTo' => 'Withdrawal to external account',
             'paymentFrom' => 'Deposit from external account',
+            'paymentToDetail' => 'Withdrawal via :payment',
+            'paymentFromDetail' => 'Deposit via :payment',
         ],
     ],
 

@@ -208,7 +208,7 @@ class Mutation extends Model {
 
         case MutationWallet::class:
             if($detail) {
-                // Get the wallet, it's name and build a link to it
+                // Get the wallet, its name and build a link to it
                 $wallet = $this->mutationable->wallet;
                 if($wallet != null) {
                     $link = '<a href="' . $wallet->getUrlShow() . '">' . e($wallet->name) . "</a>";
@@ -233,7 +233,16 @@ class Mutation extends Model {
                 return __('pages.mutations.types.product' . $dir);
 
         case MutationPayment::class:
-            // TODO: describe mutation in detail here
+            if($detail) {
+                // Get the payment, its name and build a link to it
+                $payment = $this->mutationable->payment;
+                if($payment != null) {
+                    $link = '<a href="' . $payment->getUrlShow() . '">' . e($payment->displayName()) . "</a>";
+
+                    // Return the description string including the wallet name/link
+                    return __('pages.mutations.types.payment' . $dir . 'Detail', ['payment' => $link]);
+                }
+            }
             return __('pages.mutations.types.payment' . $dir);
 
         default:

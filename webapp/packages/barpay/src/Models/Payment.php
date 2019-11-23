@@ -306,6 +306,18 @@ class Payment extends Model {
     }
 
     /**
+     * Build and return the URL for the payment show page.
+     *
+     * @return string The payment show URL.
+     */
+    // TODO: attempt to implement some eager loading of the economy model
+    public function getUrlShow() {
+        return route('payment.show', [
+            'paymentId' => $this->id,
+        ]);
+    }
+
+    /**
      * Get the state identifier, such as `completed` or `revoked`.
      *
      * @return State display name.

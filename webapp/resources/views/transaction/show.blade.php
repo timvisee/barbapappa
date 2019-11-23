@@ -11,7 +11,7 @@
 
     <div class="ui divider hidden"></div>
 
-    <p class="align-center" title="@lang('misc.description')">{{ $transaction->describe(true) }}</p>
+    <p class="align-center" title="@lang('misc.description')">{!!  $transaction->describe(true) !!}</p>
 
     {{-- State icon --}}
     <div class="ui one small statistics">

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @php
+    use \App\Models\Mutation;
     use \App\Models\MutationWallet;
     use \App\Models\MutationProduct;
     use \App\Models\MutationPayment;
@@ -18,45 +19,75 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <table class="ui compact celled definition table">
-        <tbody>
-            <tr>
-                <td>@lang('misc.description')</td>
-                <td>{!! $mutation->describe($detail = true) !!}</td>
-            </tr>
-            <tr>
-                <td>@lang('misc.amount')</td>
-                <td>
-                    {!! $mutation->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}
-                    @if($mutation->amount >= 0)
-                        @lang('pages.transactions.toTransaction')
-                    @else
-                        @lang('pages.transactions.fromTransaction')
-                    @endif
-                </td>
-            </tr>
-            @if($transaction->owner_id != null && $transaction->owner_id != barauth()->getUser()->id)
-                <tr>
-                    <td>@lang('misc.initiatedBy')</td>
-                    <td>{{ $transaction->owner->name }}</td>
-                </tr>
-            @endif
-            <tr>
-                <td>@lang('misc.state')</td>
-                <td>{{ $mutation->stateName() }}</td>
-            </tr>
-            <tr>
-                <td>@lang('misc.firstSeen')</td>
-                <td>@include('includes.humanTimeDiff', ['time' => $mutation->created_at])</td>
-            </tr>
-            @if($mutation->created_at != $mutation->updated_at)
-                <tr>
-                    <td>@lang('misc.lastUpdated')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $mutation->updated_at])</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+    <div class="ui divider hidden"></div>
+
+    <p class="align-center" title="@lang('misc.description')">{!!  $mutation->describe($detail = true) !!}</p>
+
+    {{-- State icon --}}
+    <div class="ui one small statistics">
+        @switch($mutation->state)
+            @case(Mutation::STATE_PENDING)
+                <div class="statistic yellow">
+                    <div class="value">
+                        <span class="halflings halflings-hourglass" title="{{ $mutation->stateName() }}"></span>
+                    </div>
+                    <div class="label">@lang('misc.state')</div>
+                </div>
+                @break
+
+            @case(Mutation::STATE_PROCESSING)
+                <div class="statistic yellow">
+                    <div class="value">
+                        <span class="halflings halflings-refresh" title="{{ $mutation->stateName() }}"></span>
+                    </div>
+                    <div class="label">@lang('misc.state')</div>
+                </div>
+                @break
+
+            @case(Mutation::STATE_SUCCESS)
+                <div class="statistic green">
+                    <div class="value">
+                        <span class="halflings halflings-ok" title="{{ $mutation->stateName() }}"></span>
+                    </div>
+                    <div class="label">@lang('misc.state')</div>
+                </div>
+                @break
+
+            @case(Mutation::STATE_FAILED)
+                <div class="statistic red">
+                    <div class="value">
+                        <span class="halflings halflings-alert" title="{{ $mutation->stateName() }}"></span>
+                    </div>
+                    <div class="label">@lang('misc.state')</div>
+                </div>
+                @break
+
+            @default
+                <div class="statistic">
+                    <div class="value">
+                        {{ $mutation->stateName() }}
+                    </div>
+                    <div class="label">@lang('misc.state')</div>
+                </div>
+        @endswitch
+    </div>
+    <br>
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $mutation->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}
+            </div>
+            <div class="label">
+                @if($mutation->amount >= 0)
+                    @lang('pages.transactions.toTransaction')
+                @else
+                    @lang('pages.transactions.fromTransaction')
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="ui divider hidden"></div>
 
     {{-- Metadata for transaction types --}}
     @php
@@ -203,8 +234,62 @@
         ])
     @endif
 
-    <a href="{{ route('transaction.show', ['transactionId' => $transaction->id]) }}"
-            class="ui button basic">
-        @lang('pages.transactions.backToTransaction')
-    </a>
+    <p>
+        <a href="{{ route('transaction.show', ['transactionId' => $transaction->id]) }}"
+                class="ui button basic">
+            @lang('pages.transactions.backToTransaction')
+        </a>
+    </p>
+
+    <div class="ui fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            @lang('misc.details')
+        </div>
+        <div class="content">
+            <table class="ui compact celled definition table">
+                <tbody>
+                    <tr>
+                        <td>@lang('misc.description')</td>
+                        <td>{!! $mutation->describe($detail = true) !!}</td>
+                    </tr>
+                    <tr>
+                        <td>@lang('misc.amount')</td>
+                        <td>
+                            {!! $mutation->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}
+                            @if($mutation->amount >= 0)
+                                @lang('pages.transactions.toTransaction')
+                            @else
+                                @lang('pages.transactions.fromTransaction')
+                            @endif
+                        </td>
+                    </tr>
+                    @if($transaction->owner_id != null && $transaction->owner_id != barauth()->getUser()->id)
+                        <tr>
+                            <td>@lang('misc.initiatedBy')</td>
+                            <td>{{ $transaction->owner->name }}</td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td>@lang('misc.state')</td>
+                        <td>{{ $mutation->stateName() }}</td>
+                    </tr>
+                    <tr>
+                        <td>@lang('misc.firstSeen')</td>
+                        <td>@include('includes.humanTimeDiff', ['time' => $mutation->created_at])</td>
+                    </tr>
+                    @if($mutation->created_at != $mutation->updated_at)
+                        <tr>
+                            <td>@lang('misc.lastUpdated')</td>
+                            <td>@include('includes.humanTimeDiff', ['time' => $mutation->updated_at])</td>
+                        </tr>
+                    @endif
+                    <tr>
+                        <td>@lang('misc.reference')</td>
+                        <td><code class="literal">mutation#{{ $mutation->id }}</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endsection

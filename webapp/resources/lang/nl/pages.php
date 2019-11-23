@@ -599,6 +599,8 @@ return [
             'productFromDetail' => 'Geld ontvangen voor :products',
             'paymentTo' => 'Opname naar extern account',
             'paymentFrom' => 'Storting vanaf extern account',
+            'paymentToDetail' => 'Opname via :payment',
+            'paymentFromDetail' => 'Storting via :payment',
         ],
     ],
 
