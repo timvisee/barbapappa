@@ -56,7 +56,7 @@ class PaymentManualIbanController {
         $timeLeft = $paymentable
             ->transferred_at
             ->addSeconds(PaymentManualIban::TRANSFER_WAIT)
-            ->longAbsoluteDiffForHumans(2);
+            ->shortAbsoluteDiffForHumans(2);
 
         return $response->with('timeLeft', $timeLeft);
     }
@@ -66,7 +66,7 @@ class PaymentManualIbanController {
         $timeWaiting = $paymentable
             ->transferred_at
             ->addSeconds(PaymentManualIban::TRANSFER_WAIT)
-            ->longAbsoluteDiffForHumans();
+            ->shortAbsoluteDiffForHumans();
 
         return $response->with('timeWaiting', $timeWaiting);
     }
