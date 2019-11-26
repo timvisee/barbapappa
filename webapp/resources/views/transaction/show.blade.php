@@ -3,7 +3,10 @@
 @section('title', __('pages.transactions.details'))
 
 @php
+    use \App\Models\Product;
     use \App\Models\Transaction;
+    use \App\Models\Wallet;
+    use \BarPay\Models\Payment;
 @endphp
 
 @section('content')
@@ -71,32 +74,69 @@
         </div>
     </div>
 
-    <div class="ui divider hidden"></div>
+    <div class="ui divider large hidden"></div>
 
-    @if(!empty($realtedObjects))
+    @if(!empty($realtedObjects[Product::class]))
         <div class="ui top vertical menu fluid">
-            {{-- Header --}}
             <h5 class="ui item header">
-                Items
-                {{-- TODO: translate --}}
+                {{ trans_choice('pages.products.#products', count($realtedObjects[Product::class])) }}
             </h5>
-
-            {{-- Transactions --}}
-            @foreach($realtedObjects as $obj)
+            @foreach($realtedObjects[Product::class] as $product)
                 <div class="item">
-                    {{ get_class($obj) }}
+                    {{ $product->displayName() }}
                 </div>
                 {{-- <a class="item" --}}
-                {{--         href="{{ route('transaction.show', [ --}}
-                {{--             'transactionId' => $transaction->id, --}}
+                {{--         href="{{ route('bar.product.show', [ --}}
+                {{--             'barId' => null, --}}
+                {{--             'productId' => $product->product_id, --}}
                 {{--         ]) }}"> --}}
-                {{--     {{ $transaction->describe() }} --}}
-                {{--     {!! $transaction->formatCost(BALANCE_FORMAT_LABEL, false, $wallet ?? null); !!} --}}
-
-                {{--     <span class="sub-label"> --}}
-                {{--         @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at, 'short' => true]) --}}
+                {{--     @if($data->quantity != 1) --}}
+                {{--         <span class="subtle">{{ $data->quantity }}×</span> --}}
+                {{--     @endif --}}
+                {{--     {{ $product->displayName() }} --}}
+                {{--     <span class="subtle"> --}}
+                {{--         @ {{ $product->bar->name }} --}}
                 {{--     </span> --}}
+
+                {{--     {!! $product->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!} --}}
                 {{-- </a> --}}
+            @endforeach
+        </div>
+    @endif
+    @if(!empty($realtedObjects[Payment::class]))
+        <div class="ui top vertical menu fluid">
+            <h5 class="ui item header">
+                {{ trans_choice('pages.payments.#payments', count($realtedObjects[Payment::class])) }}
+            </h5>
+            @foreach($realtedObjects[Payment::class] as $payment)
+                <a class="item"
+                        href="{{ route('payment.show', [
+                            'paymentId' => $payment->id,
+                        ]) }}">
+                    {{ $payment->displayName() }}
+                    <span class="subtle">
+                        ({{ $payment->stateName() }})
+                    </span>
+
+                    {!! $payment->formatCost(BALANCE_FORMAT_LABEL) !!}
+
+                    <span class="sub-label">
+                        @include('includes.humanTimeDiff', ['time' => $payment->updated_at ?? $payment->created_at])
+                    </span>
+                </a>
+            @endforeach
+        </div>
+    @endif
+    @if(!empty($realtedObjects[Wallet::class]))
+        <div class="ui top vertical menu fluid">
+            <h5 class="ui item header">
+                {{ trans_choice('pages.wallets.#wallets', count($realtedObjects[Wallet::class])) }}
+            </h5>
+            @foreach($realtedObjects[Wallet::class] as $wallet)
+                <a href="{{ $wallet->getUrlShow() }}"
+                        class="item">
+                    {{ $wallet->name }}
+                </a>
             @endforeach
         </div>
     @endif
