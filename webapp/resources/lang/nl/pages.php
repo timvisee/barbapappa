@@ -206,6 +206,8 @@ return [
         'manage' => 'Economieën beheren',
         'noEconomies' => 'Deze groep heeft geen economieën...',
         'createEconomy' => 'Economie aanmaken',
+        'editEconomy' => 'Economie aanpassen',
+        'deleteEconomy' => 'Economie verwijderen',
         'economyCreated' => 'De economie is aangemaakt. Voeg nu een valuta toe.',
         'deleteQuestion' => 'Je staat op het punt deze economie te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
         'deleteBlocked' => 'Je staat op het punt deze economie permanent te verwijderen. Verwijder eerst de entiteiten in de lijst hieronder voordat je verder kunt gaan met het verwijderen van deze economie.',
@@ -343,13 +345,12 @@ return [
      * Balance import system pages.
      */
     'balanceImport' => [
-        'title' => 'Saldoimportsystemen',
+        'title' => 'Saldoimports',
         'system' => 'Systeem',
         'systems' => 'Systemen',
         'noSystems' => 'Geen systemen...',
         'systems#' => '{0} Geen systemen|{1} Systeem|[2,*] :count systemen',
         'manageSystem' => 'Beheer systeem',
-        'manageSystems' => 'Beheer systemen',
         'namePlaceholder' => 'Ons systeem op papier',
         'newSystem' => 'Systeem toevoegen',
         'editSystem' => 'Systeem aanpassen',
