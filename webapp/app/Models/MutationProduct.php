@@ -109,7 +109,7 @@ class MutationProduct extends Model {
      */
     public function getRelatedObjects() {
         if($this->product_id != null)
-            return [$this->product];
+            return [$this];
         return [];
     }
 }

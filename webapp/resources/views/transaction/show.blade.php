@@ -3,7 +3,7 @@
 @section('title', __('pages.transactions.details'))
 
 @php
-    use \App\Models\Product;
+    use \App\Models\MutationProduct;
     use \App\Models\Transaction;
     use \App\Models\Wallet;
     use \BarPay\Models\Payment;
@@ -76,30 +76,30 @@
 
     <div class="ui divider large hidden"></div>
 
-    @if(!empty($realtedObjects[Product::class]))
+    @if(!empty($realtedObjects[MutationProduct::class]))
         <div class="ui top vertical menu fluid">
             <h5 class="ui item header">
-                {{ trans_choice('pages.products.#products', count($realtedObjects[Product::class])) }}
+                {{ trans_choice(
+                    'pages.products.#products',
+                    $realtedObjects[MutationProduct::class]->pluck('quantity')->sum()
+                ) }}
             </h5>
-            @foreach($realtedObjects[Product::class] as $product)
-                <div class="item">
-                    {{ $product->displayName() }}
-                </div>
-                {{-- <a class="item" --}}
-                {{--         href="{{ route('bar.product.show', [ --}}
-                {{--             'barId' => null, --}}
-                {{--             'productId' => $product->product_id, --}}
-                {{--         ]) }}"> --}}
-                {{--     @if($data->quantity != 1) --}}
-                {{--         <span class="subtle">{{ $data->quantity }}×</span> --}}
-                {{--     @endif --}}
-                {{--     {{ $product->displayName() }} --}}
-                {{--     <span class="subtle"> --}}
-                {{--         @ {{ $product->bar->name }} --}}
-                {{--     </span> --}}
+            @foreach($realtedObjects[MutationProduct::class] as $data)
+                <a class="item"
+                        href="{{ route('bar.product.show', [
+                            'barId' => $data->bar_id,
+                            'productId' => $data->product_id,
+                        ]) }}">
+                    @if($data->quantity != 1)
+                        <span class="subtle">{{ $data->quantity }}×</span>
+                    @endif
+                    {{ $data->product->displayName() }}
+                    <span class="subtle">
+                        @ {{ $data->bar->name }}
+                    </span>
 
-                {{--     {!! $product->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!} --}}
-                {{-- </a> --}}
+                    {!! $data->mutation->formatAmount(BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
+                </a>
             @endforeach
         </div>
     @endif
