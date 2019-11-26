@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BalanceImportAlias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -195,6 +196,34 @@ class BalanceImportSystemController extends Controller {
                 'economyId' => $economy->id,
             ])
             ->with('success', __('pages.balanceImport.deleted'));
+    }
+
+    /**
+     * Export a list of user alias addresses of users that have committed
+     * balance import changes.
+     *
+     * @return Response
+     */
+    public function exportUserList($communityId, $economyId, $systemId) {
+        // Get the community, economy, find the system, list events
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+
+        // Build email data for users that have committed balance import changes
+        $aliases = $system
+            ->changes()
+            ->committed()
+            ->distinct('alias_id')
+            ->pluck('alias_id');
+        $data = BalanceImportAlias::whereIn('id', $aliases)
+            ->pluck('email')
+            ->join("\r\n");
+
+        return view('community.economy.balanceimport.exportUserList')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('data', $data);
     }
 
     /**

@@ -313,8 +313,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
                     // Specific
                     Route::prefix('/{systemId}')->group(function() {
-                        // Show
+                        // Show, export user list
                         Route::get('/', 'BalanceImportSystemController@show')->name('community.economy.balanceimport.show');
+                        Route::get('/export-users', 'BalanceImportSystemController@exportUserList')->name('community.economy.balanceimport.exportUserList');
 
                         // Edit/delete, require manager perms
                         Route::middleware(BalanceImportSystemController::permsManage()->middleware())->group(function() {

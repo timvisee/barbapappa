@@ -83,6 +83,15 @@
             @lang('pages.balanceImport.viewSystem')
         </a>
 
+        <a href="{{ route('community.economy.balanceimport.exportUserList', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                ]) }}"
+                class="ui button basic">
+            @lang('pages.balanceImport.exportUserList')
+        </a>
+
         <a href="{{ route('community.economy.balanceimport.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                 class="ui button basic">
             @lang('pages.balanceImport.backToSystems')
