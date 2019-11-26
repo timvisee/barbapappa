@@ -259,9 +259,11 @@ class Wallet extends Model {
             $amount = -$self->mutations()->sum('amount');
 
             // Move transactions to target wallet
-            $self->mutations()->update([
-                'mutation_wallet.wallet_id' => $target->id,
-            ]);
+            $self->mutations()
+                ->resetOrder()
+                ->update([
+                    'mutation_wallet.wallet_id' => $target->id,
+                ]);
 
             // Update wallet balances
             if($amount > 0) {

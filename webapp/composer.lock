@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08c762631ac7dbe061119f5c7570fc52",
+    "content-hash": "3e6e9914618f16effb5217b8633bbef3",
     "packages": [
         {
             "name": "alfa6661/laravel-has-many-sync",
@@ -48,6 +48,62 @@
             ],
             "description": "Laravel has many sync",
             "time": "2018-08-13T09:35:37+00:00"
+        },
+        {
+            "name": "awssat/laravel-query-reset",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/awssat/laravel-query-reset.git",
+                "reference": "01ce2bb08def2d9166781a300e6c756aea804279"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/awssat/laravel-query-reset/zipball/01ce2bb08def2d9166781a300e6c756aea804279",
+                "reference": "01ce2bb08def2d9166781a300e6c756aea804279",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "5.*",
+                "illuminate/support": "5.*"
+            },
+            "require-dev": {
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "^6.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Awssat\\QueryReset\\QueryResetServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Awssat\\QueryReset\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Awssat developers",
+                    "email": "hello@awssat.com"
+                }
+            ],
+            "description": "Clear previously set statements in Laravel query builder",
+            "homepage": "https://github.com/awssat/laravel-query-reset",
+            "keywords": [
+                "builder",
+                "clear",
+                "laravel",
+                "query",
+                "reset"
+            ],
+            "time": "2018-07-30T19:26:58+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
