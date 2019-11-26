@@ -76,6 +76,15 @@
 
     <div class="ui divider large hidden"></div>
 
+    @if($transaction->canUndo())
+        <p>
+            <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id]) }}"
+                    class="ui button basic">
+                @lang('misc.undo')
+            </a>
+        </p>
+    @endif
+
     @if(!empty($realtedObjects[MutationProduct::class]))
         <div class="ui top vertical menu fluid">
             <h5 class="ui item header">
@@ -142,15 +151,6 @@
     @endif
 
     <div class="ui divider hidden"></div>
-
-    @if($transaction->canUndo())
-        <p>
-            <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id]) }}"
-                    class="ui button basic">
-                @lang('misc.undo')
-            </a>
-        </p>
-    @endif
 
     {{-- TODO: some action buttons --}}
     {{-- <p> --}}
