@@ -206,6 +206,8 @@ return [
         'manage' => 'Manage economies',
         'noEconomies' => 'This community has no economies...',
         'createEconomy' => 'Create economy',
+        'editEconomy' => 'Edit economy',
+        'deleteEconomy' => 'Delete economy',
         'economyCreated' => 'The economy has been created. Please add and configure a currency now.',
         'deleteQuestion' => 'You\'re about to delete this economy from this community. Are you sure you want to continue?',
         'deleteBlocked' => 'You\'re about to permanently delete this economy. You must delete the entities listed below first before you can continue with deleting this economy.',
@@ -343,13 +345,12 @@ return [
      * Balance import system pages.
      */
     'balanceImport' => [
-        'title' => 'Balance import systems',
+        'title' => 'Balance imports',
         'system' => 'System',
         'systems' => 'Systems',
         'noSystems' => 'No systems...',
         'systems#' => '{0} No systems|{1} System|[2,*] :count systems',
         'manageSystem' => 'Manage system',
-        'manageSystems' => 'Manage systems',
         'namePlaceholder' => 'Our paper system',
         'newSystem' => 'Add system',
         'editSystem' => 'Edit system',

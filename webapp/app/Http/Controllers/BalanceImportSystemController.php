@@ -66,7 +66,7 @@ class BalanceImportSystemController extends Controller {
 
         // Redirect to the show view after creation
         return redirect()
-            ->route('community.economy.balanceimport.show', [
+            ->route('community.economy.balanceimport.event.index', [
                 'communityId' => $communityId,
                 'economyId' => $economy->id,
                 'systemId' => $system->id,
