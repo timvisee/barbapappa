@@ -43,17 +43,6 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    @if($payment->isInProgress())
-        <div class="ui info message visible">
-            <div class="header">@lang('pages.payments.inProgress')</div>
-            <p>@lang('pages.payments.inProgressDescription')</p>
-            <a href="{{ route('payment.pay', ['paymentId' => $payment->id]) }}"
-                    class="ui button basic">
-                @lang('misc.showProgress')
-            </a>
-        </div>
-    @endif
-
     <div class="ui divider hidden"></div>
 
     <p class="align-center" title="@lang('misc.description')">{{ $payment->service->displayName() }}</p>
@@ -139,34 +128,10 @@
 
     <div class="ui divider hidden"></div>
 
-    {{-- Show link to transaction --}}
-    @if(!empty($transaction))
-        <div class="ui top vertical menu fluid">
-            <h5 class="ui item header">
-                @lang('pages.transactions.linkedTransaction')
-            </h5>
-
-            <a class="item"
-                    href="{{ route('transaction.show', [
-                        'transactionId' => $transaction->id,
-                    ])}}">
-                {{ $transaction->describe() }}
-                <span class="subtle">
-                    ({{ $transaction->stateName() }})
-                </span>
-
-                {!! $transaction->formatCost(BALANCE_FORMAT_LABEL) !!}
-
-                <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at])
-                </span>
-            </a>
-        </div>
-    @endif
-
-    {{-- Action buttons --}}
     @if($payment->isInProgress())
-        <p>
+        <div class="ui info message visible">
+            <div class="header">@lang('pages.payments.inProgress')</div>
+            <p>@lang('pages.payments.inProgressDescription')</p>
             <div class="ui buttons">
                 @if($payment->isInProgress())
                     <a href="{{ route('payment.pay', ['paymentId' => $payment->id]) }}"
@@ -181,8 +146,10 @@
                     </a>
                 @endif
             </div>
-        </p>
+        </div>
     @endif
+
+    <div class="ui divider hidden"></div>
 
     <p>
         <a class="ui button primary"
@@ -202,6 +169,32 @@
             @lang('misc.details')
         </div>
         <div class="content">
+            {{-- Show link to transaction --}}
+            @if(!empty($transaction))
+                <div class="ui top vertical menu fluid">
+                    <h5 class="ui item header">
+                        @lang('pages.transactions.linkedTransaction')
+                    </h5>
+
+                    <a class="item"
+                            href="{{ route('transaction.show', [
+                                'transactionId' => $transaction->id,
+                            ])}}">
+                        {{ $transaction->describe() }}
+                        <span class="subtle">
+                            ({{ $transaction->stateName() }})
+                        </span>
+
+                        {!! $transaction->formatCost(BALANCE_FORMAT_LABEL) !!}
+
+                        <span class="sub-label">
+                            @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at])
+                        </span>
+                    </a>
+                </div>
+            @endif
+
+            {{-- Details --}}
             <table class="ui compact celled definition table">
                 <tbody>
                     <tr>
