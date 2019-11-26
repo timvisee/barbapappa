@@ -25,8 +25,12 @@ class TransactionController extends Controller {
             return $m->amount > 0;
         });
 
+        // Fetch related objects
+        $related = $transaction->getRelatedObjects();
+
         return view('transaction.show')
             ->with('transaction', $transaction)
+            ->with('realtedObjects', $related)
             ->with('fromMutations', $fromMutations)
             ->with('toMutations', $toMutations);
     }

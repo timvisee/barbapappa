@@ -73,6 +73,36 @@
 
     <div class="ui divider hidden"></div>
 
+    @if(!empty($realtedObjects))
+        <div class="ui top vertical menu fluid">
+            {{-- Header --}}
+            <h5 class="ui item header">
+                Items
+                {{-- TODO: translate --}}
+            </h5>
+
+            {{-- Transactions --}}
+            @foreach($realtedObjects as $obj)
+                <div class="item">
+                    {{ get_class($obj) }}
+                </div>
+                {{-- <a class="item" --}}
+                {{--         href="{{ route('transaction.show', [ --}}
+                {{--             'transactionId' => $transaction->id, --}}
+                {{--         ]) }}"> --}}
+                {{--     {{ $transaction->describe() }} --}}
+                {{--     {!! $transaction->formatCost(BALANCE_FORMAT_LABEL, false, $wallet ?? null); !!} --}}
+
+                {{--     <span class="sub-label"> --}}
+                {{--         @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at, 'short' => true]) --}}
+                {{--     </span> --}}
+                {{-- </a> --}}
+            @endforeach
+        </div>
+    @endif
+
+    <div class="ui divider hidden"></div>
+
     @if($transaction->canUndo())
         <p>
             <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id]) }}"

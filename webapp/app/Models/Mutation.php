@@ -479,4 +479,24 @@ class Mutation extends Model {
     public function findCommunities() {
         return $this->mutationable->findCommunities();
     }
+
+    /**
+     * Get a list of all relevant and related objects to this mutation.
+     * Can be used to generate a list of links on a mutation inspection page, to
+     * the respective objects.
+     *
+     * A wallet mutation would return a list having a wallet object.
+     *
+     * This is an expensive function.
+     *
+     * @return Collection List of objects.
+     */
+    public function getRelatedObjects() {
+        switch($this->mutationable_type) {
+        case MutationMagic::class:
+            return collect();
+        default:
+            return $this->mutationable->getRelatedObjects();
+        }
+    }
 }

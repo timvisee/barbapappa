@@ -71,4 +71,21 @@ class MutationPayment extends Model {
     public function findCommunities() {
         return collect();
     }
+
+    /**
+     * Get a list of all relevant and related objects to this mutation.
+     * Can be used to generate a list of links on a mutation inspection page, to
+     * the respective objects.
+     *
+     * This will return the related payment.
+     *
+     * This is an expensive function.
+     *
+     * @return Collection List of objects.
+     */
+    public function getRelatedObjects() {
+        if($this->payment_id != null)
+            return [$this->payment];
+        return [];
+    }
 }

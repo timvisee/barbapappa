@@ -89,14 +89,6 @@
                 class="item">
             @lang('pages.products.title')
         </a>
-        <a href="{{ route('community.economy.payservice.index', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id
-                ]) }}"
-                class="item">
-            @lang('pages.paymentService.title')
-        </a>
-
         <a href="{{ route('community.economy.balanceimport.index', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id
@@ -104,7 +96,13 @@
                 class="item">
             @lang('pages.balanceImport.title')
         </a>
-
+        <a href="{{ route('community.economy.payservice.index', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id
+                ]) }}"
+                class="item">
+            @lang('pages.paymentService.title')
+        </a>
         <a href="{{ route('community.economy.finance.overview', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id
