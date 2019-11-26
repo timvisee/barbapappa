@@ -95,4 +95,21 @@ class MutationProduct extends Model {
             return collect([$this->bar->community]);
         return collect();
     }
+
+    /**
+     * Get a list of all relevant and related objects to this mutation.
+     * Can be used to generate a list of links on a mutation inspection page, to
+     * the respective objects.
+     *
+     * This will return related products.
+     *
+     * This is an expensive function.
+     *
+     * @return Collection List of objects.
+     */
+    public function getRelatedObjects() {
+        if($this->product_id != null)
+            return [$this];
+        return [];
+    }
 }

@@ -48,7 +48,7 @@ class Transaction extends Model {
 
     /**
      * Get the mutations that are part of this transaction.
-     * Ordered by their amount, positive (incomming) first, negative (outgoing) last.
+     * Ordered by their amount, positive (incoming) first, negative (outgoing) last.
      *
      * @return The mutations.
      */
@@ -470,5 +470,26 @@ class Transaction extends Model {
                 return true;
 
         return false;
+    }
+
+    /**
+     * Get a list of all relevant and related objects to this mutation.
+     * Can be used to generate a list of links on a mutation inspection page, to
+     * the respective objects.
+     *
+     * A transaction with a product and wallet mutation, would return product
+     * and wallet objects.
+     *
+     * This is an expensive function.
+     *
+     * @return Collection List of objects.
+     */
+    public function getRelatedObjects() {
+        return $this
+            ->mutations
+            ->flatMap(function($mutation) {
+                return $mutation->getRelatedObjects();
+            })
+            ->unique();
     }
 }

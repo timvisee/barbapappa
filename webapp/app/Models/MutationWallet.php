@@ -113,4 +113,21 @@ class MutationWallet extends Model {
             return collect([$this->wallet->economyMember->economy->community]);
         return collect();
     }
+
+    /**
+     * Get a list of all relevant and related objects to this mutation.
+     * Can be used to generate a list of links on a mutation inspection page, to
+     * the respective objects.
+     *
+     * This will return the related wallet.
+     *
+     * This is an expensive function.
+     *
+     * @return Collection List of objects.
+     */
+    public function getRelatedObjects() {
+        if($this->wallet_id != null)
+            return [$this->wallet];
+        return [];
+    }
 }
