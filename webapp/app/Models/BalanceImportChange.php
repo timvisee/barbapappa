@@ -78,6 +78,13 @@ class BalanceImportChange extends Model {
     }
 
     /**
+     * A scope to limit to changes only committed or not committed.
+     */
+    public function scopeCommitted($query, $committed = true) {
+        return $committed ? $query->whereNotNull('committed_at')->where('committed_at', '<=', now()) : $query->whereNull('committed_at');
+    }
+
+    /**
      * Get a relation to the balance import event.
      *
      * @return Relation to the balance import event.
@@ -411,7 +418,7 @@ class BalanceImportChange extends Model {
     public function formatCost($format = BALANCE_FORMAT_PLAIN) {
         if($this->cost == null)
             return null;
-        return $this->currency->format($this->cost, $format);
+        return $this->currency->formatAmount($this->cost, $format);
     }
 
     /**
