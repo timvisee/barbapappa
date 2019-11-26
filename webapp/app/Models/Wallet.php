@@ -93,15 +93,19 @@ class Wallet extends Model {
      * This method does not do any permission checking, all linked mutations are
      * simply related.
      *
+     * @param bool [$order=true] Automatically order.
+     *
      * @return The mutations.
      */
-    public function mutations() {
-        return $this
+    public function mutations($order = true) {
+        $query = $this
             ->hasManyDeepFromRelations(
                 $this->hasMany(MutationWallet::class),
                 (new MutationWallet)->mutation()
-            )
-            ->latest('mutation.created_at');
+            );
+        if($order)
+            $query = $query->latest('mutation.created_at');
+        return $query;
     }
 
     /**
@@ -259,7 +263,7 @@ class Wallet extends Model {
             $amount = -$self->mutations()->sum('amount');
 
             // Move transactions to target wallet
-            $self->mutations()->resetOrder()->update([
+            $self->mutations(false)->update([
                 'mutation_wallet.wallet_id' => $target->id,
             ]);
 
