@@ -11,10 +11,23 @@
             "options": {
                 "symlink": true
             }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "awssat/laravel-query-reset",
+                "version": "dev-master",
+                "source": {
+                    "url": "https://github.com/awssat/laravel-query-reset.git",
+                    "type": "git",
+                    "reference": "master"
+                }
+            }
         }
     ],
     "require": {
         "php": ">=7.2",
+        "awssat/laravel-query-reset": "dev-master",
         "alfa6661/laravel-has-many-sync": "^1.1",
         "barpay": "dev-76-payment-processing",
         "barryvdh/laravel-debugbar": "^3.2.3",
