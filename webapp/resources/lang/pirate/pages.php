@@ -363,6 +363,8 @@ return [
         'backToSystems' => 'Back to systems',
         'viewSystem' => 'View system',
         'unknownSystem' => 'Unknown system',
+        'exportUserList' => 'Export user list',
+        'exportUserListDescription' => 'Dis lists all e-bottle coordinates for pirates of booty imports within dis system, that have at least one booty import change which has been committed to a pirates wallet. Dis means that only pirates are listed that be registered, boarded a bar in dis booty, and verified they e-bottle coordinate. These pirates automatically receive booty updates from :app.',
     ],
 
     /**

@@ -363,6 +363,8 @@ return [
         'backToSystems' => 'Back to systems',
         'viewSystem' => 'View system',
         'unknownSystem' => 'Unknown system',
+        'exportUserList' => 'Export user list',
+        'exportUserListDescription' => 'This lists all email addresses for users of balance imports within this system, that have at least one balance import change which has been committed to a user wallet. This means that only users are listed that have registered, joined a bar in this economy, and have verified their email address. These users automatically receive balance updates from :app.',
     ],
 
     /**

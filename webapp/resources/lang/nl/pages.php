@@ -363,6 +363,8 @@ return [
         'backToSystems' => 'Terug naar systemen',
         'viewSystem' => 'Systeem bekijken',
         'unknownSystem' => 'Onbekende systeem',
+        'exportUserList' => 'Exporteer gebruikerslijst',
+        'exportUserListDescription' => 'Deze lijst bevat alle e-mailadressen voor gebruikers uit balansimports binnen dit balansimportsysteem, die tenminste één balansimportverandering hebben die is toegepast in een gebruikersportemonnee. Die betekent dat alleen gebruikers getoond worden die zich geregistreerd hebben, zich hebben ingeschreven bij een bar in deze economie, en die hun e-mailadres hebben geverifiëerd. Naar deze gebruikers wordt automatisch een balansupdate gestuurd vanuit :app.',
     ],
 
     /**
