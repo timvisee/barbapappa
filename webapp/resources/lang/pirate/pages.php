@@ -545,6 +545,9 @@ return [
      */
     'walletStats' => [
         'title' => 'Wallet stats',
+        'typeProductDist' => [
+            'title' => 'Product distribution',
+        ],
     ],
 
     /**

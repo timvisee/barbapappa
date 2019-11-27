@@ -728,28 +728,31 @@ class WalletController extends Controller {
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
 
-        // Build product distribution data
-        $productDistribution = $wallet
+        // Fetch product distribution data
+        $productDist = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
             ->groupBy('product_id')
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
+            ->orderBy('quantity', 'DESC')
             ->get();
-        $products = Product::whereIn('id', $productDistribution->pluck('product_id'))->get();
+        $products = Product::whereIn('id', $productDist->pluck('product_id'))->get();
 
-        $productDistribution = $productDistribution
-            ->map(function($item) use($products) {
-                $item = $item->toArray();
-                if(($product = $products->firstWhere('id', $item['product_id'])) != null)
-                    $item['product_name'] = $product->name;
-                return $item;
+        // Build product distribution chart data
+        $productDistData['labels'] = $productDist->pluck('product_id')
+            ->map(function($id) use($products) {
+                return $products->firstWhere('id', $id)->name ?? 'Unknown';
             });
-
-        // TODO: do something with product distribution data
+        $productDistData['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'data' => $productDist->pluck('quantity'),
+            'borderWidth' => 1,
+        ];
 
         return view('community.wallet.stats')
             ->with('economy', $economy)
-            ->with('wallet', $wallet);
+            ->with('wallet', $wallet)
+            ->with('productDistData', $productDistData);
     }
 }

@@ -545,6 +545,10 @@ return [
      */
     'walletStats' => [
         'title' => 'Wallet stats',
+        'typeProductDist' => [
+            'title' => 'Purchased products',
+            'chartName' => 'Product distribution chart',
+        ],
     ],
 
     /**

@@ -2,6 +2,10 @@
 
 @section('title', $bar->name)
 
+@push('scripts')
+    <script type="text/javascript" src="{{ asset('js/advancedbuy.js') }}"></script>
+@endpush
+
 @php
     $menulinks[] = [
         'name' => __('pages.bar.backToBar'),
@@ -9,10 +13,6 @@
         'icon' => 'undo',
     ];
 @endphp
-
-@push('scripts')
-    <script type="text/javascript" src="{{ asset('js/advancedbuy.js') }}"></script>
-@endpush
 
 @section('content')
     @include('bar.include.barHeader')

@@ -545,6 +545,10 @@ return [
      */
     'walletStats' => [
         'title' => 'Portemonnee statistieken',
+        'typeProductDist' => [
+            'title' => 'Gekochte producten',
+            'chartName' => 'Productdistributiegrafiek',
+        ],
     ],
 
     /**

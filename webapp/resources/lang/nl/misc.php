@@ -126,6 +126,7 @@ return [
     'emailNotReceivedCheckSpam' => 'Als je binnen 2 minuten geen bericht hebt ontvangen, controleer dan de spam map van je e-mail inbox en markeer het bericht als geen-spam.',
     'merge' => 'Samenvoegen',
     'stats' => 'Statistieken',
+    'chart' => 'Grafiek',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',
