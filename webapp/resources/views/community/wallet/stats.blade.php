@@ -44,7 +44,7 @@
     </h3>
 
     <canvas id="chartProductDist"
-        height="150"
+        height="200"
         aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
         role="img"></canvas>
     <script>
@@ -75,7 +75,7 @@
     </h3>
 
     <canvas id="chartBuyTimeHour"
-        height="200"
+        height="125"
         aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
         role="img"></canvas>
     <script>
@@ -99,13 +99,21 @@
                 data: data,
                 options: {
                     legend: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                precision: 0,
+                            }
+                        }]
+                    }
                 }
             },
         );
     </script>
 
     <canvas id="chartBuyTimeDay"
-        height="150"
+        height="125"
         aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
         role="img"></canvas>
     <script>
@@ -129,6 +137,14 @@
                 data: data,
                 options: {
                     legend: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true,
+                                precision: 0,
+                            }
+                        }]
+                    }
                 }
             },
         );
