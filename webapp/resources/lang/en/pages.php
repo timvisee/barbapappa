@@ -284,6 +284,7 @@ return [
         'permanentDescription' => 'Tick the checkbox below to permanently delete this product. You will not be able to restore it.',
         'permanentlyDelete' => 'Permanently delete product',
         'deleted' => 'The product has been trashed.',
+        'deletedProduct' => 'Deleted product',
         'permanentlyDeleted' => 'The product has been permanently deleted.',
         'namePlaceholder' => 'Fancy Juice',
         'enabledDescription' => 'Enabled, can be bought',
@@ -545,6 +546,9 @@ return [
      */
     'walletStats' => [
         'title' => 'Wallet stats',
+        'description' => 'Here are some wallet stats, for the lifetime of the wallet.',
+        'purchaseDistribution' => 'Purchase distribution',
+        'purchasePerHourDay' => 'Purchases by hour/day',
         'typeProductDist' => [
             'title' => 'Purchased products',
             'chartName' => 'Product distribution chart',

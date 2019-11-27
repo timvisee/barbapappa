@@ -728,21 +728,23 @@ class WalletController extends Controller {
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
 
-        // Fetch product distribution data
-        $productDist = $wallet
+        // Get a query for product mutations
+        // TODO: only completed mutations
+        $productMutations = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
-            ->leftJoin('product', 'product.id', 'mutation_product.product_id')
+            ->leftJoin('product', 'product.id', 'mutation_product.product_id');
+
+        // Fetch product distributions, build chart data
+        $productDist = (clone $productMutations)
             ->groupBy('product_id')
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
             ->orderBy('quantity', 'DESC')
             ->get();
         $products = Product::whereIn('id', $productDist->pluck('product_id'))->get();
-
-        // Build product distribution chart data
         $productDistData['labels'] = $productDist->pluck('product_id')
             ->map(function($id) use($products) {
-                return $products->firstWhere('id', $id)->name ?? 'Unknown';
+                return $products->firstWhere('id', $id)->name ?? __('pages.products.deletedProduct');
             });
         $productDistData['datasets'][] = [
             'label' => __('pages.walletStats.typeProductDist.title'),
@@ -750,9 +752,39 @@ class WalletController extends Controller {
             'borderWidth' => 1,
         ];
 
+        // Fetch product distributions, build chart data
+        $buyTimeHour = (clone $productMutations)
+            ->addSelect(DB::raw('HOUR(mutation.created_at) AS hour'), DB::raw('SUM(quantity) AS quantity'))
+            ->groupBy('hour')
+            ->get();
+        $buyTimeHourData['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'borderWidth' => 1,
+        ];
+        for($i = 0; $i < 24; $i++) {
+            $buyTimeHourData['labels'][] = $i;
+            $buyTimeHourData['datasets'][0]['data'][] = $buyTimeHour->firstWhere('hour', $i)->quantity ?? 0;
+        }
+
+        // Fetch product distributions, build chart data
+        $buyTimeDay = (clone $productMutations)
+            ->addSelect(DB::raw('DAYOFWEEK(mutation.created_at) - 2 AS day'), DB::raw('SUM(quantity) AS quantity'))
+            ->groupBy('day')
+            ->get();
+        $buyTimeDayData['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'borderWidth' => 1,
+        ];
+        for($i = 0; $i < 7; $i++) {
+            $buyTimeDayData['labels'][] = now()->startOfWeek()->addDays($i)->shortDayName;
+            $buyTimeDayData['datasets'][0]['data'][] = $buyTimeDay->firstWhere('day', $i)->quantity ?? 0;
+        }
+
         return view('community.wallet.stats')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
-            ->with('productDistData', $productDistData);
+            ->with('productDistData', $productDistData)
+            ->with('buyTimeHourData', $buyTimeHourData)
+            ->with('buyTimeDayData', $buyTimeDayData);
     }
 }
