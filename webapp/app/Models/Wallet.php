@@ -98,14 +98,29 @@ class Wallet extends Model {
      * @return The mutations.
      */
     public function mutations($order = true) {
-        $query = $this
-            ->hasManyDeepFromRelations(
-                $this->hasMany(MutationWallet::class),
-                (new MutationWallet)->mutation()
-            );
+        $wallet_id = $this->id;
+        $query = Mutation::leftJoin('transaction', 'transaction.id', 'mutation.transaction_id')
+            ->whereExists(function($query) use($wallet_id) {
+                return $query
+                    ->selectRaw('1')
+                    ->from('mutation AS mm')
+                    ->whereRaw('mm.transaction_id = transaction.id')
+                    ->where('mm.mutationable_type', MutationWallet::class)
+                    ->join('mutation_wallet AS mw', 'mm.mutationable_id', 'mw.id')
+                    ->where('mw.wallet_id', $wallet_id);
+            });
         if($order)
             $query = $query->latest('mutation.created_at');
         return $query;
+    }
+
+    /**
+     * Get a relation to all wallet mutations.
+     *
+     * @return Relation Relation to wallet mutations.
+     */
+    public function walletMutations() {
+        return $this->hasMany(MutationWallet::class);
     }
 
     /**
@@ -117,16 +132,21 @@ class Wallet extends Model {
      *
      * The returned relation is sorted, putting the newest transactions first.
      *
+     * @param bool [$order=true] Automatically order.
+     *
      * @return The transactions.
      */
-    public function transactions() {
-        return $this
+    public function transactions($order = true) {
+        $query = $this
             ->hasManyDeepFromRelations(
-                $this->mutations(),
+                $this->walletMutations(),
+                (new MutationWallet)->mutation(),
                 (new Mutation)->transaction()
             )
-            ->distinct()
-            ->latest('transaction.created_at');
+            ->distinct();
+        if($order)
+            $query = $query->latest('transaction.created_at');
+        return $query;
     }
 
     /**
@@ -263,7 +283,7 @@ class Wallet extends Model {
             $amount = -$self->mutations()->sum('amount');
 
             // Move transactions to target wallet
-            $self->mutations(false)->update([
+            $self->walletMutations()->update([
                 'mutation_wallet.wallet_id' => $target->id,
             ]);
 
