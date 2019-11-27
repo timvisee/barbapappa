@@ -549,6 +549,7 @@ return [
         'description' => 'Hier zie je statistieken voor de gehele levensduur van de portemonnee.',
         'purchaseDistribution' => 'Aankoopdistributie',
         'purchasePerHourDay' => 'Aankopen per uur/dag',
+        'noStatsNoTransactions' => 'Geen statistieken om te tonen. Portemonnee heeft nog geen transacties.',
         'typeProductDist' => [
             'title' => 'Gekochte producten',
             'chartName' => 'Productdistributiegrafiek',

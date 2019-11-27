@@ -170,6 +170,8 @@
         );
     </script>
 
+    <div class="ui hidden divider"></div>
+
     <p>
         <a href="{{ route('community.wallet.show', [
                     'communityId' => $community->human_id,

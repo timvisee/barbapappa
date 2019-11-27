@@ -728,6 +728,16 @@ class WalletController extends Controller {
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
 
+        // Wallet must have mutations
+        if($wallet->walletMutations()->limit(1)->count() == 0)
+            return redirect()
+                ->route('community.wallet.show', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                    'walletId' => $walletId,
+                ])
+                ->with('info', __('pages.walletStats.noStatsNoTransactions'));
+
         // Get a query for product mutations
         // TODO: only completed mutations
         $productMutations = $wallet

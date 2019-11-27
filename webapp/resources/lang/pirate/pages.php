@@ -549,6 +549,7 @@ return [
         'description' => 'Here are some wallet stats, for the lifetime of the wallet.',
         'purchaseDistribution' => 'Purchase distribution',
         'purchasePerHourDay' => 'Purchases by hour/day',
+        'noStatsNoTransactions' => 'No stats to show. Wallet does not have any transactions.',
         'typeProductDist' => [
             'title' => 'Purchased products',
             'chartName' => 'Product distribution chart',
