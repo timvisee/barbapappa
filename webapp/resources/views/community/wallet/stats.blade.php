@@ -2,6 +2,26 @@
 
 @section('title', __('pages.walletStats.title'))
 
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+@endpush
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.css">
+@endpush
+
+@php
+    // Define menulinks
+    $menulinks[] = [
+        'name' => __('pages.wallets.backToWallet'),
+        'link' => route('community.wallet.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                ]),
+        'icon' => 'undo',
+    ];
+@endphp
+
 @section('content')
     <h2 class="ui header">
         @yield('title')
