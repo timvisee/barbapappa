@@ -123,7 +123,7 @@ return [
     'iWantToDelete' => 'Ik verwijder',
     'donate' => 'Doneren',
     'verifyNow' => 'Nu verifiëren',
-    'emailNotReceivedCheckSpam' => 'Als je binnen 2 minuten geen bericht hebt ontvangen, controleer dan de spam map van je e-mail inbox en markeer het bericht als geen-spam.',
+    'emailNotReceivedCheckSpam' => 'Als je binnen 2 minuten geen bericht hebt ontvangen, controleer dan de ongewenst/spam/junk map van je e-mail inbox en markeer het bericht als niet-ongewenst.',
     'merge' => 'Samenvoegen',
     'stats' => 'Statistieken',
     'chart' => 'Grafiek',

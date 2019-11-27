@@ -123,7 +123,7 @@ return [
     'iWantToDelete' => 'I want to delete',
     'donate' => 'Donate',
     'verifyNow' => 'Verify now',
-    'emailNotReceivedCheckSpam' => 'If you don\'t receive a message within 2 minutes, please check the spam folder of your inbox and mark the messages as not-spam.',
+    'emailNotReceivedCheckSpam' => 'If you don\'t receive a message within 2 minutes, please check the spam/junk folder of your inbox and mark the messages as not-spam.',
     'merge' => 'Merge',
     'stats' => 'Stats',
     'chart' => 'Chart',
