@@ -85,6 +85,28 @@ class Mutation extends Model {
     }
 
     /**
+     * Scope to a specific mutation type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $mutationable The mutationable type.
+     * @param bool [$join=true] Join mutationable data.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeType($query, $mutationable, $join = true) {
+        $query = $query->where('mutationable_type', $mutationable);
+        if($join) {
+            $table = (new $mutationable)->getTable();
+            $query = $query->join(
+                $table,
+                'mutation.mutationable_id',
+                $table . '.id'
+            );
+        }
+        return $query;
+    }
+
+    /**
      * Get the transaction this mutation is part of.
      *
      * @return The transaction.

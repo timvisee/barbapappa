@@ -284,6 +284,7 @@ return [
         'permanentDescription' => 'Vink het selectievakje aan om dit product permanent te verwijderen. Je kunt het product dan niet meer herstellen.',
         'permanentlyDelete' => 'Product permanent verwijderen',
         'deleted' => 'Het product is weggegooid.',
+        'deletedProduct' => 'Verwijderd product',
         'permanentlyDeleted' => 'Het product is permanent verwijderd.',
         'namePlaceholder' => 'Luxe Sap',
         'enabledDescription' => 'Ingeschakeld, kan gekocht worden',
@@ -538,6 +539,21 @@ return [
         'successfullyTransferredAmount' => ':amount succesvol overgeboekt naar :wallet',
         'backToWallet' => 'Terug naar portemonnee',
         'walletTransactions' => 'Portemonnee transacties',
+    ],
+
+    /**
+     * Wallet stats pages.
+     */
+    'walletStats' => [
+        'title' => 'Portemonnee statistieken',
+        'description' => 'Hier zie je statistieken voor de gehele levensduur van de portemonnee.',
+        'purchaseDistribution' => 'Aankoopdistributie',
+        'purchasePerHourDay' => 'Aankopen per uur/dag',
+        'noStatsNoTransactions' => 'Geen statistieken om te tonen. Portemonnee heeft nog geen transacties.',
+        'typeProductDist' => [
+            'title' => 'Gekochte producten',
+            'chartName' => 'Productdistributiegrafiek',
+        ],
     ],
 
     /**

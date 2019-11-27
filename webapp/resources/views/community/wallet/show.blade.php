@@ -101,6 +101,10 @@
                 @lang('misc.delete')
             </a>
         </div>
+        <a href="{{ route('community.wallet.stats', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                class="ui button primary">
+            @lang('misc.stats')
+        </a>
     </p>
 
     <p>

@@ -7,7 +7,9 @@ use App\Models\Currency;
 use App\Models\EconomyMember;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
+use App\Models\MutationProduct;
 use App\Models\MutationWallet;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Perms\Builder\Config as PermsConfig;
@@ -711,5 +713,88 @@ class WalletController extends Controller {
             ->with('economy', $economy)
             ->with('wallet', $wallet)
             ->with('transactions', $transactions->get());
+    }
+
+    /**
+     * Show wallet stats.
+     *
+     * @return Response
+     */
+    public function stats($communityId, $economyId, $walletId) {
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
+
+        // Wallet must have mutations
+        if($wallet->walletMutations()->limit(1)->count() == 0)
+            return redirect()
+                ->route('community.wallet.show', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                    'walletId' => $walletId,
+                ])
+                ->with('info', __('pages.walletStats.noStatsNoTransactions'));
+
+        // Get a query for product mutations
+        // TODO: only completed mutations
+        $productMutations = $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->leftJoin('product', 'product.id', 'mutation_product.product_id');
+
+        // Fetch product distributions, build chart data
+        $productDist = (clone $productMutations)
+            ->groupBy('product_id')
+            ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
+            ->orderBy('quantity', 'DESC')
+            ->get();
+        $products = Product::whereIn('id', $productDist->pluck('product_id'))->get();
+        $productDistData['labels'] = $productDist->pluck('product_id')
+            ->map(function($id) use($products) {
+                return $products->firstWhere('id', $id)->name ?? __('pages.products.deletedProduct');
+            });
+        $productDistData['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'data' => $productDist->pluck('quantity'),
+            'borderWidth' => 1,
+        ];
+
+        // Fetch product distributions, build chart data
+        $buyTimeHour = (clone $productMutations)
+            ->addSelect(DB::raw('HOUR(mutation.created_at) AS hour'), DB::raw('SUM(quantity) AS quantity'))
+            ->groupBy('hour')
+            ->get();
+        $buyTimeHourData['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'borderWidth' => 1,
+        ];
+        for($i = 0; $i < 24; $i++) {
+            $buyTimeHourData['labels'][] = $i;
+            $buyTimeHourData['datasets'][0]['data'][] = $buyTimeHour->firstWhere('hour', $i)->quantity ?? 0;
+        }
+
+        // Fetch product distributions, build chart data
+        $buyTimeDay = (clone $productMutations)
+            ->addSelect(DB::raw('DAYOFWEEK(mutation.created_at) - 2 AS day'), DB::raw('SUM(quantity) AS quantity'))
+            ->groupBy('day')
+            ->get();
+        $buyTimeDayData['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'borderWidth' => 1,
+        ];
+        for($i = 0; $i < 7; $i++) {
+            $buyTimeDayData['labels'][] = now()->startOfWeek()->addDays($i)->shortDayName;
+            $buyTimeDayData['datasets'][0]['data'][] = $buyTimeDay->firstWhere('day', $i)->quantity ?? 0;
+        }
+
+        return view('community.wallet.stats')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet)
+            ->with('productDistData', $productDistData)
+            ->with('buyTimeHourData', $buyTimeHourData)
+            ->with('buyTimeDayData', $buyTimeDayData);
     }
 }

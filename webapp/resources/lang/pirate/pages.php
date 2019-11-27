@@ -284,6 +284,7 @@ return [
         'permanentDescription' => 'Tick th\' checkbox below to permanently delete dis product. Ye nay be able to restore it.',
         'permanentlyDelete' => 'Permanently delete product',
         'deleted' => 'The product be trashed.',
+        'deletedProduct' => 'Deleted product',
         'permanentlyDeleted' => 'The product be permanently deleted.',
         'namePlaceholder' => 'Bear Beer',
         'enabledDescription' => 'Enabled, can be bought',
@@ -538,6 +539,21 @@ return [
         'successfullyTransferredAmount' => 'Successfully transfered :amount to :wallet',
         'backToWallet' => 'Back to wallet',
         'walletTransactions' => 'Wallet transactions',
+    ],
+
+    /**
+     * Wallet stats pages.
+     */
+    'walletStats' => [
+        'title' => 'Wallet stats',
+        'description' => 'Here are some wallet stats, for the lifetime of the wallet.',
+        'purchaseDistribution' => 'Purchase distribution',
+        'purchasePerHourDay' => 'Purchases by hour/day',
+        'noStatsNoTransactions' => 'No stats to show. Wallet does not have any transactions.',
+        'typeProductDist' => [
+            'title' => 'Purchased products',
+            'chartName' => 'Product distribution chart',
+        ],
     ],
 
     /**
