@@ -7,7 +7,9 @@ use App\Models\Currency;
 use App\Models\EconomyMember;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
+use App\Models\MutationProduct;
 use App\Models\MutationWallet;
+use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Perms\Builder\Config as PermsConfig;
@@ -711,5 +713,43 @@ class WalletController extends Controller {
             ->with('economy', $economy)
             ->with('wallet', $wallet)
             ->with('transactions', $transactions->get());
+    }
+
+    /**
+     * Show wallet stats.
+     *
+     * @return Response
+     */
+    public function stats($communityId, $economyId, $walletId) {
+        // Get the user, community, find the economy and wallet
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallet = $economy_member->wallets()->findOrFail($walletId);
+
+        // Build product distribution data
+        $productDistribution = $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->leftJoin('product', 'product.id', 'mutation_product.product_id')
+            ->groupBy('product_id')
+            ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
+            ->get();
+        $products = Product::whereIn('id', $productDistribution->pluck('product_id'))->get();
+
+        $productDistribution = $productDistribution
+            ->map(function($item) use($products) {
+                $item = $item->toArray();
+                if(($product = $products->firstWhere('id', $item['product_id'])) != null)
+                    $item['product_name'] = $product->name;
+                return $item;
+            });
+
+        // TODO: do something with product distribution data
+
+        return view('community.wallet.stats')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet);
     }
 }

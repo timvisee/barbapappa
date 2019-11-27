@@ -541,6 +541,13 @@ return [
     ],
 
     /**
+     * Wallet stats pages.
+     */
+    'walletStats' => [
+        'title' => 'Portemonnee statistieken',
+    ],
+
+    /**
      * Transaction pages.
      */
     'transactions' => [

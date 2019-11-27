@@ -425,8 +425,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::get('/delete', 'WalletController@delete')->name('community.wallet.delete');
                     Route::delete('/delete', 'WalletController@doDelete')->name('community.wallet.doDelete');
 
-                    // Transactions
+                    // Transactions, stats
                     Route::get('/transactions', 'WalletController@transactions')->name('community.wallet.transactions');
+                    Route::get('/stats', 'WalletController@stats')->name('community.wallet.stats');
 
                     // Transfer pages
                     Route::get('/transfer', 'WalletController@transfer')->name('community.wallet.transfer');

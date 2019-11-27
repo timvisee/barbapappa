@@ -541,6 +541,13 @@ return [
     ],
 
     /**
+     * Wallet stats pages.
+     */
+    'walletStats' => [
+        'title' => 'Wallet stats',
+    ],
+
+    /**
      * Transaction pages.
      */
     'transactions' => [
