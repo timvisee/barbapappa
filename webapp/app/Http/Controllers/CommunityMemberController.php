@@ -24,6 +24,7 @@ class CommunityMemberController extends Controller {
         $members = $community
             ->members()
             ->orderBy('role', 'DESC')
+            ->orderBy('visited_at', 'DESC')
             ->get();
 
         return view('community.member.index')

@@ -24,6 +24,7 @@ class BarMemberController extends Controller {
         $members = $bar
             ->members()
             ->orderBy('role', 'DESC')
+            ->orderBy('visited_at', 'DESC')
             ->get();
 
         return view('bar.member.index')
