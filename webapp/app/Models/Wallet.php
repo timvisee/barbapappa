@@ -281,8 +281,12 @@ class Wallet extends Model {
         DB::transaction(function() use(&$self, $target) {
             // Query the amount
             $amount = -$self
-                ->mutations()
-                ->state(Mutation::STATE_SUCCESS)
+                ->walletMutations()
+                ->join('mutation', function ($join) {
+                    $join->on('mutation.mutationable_id', '=', 'mutation_wallet.id')
+                        ->where('mutation.mutationable_type', MutationWallet::class);
+                })
+                ->where('mutation.state', Mutation::STATE_SUCCESS)
                 ->sum('amount');
 
             // Move transactions to target wallet
