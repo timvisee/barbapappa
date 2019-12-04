@@ -115,7 +115,7 @@ class Mutation extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeState($query, int $state) {
-        return $query->where('state', $state);
+        return $query->where('mutation.state', $state);
     }
 
     /**
