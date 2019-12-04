@@ -56,6 +56,10 @@ class MutationWallet extends Model {
      *      transaction.
      */
     public function undo() {
+        // Nothing to undo if amount was not applied to wallet
+        if(!$this->isApplied())
+            return;
+
         // We must be in a database transaction
         assert_transaction();
 
@@ -99,6 +103,16 @@ class MutationWallet extends Model {
             else
                 $this->wallet->withdraw(-$mutation->amount);
         }
+    }
+
+    /**
+     * Check whether the amount of this wallet mutation is applied to the
+     * wallet.
+     *
+     * @return bool True if applied, false if not.
+     */
+    public function isApplied() {
+        return $this->mutation->state == Mutation::STATE_SUCCESS;
     }
 
     /**
