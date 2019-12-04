@@ -856,7 +856,6 @@ return [
     'privacy' => [
         'title' => 'Piracy',
         'description' => 'When ye use our seas, yer trusting us with yer information. We understand this be a big responsibility. We be pirates but we must follow landlubber laws.<br><br>Th\' Piracy Policy below is meant to help ye understand how we manage yer information.',
-        'onlyEnglishNote' => 'Note th\' Piracy Policy only be available in landlubber English, though it applies to our seas in any speak.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If ye have any further questions about our Piracy Policy or yer piracy when using our seas, be sure to ship us a bottle message.',
     ],
@@ -867,7 +866,6 @@ return [
     'terms' => [
         'title' => 'Terms',
         'description' => 'When ye use our seas, ye be agree with our Terms o\' Service as shown below.',
-        'onlyEnglishNote' => 'Note th\' Terms \'o Service only be available in landlubber English, although it applies to our seas in any speak.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If ye have any further questions about our Terms o\' Service, be sure to ship us a bottle message.',
     ],
@@ -878,7 +876,6 @@ return [
     'license' => [
         'title' => 'License',
         'description' => 'Th\' Arrbapappa software project be open-source, and be released under th\' GNU GPL-3.0 license. Dis license maps what ye are and nay be allowed to do with th\' public source code of dis software project. Dis license does not have any effect on the usage information processed within dis application.<br><br>Read th\' full license below, o\' check out th\' summary for dis license as quick summary.',
-        'onlyEnglishNote' => 'Note th\' license only be available in landlubber English, although it applies to our seas in any speak.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If ye have any further questions about our license, be sure to ship us a bottle message. Ye can also check th\' plain text license readable on any ship.',
         'plainTextLicense' => 'Plain text license',

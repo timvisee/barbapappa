@@ -26,7 +26,7 @@ return [
     'invalidCurrentPassword' => 'Yer current passcode be incorrect.',
     'newPasswordDifferent' => 'Th\' shiny passcode must be different than yer ol\' passcode.',
     'emailUsed' => 'Dis e-bottle coordinate be used.',
-    'iAgreeToTerms' => 'I agree to th\' <a href=":terms" target="_blank" title="Show Terms o\' Service">Terms o\' Service</a> and <a href=":privacy" target="_blank" title="Show Piracy Policy">Piracy Policy</a>.',
+    'iAgreeToTerms' => 'I understand and agree to th\' <a href=":terms" target="_blank" title="Show Terms o\' Service">Terms o\' Service</a> and <a href=":privacy" target="_blank" title="Show Piracy Policy">Piracy Policy</a>.',
     'mustAcceptTerms' => 'Ye must agree to register.',
 
     'loggedIn' => 'Ye be aboard.',

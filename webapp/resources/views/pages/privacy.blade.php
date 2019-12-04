@@ -6,8 +6,6 @@
     <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.privacy.description')</p>
 
-    <p><i>@lang('pages.privacy.onlyEnglishNote')</i></p>
-
     <div class="ui divider hidden"></div>
 
     <div class="ui tall stacked segment">@include('pages.includes.privacyPolicy')</div>

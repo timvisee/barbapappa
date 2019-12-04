@@ -856,7 +856,6 @@ return [
     'privacy' => [
         'title' => 'Privacy',
         'description' => 'When you use our service, you\'re trusting us with your information. We understand this is a big responsibility.<br><br>The Privacy Policy below is meant to help you understand how we manage your information.',
-        'onlyEnglishNote' => 'Note that the Privacy Policy is only available in English, although it applies to our service in any language.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If you have any further questions about our Privacy Policy or your privacy when using our service, be sure to get in touch with us.',
     ],
@@ -867,7 +866,6 @@ return [
     'terms' => [
         'title' => 'Terms',
         'description' => 'When you use our service, your\'re agreeing with our Terms of Service as shown below.',
-        'onlyEnglishNote' => 'Note that the Terms of Service is only available in English, although it applies to our service in any language.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If you have any further questions about our Terms of Service, be sure to get in touch with us.',
     ],
@@ -878,7 +876,6 @@ return [
     'license' => [
         'title' => 'License',
         'description' => 'The Barbapappa software project is open-source, and is released under the GNU GPL-3.0 license. This license describes what you are and are not allowed to with the public source code of this software project. This license does not have any effect on the usage information processed within this application.<br><br>Read the full license below, or check out the summary for this license as quick summary.',
-        'onlyEnglishNote' => 'Note that the license is only available in English, although it applies to this project in any language.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If you have any further questions about the license used for this project, be sure to get in touch with us. You can also check out the plain text license readable on any device.',
         'plainTextLicense' => 'Plain text license',

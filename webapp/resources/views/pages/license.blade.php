@@ -29,9 +29,6 @@
     </p>
     <div class="ui divider hidden"></div>
 
-    <p><i>@lang('pages.license.onlyEnglishNote')</i></p>
-    <div class="ui divider hidden"></div>
-
     <div class="ui tall stacked segment">@include('pages.includes.license')</div>
 
     <h3 class="ui header">@lang('pages.license.questions')</h3>

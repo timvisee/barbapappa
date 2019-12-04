@@ -856,7 +856,6 @@ return [
     'privacy' => [
         'title' => 'Privacy',
         'description' => 'Wanneer je onze service gebruikt, vertrouw je ons met je gegevens. We begrijpen dat dit een grote verantwoordelijkheid is.<br><br>Het privacybeleid (Privacy Policy) hieronder is bedoeld om je te helpen begrijpen hoe we jouw gegevens beheren.',
-        'onlyEnglishNote' => 'Het privacybeleid (Privacy Policy) is alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over ons privacybeleid (Privacy Policy) of over jouw privacy, neem gerust contact met ons op.',
     ],
@@ -867,7 +866,6 @@ return [
     'terms' => [
         'title' => 'Voorwaarden',
         'description' => 'Wanneer je onze service gebruikt, ga je akkoord met onze servicevoowaarden (Terms of Service) zoals hieronder getoond.',
-        'onlyEnglishNote' => 'De servicevoorwaarden (Terms of Service) zijn alleen beschikbaar in het Engels, maar zijn actief voor alle gebruikstalen.',
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over onze servicevoorwaarden (Terms of Service), neem gerust contact met ons op.',
     ],
@@ -878,7 +876,6 @@ return [
     'license' => [
         'title' => 'Licentie',
         'description' => 'Het Barbapappa software project is open-source, en is uitgebracht onder de GNU GPL-3.0 licentie (License). Deze licentie beschrijft wat wel en niet is toegestaan met de publieke broncode voor dit softwareproject. Deze licentie betreft niet de gebruiksinformatie verwerkt binnen deze applicatie.<br><br>Lees de volledige licentie hieronder, of check de licentie samenvatting voor een snel overzicht.',
-        'onlyEnglishNote' => 'De licentie (License) is alleen beschikbaar in het Engels, maar is actief voor alle gebruikstalen.',
         'questions' => 'Vragen?',
         'questionsDescription' => 'Als je verdere vragen hebt over de gebruikte licentie (License), neem gerust contact met ons op. Je kunt de licentie ook bekijken in platte text leesbaar op elk willekeurig apparaat.',
         'plainTextLicense' => 'Licentie in platte text',

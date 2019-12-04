@@ -6,8 +6,6 @@
     <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.terms.description')</p>
 
-    <p><i>@lang('pages.terms.onlyEnglishNote')</i></p>
-
     <div class="ui divider hidden"></div>
 
     <div class="ui tall stacked segment">@include('pages.includes.termsOfService')</div>
