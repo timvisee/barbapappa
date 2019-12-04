@@ -280,7 +280,10 @@ class Wallet extends Model {
         $self = $this;
         DB::transaction(function() use(&$self, $target) {
             // Query the amount
-            $amount = -$self->mutations()->sum('amount');
+            $amount = -$self
+                ->mutations()
+                ->state(Mutation::STATE_SUCCESS)
+                ->sum('amount');
 
             // Move transactions to target wallet
             $self->walletMutations()->update([

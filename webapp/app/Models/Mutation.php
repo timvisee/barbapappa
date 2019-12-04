@@ -107,6 +107,18 @@ class Mutation extends Model {
     }
 
     /**
+     * Scope to a specific mutation state.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param int $state The mutation state.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeState($query, int $state) {
+        return $query->where('state', $state);
+    }
+
+    /**
      * Get the transaction this mutation is part of.
      *
      * @return The transaction.
