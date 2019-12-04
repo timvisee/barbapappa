@@ -137,7 +137,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->members()->firstOrFail($memberId);
+        $member = $bar->members()->findOrFail($memberId);
 
         // Do some delete checks, return on early response
         if(($return = $this->checkDelete($bar, $member)) != null)
@@ -157,7 +157,7 @@ class BarMemberController extends Controller {
 
         // Get the bar, find the member
         $bar = \Request::get('bar');
-        $member = $bar->members()->firstOrFail($memberId);
+        $member = $bar->members()->findOrFail($memberId);
 
         // Validate confirmation when deleting authenticated member
         if($member->user_id == barauth()->getSessionUser()->id)
