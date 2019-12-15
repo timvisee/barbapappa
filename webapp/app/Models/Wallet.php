@@ -334,10 +334,11 @@ class Wallet extends Model {
      */
     public function traceBalance($at) {
         // Get all mutation changes in this period, and sum the amounts
-        $change = $this->mutations()
+        $change = $this
+            ->mutations()
             ->where('mutation.created_at', '>=', $at)
-            ->where('state', Mutation::STATE_SUCCESS)
-            ->sum('amount');
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
+            ->sum('mutation.amount');
 
         // Apply the delta to the current balance, return the result
         return $this->balance + $change;

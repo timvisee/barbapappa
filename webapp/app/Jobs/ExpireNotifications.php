@@ -40,7 +40,7 @@ class ExpireNotifications implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // Delete all notifications that readed their expiry time
+        // Delete all notifications that reached their expiry time
         Notification::withoutGlobalScopes()
             ->expired()
             ->delete();
