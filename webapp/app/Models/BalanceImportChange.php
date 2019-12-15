@@ -296,14 +296,14 @@ class BalanceImportChange extends Model {
         $currency = $this->currency;
         $economyMember = $this->alias->economyMembers()->firstOrFail();
         $wallet = $economyMember->getOrCreateWallet(collect([$currency]), true, true);
-        $user = $economyMember->user;
+        $user_id = $economyMember->user->id ?? null;
 
         $change = $this;
-        DB::transaction(function() use(&$change, $user, $amount, $economy, $currency, $wallet) {
+        DB::transaction(function() use(&$change, $user_id, $amount, $economy, $currency, $wallet) {
             // Create the transaction
             $transaction = Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
-                'owner_id' => $user->id,
+                'owner_id' => $user_id,
             ]);
 
             // Create wallet mutation
@@ -316,7 +316,7 @@ class BalanceImportChange extends Model {
                     'amount' => -$amount,
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
-                    'owner_id' => $user->id,
+                    'owner_id' => $user_id,
                 ]);
             $mut_wallet->setMutationable(
                 MutationWallet::create([
@@ -334,7 +334,7 @@ class BalanceImportChange extends Model {
                     'amount' => $amount,
                     'currency_id' => $currency->id,
                     'state' => Mutation::STATE_SUCCESS,
-                    'owner_id' => $user->id,
+                    'owner_id' => $user_id,
                     'depend_on' => $mut_wallet->id,
                 ]);
             $mut_change->setMutationable(MutationMagic::create());
