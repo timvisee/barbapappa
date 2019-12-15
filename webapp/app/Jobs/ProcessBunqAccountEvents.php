@@ -119,7 +119,9 @@ class ProcessBunqAccountEvents implements ShouldQueue {
         assert_transaction();
 
         // Gather facts, load bunq API context
-        $account = BunqAccount::findOrFail($this->accountId);
+        $account = BunqAccount::find($this->accountId);
+        if($account == null)
+            return;
         $account->loadBunqContext();
 
         // Configure pagination, start after last ID
