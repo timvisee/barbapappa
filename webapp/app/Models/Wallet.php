@@ -336,6 +336,7 @@ class Wallet extends Model {
         // Get all mutation changes in this period, and sum the amounts
         $change = $this
             ->mutations()
+            ->type(MutationWallet::class, false)
             ->where('mutation.created_at', '>=', $at)
             ->where('mutation.state', Mutation::STATE_SUCCESS)
             ->sum('mutation.amount');
