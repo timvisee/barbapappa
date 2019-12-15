@@ -93,7 +93,7 @@ class SendBalanceUpdate implements ShouldQueue {
                                     'balance' => $wallet->formatBalance(),
                                     'balanceHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
                                     'previousBalance' => $previousBalance,
-                                    'previousBalanceHtml' => $wallet->currency->formatAmount($previousBalance, BALANCE_FORMAT_COLOR),
+                                    'previousBalanceHtml' => $wallet->currency->format($previousBalance, BALANCE_FORMAT_COLOR),
                                     'previousPeriod' => $previous->diffForHumans(),
                                     'url' => route('community.wallet.show', [
                                         'communityId' => $community->human_id,
