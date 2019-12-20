@@ -351,7 +351,6 @@ class BunqAccountController extends Controller {
     //     $economy = $community->economies()->findOrFail($economyId);
     //     $service = $economy
     //         ->paymentServices()
-    //         ->withDisabled()
     //         ->withTrashed()
     //         ->findOrFail($serviceId);
 
@@ -375,7 +374,6 @@ class BunqAccountController extends Controller {
     //     $economy = $community->economies()->findOrFail($economyId);
     //     $service = $economy
     //         ->paymentServices()
-    //         ->withDisabled()
     //         ->withTrashed()
     //         ->findOrFail($serviceId);
 

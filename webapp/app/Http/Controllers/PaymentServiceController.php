@@ -22,7 +22,7 @@ class PaymentServiceController extends Controller {
         // Get the community, find the payment services
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $services = $economy->paymentServices()->withDisabled()->get();
+        $services = $economy->paymentServices()->get();
 
         return view('community.economy.paymentservice.index')
             ->with('economy', $economy)
@@ -125,7 +125,6 @@ class PaymentServiceController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
             ->paymentServices()
-            ->withDisabled()
             ->withTrashed()
             ->findOrFail($serviceId);
         $serviceable = $service->serviceable;
@@ -149,7 +148,6 @@ class PaymentServiceController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
             ->paymentServices()
-            ->withDisabled()
             ->findOrFail($serviceId);
         $serviceable = $service->serviceable;
 
@@ -182,7 +180,6 @@ class PaymentServiceController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
             ->paymentServices()
-            ->withDisabled()
             ->findOrFail($serviceId);
         $serviceable = $service->serviceable;
 
@@ -287,7 +284,6 @@ class PaymentServiceController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
             ->paymentServices()
-            ->withDisabled()
             ->withTrashed()
             ->findOrFail($serviceId);
 
@@ -310,7 +306,6 @@ class PaymentServiceController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $service = $economy
             ->paymentServices()
-            ->withDisabled()
             ->withTrashed()
             ->findOrFail($serviceId);
 

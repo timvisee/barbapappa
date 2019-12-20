@@ -323,7 +323,6 @@ class AppBunqAccountController extends Controller {
     //     $economy = $community->economies()->findOrFail($economyId);
     //     $service = $economy
     //         ->paymentServices()
-    //         ->withDisabled()
     //         ->withTrashed()
     //         ->findOrFail($serviceId);
 
@@ -347,7 +346,6 @@ class AppBunqAccountController extends Controller {
     //     $economy = $community->economies()->findOrFail($economyId);
     //     $service = $economy
     //         ->paymentServices()
-    //         ->withDisabled()
     //         ->withTrashed()
     //         ->findOrFail($serviceId);
 

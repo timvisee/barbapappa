@@ -554,6 +554,7 @@ class WalletController extends Controller {
         $currency = $wallet->currency;
         $services = $economy
             ->paymentServices()
+            ->enabled()
             ->supportsCurrency($currency)
             ->supportsDeposit()
             ->get();
@@ -584,6 +585,7 @@ class WalletController extends Controller {
         $currency = $wallet->currency;
         $services = $economy
             ->paymentServices()
+            ->enabled()
             ->supportsCurrency($currency)
             ->supportsDeposit()
             ->get();

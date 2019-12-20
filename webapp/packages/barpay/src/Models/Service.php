@@ -65,9 +65,6 @@ class Service extends Model {
     public static function boot() {
         parent::boot();
 
-        // Add global scopes
-        static::addGlobalScope(new EnabledScope);
-
         // Cascade delete to serviceable
         static::deleting(function($model) {
             $model->serviceable()->delete();
@@ -75,10 +72,14 @@ class Service extends Model {
     }
 
     /**
-     * Disable the enabled scope, and also return the disabled entities.
+     * Scope a query to filter only to services that are enabled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeWithDisabled($query) {
-        return $query->withoutGlobalScope(EnabledScope::class);
+    public function scopeEnabled($query, $enabled = true) {
+        return $query->where('enabled', $enabled);
     }
 
     /**
