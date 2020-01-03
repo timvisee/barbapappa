@@ -67,17 +67,14 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
      * @param User $user The user instance if known.
      */
     public function configureLocale($user = null) {
-        // Get the user, find their preferred locale
+        // Select the user
         if($user == null)
             $user = $this->recipients->first()->getUser();
-        $locale = $user->preferredLocale();
 
-        // Configure locale
-        if(isset($locale)) {
-            App::setLocale($locale);
-            Carbon::setLocale($locale);
-        }
-        $this->locale($user);
+        // Apply preferred locale, set in this mailable as well
+        $locale = $user->applyPreferredLocale();
+        if(!empty($locale))
+            $this->locale($user);
     }
 
     /**
