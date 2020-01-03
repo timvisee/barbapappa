@@ -24,9 +24,19 @@ class SelectLocale {
      * @return Response Response.
      */
     public function handle($request, Closure $next) {
-        // Redirect to the locale selection screen if needed, don't redirect if already on the language page
-        if(!langManager()->hasSelectedLocale() && !$request->routeIs('language'))
-            return redirect()->guest(route('language'));
+        // User must have language selected
+        if(!langManager()->hasSelectedLocale() && !$request->routeIs('language')) {
+            // Guess preferred user locale based on browser headers
+            $locales = langManager()->getLocales();
+            $locale = $request->getPreferredLanguage($locales);
+
+            // Show language select page if no locale could be determined
+            if(empty($locale))
+                return redirect()->guest(route('language'));
+
+            // Enable automatically selected locale
+            langManager()->setLocale($locale, true, false);
+        }
 
         return $next($request);
     }
