@@ -29,21 +29,22 @@ class ExampleTest extends TestCase {
         });
     }
 
-    /**
-     * Test whether the first request to the home page redirects properly to the language selection page,
-     * because the user hasn't selected a language yet.
-     *
-     * @return void
-     */
-    public function testHomeToLanguageSelect() {
-        // Visit the home page
-        $response = $this->get('/');
+    // // TODO: rework this test, test for redirection or automatic language selection
+    // /**
+    //  * Test whether the first request to the home page redirects properly to the language selection page,
+    //  * because the user hasn't selected a language yet.
+    //  *
+    //  * @return void
+    //  */
+    // public function testHomeToLanguageSelect() {
+    //     // Visit the home page
+    //     $response = $this->get('/');
 
-        // The user should see the language page, because the user hasn't selected a language yet
-        $response->assertRedirect('language')
-            ->followRedirects()
-            ->assertViewIs('pages.language');
-    }
+    //     // The user should see the language page, because the user hasn't selected a language yet
+    //     $response->assertRedirect('language')
+    //         ->followRedirects()
+    //         ->assertViewIs('pages.language');
+    // }
 
     /**
      * Test whether a proper 404 status code is returned on pages that don't exist.
