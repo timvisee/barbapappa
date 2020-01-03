@@ -317,6 +317,23 @@ class User extends Model implements HasLocalePreference {
     }
 
     /**
+     * Apply the user's preferred locale to the current PHP environment.
+     *
+     * @return string|null The locale that is applied, or null if unknown.
+     */
+    public function applyPreferredLocale() {
+        // Obtain the preferred user locale
+        $locale = $user->preferredLocale();
+        if(empty($locale))
+            return null;
+
+        // Configure locale
+        App::setLocale($locale);
+        Carbon::setLocale($locale);
+        return $locale;
+    }
+
+    /**
      * Invalidate sessions for this user.
      *
      * @param bool $current True to invalidate the current session, false to keep it alive.
