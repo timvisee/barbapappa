@@ -3,14 +3,15 @@
 namespace App\Models;
 
 use App\Facades\LangManager;
-use App\Mail\Password\Reset;
 use App\Mail\Password\Disabled;
+use App\Mail\Password\Reset;
 use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
 use BarPay\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Contracts\Translation\HasLocalePreference;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
