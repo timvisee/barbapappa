@@ -323,7 +323,7 @@ class User extends Model implements HasLocalePreference {
      */
     public function applyPreferredLocale() {
         // Obtain the preferred user locale
-        $locale = $user->preferredLocale();
+        $locale = $this->preferredLocale();
         if(empty($locale))
             return null;
 
