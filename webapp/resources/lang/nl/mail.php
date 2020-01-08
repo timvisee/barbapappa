@@ -17,8 +17,8 @@ return [
          * Email verification email.
          */
         'verify' => [
-            'subject' => 'E-mail verificatie',
-            'subjectRegistered' => ':app registratie & e-mail verificatie',
+            'subject' => 'E-mailverificatie',
+            'subjectRegistered' => ':app registratie & e-mailverificatie',
             'subtitle' => 'Je staat op het punt je e-mailadres te verifiëren.',
             'subtitleRegistered' => 'Je account is bijna klaar voor gebruik.',
             'registered' => 'Bedankt voor het registreren van een account.',
