@@ -130,7 +130,7 @@ class ValidationDefaults {
     /**
      * bunq API token.
      */
-    const BUNQ_TOKEN = 'string|alpha_num|size:64';
+    const BUNQ_TOKEN = 'string|alpha_dash|size:64';
 
     /**
      * Build the community slug validation configuration.
