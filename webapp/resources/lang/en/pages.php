@@ -909,7 +909,7 @@ return [
     'about' => [
         'title' => 'About',
         'aboutUs' => 'About us',
-        'description' => ':app is a digital bar management application to facilitate a user-controlled platform for purchase processing, payment handling and inventory management.<br><br>:app is a fully automated solution for small self-managed bars and communities, to take away the hassle of manually registering purcahses using telly marks on paper.<br><br>For any interest in using this platform for your own community, be sure to send us a message!',
+        'description' => ':app is a digital bar management application to facilitate a user-controlled platform for purchase processing, payment handling and inventory management.<br><br>:app is a fully automated solution for small self-managed bars and communities, to take away the hassle of manually registering purcahses using tally marks on paper.<br><br>For any interest in using this platform for your own community, be sure to send us a message!',
         'developedBy' => 'The project is developed & maintained by',
         'sourceDescription' => 'I make the software that I develop open-source. The complete project with its source code is available free of charge, for everyone. I believe it is important to allow anybody to inspect, modify, improve, contribute, and verify without restrictions.',
         'sourceAt' => 'The latest source code can be found on GitLab',

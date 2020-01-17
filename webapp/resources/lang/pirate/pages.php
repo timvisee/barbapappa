@@ -909,7 +909,7 @@ return [
     'about' => [
         'title' => 'About',
         'aboutUs' => 'About us',
-        'description' => ':app be a digital bar management application to facilitate a pirate-controlled sea for purchase processing, payment handling and treasure management.<br><br>:app be a fully automated solution for small self-managed bars and crews, to take away hassle of manually registering purcahses using telly marks on yer paper.<br><br>For any interest in using dis platform for yer own crew, sure to send us a message!',
+        'description' => ':app be a digital bar management application to facilitate a pirate-controlled sea for purchase processing, payment handling and treasure management.<br><br>:app be a fully automated solution for small self-managed bars and crews, to take away hassle of manually registering purcahses using tally marks on yer paper.<br><br>For any interest in using dis platform for yer own crew, sure to send us a message!',
         'developedBy' => 'Dis project be developed & maintained by',
         'sourceDescription' => 'I make th\' software that I develop open-source. Th\' complete project with its source code be available free of charge, for all pirates. I believe it be important to allow any pirate to inspect, modify, improve, contribute, and verify without restrictions.',
         'sourceAt' => 'Latest source code be available on GitLab',
