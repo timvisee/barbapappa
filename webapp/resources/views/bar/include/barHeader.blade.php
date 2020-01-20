@@ -32,7 +32,7 @@
             <div>
                 {{-- Quick top-up if user has negative balance --}}
                 @if($balance->amount < 0)
-                    <a href="{{ route('community.wallet.topUpEconomy', [
+                    <a href="{{ route('community.wallet.quickTopUp', [
                                 'communityId' => $community->human_id,
                                 'economyId' => $economy->id
                             ]) }}"
@@ -44,7 +44,7 @@
                 @endif
 
                 {{-- Balance label --}}
-                <a href="{{ route('community.wallet.list', [
+                <a href="{{ route('community.wallet.quickShow', [
                             'communityId' => $community->human_id,
                             'economyId' => $economy->id,
                         ]) }}"

@@ -411,8 +411,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 Route::get('/merge', 'WalletController@merge')->name('community.wallet.merge');
                 Route::post('/merge', 'WalletController@doMerge')->name('community.wallet.doMerge');
 
-                // Quick top-up economy
-                Route::get('/top-up', 'WalletController@topUpEconomy')->name('community.wallet.topUpEconomy');
+                // Quick show and top-up economy
+                Route::get('/show', 'WalletController@quickShow')->name('community.wallet.quickShow');
+                Route::get('/top-up', 'WalletController@quickTopUp')->name('community.wallet.quickTopUp');
 
                 // Specific
                 Route::prefix('/{walletId}')->group(function() {

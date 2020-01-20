@@ -658,11 +658,42 @@ class WalletController extends Controller {
     }
 
     /**
+     * Economy wallet quick show.
+     * Redirects user to single wallet, or the index page if the user has
+     * multiple wallets.
+     *
+     * @return Response
+     */
+    public function quickShow($communityId, $economyId) {
+        // Get the user, community, find the economy and wallets
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $wallets = $economy_member->wallets;
+
+        // Show single wallet or go to wallet list
+        if($wallets->count() == 1)
+            return redirect()
+                ->route('community.wallet.show', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                    'walletId' => $wallets->first()->id,
+                ]);
+        else
+            return redirect()
+                ->route('community.wallet.list', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                ]);
+    }
+
+    /**
      * Economy wallet top-up page.
      *
      * @return Response
      */
-    public function topUpEconomy($communityId, $economyId) {
+    public function quickTopUp($communityId, $economyId) {
         // Get the user, community, find the economy and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
