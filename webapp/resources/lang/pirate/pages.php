@@ -287,6 +287,7 @@ return [
         'deletedProduct' => 'Deleted product',
         'permanentlyDeleted' => 'The product be permanently deleted.',
         'namePlaceholder' => 'Bear Beer',
+        'tagsPlaceholder' => 'cola soda',
         'enabledDescription' => 'Enabled, can be bought',
         'prices' => 'Prices',
         'pricesDescription' => 'Configure prices for dis product in th\' fields below for booties ye want to support.',

@@ -287,6 +287,7 @@ return [
         'deletedProduct' => 'Deleted product',
         'permanentlyDeleted' => 'The product has been permanently deleted.',
         'namePlaceholder' => 'Fancy Juice',
+        'tagsPlaceholder' => 'cola soda',
         'enabledDescription' => 'Enabled, can be bought',
         'prices' => 'Prices',
         'pricesDescription' => 'Configure prices for this product in the fields below for currencies you want to support.',

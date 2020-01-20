@@ -32,6 +32,16 @@
                     </div>
                 </td>
             </tr>
+            @if($product->tags)
+                <tr>
+                    <td>@lang('misc.tags')</td>
+                    <td>
+                        <div class="ui list">
+                            <div class="item">{{ $product->tags }}</div>
+                        </div>
+                    </td>
+                </tr>
+            @endif
             <tr>
                 <td>@lang('pages.products.prices')</td>
                 <td>
