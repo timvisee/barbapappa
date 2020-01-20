@@ -287,6 +287,7 @@ return [
         'deletedProduct' => 'Verwijderd product',
         'permanentlyDeleted' => 'Het product is permanent verwijderd.',
         'namePlaceholder' => 'Luxe Sap',
+        'tagsPlaceholder' => 'cola frisdrank',
         'enabledDescription' => 'Ingeschakeld, kan gekocht worden',
         'prices' => 'Prijzen',
         'pricesDescription' => 'Configureer de prijzen voor dit product in de velden hieronder voor de valutas die je wilt ondersteunen.',

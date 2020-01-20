@@ -51,6 +51,7 @@ return [
     'public' => 'Public',
     'name' => 'Name',
     'descriptiveName' => 'Descriptive name',
+    'tags' => 'Tags',
     'reference' => 'Reference',
     'user' => 'User',
     'owner' => 'Owner',

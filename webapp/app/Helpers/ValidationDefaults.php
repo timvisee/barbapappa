@@ -68,6 +68,11 @@ class ValidationDefaults {
     const LAST_NAME = self::NAME;
 
     /**
+     * Product tags list.
+     */
+    const PRODUCT_TAGS = 'string|max:255';
+
+    /**
      * Base slug validation configuration.
      */
     const SLUG = 'string|alpha_dash|min:2|max:64|regex:' . self::SLUG_REGEX;

@@ -51,6 +51,7 @@ return [
     'public' => 'Publiek',
     'name' => 'Naam',
     'descriptiveName' => 'Beschrijvende naam',
+    'tags' => 'Tags',
     'reference' => 'Referentie',
     'user' => 'Gebruiker',
     'owner' => 'Eigenaar',

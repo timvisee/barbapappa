@@ -72,7 +72,10 @@ class ProductController extends Controller {
         $clone = $request->input('submit') == 'clone';
 
         // Build validation rules, and validate
-        $rules = ['name' => 'required|' . ValidationDefaults::NAME];
+        $rules = [
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'tags' => 'nullable|' . ValidationDefaults::PRODUCT_TAGS,
+        ];
         $messages = [];
         foreach($economy->currencies as $currency) {
             $rules['price_' . $currency->id] = 'nullable|' . ValidationDefaults::PRICE;
@@ -90,6 +93,7 @@ class ProductController extends Controller {
                 'economy_id' => $economy->id,
                 'type' => Product::TYPE_NORMAL,
                 'name' => $request->input('name'),
+                'tags' => $request->input('tags'),
                 'enabled' => is_checked($request->input('enabled')),
             ]);
 
@@ -205,7 +209,10 @@ class ProductController extends Controller {
         $locales = collect(langManager()->getLocales(true, true));
 
         // Build validation rules, and validate
-        $rules = ['name' => 'required|' . ValidationDefaults::NAME];
+        $rules = [
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'tags' => 'nullable|' . ValidationDefaults::PRODUCT_TAGS,
+        ];
         $messages = [];
         foreach($economy->currencies as $currency) {
             $rules['price_' . $currency->id] = 'nullable|' . ValidationDefaults::PRICE;
@@ -219,6 +226,7 @@ class ProductController extends Controller {
         DB::transaction(function() use($request, $product, $economy, $locales) {
             // Change properties
             $product->name = $request->input('name');
+            $product->tags = $request->input('tags');
             $product->enabled = is_checked($request->input('enabled'));
             $product->save();
 
