@@ -94,6 +94,7 @@ class Product extends Model {
     public function scopeSearch($query, $search) {
         return $query
             ->where('name', 'LIKE', '%' . escape_like($search) . '%')
+            ->orWhere('tags', 'LIKE', '%' . escape_like($search) . '%')
             ->orWhereExists(function($query) use($search) {
                 $query->selectRaw('1')
                     ->from('product_name')
