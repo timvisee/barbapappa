@@ -113,7 +113,7 @@ return [
         ],
         'failed' => [
             'subject' => 'Payment failed',
-            'subtitle' => 'Your wallet top up did not succeed.',
+            'subtitle' => 'Your wallet top-up did not succeed.',
             'stateFailed' => 'A payment you\'ve started could not be completed, because it failed. If you believe this is an error, please contact us.',
             'stateRevoked' => 'A payment you\'ve started could not be completed, because it has been revoked. If you believe this is an error, please contact us.',
             'stateRejected' => 'A payment you\'ve started could not be completed, because it has been rejected. If you believe this is an error, please contact us.',
