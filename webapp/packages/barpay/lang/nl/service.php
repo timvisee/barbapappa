@@ -33,7 +33,7 @@ return [
      */
     'bunqiban' => [
         'name' => 'Zelf overschrijven (IBAN)',
-        'duration' => 'direct / tot 3 dagen',
+        'duration' => 'tot 3 dagen',
     ],
 
     /**

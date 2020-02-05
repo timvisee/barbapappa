@@ -33,7 +33,7 @@ return [
      */
     'bunqiban' => [
         'name' => 'Manual transfer (IBAN)',
-        'duration' => 'instant / up to 3 days',
+        'duration' => 'up to 3 days',
     ],
 
     /**
