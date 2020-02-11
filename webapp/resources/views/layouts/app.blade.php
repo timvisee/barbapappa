@@ -50,7 +50,9 @@
         @include('includes.toolbar')
 
         <div class="ui container page">
-            @include('includes.impersonate')
+            @if(!isset($dontLeak) || !$dontLeak)
+                @include('includes.impersonate')
+            @endif
 
             @include('includes.message')
 
