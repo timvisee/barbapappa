@@ -1,4 +1,5 @@
-@extends('layouts.app')
+{{-- prevent leaking personal info with no permission using dontLeak --}}
+@extends('layouts.app', ['dontLeak' => true])
 
 @section('title', __('pages.noPermission.title'))
 
