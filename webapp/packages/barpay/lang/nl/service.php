@@ -15,7 +15,7 @@ return [
      * IBAN transfer service with manual check.
      */
     'manualiban' => [
-        'name' => 'Zelf overschrijven (IBAN)',
+        'name' => 'Bankoverschrijving (IBAN)',
         'duration' => 'duurt tot 1 maand',
     ],
 
@@ -32,7 +32,7 @@ return [
      * IBAN transfer service with automatic checking through bunq.
      */
     'bunqiban' => [
-        'name' => 'Zelf overschrijven (IBAN)',
+        'name' => 'Bankoverschrijving (IBAN)',
         'duration' => 'tot 3 dagen',
     ],
 

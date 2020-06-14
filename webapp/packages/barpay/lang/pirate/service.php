@@ -15,7 +15,7 @@ return [
      * IBAN transfer service with manual check.
      */
     'manualiban' => [
-        'name' => 'Manual transfer (IBAN)',
+        'name' => 'Bank transfer (IBAN)',
         'duration' => 'takes up to 1 month',
     ],
 
@@ -32,7 +32,7 @@ return [
      * IBAN transfer service with automatic checking through bunq.
      */
     'bunqiban' => [
-        'name' => 'Manual transfer (IBAN)',
+        'name' => 'Bank transfer (IBAN)',
         'duration' => 'up to 3 days',
     ],
 
