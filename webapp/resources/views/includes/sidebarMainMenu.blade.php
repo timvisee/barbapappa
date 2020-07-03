@@ -100,7 +100,7 @@
     </div>
 
     {{-- Pirate language easter egg --}}
-    @if(rand_float() <= (float) config('app.pirate_chance'))
+    @if(Route::currentRouteName() == 'about' || rand_float() <= (float) config('app.pirate_chance'))
         <a href="{{ route('language', [
                     'locale' => 'pirate',
                     'redirect' => url()->full(),
