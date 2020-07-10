@@ -889,8 +889,8 @@ return [
     'contact' => [
         'title' => 'Contact',
         'contactUs' => 'Neem contact op',
-        'description' => 'Gebruik de volgende gegevens om Barbapappa te contacteren:',
-        'issuesDescription' => 'Deze applicatie is open-source, en het ontwikkelprocess is daarom open. Controlleer bij het melden van fouten eerst de \'Issue lijst\' om te zien of deze al geregistreerd zijn.<br><br>Als de bug nog niet bekend is, kun je een nieuwe issue aanmaken via de issues pagina. Of je kunt een e-mail sturen naar het onderstaande \'Rapporteer issue e-mail\' adres waarin je de bug in detail beschrijft, en er zal direct een issue voor aangemaakt worden, zonder dat je daarvoor een account aan hoeft te maken.',
+        'description' => 'Gebruik de volgende gegevens om contact op te nemen met Barbapappa:',
+        'issuesDescription' => 'Deze applicatie is open-source, het ontwikkelprocess is daarom open. Controlleer bij het melden van fouten eerst de \'Issue lijst\' om te zien of deze al geregistreerd zijn.<br><br>Als de bug nog niet bekend is, kun je een nieuwe issue aanmaken via de issues pagina. Of je kunt een e-mail sturen naar het onderstaande \'Rapporteer issue e-mail\' adres waarin je de bug in detail beschrijft, en er zal direct een issue voor aangemaakt worden, zonder dat je daarvoor een account aan hoeft te maken.',
         'issueList' => 'Issue lijst',
         'newIssueMail' => 'Rapporteer issue e-mail',
         'thisAppIsOpenSource' => 'Deze applicatie is Open Source',

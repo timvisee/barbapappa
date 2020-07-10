@@ -40,7 +40,7 @@ return [
 
     'mustVerifyEmail' => 'You must verify your email address to fully use our service.',
 
-    'loginTroubleContact' => 'Trouble logging in? Contact us!',
+    'loginTroubleContact' => 'Trouble logging in? Contact us',
 
     /*
     | TODO: Are these properties still required/used?

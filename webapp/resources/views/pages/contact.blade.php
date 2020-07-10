@@ -23,7 +23,7 @@
     <div class="ui fluid accordion">
         <div class="title">
             <i class="dropdown icon"></i>
-            @lang('pages.about.thisAppIsOpenSource')
+            @lang('pages.contact.thisAppIsOpenSource')
         </div>
         <div class="content">
             <p>@lang('pages.contact.issuesDescription')</p>
