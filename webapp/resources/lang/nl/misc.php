@@ -128,6 +128,9 @@ return [
     'merge' => 'Samenvoegen',
     'stats' => 'Statistieken',
     'chart' => 'Grafiek',
+    'mail' => 'E-mail',
+    'developer' => 'Ontwikkelaar',
+    'sourceCode' => 'Broncode',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',

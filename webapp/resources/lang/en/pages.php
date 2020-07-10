@@ -889,9 +889,11 @@ return [
     'contact' => [
         'title' => 'Contact',
         'contactUs' => 'Contact us',
-        'description' => 'You can use any of the following channels to contact the administrator that is running this website. Please ask the administrators of your community for support first, and attempt to solve any problems with them.<br><br>Please describe your question and/or problem carefully. Any GDRP inquiries can be requested through these channels as well.',
-        'issuesDescription' => 'This application is open-source, and its development process is
-        therefore open. For bugs in this application, please check the \'Issues\' list to see if it has been registered already.<br><br>If it isn\'t yet, you can create a new issue on the issues overview page. Alternatively, you can send an email describing the issue to the address below, which will immediately add the issue to the list as well without having to create a GitLab account.',
+        'description' => 'Use the following details to contact Barbapappa:',
+        'issuesDescription' => 'This application is open-source, and its development process is therefore open. Before reporting bugs, please check the \'Issue list\' to see if it has been registered already.<br><br>If it isn\'t yet, you can create a new issue on the issues overview page. Alternatively, you can send an email describing the issue to the \'Report issue email\' address below, which will immediately add the issue to the list as well without having to create an account.',
+        'issueList' => 'Issue list',
+        'newIssueMail' => 'Report issue email',
+        'thisAppIsOpenSource' => 'This application is Open Source',
     ],
 
     /**

@@ -127,6 +127,9 @@ return [
     'merge' => 'Merge',
     'stats' => 'Stats',
     'chart' => 'Chart',
+    'mail' => 'E-bottle',
+    'developer' => 'Developer',
+    'sourceCode' => 'Source code',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',
