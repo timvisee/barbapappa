@@ -19,6 +19,9 @@
                 @lang('auth.loginPassword')
             </a>
         @endif
+        <a href="{{ route('contact') }}" class="item">
+            @lang('auth.loginTroubleContact')
+        </a>
         <a href="{{ route('index') }}" class="item">
             @lang('pages.index.backToIndex')
         </a>

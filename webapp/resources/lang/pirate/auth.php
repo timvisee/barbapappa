@@ -40,6 +40,8 @@ return [
 
     'mustVerifyEmail' => 'Ye must verify yer e-bottle coordinate to fully use our service.',
 
+    'loginTroubleContact' => 'Trouble logging in? Contact us!',
+
     /*
     | TODO: Are these properties still required?
     | TODO: Translate these.

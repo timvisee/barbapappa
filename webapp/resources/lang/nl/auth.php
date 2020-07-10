@@ -40,6 +40,8 @@ return [
 
     'mustVerifyEmail' => 'Verifieer je e-mailadres om volledig gebruik te maken van onze service.',
 
+    'loginTroubleContact' => 'Problemen met inloggen? Contacteer ons!',
+
     /*
     | TODO: Are these properties still required?
     |
