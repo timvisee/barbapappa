@@ -22,7 +22,7 @@
             'key' => __('misc.wallet'),
             'valueHtml' => '<a href="' . route('community.wallet.show', [
                     'communityId' => $wallet->economyMember->economy->community->human_id,
-                    'economyId' => $wallet->economy_id,
+                    'economyId' => $wallet->economyMember->economy_id,
                     'walletId' => $wallet->id,
                 ]) . '">' . $wallet->name . '</a>',
         ];
