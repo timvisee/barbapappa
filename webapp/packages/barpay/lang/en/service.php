@@ -40,7 +40,7 @@ return [
      * Transfer through a bunqme tab payment request.
      */
     'bunqmetab' => [
-        'name' => 'iDeal transfer',
+        'name' => 'iDeal payment',
         'duration' => 'instant',
     ],
 ];
