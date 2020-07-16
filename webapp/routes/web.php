@@ -48,7 +48,7 @@ Route::get('/login', 'LoginController@login')->name('login');
 Route::middleware('throttle:10,1')->post('/login', 'LoginController@doLogin');
 Route::get('/login/email', 'LoginController@email')->name('login.email');
 Route::middleware('throttle:10,1')->post('/login/email', 'LoginController@doEmail');
-Route::get('/register', 'RegisterController@register')->name('register');
+Route::middleware('throttle:4,1')->get('/register', 'RegisterController@register')->name('register');
 Route::middleware('throttle:4,1')->post('/register', 'RegisterController@doRegister');
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 Route::prefix('/password')->group(function() {
