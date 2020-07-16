@@ -68,6 +68,7 @@ return [
     'numeric'              => 'Th\' :attribute \'d be a number.',
     'present'              => 'Th\' :attribute field \'d be present.',
     'regex'                => 'Th\' :attribute format be sunken.',
+    'not_regex'            => 'Th\' :attribute format nay be allowed.',
     'required'             => 'Th\' :attribute field be required.',
     'required_if'          => 'Th\' :attribute field be required when :other be :value.',
     'required_unless'      => 'Th\' :attribute field be required unless :other be in :values.',

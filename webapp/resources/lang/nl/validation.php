@@ -68,6 +68,7 @@ return [
     'numeric'              => 'Het :attribute veld moet een nummer bevatten.',
     'present'              => 'Het :attribute veld moet beschikbaar zijn.',
     'regex'                => 'Het formaat in het :attribute veld is ongeldig.',
+    'not_regex'            => 'Het formaat in het :attribute veld is niet toegestaan.',
     'required'             => 'Het :attribute veld is vereist.',
     'required_if'          => 'Het :attribute veld is vereist wanneer :other :value is.',
     'required_unless'      => 'Het :attribute veld is vereist tenzei :other in :values is.',
