@@ -55,7 +55,7 @@ class ValidationDefaults {
      * A regular name.
      * For example, a community or bar name.
      */
-    const NAME = 'string|min:2|max:255';
+    const NAME = 'string|min:2|max:64|not_regex:/[:\.\n\r]/';
 
     /**
      * First name validation configuration.
