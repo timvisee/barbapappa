@@ -6,7 +6,7 @@
     // Define menulinks
     $menulinks[] = [
         'name' => __('pages.license.licenseSummary'),
-        'link' => "https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)",
+        'link' => "https://choosealicense.com/licenses/gpl-3.0/",
         'icon' => 'log-book',
     ];
     $menulinks[] = [
@@ -21,7 +21,7 @@
     <p>@lang('pages.license.description')</p>
 
     <p>
-        <a href="https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)"
+        <a href="https://choosealicense.com/licenses/gpl-3.0/"
                 target="_blank"
                 class="ui button basic">
             @lang('pages.license.licenseSummary')
