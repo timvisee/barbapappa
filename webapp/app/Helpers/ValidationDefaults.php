@@ -21,9 +21,21 @@ use \App\Perms\CommunityRoles;
 class ValidationDefaults {
 
     /**
+     * A regular name.
+     * For example, a community or bar name.
+     */
+    const NAME = 'string|min:2|max:256';
+
+    /**
      * Email validation configuration.
      */
     const EMAIL = 'string|email|max:255';
+
+    /**
+     * A regular name.
+     * For example, a community or bar name.
+     */
+    const USER_NAME = self::NAME . '|max:64|not_regex:/[:\.\n\r]/';
 
     /**
      * User password validation configuration.
@@ -52,20 +64,14 @@ class ValidationDefaults {
     const PASSWORD_RESET_TOKEN = 'string|size:32';
 
     /**
-     * A regular name.
-     * For example, a community or bar name.
-     */
-    const NAME = 'string|min:2|max:64|not_regex:/[:\.\n\r]/';
-
-    /**
      * First name validation configuration.
      */
-    const FIRST_NAME = self::NAME;
+    const FIRST_NAME = self::USER_NAME;
 
     /**
      * Last name validation configuration.
      */
-    const LAST_NAME = self::NAME;
+    const LAST_NAME = self::USER_NAME;
 
     /**
      * Product tags list.
