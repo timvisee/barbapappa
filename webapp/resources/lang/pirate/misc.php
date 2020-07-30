@@ -55,6 +55,7 @@ return [
     'reference' => 'Reference',
     'user' => 'User',
     'owner' => 'Owner',
+    'initiatedBy' => 'Made by',
     'fromUser' => 'From user',
     'role' => 'Rank',
     'createdAt' => 'Created at',
