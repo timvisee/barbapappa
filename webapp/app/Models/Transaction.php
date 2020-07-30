@@ -18,6 +18,8 @@ use App\Perms\CommunityRoles;
  * @property int state
  * @property int|null reference_to
  * @property int|null owner_id
+ * @property int|null initiated_by_id
+ * @property bool initiated_by_other
  * @property-read User|null owner
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -78,10 +80,20 @@ class Transaction extends Model {
      * Get a relation to the user that owns this transaction.
      * This is usually the user that initiated this transaction.
      *
-     * @return Relation to the user that created this transaction.
+     * @return Relation to the user that owns this transaction.
      */
     public function owner() {
         return $this->belongsTo('App\Models\User', 'owner_id');
+    }
+
+    /**
+     * Get a relation to the user that initiated this transaction.
+     * This is usually the user that initiated this transaction.
+     *
+     * @return Relation to the user that initiated this transaction.
+     */
+    public function initiatedBy() {
+        return $this->belongsTo('App\Models\User', 'initiated_by_id');
     }
 
     /**
