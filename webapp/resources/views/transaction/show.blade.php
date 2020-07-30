@@ -14,7 +14,19 @@
 
     <div class="ui divider hidden"></div>
 
-    <p class="align-center" title="@lang('misc.description')">{!!  $transaction->describe(true) !!}</p>
+    <p class="align-center" title="@lang('misc.description')">
+        {!!  $transaction->describe(true) !!}
+
+        @if($transaction->initiated_by_other)
+            <br />
+            @lang('misc.by')
+            @if($transaction->initiatedBy != null)
+                {{ $transaction->initiatedBy->name }}
+            @else
+                <i>@lang('misc.unknownUser')</i>
+            @endif
+        @endif
+    </p>
 
     {{-- State icon --}}
     <div class="ui one small statistics">
@@ -239,6 +251,18 @@
                             @endif
                         </td>
                     </tr>
+                    @if($transaction->initiated_by_other)
+                        <tr>
+                            <td>@lang('misc.initiatedBy')</td>
+                            <td>
+                                @if($transaction->initiatedBy != null)
+                                    {{ $transaction->initiatedBy->name }}
+                                @else
+                                    <i>@lang('misc.unknownUser')</i>
+                                @endif
+                            </td>
+                        </tr>
+                    @endif
                     <tr>
                         <td>@lang('misc.firstSeen')</td>
                         <td>@include('includes.humanTimeDiff', ['time' => $transaction->created_at])</td>

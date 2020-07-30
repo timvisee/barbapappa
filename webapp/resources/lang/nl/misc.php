@@ -55,6 +55,7 @@ return [
     'reference' => 'Referentie',
     'user' => 'Gebruiker',
     'owner' => 'Eigenaar',
+    'initiatedBy' => 'Gemaakt door',
     'fromUser' => 'Van gebruiker',
     'role' => 'Rol',
     'createdAt' => 'Gemaakt op',
