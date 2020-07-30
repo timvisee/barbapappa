@@ -253,7 +253,7 @@
                     </tr>
                     @if($transaction->initiated_by_other)
                         <tr>
-                            <td>@lang('misc.madeB')</td>
+                            <td>@lang('misc.madeBy')</td>
                             <td>
                                 @if($transaction->initiatedBy != null)
                                     {{ $transaction->initiatedBy->name }}
