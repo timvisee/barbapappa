@@ -636,7 +636,7 @@ class BarController extends Controller {
      *
      * @return Response
      */
-    public function apiBuyBuy(Request $request, $barId) {
+    public function apiBuyBuy(Request $request) {
         // Get the bar, current user and the search query
         $bar = \Request::get('bar');
         $economy = $bar->economy;
