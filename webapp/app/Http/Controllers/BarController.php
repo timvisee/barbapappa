@@ -893,15 +893,25 @@ class BarController extends Controller {
         // Get the user ID
         $user_id = $economy_member->user_id;
 
+        // Determine whether to set different initiating user
+        $initiated_by_id = null;
+        $initiated_by_other = $user_id != barauth()->getUser()->id;
+        if($initiated_by_other)
+            $initiated_by_id = barauth()->getUser()->id;
+
         // Start a database transaction for the product transaction
         // TODO: create a nice generic builder for the actions below
         $out = null;
         $productCount = 0;
-        DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, &$out, &$productCount) {
+        DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, &$out, &$productCount, $initiated_by_id, $initiated_by_other) {
+            // TODO: last_transaction is used here but never defined
+
             // Create the transaction or use last transaction
             $transaction = $last_transaction ?? Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
                 'owner_id' => $user_id,
+                'initiated_by_id' => $initiated_by_id,
+                'initiated_by_other' => $initiated_by_other,
             ]);
 
             // Determine whether the product was free
