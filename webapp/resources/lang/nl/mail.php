@@ -79,7 +79,7 @@ return [
             'clickButtonToReset' => 'Klik op de onderstaande knop om je wachtwoord te resetten',
             'resetButton' => 'Je wachtwoord resetten',
             'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
-            'notRequested' => 'Als je geen wachtwoord reset hebt aangevraagd, kun je dit email bericht als niet verzonden beschouwen.',
+            'mayIgnore' => 'Als je geen wachtwoord reset hebt aangevraagd, kun je dit email bericht veilig als niet verzonden beschouwen.',
         ],
 
         /**

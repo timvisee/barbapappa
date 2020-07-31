@@ -79,7 +79,7 @@ return [
             'clickButtonToReset' => 'Navigate to th\' following button to reset yer passcode.',
             'resetButton' => 'Reset yer passcode',
             'manual' => 'If th\' above button doesn\'t work, open th\' following link in yer web browser:',
-            'notRequested' => 'If ye have nay requested a shiny passcode, ye may ignore dis e-bottle message.',
+            'mayIgnore' => 'If ye have nay requested a shiny passcode, ye may safely ignore dis e-bottle message.',
         ],
 
         /**

@@ -79,7 +79,7 @@ return [
             'clickButtonToReset' => 'Please click the following button to reset your password.',
             'resetButton' => 'Reset your password',
             'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
-            'notRequested' => 'If you haven\'t requested a password reset, you may ignore this email message.',
+            'mayIgnore' => 'If you haven\'t requested a password reset, you may safely ignore this email message.',
         ],
 
         /**
