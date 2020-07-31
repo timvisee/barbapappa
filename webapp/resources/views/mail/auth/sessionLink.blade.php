@@ -13,6 +13,8 @@
 @endcomponent
 
 @component('mail::text')
+@lang('mail.auth.sessionLink.mayIgnore')<br>
+
 @lang('mail.auth.sessionLink.manual')<br>
 
 {{ route('auth.login', ['token' => $token]) }}<br>

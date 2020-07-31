@@ -28,6 +28,7 @@ return [
             'soon' => 'Please do dis as soon as possible, th\' verification link sinks **within :expire**.',
             'clickButtonToVerify' => 'Please click th\' following button be verify yer e-bottle address.',
             'verifyButton' => 'Verify yer e-bottle address',
+            'mayIgnore' => 'If ye nay requested dis, ye may safely ignore dis message.',
             'manual' => 'If th\' above button doesn\'t work, open th\' following link in yer web browser:',
         ],
 
@@ -57,6 +58,7 @@ return [
             'subtitle' => 'Tap th\' button to sign in to yer Barbapappa account.',
             'soon' => 'The link expires **within :expire**, and can be used once.',
             'button' => 'Sign in to Barbapappa',
+            'mayIgnore' => 'If ye nay requested dis, ye may safely ignore dis message.',
             'manual' => 'If th\' above button don\'t work, open th\' following link in yer web browser:',
         ],
     ],
@@ -77,7 +79,7 @@ return [
             'clickButtonToReset' => 'Navigate to th\' following button to reset yer passcode.',
             'resetButton' => 'Reset yer passcode',
             'manual' => 'If th\' above button doesn\'t work, open th\' following link in yer web browser:',
-            'notRequested' => 'If ye have nay requested a shiny passcode, ye may ignore dis e-bottle message.',
+            'mayIgnore' => 'If ye have nay requested a shiny passcode, ye may safely ignore dis e-bottle message.',
         ],
 
         /**

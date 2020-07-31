@@ -28,6 +28,7 @@ return [
             'soon' => 'Please do this as soon as possible, the verification link expires **within :expire**.',
             'clickButtonToVerify' => 'Please click the following button to verify your email address.',
             'verifyButton' => 'Verify your email address',
+            'mayIgnore' => 'If you did not request this, you may safely ignore this message.',
             'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
         ],
 
@@ -57,6 +58,7 @@ return [
             'subtitle' => 'Tap the button to sign in to your Barbapappa account.',
             'soon' => 'The link expires **within :expire**, and can be used once.',
             'button' => 'Sign in to Barbapappa',
+            'mayIgnore' => 'If you did not request this, you may safely ignore this message.',
             'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
         ],
     ],
@@ -77,7 +79,7 @@ return [
             'clickButtonToReset' => 'Please click the following button to reset your password.',
             'resetButton' => 'Reset your password',
             'manual' => 'If the above button doesn\'t work, open the following link in your web browser:',
-            'notRequested' => 'If you haven\'t requested a password reset, you may ignore this email message.',
+            'mayIgnore' => 'If you haven\'t requested a password reset, you may safely ignore this email message.',
         ],
 
         /**
