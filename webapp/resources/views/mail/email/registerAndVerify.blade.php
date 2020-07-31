@@ -21,6 +21,8 @@
 @endcomponent
 
 @component('mail::text')
+@lang('mail.email.verify.mayIgnore')<br>
+
 @lang('mail.email.verify.manual')<br>
 
 {{ route('email.verify', ['token' => $token]) }}<br>

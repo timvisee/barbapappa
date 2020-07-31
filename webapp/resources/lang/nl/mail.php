@@ -28,6 +28,7 @@ return [
             'soon' => 'Doe dit zo snel mogelijk, de verificatie link verloopt **binnen :expire**.',
             'clickButtonToVerify' => 'Klik op de onderstaande knop om je e-mailadres te verifieren.',
             'verifyButton' => 'Verifiëer je e-mailadres',
+            'mayIgnore' => 'Als je dit niet hebt aangevraagd, kun je dit email bericht veilig als niet verzonden beschouwen.',
             'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
         ],
 
@@ -57,6 +58,7 @@ return [
             'subtitle' => 'Druk op de knop om in te loggen op je Barbapappa account.',
             'soon' => 'De link verloopt **binnen :expire**, en kan één keer gebruikt worden.',
             'button' => 'Inloggen op Barbapappa',
+            'mayIgnore' => 'Als je dit niet hebt aangevraagd, kun je dit email bericht veilig als niet verzonden beschouwen.',
             'manual' => 'Als de bovenstaande knop niet werkt, open de volgende link in je web browser:',
         ],
     ],
