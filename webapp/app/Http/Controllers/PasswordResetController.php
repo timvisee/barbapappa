@@ -56,7 +56,7 @@ class PasswordResetController extends Controller {
                 break;
 
             case PasswordResetResult::OK:
-                return $response->route('login')
+                return $response->route(barauth()->isAuth() ? 'dashboard' : 'login')
                     ->with('success', __('auth.passwordChanged'));
 
             default:
