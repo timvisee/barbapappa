@@ -90,7 +90,7 @@ return [
             'forSecurity' => 'We informeren je even wegens veiligheidsredenen.',
             'useNewPassword' => 'Vanaf nu kun je je nieuwe wachtwoord gebruiken om in te loggen.',
             'noChangeThenReset' => 'Als je je wachtwoord niet zelf hebt aangepast, verander het alsjeblieft zo snel mogelijk met behulp van de volgende link:',
-            'orContact' => 'Of neem zo snel mogelijk [contact](:contact) op met het :app team wegens dit mogelijke veiligheidsincident.',
+            'orContact' => 'Of neem direct [contact](:contact) op met het :app team wegens dit mogelijke veiligheidsincident.',
             'noChangeThenContact' => 'Als je dit bericht ontvangen hebt maar niet je wachtwoord hebt aangepast, neem zo snel mogelijk [contact](:contact) op met het :contact team wegens dit mogelijke veiligheidsincident.',
         ],
 

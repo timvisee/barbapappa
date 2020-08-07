@@ -468,7 +468,7 @@ return [
         'walletSum' => 'Cumulatief saldo',
         'paymentsInProgress' => 'In verwerking',
         'fromBalanceImport' => 'vanuit saldoimport',
-        'membersWithNonZeroBalance' => 'Leden met niet-nul saldo',
+        'membersWithNonZeroBalance' => 'Leden met saldo',
         'description' => 'Hier zie je een simpel financieel overzicht van de huidige economie staat. Gebruikers van saldoimports, die nog niet geregistreerd zijn en nog geen deel uitmaken van deze economie worden hier nog niet getoond.',
     ],
 

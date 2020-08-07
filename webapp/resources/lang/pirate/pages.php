@@ -468,7 +468,7 @@ return [
         'walletSum' => 'Cumulative balance',
         'paymentsInProgress' => 'In progress',
         'fromBalanceImport' => 'from booty import',
-        'membersWithNonZeroBalance' => 'Members with non-zero balance',
+        'membersWithNonZeroBalance' => 'Members with booty',
         'description' => 'Dis shows a simple financial report for th\' current booty state. Pirates from booty imports, that nay be registered and joined dis booty, are currently not listed.',
     ],
 

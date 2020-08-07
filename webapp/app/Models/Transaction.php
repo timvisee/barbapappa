@@ -192,7 +192,8 @@ class Transaction extends Model {
             return $text;
 
         // Determine whether to use a suffix
-        $suffix = $details ? ' (' . strtolower(__('misc.estimate')) . ')' : '';
+        // $suffix = $details ? ' (' . strtolower(__('misc.estimate')) . ')' : '';
+        $suffix = '';
 
         // Collect all mutation types, separate by deposit/withdraw
         // TODO: create method for this, also used somewhere else! (search partition)
