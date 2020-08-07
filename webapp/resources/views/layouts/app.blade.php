@@ -13,7 +13,7 @@
     <meta name="author" content="{{ config('app.author') }}">
     <meta name="description" content="{{ config('app.description') }}">
     <meta name="keywords" content="{{ config('app.keywords') }}">
-    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="manifest" href="/manifest.webmanifest">
 
     {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
