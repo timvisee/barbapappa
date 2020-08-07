@@ -47,7 +47,16 @@
 
     <p class="align-center" title="@lang('misc.description')">{{ $payment->service->displayName() }}</p>
 
-    {{-- State icon --}}
+    {{-- Amount & state icon --}}
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $payment->formatCost(BALANCE_FORMAT_COLOR) !!}
+            </div>
+            <div class="label">@lang('misc.amount')</div>
+        </div>
+    </div>
+    <br>
     <div class="ui one small statistics">
         @switch($payment->state)
             @case(Payment::STATE_INIT)
@@ -115,15 +124,6 @@
                     <div class="label">@lang('misc.state')</div>
                 </div>
         @endswitch
-    </div>
-    <br>
-    <div class="ui one small statistics">
-        <div class="statistic">
-            <div class="value">
-                {!! $payment->formatCost(BALANCE_FORMAT_COLOR) !!}
-            </div>
-            <div class="label">@lang('misc.amount')</div>
-        </div>
     </div>
 
     <div class="ui divider hidden"></div>

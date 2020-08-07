@@ -28,7 +28,16 @@
         @endif
     </p>
 
-    {{-- State icon --}}
+    {{-- Amount & state icon --}}
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $transaction->formatCost(BALANCE_FORMAT_COLOR) !!}
+            </div>
+            <div class="label">@lang('misc.amount')</div>
+        </div>
+    </div>
+    <br>
     <div class="ui one small statistics">
         @switch($transaction->state)
             @case(Transaction::STATE_PENDING)
@@ -75,15 +84,6 @@
                     <div class="label">@lang('misc.state')</div>
                 </div>
         @endswitch
-    </div>
-    <br>
-    <div class="ui one small statistics">
-        <div class="statistic">
-            <div class="value">
-                {!! $transaction->formatCost(BALANCE_FORMAT_COLOR) !!}
-            </div>
-            <div class="label">@lang('misc.amount')</div>
-        </div>
     </div>
 
     <div class="ui divider large hidden"></div>

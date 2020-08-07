@@ -23,7 +23,22 @@
 
     <p class="align-center" title="@lang('misc.description')">{!!  $mutation->describe($detail = true) !!}</p>
 
-    {{-- State icon --}}
+    {{-- Amount & state icon --}}
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $mutation->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}
+            </div>
+            <div class="label">
+                @if($mutation->amount >= 0)
+                    @lang('pages.transactions.toTransaction')
+                @else
+                    @lang('pages.transactions.fromTransaction')
+                @endif
+            </div>
+        </div>
+    </div>
+    <br>
     <div class="ui one small statistics">
         @switch($mutation->state)
             @case(Mutation::STATE_PENDING)
@@ -70,21 +85,6 @@
                     <div class="label">@lang('misc.state')</div>
                 </div>
         @endswitch
-    </div>
-    <br>
-    <div class="ui one small statistics">
-        <div class="statistic">
-            <div class="value">
-                {!! $mutation->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}
-            </div>
-            <div class="label">
-                @if($mutation->amount >= 0)
-                    @lang('pages.transactions.toTransaction')
-                @else
-                    @lang('pages.transactions.fromTransaction')
-                @endif
-            </div>
-        </div>
     </div>
 
     <div class="ui divider hidden"></div>
