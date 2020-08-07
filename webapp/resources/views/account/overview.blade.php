@@ -62,20 +62,15 @@
         <tbody>
             <tr>
                 <td>@lang('pages.accountPage.email.yourEmails')</td>
-                <td>{{ $mailsConfigured }}</td>
+                <td>
+                    <div class="ui bulleted list">
+                        @foreach($user->emails()->get() as $email)
+                            <div class="item">{{ $email->email }}</div>
+                        @endforeach
+                    </div>
+                </td>
             </tr>
-            @if($mailsConfigured > 0 && $mailsUnverified <= 0)
-                <tr>
-                    <td></td>
-                    <td>
-                        <div class="ui bulleted list">
-                            @foreach($user->emails()->get() as $email)
-                                <div class="item">{{ $email->email }}</div>
-                            @endforeach
-                        </div>
-                    </td>
-                </tr>
-            @elseif($mailsUnverified > 0)
+            @if($mailsUnverified > 0)
                 <tr>
                     <td>@lang('misc.unverified')</td>
                     <td class="negative">
