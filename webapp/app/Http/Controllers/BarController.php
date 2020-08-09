@@ -628,7 +628,14 @@ class BarController extends Controller {
             ->take($limit);
 
         // Fetch and return the members for these users
-        return $bar->economy->members()->whereIn('user_id', $user_ids)->get();
+        $econ_members = $bar->economy->members()->whereIn('user_id', $user_ids)->get();
+        return $user_ids
+            ->map(function($user_id) use($econ_members) {
+                return $econ_members->firstWhere('user_id', $user_id);
+            })
+            ->filter(function($member) {
+                return $member != null;
+            });
     }
 
     /**
