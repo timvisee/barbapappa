@@ -618,17 +618,33 @@ class BarController extends Controller {
         if(!empty($product_ids))
             $query = $query->whereIn('mutation_product.product_id', $product_ids);
 
-        // Finalize query, get member IDs
-        $user_ids = $query
-            ->orderBy('mutation_product.quantity', 'DESC')
+        // Fetch transaction details for last 100 relevant transactions
+        $transactions = $query
             ->limit(100)
-            ->get(['mutation.owner_id'])
-            ->pluck('owner_id')
-            ->unique()
-            ->take($limit);
+            ->get(['mutation.owner_id', 'mutation_product.quantity']);
+
+        // List user IDs sorted by most bought
+        $user_ids = $transactions
+            ->reduce(function($list, $item) {
+                $key = strval($item->owner_id);
+                if(isset($list[$key]))
+                    $list[$key] += $item->quantity;
+                else
+                    $list[$key] = $item->quantity;
+                return $list;
+            }, collect())
+            ->sort()
+            ->reverse()
+            ->take($limit)
+            ->keys();
 
         // Fetch and return the members for these users
-        $econ_members = $bar->economy->members()->whereIn('user_id', $user_ids)->get();
+        $econ_members = $bar
+            ->economy
+            ->members()
+            ->whereIn('user_id', $user_ids)
+            ->limit($limit)
+            ->get();
         return $user_ids
             ->map(function($user_id) use($econ_members) {
                 return $econ_members->firstWhere('user_id', $user_id);
