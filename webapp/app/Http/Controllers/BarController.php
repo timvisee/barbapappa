@@ -556,11 +556,11 @@ class BarController extends Controller {
 
             // Build a list of members most likely to buy new products
             // Specifically for selected products first, then fill gor any
-            $limit = 6;
+            $limit = 7;
             if(!empty($product_ids))
                 $members = $members->merge($this->getProductBuyMemberList(
                     $bar,
-                    $limit,
+                    5,
                     [$user->id],
                     $product_ids
                 ));
