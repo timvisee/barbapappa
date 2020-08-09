@@ -781,6 +781,7 @@ class WalletController extends Controller {
         // Fetch product distributions, build chart data
         $productDist = (clone $productMutations)
             ->groupBy('product_id')
+            // TODO: should we use two arguments here?
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
             ->orderBy('quantity', 'DESC')
             ->get();
