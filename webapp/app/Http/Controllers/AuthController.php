@@ -44,12 +44,6 @@ class AuthController extends Controller {
      * @param string $token The session link token used for authentication.
      */
     public function login(Request $request, $token) {
-        // Show error if already authenticated
-        if(barauth()->isAuth())
-            return redirect()
-                ->intended(route('dashboard'))
-                ->with('success', __('auth.alreadyLoggedIn'));
-
         // Get the user session link
         $link = SessionLink::notExpired()->where('token', $token)->first();
         if(empty($link))
@@ -65,6 +59,12 @@ class AuthController extends Controller {
                 ->with('token', $token)
                 ->with('code', $code);
         }
+
+        // Show error if already authenticated
+        if(barauth()->isAuth())
+            return redirect()
+                ->intended(route('dashboard'))
+                ->with('success', __('auth.alreadyLoggedIn'));
 
         // Consume the authentication link
         $link->consume($token);

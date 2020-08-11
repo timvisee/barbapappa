@@ -31,6 +31,7 @@ class SessionLink extends Model {
     protected $fillable = [
         'code',
         'code_expire_at',
+        'expire_at',
     ];
 
     /**
@@ -175,10 +176,8 @@ class SessionLink extends Model {
      */
     public function newCode() {
         $code = random_str(Self::CODE_LENGTH, Self::CODE_KEYSPACE);
-        $this->update([
-           'code' => $code,
-           'code_expire_at' => now()->addSeconds(config('app.auth_session_link_code_expire')),
-        ]);
+        $this->code = (string) $code;
+        $this->code_expire_at = now()->addSeconds(config('app.auth_session_link_code_expire'));
         return $code;
     }
 
