@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
  * @property string token
  * @property Carbon|null expire_at
  * @property string|null intended_url
+ * @property string|null laravel_session_id
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -100,6 +101,7 @@ class SessionLink extends Model {
         $link->token = Self::generateToken();
         $link->expire_at = now()->addSeconds(config('app.auth_session_link_expire'));
         $link->intended_url = $intended_url;
+        $link->laravel_session_id = session()->getId();
         $link->save();
         return $link;
     }
@@ -179,5 +181,15 @@ class SessionLink extends Model {
         return redirect()
             ->intended(route('dashboard'))
             ->with('success', __('auth.loggedIn'));
+    }
+
+    /**
+     * Check whehter we're in the same Laravel session.
+     *
+     * @return boolean True if same Laravel session, false if not.
+     */
+    public function isSameSession() {
+        return $this->laravel_session_id != null
+            && $this->laravel_session_id == session()->getId();
     }
 }
