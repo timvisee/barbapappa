@@ -29,6 +29,16 @@ class SessionLink extends Model {
     protected $table = 'session_link';
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'token',
+        'code',
+    ];
+
+    /**
      * The length in characters of reset tokens.
      * @type int
      */
