@@ -144,6 +144,9 @@ return [
     // Time for authentication session links to expire in seconds
     'auth_session_link_expire' => 30 * 60,
 
+    // Time for authentication session link codes to expire in seconds
+    'auth_session_link_code_expire' => 10 * 60,
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

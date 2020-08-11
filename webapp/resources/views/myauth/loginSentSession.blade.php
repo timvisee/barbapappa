@@ -4,12 +4,37 @@
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
-    <div class="ui success message">
-        <span class="halflings halflings-ok-sign icon"></span>
-        @lang('auth.sessionLinkSent', ['email' => $email->email])
-    </div>
+    @if(isset($email))
+        <div class="ui success message">
+            <span class="halflings halflings-ok-sign icon"></span>
+            @lang('auth.sessionLinkSent', ['email' => $email->email])
+        </div>
+    @endif
 
     <p>@lang('misc.emailNotReceivedCheckSpam')</p>
+
+    <div class="ui hidden divider"></div>
+
+    <div class="ui fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            @lang('auth.iHaveLoginCode')
+        </div>
+        <div class="content">
+            {!! Form::open(['action' => ['AuthController@loginWithCode'], 'method' => 'POST', 'class' => 'ui form']) !!}
+
+            <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
+                {{ Form::label('code', __('auth.loginCode') . ':') }}
+                <div class="ui action input">
+                    {{ Form::text('code', '', ['placeholder' => __('auth.loginCodePlaceholder')]) }}
+                    <button class="ui button primary" type="submit">@lang('auth.login')</button>
+                </div>
+                {{ ErrorRenderer::inline('code') }}
+            </div>
+
+            {!! Form::close() !!}
+        </div>
+    </div>
 
     <div class="ui hidden divider"></div>
 

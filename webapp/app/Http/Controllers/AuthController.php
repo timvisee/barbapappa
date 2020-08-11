@@ -43,7 +43,7 @@ class AuthController extends Controller {
      *
      * @param string $token The session link token used for authentication.
      */
-    public function login($token) {
+    public function login(Request $request, $token) {
         // Show error if already authenticated
         if(barauth()->isAuth())
             return redirect()
@@ -51,11 +51,20 @@ class AuthController extends Controller {
                 ->with('success', __('auth.alreadyLoggedIn'));
 
         // Get the user session link
-        $link = SessionLink::where('token', $token)->first();
+        $link = SessionLink::notExpired()->where('token', $token)->first();
         if(empty($link))
             return redirect()
                 ->route('index')
                 ->with('error', __('auth.sessionLinkUnknown'));
+
+        // If other session, generate code and show to user
+        $is_forced = is_checked($request->input('force'));
+        if(!$is_forced && !$link->isSameSession()) {
+            $code = $link->newCode();
+            return view('myauth.loginOtherSession')
+                ->with('token', $token)
+                ->with('code', $code);
+        }
 
         // Consume the authentication link
         $link->consume($token);
@@ -64,5 +73,44 @@ class AuthController extends Controller {
         return redirect()
             ->intended($link->intended_url ?? route('dashboard'))
             ->with('success', __('auth.loggedIn'));
+    }
+
+
+    /**
+     * Login a user through a Laravel session and login code.
+     *
+     * @param string $code The code used to authenticate the session.
+     */
+    public function loginWithCode(Request $request) {
+        // Show error if already authenticated
+        if(barauth()->isAuth())
+            return redirect()
+                ->intended(route('dashboard'))
+                ->with('success', __('auth.alreadyLoggedIn'));
+
+        $code = $request->input('code');
+
+        // Find a session
+        $links = SessionLink::notExpired()->currentLaravelSession()->get();
+        foreach($links as $link) {
+            // The login code must be valid
+            if(!$link->isValidCode($code))
+                continue;
+
+            // Consume the authentication link
+            // TODO: do not consume with token, force consume instead
+            $link->consume($link->token);
+
+            // Redirect to the intended link, from session or session link
+            return redirect()
+                ->intended($link->intended_url ?? route('dashboard'))
+                ->with('success', __('auth.loggedIn'));
+        }
+
+        // Show error
+        add_session_error('code', __('auth.loginCodeInvalid'));
+        return view('myauth.loginSentSession')
+            ->with('email', null);
+            // ->with('loginWithPassword', $email->user->hasPassword());
     }
 }
