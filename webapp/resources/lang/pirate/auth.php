@@ -43,7 +43,7 @@ return [
     'iHaveLoginCode' => 'I received a login code',
     'loginCodeInvalid' => 'Invalid login code',
     'openedInOtherBrowser' => 'Ye opened th\' login link in a different webbrowser.',
-    'enterLoginCodeOtherBrowser' => 'To continue, switch to th\' webbrowser ye tried to login from, and enter dis code:',
+    'enterLoginCodeOtherBrowser' => 'To continue, switch to th\' webbrowser ye tried to login from, and enter dis login code:',
     'continueHereInstead' => 'Sail ho here instead',
 
     'mustVerifyEmail' => 'Ye must verify yer e-bottle coordinate to fully use our service.',
