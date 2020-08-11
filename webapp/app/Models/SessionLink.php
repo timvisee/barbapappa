@@ -28,6 +28,11 @@ class SessionLink extends Model {
 
     protected $table = 'session_link';
 
+    protected $fillable = [
+        'code',
+        'code_expire_at',
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -170,9 +175,10 @@ class SessionLink extends Model {
      */
     public function newCode() {
         $code = random_str(Self::CODE_LENGTH, Self::CODE_KEYSPACE);
-        $this->code = $code;
-        $this->code_expire_at = now()->addSeconds(config('app.auth_session_link_code_expire'));
-        $this->save();
+        $this->update([
+           'code' => $code,
+           'code_expire_at' => now()->addSeconds(config('app.auth_session_link_code_expire')),
+        ]);
         return $code;
     }
 
