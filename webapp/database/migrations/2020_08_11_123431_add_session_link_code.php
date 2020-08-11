@@ -14,7 +14,7 @@ class AddSessionLinkCode extends Migration {
     public function up() {
         Schema::table('session_link', function(Blueprint $table) {
             $table->string('code')->after('laravel_session_id')->nullable(true);
-            $table->timestamp('code_expire_at')->after('code')->nullable(true);
+            $table->datetime('code_expire_at')->after('code')->nullable(true);
         });
     }
 

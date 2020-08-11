@@ -16,7 +16,7 @@ class CreateSessionLinkTable extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->string('token')->unique();
-            $table->timestamp('expire_at');
+            $table->datetime('expire_at');
             $table->string('intended_url')->nullable();
             $table->timestamps();
 

@@ -34,6 +34,11 @@ class SessionLink extends Model {
         'expire_at',
     ];
 
+    protected $casts = [
+        'expire_at' => 'datetime',
+        'code_expire_at' => 'datetime',
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -176,8 +181,9 @@ class SessionLink extends Model {
      */
     public function newCode() {
         $code = random_str(Self::CODE_LENGTH, Self::CODE_KEYSPACE);
-        $this->code = (string) $code;
+        $this->code = $code;
         $this->code_expire_at = now()->addSeconds(config('app.auth_session_link_code_expire'));
+        $this->save();
         return $code;
     }
 
