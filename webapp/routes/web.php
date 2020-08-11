@@ -61,8 +61,10 @@ Route::prefix('/password')->group(function() {
     Route::get('/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
     Route::middleware('throttle:4,1')->post('/reset', 'PasswordResetController@doReset');
 });
-Route::middleware('throttle:4,1')->post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinue');
-Route::middleware('throttle:4,1')->get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
+Route::middleware('throttle:5,1')->post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinue');
+Route::middleware('throttle:5,1')->post('/auth/login/code', 'AuthController@loginWithCode')->name('auth.loginWithCode');
+Route::middleware('throttle:5,1')->get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
+Route::middleware('throttle:5,1')->post('/auth/login/{token}', 'AuthController@login')->name('auth.login');
 
 // Email routes
 Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('email.verify');

@@ -38,6 +38,14 @@ return [
     'sessionLinkSent' => 'We sent ye a magic link to :email. Click on the link to sign in.',
     'unrecognizedEmailRegister' => 'We nay recognize yer e-bottle address yet. Please register an account to start using :app.',
 
+    'loginCode' => 'Login code',
+    'loginCodePlaceholder' => '000000',
+    'iHaveLoginCode' => 'I received a login code',
+    'loginCodeInvalid' => 'Invalid login code',
+    'openedInOtherBrowser' => 'Ye opened th\' login link in a different webbrowser.',
+    'enterLoginCodeOtherBrowser' => 'To continue, switch to th\' webbrowser ye tried to login from, and enter dis code:',
+    'continueHereInstead' => 'Sail ho here instead',
+
     'mustVerifyEmail' => 'Ye must verify yer e-bottle coordinate to fully use our service.',
 
     'loginTroubleContact' => 'Trouble logging in? Contact us',

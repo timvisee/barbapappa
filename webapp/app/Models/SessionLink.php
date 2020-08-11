@@ -45,12 +45,33 @@ class SessionLink extends Model {
     const TOKEN_LENGTH = 24;
 
     /**
+     * The length in characters of the login code.
+     * @type int
+     */
+    const CODE_LENGTH = 6;
+
+    /**
+     * The expiry time in seconds of a login code.
+     * @type int
+     */
+    const CODE_KEYSPACE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
+    /**
      * A scope for session links that have not yet expired.
      *
      * @param \Builder $query The query builder.
      */
     public function scopeNotExpired($query) {
         return $query->where('expire_at', '>', now());
+    }
+
+    /**
+     * A scope for session links within the current Laravel session ID.
+     *
+     * @param \Builder $query The query builder.
+     */
+    public function scopeCurrentLaravelSession($query) {
+        return $query->where('laravel_session_id', session()->getId());
     }
 
     /**
@@ -135,6 +156,35 @@ class SessionLink extends Model {
 
         // Return the generated token
         return $token;
+    }
+
+    /**
+     * Generate and set a new login code for this session link.
+     *
+     * This overwrites any existing login code, and sets its expiration time to
+     * config(app.auth_session_link_code_expire).
+     *
+     * This automatically saves the model to the database.
+     *
+     * @return string The new code.
+     */
+    public function newCode() {
+        $code = random_str(Self::CODE_LENGTH, Self::CODE_KEYSPACE);
+        $this->code = $code;
+        $this->code_expire_at = now()->addSeconds(config('app.auth_session_link_code_expire'));
+        $this->save();
+        return $code;
+    }
+
+    /**
+     * Check whether the given login code is valid.
+     *
+     * @return boolean True if valid, false if not or if expired.
+     */
+    public function isValidCode($code) {
+        return $this->code != null
+            && $this->code_expire_at > now()
+            && $this->code == str_replace(' ', '', strtoupper(trim($code)));
     }
 
     /**
