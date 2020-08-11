@@ -51,7 +51,7 @@ class AuthController extends Controller {
                 ->with('success', __('auth.alreadyLoggedIn'));
 
         // Get the user session link
-        $link = SessionLink::where('token', $token)->first();
+        $link = SessionLink::notExpired()->where('token', $token)->first();
         if(empty($link))
             return redirect()
                 ->route('index')
