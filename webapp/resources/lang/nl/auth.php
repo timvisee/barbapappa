@@ -43,7 +43,7 @@ return [
     'iHaveLoginCode' => 'Ik heb een inlogcode gekregen',
     'loginCodeInvalid' => 'Inlogcode incorrect',
     'openedInOtherBrowser' => 'Je hebt de inloglink in een andere webbrowser geopent.',
-    'enterLoginCodeOtherBrowser' => 'Om verder te gaan, schakel terug naar de browser waarin je geprobeert hebt in te loggen, en vul de onderstaande inlogcode in:',
+    'enterLoginCodeOtherBrowser' => 'Om verder te gaan, schakel terug naar de webbrowser of app waarin je geprobeert hebt in te loggen, en vul de onderstaande inlogcode in:',
     'continueHereInstead' => 'Hier verder gaan',
 
     'mustVerifyEmail' => 'Verifieer je e-mailadres om volledig gebruik te maken van onze service.',
