@@ -8,8 +8,8 @@
         {{ logo()->element(true, false, ['class' => 'logo']) }}
         <p>
             <i>
-                @if(!empty($sourceVersionPage = config('app.sourceVersionPage')))
-                    <a href="{{ str_replace('{}', config('app.version_name'), $sourceVersionPage) }}" target="_blank">
+                @if(!empty($source_version_page = config('app.source_version_page')))
+                    <a href="{{ str_replace('{}', config('app.version_name'), $source_version_page) }}" target="_blank">
                         {{ config('app.version_name') }}
                     </a>
                 @else
