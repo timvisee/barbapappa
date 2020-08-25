@@ -38,12 +38,12 @@ return [
     'sessionLinkSent' => 'We sent ye a magic link to :email. Click on the link to sign in.',
     'unrecognizedEmailRegister' => 'We nay recognize yer e-bottle address yet. Please register an account to start using :app.',
 
-    'loginCode' => 'Login code',
-    'loginCodePlaceholder' => '000000',
-    'iHaveLoginCode' => 'I received a login code',
-    'loginCodeInvalid' => 'Invalid login code',
+    'verificationCode' => 'Verification code',
+    'verificationCodePlaceholder' => '000000',
+    'iHaveVerificationCode' => 'I have a verification code',
+    'verificationCodeInvalid' => 'Invalid verification code',
     'openedInOtherBrowser' => 'Ye opened th\' login link in a different webbrowser.',
-    'enterLoginCodeOtherBrowser' => 'To continue, switch to th\' webbrowser or app ye tried to login from, and enter dis login code:',
+    'enterVerificationCodeOtherBrowser' => 'To continue, switch to th\' webbrowser or app ye tried to login from, and enter dis verification code:',
     'continueHereInstead' => 'Sail ho here instead',
 
     'mustVerifyEmail' => 'Ye must verify yer e-bottle coordinate to fully use our service.',

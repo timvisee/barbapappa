@@ -38,12 +38,12 @@ return [
     'sessionLinkSent' => 'We hebben je een magische link gestuurd naar :email. Klik op de link om in te loggen.',
     'unrecognizedEmailRegister' => 'We herkennen je e-mailadres nog niet. Registreer een account om gebruik te maken van :app.',
 
-    'loginCode' => 'Inlogcode',
-    'loginCodePlaceholder' => '000000',
-    'iHaveLoginCode' => 'Ik heb een inlogcode gekregen',
-    'loginCodeInvalid' => 'Inlogcode incorrect',
+    'verificationCode' => 'Verificatiecode',
+    'verificationCodePlaceholder' => '000000',
+    'iHaveVerificationCode' => 'Ik heb een verificatiecode',
+    'verificationCodeInvalid' => 'Verificatiecode incorrect',
     'openedInOtherBrowser' => 'Je hebt de inloglink in een andere webbrowser geopent.',
-    'enterLoginCodeOtherBrowser' => 'Om verder te gaan, schakel terug naar de webbrowser of app waarin je geprobeert hebt in te loggen, en vul de onderstaande inlogcode in:',
+    'enterVerificationCodeOtherBrowser' => 'Om verder te gaan, schakel terug naar de webbrowser of app waarin je geprobeert hebt in te loggen, en vul de onderstaande verificatiecode in:',
     'continueHereInstead' => 'Hier verder gaan',
 
     'mustVerifyEmail' => 'Verifieer je e-mailadres om volledig gebruik te maken van onze service.',
