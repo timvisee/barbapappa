@@ -11,6 +11,12 @@
       "type": "image/png"
     },
     {
+      "src": "/img/logo/logo_maskable_icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
       "src": "/img/logo/logo_square_x512.png",
       "sizes": "512x512",
       "type": "image/png"
