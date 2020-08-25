@@ -26,7 +26,7 @@
             <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
                 {{ Form::label('code', __('auth.loginCode') . ':') }}
                 <div class="ui action input">
-                    {{ Form::text('code', '', ['placeholder' => __('auth.loginCodePlaceholder')]) }}
+                    {{ Form::text('code', '', ['placeholder' => __('auth.verificationCodePlaceholder')]) }}
                     <button class="ui button primary" type="submit">@lang('auth.login')</button>
                 </div>
                 {{ ErrorRenderer::inline('code') }}

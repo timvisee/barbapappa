@@ -38,12 +38,12 @@ return [
     'sessionLinkSent' => 'We sent you a magic link to :email. Click on the link to sign in.',
     'unrecognizedEmailRegister' => 'We do not recognize your email address yet. Please register an account to start using :app.',
 
-    'loginCode' => 'Login code',
-    'loginCodePlaceholder' => '000000',
-    'iHaveLoginCode' => 'I received a login code',
-    'loginCodeInvalid' => 'Invalid login code',
+    'verificationCode' => 'Verification code',
+    'verificationCodePlaceholder' => '000000',
+    'iHaveVerificationCode' => 'I have a verification code',
+    'verificationCodeInvalid' => 'Invalid verification code',
     'openedInOtherBrowser' => 'You\'ve opened the login link in a different webbrowser.',
-    'enterLoginCodeOtherBrowser' => 'To continue, switch to the webbrowser or app you tried to login from, and enter the following login code:',
+    'enterVerificationCodeOtherBrowser' => 'To continue, switch to the webbrowser or app you tried to login from, and enter the following verification code:',
     'continueHereInstead' => 'Continue here instead',
 
     'mustVerifyEmail' => 'You must verify your email address to fully use our service.',

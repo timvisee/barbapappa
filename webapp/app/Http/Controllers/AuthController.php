@@ -77,7 +77,7 @@ class AuthController extends Controller {
 
 
     /**
-     * Login a user through a Laravel session and login code.
+     * Login a user through a Laravel session and a verification code.
      *
      * @param string $code The code used to authenticate the session.
      */
@@ -93,7 +93,7 @@ class AuthController extends Controller {
         // Find a session
         $links = SessionLink::notExpired()->currentLaravelSession()->get();
         foreach($links as $link) {
-            // The login code must be valid
+            // The verification code must be valid
             if(!$link->isValidCode($code))
                 continue;
 
@@ -108,7 +108,7 @@ class AuthController extends Controller {
         }
 
         // Show error
-        add_session_error('code', __('auth.loginCodeInvalid'));
+        add_session_error('code', __('auth.verificationCodeInvalid'));
         return view('myauth.loginSentSession')
             ->with('email', null);
             // ->with('loginWithPassword', $email->user->hasPassword());
