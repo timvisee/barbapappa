@@ -8,7 +8,7 @@ var pwaDeferredPrompt = null;
 // Register service worker for PWA/offline usage
 if('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/js/sw.js').then(registration => {
+        navigator.serviceWorker.register('/sw.js').then(registration => {
             console.log('Service worker registered: ', registration);
         }).catch(registrationError => {
             console.log('Service worker registration failed: ', registrationError);

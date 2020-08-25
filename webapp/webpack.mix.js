@@ -15,7 +15,7 @@ mix.webpackConfig({
             exclude: [
                 /.*\.(js|css)/
             ],
-            swDest: 'js/sw.js',
+            swDest: 'sw.js',
         }),
     ]
 });

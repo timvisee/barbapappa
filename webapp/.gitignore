@@ -8,7 +8,7 @@
 /public/css
 /public/fonts
 /public/flags
-/public/service-worker.js
+/public/sw.js
 /public/workbox*.js
 
 #################
