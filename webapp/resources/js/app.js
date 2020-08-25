@@ -5,13 +5,15 @@ var axios = require('axios');
  */
 var pwaDeferredPrompt = null;
 
-// Register service worker for offline usage
+// Register service worker for PWA/offline usage
 if('serviceWorker' in navigator) {
-    navigator.serviceWorker
-        .register('/js/sw.js')
-        .then(function() {
-            console.log('Service worker registered');
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js').then(registration => {
+            console.log('Service worker registered: ', registration);
+        }).catch(registrationError => {
+            console.log('Service worker registration failed: ', registrationError);
         });
+    });
 }
 
 // Catch PWA install prompt

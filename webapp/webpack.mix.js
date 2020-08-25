@@ -1,6 +1,7 @@
 // noinspection JSAnnotator
 let mix = require('laravel-mix');
 const WebpackShellPlugin = require('webpack-shell-plugin');
+const {GenerateSW} = require('workbox-webpack-plugin');
 
 // Add shell command plugin configured to create JavaScript language file
 mix.webpackConfig({
@@ -9,6 +10,7 @@ mix.webpackConfig({
             onBuildStart:['php artisan lang:js --compress --quiet'],
             onBuildEnd:[],
         }),
+        new GenerateSW(),
     ]
 });
 
@@ -32,9 +34,6 @@ mix.copyDirectory(
 // Compile application assets
 mix.js(
     'resources/js/app.js',
-    'public/js',
-).js(
-    'resources/js/sw.js',
     'public/js',
 ).js(
     'resources/js/quickbuy/quickbuy.js',

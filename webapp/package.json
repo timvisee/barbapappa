@@ -25,5 +25,8 @@
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.11",
     "webpack-shell-plugin": "^0.5.0"
+  },
+  "dependencies": {
+    "workbox-webpack-plugin": "^5.1.3"
   }
 }
