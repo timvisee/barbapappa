@@ -1,5 +1,14 @@
 var axios = require('axios');
 
+// Register service worker for offline usage
+if('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/js/sw.js')
+        .then(function() {
+            console.log('Service worker registered');
+        });
+}
+
 $(document).ready(function() {
     // Initialize components
     $('.ui.checkbox').checkbox();
