@@ -7,7 +7,7 @@ self.addEventListener('install', function(e) {
                 '/css/flag-icon.css',
                 '/css/glyphicons-packed.css',
                 '/css/semnatic.min.css',
-                '/img/logo/logo_nowrap.svg',
+                '/img/logo/logo_square.png',
                 '/js/app.js',
                 '/js/jquery-packed.js',
                 '/js/lang.js',
