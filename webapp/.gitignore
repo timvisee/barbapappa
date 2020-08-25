@@ -8,6 +8,8 @@
 /public/css
 /public/fonts
 /public/flags
+/public/sw.js
+/public/workbox*.js
 
 #################
 ## Laravel

@@ -8,6 +8,7 @@
     <meta name="HandheldFriendly" content="True">
     <meta name="theme-color" content="#e9e9e9">
     <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/img/icon/logo_apple_touch_icon.png">
 
     <meta name="application-name" content="{{ config('app.name', 'Barbapappa') }}">
     <meta name="author" content="{{ config('app.author') }}">
