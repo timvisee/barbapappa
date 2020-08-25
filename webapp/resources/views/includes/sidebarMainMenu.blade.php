@@ -67,6 +67,10 @@
     <div class="item">
         <div class="header">@lang('misc.information')</div>
         <div class="menu">
+            <div class="item link pwa-install-button">
+                <i class="glyphicons glyphicons-download"></i>
+                @lang('app.installApp')
+            </div>
             <a href="{{ route('about') }}"
                     class="item {{ Route::currentRouteName() == 'about' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-heart-empty"></i>

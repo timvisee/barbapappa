@@ -4,6 +4,8 @@
  * Application related translations.
  */
 return [
+    'installApp' => 'App installeren',
+
     // Logo customization
     'logo' => [
         // Logo file names
