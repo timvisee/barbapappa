@@ -1,5 +1,10 @@
 var axios = require('axios');
 
+/**
+ * Keeps PWA prompt event so we can manually trigger it.
+ */
+var pwaDeferredPrompt = null;
+
 // Register service worker for offline usage
 if('serviceWorker' in navigator) {
     navigator.serviceWorker
@@ -8,6 +13,15 @@ if('serviceWorker' in navigator) {
             console.log('Service worker registered');
         });
 }
+
+// Catch PWA install prompt
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Keep event so we can trigger prompt later
+    pwaDeferredPrompt = e;
+
+    // Manage PWA install button
+    managePwaInstallButton();
+});
 
 $(document).ready(function() {
     // Initialize components
@@ -41,37 +55,31 @@ $(document).ready(function() {
 /**
  * Manage the PWA install button.
  */
-// TODO: improve this logic
 function managePwaInstallButton() {
-    // Get install button, hide if useless, hold reference to PWA prompt
-    let deferredPrompt;
+    // Select install button, hide by default
     const installBtn = document.querySelector('.pwa-install-button');
     installBtn.style.display = 'none';
 
-    window.addEventListener('beforeinstallprompt', (e) => {
-        // // Prevent Chrome 67 and earlier from automatically showing the prompt
-        // e.preventDefault();
+    // Stop if we did not catch PWA prompt
+    if(pwaDeferredPrompt == null)
+        return;
 
-        // Stash the event so it can be triggered later.
-        deferredPrompt = e;
-        // Update UI to notify the user they can add to home screen
-        installBtn.style.display = 'block';
+    // Show install button if PWA prompt was deferred
+    installBtn.style.display = 'block';
 
-        installBtn.addEventListener('click', (e) => {
-            // hide our user interface that shows our A2HS button
-            installBtn.style.display = 'none';
-            // Show the prompt
-            deferredPrompt.prompt();
-            // Wait for the user to respond to the prompt
-            deferredPrompt.userChoice.then((choiceResult) => {
-                // TODO: remove logging?
-                if (choiceResult.outcome === 'accepted') {
-                    console.log('User accepted the A2HS prompt');
-                } else {
-                    console.log('User dismissed the A2HS prompt');
-                }
-                deferredPrompt = null;
-            });
+    installBtn.addEventListener('click', (e) => {
+        installBtn.style.display = 'none';
+
+        // Show prompt
+        pwaDeferredPrompt.prompt();
+        pwaDeferredPrompt.userChoice.then((choiceResult) => {
+            // TODO: remove logging?
+            // if (choiceResult.outcome === 'accepted') {
+            //     console.log('User accepted the A2HS prompt');
+            // } else {
+            //     console.log('User dismissed the A2HS prompt');
+            // }
+            pwaDeferredPrompt = null;
         });
     });
 }
