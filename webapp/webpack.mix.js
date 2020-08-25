@@ -10,7 +10,13 @@ mix.webpackConfig({
             onBuildStart:['php artisan lang:js --compress --quiet'],
             onBuildEnd:[],
         }),
-        new GenerateSW(),
+        new GenerateSW({
+            // TODO: do not exclude common files
+            exclude: [
+                /.*\.(js|css)/
+            ],
+            swDest: 'js/sw.js',
+        }),
     ]
 });
 
