@@ -9,6 +9,11 @@
       "src": "/img/logo/logo_square.png",
       "sizes": "192x192",
       "type": "image/png"
+    },
+    {
+      "src": "/img/logo/logo_square_x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "shortcuts": [
