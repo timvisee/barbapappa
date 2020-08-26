@@ -18,13 +18,13 @@
     <div class="ui fluid accordion">
         <div class="title">
             <i class="dropdown icon"></i>
-            @lang('auth.iHaveLoginCode')
+            @lang('auth.iHaveVerificationCode')
         </div>
         <div class="content">
             {!! Form::open(['action' => ['AuthController@loginWithCode'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
             <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
-                {{ Form::label('code', __('auth.loginCode') . ':') }}
+                {{ Form::label('code', __('auth.verificationCode') . ':') }}
                 <div class="ui action input">
                     {{ Form::text('code', '', ['placeholder' => __('auth.verificationCodePlaceholder')]) }}
                     <button class="ui button primary" type="submit">@lang('auth.login')</button>

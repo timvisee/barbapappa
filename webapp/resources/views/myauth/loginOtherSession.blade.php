@@ -9,7 +9,7 @@
         @lang('auth.openedInOtherBrowser')
     </div>
 
-    <p>@lang('auth.enterLoginCodeOtherBrowser')</p>
+    <p>@lang('auth.enterVerificationCodeOtherBrowser')</p>
 
     <h3 class="ui block header">
         <code>{{ $code }}</code>
