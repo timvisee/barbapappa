@@ -4,7 +4,7 @@
  * Application related translations.
  */
 return [
-    'installApp' => 'App installeren',
+    'installApp' => 'Install app',
 
     // Logo customization
     'logo' => [
