@@ -65,9 +65,9 @@
                     class="ui button green">
                 @lang('misc.pay')
             </a>
-            <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button orange">
-                @lang('pages.wallets.transfer')
+            <a href="{{ route('community.wallet.stats', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                    class="ui button primary">
+                @lang('misc.stats')
             </a>
         </div>
     </center>
@@ -93,17 +93,17 @@
     <p>
         <div class="ui buttons">
             <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button secondary">
+                    class="ui button secondary basic">
                 @lang('misc.rename')
             </a>
             <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button negative">
+                    class="ui button negative basic">
                 @lang('misc.delete')
             </a>
         </div>
-        <a href="{{ route('community.wallet.stats', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                class="ui button primary">
-            @lang('misc.stats')
+        <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                class="ui button orange basic">
+            @lang('pages.wallets.transfer')
         </a>
     </p>
 
