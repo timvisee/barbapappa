@@ -81,10 +81,44 @@ class WalletController extends Controller {
             ->findOrFail($walletId);
         $transactions = $wallet->lastTransactions();
 
+        // Build balance graph item data
+        $balance_graph_items = $wallet
+            // TODO: choose proper limit
+            ->lastTransactions(35)
+            ->get()
+            ->filter(function($t) {
+                return $t->state == Transaction::STATE_SUCCESS;
+            })
+            ->map(function($t) use($wallet) {
+                // TODO: add date and some other parameters as well
+                return [
+                    'time' => $t->created_at,
+                    'amount' => $t->cost($wallet),
+                ];
+            });
+        $balance_accum = $wallet->balance;
+        $balance_graph_items = $balance_graph_items
+            ->map(function($data) use(&$balance_accum) {
+                $data['balance'] = $balance_accum;
+                $balance_accum = round($balance_accum - $data['amount'], 2);
+                return $data;
+            })
+            ->reverse()
+            ->values();
+
+        // Build graph data
+        if($balance_graph_items->count() >= 5) {
+            $balance_graph_items->each(function($t) use(&$balance_graph_data) {
+                $balance_graph_data['labels'][] = $t['time']->longRelativeDiffForHumans() . ' (' . $t['time']->format('Y-m-d H:m') . ')';
+                $balance_graph_data['datasets'][0]['data'][] = $t['balance'];
+            });
+        }
+
         return view('community.wallet.show')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
-            ->with('transactions', $transactions->get());
+            ->with('transactions', $transactions->get())
+            ->with('balance_graph_data', $balance_graph_data ?? null);
     }
 
     /**

@@ -2,6 +2,13 @@
 
 @section('title', $wallet->name)
 
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+@endpush
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.css">
+@endpush
+
 @php
     // Define menulinks
     $menulinks[] = [
@@ -73,6 +80,43 @@
     </center>
 
     <div class="ui divider hidden"></div>
+
+    @if($balance_graph_data != null)
+        <canvas id="chartBalanceGraph"
+            height="50"
+            aria-label="@lang('misc.balance')"
+            role="img"></canvas>
+        <script>
+            var data = JSON.parse('{!! json_encode($balance_graph_data) !!}');
+            data.datasets[0].borderColor = 'rgb(75, 192, 192)';
+            data.datasets[0].backgroundColor = 'rgba(75, 192, 192, 0.5)';
+            new Chart(
+                document.getElementById('chartBalanceGraph').getContext('2d'),
+                {
+                    type: 'line',
+                    data: data,
+                    options: {
+                        animation: false,
+                        legend: false,
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                            }],
+                            yAxes: [{
+                                ticks: {
+                                    callback: function(value, index, values) {
+                                        return '€ ' + value;
+                                    }
+                                }
+                            }]
+                        }
+                    }
+                },
+            );
+        </script>
+
+        <div class="ui divider hidden"></div>
+    @endif
 
     {{-- Transaction list --}}
     @include('transaction.include.list', [
