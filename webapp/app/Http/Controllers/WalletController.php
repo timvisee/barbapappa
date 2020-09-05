@@ -4,21 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
-use App\Models\EconomyMember;
 use App\Models\Mutation;
 use App\Models\MutationPayment;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Product;
 use App\Models\Transaction;
-use App\Models\Wallet;
-use App\Perms\Builder\Config as PermsConfig;
-use App\Perms\CommunityRoles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
-use Validator;
 
 class WalletController extends Controller {
 
