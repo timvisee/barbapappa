@@ -8,6 +8,7 @@
             <div class="ui transparent icon input">
                 <input v-model="query"
                         :placeholder="__('pages.bar.advancedBuy.searchUsers') + '...'"
+                        id="user-search"
                         type="text" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
                 <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon link">
@@ -57,6 +58,11 @@
                 // Do not add products when currently buying
                 if(this.buying)
                     return;
+
+                // Focus the search field for quick new searches
+                let searchField = document.getElementById("user-search");
+                searchField.focus();
+                searchField.setSelectionRange(0, searchField.value.length)
 
                 // Find the user object, or create a new one
                 let item = this.cart.filter(i => i.user.id == user.id);
