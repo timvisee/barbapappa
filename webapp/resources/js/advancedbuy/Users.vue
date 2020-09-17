@@ -19,9 +19,9 @@
 
         <a v-for="user in users"
                 v-on:click.prevent.stop="addSelected(user)"
-                v-bind:class="{ disabled: buying }"
+                v-bind:class="{ disabled: buying, active: user.active }"
                 href="#"
-                class="item">
+                class="green item">
             {{ user.name || __('misc.unknownUser') }}
             <span v-if="user.me" class="subtle">({{ __('misc.me') }})</span>
         </a>
@@ -58,6 +58,14 @@
                 // Do not add products when currently buying
                 if(this.buying)
                     return;
+
+                // Mark user as active for half a second
+                user.active = true;
+                this.$forceUpdate();
+                setTimeout(() => {
+                    user.active = false;
+                    this.$forceUpdate();
+                }, 500);
 
                 // Focus the search field for quick new searches
                 let searchField = document.getElementById("user-search");
