@@ -10,7 +10,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * Check for each user whether a new balance update should be sent, and in that
@@ -86,8 +85,8 @@ class SendBalanceUpdates implements ShouldQueue {
         $users->each(function($user) {
             DB::transaction(function() use($user) {
                 // Find the email history entry
-                $email_history = EmailHistory::user($user)
-                    ->type(EmailHistory::TYPE_BALANCE_UPDATE)
+                $email_history = EmailHistory::where('user_id', $user->id)
+                    ->where('type', EmailHistory::TYPE_BALANCE_UPDATE)
                     ->first();
 
                 // Create new entry if non existant
