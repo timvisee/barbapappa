@@ -33,7 +33,7 @@ class SendBalanceUpdates implements ShouldQueue {
     /**
      * Time in seconds for the first updat eemail to be send to each user.
      */
-    const UPDATE_FIRST_DELAY = 60 * 60 * 24 * 7;
+    const UPDATE_FIRST_DELAY = 60 * 60 * 24 * 3;
 
     /**
      * Allowed update interval play in seconds.
