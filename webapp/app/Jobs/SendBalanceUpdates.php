@@ -31,6 +31,11 @@ class SendBalanceUpdates implements ShouldQueue {
     const UPDATE_INTERVAL = 60 * 60 * 24 * 30;
 
     /**
+     * Time in seconds for the first updat eemail to be send to each user.
+     */
+    const UPDATE_FIRST_DELAY = 60 * 60 * 24 * 7;
+
+    /**
      * Allowed update interval play in seconds.
      *
      * This is to fix any delays in sending emails. Time between emails usually
@@ -80,17 +85,24 @@ class SendBalanceUpdates implements ShouldQueue {
         // Send an update to each listed user
         $users->each(function($user) {
             DB::transaction(function() use($user) {
-                // Update email history time
-                $history = EmailHistory::updateOrCreate([
-                    'user_id' => $user->id,
-                    'type' => EmailHistory::TYPE_BALANCE_UPDATE,
-                ], [
-                    'last_at' => now(),
-                ]);
+                // Find the email history entry
+                $email_history = EmailHistory::user($user)
+                    ->type(EmailHistory::TYPE_BALANCE_UPDATE)
+                    ->first();
 
-                // Do not send the first time, if create/update time are the same
-                if($history->created_at == $history->updated_at)
+                // Create new entry if non existant
+                if($email_history == null) {
+                    $email_history = new EmailHistory();
+                    $email_history->user_id = $user->id;
+                    $email_history->type = EmailHistory::TYPE_BALANCE_UPDATE;
+                    $email_history->last_at = now()->subSeconds(Self::UPDATE_INTERVAL)->addSeconds(Self::UPDATE_FIRST_DELAY);
+                    $email_history->save();
                     return;
+                }
+
+                // Update last time in existing entity
+                $email_history->last_at = now();
+                $email_history->save();
 
                 // Schedule a job to send the balance update for the user
                 SendBalanceUpdate::dispatch($user->id);
