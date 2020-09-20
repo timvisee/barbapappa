@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Users;
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -37,6 +38,19 @@ class EmailHistory extends Model {
      * Email type: user wallet balance update
      */
     const TYPE_BALANCE_UPDATE = 1;
+
+    /**
+     * A scope for selecting a specific user.
+     *
+     * @param User|int $user_id The user.
+     */
+    public function scopeUser($query, $user_id) {
+        if($user_id instanceof User)
+            $user_id = $user_id->id;
+        if($user_id == null)
+            throw new \Exception("User cannot be null");
+        return $query->where('user_id', $user_id);
+    }
 
     /**
      * A scope for selecting a specific email type.
