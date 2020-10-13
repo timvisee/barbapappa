@@ -33,7 +33,7 @@ class PasswordForgetController extends Controller {
         $email = Email::where('email', '=', $request->input('email'))->first();
 
         // Send login link if user has no password
-        if(($user = $email->user) != null) {
+        if($email != null && ($user = $email->user) != null) {
             if(!$user->hasPassword()) {
                 // Create and send session link
                 $link = SessionLink::create($user, route('password.change'));
