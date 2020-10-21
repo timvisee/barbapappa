@@ -86,3 +86,9 @@ mix.copy(
     'node_modules/semantic-ui-css/semantic.min.js',
     'public/js/semantic.min.js',
 );
+
+// Other static resources
+mix.copy(
+    '../LICENSE',
+    'public/LICENSE',
+);
