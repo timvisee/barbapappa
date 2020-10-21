@@ -10,6 +10,7 @@
 /public/flags
 /public/sw.js
 /public/workbox*.js
+/public/LICENSE
 
 #################
 ## Laravel

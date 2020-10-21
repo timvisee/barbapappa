@@ -2,7 +2,7 @@
   "name": "barpay",
   "description": "Laravel payment processing framework for Barbapappa",
   "type": "library",
-  "license": "GPL-3.0",
+  "license": "AGPL-3.0",
   "authors": [
     {
       "name": "timvisee",

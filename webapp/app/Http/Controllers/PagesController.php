@@ -72,9 +72,8 @@ class PagesController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function licenseRaw() {
-        $response = \Response::make(\View::make('pages.includes.raw.license'), 200);
-        $response->header('Content-Type', 'text/plain');
-        return $response;
+        return response()
+            ->file('LICENSE', ['Content-Type' => 'text/plain']);
     }
 
     /**

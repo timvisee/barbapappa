@@ -83,7 +83,7 @@ Note: Tests are currently fairly basic, and should be improved at a later time.
 This project is currently developed and maintained by [Tim Visée](https://github.com/timvisee), [www.timvisee.com](https://timvisee.com/).
 
 ## License
-This project is released under the GNU GPL-3.0 licence.
+This project is released under the GNU AGPL-3.0 licence.
 Check out the [LICENSE](LICENSE) file for more information.
 
 [pipeline-badge]: https://gitlab.com/timvisee/barbapappa/badges/master/pipeline.svg

@@ -876,7 +876,7 @@ return [
      */
     'license' => [
         'title' => 'License',
-        'description' => 'The Barbapappa software project is open-source, and is released under the GNU GPL-3.0 license. This license describes what you are and are not allowed to with the public source code of this software project. This license does not have any effect on the usage information processed within this application.<br><br>Read the full license below, or check out the summary for this license as quick summary.',
+        'description' => 'The Barbapappa software project is open-source, and is released under the GNU AGPL-3.0 license. This license describes what you are and are not allowed to with the public source code of this software project. This license does not have any effect on the usage information processed within this application.<br><br>Read the full license below, or check out the summary for this license as quick summary.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If you have any further questions about the license used for this project, be sure to get in touch with us. You can also check out the plain text license readable on any device.',
         'plainTextLicense' => 'Plain text license',

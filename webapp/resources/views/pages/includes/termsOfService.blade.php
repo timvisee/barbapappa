@@ -31,7 +31,7 @@
     <li>
         Permission is granted to download a copy of the source code (software)
         for the {{ $app }} application. The source code may be used within lawful
-        means as described in the included <a href="{{ route('license') }}">GNU GPL-3.0</a>
+        means as described in the included <a href="{{ route('license') }}">GNU AGPL-3.0</a>
         license.
     </li>
     <li>
