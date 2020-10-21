@@ -56,7 +56,7 @@
 
         <p>@lang('pages.about.withLicense'):</p>
         <div class="ui list">
-            <a href="{{ route('license') }}" class="item">GNU GPL-3.0</a>
+            <a href="{{ route('license') }}" class="item">GNU AGPL-3.0</a>
         </div>
 
         <h3 class="ui horizontal divider header">

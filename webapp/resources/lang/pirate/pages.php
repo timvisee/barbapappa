@@ -876,7 +876,7 @@ return [
      */
     'license' => [
         'title' => 'License',
-        'description' => 'Th\' Arrbapappa software project be open-source, and be released under th\' GNU GPL-3.0 license. Dis license maps what ye are and nay be allowed to do with th\' public source code of dis software project. Dis license does not have any effect on the usage information processed within dis application.<br><br>Read th\' full license below, o\' check out th\' summary for dis license as quick summary.',
+        'description' => 'Th\' Arrbapappa software project be open-source, and be released under th\' GNU AGPL-3.0 license. Dis license maps what ye are and nay be allowed to do with th\' public source code of dis software project. Dis license does not have any effect on the usage information processed within dis application.<br><br>Read th\' full license below, o\' check out th\' summary for dis license as quick summary.',
         'questions' => 'Questions?',
         'questionsDescription' => 'If ye have any further questions about our license, be sure to ship us a bottle message. Ye can also check th\' plain text license readable on any ship.',
         'plainTextLicense' => 'Plain text license',
