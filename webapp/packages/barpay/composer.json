@@ -1,5 +1,5 @@
 {
-  "name": "barpay",
+  "name": "timvisee/barpay",
   "description": "Laravel payment processing framework for Barbapappa",
   "type": "library",
   "license": "AGPL-3.0",
