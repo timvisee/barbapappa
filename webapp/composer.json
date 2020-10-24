@@ -16,7 +16,7 @@
     "require": {
         "php": ">=7.2",
         "alfa6661/laravel-has-many-sync": "^1.1",
-        "timvisee/barpay": "dev-master",
+        "timvisee/barpay": "@dev",
         "barryvdh/laravel-debugbar": "^3.2.3",
         "barryvdh/laravel-dompdf": "^0.8.4",
         "bunq/sdk_php": "^1.13.0",
