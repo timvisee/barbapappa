@@ -6084,7 +6084,7 @@
         },
         {
             "name": "timvisee/barpay",
-            "version": "dev-361-fix-barpay-composer-package-error-in-gitlab-ci",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "packages/barpay",
