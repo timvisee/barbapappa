@@ -354,6 +354,7 @@ return [
         'noSystems' => 'Geen systemen...',
         'systems#' => '{0} Geen systemen|{1} Systeem|[2,*] :count systemen',
         'manageSystem' => 'Beheer systeem',
+        'manageSystems' => 'Beheer systemen',
         'namePlaceholder' => 'Ons systeem op papier',
         'newSystem' => 'Systeem toevoegen',
         'editSystem' => 'Systeem aanpassen',
