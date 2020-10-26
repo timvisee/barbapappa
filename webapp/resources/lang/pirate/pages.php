@@ -354,6 +354,7 @@ return [
         'noSystems' => 'Nay systems...',
         'systems#' => '{0} Nay systems|{1} System|[2,*] :count systems',
         'manageSystem' => 'Manage system',
+        'manageSystems' => 'Manage systems',
         'namePlaceholder' => 'Our paper system',
         'newSystem' => 'Add system',
         'editSystem' => 'Edit system',
