@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Email\Payment;
+namespace App\Mail\Payment;
 
 use App\Mail\PersonalizedEmail;
 use App\Models\EmailVerification;
