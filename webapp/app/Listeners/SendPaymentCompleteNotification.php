@@ -3,10 +3,9 @@
 namespace App\Listeners;
 
 use App\Events\PaymentCompleted;
-use App\Mail\Email\Payment\Completed;
+use App\Mail\Payment\Completed;
 use App\Models\Notifications\PaymentSettled;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 
 class SendPaymentCompleteNotification implements ShouldQueue {
