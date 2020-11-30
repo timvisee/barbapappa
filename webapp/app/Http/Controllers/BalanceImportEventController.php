@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\BalanceImport\Update;
 use App\Models\MutationWallet;
+use App\Utils\MoneyAmount;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
@@ -269,7 +270,7 @@ class BalanceImportEventController extends Controller {
             $alias = $change->alias;
 
             // Get balance, skip if zero
-            $balance = $change->balance;
+            $balance = new MoneyAmount($change->currency, $change->balance);
 
             // Find mutation/wallet used for change if there is any, get balance
             $mutation = $change->mutation;
@@ -283,11 +284,22 @@ class BalanceImportEventController extends Controller {
                 }
             }
             if($wallet != null)
-                $balance = $wallet->balance;
+                $balance = new MoneyAmount($wallet->currency, $wallet->balance);
 
-            // If user has zero balance, ignore
-            // TODO: do continue if balance is now zero but is changed
-            if($balance == null || $balance == 0)
+            // Calculate/get balance change
+            $balanceChange = null;
+            if($mutation != null) {
+                $balanceChange = new MoneyAmount($mutation->currency, $mutation->amount);
+            } else {
+                // TODO: does this work for 'cost' imports?
+                $previous = $change->previous()->first();
+                if($previous != null) {
+                    $balanceChange = new MoneyAmount($change->currency, $change->balance - $previous->balance);
+                }
+            }
+
+            // If user has zero balance and has no change, ignore
+            if($balance->amount == null && ($balanceChange != null && $balanceChange->amount == 0))
                continue;
 
             // Create the mailable for the change, send the mailable
@@ -297,7 +309,9 @@ class BalanceImportEventController extends Controller {
                 $message,
                 $invite_to_bar,
                 $mutation,
-                $wallet
+                $wallet,
+                $balance,
+                $balanceChange,
             ));
         }
 

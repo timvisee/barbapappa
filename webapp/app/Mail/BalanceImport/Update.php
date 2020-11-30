@@ -50,6 +50,16 @@ class Update extends PersonalizedEmail {
     private $wallet;
 
     /**
+     * The current balance.
+     */
+    private $balance;
+
+    /**
+     * Balance change.
+     */
+    private $balanceChange;
+
+    /**
      * Constructor.
      *
      * @param EmailRecipient[] $recipients A list of email recipients.
@@ -58,8 +68,10 @@ class Update extends PersonalizedEmail {
      * @param Bar|null $bar Bar to invite users to.
      * @param Mutation|null $mutation The mutation for this change if there is any.
      * @param Wallet|null $wallet The related user wallet if there is any.
+     * @param MoneyAmount $balance The current balance.
+     * @param MoneyAmount $balanceChange The balance change.
      */
-    public function __construct($recipients, BalanceImportChange $change, $message, $invite_to_bar, $mutation, $wallet) {
+    public function __construct($recipients, BalanceImportChange $change, $message, $invite_to_bar, $mutation, $wallet, $balance, $balanceChange) {
         // Construct the parent
         parent::__construct($recipients, self::SUBJECT);
 
@@ -68,6 +80,8 @@ class Update extends PersonalizedEmail {
         $this->invite_to_bar = $invite_to_bar;
         $this->mutation = $mutation;
         $this->wallet = $wallet;
+        $this->balance = $balance;
+        $this->balanceChange = $balanceChange;
     }
 
     /**
@@ -100,6 +114,8 @@ class Update extends PersonalizedEmail {
         return parent::build()
             ->with('subtitle', $subtitle)
             ->with('user_name', $user_name)
+            ->with('balance', $this->balance)
+            ->with('balanceChange', $this->balanceChange)
             ->with('change', $this->change)
             ->with('event', $event)
             ->with('system', $system)

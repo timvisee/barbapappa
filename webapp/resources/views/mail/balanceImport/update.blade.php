@@ -9,11 +9,16 @@
 
 @php
     $details = [];
-    if($wallet != null) {
+    $details[] = [
+        'key' => __('misc.balance'),
+        'valueHtml' => $balance->formatAmount(BALANCE_FORMAT_COLOR),
+    ];
+    if($balanceChange != null)
         $details[] = [
-            'key' => __('misc.balance'),
-            'valueHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
+            'key' => __('misc.difference'),
+            'valueHtml' => $balanceChange->formatAmount(BALANCE_FORMAT_COLOR),
         ];
+    if($wallet != null)
         $details[] = [
             'key' => __('misc.wallet'),
             'valueHtml' => '<a href="' . route('community.wallet.show', [
@@ -22,12 +27,6 @@
                     'walletId' => $wallet->id,
                 ]) . '">' . $wallet->name . '</a>',
         ];
-    } else if($change != null) {
-        $details[] = [
-            'key' => __('misc.balance'),
-            'valueHtml' => $change->formatAmount(BALANCE_FORMAT_COLOR),
-        ];
-    }
     if($change != null)
         $details[] = [
             'key' => __('misc.imported'),

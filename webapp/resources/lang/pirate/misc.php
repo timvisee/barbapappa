@@ -136,6 +136,7 @@ return [
     'send' => 'Send',
     'event' => 'Event',
     'source' => 'Source',
+    'difference' => 'Difference',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',
