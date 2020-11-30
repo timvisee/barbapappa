@@ -60,6 +60,16 @@
 <br>
 @endif
 
+@if(!empty($wallet))
+@component('mail::notice')
+@lang('mail.balanceImport.update.payInAppDescription')<br>
+
+@component('mail::button', ['url' => route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id])])
+@lang('mail.balanceImport.update.payInAppButton')
+@endcomponent
+@endcomponent
+@endif
+
 @if(!empty($invite_to_bar))
 @component('mail::notice')
 @lang('mail.balanceImport.update.joinBarDescription', ['name' => $invite_to_bar->name])<br>

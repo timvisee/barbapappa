@@ -145,6 +145,8 @@ return [
             'subject' => 'Balance update',
             'subtitle' => 'Here is a balance update for you on :economy.',
             'subtitleWithBar' => 'Here is a balance update for you at :name on :economy.',
+            'payInAppDescription' => 'You can pay any outstanding balance through Barbapappa by topping up your wallet.',
+            'payInAppButton' => 'Pay in Barbapappa',
             'joinBarDescription' => 'This bar manages payments through Barbapappa. Click the button below to join :name in Barbapappa.',
             'joinBarButton' => 'Join :name',
             'pleaseTopUp' => 'Please pay any negative balance now, and always make sure you\'ve enough available for the upcoming period.',

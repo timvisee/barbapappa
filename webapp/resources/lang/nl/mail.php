@@ -145,6 +145,8 @@ return [
             'subject' => 'Saldo update',
             'subtitle' => 'Hier is een saldo update voor je op :economy.',
             'subtitleWithBar' => 'Hier is een saldo update voor je bij :name op :economy.',
+            'payInAppDescription' => 'Je kunt een openstaand saldo betalen via Barbapappa door een bedrag op je portemonnee te storten.',
+            'payInAppButton' => 'Betalen in Barbapappa',
             'joinBarDescription' => 'Deze bar beheerd betalingen met Barbapappa. Klik op de knop hieronder om toe te treden tot :name in Barbapappa.',
             'joinBarButton' => ':name toetreden',
             'pleaseTopUp' => 'Vul een negatief saldo nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',

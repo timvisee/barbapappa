@@ -119,6 +119,8 @@ class Update extends PersonalizedEmail {
             ->with('change', $this->change)
             ->with('event', $event)
             ->with('system', $system)
+            ->with('community', $economy->community)
+            ->with('economy', $economy)
             ->with('message', $this->message)
             ->with('invite_to_bar', $invite_to_bar)
             ->with('mutation', $this->mutation)
