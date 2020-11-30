@@ -31,12 +31,17 @@
             'valueHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
         ];
     }
-    if($payment != null)
+    if($payment != null) {
+        $details[] = [
+            'key' => __('misc.initiatedOn'),
+            'valueHtml' => $payment->created_at->toFormattedDateString() . ' (' . $payment->created_at->diffForHumans() . ')',
+        ];
         $details[] = [
             'key' => __('misc.payment'),
             'valueHtml' => '<a href="' . route('payment.show', ['paymentId' => $payment->id]) . '">'
                 . $payment->service->displayName() . '</a>',
         ];
+    }
     if($community != null)
         $details[] = [
             'key' => __('misc.community'),
