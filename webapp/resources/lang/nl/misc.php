@@ -16,6 +16,7 @@ return [
     'clone' => 'Dupliceren',
     'addAndClone' => 'Toevoegen & Dupliceren',
     'import' => 'Importeren',
+    'imported' => 'Geïmporteerd',
     'importAll' => 'Importeer alles',
     'download' => 'Downloaden',
     'edit' => 'Aanpassen',
@@ -133,6 +134,10 @@ return [
     'developer' => 'Ontwikkelaar',
     'sourceCode' => 'Broncode',
     'initiatedOn' => 'Geïnitieerd op',
+    'send' => 'Versturen',
+    'event' => 'Event',
+    'source' => 'Bron',
+    'difference' => 'Verschil',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',

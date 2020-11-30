@@ -205,7 +205,7 @@ class BalanceImportSystemController extends Controller {
      * @return Response
      */
     public function exportUserList($communityId, $economyId, $systemId) {
-        // Get the community, economy, find the system, list events
+        // Get the community, economy, find the system
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);

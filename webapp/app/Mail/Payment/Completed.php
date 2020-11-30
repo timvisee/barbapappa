@@ -3,7 +3,6 @@
 namespace App\Mail\Payment;
 
 use App\Mail\PersonalizedEmail;
-use App\Models\EmailVerification;
 use App\Utils\EmailRecipient;
 use BarPay\Models\Payment;
 use Illuminate\Mail\Mailable;

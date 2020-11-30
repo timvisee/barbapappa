@@ -3,8 +3,6 @@
 namespace App\Mail\Update;
 
 use App\Mail\PersonalizedEmail;
-use App\Models\EmailVerification;
-use App\Models\SessionLink;
 use App\Utils\EmailRecipient;
 use Illuminate\Mail\Mailable;
 

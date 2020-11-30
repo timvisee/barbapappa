@@ -4,14 +4,6 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-
-use App\Mail\Password\Reset;
-use App\Managers\PasswordResetManager;
-use App\Scopes\EnabledScope;
 use App\Utils\EmailRecipient;
 
 /**
@@ -317,5 +309,14 @@ class BalanceImportAlias extends Model {
         foreach($changes as $change)
             if($change->shouldCommit())
                 $change->commit();
+    }
+
+    /**
+     * Get an email recipient for this alias.
+     *
+     * @return EmailRecipient
+     */
+    public function toEmailRecipient() {
+        return new EmailRecipient($this->email, $this->name);
     }
 }

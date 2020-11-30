@@ -159,6 +159,16 @@
             @lang('pages.balanceImportEvent.viewEvent')
         </a>
 
+        <a href="{{ route('community.economy.balanceimport.event.mailBalance', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'systemId' => $system->id,
+                    'eventId' => $event->id,
+                ]) }}"
+                class="ui button basic">
+            @lang('pages.balanceImportMailBalance.title')
+        </a>
+
         <a href="{{ route('community.economy.balanceimport.event.index', [
             'communityId' => $community->human_id,
             'economyId' => $economy->id,

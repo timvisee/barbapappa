@@ -16,6 +16,7 @@ return [
     'clone' => 'Clone',
     'addAndClone' => 'Add \'n Clone',
     'import' => 'Import',
+    'imported' => 'Imported',
     'importAll' => 'Import all',
     'download' => 'Download',
     'edit' => 'Edit',
@@ -132,6 +133,10 @@ return [
     'developer' => 'Developer',
     'sourceCode' => 'Source code',
     'initiatedOn' => 'Initiated on',
+    'send' => 'Send',
+    'event' => 'Event',
+    'source' => 'Source',
+    'difference' => 'Difference',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

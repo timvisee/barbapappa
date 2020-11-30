@@ -2,20 +2,13 @@
 
 namespace App\Models;
 
-use App\Mail\Password\Reset;
-use App\Managers\PasswordResetManager;
 use App\Traits\HasPassword;
 use App\Traits\HasSlug;
 use App\Traits\Joinable;
-use App\Utils\EmailRecipient;
 use App\Utils\SlugUtils;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * Bar model.

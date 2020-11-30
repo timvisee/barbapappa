@@ -382,6 +382,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                                         });
                                     });
                                 });
+
+                                // Balance update mail pages
+                                Route::get('/mail-balance', 'BalanceImportEventController@mailBalance')->name('community.economy.balanceimport.event.mailBalance');
+                                Route::post('/mail-balance', 'BalanceImportEventController@doMailBalance')->name('community.economy.balanceimport.event.doMailBalance');
                             });
                         });
                     });

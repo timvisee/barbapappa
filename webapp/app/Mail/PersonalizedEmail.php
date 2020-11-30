@@ -3,12 +3,10 @@
 namespace App\Mail;
 
 use App\Utils\EmailRecipient;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\App;
 
 abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
 
@@ -70,6 +68,10 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         // Select the user
         if($user == null)
             $user = $this->recipients->first()->getUser();
+
+        // Do not apply if not a user
+        if($user == null)
+            return;
 
         // Apply preferred locale, set in this mailable as well
         $locale = $user->applyPreferredLocale();

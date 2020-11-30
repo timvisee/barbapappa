@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Jobs\CommitBalanceUpdatesForAliases;
 use App\Models\BalanceImportAlias;
-use App\Models\Currency;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
