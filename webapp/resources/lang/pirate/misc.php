@@ -131,6 +131,7 @@ return [
     'mail' => 'E-bottle',
     'developer' => 'Developer',
     'sourceCode' => 'Source code',
+    'initiatedOn' => 'Initiated on',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',
