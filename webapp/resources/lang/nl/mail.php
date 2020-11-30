@@ -136,4 +136,19 @@ return [
             'noUpdateZeroBalance' => 'Zodra het saldo van al je portemonnees nul is, zul je geen periodieke updates ontvangen.',
         ],
     ],
+
+    /**
+     * Balance import emails.
+     */
+    'balanceImport' => [
+        'update' => [
+            'subject' => 'Saldo update',
+            'subtitle' => 'Hier is een saldo update voor je op :economy.',
+            'subtitleWithBar' => 'Hier is een saldo update voor je bij :name op :economy.',
+            'joinBarDescription' => 'Deze bar beheerd betalingen met Barbapappa. Klik op de knop hieronder om toe te treden tot :name in Barbapappa.',
+            'joinBarButton' => ':name toetreden',
+            'pleaseTopUp' => 'Vul een negatief saldo nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',
+            'noUpdateZeroBalance' => 'Zodra je saldo nul is, zul je geen updates ontvangen.',
+        ],
+    ],
 ];

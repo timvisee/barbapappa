@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BalanceImport\Update;
+use App\Models\MutationWallet;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Validator;
+use Illuminate\Support\Facades\Mail;
 
 use App\Helpers\ValidationDefaults;
 
@@ -214,6 +215,101 @@ class BalanceImportEventController extends Controller {
                 'systemId' => $system->id,
             ])
             ->with('success', __('pages.balanceImportEvent.deleted'));
+    }
+
+    /**
+     * Page to send a balance update mail with.
+     *
+     * @return Response
+     */
+    public function mailBalance($communityId, $economyId, $systemId, $eventId) {
+        // Get the community, economy, find the system
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+
+        return view('community.economy.balanceimport.event.mailBalance')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event);
+    }
+
+    /**
+     * Do send balance update mail.
+     *
+     * @return Response
+     */
+    public function doMailBalance(Request $request, $communityId, $economyId, $systemId, $eventId) {
+        // Get the community, economy, find the system
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+
+        // Validate
+        $this->validate($request, [
+            'message' => 'nullable|string',
+            'invite_to_bar' => 'integer',
+            'confirm_send_mail' => 'accepted',
+        ]);
+
+        // Read input fields
+        $mail_unregistered_users = is_checked($request->input('mail_unregistered_users'));
+        $mail_non_joined_users = is_checked($request->input('mail_non_joined_users'));
+        $mail_joined_users = is_checked($request->input('mail_joined_users'));
+        $message = $request->input('message');
+        $invite_to_bar_id = (int) $request->input('invite_to_bar');
+        $invite_to_bar = $invite_to_bar_id != 0 ? $community->bars()->findOrFail($invite_to_bar_id) : null;
+
+        // Walk through all changes in this event
+        $changes = $event->changes()->approved()->get();
+        foreach($changes as $change) {
+            // TODO: actually filter users by alias
+            $alias = $change->alias;
+
+            // Get balance, skip if zero
+            $balance = $change->balance;
+
+            // Find mutation/wallet used for change if there is any, get balance
+            $mutation = $change->mutation;
+            $wallet = null;
+            if($mutation != null) {
+                $wallet_mutation = $mutation->dependOn;
+                if($wallet_mutation != null) {
+                    $mutationable = $wallet_mutation->mutationable;
+                    if($mutationable instanceof MutationWallet)
+                        $wallet = $mutationable->wallet;
+                }
+            }
+            if($wallet != null)
+                $balance = $wallet->balance;
+
+            // If user has zero balance, ignore
+            // TODO: do continue if balance is now zero but is changed
+            if($balance == null || $balance == 0)
+               continue;
+
+            // Create the mailable for the change, send the mailable
+            Mail::send(new Update(
+                $alias->toEmailRecipient(),
+                $change,
+                $message,
+                $invite_to_bar,
+                $mutation,
+                $wallet
+            ));
+        }
+
+        // Redirect to the index page after deleting
+        return redirect()
+            ->route('community.economy.balanceimport.change.index', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+                'eventId' => $event->id,
+            ])
+            ->with('success', __('pages.balanceImportMailBalance.sentBalanceUpdateEmail'));
     }
 
     /**

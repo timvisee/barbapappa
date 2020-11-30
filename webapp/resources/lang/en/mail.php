@@ -133,7 +133,22 @@ return [
             'subject' => 'Balance update for Barbapappa',
             'subtitle' => 'Here is an update for your Barbapappa wallet balances.',
             'pleaseTopUp' => 'Please top up any wallets with a negative balance now, and always make sure you\'ve enough available for the upcoming period.',
-            'noUpdateZeroBalance' => 'As soon as the the balance of all wallets is zero, you won\'t receive any further periodic updates.',
+            'noUpdateZeroBalance' => 'As soon as the balance of all wallets is zero, you won\'t receive any further periodic updates.',
+        ],
+    ],
+
+    /**
+     * Balance import emails.
+     */
+    'balanceImport' => [
+        'update' => [
+            'subject' => 'Balance update',
+            'subtitle' => 'Here is a balance update for you on :economy.',
+            'subtitleWithBar' => 'Here is a balance update for you at :name on :economy.',
+            'joinBarDescription' => 'This bar manages payments through Barbapappa. Click the button below to join :name in Barbapappa.',
+            'joinBarButton' => 'Join :name',
+            'pleaseTopUp' => 'Please pay any negative balance now, and always make sure you\'ve enough available for the upcoming period.',
+            'noUpdateZeroBalance' => 'As soon as your balance is zero, you won\'t receive any further updates.',
         ],
     ],
 ];

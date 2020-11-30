@@ -106,7 +106,6 @@
             {{ ErrorRenderer::inline('data') }}
         </div>
 
-
         <div class="inline field {{ ErrorRenderer::hasError('allow_duplicate') ?  'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('allow_duplicate', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}

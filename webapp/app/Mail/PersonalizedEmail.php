@@ -71,6 +71,10 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         if($user == null)
             $user = $this->recipients->first()->getUser();
 
+        // Do not apply if not a user
+        if($user == null)
+            return;
+
         // Apply preferred locale, set in this mailable as well
         $locale = $user->applyPreferredLocale();
         if(!empty($locale))

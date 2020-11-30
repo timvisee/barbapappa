@@ -136,4 +136,19 @@ return [
             'noUpdateZeroBalance' => 'As soon as th\' balance of all wallets be zero, ye nay receive any further periodic updates.',
         ],
     ],
+
+    /**
+     * Balance import emails.
+     */
+    'balanceImport' => [
+        'update' => [
+            'subject' => 'Balance update',
+            'subtitle' => 'Here be a balance update for ye on :economy.',
+            'subtitleWithBar' => 'Here be a balance update for ye at :name on :economy.',
+            'joinBarDescription' => 'Dis bar manages payments through Arrbapappa. Click th\' button below to enter :name in Arrbapappa.',
+            'joinBarButton' => 'Enter :name',
+            'pleaseTopUp' => 'Please pay any negative balance now, and always make sure ye have enough available for the upcoming period.',
+            'noUpdateZeroBalance' => 'As soon as yer balance be zero, ye nay receive any further updates.',
+        ],
+    ],
 ];
