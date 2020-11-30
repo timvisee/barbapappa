@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\BalanceImport\Update;
-use App\Models\MutationWallet;
-use App\Utils\MoneyAmount;
+use App\Jobs\BalanceImportEventMailUpdates;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Mail;
 
 use App\Helpers\ValidationDefaults;
 
@@ -261,59 +258,18 @@ class BalanceImportEventController extends Controller {
         $mail_joined_users = is_checked($request->input('mail_joined_users'));
         $message = $request->input('message');
         $invite_to_bar_id = (int) $request->input('invite_to_bar');
-        $invite_to_bar = $invite_to_bar_id != 0 ? $community->bars()->findOrFail($invite_to_bar_id) : null;
+        if($invite_to_bar_id == 0)
+            $invite_to_bar_id = null;
 
-        // Walk through all changes in this event
-        $changes = $event->changes()->approved()->get();
-        foreach($changes as $change) {
-            // TODO: actually filter users by alias
-            $alias = $change->alias;
-
-            // Get balance, skip if zero
-            $balance = new MoneyAmount($change->currency, $change->balance);
-
-            // Find mutation/wallet used for change if there is any, get balance
-            $mutation = $change->mutation;
-            $wallet = null;
-            if($mutation != null) {
-                $wallet_mutation = $mutation->dependOn;
-                if($wallet_mutation != null) {
-                    $mutationable = $wallet_mutation->mutationable;
-                    if($mutationable instanceof MutationWallet)
-                        $wallet = $mutationable->wallet;
-                }
-            }
-            if($wallet != null)
-                $balance = new MoneyAmount($wallet->currency, $wallet->balance);
-
-            // Calculate/get balance change
-            $balanceChange = null;
-            if($mutation != null) {
-                $balanceChange = new MoneyAmount($mutation->currency, $mutation->amount);
-            } else {
-                // TODO: does this work for 'cost' imports?
-                $previous = $change->previous()->first();
-                if($previous != null) {
-                    $balanceChange = new MoneyAmount($change->currency, $change->balance - $previous->balance);
-                }
-            }
-
-            // If user has zero balance and has no change, ignore
-            if($balance->amount == null && ($balanceChange != null && $balanceChange->amount == 0))
-               continue;
-
-            // Create the mailable for the change, send the mailable
-            Mail::send(new Update(
-                $alias->toEmailRecipient(),
-                $change,
-                $message,
-                $invite_to_bar,
-                $mutation,
-                $wallet,
-                $balance,
-                $balanceChange,
-            ));
-        }
+        // Dispatch background jobs to send updates
+        BalanceImportEventMailUpdates::dispatch(
+            $event->id,
+            $mail_unregistered_users,
+            $mail_non_joined_users,
+            $mail_joined_users,
+            $message,
+            $invite_to_bar_id,
+        );
 
         // Redirect to the index page after deleting
         return redirect()

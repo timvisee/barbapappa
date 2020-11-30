@@ -289,15 +289,6 @@ class BalanceImportAlias extends Model {
     }
 
     /**
-     * Get an email recipient for this alias.
-     *
-     * @return EmailRecipient
-     */
-    public function toEmailRecipient() {
-        return new EmailRecipient($this->email, $this->name);
-    }
-
-    /**
      * Commit all uncommitted balance import changes for the given aliases, if
      * possible.
      *
@@ -318,5 +309,14 @@ class BalanceImportAlias extends Model {
         foreach($changes as $change)
             if($change->shouldCommit())
                 $change->commit();
+    }
+
+    /**
+     * Get an email recipient for this alias.
+     *
+     * @return EmailRecipient
+     */
+    public function toEmailRecipient() {
+        return new EmailRecipient($this->email, $this->name);
     }
 }

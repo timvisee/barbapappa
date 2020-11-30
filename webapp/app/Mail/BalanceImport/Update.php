@@ -100,7 +100,7 @@ class Update extends PersonalizedEmail {
         // Get bar, determine whether to invite user
         $invite_to_bar = $this->invite_to_bar;
         $bar = $invite_to_bar;
-        if($user != null)
+        if($user != null && $bar != null)
             if($bar->isJoined($user))
                 $invite_to_bar = null;
 
