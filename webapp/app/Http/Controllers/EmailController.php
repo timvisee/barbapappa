@@ -106,7 +106,12 @@ class EmailController extends Controller {
      * @param Request $request The request.
      * @param string $userId The user ID.
      */
-    public function unverified(Request $request, $userId) {
+    public function unverified($userId = null) {
+        // Redirect to user page if user is undefined
+        if($userId == null)
+            return redirect()
+                ->route('account.user.emails.unverified', ['userId' => barauth()->getUser()->id]);
+
         // To edit a different user, ensure we have administrator privileges
         if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
             return response(view('noPermission'));

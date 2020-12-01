@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Email;
+use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use App\Utils\EmailRecipient;
 
 /**
  * Balance import alias.
@@ -107,6 +108,18 @@ class BalanceImportAlias extends Model {
      */
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get a relation to user email addresses.
+     *
+     * This may return multiple email addresses if multiple users entered the
+     * same address.
+     *
+     * @return Relation to user email addresses.
+     */
+    public function userEmails() {
+        return $this->belongsTo(Email::class, 'email', 'email');
     }
 
     /**
@@ -356,5 +369,14 @@ class BalanceImportAlias extends Model {
                 : Self::USER_STATE_JOINED;
         }
         return Self::USER_STATE_UNREGISTERED;
+    }
+
+    /**
+     * Check whether this alias has any matching verified email address.
+     *
+     * @return bool True if any verified email, false if not.
+     */
+    public function hasVerifiedEmail() {
+        return $this->userEmails()->verified()->limit(1)->count() > 0;
     }
 }

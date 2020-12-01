@@ -149,6 +149,8 @@ return [
             'payInAppButton' => 'Pay in Barbapappa',
             'joinBarDescription' => 'This bar manages payments through Barbapappa. Click the button below to join :name in Barbapappa.',
             'joinBarButton' => 'Join :name',
+            'verifyMailDescription' => 'Please verify the email address on your Barbapappa account to automatically merge this balance into your wallet.',
+            'verifyMailButton' => 'Verify email',
             'pleaseTopUp' => 'Please pay any negative balance now, and always make sure you\'ve enough available for the upcoming period.',
             'noUpdateZeroBalance' => 'As soon as your balance is zero, you won\'t receive any further updates.',
         ],

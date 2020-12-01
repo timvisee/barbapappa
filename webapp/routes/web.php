@@ -78,12 +78,17 @@ Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(f
         Route::get('/', 'EmailController@show')->name('account.emails');
         Route::get('/new', 'EmailController@create')->name('account.emails.create');
         Route::post('/new', 'EmailController@doCreate');
-        Route::get('/unverified', 'EmailController@unverified')->name('account.emails.unverified');
+        Route::get('/unverified', 'EmailController@unverified')->name('account.user.emails.unverified');
         Route::middleware('throttle:3,1')->post('/unverified', 'EmailController@doVerifyAll')->name('account.emails.doVerifyAll');
         Route::get('/verified', 'EmailController@verified')->name('account.emails.verified');
         Route::middleware('throttle:5,1')->post('/reverify/{emailId}', 'EmailController@reverify')->name('account.emails.reverify');
         Route::get('/delete/{emailId}', 'EmailController@delete')->name('account.emails.delete');
         Route::delete('/delete/{emailId}', 'EmailController@doDelete')->name('account.emails.doDelete');
+    });
+});
+Route::prefix('/account')->middleware(['auth'])->group(function() {
+    Route::prefix("/emails")->group(function() {
+        Route::get('/unverified', 'EmailController@unverified')->name('account.emails.unverified');
     });
 });
 

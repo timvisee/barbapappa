@@ -3,7 +3,7 @@
     <div class="ui warning message">
         <span class="halflings halflings-warning-sign icon"></span>
         @lang('auth.mustVerifyEmail')
-        <a href="{{ route('account.emails.unverified', [
+        <a href="{{ route('account.user.emails.unverified', [
             'userId' => barauth()->getUser()->id,
         ]) }}">@lang('misc.verifyNow')</a>.
     </div>

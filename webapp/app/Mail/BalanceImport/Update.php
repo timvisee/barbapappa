@@ -5,6 +5,7 @@ namespace App\Mail\BalanceImport;
 use App\Mail\PersonalizedEmail;
 use App\Models\BalanceImportChange;
 use App\Utils\EmailRecipient;
+use App\Utils\MoneyAmount;
 use Illuminate\Mail\Mailable;
 
 class Update extends PersonalizedEmail {
@@ -75,9 +76,20 @@ class Update extends PersonalizedEmail {
      * @param Mutation|null $mutation The mutation for this change if there is any.
      * @param Wallet|null $wallet The related user wallet if there is any.
      * @param MoneyAmount $balance The current balance.
-     * @param MoneyAmount $balanceChange The balance change.
+     * @param MoneyAmount|null $balanceChange The balance change.
      */
-    public function __construct($recipients, BalanceImportChange $change, $message, $invite_to_bar, $bar, $mutation, $wallet, $balance, $balanceChange) {
+    public function __construct(
+        $recipients,
+        BalanceImportChange $change,
+        $message,
+        $invite_to_bar,
+        $bar,
+        $mutation,
+        $wallet,
+        MoneyAmount $balance,
+        $balanceChange,
+        bool $has_verified
+    ) {
         // Construct the parent
         parent::__construct($recipients, self::SUBJECT);
 
@@ -89,6 +101,7 @@ class Update extends PersonalizedEmail {
         $this->wallet = $wallet;
         $this->balance = $balance;
         $this->balanceChange = $balanceChange;
+        $this->has_verified = $has_verified;
     }
 
     /**
@@ -125,6 +138,7 @@ class Update extends PersonalizedEmail {
             ->with('invite_to_bar', $this->invite_to_bar)
             ->with('mutation', $this->mutation)
             ->with('wallet', $this->wallet)
+            ->with('has_verified', $this->has_verified)
             ->markdown(self::VIEW);
     }
 

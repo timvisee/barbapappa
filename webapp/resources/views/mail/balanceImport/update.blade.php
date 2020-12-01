@@ -70,13 +70,23 @@
 @endcomponent
 @endif
 
+{{-- TODO: this should lead to payment page --}}
 @if(!empty($invite_to_bar))
 @component('mail::notice')
 @lang('mail.balanceImport.update.joinBarDescription', ['name' => $invite_to_bar->name])<br>
 
-{{-- TODO: this should lead to payment page --}}
 @component('mail::button', ['url' => route('bar.join', ['barId' => $invite_to_bar->human_id, 'code' => $invite_to_bar->password])])
 @lang('mail.balanceImport.update.joinBarButton', ['name' => $invite_to_bar->name])
+@endcomponent
+@endcomponent
+@endif
+
+@if(!$has_verified)
+@component('mail::notice')
+@lang('mail.balanceImport.update.verifyMailDescription')<br>
+
+@component('mail::button', ['url' => route('bar.join', ['barId' => $invite_to_bar->human_id, 'code' => $invite_to_bar->password])])
+@lang('mail.balanceImport.update.verifyMailButton')
 @endcomponent
 @endcomponent
 @endif

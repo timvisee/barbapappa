@@ -149,6 +149,8 @@ return [
             'payInAppButton' => 'Betalen in Barbapappa',
             'joinBarDescription' => 'Deze bar beheerd betalingen met Barbapappa. Klik op de knop hieronder om toe te treden tot :name in Barbapappa.',
             'joinBarButton' => ':name toetreden',
+            'verifyMailDescription' => 'Verifieer alsjeblieft je e-mailadres op je Barbapappa account om dit saldo automatisch in je portemonnee te verwerken.',
+            'verifyMailButton' => 'Verifieer e-mail',
             'pleaseTopUp' => 'Vul een negatief saldo nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',
             'noUpdateZeroBalance' => 'Zodra je saldo nul is, zul je geen updates ontvangen.',
         ],

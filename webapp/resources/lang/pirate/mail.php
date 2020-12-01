@@ -149,6 +149,8 @@ return [
             'payInAppButton' => 'Pay in Arrbapappa',
             'joinBarDescription' => 'Dis bar manages payments through Arrbapappa. Click th\' button below to enter :name in Arrbapappa.',
             'joinBarButton' => 'Enter :name',
+            'verifyMailDescription' => 'Please verify yer e-bottle coordinate on yer Arrbapappa account to automatically merge dis balance into yer wallet.',
+            'verifyMailButton' => 'Verify e-bottle',
             'pleaseTopUp' => 'Please pay any negative balance now, and always make sure ye have enough available for the upcoming period.',
             'noUpdateZeroBalance' => 'As soon as yer balance be zero, ye nay receive any further updates.',
         ],
