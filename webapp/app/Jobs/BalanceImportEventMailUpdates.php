@@ -28,13 +28,29 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
     private $mail_joined_users;
     private $message;
     private $invite_to_bar_id;
+    private $default_locale;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param int $event_id Event ID.
+     * @param bool $mail_unregistered_users Whether to mail unregistered users.
+     * @param bool $mail_not_joined_users Whether to mail not-joined users.
+     * @param bool $mail_joined_users Whether to mail joined users.
+     * @param string|null $message Optional extra message.
+     * @param int|null $invite_to_bar_id Bar ID to invite user to.
+     * @param string|null $default_locale The default locale to use if user
+     *      locale is unknown.
      */
-    public function __construct(int $event_id, bool $mail_unregistered_users, bool $mail_not_joined_users, bool $mail_joined_users, $message, $invite_to_bar_id) {
+    public function __construct(
+        int $event_id,
+        bool $mail_unregistered_users,
+        bool $mail_not_joined_users,
+        bool $mail_joined_users,
+        $message,
+        $invite_to_bar_id,
+        $default_locale
+    ) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
@@ -44,6 +60,7 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
         $this->mail_joined_users = $mail_joined_users;
         $this->message = $message;
         $this->invite_to_bar_id = $invite_to_bar_id;
+        $this->default_locale = $default_locale;
     }
 
     /**
@@ -71,6 +88,7 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
                     $self->mail_joined_users,
                     $self->message,
                     $self->invite_to_bar_id,
+                    $self->default_locale,
                 );
             }
         });

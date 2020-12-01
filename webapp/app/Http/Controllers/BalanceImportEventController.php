@@ -261,6 +261,11 @@ class BalanceImportEventController extends Controller {
         if($invite_to_bar_id == 0)
             $invite_to_bar_id = null;
 
+        // Get selected locale, reset if invalid
+        $default_locale = $request->input('language');
+        if(!langManager()->isValidLocale($default_locale))
+            $default_locale = null;
+
         // Dispatch background jobs to send updates
         BalanceImportEventMailUpdates::dispatch(
             $event->id,
@@ -269,6 +274,7 @@ class BalanceImportEventController extends Controller {
             $mail_joined_users,
             $message,
             $invite_to_bar_id,
+            $default_locale,
         );
 
         // Redirect to the index page after deleting

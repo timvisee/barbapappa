@@ -124,15 +124,17 @@ class Update extends PersonalizedEmail {
         $user = $alias->user()->first();
         $user_name = $user != null ? $user->first_name : $alias->name;
 
+        // Build the mail
+        $mail = parent::build();
+
         // Build dynamic subtitle
         $economy = $system->economy;
         $subtitle = $this->bar != null
             ? __('mail.balanceImport.update.subtitleWithBar', ['name' => $this->bar->name, 'economy' => $economy->name])
             : __('mail.balanceImport.update.subtitle', ['economy' => $economy->name]);
 
-        // Build the mail
-        return parent::build()
-            ->with('subtitle', $subtitle)
+        // Bind values to mail
+        $mail->with('subtitle', $subtitle)
             ->with('user_name', $user_name)
             ->with('balance', $this->balance)
             ->with('balanceChange', $this->balanceChange)

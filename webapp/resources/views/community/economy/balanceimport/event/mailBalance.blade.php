@@ -79,7 +79,33 @@
             {{ ErrorRenderer::inline('invite_to_bar') }}
         </div>
 
-        {{-- TODO: select default mail language for unregistered users --}}
+        @php
+            // Create a locales map for the selection box
+            $locales = [];
+            foreach(langManager()->getLocales(true, false) as $entry)
+                $locales[$entry] = __('lang.name', [], $entry);
+        @endphp
+
+        <div class="field {{ ErrorRenderer::hasError('language') ? 'error' : '' }}">
+            {{ Form::label('language', __('lang.language') . ':') }}
+
+            <div class="ui fluid selection dropdown">
+                {{ Form::hidden('language', langManager()->getLocale()) }}
+                <i class="dropdown icon"></i>
+
+                <div class="default text">@lang('misc.unspecified')</div>
+                <div class="menu">
+                    @foreach($locales as $locale => $name)
+                        <div class="item" data-value="{{ $locale }}">
+                            <span class="{{ langManager()->getLocaleFlagClass($locale, false, true) }} flag"></span>
+                            {{ $name }}
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{ ErrorRenderer::inline('language') }}
+        </div>
 
         <br>
 

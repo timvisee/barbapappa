@@ -33,13 +33,29 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
     private $mail_joined_users;
     private $message;
     private $invite_to_bar_id;
+    private $default_locale;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param int $change_id Change ID.
+     * @param bool $mail_unregistered_users Whether to mail unregistered users.
+     * @param bool $mail_not_joined_users Whether to mail not-joined users.
+     * @param bool $mail_joined_users Whether to mail joined users.
+     * @param string|null $message Optional extra message.
+     * @param int|null $invite_to_bar_id Bar ID to invite user to.
+     * @param string|null $default_locale The default locale to use if user
+     *      locale is unknown.
      */
-    public function __construct(int $change_id, bool $mail_unregistered_users, bool $mail_not_joined_users, bool $mail_joined_users, $message, $invite_to_bar_id) {
+    public function __construct(
+        int $change_id,
+        bool $mail_unregistered_users,
+        bool $mail_not_joined_users,
+        bool $mail_joined_users,
+        $message,
+        $invite_to_bar_id,
+        $default_locale
+    ) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
@@ -49,6 +65,7 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
         $this->mail_joined_users = $mail_joined_users;
         $this->message = $message;
         $this->invite_to_bar_id = $invite_to_bar_id;
+        $this->default_locale = $default_locale;
     }
 
     /**
@@ -111,9 +128,14 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
         if($balance->amount == null && ($balanceChange != null && $balanceChange->amount == 0))
             return;
 
+        // Get the email recipient
+        $recipient = $alias->toEmailRecipient();
+        if(!empty($this->default_locale))
+            $recipient->default_locale = $this->default_locale;
+
         // Create the mailable for the change, send the mailable
         Mail::send(new Update(
-            $alias->toEmailRecipient(),
+            $recipient,
             $change,
             $this->message,
             $invite_to_bar,
