@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\BalanceImport\Update;
+use App\Models\BalanceImportAlias;
 use App\Models\BalanceImportChange;
 use App\Models\Bar;
 use App\Models\MutationWallet;
@@ -28,26 +29,43 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
 
     private $change_id;
     private $mail_unregistered_users;
-    private $mail_non_joined_users;
+    private $mail_not_joined_users;
     private $mail_joined_users;
     private $message;
     private $invite_to_bar_id;
+    private $default_locale;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param int $change_id Change ID.
+     * @param bool $mail_unregistered_users Whether to mail unregistered users.
+     * @param bool $mail_not_joined_users Whether to mail not-joined users.
+     * @param bool $mail_joined_users Whether to mail joined users.
+     * @param string|null $message Optional extra message.
+     * @param int|null $invite_to_bar_id Bar ID to invite user to.
+     * @param string|null $default_locale The default locale to use if user
+     *      locale is unknown.
      */
-    public function __construct(int $change_id, bool $mail_unregistered_users, bool $mail_non_joined_users, bool $mail_joined_users, $message, $invite_to_bar_id) {
+    public function __construct(
+        int $change_id,
+        bool $mail_unregistered_users,
+        bool $mail_not_joined_users,
+        bool $mail_joined_users,
+        $message,
+        $invite_to_bar_id,
+        $default_locale
+    ) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
         $this->change_id = $change_id;
         $this->mail_unregistered_users = $mail_unregistered_users;
-        $this->mail_non_joined_users = $mail_non_joined_users;
+        $this->mail_not_joined_users = $mail_not_joined_users;
         $this->mail_joined_users = $mail_joined_users;
         $this->message = $message;
         $this->invite_to_bar_id = $invite_to_bar_id;
+        $this->default_locale = $default_locale;
     }
 
     /**
@@ -56,15 +74,26 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // Get the change
+        // Load change and bar from database
         $change = BalanceImportChange::find($this->change_id);
+        $bar = $invite_to_bar = Bar::find($this->invite_to_bar_id);
         if($change == null)
             return;
 
-        $invite_to_bar = Bar::find($this->invite_to_bar_id);
-
-        // TODO: actually filter users by alias
+        // Get user state for alias, do not invite to bar if already joined
         $alias = $change->alias;
+        $user_state = $alias->getUserState();
+        $request_to_verify = ($user_state != BalanceImportAlias::USER_STATE_UNREGISTERED) && $alias->hasUnverifiedEmail();
+        if($user_state == BalanceImportAlias::USER_STATE_JOINED)
+            $invite_to_bar = null;
+
+        // User must meet filter requirements
+        if($user_state == BalanceImportAlias::USER_STATE_UNREGISTERED && !$this->mail_unregistered_users)
+            return;
+        if($user_state == BalanceImportAlias::USER_STATE_NOT_JOINED && !$this->mail_not_joined_users)
+            return;
+        if($user_state == BalanceImportAlias::USER_STATE_JOINED && !$this->mail_joined_users)
+            return;
 
         // Get balance, skip if zero
         $balance = new MoneyAmount($change->currency, $change->balance);
@@ -99,16 +128,28 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
         if($balance->amount == null && ($balanceChange != null && $balanceChange->amount == 0))
             return;
 
+        // Get the email recipients, set default locale on them
+        $recipients = $alias->toEmailRecipients();
+        if(!empty($this->default_locale)) {
+            $default_locale = $this->default_locale;
+            $recipients = $recipients->map(function($recipient) use($default_locale) {
+                $recipient->default_locale = $default_locale;
+                return $recipient;
+            });
+        }
+
         // Create the mailable for the change, send the mailable
         Mail::send(new Update(
-            $alias->toEmailRecipient(),
+            $recipients,
             $change,
             $this->message,
             $invite_to_bar,
+            $bar,
             $mutation,
             $wallet,
             $balance,
             $balanceChange,
+            $request_to_verify
         ));
     }
 }

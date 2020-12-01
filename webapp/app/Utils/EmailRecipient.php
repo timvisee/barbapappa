@@ -31,6 +31,13 @@ class EmailRecipient {
     public $user;
 
     /**
+     * Default locale to use if unset by the user.
+     *
+     * @var string|null
+     */
+    public $default_locale;
+
+    /**
      * Recipient constructor.
      *
      * If no email address or name is specified, it's automatically determined based on the other parameters when possible.

@@ -468,7 +468,7 @@ return [
         'title' => 'Send balance e-bottle message',
         'description' => 'Send pirates in dis booty import event a balance update e-bottle message. Dis may be used to notify pirates when a new booty list is imported. A message will only be sent for approved changes in dis import event. Pirates with zero booty will not receive a message.',
         'mailUnregisteredUsers' => 'Message unregistered pirates (no account)',
-        'mailNonJoinedUsers' => 'Message non-joined pirates (with account, not a bar member)',
+        'mailNotJoinedUsers' => 'Message not-joined pirates (with account, not a bar member)',
         'mailJoinedUsers' => 'Message joined pirates (with account, and a bar member)',
         'extraMessage' => 'Extra notes',
         'inviteToJoinBar' => 'Invite to enter bar',

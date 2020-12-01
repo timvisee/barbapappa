@@ -1,10 +1,11 @@
 <?php
 
 use App\Perms\Builder\Config as PermsConfig;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 
@@ -323,5 +324,22 @@ if(!function_exists('normalize_price')) {
     */
     function normalize_price($price): float {
         return (float) str_replace(',', '.', $price);
+    }
+}
+
+if(!function_exists('set_env_locale')) {
+    /**
+    * Set the locale for the current environment.
+    *
+    * Sets for:
+    * - Laravel
+    * - Laravel mail
+    * - Carbon
+    *
+    * @param string $locale The locale.
+    */
+    function set_env_locale(string $locale) {
+        App::setLocale($locale);
+        Carbon::setLocale($locale);
     }
 }

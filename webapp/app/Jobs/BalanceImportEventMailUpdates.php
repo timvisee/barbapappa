@@ -24,26 +24,43 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
 
     private $event_id;
     private $mail_unregistered_users;
-    private $mail_non_joined_users;
+    private $mail_not_joined_users;
     private $mail_joined_users;
     private $message;
     private $invite_to_bar_id;
+    private $default_locale;
 
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param int $event_id Event ID.
+     * @param bool $mail_unregistered_users Whether to mail unregistered users.
+     * @param bool $mail_not_joined_users Whether to mail not-joined users.
+     * @param bool $mail_joined_users Whether to mail joined users.
+     * @param string|null $message Optional extra message.
+     * @param int|null $invite_to_bar_id Bar ID to invite user to.
+     * @param string|null $default_locale The default locale to use if user
+     *      locale is unknown.
      */
-    public function __construct(int $event_id, bool $mail_unregistered_users, bool $mail_non_joined_users, bool $mail_joined_users, $message, $invite_to_bar_id) {
+    public function __construct(
+        int $event_id,
+        bool $mail_unregistered_users,
+        bool $mail_not_joined_users,
+        bool $mail_joined_users,
+        $message,
+        $invite_to_bar_id,
+        $default_locale
+    ) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
         $this->event_id = $event_id;
         $this->mail_unregistered_users = $mail_unregistered_users;
-        $this->mail_non_joined_users = $mail_non_joined_users;
+        $this->mail_not_joined_users = $mail_not_joined_users;
         $this->mail_joined_users = $mail_joined_users;
         $this->message = $message;
         $this->invite_to_bar_id = $invite_to_bar_id;
+        $this->default_locale = $default_locale;
     }
 
     /**
@@ -59,17 +76,19 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
 
         $self = $this;
         DB::transaction(function() use($event, $self) {
-            // Walk through all changes in this event
+            // Schedule job for each event change, determine whether to send,
+            // then send
             $changes = $event->changes()->approved()->get();
             foreach($changes as $change) {
                 // Dispatch background jobs to send update to change user
                 BalanceImportEventMailUpdate::dispatch(
                     $change->id,
                     $self->mail_unregistered_users,
-                    $self->mail_non_joined_users,
+                    $self->mail_not_joined_users,
                     $self->mail_joined_users,
                     $self->message,
                     $self->invite_to_bar_id,
+                    $self->default_locale,
                 );
             }
         });

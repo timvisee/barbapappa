@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Email;
+use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use App\Utils\EmailRecipient;
 
 /**
  * Balance import alias.
@@ -32,6 +33,22 @@ class BalanceImportAlias extends Model {
         'name',
         'email',
     ];
+
+    /**
+     * A user that has not registered yet.
+     */
+    public const USER_STATE_UNREGISTERED = 1;
+
+    /**
+     * A user that has not joined the selected bar yet.
+     */
+    public const USER_STATE_NOT_JOINED = 2;
+
+    /**
+     * A user that has joined the selected bar.
+     */
+    public const USER_STATE_JOINED = 3;
+
 
     public static function boot() {
         parent::boot();
@@ -91,6 +108,18 @@ class BalanceImportAlias extends Model {
      */
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get a relation to user email addresses.
+     *
+     * This may return multiple email addresses if multiple users entered the
+     * same address.
+     *
+     * @return Relation to user email addresses.
+     */
+    public function userEmails() {
+        return $this->belongsTo(Email::class, 'email', 'email');
     }
 
     /**
@@ -312,11 +341,52 @@ class BalanceImportAlias extends Model {
     }
 
     /**
-     * Get an email recipient for this alias.
+     * Get a list of email recipients for this alias.
      *
-     * @return EmailRecipient
+     * @return [EmailRecipient]
      */
-    public function toEmailRecipient() {
-        return new EmailRecipient($this->email, $this->name);
+    public function toEmailRecipients() {
+        // Attemp to use user recipients for this alias address if available
+        if(($user = $this->user) != null) {
+            try {
+                $recipients = $user->buildEmailRecipients($this->email);
+                if(!$recipients->isEmpty())
+                    return $recipients;
+            } catch(\Exception $e) {}
+        }
+
+        // Default to raw alias address
+        return collect([new EmailRecipient($this->email, $this->name)]);
+    }
+
+    /**
+     * Determine user state for this alias.
+     *
+     * Defines any of:
+     * - USER_STATE_UNREGISTERED: User is unregistered
+     * - USER_STATE_NOT_JOINED: User is registered
+     * - USER_STATE_JOINED: User is registered and joined bar (if specified)
+     *
+     * If no bar is given USER_STATE_NOT_JOINED will be returned for all users.
+     *
+     * @param Bar|null [$bar=null] A bar to determine if user has joined.
+     * @return int User state.
+     */
+    public function getUserState($bar = null) {
+        if($user = $this->user != null) {
+            return ($bar != null && $bar->isJoined($user))
+                ? Self::USER_STATE_NOT_JOINED
+                : Self::USER_STATE_JOINED;
+        }
+        return Self::USER_STATE_UNREGISTERED;
+    }
+
+    /**
+     * Check whether this alias has any matching unverified email address.
+     *
+     * @return bool True if any unverified email, false if not.
+     */
+    public function hasUnverifiedEmail() {
+        return $this->userEmails()->unverified()->limit(1)->count() > 0;
     }
 }

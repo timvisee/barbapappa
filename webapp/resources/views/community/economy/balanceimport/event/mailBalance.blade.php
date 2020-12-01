@@ -20,7 +20,7 @@
         'method' => 'POST',
         'class' => 'ui form'
     ]) !!}
-        <div class="inline field disabled {{ ErrorRenderer::hasError('mail_unregistered_users') ?  'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('mail_unregistered_users') ?  'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('mail_unregistered_users', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('mail_unregistered_users', __('pages.balanceImportMailBalance.mailUnregisteredUsers')) }}
@@ -29,16 +29,16 @@
             {{ ErrorRenderer::inline('mail_unregistered_users') }}
         </div>
 
-        <div class="inline field disabled {{ ErrorRenderer::hasError('mail_non_joined_users') ?  'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('mail_not_joined_users') ?  'error' : '' }}">
             <div class="ui checkbox">
-                {{ Form::checkbox('mail_non_joined_users', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
-                {{ Form::label('mail_non_joined_users', __('pages.balanceImportMailBalance.mailNonJoinedUsers')) }}
+                {{ Form::checkbox('mail_not_joined_users', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('mail_not_joined_users', __('pages.balanceImportMailBalance.mailNotJoinedUsers')) }}
             </div>
             <br />
-            {{ ErrorRenderer::inline('mail_non_joined_users') }}
+            {{ ErrorRenderer::inline('mail_not_joined_users') }}
         </div>
 
-        <div class="inline field disabled {{ ErrorRenderer::hasError('mail_joined_users') ?  'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('mail_joined_users') ?  'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('mail_joined_users', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('mail_joined_users', __('pages.balanceImportMailBalance.mailJoinedUsers')) }}
@@ -79,7 +79,33 @@
             {{ ErrorRenderer::inline('invite_to_bar') }}
         </div>
 
-        {{-- TODO: select default mail language for unregistered users --}}
+        @php
+            // Create a locales map for the selection box
+            $locales = [];
+            foreach(langManager()->getLocales(true, false) as $entry)
+                $locales[$entry] = __('lang.name', [], $entry);
+        @endphp
+
+        <div class="field {{ ErrorRenderer::hasError('language') ? 'error' : '' }}">
+            {{ Form::label('language', __('lang.language') . ':') }}
+
+            <div class="ui fluid selection dropdown">
+                {{ Form::hidden('language', langManager()->getLocale()) }}
+                <i class="dropdown icon"></i>
+
+                <div class="default text">@lang('misc.unspecified')</div>
+                <div class="menu">
+                    @foreach($locales as $locale => $name)
+                        <div class="item" data-value="{{ $locale }}">
+                            <span class="{{ langManager()->getLocaleFlagClass($locale, false, true) }} flag"></span>
+                            {{ $name }}
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{ ErrorRenderer::inline('language') }}
+        </div>
 
         <br>
 

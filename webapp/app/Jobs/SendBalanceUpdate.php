@@ -51,7 +51,9 @@ class SendBalanceUpdate implements ShouldQueue {
     public function handle() {
         // Find the user, apply it's locale to the environment
         $user = User::findOrFail($this->user_id);
-        $user->applyPreferredLocale();
+        $locale = $user->preferredLocale();
+        if(!empty($locale))
+            set_env_locale($locale);
 
         // Collect user wallets
         $wallets = $user->wallets;
