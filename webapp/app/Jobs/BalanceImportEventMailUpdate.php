@@ -63,9 +63,11 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
         if($change == null)
             return;
 
-        // Get user state for alias
+        // Get user state for alias, do not invite to bar if already joined
         $alias = $change->alias;
         $user_state = $alias->getUserState();
+        if($user_state == BalanceImportAlias::USER_STATE_JOINED)
+            $invite_to_bar = null;
 
         // User must meet filter requirements
         if($user_state == BalanceImportAlias::USER_STATE_UNREGISTERED && !$this->mail_unregistered_users)
@@ -114,6 +116,7 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
             $change,
             $this->message,
             $invite_to_bar,
+            $bar,
             $mutation,
             $wallet,
             $balance,

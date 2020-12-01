@@ -40,6 +40,11 @@ class Update extends PersonalizedEmail {
     private $invite_to_bar;
 
     /**
+     * Bar this import change is for.
+     */
+    private $bar;
+
+    /**
      * Related mutation for this change.
      */
     private $mutation;
@@ -65,19 +70,21 @@ class Update extends PersonalizedEmail {
      * @param EmailRecipient[] $recipients A list of email recipients.
      * @param BalanceImportChange $change The balance import change.
      * @param string|null $message An extra message.
-     * @param Bar|null $bar Bar to invite users to.
+     * @param Bar|null $invite_to_bar Bar to invite user to.
+     * @param Bar|null $bar Bar this import change is for.
      * @param Mutation|null $mutation The mutation for this change if there is any.
      * @param Wallet|null $wallet The related user wallet if there is any.
      * @param MoneyAmount $balance The current balance.
      * @param MoneyAmount $balanceChange The balance change.
      */
-    public function __construct($recipients, BalanceImportChange $change, $message, $invite_to_bar, $mutation, $wallet, $balance, $balanceChange) {
+    public function __construct($recipients, BalanceImportChange $change, $message, $invite_to_bar, $bar, $mutation, $wallet, $balance, $balanceChange) {
         // Construct the parent
         parent::__construct($recipients, self::SUBJECT);
 
         $this->change = $change;
         $this->message = $message;
         $this->invite_to_bar = $invite_to_bar;
+        $this->bar = $bar;
         $this->mutation = $mutation;
         $this->wallet = $wallet;
         $this->balance = $balance;
@@ -97,17 +104,10 @@ class Update extends PersonalizedEmail {
         $user = $alias->user()->first();
         $user_name = $user != null ? $user->first_name : $alias->name;
 
-        // Get bar, determine whether to invite user
-        $invite_to_bar = $this->invite_to_bar;
-        $bar = $invite_to_bar;
-        if($user != null && $bar != null)
-            if($bar->isJoined($user))
-                $invite_to_bar = null;
-
         // Build dynamic subtitle
         $economy = $system->economy;
-        $subtitle = $bar != null
-            ? __('mail.balanceImport.update.subtitleWithBar', ['name' => $bar->name, 'economy' => $economy->name])
+        $subtitle = $this->bar != null
+            ? __('mail.balanceImport.update.subtitleWithBar', ['name' => $this->bar->name, 'economy' => $economy->name])
             : __('mail.balanceImport.update.subtitle', ['economy' => $economy->name]);
 
         // Build the mail
@@ -122,7 +122,7 @@ class Update extends PersonalizedEmail {
             ->with('community', $economy->community)
             ->with('economy', $economy)
             ->with('message', $this->message)
-            ->with('invite_to_bar', $invite_to_bar)
+            ->with('invite_to_bar', $this->invite_to_bar)
             ->with('mutation', $this->mutation)
             ->with('wallet', $this->wallet)
             ->markdown(self::VIEW);
