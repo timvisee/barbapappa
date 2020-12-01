@@ -66,6 +66,11 @@ class Update extends PersonalizedEmail {
     private $balanceChange;
 
     /**
+     * Whether to request the user to verify their email address.
+     */
+    private $request_to_verify;
+
+    /**
      * Constructor.
      *
      * @param EmailRecipient[] $recipients A list of email recipients.
@@ -77,6 +82,8 @@ class Update extends PersonalizedEmail {
      * @param Wallet|null $wallet The related user wallet if there is any.
      * @param MoneyAmount $balance The current balance.
      * @param MoneyAmount|null $balanceChange The balance change.
+     * @param bool $request_to_verify Whether to request the user to verify
+     *          their email address.
      */
     public function __construct(
         $recipients,
@@ -88,7 +95,7 @@ class Update extends PersonalizedEmail {
         $wallet,
         MoneyAmount $balance,
         $balanceChange,
-        bool $has_verified
+        bool $request_to_verify
     ) {
         // Construct the parent
         parent::__construct($recipients, self::SUBJECT);
@@ -101,7 +108,7 @@ class Update extends PersonalizedEmail {
         $this->wallet = $wallet;
         $this->balance = $balance;
         $this->balanceChange = $balanceChange;
-        $this->has_verified = $has_verified;
+        $this->request_to_verify = $request_to_verify;
     }
 
     /**
@@ -138,7 +145,7 @@ class Update extends PersonalizedEmail {
             ->with('invite_to_bar', $this->invite_to_bar)
             ->with('mutation', $this->mutation)
             ->with('wallet', $this->wallet)
-            ->with('has_verified', $this->has_verified)
+            ->with('request_to_verify', $this->request_to_verify)
             ->markdown(self::VIEW);
     }
 

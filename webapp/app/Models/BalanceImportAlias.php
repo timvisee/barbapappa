@@ -372,11 +372,11 @@ class BalanceImportAlias extends Model {
     }
 
     /**
-     * Check whether this alias has any matching verified email address.
+     * Check whether this alias has any matching unverified email address.
      *
-     * @return bool True if any verified email, false if not.
+     * @return bool True if any unverified email, false if not.
      */
-    public function hasVerifiedEmail() {
-        return $this->userEmails()->verified()->limit(1)->count() > 0;
+    public function hasUnverifiedEmail() {
+        return $this->userEmails()->unverified()->limit(1)->count() > 0;
     }
 }

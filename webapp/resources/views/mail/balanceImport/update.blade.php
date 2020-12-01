@@ -81,11 +81,11 @@
 @endcomponent
 @endif
 
-@if(!$has_verified)
+@if($request_to_verify)
 @component('mail::notice')
 @lang('mail.balanceImport.update.verifyMailDescription')<br>
 
-@component('mail::button', ['url' => route('bar.join', ['barId' => $invite_to_bar->human_id, 'code' => $invite_to_bar->password])])
+@component('mail::button', ['url' => route('account.emails.unverified')])
 @lang('mail.balanceImport.update.verifyMailButton')
 @endcomponent
 @endcomponent
