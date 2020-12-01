@@ -341,12 +341,22 @@ class BalanceImportAlias extends Model {
     }
 
     /**
-     * Get an email recipient for this alias.
+     * Get a list of email recipients for this alias.
      *
-     * @return EmailRecipient
+     * @return [EmailRecipient]
      */
-    public function toEmailRecipient() {
-        return new EmailRecipient($this->email, $this->name);
+    public function toEmailRecipients() {
+        // Attemp to use user recipients for this alias address if available
+        if(($user = $this->user) != null) {
+            try {
+                $recipients = $user->buildEmailRecipients($this->email);
+                if(!$recipients->isEmpty())
+                    return $recipients;
+            } catch(\Exception $e) {}
+        }
+
+        // Default to raw alias address
+        return collect([new EmailRecipient($this->email, $this->name)]);
     }
 
     /**

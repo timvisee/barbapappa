@@ -128,14 +128,19 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
         if($balance->amount == null && ($balanceChange != null && $balanceChange->amount == 0))
             return;
 
-        // Get the email recipient
-        $recipient = $alias->toEmailRecipient();
-        if(!empty($this->default_locale))
-            $recipient->default_locale = $this->default_locale;
+        // Get the email recipients, set default locale on them
+        $recipients = $alias->toEmailRecipients();
+        if(!empty($this->default_locale)) {
+            $default_locale = $this->default_locale;
+            $recipients = $recipients->map(function($recipient) use($default_locale) {
+                $recipient->default_locale = $default_locale;
+                return $recipient;
+            });
+        }
 
         // Create the mailable for the change, send the mailable
         Mail::send(new Update(
-            $recipient,
+            $recipients,
             $change,
             $this->message,
             $invite_to_bar,
