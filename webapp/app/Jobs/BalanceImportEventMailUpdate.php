@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\BalanceImport\Update;
+use App\Models\BalanceImportAlias;
 use App\Models\BalanceImportChange;
 use App\Models\Bar;
 use App\Models\MutationWallet;
@@ -28,7 +29,7 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
 
     private $change_id;
     private $mail_unregistered_users;
-    private $mail_non_joined_users;
+    private $mail_not_joined_users;
     private $mail_joined_users;
     private $message;
     private $invite_to_bar_id;
@@ -38,13 +39,13 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct(int $change_id, bool $mail_unregistered_users, bool $mail_non_joined_users, bool $mail_joined_users, $message, $invite_to_bar_id) {
+    public function __construct(int $change_id, bool $mail_unregistered_users, bool $mail_not_joined_users, bool $mail_joined_users, $message, $invite_to_bar_id) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
         $this->change_id = $change_id;
         $this->mail_unregistered_users = $mail_unregistered_users;
-        $this->mail_non_joined_users = $mail_non_joined_users;
+        $this->mail_not_joined_users = $mail_not_joined_users;
         $this->mail_joined_users = $mail_joined_users;
         $this->message = $message;
         $this->invite_to_bar_id = $invite_to_bar_id;
@@ -56,15 +57,23 @@ class BalanceImportEventMailUpdate implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // Get the change
+        // Load change and bar from database
         $change = BalanceImportChange::find($this->change_id);
+        $bar = $invite_to_bar = Bar::find($this->invite_to_bar_id);
         if($change == null)
             return;
 
-        $invite_to_bar = Bar::find($this->invite_to_bar_id);
-
-        // TODO: actually filter users by alias
+        // Get user state for alias
         $alias = $change->alias;
+        $user_state = $alias->getUserState();
+
+        // User must meet filter requirements
+        if($user_state == BalanceImportAlias::USER_STATE_UNREGISTERED && !$this->mail_unregistered_users)
+            return;
+        if($user_state == BalanceImportAlias::USER_STATE_NOT_JOINED && !$this->mail_not_joined_users)
+            return;
+        if($user_state == BalanceImportAlias::USER_STATE_JOINED && !$this->mail_joined_users)
+            return;
 
         // Get balance, skip if zero
         $balance = new MoneyAmount($change->currency, $change->balance);

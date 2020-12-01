@@ -254,7 +254,7 @@ class BalanceImportEventController extends Controller {
 
         // Read input fields
         $mail_unregistered_users = is_checked($request->input('mail_unregistered_users'));
-        $mail_non_joined_users = is_checked($request->input('mail_non_joined_users'));
+        $mail_not_joined_users = is_checked($request->input('mail_not_joined_users'));
         $mail_joined_users = is_checked($request->input('mail_joined_users'));
         $message = $request->input('message');
         $invite_to_bar_id = (int) $request->input('invite_to_bar');
@@ -265,7 +265,7 @@ class BalanceImportEventController extends Controller {
         BalanceImportEventMailUpdates::dispatch(
             $event->id,
             $mail_unregistered_users,
-            $mail_non_joined_users,
+            $mail_not_joined_users,
             $mail_joined_users,
             $message,
             $invite_to_bar_id,

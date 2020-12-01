@@ -20,7 +20,7 @@
         'method' => 'POST',
         'class' => 'ui form'
     ]) !!}
-        <div class="inline field disabled {{ ErrorRenderer::hasError('mail_unregistered_users') ?  'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('mail_unregistered_users') ?  'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('mail_unregistered_users', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('mail_unregistered_users', __('pages.balanceImportMailBalance.mailUnregisteredUsers')) }}
@@ -29,16 +29,16 @@
             {{ ErrorRenderer::inline('mail_unregistered_users') }}
         </div>
 
-        <div class="inline field disabled {{ ErrorRenderer::hasError('mail_non_joined_users') ?  'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('mail_not_joined_users') ?  'error' : '' }}">
             <div class="ui checkbox">
-                {{ Form::checkbox('mail_non_joined_users', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
-                {{ Form::label('mail_non_joined_users', __('pages.balanceImportMailBalance.mailNonJoinedUsers')) }}
+                {{ Form::checkbox('mail_not_joined_users', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('mail_not_joined_users', __('pages.balanceImportMailBalance.mailNotJoinedUsers')) }}
             </div>
             <br />
-            {{ ErrorRenderer::inline('mail_non_joined_users') }}
+            {{ ErrorRenderer::inline('mail_not_joined_users') }}
         </div>
 
-        <div class="inline field disabled {{ ErrorRenderer::hasError('mail_joined_users') ?  'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('mail_joined_users') ?  'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('mail_joined_users', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('mail_joined_users', __('pages.balanceImportMailBalance.mailJoinedUsers')) }}

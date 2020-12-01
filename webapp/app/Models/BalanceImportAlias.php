@@ -33,6 +33,22 @@ class BalanceImportAlias extends Model {
         'email',
     ];
 
+    /**
+     * A user that has not registered yet.
+     */
+    public const USER_STATE_UNREGISTERED = 1;
+
+    /**
+     * A user that has not joined the selected bar yet.
+     */
+    public const USER_STATE_NOT_JOINED = 2;
+
+    /**
+     * A user that has joined the selected bar.
+     */
+    public const USER_STATE_JOINED = 3;
+
+
     public static function boot() {
         parent::boot();
 
@@ -318,5 +334,27 @@ class BalanceImportAlias extends Model {
      */
     public function toEmailRecipient() {
         return new EmailRecipient($this->email, $this->name);
+    }
+
+    /**
+     * Determine user state for this alias.
+     *
+     * Defines any of:
+     * - USER_STATE_UNREGISTERED: User is unregistered
+     * - USER_STATE_NOT_JOINED: User is registered
+     * - USER_STATE_JOINED: User is registered and joined bar (if specified)
+     *
+     * If no bar is given USER_STATE_NOT_JOINED will be returned for all users.
+     *
+     * @param Bar|null [$bar=null] A bar to determine if user has joined.
+     * @return int User state.
+     */
+    public function getUserState($bar = null) {
+        if($user = $this->user != null) {
+            return ($bar != null && $bar->isJoined($user))
+                ? Self::USER_STATE_NOT_JOINED
+                : Self::USER_STATE_JOINED;
+        }
+        return Self::USER_STATE_UNREGISTERED;
     }
 }

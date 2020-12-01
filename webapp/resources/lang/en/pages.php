@@ -468,7 +468,7 @@ return [
         'title' => 'Send balance email',
         'description' => 'Send users in this balance import event a balance update email. This may be used to notify users when a new list of balances is imported. A message will only be sent for approved changes in this balance import event. Users with a balance of zero will not receive a message.',
         'mailUnregisteredUsers' => 'Mail unregistered users (no account)',
-        'mailNonJoinedUsers' => 'Mail non-joined users (with account, not a bar member)',
+        'mailNotJoinedUsers' => 'Mail not-joined users (with account, not a bar member)',
         'mailJoinedUsers' => 'Mail joined users (with account, and a bar member)',
         'extraMessage' => 'Extra message',
         'inviteToJoinBar' => 'Invite to join bar',
