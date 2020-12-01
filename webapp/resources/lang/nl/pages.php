@@ -471,7 +471,7 @@ return [
         'mailNotJoinedUsers' => 'Bericht niet-leden (met account, geen bar lid)',
         'mailJoinedUsers' => 'Bericht leden (met account, en bar lid)',
         'extraMessage' => 'Extra bericht',
-        'inviteToJoinBar' => 'Uitnodigen om bar toe te treden',
+        'inviteToJoinBar' => 'Uitnodigen deel te nemen aan bar',
         'doNotInvite' => 'Niet uitnodigen',
         'confirmSendMessage' => 'Bevestig om e-mailberichten te versturen.',
         'sentBalanceUpdateEmail' => 'Een saldo update e-mail zal nu verzonden worden naar de geselecteerde gebruikers. Het kan enkele minuten duren voordat het bericht aankomst.',
