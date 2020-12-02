@@ -2,16 +2,9 @@
 
 namespace App\Models;
 
-use App\Mail\Password\Reset;
-use App\Managers\PasswordResetManager;
-use App\Scopes\EnabledScope;
-use App\Utils\EmailRecipient;
 use BarPay\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 
 // TODO: update parent mutation change time, if this model changes
 
