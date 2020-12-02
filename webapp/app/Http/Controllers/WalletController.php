@@ -621,14 +621,19 @@ class WalletController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'amount' => ['required', ValidationDefaults::PRICE_POSITIVE],
+            'amount' => ['nullable', 'required_without:amount_custom', ValidationDefaults::PRICE_POSITIVE],
+            'amount_custom' => ['nullable', ValidationDefaults::PRICE_POSITIVE],
             'payment_service' => [
                 'required',
                 Rule::in($services->pluck('id')),
             ],
         ]);
-        $amount = normalize_price($request->input('amount'));
+        $amount = normalize_price($request->input('amount') ?? $request->input('amount_custom'));
         $service = $services->firstWhere('id', $request->input('payment_service'));
+
+        // Assert price is positive
+        if($amount <= 0)
+            throw new \Exception('Amount must be positive');
 
         // Start a database transaction for the top-up
         $payment = null;

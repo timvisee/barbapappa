@@ -110,6 +110,7 @@ class ValidationDefaults {
 
     /**
      * A price value, with two optional decimal digits, may be zero.
+     * It cannot be negative.
      */
     const PRICE = 'regex:/^(\d{0,8}([,.]\d{1,2})?)?$/';
 

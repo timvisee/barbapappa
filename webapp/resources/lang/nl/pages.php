@@ -341,6 +341,8 @@ return [
         'startedWillUseOldDetails' => 'Betalingen die al geïnitieerd zijn gebruiken mogelijk nog oude gegevens, ook nadat je ze hier aanpast.',
         'startedWillComplete' => 'Er zullen geen nieuwe betalingen geaccepteerd worden met deze service. Betaling die al geïnitieerd zijn zullen echter wel nog worden afgemaakt.',
         'amountToTopUpInCurrency' => 'Bedrag om mee op te waarderen in :currency',
+        'pay' => 'Betaal',
+        'otherPay' => 'Anders, betaal',
         'selectPaymentServiceToUse' => 'Betaalmethode',
     ],
 

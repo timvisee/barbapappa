@@ -134,6 +134,7 @@ return [
         'invalidate_other_sessions' => 'log uit op andere apparaten',
         'slug' => 'URL-pad',
         'amount' => 'bedrag',
+        'amount_custom' => 'aangepast bedrag',
         'iban' => 'IBAN',
         'bic' => 'BIC',
         'account_holder' => 'rekeninghouder',

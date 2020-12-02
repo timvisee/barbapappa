@@ -50,7 +50,7 @@
             <a class="item" href="{{ config('app.source') }}" target="_blank">GitLab</a>
             <div class="item">
                 <a class="item" href="https://github.com/timvisee/barbapappa" target="_blank">GitHub</a>
-                <span class="subtle">(mirror)</a>
+                <span class="subtle">(mirror)</span>
             </div>
         </div>
 
