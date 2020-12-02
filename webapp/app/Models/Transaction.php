@@ -208,7 +208,9 @@ class Transaction extends Model {
         $from = $from->pluck(0);
 
         // Based on the mutation types, find a fitting description
-        if($from->containsStrict(MutationWallet::class) && $to->containsStrict(MutationProduct::class))
+        if($from->containsStrict(MutationBalanceImport::class) || $to->containsStrict(MutationBalanceImport::class))
+            return __('pages.transactions.descriptions.balanceImport') . $suffix;
+        else if($from->containsStrict(MutationWallet::class) && $to->containsStrict(MutationProduct::class))
             return __('pages.transactions.descriptions.fromWalletToProduct') . $suffix;
         else if($to->containsStrict(MutationProduct::class))
             return __('pages.transactions.descriptions.toProduct') . $suffix;

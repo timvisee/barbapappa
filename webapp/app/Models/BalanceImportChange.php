@@ -329,7 +329,10 @@ class BalanceImportChange extends Model {
                     'owner_id' => $user_id,
                     'depend_on' => $mut_wallet->id,
                 ]);
-            $mut_change->setMutationable(MutationMagic::create());
+            $mut_change_import = MutationBalanceImport::create([
+                'balance_import_change_id' => $change->id,
+            ]);
+            $mut_change->setMutationable($mut_change_import);
 
             // Update the wallet balance
             // TODO: do this by setting the mutation states instead

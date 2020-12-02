@@ -601,6 +601,7 @@ return [
             'failed' => 'Mislukt',
         ],
         'descriptions' => [
+            'balanceImport' => 'Import extern saldo',
             'fromWalletToProduct' => 'Aankoop product(en)',
             'toProduct' => 'Aankoop product(en)',
             'fromPaymentToWallet' => 'Storting naar portemonnee',
@@ -641,6 +642,8 @@ return [
             'paymentFrom' => 'Storting vanaf extern account',
             'paymentToDetail' => 'Opname via :payment',
             'paymentFromDetail' => 'Storting via :payment',
+            'balanceImport' => 'Import saldo van extern systeem',
+            'balanceImportDetail' => 'Import saldo van extern systeem door :user',
         ],
     ],
 
