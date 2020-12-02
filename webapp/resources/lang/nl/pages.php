@@ -342,7 +342,7 @@ return [
         'startedWillComplete' => 'Er zullen geen nieuwe betalingen geaccepteerd worden met deze service. Betaling die al geïnitieerd zijn zullen echter wel nog worden afgemaakt.',
         'amountToTopUpInCurrency' => 'Bedrag om mee op te waarderen in :currency',
         'pay' => 'Betaal',
-        'otherPay' => 'Anders, betaal',
+        'otherPay' => 'Ander bedrag, betaal',
         'selectPaymentServiceToUse' => 'Betaalmethode',
     ],
 

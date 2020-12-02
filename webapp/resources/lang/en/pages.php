@@ -342,7 +342,7 @@ return [
         'startedWillComplete' => 'No new payments will be accepted using this service. However, payments that have already been initiated will still be completed.',
         'amountToTopUpInCurrency' => 'Amount to top up with in :currency',
         'pay' => 'Pay',
-        'otherPay' => 'Other, pay',
+        'otherPay' => 'Other amount, pay',
         'selectPaymentServiceToUse' => 'Payment method',
     ],
 
