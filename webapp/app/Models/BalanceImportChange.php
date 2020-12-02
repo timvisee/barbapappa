@@ -413,7 +413,7 @@ class BalanceImportChange extends Model {
     public function formatCost($format = BALANCE_FORMAT_PLAIN) {
         if($this->cost == null)
             return null;
-        return $this->currency->formatAmount($this->cost, $format);
+        return $this->currency->format($this->cost, $format);
     }
 
     /**
