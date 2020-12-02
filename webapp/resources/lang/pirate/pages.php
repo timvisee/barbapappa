@@ -341,6 +341,8 @@ return [
         'startedWillUseOldDetails' => 'Payments that already be initiated might still use old details, even after changing them here.',
         'startedWillComplete' => 'Nay new payments be accepted using dis service. However, payments that have already been initiated still be completed.',
         'amountToTopUpInCurrency' => 'Amount to top up wit\' in :currency',
+        'pay' => 'Pay',
+        'otherPay' => 'Other, pay',
         'selectPaymentServiceToUse' => 'Payment method',
     ],
 
