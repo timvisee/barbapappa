@@ -51,6 +51,7 @@ class Mutation extends Model {
         MutationWallet::class,
         MutationProduct::class,
         MutationPayment::class,
+        MutationBalanceImport::class,
     ];
 
     const STATE_PENDING = 1;
@@ -135,12 +136,13 @@ class Mutation extends Model {
      * @param Mutationable The mutationable to attach.
      * @param bool [$save=true] True to immediately save this model, false if
      * not.
+     * @param bool [$force=false] Force set.
      *
      * @throws \Exception Throws if a paymentable was already set.
      */
-    public function setMutationable($mutationable, $save = true) {
+    public function setMutationable($mutationable, $save = true, $force = false) {
         // Assert no mutationable is set yet
-        if(!empty($this->mutationable_id) || !empty($this->mutationable_type))
+        if(!$force && (!empty($this->mutationable_id) || !empty($this->mutationable_type)))
             throw new \Exception('Could not link mutationable to mutation, it has already been set');
 
         // Set the mutationable
@@ -269,6 +271,18 @@ class Mutation extends Model {
                 }
             }
             return __('pages.mutations.types.payment' . $dir);
+
+        case MutationBalanceImport::class:
+            if($detail) {
+                // Get the balance import change, its name and build a link to it
+                $change = $this->mutationable->balanceImportChange;
+                if($change != null) {
+                    $system = $change->event->system;
+                    $submitter = $change->submitter;
+                    return __('pages.mutations.types.balanceImportDetail', ['user' => $submitter->name]);
+                }
+            }
+            return __('pages.mutations.types.balanceImport');
 
         default:
             throw new \Exception('Unknown mutation type');
@@ -438,6 +452,7 @@ class Mutation extends Model {
         case MutationPayment::class:
             return false;
         case MutationMagic::class:
+        case MutationBalanceImport::class:
             return $force;
 
         default:

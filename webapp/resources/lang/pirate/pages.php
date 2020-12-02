@@ -601,6 +601,7 @@ return [
             'failed' => 'Sunk',
         ],
         'descriptions' => [
+            'balanceImport' => 'Import external balance',
             'fromWalletToProduct' => 'Purchased product(s)',
             'toProduct' => 'Purchased product(s)',
             'fromPaymentToWallet' => 'Deposit to wallet',
@@ -641,6 +642,8 @@ return [
             'paymentFrom' => 'Deposit from external account',
             'paymentToDetail' => 'Withdrawal via :payment',
             'paymentFromDetail' => 'Deposit via :payment',
+            'balanceImport' => 'Import balance of external system',
+            'balanceImportDetail' => 'Import balance of external system by :user',
         ],
     ],
 

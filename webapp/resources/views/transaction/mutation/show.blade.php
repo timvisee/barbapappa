@@ -2,9 +2,11 @@
 
 @php
     use \App\Models\Mutation;
-    use \App\Models\MutationWallet;
-    use \App\Models\MutationProduct;
+    use \App\Models\MutationBalanceImport;
+    use \App\Models\MutationMagic;
     use \App\Models\MutationPayment;
+    use \App\Models\MutationProduct;
+    use \App\Models\MutationWallet;
 
     // Define menulinks
     $menulinks[] = [
@@ -108,7 +110,22 @@
                 $data = $mutation->mutationable;
             @endphp
             @if($data != null)
-                @if($data instanceof MutationWallet && $data->wallet_id != null)
+                @if($data instanceof MutationMagic)
+                    <table class="ui compact celled definition table">
+                        <tbody>
+                            <tr>
+                                <td>@lang('misc.description')</td>
+                                <td>
+                                    @if($data->description)
+                                        {{ $data->description }}
+                                    @else
+                                        <i>@lang('misc.none')</i>
+                                    @endif
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                @elseif($data instanceof MutationWallet && $data->wallet_id != null)
                     @php
                         // Extend page links
                         $menulinks[] = [
@@ -206,16 +223,43 @@
                             </span>
                         </a>
                     </div>
-                @else
+                @elseif($data instanceof MutationBalanceImport)
+                    @php
+                        $change = $data->balanceImportChange;
+                        $submitter = $change != null ? $change->submitter : null;
+                        $system = $change != null ? $change->event->system : null;
+                    @endphp
+
                     <table class="ui compact celled definition table">
                         <tbody>
                             <tr>
-                                <td>@lang('misc.description')</td>
+                                <td>@lang('misc.initiatedAt')</td>
                                 <td>
-                                    @if($data->description)
-                                        {{ $data->description }}
+                                    @if($change != null)
+                                        {{ $change->created_at->toDateString() }}
+                                        ({{ $change->created_at->diffForHumans() }})
                                     @else
-                                        <i>@lang('misc.none')</i>
+                                        <i>@lang('misc.unknown')</i>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@lang('misc.initiatedBy')</td>
+                                <td>
+                                    @if($submitter != null)
+                                        {{ $submitter->name }}
+                                    @else
+                                        <i>@lang('misc.unknownUser')</i>
+                                    @endif
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>@lang('misc.source')</td>
+                                <td>
+                                    @if($system != null)
+                                        {{ $system->name }}
+                                    @else
+                                        <i>@lang('misc.unknown')</i>
                                     @endif
                                 </td>
                             </tr>
