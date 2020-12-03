@@ -14,15 +14,11 @@
         @lang('barpay::payment.bunqiban.pleaseTransferSameDescription')
     </div>
 
-    @php
-        $bunqAccount = $payment->paymentable->getBunqAccount();
-    @endphp
-
     <table class="ui compact celled definition table bottom attached">
         <tbody>
             <tr>
                 <td>@lang('misc.amount')</td>
-            <td>{!! $payment->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
+                <td>{!! $payment->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
             <tr>
                 <td>@lang('barpay::misc.toAccountHolder')</td>

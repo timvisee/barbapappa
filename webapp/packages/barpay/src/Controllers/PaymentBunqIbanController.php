@@ -2,7 +2,6 @@
 
 namespace BarPay\Controllers;
 
-use App\Helpers\ValidationDefaults;
 use BarPay\Models\Payment;
 use BarPay\Models\PaymentBunqIban;
 use Illuminate\Http\Request;
@@ -13,16 +12,17 @@ class PaymentBunqIbanController {
     public static function stepTransfer(Payment $payment, PaymentBunqIban $paymentable, $response) {
         // Get some parameters
         $reference = $payment->getReference(true, true);
+        $bunqAccount = $paymentable->getBunqAccount();
 
         // Add SEPA QR code payload to response if can be used
-        if($paymentable->to_iban != null && $paymentable->to_bic != null && $payment->currency->code == 'EUR') {
+        if($bunqAccount->iban != null && $bunqAccount->bic != null && $payment->currency->code == 'EUR') {
             $qr = "BCD\n";
             $qr .= "001\n";
             $qr .= "1\n";
             $qr .= "SCT\n";
-            $qr .= $paymentable->to_bic . "\n";
-            $qr .= $paymentable->to_account_holder . "\n";
-            $qr .= $paymentable->to_iban . "\n";
+            $qr .= $bunqAccount->bic . "\n";
+            $qr .= $bunqAccount->account_holder . "\n";
+            $qr .= $bunqAccount->iban . "\n";
             $qr .= 'EUR' . $payment->money . "\n";
             $qr .= "\n";
             $qr .= $reference;
@@ -30,7 +30,9 @@ class PaymentBunqIbanController {
             $response = $response->with('paymentQrPayload', $qr);
         }
 
-        return $response->with('description', $reference);
+        return $response
+            ->with('description', $reference)
+            ->with('bunqAccount', $bunqAccount);
     }
 
     public static function doStepTransfer(Request $request, Payment $payment, PaymentBunqIban $paymentable, $response) {
