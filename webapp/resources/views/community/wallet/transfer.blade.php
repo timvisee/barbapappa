@@ -6,16 +6,16 @@
     <h2 class="ui header">
         @yield('title')
 
-        {{-- <div class="sub header"> --}}
-        {{--     @lang('misc.in') --}}
-        {{--     <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}"> --}}
-        {{--         {{ $community->name }} --}}
-        {{--     </a> --}}
-        {{--     @lang('misc.for') --}}
-        {{--     <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"> --}}
-        {{--         {{ $economy->name }} --}}
-        {{--     </a> --}}
-        {{-- </div> --}}
+        <div class="sub header">
+            @lang('misc.in')
+            <a href="{{ route('community.wallet.show', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}">
+                {{ $wallet->name }}
+            </a>
+            @lang('misc.in')
+            <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
+                {{ $economy->name }}
+            </a>
+        </div>
     </h2>
 
     <div class="ui two item menu">
@@ -40,22 +40,18 @@
         $wallet->id,
     ], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-    <table class="ui compact celled definition table">
-        <tbody>
-            <tr>
-                <td>@lang('misc.name')</td>
-                <td>{{ $wallet->name }}</td>
-            </tr>
-            <tr>
-                <td>@lang('misc.balance')</td>
-                <td>{!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="ui hidden divider"></div>
 
-    <div class="highlight-box">
-        <i class="glyphicons glyphicons-arrow-down arrow-icon"></i>
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}
+            </div>
+            <div class="label">@lang('misc.balance')</div>
+        </div>
     </div>
+
+    <div class="ui hidden divider"></div>
 
     <div class="field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
         {{ Form::label('amount', __('misc.amountInCurrency', ['currency' => $currency->name]) . ':') }}
@@ -64,10 +60,6 @@
             {{ Form::text('amount', '', ['id' => 'amount', 'placeholder' => '1.23']) }}
         </div>
         {{ ErrorRenderer::inline('amount') }}
-    </div>
-
-    <div class="highlight-box">
-        <i class="glyphicons glyphicons-arrow-down arrow-icon"></i>
     </div>
 
     <div class="field {{ ErrorRenderer::hasError('to_wallet') ? 'error' : '' }}">
