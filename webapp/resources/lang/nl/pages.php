@@ -864,7 +864,7 @@ return [
      * Password reset page.
      */
     'passwordReset' => [
-        'enterResetToken' => 'Vul alsjeblieft je wachtwoord reset token in.'
+        'enterResetToken' => 'Vul alsjeblieft je wachtwoord reset token in. '
             . 'Deze token is te vinden in de e-mail die je ontvangen hebt met wachtwoord reset instructies.',
         'enterNewPassword' => 'Vul alsjeblieft het nieuwe wachtwoord in dat je vanaf nu wilt gebruiken.',
         'invalid' => 'Token onbekend. Misschien is de token reeds verlopen.',
