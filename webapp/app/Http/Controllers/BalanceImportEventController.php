@@ -274,7 +274,7 @@ class BalanceImportEventController extends Controller {
             $mail_joined_users,
             $message,
             $invite_to_bar_id,
-            $default_locale,
+            $default_locale
         );
 
         // Redirect to the index page after deleting
