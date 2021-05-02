@@ -25,11 +25,6 @@
         </tbody>
     </table>
 
-    <div class="ui warning message visible">
-        <span class="halflings halflings-warning-sign"></span>
-        @lang('misc.cannotBeUndone')
-    </div>
-
     <br />
 
     {!! Form::open(['action' => ['TransactionController@doUndo', 'transactionId' => $transaction->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
