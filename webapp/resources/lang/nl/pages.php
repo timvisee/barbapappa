@@ -697,7 +697,7 @@ return [
         'paymentRequiresCommunityAction' => 'Deze betaling wacht op actie van een groepsbeheerder. Als je geen toegang hebt tot de ontvangstrekening, onderneem dan geen actie en laat deze controle over aan een groepsbeheerder die hier wel toegang tot heeft.',
         'cancelPayment' => 'Betaling annuleren',
         'cancelPaymentQuestion' => 'Je staat op het punt deze betaling te annuleren. Annulleer nooit een betaling waarvoor je al geld hebt overgemaakt, of je overboeking gaat mogelijk verloren. Weet je zeker dat je door wilt gaan?',
-        'paymentCancelled' => 'Payment cancelled',
+        'paymentCancelled' => 'Betaling geannuleerd',
         'state' => [
             'init' => 'Geïnitieerd',
             'pendingUser' => 'Wachtend op gebruiker actie',
