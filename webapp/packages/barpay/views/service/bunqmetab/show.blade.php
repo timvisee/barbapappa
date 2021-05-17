@@ -3,7 +3,13 @@
     <tbody>
         <tr>
             <td>@lang('pages.bunqAccounts.bunqAccount')</td>
-            <td>{{ $serviceable->bunqAccount->name }}</td>
+            <td>
+                @if($serviceable->bunqAccount != null)
+                    {{ $serviceable->bunqAccount->name }}
+                @else
+                    <i>@lang('misc.unknown')</i>
+                @endif
+            </td>
         </tr>
         <tr>
             <td>@lang('barpay::misc.accountHolder')</td>

@@ -115,6 +115,7 @@ return [
     'visit' => 'Visit',
     'me' => 'Me',
     'catalog' => 'Catalog',
+    'unknown' => 'Unknown',
     'unknownUser' => 'Unknown user',
     'submitter' => 'Submitter',
     'approve' => 'Approve',
