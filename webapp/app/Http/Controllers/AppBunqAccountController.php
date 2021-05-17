@@ -3,24 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
-use App\Models\BunqAccount;
 use App\Jobs\ProcessBunqAccountEvents;
-use BarPay\Models\Service as PayService;
+use App\Models\BunqAccount;
+use App\Scopes\EnabledScope;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\ViewErrorBag;
-use Illuminate\Validation\Rule;
-use Validator;
+use Illuminate\Support\Str;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
-use bunq\Exception\ApiException;
 use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
 use bunq\Model\Generated\Endpoint\Event;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\Pointer;
 use bunq\Util\BunqEnumApiEnvironmentType;
 
 class AppBunqAccountController extends Controller {
@@ -31,9 +25,9 @@ class AppBunqAccountController extends Controller {
      * @return Response
      */
     public function index(Request $request) {
-        $user = barauth()->getUser();
-        // TODO: also list disabled accounts
-        $accounts = BunqAccount::where('community_id', null)->get();
+        $accounts = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
+            ->get();
 
         return view('app.bunqAccount.index')
             ->with('accounts', $accounts);
@@ -49,7 +43,7 @@ class AppBunqAccountController extends Controller {
     }
 
     /**
-     * Payment service create endpoint.
+     * bunq account creation endpoint.
      *
      * @param Request $request Request.
      *
@@ -73,7 +67,8 @@ class AppBunqAccountController extends Controller {
         // Gather fats
         $account_holder = $request->input('account_holder');
         $iban = $request->input('iban');
-        $bic = $request->input('bic');
+        // TODO: user cannot enter BIC
+        $bic = $request->input('bic') ?? 'BUNQNL2A';
 
         // Create an API context for this application instance, load the context
         try {
@@ -222,7 +217,8 @@ class AppBunqAccountController extends Controller {
      */
     public function show($accountId) {
         // Find the bunq account
-        $account = BunqAccount::where('community_id', null)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
             ->findOrFail($accountId);
 
         return view('app.bunqAccount.show')
@@ -242,7 +238,8 @@ class AppBunqAccountController extends Controller {
      */
     public function doHousekeep($accountId) {
         // Find the bunq account
-        $account = BunqAccount::where('community_id', null)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
             ->findOrFail($accountId);
 
         // Load the bunq API context
@@ -270,7 +267,8 @@ class AppBunqAccountController extends Controller {
      */
     public function edit($accountId) {
         // Find the bunq account
-        $account = BunqAccount::where('community_id', null)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
             ->findOrFail($accountId);
 
         return view('app.bunqAccount.edit')
@@ -289,7 +287,9 @@ class AppBunqAccountController extends Controller {
         // TODO: with trashed?
 
         // Find the bunq account
-        $account = BunqAccount::where('community_id', null)->findOrFail($accountId);
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
+            ->findOrFail($accountId);
 
         // Validate
         $request->validate([

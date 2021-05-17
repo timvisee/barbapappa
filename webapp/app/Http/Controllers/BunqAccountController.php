@@ -6,22 +6,14 @@ use App\Helpers\ValidationDefaults;
 use App\Jobs\ProcessBunqAccountEvents;
 use App\Models\BunqAccount;
 use App\Scopes\EnabledScope;
-use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\ViewErrorBag;
-use Illuminate\Validation\Rule;
-use Validator;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
-use bunq\Exception\ApiException;
 use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
 use bunq\Model\Generated\Endpoint\Event;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\Pointer;
 use bunq\Util\BunqEnumApiEnvironmentType;
 
 class BunqAccountController extends Controller {
@@ -83,7 +75,8 @@ class BunqAccountController extends Controller {
         // Gather fats
         $account_holder = $request->input('account_holder');
         $iban = $request->input('iban');
-        $bic = $request->input('bic');
+        // TODO: user cannot enter bic?
+        $bic = $request->input('bic') ?? 'BUNQNL2A';
 
         // Create an API context for this application instance, load the context
         try {
@@ -121,7 +114,6 @@ class BunqAccountController extends Controller {
 
         // Must use euro and have a zero balance
         $balance = $monetaryAccount->getBalance();
-        \Debugbar::info($balance);
         // TODO: assert list of supported currencies somewhere
         if($balance->getCurrency() != 'EUR') {
             add_session_error('iban', __('pages.bunqAccounts.onlyEuroSupported'));
