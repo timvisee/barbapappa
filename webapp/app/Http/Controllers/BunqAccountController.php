@@ -8,7 +8,6 @@ use App\Models\BunqAccount;
 use App\Scopes\EnabledScope;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Str;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
 use bunq\Exception\BadRequestException;
@@ -194,7 +193,7 @@ class BunqAccountController extends Controller {
         ]);
 
         // Create new bunq sandbox API token
-        $api_token = self::createBunqSandboxApiToken();
+        $api_token = AppBunqAccountController::createBunqSandboxApiToken();
 
         // Create an API context for this application instance, load the context
         $apiContext = ApiContext::create(
@@ -496,47 +495,6 @@ class BunqAccountController extends Controller {
     //         ])
     //         ->with('success', __('pages.paymentService.deleted'));
     // }
-
-    /**
-     * Create a new bunq sandbox user person and return its API token.
-     *
-     * @return string bunq sandbox API token.
-     * @throws \Exception Throws an exception on failure.
-     */
-    // TODO: duplicate function, also in AppBunqAccountController
-    private static function createBunqSandboxApiToken() {
-        // Request URL
-        $url_sandbox_user_person = ApiContext::BASE_URL_SANDBOX . 'sandbox-user-person';
-
-        // Request new sandbox API token
-        $options = array(
-            'http' => array(
-                'header'  => collect(
-                    'Content-Type: application/json',
-                    'Cache-Control: none',
-                    'X-Bunq-Client-Request-Id: ' . Str::random(64),
-                    'X-Bunq-Language: nl_NL',
-                    'X-Bunq-Region: nl_NL',
-                    'X-Bunq-Geolocation: 0 0 0 0 000',
-                    ''
-                )->join("\r\n"),
-                'method'  => 'POST'
-            )
-        );
-        $result = file_get_contents($url_sandbox_user_person, false, stream_context_create($options));
-        if($result === false)
-            throw new \Exception('Failed to request new bunq sandbox API token');
-
-        // Parse result
-        $result = json_decode($result);
-        $api_token = $result->Response[0]->ApiKey->api_key;
-
-        // Assert token validity
-        if(!str_starts_with($api_token, 'sandbox_'))
-            throw new \Exception('Created bunq sandbox API token has invalid format');
-
-        return $api_token;
-    }
 
     // TODO: set proper perms here!
     /**

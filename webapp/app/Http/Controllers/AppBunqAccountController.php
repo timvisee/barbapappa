@@ -475,7 +475,7 @@ class AppBunqAccountController extends Controller {
      * @return string bunq sandbox API token.
      * @throws \Exception Throws an exception on failure.
      */
-    private static function createBunqSandboxApiToken() {
+    public static function createBunqSandboxApiToken() {
         // Request URL
         $url_sandbox_user_person = ApiContext::BASE_URL_SANDBOX . 'sandbox-user-person';
 
