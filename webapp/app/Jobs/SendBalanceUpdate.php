@@ -6,7 +6,6 @@ use App\Mail\Update\BalanceUpdateMail;
 use App\Models\Community;
 use App\Models\Economy;
 use App\Models\EconomyMember;
-use App\Models\Notifications\Notification;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -54,6 +53,11 @@ class SendBalanceUpdate implements ShouldQueue {
         $locale = $user->preferredLocale();
         if(!empty($locale))
             set_env_locale($locale);
+
+        // Find user email recipients, skip sending if user does not have any
+        $recipients = $user->buildEmailRecipients();
+        if($recipients->isEmpty())
+            return;
 
         // Collect user wallets
         $wallets = $user->wallets;
@@ -126,8 +130,6 @@ class SendBalanceUpdate implements ShouldQueue {
             })->toArray();
 
         // Send the balance update mail
-        Mail::send(
-            new BalanceUpdateMail($user->buildEmailRecipients(), $data)
-        );
+        Mail::send(new BalanceUpdateMail($recipients, $data));
     }
 }
