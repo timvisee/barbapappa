@@ -5,7 +5,6 @@ namespace BarPay\Models;
 use App\Models\Currency;
 use App\Models\Economy;
 use App\Models\User;
-use App\Scopes\EnabledScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -79,6 +78,7 @@ class Service extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeEnabled($query, $enabled = true) {
+        // TODO: use EnabledScope
         return $query->where('enabled', $enabled);
     }
 

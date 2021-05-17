@@ -4,10 +4,6 @@ namespace BarPay\Models;
 
 use App\Events\PaymentCompleted;
 use App\Events\PaymentFailed;
-use App\Http\Controllers\CommunityController;
-use App\Mail\Email\Payment\Completed;
-use App\Mail\Email\Payment\Failed;
-use App\Models\Community;
 use App\Models\Currency;
 use App\Models\Economy;
 use App\Models\Mutation;
@@ -18,11 +14,8 @@ use App\Models\Transaction;
 use App\Models\User;
 use App\Perms\AppRoles;
 use App\Perms\CommunityRoles;
-use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 /**
  * Payment model.
@@ -431,7 +424,7 @@ class Payment extends Model {
      */
     public function displayName() {
         // Show generic payment service name if unknown
-        if($this->service_id == null)
+        if($this->service_id == null || $this->service == null)
             return __('barpay::service.unknown.name');
 
         // TODO: this is very inefficient, fix this!
