@@ -16,6 +16,7 @@ return [
      */
     'manualiban' => [
         'name' => 'Bankoverschrijving (IBAN)',
+        'nameAdmin' => 'Bankoverschrijving (IBAN) (handmatige check)',
         'duration' => 'duurt tot 1 maand',
     ],
 
@@ -33,6 +34,7 @@ return [
      */
     'bunqiban' => [
         'name' => 'Bankoverschrijving (IBAN)',
+        'nameAdmin' => 'Bankoverschrijving (IBAN) (automatisch via bunq)',
         'duration' => 'tot 3 dagen',
     ],
 
@@ -41,6 +43,7 @@ return [
      */
     'bunqmetab' => [
         'name' => 'iDeal betaling',
+        'nameAdmin' => 'iDeal betaling (via bunq)',
         'duration' => 'direct',
     ],
 ];

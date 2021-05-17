@@ -2,11 +2,6 @@
 
 namespace BarPay\Models;
 
-use BarPay\Controllers\PaymentManualIbanController;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 // TODO: require Model implementation?
 trait Serviceable {
 
@@ -22,10 +17,12 @@ trait Serviceable {
     /**
      * Get the name for this service type.
      *
+     * @param bool [$admin=false] Name for administrators (more detailed).
+     *
      * @return string Name for this service type.
      */
-    public static function name() {
-        return Self::__('name');
+    public static function name($admin = false) {
+        return Self::__($admin ? 'nameAdmin' : 'name');
     }
 
     /**

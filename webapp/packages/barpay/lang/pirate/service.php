@@ -16,6 +16,7 @@ return [
      */
     'manualiban' => [
         'name' => 'Bank transfer (IBAN)',
+        'nameAdmin' => 'Bank transfer (IBAN) (manual check)',
         'duration' => 'takes up to 1 month',
     ],
 
@@ -33,6 +34,7 @@ return [
      */
     'bunqiban' => [
         'name' => 'Bank transfer (IBAN)',
+        'nameAdmin' => 'Bank transfer (IBAN) (automatic through bunq)',
         'duration' => 'up to 3 days',
     ],
 
@@ -41,6 +43,7 @@ return [
      */
     'bunqmetab' => [
         'name' => 'iDeal payment',
+        'nameAdmin' => 'iDeal payment (through bunq)',
         'duration' => 'instant',
     ],
 ];

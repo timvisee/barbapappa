@@ -160,10 +160,12 @@ class Service extends Model {
      * Get the display name for this service.
      * This will be shown both to administrators and to regular users.
      *
+     * @param bool [$admin=false] Name for administrators (more detailed).
+     *
      * @return string Display name.
      */
-    public function displayName() {
-        return $this->serviceable::name();
+    public function displayName($admin = false) {
+        return $this->serviceable::name($admin);
     }
 
     /**
