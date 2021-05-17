@@ -20,7 +20,7 @@
         <tbody>
             <tr>
                 <td>@lang('misc.type')</td>
-                <td>{{ $service->displayName() }}</td>
+                <td>{{ $service->displayName(true) }}</td>
             </tr>
             <tr>
                 <td>@lang('pages.community.economy')</td>

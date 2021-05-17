@@ -23,7 +23,7 @@
                         'economyId' => $economy->id,
                         'serviceable' => $service,
                     ]) }}">
-                {{ $service::name() }}
+                {{ $service::name(true) }}
             </a>
         @empty
             {{-- TODO: redirect back with error instead --}}

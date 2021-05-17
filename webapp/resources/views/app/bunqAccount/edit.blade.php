@@ -22,7 +22,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
             <div class="ui checkbox">
-                {{ Form::checkbox('enabled', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::checkbox('enabled', true, $account->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('enabled', __('pages.bunqAccounts.enabled')) }}
             </div>
             <br />

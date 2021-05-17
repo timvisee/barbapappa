@@ -45,7 +45,7 @@
 
     <div class="ui divider hidden"></div>
 
-    <p class="align-center" title="@lang('misc.description')">{{ $payment->service->displayName() }}</p>
+    <p class="align-center" title="@lang('misc.description')">{{ $payment->displayName() }}</p>
 
     {{-- Amount & state icon --}}
     <div class="ui one small statistics">
@@ -204,7 +204,7 @@
                     @if($payment->service_id != null)
                         <tr>
                             <td>@lang('pages.paymentService.serviceType')</td>
-                            <td>{{ $payment->service->displayName() }}</td>
+                            <td>{{ $payment->displayName() }}</td>
                         </tr>
                     @endif
                     @if($payment->user_id == barauth()->getUser()->id)

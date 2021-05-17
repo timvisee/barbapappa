@@ -5,6 +5,13 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
+    <p>
+        @lang('pages.bunqAccounts.addAccountDescription')
+        <a href="{{ route('app.bunqAccount.createSandbox') }}">@lang('pages.bunqAccounts.createSandboxAccount')</a>.
+    </p>
+
+    <div class="ui divider hidden"></div>
+
     {!! Form::open(['action' => ['AppBunqAccountController@doCreate'], 'method' => 'POST', 'class' => 'ui form']) !!}
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.descriptiveName') . ' :') }}

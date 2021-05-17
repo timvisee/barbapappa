@@ -16,7 +16,7 @@
                         'economyId' => $service->economy_id,
                         'serviceId' => $service->id,
                     ]) }}">
-                {{ $service->displayName() }}
+                {{ $service->displayName(true) }}
 
                 {{-- TODO: show some other stat here --}}
                 <span class="sub-label">

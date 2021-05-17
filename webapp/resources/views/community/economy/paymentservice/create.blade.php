@@ -18,7 +18,7 @@
 
         <div class="field disabled">
             {{ Form::label('type', __('pages.paymentService.serviceType') . ':') }}
-            {{ Form::text('type', $serviceable::name()) }}
+            {{ Form::text('type', $serviceable::name(true)) }}
         </div>
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">

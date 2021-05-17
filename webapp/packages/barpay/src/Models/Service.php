@@ -5,7 +5,6 @@ namespace BarPay\Models;
 use App\Models\Currency;
 use App\Models\Economy;
 use App\Models\User;
-use App\Scopes\EnabledScope;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -79,6 +78,7 @@ class Service extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeEnabled($query, $enabled = true) {
+        // TODO: use EnabledScope
         return $query->where('enabled', $enabled);
     }
 
@@ -160,10 +160,12 @@ class Service extends Model {
      * Get the display name for this service.
      * This will be shown both to administrators and to regular users.
      *
+     * @param bool [$admin=false] Name for administrators (more detailed).
+     *
      * @return string Display name.
      */
-    public function displayName() {
-        return $this->serviceable::name();
+    public function displayName($admin = false) {
+        return $this->serviceable::name($admin);
     }
 
     /**

@@ -164,6 +164,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 Route::get('/add', 'BunqAccountController@create')->name('community.bunqAccount.create');
                 Route::post('/add', 'BunqAccountController@doCreate')->name('community.bunqAccount.doCreate');
 
+                // Create sandbox user
+                Route::get('/add-sandbox', 'BunqAccountController@createSandbox')->name('community.bunqAccount.createSandbox');
+                Route::post('/add-sandbox', 'BunqAccountController@doCreateSandbox')->name('community.bunqAccount.doCreateSandbox');
+
                 // Specific
                 Route::prefix('/{accountId}')->group(function() {
                     // Show
@@ -636,6 +640,10 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
         // Create
         Route::get('/add', 'AppBunqAccountController@create')->name('app.bunqAccount.create');
         Route::post('/add', 'AppBunqAccountController@doCreate')->name('app.bunqAccount.doCreate');
+
+        // Create sandbox user
+        Route::get('/add-sandbox', 'AppBunqAccountController@createSandbox')->name('app.bunqAccount.createSandbox');
+        Route::post('/add-sandbox', 'AppBunqAccountController@doCreateSandbox')->name('app.bunqAccount.doCreateSandbox');
 
         // Specific
         Route::prefix('/{accountId}')->group(function() {

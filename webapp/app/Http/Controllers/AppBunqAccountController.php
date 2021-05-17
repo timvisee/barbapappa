@@ -3,24 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
-use App\Models\BunqAccount;
 use App\Jobs\ProcessBunqAccountEvents;
-use BarPay\Models\Service as PayService;
+use App\Models\BunqAccount;
+use App\Scopes\EnabledScope;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\ViewErrorBag;
-use Illuminate\Validation\Rule;
-use Validator;
+use Illuminate\Support\Str;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
-use bunq\Exception\ApiException;
 use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
 use bunq\Model\Generated\Endpoint\Event;
 use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\Pointer;
 use bunq\Util\BunqEnumApiEnvironmentType;
 
 class AppBunqAccountController extends Controller {
@@ -31,9 +25,9 @@ class AppBunqAccountController extends Controller {
      * @return Response
      */
     public function index(Request $request) {
-        $user = barauth()->getUser();
-        // TODO: also list disabled accounts
-        $accounts = BunqAccount::where('community_id', null)->get();
+        $accounts = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
+            ->get();
 
         return view('app.bunqAccount.index')
             ->with('accounts', $accounts);
@@ -49,7 +43,7 @@ class AppBunqAccountController extends Controller {
     }
 
     /**
-     * Payment service create endpoint.
+     * bunq account creation endpoint.
      *
      * @param Request $request Request.
      *
@@ -73,7 +67,8 @@ class AppBunqAccountController extends Controller {
         // Gather fats
         $account_holder = $request->input('account_holder');
         $iban = $request->input('iban');
-        $bic = $request->input('bic');
+        // TODO: user cannot enter BIC
+        $bic = $request->input('bic') ?? 'BUNQNL2A';
 
         // Create an API context for this application instance, load the context
         try {
@@ -111,7 +106,112 @@ class AppBunqAccountController extends Controller {
 
         // Must use euro and have a zero balance
         $balance = $monetaryAccount->getBalance();
-        \Debugbar::info($balance);
+        // TODO: assert list of supported currencies somewhere
+        if($balance->getCurrency() != 'EUR') {
+            add_session_error('iban', __('pages.bunqAccounts.onlyEuroSupported'));
+            return redirect()->back()->withInput();
+        }
+        if($balance->getValue() != '0.00') {
+            add_session_error('iban', __('pages.bunqAccounts.notZeroBalance'));
+            return redirect()->back()->withInput();
+        }
+
+        // List the last account event, obtain its ID
+        $events = Event::listing([
+                'monetary_account_id' => $monetaryAccount->getId(),
+                'status' => 'FINALIZED',
+                'count' => 1,
+            ], [])->getValue();
+        $last_event_id = collect($events)
+            ->map(function($event) {
+                return $event->getId();
+            })
+            ->first();
+
+        // Add the bunq account to the database
+        $account = new BunqAccount();
+        $account->community_id = null;
+        $account->enabled = is_checked($request->input('enabled'));
+        $account->name = $request->input('name');
+        $account->api_context = $apiContext;
+        $account->monetary_account_id = $monetaryAccount->getId();
+        $account->account_holder = $account_holder;
+        $account->iban = $iban;
+        $account->bic = $bic;
+        $account->last_event_id = $last_event_id;
+        $account->save();
+
+        // Update the bunq account settings, configure things like callbacks
+        $message = $account->updateBunqAccountSettings();
+
+        // Redirect to services index
+        $response = redirect()
+            ->route('app.bunqAccount.show', [
+                'accountId' => $account->id,
+            ])
+            ->with('success', __('pages.bunqAccounts.added'));
+        if(!empty($message))
+            $response = $response->with('warning', $message);
+        return $response;
+    }
+
+    /**
+     * bunq sandbox account creation page.
+     *
+     * @return Response
+     */
+    public function createSandbox(Request $request) {
+        return view('app.bunqAccount.createSandbox');
+    }
+
+    /**
+     * bunq sandbox account creation endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doCreateSandbox(Request $request) {
+        // Validate
+        $request->validate([
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'confirm' => 'accepted',
+        ]);
+
+        // Create new bunq sandbox API token
+        $api_token = self::createBunqSandboxApiToken();
+
+        // Create an API context for this application instance, load the context
+        $apiContext = ApiContext::create(
+            BunqEnumApiEnvironmentType::SANDBOX(),
+            $api_token,
+            config('app.name') . ' ' . config('app.url'),
+            []
+        );
+        BunqContext::loadApiContext($apiContext);
+
+        // Get first monetary account
+        $pagination = new Pagination();
+        $pagination->setCount(1);
+        $monetaryAccounts = MonetaryAccountBank::listing(
+            [],
+            $pagination->getUrlParamsCountOnly()
+        )->getValue();
+        $monetaryAccount = collect($monetaryAccounts)->first();
+
+        // Get facts
+        $iban_pointer = collect($monetaryAccount->getAlias())
+            ->filter(function($p) {
+                return $p->getType() == 'IBAN';
+            })
+            ->first();
+        $iban = $iban_pointer->getValue();
+        $account_holder = $iban_pointer->getName();
+        // TODO: user cannot enter bic?
+        $bic = $request->input('bic') ?? 'BUNQNL2A';
+
+        // Must use euro and have a zero balance
+        $balance = $monetaryAccount->getBalance();
         // TODO: assert list of supported currencies somewhere
         if($balance->getCurrency() != 'EUR') {
             add_session_error('iban', __('pages.bunqAccounts.onlyEuroSupported'));
@@ -222,7 +322,8 @@ class AppBunqAccountController extends Controller {
      */
     public function show($accountId) {
         // Find the bunq account
-        $account = BunqAccount::where('community_id', null)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
             ->findOrFail($accountId);
 
         return view('app.bunqAccount.show')
@@ -242,7 +343,8 @@ class AppBunqAccountController extends Controller {
      */
     public function doHousekeep($accountId) {
         // Find the bunq account
-        $account = BunqAccount::where('community_id', null)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
             ->findOrFail($accountId);
 
         // Load the bunq API context
@@ -270,7 +372,8 @@ class AppBunqAccountController extends Controller {
      */
     public function edit($accountId) {
         // Find the bunq account
-        $account = BunqAccount::where('community_id', null)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
             ->findOrFail($accountId);
 
         return view('app.bunqAccount.edit')
@@ -289,7 +392,9 @@ class AppBunqAccountController extends Controller {
         // TODO: with trashed?
 
         // Find the bunq account
-        $account = BunqAccount::where('community_id', null)->findOrFail($accountId);
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+            ->where('community_id', null)
+            ->findOrFail($accountId);
 
         // Validate
         $request->validate([
@@ -363,6 +468,46 @@ class AppBunqAccountController extends Controller {
     //         ])
     //         ->with('success', __('pages.paymentService.deleted'));
     // }
+
+    /**
+     * Create a new bunq sandbox user person and return its API token.
+     *
+     * @return string bunq sandbox API token.
+     * @throws \Exception Throws an exception on failure.
+     */
+    private static function createBunqSandboxApiToken() {
+        // Request URL
+        $url_sandbox_user_person = ApiContext::BASE_URL_SANDBOX . 'sandbox-user-person';
+
+        // Request new sandbox API token
+        $options = array(
+            'http' => array(
+                'header'  => collect(
+                    'Content-Type: application/json',
+                    'Cache-Control: none',
+                    'X-Bunq-Client-Request-Id: ' . Str::random(64),
+                    'X-Bunq-Language: nl_NL',
+                    'X-Bunq-Region: nl_NL',
+                    'X-Bunq-Geolocation: 0 0 0 0 000',
+                    ''
+                )->join("\r\n"),
+                'method'  => 'POST'
+            )
+        );
+        $result = file_get_contents($url_sandbox_user_person, false, stream_context_create($options));
+        if($result === false)
+            throw new \Exception('Failed to request new bunq sandbox API token');
+
+        // Parse result
+        $result = json_decode($result);
+        $api_token = $result->Response[0]->ApiKey->api_key;
+
+        // Assert token validity
+        if(!str_starts_with($api_token, 'sandbox_'))
+            throw new \Exception('Created bunq sandbox API token has invalid format');
+
+        return $api_token;
+    }
 
     /**
      * The permission required for viewing.
