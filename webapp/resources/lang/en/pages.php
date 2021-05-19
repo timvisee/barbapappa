@@ -535,7 +535,7 @@ return [
         'yourWallets' => 'Your wallets',
         '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
         'economySelectDescription' => 'Wallets in this community are divided by economy.<br>Select the economy to manage your wallets in it.',
-        'noWallets' => 'You don\'t have any wallets yet...',
+        'noWallets' => 'No wallets...',
         'namePlaceholder' => 'My personal wallet',
         'nameDefault' => 'My wallet',
         'createWallet' => 'Create wallet',

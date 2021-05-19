@@ -68,6 +68,29 @@
         </p>
     @endif
 
+    @if(perms(BarMemberController::permsView()))
+        @php
+            $econ_member = $member->fetchEconomyMember();
+        @endphp
+        <div class="ui vertical menu fluid">
+            <h5 class="ui item header">@lang('pages.wallets.title')</h5>
+            @forelse($econ_member->wallets as $wallet)
+                <a href="{{ route('community.wallet.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $econ_member->economy_id,
+                    'walletId' => $wallet->id,
+                ]) }}" class="item">
+                    {{ $wallet->name }}
+                    {!! $wallet->formatBalance(BALANCE_FORMAT_LABEL) !!}
+                </a>
+            @empty
+                <div class="item">
+                    <i>@lang('pages.wallets.noWallets')</i>
+                </div>
+            @endforelse
+        </div>
+    @endif
+
     <p>
         <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">

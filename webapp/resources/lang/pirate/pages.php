@@ -535,7 +535,7 @@ return [
         'yourWallets' => 'Yer wallets',
         '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
         'economySelectDescription' => 'Wallets in dis community be divided by booty.<br>Select \'the booty to manage yer wallets.',
-        'noWallets' => 'Yer nay be any wallets yet...',
+        'noWallets' => 'Nay wallets...',
         'namePlaceholder' => 'My personal wallet',
         'nameDefault' => 'Fresh treasury',
         'createWallet' => 'Create wallet',
