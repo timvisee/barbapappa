@@ -231,16 +231,16 @@
                         <td>@lang('misc.amount')</td>
                         <td>{!! $transaction->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
                     </tr>
+                    <tr>
+                        <td>@lang('misc.state')</td>
+                        <td>{{ $transaction->stateName() }}</td>
+                    </tr>
                     @if($transaction->created_by != null && $transaction->created_by != barauth()->getUser()->id)
                         <tr>
                             <td>@lang('misc.initiatedBy')</td>
                             <td>{{ $transaction->owner->name }}</td>
                         </tr>
                     @endif
-                    <tr>
-                        <td>@lang('misc.state')</td>
-                        <td>{{ $transaction->stateName() }}</td>
-                    </tr>
                     <tr>
                         <td>@lang('misc.owner')</td>
                         <td>

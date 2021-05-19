@@ -452,6 +452,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     // Top-up pages
                     Route::get('/top-up', 'WalletController@topUp')->name('community.wallet.topUp');
                     Route::post('/top-up', 'WalletController@doTopUp')->name('community.wallet.topUp');
+
+                    // Modify balance pages
+                    Route::get('/modify-balance', 'WalletController@modifyBalance')->name('community.wallet.modifyBalance');
+                    Route::post('/modify-balance', 'WalletController@doModifyBalance')->name('community.wallet.modifyBalance');
                 });
             });
         });

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
 use App\Models\Mutation;
+use App\Models\MutationMagic;
 use App\Models\MutationPayment;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Perms\CommunityRoles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -700,6 +702,127 @@ class WalletController extends Controller {
         return redirect()->route('payment.pay', [
             'paymentId' => $payment->id,
         ]);
+    }
+
+    /**
+     * Balance modification page for administrators.
+     *
+     * @return Response
+     */
+    public function modifyBalance($communityId, $economyId, $walletId) {
+        // Get the user, community, find the economy and wallet
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+        $currency = $wallet->currency;
+
+        // User must be community manager, wallet owner is not good enough
+        // TODO: improve security check, check through single function
+        if(!app('perms')->evaluate(CommunityRoles::presetManager(), $community, null))
+            return response(view('noPermission'));
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
+
+        return view('community.wallet.modifyBalance')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet)
+            ->with('currency', $wallet->currency);
+    }
+
+    /**
+     * Do the wallet modification.
+     *
+     * @return Response
+     */
+    public function doModifyBalance(Request $request, $communityId, $economyId, $walletId) {
+        // Get the community, find the economy and wallet
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+        $currency = $wallet->currency;
+
+        // Get initiating- and wallet user
+        $init_user = barauth()->getSessionUser();
+        $wallet_user = $wallet->economyMember->user;
+
+        // User must be community manager, wallet owner is not good enough
+        // TODO: improve security check, check through single function
+        if(!app('perms')->evaluate(CommunityRoles::presetManager(), $community, null))
+            return response(view('noPermission'));
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
+
+        // Validate
+        $this->validate($request, [
+            'amount' => ['required', ValidationDefaults::PRICE_NOT_ZERO],
+            'description' => 'nullable|string',
+            'confirm' => 'accepted',
+        ]);
+        $amount = normalize_price($request->input('amount'));
+        $description = $request->input('description');
+
+        // Start a database transaction for the modification
+        DB::transaction(function() use($init_user, $wallet_user, $economy, $wallet, $currency, $amount, $description) {
+            // Create the transaction
+            $transaction = Transaction::create([
+                'state' => Transaction::STATE_SUCCESS,
+                'owner_id' => $wallet_user->id,
+                'initiated_by_id' => $init_user->id,
+                'initiated_by_other' => true,
+            ]);
+
+            // Create the magic mutation
+            $mut_magic = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $economy->id,
+                    'mutationable_id' => 0,
+                    'mutationable_type' => '',
+                    'amount' => $amount,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_SUCCESS,
+                    'owner_id' => $wallet_user->id,
+                ]);
+            $mut_magic->setMutationable(
+                MutationMagic::create([
+                    'description' => $description,
+                ])
+            );
+
+            // Create the to wallet mutation
+            $mut_wallet = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $economy->id,
+                    'mutationable_id' => 0,
+                    'mutationable_type' => '',
+                    'amount' => -$amount,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_SUCCESS,
+                    'owner_id' => $wallet_user->id,
+                    'depend_on' => $mut_magic->id,
+                ]);
+            $mut_wallet->setMutationable(
+                MutationWallet::create([
+                    'wallet_id' => $wallet->id,
+                ])
+            );
+
+            // Modify wallet balance
+            if($amount > 0)
+                $wallet->deposit($amount);
+            else
+                $wallet->withdraw(-$amount);
+        });
+
+        // Redirect to the payment page
+        return redirect()
+            ->route('community.wallet.show', [
+                'communityId' => $communityId,
+                'economyId' => $economyId,
+                'walletId' => $walletId,
+            ])
+            ->with('success', __('pages.wallets.balanceModified'));
     }
 
     /**
