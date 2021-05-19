@@ -132,4 +132,9 @@ class SendBalanceUpdate implements ShouldQueue {
         // Send the balance update mail
         Mail::send(new BalanceUpdateMail($recipients, $data));
     }
+
+    public function retryUntil() {
+        // After two months it really is to late to still send an update
+        return now()->addMonths(2);
+    }
 }
