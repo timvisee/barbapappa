@@ -64,4 +64,9 @@ class ProcessAllBunqAccountEvents implements ShouldQueue {
                     ->delay(now()->addMinutes($i));
             });
     }
+
+    public function retryUntil() {
+        // Matches interval in \App\Console\Kernel::schedule
+        return now()->addHours(12);
+    }
 }

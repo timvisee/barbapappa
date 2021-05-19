@@ -108,4 +108,9 @@ class SendBalanceUpdates implements ShouldQueue {
             });
         });
     }
+
+    public function retryUntil() {
+        // Matches interval in \App\Console\Kernel::schedule
+        return now()->addHour();
+    }
 }

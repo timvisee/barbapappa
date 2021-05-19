@@ -46,4 +46,9 @@ class ExpirePayments implements ShouldQueue {
             ExpirePayment::dispatch($payment->id);
         });
     }
+
+    public function retryUntil() {
+        // Matches interval in \App\Console\Kernel::schedule
+        return now()->addHour();
+    }
 }
