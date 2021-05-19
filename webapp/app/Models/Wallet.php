@@ -2,17 +2,10 @@
 
 namespace App\Models;
 
+use App\Perms\CommunityRoles;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
-
-use App\Mail\Password\Reset;
-use App\Managers\PasswordResetManager;
-use App\Scopes\EnabledScope;
-use App\Utils\EmailRecipient;
 
 /**
  * Wallet model.
@@ -21,7 +14,7 @@ use App\Utils\EmailRecipient;
  *
  * @property int id
  * @property int economy_member_id
- * @property-read EconomyMember economy_member
+ * @property-read EconomyMember economyMember
  * @property string name
  * @property decimal balance
  * @property int currency_id
@@ -343,5 +336,54 @@ class Wallet extends Model {
 
         // Apply the delta to the current balance, return the result
         return $this->balance + $change;
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to view this
+     * wallet.
+     *
+     * @return boolean True if the user can view this wallet, false if not.
+     */
+    public function hasViewPermission() {
+        return $this->hasPermission(false);
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to manage
+     * this wallet.
+     *
+     * @return boolean True if the user can manage this wallet, false if not.
+     */
+    public function hasManagePermission() {
+        return $this->hasPermission(true);
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to view this
+     * wallet.
+     *
+     * Note: this is expensive.
+     *
+     * @param bool [$manage=true] True to check for management permissions,
+     *      false for just viewing permission.
+     * @return boolean True if the user can view this wallet, false if not.
+     */
+    private function hasPermission($manage = true) {
+        // The user must be authenticated
+        $barauth = barauth();
+        if(!$barauth->isAuth())
+            return false;
+        $user = $barauth->getUser();
+
+        // User is fine if he owns the wallet
+        if($this->economyMember->user_id == $user->id)
+            return true;
+
+        // User is fine if has community permissions
+        $community = $this->economyMember->economy->community;
+        if(app('perms')->evaluate(CommunityRoles::presetManager(), $community, null))
+            return true;
+
+        return false;
     }
 }

@@ -72,4 +72,18 @@ class BarMember extends Pivot {
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Get related economy member.
+     *
+     * This function is expensive.
+     */
+    public function fetchEconomyMember() {
+        return $this
+            ->bar
+            ->economy
+            ->members()
+            ->where('user_id', $this->user_id)
+            ->firstOrFail();
+    }
 }

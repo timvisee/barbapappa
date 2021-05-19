@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Models\Currency;
 use App\Models\Mutation;
+use App\Models\MutationMagic;
 use App\Models\MutationPayment;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Perms\CommunityRoles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -69,16 +71,15 @@ class WalletController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $walletId) {
-        // TODO: do some permission checking?
-
         // Get the user, community, find the economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member
-            ->wallets()
-            ->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasViewPermission())
+            return response(view('noPermission'));
+
         $transactions = $wallet->lastTransactions();
 
         // Build balance graph item data
@@ -193,11 +194,13 @@ class WalletController extends Controller {
      */
     public function edit($communityId, $economyId, $walletId) {
         // Get the user, community, find economy, economy member and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
 
         // Show the edit view
         return view('community.wallet.edit')
@@ -212,11 +215,13 @@ class WalletController extends Controller {
      */
     public function doEdit(Request $request, $communityId, $economyId, $walletId) {
         // Get the user, community, find economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
 
         // Validate
         $this->validate($request, [
@@ -240,11 +245,13 @@ class WalletController extends Controller {
      */
     public function delete($communityId, $economyId, $walletId) {
         // Get the user, community, find economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
 
         // Make sure there's exactly zero balance
         if($wallet->balance != 0.00) {
@@ -271,14 +278,16 @@ class WalletController extends Controller {
      */
     public function doDelete($communityId, $economyId, $walletId) {
         // Get the user, community, find economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member
+        $wallet = $economy
             ->wallets()
             ->where('balance', 0.00)
             ->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // wallet
@@ -437,6 +446,10 @@ class WalletController extends Controller {
             ->where('currency_id', $wallet->currency_id)
             ->where('id', '<>', $walletId)
             ->get();
+
+        // // User must have permission
+        // if(!$wallet->hasManagePermission())
+        //     return response(view('noPermission'));
 
         return view('community.wallet.transfer')
             ->with('economy', $economy)
@@ -692,6 +705,143 @@ class WalletController extends Controller {
     }
 
     /**
+     * Balance modification page for administrators.
+     *
+     * @return Response
+     */
+    public function modifyBalance($communityId, $economyId, $walletId) {
+        // Get the user, community, find the economy and wallet
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must be community manager, wallet owner is not good enough
+        // TODO: improve security check, check through single function
+        if(!app('perms')->evaluate(CommunityRoles::presetManager(), $community, null))
+            return response(view('noPermission'));
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
+
+        return view('community.wallet.modifyBalance')
+            ->with('economy', $economy)
+            ->with('wallet', $wallet)
+            ->with('currency', $wallet->currency);
+    }
+
+    /**
+     * Do the wallet modification.
+     *
+     * @return Response
+     */
+    public function doModifyBalance(Request $request, $communityId, $economyId, $walletId) {
+        // Get the community, find the economy and wallet
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+        $currency = $wallet->currency;
+
+        // Get initiating- and wallet user
+        $init_user = barauth()->getSessionUser();
+        $wallet_user = $wallet->economyMember->user;
+
+        // User must be community manager, wallet owner is not good enough
+        // TODO: improve security check, check through single function
+        if(!app('perms')->evaluate(CommunityRoles::presetManager(), $community, null))
+            return response(view('noPermission'));
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
+
+        // Validate
+        $this->validate($request, [
+            'modifyMethod' => 'required|in:deposit,withdraw,set',
+            'amount' => ['required', ValidationDefaults::PRICE_POSITIVE],
+            'description' => 'nullable|string',
+            'confirm' => 'accepted',
+        ]);
+        $amount = normalize_price($request->input('amount'));
+        $description = $request->input('description');
+
+        // Tweak amount based on modification method
+        switch($request->input('modifyMethod')) {
+            case 'deposit':
+                break;
+            case 'withdraw':
+                $amount = -$amount;
+                break;
+            case 'set':
+                $amount = -$wallet->balance + $amount;
+                break;
+            default:
+                throw new \Exception('Unknown balance modification method');
+        }
+        if($amount == 0)
+            throw new \Exception('Balance change amount cannot be zero');
+
+        // Start a database transaction for the modification
+        DB::transaction(function() use($init_user, $wallet_user, $economy, $wallet, $currency, $amount, $description) {
+            // Create the transaction
+            $transaction = Transaction::create([
+                'state' => Transaction::STATE_SUCCESS,
+                'owner_id' => $wallet_user->id,
+                'initiated_by_id' => $init_user->id,
+                'initiated_by_other' => true,
+            ]);
+
+            // Create the magic mutation
+            $mut_magic = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $economy->id,
+                    'mutationable_id' => 0,
+                    'mutationable_type' => '',
+                    'amount' => $amount,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_SUCCESS,
+                    'owner_id' => $wallet_user->id,
+                ]);
+            $mut_magic->setMutationable(
+                MutationMagic::create([
+                    'description' => $description,
+                ])
+            );
+
+            // Create the to wallet mutation
+            $mut_wallet = $transaction
+                ->mutations()
+                ->create([
+                    'economy_id' => $economy->id,
+                    'mutationable_id' => 0,
+                    'mutationable_type' => '',
+                    'amount' => -$amount,
+                    'currency_id' => $currency->id,
+                    'state' => Mutation::STATE_SUCCESS,
+                    'owner_id' => $wallet_user->id,
+                    'depend_on' => $mut_magic->id,
+                ]);
+            $mut_wallet->setMutationable(
+                MutationWallet::create([
+                    'wallet_id' => $wallet->id,
+                ])
+            );
+
+            // Modify wallet balance
+            if($amount > 0)
+                $wallet->deposit($amount);
+            else
+                $wallet->withdraw(-$amount);
+        });
+
+        // Redirect to the payment page
+        return redirect()
+            ->route('community.wallet.show', [
+                'communityId' => $communityId,
+                'economyId' => $economyId,
+                'walletId' => $walletId,
+            ])
+            ->with('success', __('pages.wallets.balanceModified'));
+    }
+
+    /**
      * Economy wallet quick show.
      * Redirects user to single wallet, or the index page if the user has
      * multiple wallets.
@@ -766,14 +916,16 @@ class WalletController extends Controller {
      * @return Response
      */
     public function transactions($communityId, $economyId, $walletId) {
-        // TODO: do some permission checking?
-
         // Get the user, community, find the economy and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasViewPermission())
+            return response(view('noPermission'));
+
         $transactions = $wallet->transactions();
 
         return view('community.wallet.transactions')

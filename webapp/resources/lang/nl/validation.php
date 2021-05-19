@@ -150,6 +150,7 @@ return [
         'to_wallet' => 'naar portemonnee',
         'symbol' => 'symbool',
         'format' => 'formaat',
+        'method' => 'methode',
     ],
 
 ];

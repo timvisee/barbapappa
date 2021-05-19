@@ -10,6 +10,8 @@
 @endpush
 
 @php
+    use App\Perms\CommunityRoles;
+
     // Define menulinks
     $menulinks[] = [
         'name' => __('general.goBack'),
@@ -149,6 +151,12 @@
                 class="ui button orange basic">
             @lang('pages.wallets.transfer')
         </a>
+        @if(perms(CommunityRoles::presetManager()))
+            <a href="{{ route('community.wallet.modifyBalance', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                    class="ui button purple basic">
+                @lang('pages.wallets.modifyBalance')
+            </a>
+        @endif
     </p>
 
     <p>
