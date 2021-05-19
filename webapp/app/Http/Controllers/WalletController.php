@@ -714,7 +714,6 @@ class WalletController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $wallet = $economy->wallets()->findOrFail($walletId);
-        $currency = $wallet->currency;
 
         // User must be community manager, wallet owner is not good enough
         // TODO: improve security check, check through single function
@@ -754,12 +753,29 @@ class WalletController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'amount' => ['required', ValidationDefaults::PRICE_NOT_ZERO],
+            'modifyMethod' => 'required|in:deposit,withdraw,set',
+            'amount' => ['required', ValidationDefaults::PRICE_POSITIVE],
             'description' => 'nullable|string',
             'confirm' => 'accepted',
         ]);
         $amount = normalize_price($request->input('amount'));
         $description = $request->input('description');
+
+        // Tweak amount based on modification method
+        switch($request->input('modifyMethod')) {
+            case 'deposit':
+                break;
+            case 'withdraw':
+                $amount = -$amount;
+                break;
+            case 'set':
+                $amount = -$wallet->balance + $amount;
+                break;
+            default:
+                throw new \Exception('Unknown balance modification method');
+        }
+        if($amount == 0)
+            throw new \Exception('Balance change amount cannot be zero');
 
         // Start a database transaction for the modification
         DB::transaction(function() use($init_user, $wallet_user, $economy, $wallet, $currency, $amount, $description) {

@@ -36,8 +36,35 @@
 
     <div class="ui hidden divider"></div>
 
+    <div class="grouped fields {{ ErrorRenderer::hasError('modifyMethod') ? 'error' : '' }}">
+        {{ Form::label('modifyMethod', __('pages.wallets.modifyMethod', ['currency' => $currency->name]) . ':') }}
+
+        <div class="field">
+            <div class="ui radio checkbox">
+                {{ Form::radio('modifyMethod', 'deposit', false, ['class' => 'hidden', 'tabindex' => 0]) }}
+                <label for="modifyMethod">@lang('pages.wallets.modifyMethodDeposit')</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                {{ Form::radio('modifyMethod', 'withdraw', false, ['class' => 'hidden', 'tabindex' => 0]) }}
+                <label for="modifyMethod">@lang('pages.wallets.modifyMethodWithdraw')</label>
+            </div>
+        </div>
+        <div class="field">
+            <div class="ui radio checkbox">
+                {{ Form::radio('modifyMethod', 'set', false, ['class' => 'hidden', 'tabindex' => 0]) }}
+                <label for="modifyMethod">@lang('pages.wallets.modifyMethodSet')</label>
+            </div>
+        </div>
+
+        {{ ErrorRenderer::inline('modifyMethod') }}
+    </div>
+
+    <div class="ui hidden divider"></div>
+
     <div class="field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
-        {{ Form::label('amount', __('pages.wallets.addAmountToBalance') . ':') }}
+        {{ Form::label('amount', __('pages.paymentService.amountInCurrency', ['currency' => $currency->name]) . ':') }}
         <div class="ui labeled input">
             {{ Form::label('amount', $currency->symbol, ['class' => 'ui label']) }}
             {{ Form::text('amount', '', ['id' => 'amount', 'placeholder' => '1.23']) }}
