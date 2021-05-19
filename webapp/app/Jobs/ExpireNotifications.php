@@ -45,4 +45,9 @@ class ExpireNotifications implements ShouldQueue {
             ->expired()
             ->delete();
     }
+
+    public function retryUntil() {
+        // Matches interval in \App\Console\Kernel::schedule
+        return now()->addHour();
+    }
 }
