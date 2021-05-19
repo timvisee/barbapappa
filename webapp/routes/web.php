@@ -12,7 +12,6 @@ use App\Http\Controllers\CommunityMemberController;
 use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\FinanceController;
-use App\Http\Controllers\MagicController;
 use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
 

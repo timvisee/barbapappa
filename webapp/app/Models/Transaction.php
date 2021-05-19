@@ -413,6 +413,27 @@ class Transaction extends Model {
     }
 
     /**
+     * Get a list of all relevant and related objects to this mutation.
+     * Can be used to generate a list of links on a mutation inspection page, to
+     * the respective objects.
+     *
+     * A transaction with a product and wallet mutation, would return product
+     * and wallet objects.
+     *
+     * This is an expensive function.
+     *
+     * @return Collection List of objects.
+     */
+    public function getRelatedObjects() {
+        return $this
+            ->mutations
+            ->flatMap(function($mutation) {
+                return $mutation->getRelatedObjects();
+            })
+            ->unique();
+    }
+
+    /**
      * Check whether the currently authenticated user has permission to view this
      * transaction.
      *
@@ -484,26 +505,5 @@ class Transaction extends Model {
                 return true;
 
         return false;
-    }
-
-    /**
-     * Get a list of all relevant and related objects to this mutation.
-     * Can be used to generate a list of links on a mutation inspection page, to
-     * the respective objects.
-     *
-     * A transaction with a product and wallet mutation, would return product
-     * and wallet objects.
-     *
-     * This is an expensive function.
-     *
-     * @return Collection List of objects.
-     */
-    public function getRelatedObjects() {
-        return $this
-            ->mutations
-            ->flatMap(function($mutation) {
-                return $mutation->getRelatedObjects();
-            })
-            ->unique();
     }
 }

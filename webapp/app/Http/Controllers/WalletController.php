@@ -69,16 +69,15 @@ class WalletController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $walletId) {
-        // TODO: do some permission checking?
-
         // Get the user, community, find the economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member
-            ->wallets()
-            ->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasViewPermission())
+            return response(view('noPermission'));
+
         $transactions = $wallet->lastTransactions();
 
         // Build balance graph item data
@@ -193,11 +192,13 @@ class WalletController extends Controller {
      */
     public function edit($communityId, $economyId, $walletId) {
         // Get the user, community, find economy, economy member and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
 
         // Show the edit view
         return view('community.wallet.edit')
@@ -212,11 +213,13 @@ class WalletController extends Controller {
      */
     public function doEdit(Request $request, $communityId, $economyId, $walletId) {
         // Get the user, community, find economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
 
         // Validate
         $this->validate($request, [
@@ -240,11 +243,13 @@ class WalletController extends Controller {
      */
     public function delete($communityId, $economyId, $walletId) {
         // Get the user, community, find economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
 
         // Make sure there's exactly zero balance
         if($wallet->balance != 0.00) {
@@ -271,14 +276,16 @@ class WalletController extends Controller {
      */
     public function doDelete($communityId, $economyId, $walletId) {
         // Get the user, community, find economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member
+        $wallet = $economy
             ->wallets()
             ->where('balance', 0.00)
             ->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasManagePermission())
+            return response(view('noPermission'));
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // wallet
@@ -437,6 +444,10 @@ class WalletController extends Controller {
             ->where('currency_id', $wallet->currency_id)
             ->where('id', '<>', $walletId)
             ->get();
+
+        // // User must have permission
+        // if(!$wallet->hasManagePermission())
+        //     return response(view('noPermission'));
 
         return view('community.wallet.transfer')
             ->with('economy', $economy)
@@ -766,14 +777,16 @@ class WalletController extends Controller {
      * @return Response
      */
     public function transactions($communityId, $economyId, $walletId) {
-        // TODO: do some permission checking?
-
         // Get the user, community, find the economy and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
+
+        // User must have permission
+        if(!$wallet->hasViewPermission())
+            return response(view('noPermission'));
+
         $transactions = $wallet->transactions();
 
         return view('community.wallet.transactions')
