@@ -33,10 +33,11 @@
     {{-- Transaction list --}}
     @include('transaction.include.list', [
         'groups' => [[
-            'header' => __('pages.wallets.walletTransactions') . ' (' .  count($transactions) . ')',
+            'header' => __('pages.wallets.walletTransactions'),
             'transactions' => $transactions,
         ]],
     ])
+    {{ $transactions->links() }}
 
     <p>
         <a href="{{ route('community.wallet.show', [
