@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -12,6 +11,8 @@ use App\Perms\Builder\Config as PermsConfig;
 use App\Perms\CommunityRoles;
 
 class CommunityMemberController extends Controller {
+
+    const PAGINATE_ITEMS = 50;
 
     /**
      * Community member index page.
@@ -25,7 +26,7 @@ class CommunityMemberController extends Controller {
             ->members()
             ->orderBy('role', 'DESC')
             ->orderBy('visited_at', 'DESC')
-            ->get();
+            ->paginate(self::PAGINATE_ITEMS);
 
         return view('community.member.index')
             ->with('members', $members);

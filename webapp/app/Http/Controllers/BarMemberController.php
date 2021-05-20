@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -12,6 +11,8 @@ use App\Perms\Builder\Builder;
 use App\Perms\Builder\Config as PermsConfig;
 
 class BarMemberController extends Controller {
+
+    const PAGINATE_ITEMS = 50;
 
     /**
      * Bar member index page.
@@ -25,7 +26,7 @@ class BarMemberController extends Controller {
             ->members()
             ->orderBy('role', 'DESC')
             ->orderBy('visited_at', 'DESC')
-            ->get();
+            ->paginate(self::PAGINATE_ITEMS);
 
         return view('bar.member.index')
             ->with('members', $members);

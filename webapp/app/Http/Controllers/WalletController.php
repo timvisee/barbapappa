@@ -59,7 +59,7 @@ class WalletController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->first();
         $wallets = $economy_member != null
-            ? $economy_member->wallets()->get()
+            ? $economy_member->wallets()->paginate(10)
             : [];
 
         return view('community.wallet.list')
