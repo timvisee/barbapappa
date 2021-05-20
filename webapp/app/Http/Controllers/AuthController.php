@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Models\Email;
 use App\Models\SessionLink;
-use App\Services\Auth\AuthResult;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller {

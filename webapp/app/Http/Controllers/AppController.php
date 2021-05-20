@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ValidationDefaults;
 use App\Models\Community;
-use App\Models\Economy;
 use App\Perms\AppRoles;
-use App\Perms\CommunityRoles;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Validator;
 
 class AppController extends Controller {
 

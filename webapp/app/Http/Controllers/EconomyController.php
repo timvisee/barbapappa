@@ -7,7 +7,6 @@ use App\Models\Wallet;
 use App\Perms\Builder\Config as PermsConfig;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Validator;
 
 class EconomyController extends Controller {
 

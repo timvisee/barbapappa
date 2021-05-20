@@ -4,10 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Validator;
 
-use App\Helpers\ValidationDefaults;
 use App\Utils\MoneyAmount;
 
 class FinanceController extends Controller {
