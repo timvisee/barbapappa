@@ -533,7 +533,7 @@ return [
         'title' => 'Wallets',
         'description' => 'Click on one of your wallets to manage it, or create a new one.',
         'walletEconomies' => 'Wallet economies',
-        'yourWallets' => 'Your wallets',
+        'myWallets' => 'My wallets',
         '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
         'economySelectDescription' => 'Wallets in this community are divided by economy.<br>Select the economy to manage your wallets in it.',
         'noWallets' => 'No wallets...',

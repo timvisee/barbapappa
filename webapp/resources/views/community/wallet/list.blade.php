@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.wallets.yourWallets'))
+@section('title', __('pages.wallets.myWallets'))
 
 @php
     // Define menulinks

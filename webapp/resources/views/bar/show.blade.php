@@ -22,7 +22,7 @@
 
     if($joined)
         $menulinks[] = [
-            'name' => __('pages.wallets.yourWallets'),
+            'name' => __('pages.wallets.myWallets'),
             'link' => route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]),
             'icon' => 'wallet',
         ];
