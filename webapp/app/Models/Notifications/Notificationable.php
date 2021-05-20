@@ -3,9 +3,6 @@
 namespace App\Models\Notifications;
 
 use App\Models\User;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 // TODO: require Model implementation

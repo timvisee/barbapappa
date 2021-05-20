@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Users;
-use App\Utils\EmailRecipient;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
