@@ -2,26 +2,11 @@
 
 namespace App\Http\Controllers\Callbacks;
 
-use App\Helpers\ValidationDefaults;
 use App\Jobs\ProcessBunqAccountEvents;
 use App\Models\BunqAccount;
-use BarPay\Models\Service as PayService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\ViewErrorBag;
-use Illuminate\Validation\Rule;
-use Validator;
-use bunq\Context\ApiContext;
-use bunq\Context\BunqContext;
-use bunq\Exception\ApiException;
-use bunq\Exception\BadRequestException;
-use bunq\Http\Pagination;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
 use bunq\Model\Generated\Object\NotificationUrl;
-use bunq\Model\Generated\Object\Pointer;
-use bunq\Util\BunqEnumApiEnvironmentType;
 
 class BunqController extends Controller {
 

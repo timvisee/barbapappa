@@ -11,7 +11,6 @@ use App\Perms\CommunityRoles;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
 use Validator;
 
 // TODO: using barauth()->getSessionUser() in some places, shouldn't this be getUser() ?

@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
-use App\Models\User;
 use App\Perms\AppRoles;
 
 class ProfileController extends Controller {

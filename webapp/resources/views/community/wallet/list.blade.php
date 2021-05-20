@@ -59,6 +59,7 @@
             </div>
         @endforelse
     </div>
+    {{ !is_array($wallets) ? $wallets->links() : '' }}
 
     {{-- TODO: check whether the user can create a wallet in any currency --}}
     <a href="{{ route('community.wallet.create', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"

@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ValidationDefaults;
 use App\Models\Notifications\Notification;
-use App\Perms\Builder\Config as PermsConfig;
-use App\Perms\CommunityRoles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Validator;
 
 class NotificationController extends Controller {
 

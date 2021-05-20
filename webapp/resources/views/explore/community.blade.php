@@ -31,4 +31,6 @@
     </div>
 
     @include('community.include.list')
+
+    {{ $communities->links() }}
 @endsection

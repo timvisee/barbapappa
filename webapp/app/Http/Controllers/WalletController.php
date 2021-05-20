@@ -19,6 +19,8 @@ use Illuminate\Validation\Rule;
 
 class WalletController extends Controller {
 
+    const PAGINATE_ITEMS = 50;
+
     /**
      * Wallet index page for a community user.
      * This shows a list of economies wallets may be created in.
@@ -57,7 +59,7 @@ class WalletController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->first();
         $wallets = $economy_member != null
-            ? $economy_member->wallets()->get()
+            ? $economy_member->wallets()->paginate(10)
             : [];
 
         return view('community.wallet.list')
@@ -916,8 +918,7 @@ class WalletController extends Controller {
      * @return Response
      */
     public function transactions($communityId, $economyId, $walletId) {
-        // Get the user, community, find the economy and wallet
-        $user = barauth()->getUser();
+        // Get the community, find the economy and wallet
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $wallet = $economy->wallets()->findOrFail($walletId);
@@ -926,12 +927,12 @@ class WalletController extends Controller {
         if(!$wallet->hasViewPermission())
             return response(view('noPermission'));
 
-        $transactions = $wallet->transactions();
+        $transactions = $wallet->transactions()->paginate(self::PAGINATE_ITEMS);
 
         return view('community.wallet.transactions')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
-            ->with('transactions', $transactions->get());
+            ->with('transactions', $transactions);
     }
 
     /**

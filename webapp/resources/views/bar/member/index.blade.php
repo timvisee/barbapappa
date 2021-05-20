@@ -14,7 +14,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">@yield('title') ({{ count($members) }})</h2>
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.barMembers.description')</p>
 
     <div class="ui vertical menu fluid">
@@ -45,6 +45,7 @@
             </div>
         @endforelse
     </div>
+    {{ $members->links() }}
 
     <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
             class="ui button basic">

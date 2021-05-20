@@ -45,6 +45,7 @@
             </div>
         @endforelse
     </div>
+    {{ $members->links() }}
 
     <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}"
             class="ui button basic">

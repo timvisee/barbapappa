@@ -2,16 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\ValidationDefaults;
-use App\Models\Mutation;
-use App\Models\Transaction;
-use App\Perms\Builder\Config as PermsConfig;
-use App\Perms\CommunityRoles;
 use BarPay\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Validator;
 
 class PaymentController extends Controller {
 

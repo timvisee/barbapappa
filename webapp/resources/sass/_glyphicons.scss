@@ -27,3 +27,8 @@ p .glyphicons {
 .ui.vertical.menu i.icon .glyphicons {
     line-height: 0.5rem;
 }
+
+// Pagination icons no padding
+.ui.pagination a.icon .glyphicons::before {
+    padding: 0;
+}

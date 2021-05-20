@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bar;
-use Illuminate\Http\Request;
-
 class MagicController extends Controller {
 
     /**
