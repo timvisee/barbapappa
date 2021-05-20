@@ -17,7 +17,7 @@
 
     {!! Form::open(['action' => ['BarController@doLeave', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
         <div class="ui buttons">
-            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+            <a href="{{ route('bar.info', ['barId' => $bar->human_id]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')
             </a>

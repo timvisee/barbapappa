@@ -125,6 +125,8 @@ return [
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
         'joined' => 'Joined',
+        'youAreJoined' => 'You joined dis crew.',
+        'leave' => 'Leave',
         'notJoined' => 'Strangers!',
         'hintJoin' => 'Ye be not part of th\' crew.',
         'joinedClickToLeave' => 'Click to be sunk.',
@@ -736,7 +738,9 @@ return [
         'join' => 'Join',
         'yesJoin' => 'Yey, sail ho!',
         'joined' => 'Joined',
+        'youAreJoined' => 'You joined dis bar.',
         'notJoined' => 'Strangers!',
+        'leave' => 'Leave',
 
         'hintJoin' => 'Ye be not part of th\' bar.',
         'joinedClickToLeave' => 'Click to be sunk.',

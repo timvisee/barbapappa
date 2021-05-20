@@ -69,6 +69,7 @@
     </div>
 
     @include('bar.include.joinBanner')
+    @include('bar.include.joinedBanner')
 
     @if($page == 'info')
         <p>

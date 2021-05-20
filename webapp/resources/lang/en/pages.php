@@ -125,6 +125,8 @@ return [
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',
+        'youAreJoined' => 'You joined this community.',
+        'leave' => 'Leave',
         'notJoined' => 'Not joined',
         'hintJoin' => 'You aren\'t part of this community yet.',
         'joinedClickToLeave' => 'Click to leave.',
@@ -736,7 +738,9 @@ return [
         'join' => 'Join',
         'yesJoin' => 'Yes, join',
         'joined' => 'Joined',
+        'youAreJoined' => 'You joined this bar.',
         'notJoined' => 'Not joined',
+        'leave' => 'Leave',
 
         'hintJoin' => 'You aren\'t part of this bar yet.',
         'joinedClickToLeave' => 'Click to leave.',

@@ -125,6 +125,8 @@ return [
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
         'joined' => 'Ingeschreven',
+        'youAreJoined' => 'Je bent ingeschreven bij deze groep.',
+        'leave' => 'Uitschrijven',
         'notJoined' => 'Niet ingeschreven',
         'hintJoin' => 'Je maakt nog geen deel uit van deze groep.',
         'joinedClickToLeave' => 'Klik om uit te schrijven.',
@@ -736,7 +738,9 @@ return [
         'join' => 'Inschrijven',
         'yesJoin' => 'Ja, inschrijven',
         'joined' => 'Ingeschreven',
+        'youAreJoined' => 'Je bent ingeschreven bij deze bar.',
         'notJoined' => 'Niet ingeschreven',
+        'leave' => 'Uitschrijven',
 
         'hintJoin' => 'Je maakt nog geen deel uit van deze bar.',
         'joinedClickToLeave' => 'Klik om uit te schrijven.',
