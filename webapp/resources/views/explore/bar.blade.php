@@ -30,4 +30,6 @@
     </div>
 
     @include('bar.include.list')
+
+    {{ $bars->links() }}
 @endsection
