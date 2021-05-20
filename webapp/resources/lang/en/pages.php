@@ -613,6 +613,8 @@ return [
         'cannotUndo' => 'This transaction cannot be undone.',
         'undone' => 'The transaction has been undone.',
         'undoTransaction' => 'Undo transaction',
+        'selectProductsToUndo' => 'Select products to undo',
+        'noProductsSelected' => 'No products selected',
         'undoQuestion' => 'You\'re about to undo this transaction. Are you sure you want to continue?',
         'viewTransaction' => 'View transaction',
         'linkedTransaction' => 'Linked transaction',

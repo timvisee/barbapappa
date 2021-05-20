@@ -613,6 +613,8 @@ return [
         'cannotUndo' => 'Deze transactie kan niet ongedaan gemaakt worden.',
         'undone' => 'De transactie is ongedaan gemaakt.',
         'undoTransaction' => 'Transactie ongedaan maken',
+        'selectProductsToUndo' => 'Selecteer producten om ongedaan te maken',
+        'noProductsSelected' => 'Geen producten geselecteerd',
         'undoQuestion' => 'Je staat op het punt deze transactie ongedaan te maken. Weet je zeker dat je door wilt gaan?',
         'viewTransaction' => 'Bekijk transactie',
         'linkedTransaction' => 'Gekoppelde transactie',
