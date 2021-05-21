@@ -1,3 +1,7 @@
+<div class="item header">
+    @lang('pages.notifications.title')
+</div>
+
 @if(isset($notificationsUnread) && $notificationsUnread->isNotEmpty())
     <a href="{{ route('notification.index') }}" class="item header">
         {{ trans_choice('pages.notifications.unread#', $notificationsUnread->count()) }}
