@@ -784,6 +784,7 @@ class WalletController extends Controller {
             // Create the transaction
             $transaction = Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
+                'description' => $description,
                 'owner_id' => $wallet_user->id,
                 'initiated_by_id' => $init_user->id,
                 'initiated_by_other' => true,
