@@ -789,8 +789,11 @@ return [
             'scanQr' => 'scan de QR code met je telefoon, word lid en doe een aankoop',
             'orVisit' => 'Of bezoek',
         ],
+        'buy' => [
+            'forMe' => 'Koop zelf',
+            'forOthers' => 'Voor anderen/meer',
+        ],
         'advancedBuy' => [
-            'title' => 'Uitgebreid kopen',
             'tapProducts' => 'Druk op producten die je voor iemand wilt kopen.',
             'tapUsers' => 'Druk op leden om de producten toe te voegen.',
             'tapBuy' => 'Druk op de koop knop om de bestelling te voltooien.',

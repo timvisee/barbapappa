@@ -35,6 +35,11 @@
         </div>
     </h2>
 
+    <div class="ui two item menu">
+        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forMe')</a>
+        <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forOthers')</a>
+    </div>
+
     <div class="ui vertical menu fluid">
         {!! Form::open(['action' => ['BarProductController@index', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
             <div class="item">
