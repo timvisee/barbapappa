@@ -137,7 +137,7 @@
     ])
 
     <p>
-        <div class="ui floating right labeled icon dropdown button orange">
+        <div class="ui floating right labeled icon dropdown button">
             <i class="dropdown icon"></i>
             @lang('misc.manage')
             <div class="menu">
@@ -167,7 +167,7 @@
         </div>
 
         @if(perms(CommunityRoles::presetManager()))
-            <div class="ui floating right labeled icon dropdown button violet">
+            <div class="ui floating right labeled icon dropdown button">
                 <i class="dropdown icon"></i>
                 @lang('misc.admin')
                 <div class="menu">
