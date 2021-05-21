@@ -30,7 +30,7 @@
                             class="ui right pointing label red label-top-up"
                             data-title="@lang('pages.bar.joined')"
                             data-content="@lang('pages.bar.joinedClickToLeave')">
-                        @lang('pages.wallets.topUpNow')
+                        <u>@lang('pages.wallets.topUpNow')</u>
                     </a>
                 @endif
 
