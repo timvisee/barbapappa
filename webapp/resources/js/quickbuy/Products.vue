@@ -27,9 +27,6 @@
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}
         </i>
 
-        <a :href="url + '/buy'" class="ui bottom attached button">
-            {{ __('pages.bar.advancedBuy.title') }}
-        </a>
         <a :href="url + '/products'" class="ui bottom attached button">
             {{ __('misc.catalog') }}
         </a>

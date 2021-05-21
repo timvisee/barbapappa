@@ -789,8 +789,11 @@ return [
             'scanQr' => 'scan the QR code with your phone to join and make a purchase',
             'orVisit' => 'Or visit',
         ],
+        'buy' => [
+            'forMe' => 'Buy myself',
+            'forOthers' => 'For others/more',
+        ],
         'advancedBuy' => [
-            'title' => 'Advanced buy',
             'tapProducts' => 'Tap products to buy for any user.',
             'tapUsers' => 'Tap users to add the selected products in cart for.',
             'tapBuy' => 'Tap the blue buy button to commit the purchase.',

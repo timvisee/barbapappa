@@ -18,13 +18,13 @@
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
+    <div class="ui two item menu">
+        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forMe')</a>
+        <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}" class="item active">@lang('pages.bar.buy.forOthers')</a>
+    </div>
+
     <div id="advancedbuy">
         <div class="ui active centered inline loader"></div>
     </div>
     <br>
-
-    <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
-            class="ui button basic">
-        @lang('pages.bar.backToBar')
-    </a>
 @endsection

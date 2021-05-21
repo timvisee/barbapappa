@@ -49,6 +49,11 @@
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
+    <div class="ui two item menu">
+        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item active">@lang('pages.bar.buy.forMe')</a>
+        <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forOthers')</a>
+    </div>
+
     {{-- Quick buy list --}}
     <div id="quickbuy" class="ui vertical menu fluid">
         {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
@@ -79,11 +84,6 @@
         @empty
             <i class="item">@lang('pages.products.noProducts')</i>
         @endforelse
-
-        <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}"
-                class="ui attached button">
-            @lang('pages.bar.advancedBuy.title')
-        </a>
 
         <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
                 class="ui bottom attached button">
