@@ -70,7 +70,7 @@
         @foreach($amounts as $amount)
             <div class="field">
                 <div class="ui radio checkbox">
-                    {{ Form::radio('amount', $amount, false, ['class' => 'hidden', 'tabindex' => 0]) }}
+                    {{ Form::radio('amount', $amount, ($wallet->balance + $amount) == 0, ['class' => 'hidden', 'tabindex' => 0]) }}
                     <label for="custom_amount">
                         @lang('pages.paymentService.pay')
                         &nbsp;
