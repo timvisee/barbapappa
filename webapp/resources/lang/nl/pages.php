@@ -794,9 +794,9 @@ return [
             'forOthers' => 'Voor anderen/meer',
         ],
         'advancedBuy' => [
-            'tapProducts' => 'Druk op producten die je voor iemand wilt kopen.',
+            'tapProducts' => 'Selecteer producten die je voor iemand wilt kopen.',
             'tapUsers' => 'Druk op leden om de producten toe te voegen.',
-            'tapBuy' => 'Druk op de koop knop om de bestelling te voltooien.',
+            'tapBuy' => 'Druk op de koop knop om de aankoop te voltooien.',
             'addToCartFor' => 'Voeg geselecteerde aan winkelwagen toe voor',
             'searchUsers' => 'Zoek leden',
             'noUsersFoundFor' => 'Geen leden gevonden voor :term',

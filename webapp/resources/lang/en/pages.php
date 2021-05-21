@@ -794,7 +794,7 @@ return [
             'forOthers' => 'For others/more',
         ],
         'advancedBuy' => [
-            'tapProducts' => 'Tap products to buy for any user.',
+            'tapProducts' => 'Select products to buy for any user.',
             'tapUsers' => 'Tap users to add the selected products in cart for.',
             'tapBuy' => 'Tap the blue buy button to commit the purchase.',
             'addToCartFor' => 'Add selected to cart for',
