@@ -137,29 +137,48 @@
     ])
 
     <p>
-        <div class="ui buttons">
-            <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button secondary">
-                @lang('misc.rename')
-            </a>
-            <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button negative">
-                @lang('misc.delete')
-            </a>
+        <div class="ui floating right labeled icon dropdown button orange">
+            <i class="dropdown icon"></i>
+            @lang('misc.manage')
+            <div class="menu">
+                <a href="{{ route('community.wallet.edit', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                        class="item">
+                    @lang('misc.rename')
+                </a>
+                <a href="{{ route('community.wallet.delete', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                        class="item">
+                    @lang('misc.delete')
+                </a>
+                <div class="divider"></div>
+                <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                        class="item">
+                    @lang('pages.wallets.transferToSelf')
+                </a>
+                <a href="{{ route('community.wallet.transfer.user', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                        class="item">
+                    @lang('pages.wallets.transferToUser')
+                </a>
+                <div class="divider"></div>
+                <a href="{{ route('community.wallet.merge', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
+                        class="item">
+                    @lang('misc.merge')
+                </a>
+            </div>
         </div>
-        <a href="{{ route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                class="ui button orange">
-            @lang('pages.wallets.transfer')
-        </a>
-        @if(perms(CommunityRoles::presetManager()))
-            <a href="{{ route('community.wallet.modifyBalance', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button purple">
-                @lang('pages.wallets.modifyBalance')
-            </a>
-        @endif
-    </p>
 
-    <p>
+        @if(perms(CommunityRoles::presetManager()))
+            <div class="ui floating right labeled icon dropdown button violet">
+                <i class="dropdown icon"></i>
+                @lang('misc.admin')
+                <div class="menu">
+                    <a href="{{ route('community.wallet.modifyBalance', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
+                            class="item">
+                        @lang('pages.wallets.modifyBalance')
+                    </a>
+                </div>
+            </div>
+        @endif
+
         <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                 class="ui button basic">
             @lang('general.goBack')
