@@ -24,7 +24,7 @@
 
             <div v-if="getQuantity(product)"
                     v-on:click.stop.prevent="deselect(product)"
-                    class="ui red label">×</div>
+                    class="ui red label small basic">×</div>
 
             <div class="ui blue label">{{ product.price_display }}</div>
         </a>
@@ -45,7 +45,7 @@
 
             <div v-if="getQuantity(product.product)"
                     v-on:click.stop.prevent="deselect(product.product)"
-                    class="ui red label">×</div>
+                    class="ui red label small basic">×</div>
 
             <div class="ui blue label">{{ product.product.price_display }}</div>
         </a>
