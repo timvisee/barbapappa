@@ -14,7 +14,7 @@
             @foreach($blockingWallets as $wallet)
                 <a class="item" href="{{ route('community.wallet.show', [
                             'communityId' => $community->human_id,
-                            'economyId' => $wallet->economy_id,
+                            'economyId' => $economy->id,
                             'walletId' => $wallet->id,
                         ]) }}">
                     {{ $wallet->name }}
