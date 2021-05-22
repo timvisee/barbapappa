@@ -756,7 +756,7 @@ class WalletController extends Controller {
         // Validate
         $this->validate($request, [
             'modifyMethod' => 'required|in:deposit,withdraw,set',
-            'amount' => ['required', ValidationDefaults::PRICE_POSITIVE],
+            'amount' => ['required', ValidationDefaults::PRICE_SIGNED],
             'description' => 'nullable|string',
             'confirm' => 'accepted',
         ]);
