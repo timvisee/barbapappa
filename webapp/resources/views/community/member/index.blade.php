@@ -14,7 +14,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">@yield('title') ({{ count($members) }})</h2>
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.communityMembers.description')</p>
 
     <div class="ui vertical menu fluid">
