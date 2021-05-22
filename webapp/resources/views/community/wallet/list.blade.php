@@ -18,7 +18,7 @@
 
 @section('content')
     <h2 class="ui header">
-        @yield('title') ({{ count($wallets) }})
+        @yield('title')
 
         <div class="sub header">
             @lang('misc.in')
@@ -33,17 +33,6 @@
     <p>@lang('pages.wallets.description')</p>
 
     <div class="ui vertical menu fluid">
-        {{--
-            <div class="item">
-                <div class="ui transparent icon input">
-                    {{ Form::text('search', '', ['placeholder' => 'Search communities...']) }}
-                    <i class="icon link">
-                        <span class="glyphicons glyphicons-search"></span>
-                    </i>
-                </div>
-            </div>
-        --}}
-
         @forelse($wallets as $wallet)
             <a href="{{ route('community.wallet.show', [
                 'communityId' => $community->human_id,
