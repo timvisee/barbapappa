@@ -131,6 +131,7 @@ class BarController extends Controller {
             ->with('economy', $bar->economy)
             ->with('joined', $bar->isJoined($user))
             ->with('mustVerify', $user->needsToVerifyEmail())
+            ->with('userBalance', $bar->economy->calcUserBalance())
             ->with('products', $products)
             ->with('currencies', $currencies)
             ->with('productMutations', $productMutations->get());
@@ -496,7 +497,8 @@ class BarController extends Controller {
         return view('bar.buy')
             ->with('economy', $bar->economy)
             ->with('joined', $bar->isJoined($user))
-            ->with('mustVerify', $user->needsToVerifyEmail());
+            ->with('mustVerify', $user->needsToVerifyEmail())
+            ->with('userBalance', $bar->economy->calcUserBalance());
     }
 
     /**

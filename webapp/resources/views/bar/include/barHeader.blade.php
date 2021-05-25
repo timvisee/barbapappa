@@ -15,14 +15,10 @@
     </div>
 
     @if($joined || $economy->userHasBalance())
-        @php
-            $balance = $economy->calcUserBalance();
-        @endphp
-
-        @if($balance != null)
+        @if($userBalance != null)
             <div>
                 {{-- Quick top-up if user has negative balance --}}
-                @if($balance->amount < 0)
+                @if($userBalance->amount < 0)
                     <a href="{{ route('community.wallet.quickTopUp', [
                                 'communityId' => $community->human_id,
                                 'economyId' => $economy->id
@@ -40,7 +36,7 @@
                             'economyId' => $economy->id,
                         ]) }}"
                         class="balance">
-                    {!! $balance->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                    {!! $userBalance->formatAmount(BALANCE_FORMAT_LABEL) !!}
                 </a>
             </div>
         @endif
