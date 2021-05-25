@@ -51,8 +51,9 @@
         <div class="ui error message">
             <span class="halflings halflings-exclamation-sign icon"></span>
             {!! nl2br(e($bar->low_balance_text)) !!}
-            <a href="{{ route('account.user.emails.unverified', [
-                'userId' => barauth()->getUser()->id,
+            <a href="{{ route('community.wallet.quickTopUp', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id
             ]) }}">@lang('pages.wallets.topUpNow')</a>.
         </div>
     @endif
