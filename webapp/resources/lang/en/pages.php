@@ -756,7 +756,7 @@ return [
         'protectedByCodeFilled' => 'This bar is protected by a passcode. We\'ve filled it in for you.',
         'incorrectCode' => 'Incorrect bar code.',
         'namePlaceholder' => 'Viking bar',
-        'descriptionPlaceholder' => 'Welcome to thé Viking bar!',
+        'descriptionPlaceholder' => 'Welcome to the Viking bar!',
         'slugDescription' => 'A slug allows you to create an easy to remember URL to access this bar, by defining a short keyword.',
         'slugDescriptionExample' => 'This could simplify your bar URL:',
         'slugPlaceholder' => 'viking',

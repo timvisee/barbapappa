@@ -140,7 +140,7 @@ return [
         'protectedByCodeFilled' => 'Deze groep is beveiligd met een code. We hebben de code voor je ingevuld.',
         'incorrectCode' => 'Verkeerde groep code.',
         'namePlaceholder' => 'Viking groep',
-        'descriptionPlaceholder' => 'Welkom bij dé Viking groep!',
+        'descriptionPlaceholder' => 'Welkom bij de Viking groep!',
         'slugDescription' => 'Een URL-pad laat je een makkelijk te onthouden link creëren om de groeps pagina te bezoeken, door een kort trefwoord te definieren.',
         'slugDescriptionExample' => 'Dit kan de groepslink versimpelen:',
         'slugPlaceholder' => 'vikings',
