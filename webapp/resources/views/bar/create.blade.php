@@ -86,6 +86,14 @@
 
         <div class="ui divider"></div>
 
+        <div class="field {{ ErrorRenderer::hasError('low_balance_text') ? 'error' : '' }}">
+            {{ Form::label('low_balance_text', __('pages.bar.lowBalanceText') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::textarea('low_balance_text', '', ['placeholder' => __('pages.bar.lowBalanceTextPlaceholder'), 'rows' => 3]) }}
+            {{ ErrorRenderer::inline('low_balance_text') }}
+        </div>
+
+        <div class="ui divider"></div>
+
         <div class="inline field {{ ErrorRenderer::hasError('show_explore') ? 'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('show_explore', true, $community->show_explore, ['tabindex' => 0, 'class' => 'hidden']) }}

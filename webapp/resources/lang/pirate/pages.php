@@ -783,6 +783,8 @@ return [
         'generatePoster' => 'Create bar poster',
         'generatePosterDescription' => 'Create a poster for dis bar to hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a QR code with their handheld phoning device.',
         'showCodeOnPoster' => 'Show code to join dis bar on th\' poster',
+        'lowBalanceText' => 'Negative balance text',
+        'lowBalanceTextPlaceholder' => 'Ye currently have a negative balance. Please top-up yer wallet now before buying new products.',
         'poster' => [
             'thisBarUses' => 'Dis bar uses',
             'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',
