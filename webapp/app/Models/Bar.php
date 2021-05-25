@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\DB;
  * @property bool show_community
  * @property bool self_enroll
  * @property string|null password
+ * @property string|null low_balance_text
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -49,6 +50,7 @@ class Bar extends Model {
         'show_explore',
         'show_community',
         'self_enroll',
+        'low_balance_text',
     ];
 
     /**
