@@ -56,6 +56,7 @@ class BarController extends Controller {
             'slug' => 'nullable|' . ValidationDefaults::barSlug(),
             'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+            'low_balance_text' => 'nullable|' . ValidationDefaults::DESCRIPTION,
         ], [
             'slug.regex' => __('pages.bar.slugFieldRegexError'),
         ]);
@@ -70,6 +71,7 @@ class BarController extends Controller {
             'show_explore' => is_checked($request->input('show_explore')),
             'show_community' => is_checked($request->input('show_community')),
             'self_enroll' => is_checked($request->input('self_enroll')),
+            'low_balance_text' => $request->input('low_balance_text'),
         ]);
 
         // Automatically join if checked
@@ -292,6 +294,7 @@ class BarController extends Controller {
             'slug' => 'nullable|' . ValidationDefaults::barSlug($bar),
             'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+            'low_balance_text' => 'nullable|' . ValidationDefaults::DESCRIPTION,
         ], [
             'slug.regex' => __('pages.bar.slugFieldRegexError'),
         ]);
@@ -305,6 +308,7 @@ class BarController extends Controller {
         $bar->show_explore = is_checked($request->input('show_explore'));
         $bar->show_community = is_checked($request->input('show_community'));
         $bar->self_enroll = is_checked($request->input('self_enroll'));
+        $bar->low_balance_text = $request->input('low_balance_text');
 
         // Save the bar
         $bar->save();

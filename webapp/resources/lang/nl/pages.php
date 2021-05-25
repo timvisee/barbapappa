@@ -783,6 +783,8 @@ return [
         'generatePoster' => 'Creëer bar poster',
         'generatePosterDescription' => 'Creëer een poster voor deze bar om aan de muur te hangen. Bezoekers kunnen dan gemakklijk gebruik kunnen maken van :app en kunnen lid worden van deze bar door een QR code te scannen met hun mobiele telefoon.',
         'showCodeOnPoster' => 'Toon code om lid te worden op de poster',
+        'lowBalanceText' => 'Negatief saldo tekst',
+        'lowBalanceTextPlaceholder' => 'Je hebt op dit moment een negatief saldo. Waardeer je saldo alsjeblieft op voordat je nieuwe producten koopt.',
         'poster' => [
             'thisBarUses' => 'Deze bar gebruikt',
             'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties:',

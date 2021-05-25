@@ -46,6 +46,21 @@
 @endpush
 
 @section('content')
+    {{-- Low balance message --}}
+    {{-- TODO: get user balance in bar controller instead --}}
+    @php
+        $balance = $economy->calcUserBalance();
+    @endphp
+    @if($balance != null && $balance->amount < 0 && !empty($bar->low_balance_text))
+        <div class="ui error message">
+            <span class="halflings halflings-exclamation-sign icon"></span>
+            {!! nl2br(e($bar->low_balance_text)) !!}
+            <a href="{{ route('account.user.emails.unverified', [
+                'userId' => barauth()->getUser()->id,
+            ]) }}">@lang('pages.wallets.topUpNow')</a>.
+        </div>
+    @endif
+
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
