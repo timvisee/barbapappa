@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 
 class RenewBunqApiContext implements ShouldQueue {
@@ -46,6 +47,15 @@ class RenewBunqApiContext implements ShouldQueue {
         $this->onQueue(Self::QUEUE);
 
         $this->account_id = $account->id;
+    }
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware() {
+        return [new RateLimited('bunq-api')];
     }
 
     /**

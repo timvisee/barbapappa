@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use bunq\Model\Generated\Endpoint\Payment;
 use bunq\Model\Generated\Object\Amount;
@@ -75,6 +76,15 @@ class SendBunqPayment implements ShouldQueue {
         $this->to = $to;
         $this->amount = $amount;
         $this->description = $description;
+    }
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware() {
+        return [new RateLimited('bunq-api')];
     }
 
     /**
