@@ -15,13 +15,13 @@ class UpdateLaravel8 extends Migration {
      */
     public function up() {
         // Add UUID column
-        Schema::table('failed_jobs', function (Blueprint $table) {
+        Schema::table('job_failed', function (Blueprint $table) {
             $table->string('uuid')->after('id')->nullable()->unique();
         });
 
         // Add UUID for existing entries
-        DB::table('failed_jobs')->whereNull('uuid')->cursor()->each(function ($job) {
-            DB::table('failed_jobs')
+        DB::table('job_failed')->whereNull('uuid')->cursor()->each(function ($job) {
+            DB::table('job_failed')
                 ->where('id', $job->id)
                 ->update(['uuid' => (string) Str::uuid()]);
         });
@@ -33,7 +33,7 @@ class UpdateLaravel8 extends Migration {
      * @return void
      */
     public function down() {
-        Schema::table('failed_jobs', function(Blueprint $table) {
+        Schema::table('job_failed', function(Blueprint $table) {
             $table->dropColumn('uuid');
         });
     }
