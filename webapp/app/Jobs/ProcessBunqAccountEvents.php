@@ -7,6 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use bunq\Http\Pagination;
@@ -87,6 +88,15 @@ class ProcessBunqAccountEvents implements ShouldQueue {
 
         $this->accountId = $account->id;
         $this->retryCountIfNone = $retryCountIfNone;
+    }
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware() {
+        return [new RateLimited('bunq-api')];
     }
 
     /**
@@ -196,5 +206,10 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 ->delay(
                     now()->addSeconds($events->count() * Self::EVENT_INTERVAL)
                 );
+    }
+
+    public function retryUntil() {
+        // Matches interval in \App\Console\Kernel::schedule for ProcessAllBunqAccountEvents
+        return now()->addHours(12);
     }
 }

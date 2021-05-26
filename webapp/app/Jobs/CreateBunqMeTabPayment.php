@@ -8,6 +8,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use bunq\Model\Generated\Endpoint\BunqMeTab;
 use bunq\Model\Generated\Endpoint\BunqMeTabEntry;
@@ -75,6 +76,15 @@ class CreateBunqMeTabPayment implements ShouldQueue {
         $this->account_id = $account->id;
         $this->payment_id = $payment->id;
         $this->amount = $amount;
+    }
+
+    /**
+     * Get the middleware the job should pass through.
+     *
+     * @return array
+     */
+    public function middleware() {
+        return [new RateLimited('bunq-api')];
     }
 
     /**
