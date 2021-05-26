@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon updated_at
  */
 class Email extends Model {
+
+    use HasFactory;
 
     protected $table = 'email';
 
