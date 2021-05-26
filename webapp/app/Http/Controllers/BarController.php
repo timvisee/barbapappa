@@ -11,12 +11,15 @@ use App\Models\MutationWallet;
 use App\Models\Transaction;
 use App\Perms\BarRoles;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
 class BarController extends Controller {
+
+    use HasFactory;
 
     /**
      * Bar creation page.

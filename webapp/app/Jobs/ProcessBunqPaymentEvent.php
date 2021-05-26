@@ -39,7 +39,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      *
      * @var int
      */
-    public $retryAfter = 32;
+    public $backoff = 32;
 
     private $accountId;
     private $apiPaymentId;

@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Bar;
 use App\Models\Community;
 use App\Models\Economy;
@@ -13,14 +15,14 @@ class CommunitySeeder extends Seeder {
      * @return void
      */
     public function run() {
-        factory(Community::class, 5)->create()->each(function($community) {
+        Community::factory()->count(5)->create()->each(function($community) {
             // Add random economies
-            $community->economies()->save(
-                    factory(Economy::class)->make()
-                )
+            $community
+                ->economies()
+                ->save(Economy::factory()->make())
                 ->each(function($economy) use($community) {
                     $economy->bars()->save(
-                        factory(Bar::class)->make([
+                        Bar::factory()->make([
                             'community_id' => $community->id
                         ])
                     );

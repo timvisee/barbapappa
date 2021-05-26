@@ -8,9 +8,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use bunq\Model\Generated\Endpoint\Payment;
-use bunq\Model\Generated\Object\Amount;
-use bunq\Model\Generated\Object\Pointer;
 
 class RenewBunqApiContext implements ShouldQueue {
 
@@ -27,7 +24,7 @@ class RenewBunqApiContext implements ShouldQueue {
      *
      * @var int
      */
-    public $retryAfter = 32;
+    public $backoff = 32;
 
     /**
      * The ID of the bunq account, which the money is sent from.

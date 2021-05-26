@@ -2,7 +2,7 @@
 
     {{-- Title --}}
     @component('mail::title')
-        {{ trans_random('general.hellos') }} {{ $name ?? $user->first_name }}
+        {{ trans_random('general.hellos') }} {{ $name ?? $user->first_name }},
 
         @if(isset($subtitle))
             @slot('lead')

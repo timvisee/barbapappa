@@ -7,7 +7,7 @@ return [
      */
     'login' => 'Enter ship',
     'loginPassword' => 'Login wit\' password',
-    'loginEmail' => 'Login wit\' email',
+    'loginEmail' => 'Login via email',
     'logout' => 'Abandon ship',
     'register' => 'New ship',
     'forgotPassword' => 'Lost yer passcode?',

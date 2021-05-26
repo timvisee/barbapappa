@@ -40,7 +40,7 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
      *
      * @var int
      */
-    public $retryAfter = 32;
+    public $backoff = 32;
 
     /**
      * The bunq account ID.

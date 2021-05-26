@@ -7,7 +7,7 @@ return [
      */
     'login' => 'Login',
     'loginPassword' => 'Login with password',
-    'loginEmail' => 'Login with email',
+    'loginEmail' => 'Login via email',
     'logout' => 'Logout',
     'register' => 'Register',
     'forgotPassword' => 'Forgot your password?',

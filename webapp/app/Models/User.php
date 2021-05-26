@@ -10,6 +10,7 @@ use App\Utils\EmailRecipient;
 use BarPay\Models\Payment;
 use Carbon\Carbon;
 use Illuminate\Contracts\Translation\HasLocalePreference;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -30,6 +31,8 @@ use Illuminate\Support\Facades\Mail;
  * @property-read string email
  */
 class User extends Model implements HasLocalePreference {
+
+    use HasFactory;
 
     protected $table = 'user';
 

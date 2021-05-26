@@ -23,9 +23,11 @@
 @component('mail::text')
 @lang('mail.password.request.mayIgnore')<br>
 
+@component('mail::htmlOnly')
 @lang('mail.password.request.manual')<br>
 
-{{ route('password.reset', ['token' => $token]) }}<br>
+<{{ route('password.reset', ['token' => $token]) }}><br>
+@endcomponent
 @endcomponent
 
 @endcomponent

@@ -8,6 +8,7 @@ use App\Utils\MoneyAmount;
 use BarPay\Models\Payment as PayPayment;
 use BarPay\Models\Service as PayService;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\DB;
  */
 class Economy extends Model {
 
-    use Joinable;
+    use HasFactory, Joinable;
 
     protected $table = 'economy';
 

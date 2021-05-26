@@ -52,9 +52,9 @@ Route::middleware('throttle:4,1')->post('/register', 'RegisterController@doRegis
 Route::get('/logout', 'LogoutController@logout')->name('logout');
 Route::prefix('/password')->group(function() {
     Route::get('/change', 'PasswordChangeController@change')->name('password.change');
-    Route::middleware('throttle:5,1')->post('/change', 'PasswordChangeController@doChange')->name('password.change');
+    Route::middleware('throttle:5,1')->post('/change', 'PasswordChangeController@doChange')->name('password.doChange');
     Route::get('/disable', 'PasswordChangeController@disable')->name('password.disable');
-    Route::middleware('throttle:5,1')->post('/disable', 'PasswordChangeController@doDisable')->name('password.disable');
+    Route::middleware('throttle:5,1')->post('/disable', 'PasswordChangeController@doDisable')->name('password.doDisable');
     Route::get('/request', 'PasswordForgetController@request')->name('password.request');
     Route::middleware('throttle:4,1')->post('/request', 'PasswordForgetController@doRequest');
     Route::get('/reset/{token?}', 'PasswordResetController@reset')->name('password.reset');
@@ -63,7 +63,7 @@ Route::prefix('/password')->group(function() {
 Route::middleware('throttle:5,1')->post('/auth/continue', 'AuthController@doContinue')->name('auth.doContinue');
 Route::middleware('throttle:5,1')->post('/auth/login/code', 'AuthController@loginWithCode')->name('auth.loginWithCode');
 Route::middleware('throttle:5,1')->get('/auth/login/{token}', 'AuthController@login')->name('auth.login');
-Route::middleware('throttle:5,1')->post('/auth/login/{token}', 'AuthController@login')->name('auth.login');
+Route::middleware('throttle:5,1')->post('/auth/login/{token}', 'AuthController@login')->name('auth.doLogin');
 
 // Email routes
 Route::get('/email/verify/{token?}', 'EmailVerifyController@verify')->name('email.verify');
@@ -451,11 +451,11 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
                     // Top-up pages
                     Route::get('/top-up', 'WalletController@topUp')->name('community.wallet.topUp');
-                    Route::post('/top-up', 'WalletController@doTopUp')->name('community.wallet.topUp');
+                    Route::post('/top-up', 'WalletController@doTopUp')->name('community.wallet.doTopUp');
 
                     // Modify balance pages
                     Route::get('/modify-balance', 'WalletController@modifyBalance')->name('community.wallet.modifyBalance');
-                    Route::post('/modify-balance', 'WalletController@doModifyBalance')->name('community.wallet.modifyBalance');
+                    Route::post('/modify-balance', 'WalletController@doModifyBalance')->name('community.wallet.doModifyBalance');
                 });
             });
         });

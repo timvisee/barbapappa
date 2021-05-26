@@ -7,6 +7,7 @@ use App\Traits\HasSlug;
 use App\Traits\Joinable;
 use App\Utils\SlugUtils;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -28,7 +29,7 @@ use Illuminate\Support\Facades\DB;
  */
 class Bar extends Model {
 
-    use HasPassword, HasSlug, Joinable;
+    use HasFactory, HasPassword, HasSlug, Joinable;
     use \Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
     protected $table = 'bar';

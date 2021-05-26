@@ -47,7 +47,7 @@
 
 @section('content')
     {{-- Low balance message --}}
-    @if($userBalance != null && $userBalance->amount < 0 && !empty($bar->low_balance_text))
+    @if(isset($userBalance) && $userBalance->amount < 0 && !empty($bar->low_balance_text))
         <div class="ui error message">
             <span class="halflings halflings-exclamation-sign icon"></span>
             {!! nl2br(e($bar->low_balance_text)) !!}

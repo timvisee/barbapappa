@@ -23,9 +23,11 @@
 @component('mail::text')
 @lang('mail.email.verify.mayIgnore')<br>
 
+@component('mail::htmlOnly')
 @lang('mail.email.verify.manual')<br>
 
-{{ route('email.verify', ['token' => $token]) }}<br>
+<{{ route('email.verify', ['token' => $token]) }}><br>
+@endcomponent
 @endcomponent
 
 @endcomponent
