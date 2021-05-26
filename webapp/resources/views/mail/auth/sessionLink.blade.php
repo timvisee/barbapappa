@@ -17,7 +17,7 @@
 
 @lang('mail.auth.sessionLink.manual')<br>
 
-{{ route('auth.login', ['token' => $token]) }}<br>
+<a href="{{ route('auth.login', ['token' => $token]) }}">{{ route('auth.login', ['token' => $token]) }}</a><br>
 @endcomponent
 
 @endcomponent

@@ -25,7 +25,7 @@
 
 @lang('mail.password.request.manual')<br>
 
-{{ route('password.reset', ['token' => $token]) }}<br>
+<a href="{{ route('password.reset', ['token' => $token]) }}">{{ route('password.reset', ['token' => $token]) }}</a><br>
 @endcomponent
 
 @endcomponent

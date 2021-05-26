@@ -25,7 +25,7 @@
 
 @lang('mail.email.verify.manual')<br>
 
-{{ route('email.verify', ['token' => $token]) }}<br>
+<a href="{{ route('email.verify', ['token' => $token]) }}">{{ route('email.verify', ['token' => $token]) }}</a><br>
 @endcomponent
 
 @endcomponent
