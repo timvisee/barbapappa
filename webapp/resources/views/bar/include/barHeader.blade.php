@@ -15,7 +15,7 @@
     </div>
 
     @if($joined || $economy->userHasBalance())
-        @if($userBalance != null)
+        @if(isset($userBalance))
             <div>
                 {{-- Quick top-up if user has negative balance --}}
                 @if($userBalance->amount < 0)
