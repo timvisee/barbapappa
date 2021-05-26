@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,6 +24,13 @@ class AppServiceProvider extends ServiceProvider
         // Pagination controls view
         Paginator::defaultView('vendor.pagination.semantic-ui');
         Paginator::defaultSimpleView('vendor.pagination.semantic-ui');
+
+        // Rate limiters
+        RateLimiter::for('bunq-api', function() {
+            // TODO: limit per environment/host
+            // TODO: rough limit, limit to 3 per 3 seconds instead
+            return Limit::perMinute(15);
+        });
     }
 
     /**
