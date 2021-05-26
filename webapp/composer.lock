@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1cab55cc160505241961acd500421d1b",
+    "content-hash": "afa8b3b798d5e92395ccf7ea775d9484",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -7028,7 +7028,7 @@
             "version": "0.2.0",
             "source": {
                 "type": "git",
-                "url": "git@github.com:timvisee/laravel-hasmany-sync.git",
+                "url": "https://github.com/timvisee/laravel-hasmany-sync",
                 "reference": "995d7ba37def7599cd48ae6b97604d37c1576af5"
             },
             "require": {

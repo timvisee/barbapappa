@@ -18,7 +18,7 @@
                 "name": "timvisee/laravel-has-many-sync",
                 "version": "0.2.0",
                 "source": {
-                    "url": "git@github.com:timvisee/laravel-hasmany-sync.git",
+                    "url": "https://github.com/timvisee/laravel-hasmany-sync",
                     "type": "git",
                     "reference": "995d7ba37def7599cd48ae6b97604d37c1576af5"
                 },
