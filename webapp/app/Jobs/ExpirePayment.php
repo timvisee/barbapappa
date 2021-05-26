@@ -55,4 +55,9 @@ class ExpirePayment implements ShouldQueue {
             $payment->settle(Payment::STATE_REVOKED);
         });
     }
+
+    public function retryUntil() {
+        // Matches interval in \App\Console\Kernel::schedule for ExpirePayments
+        return now()->addHour();
+    }
 }

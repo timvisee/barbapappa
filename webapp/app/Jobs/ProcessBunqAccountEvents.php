@@ -207,4 +207,9 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                     now()->addSeconds($events->count() * Self::EVENT_INTERVAL)
                 );
     }
+
+    public function retryUntil() {
+        // Matches interval in \App\Console\Kernel::schedule for ProcessAllBunqAccountEvents
+        return now()->addHours(12);
+    }
 }
