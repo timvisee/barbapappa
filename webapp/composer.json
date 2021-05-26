@@ -20,12 +20,12 @@
                 "source": {
                     "url": "git@github.com:timvisee/laravel-hasmany-sync.git",
                     "type": "git",
-                    "reference": "9ac37fe99fb2628fef79922cfc005d614ed30339"
+                    "reference": "995d7ba37def7599cd48ae6b97604d37c1576af5"
                 },
                 "description": "Laravel has many sync",
                 "type": "library",
                 "require": {
-                    "illuminate/support": "~7.0"
+                    "illuminate/support": "~8.0"
                 },
                 "license": "MIT",
                 "authors": [
@@ -56,14 +56,14 @@
         "barryvdh/laravel-debugbar": "^3.2.3",
         "barryvdh/laravel-dompdf": "^0.8.4",
         "bunq/sdk_php": "^1.14.18",
-        "facade/ignition": "^2.0",
+        "facade/ignition": "^2.3.6",
         "fruitcake/laravel-cors": "^2.0",
         "intervention/validation": "^2.6.7",
-        "laravel/framework": "^7.0",
+        "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.0",
         "mariuzzo/laravel-js-localization": "^1.4",
-        "nunomaduro/collision": "^4.1",
+        "nunomaduro/collision": "^5.0",
         "sentry/sentry-laravel": "^1.0.2",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "staudenmeir/eloquent-has-many-deep": "^1.8",
@@ -73,7 +73,7 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "^8.5",
+        "phpunit/phpunit": "^9.0",
         "filp/whoops": "~2.0"
     },
     "autoload": {
