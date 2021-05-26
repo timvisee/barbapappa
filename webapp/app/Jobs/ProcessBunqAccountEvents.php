@@ -9,15 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use bunq\Context\ApiContext;
-use bunq\Context\BunqContext;
-use bunq\Exception\ApiException;
-use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
 use bunq\Model\Generated\Endpoint\Event;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\Pointer;
-use bunq\Util\BunqEnumApiEnvironmentType;
 
 /**
  * Process all events on the given bunq account, that have not yet been
