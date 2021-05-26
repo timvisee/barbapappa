@@ -66,12 +66,12 @@
 
     <p>
         <div class="ui buttons">
-            <a href="{{ route('app.bunqAccount.edit', ['walletId' => $account->id]) }}"
+            <a href="{{ route('app.bunqAccount.edit', ['accountId' => $account->id]) }}"
                     class="ui button secondary">
                 @lang('misc.edit')
             </a>
             {{-- TODO: implement this --}}
-            <a href="{{ route('app.bunqAccount.delete', ['walletId' => $account->id]) }}"
+            <a href="{{ route('app.bunqAccount.delete', ['accountId' => $account->id]) }}"
                     class="ui button negative disabled">
                 @lang('misc.delete')
             </a>
