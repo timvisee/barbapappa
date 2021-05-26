@@ -11,7 +11,7 @@
                     <td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;"
                         align="left" valign="top">
                         <h1 style="color: #222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; text-align: left; line-height: 1.3; word-break: normal; font-size: 30px; margin: 0 0 4px 0; padding: 0;"
-                            align="left">{{ trim($slot) }},</h1>
+                            align="left">{{ trim($slot) }}</h1>
 
                         @if(isset($lead))
                             <p class="lead"
