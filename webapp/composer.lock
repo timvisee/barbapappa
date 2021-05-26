@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "457c663c36f1ed6d85788f7a240affc5",
+    "content-hash": "08a849f75371304f6ee1922d236a68d8",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -6632,7 +6632,7 @@
         },
         {
             "name": "timvisee/barpay",
-            "version": "dev-372-update-to-laravel-8",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "packages/barpay",
@@ -6675,7 +6675,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/timvisee/laravel-hasmany-sync",
-                "reference": "995d7ba37def7599cd48ae6b97604d37c1576af5"
+                "reference": "18308e822164e692f2b8e07736359246488279e2"
             },
             "require": {
                 "illuminate/support": "~8.0"
@@ -6702,7 +6702,8 @@
                     "email": "alfa2159@gmail.com"
                 }
             ],
-            "description": "Laravel has many sync"
+            "description": "Laravel has many sync",
+            "abandoned": true
         },
         {
             "name": "vlucas/phpdotenv",
