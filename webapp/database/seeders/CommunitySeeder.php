@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Bar;
 use App\Models\Community;
 use App\Models\Economy;

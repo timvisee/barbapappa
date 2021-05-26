@@ -38,7 +38,7 @@ class ProcessAllBunqAccountEvents implements ShouldQueue {
      *
      * @var int
      */
-    public $retryAfter = 32;
+    public $backoff = 32;
 
     /**
      * Create a new job instance.

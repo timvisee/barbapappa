@@ -36,7 +36,7 @@ class CreateBunqMeTabPayment implements ShouldQueue {
      *
      * @var int
      */
-    public $retryAfter = 32;
+    public $backoff = 32;
 
     /**
      * The ID of the bunq account, which the money is sent from.

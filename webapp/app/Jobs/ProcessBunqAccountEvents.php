@@ -38,7 +38,7 @@ class ProcessBunqAccountEvents implements ShouldQueue {
      *
      * @var int
      */
-    public $retryAfter = 32;
+    public $backoff = 32;
 
     /**
      * The maximum number of unhandled events to query from bunq at once.
