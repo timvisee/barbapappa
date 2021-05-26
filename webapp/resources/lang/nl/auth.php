@@ -7,7 +7,7 @@ return [
      */
     'login' => 'Inloggen',
     'loginPassword' => 'Inloggen met wachtwoord',
-    'loginEmail' => 'Inloggen met e-mail',
+    'loginEmail' => 'Inloggen via e-mail',
     'logout' => 'Uitloggen',
     'register' => 'Registreren',
     'forgotPassword' => 'Wachtwoord vergeten?',
