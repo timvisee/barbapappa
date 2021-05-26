@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.3",
         "alfa6661/laravel-has-many-sync": "^1.1",
         "timvisee/barpay": "@dev",
         "barryvdh/laravel-debugbar": "^3.2.3",
