@@ -26,7 +26,7 @@
 @component('mail::htmlOnly')
 @lang('mail.password.request.manual')<br>
 
-<a href="{{ route('password.reset', ['token' => $token]) }}">{{ route('password.reset', ['token' => $token]) }}</a><br>
+<{{ route('password.reset', ['token' => $token]) }}><br>
 @endcomponent
 @endcomponent
 

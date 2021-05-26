@@ -26,7 +26,7 @@
 @component('mail::htmlOnly')
 @lang('mail.email.verify.manual')<br>
 
-<a href="{{ route('email.verify', ['token' => $token]) }}">{{ route('email.verify', ['token' => $token]) }}</a><br>
+<{{ route('email.verify', ['token' => $token]) }}><br>
 @endcomponent
 @endcomponent
 
