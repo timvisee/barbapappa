@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
+use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 class RenewBunqApiContext implements ShouldQueue {
@@ -55,7 +56,13 @@ class RenewBunqApiContext implements ShouldQueue {
      * @return array
      */
     public function middleware() {
-        return [new RateLimited('bunq-api')];
+        return [
+            new RateLimited('bunq-api'),
+            (new WithoutOverlapping($this->account_id))
+                // Release exclusive lock after half a minute (failure)
+                ->expireAfter(30)
+                ->dontRelease()
+        ];
     }
 
     /**
