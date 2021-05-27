@@ -28,7 +28,7 @@ class RequireKiosk {
         $route = config('app.auth_session_link') ? 'index' : 'login';
 
         // Redirect to the login page if not authenticated
-        if(!barauth()->isAuth())
+        if(!kioskauth()->isAuth())
             return redirect()
                 ->guest(route($route))
                 ->with('error', __('auth.authRequired'));

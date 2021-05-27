@@ -665,6 +665,12 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
     });
 });
 
+// Kiosk routes
+Route::prefix('/kiosk')->middleware('kiosk')->group(function() {
+    // Main kiosk page
+    Route::get('/', 'KioskController@show')->name('kiosk.show');
+});
+
 // Ajax routes
 // TODO: skip language select middleware here
 Route::prefix('/ajax')->name('ajax.')->group(function() {
