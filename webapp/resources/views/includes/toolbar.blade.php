@@ -37,7 +37,7 @@
                     data-sidebar="messages"></a>
             @endif
         @else
-            <a href="{{ route('kiosk.main') }}" class="sidebar-toggle glyphicons glyphicons-shop"></a>
+            <a href="{{ route('kiosk.main') }}" class="glyphicons glyphicons-shop"></a>
         @endif
     </div>
 

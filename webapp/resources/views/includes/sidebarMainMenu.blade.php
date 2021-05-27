@@ -20,6 +20,17 @@
             @lang('pages.dashboard.title')
         </a>
     @else
+        @if(kioskauth()->isAuth())
+            <div class="item header has-alt-button">
+                @lang('misc.kiosk') @lang('misc.for') {{ kioskauth()->getBar()->name }}
+                <a href="{{ route('logout') }}"
+                        class="alt-button logout"
+                        title="@lang('auth.logout')">
+                    <i class="glyphicons glyphicons-exit"></i>
+                </a>
+            </div>
+        @endif
+
         <a href="{{ route('index') }}"
                 class="item {{ Route::currentRouteName() == 'index' ? ' active' : '' }}">
             <i class="glyphicons glyphicons-home"></i>
