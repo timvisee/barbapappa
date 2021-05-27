@@ -503,6 +503,10 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             // Index
             Route::get('/', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
+            // Start kiosk
+            Route::get('/start-kiosk', 'BarController@startKiosk')->name('bar.startKiosk');
+            Route::post('/start-kiosk', 'BarController@doStartKiosk')->name('bar.doStartKiosk');
+
             // Generate poster
             Route::get('/generate-poster', 'BarController@generatePoster')->name('bar.poster.generate');
             Route::post('/generate-poster', 'BarController@doGeneratePoster')->name('bar.poster.doGenerate');
@@ -668,7 +672,7 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
 // Kiosk routes
 Route::prefix('/kiosk')->middleware('kiosk')->group(function() {
     // Main kiosk page
-    Route::get('/', 'KioskController@show')->name('kiosk.show');
+    Route::get('/', 'KioskController@main')->name('kiosk.main');
 });
 
 // Ajax routes
