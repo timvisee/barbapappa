@@ -2,7 +2,6 @@
 
 namespace BarPay\Controllers;
 
-use App\Helpers\ValidationDefaults;
 use BarPay\Models\Payment;
 use BarPay\Models\PaymentBunqMeTab;
 use Illuminate\Http\Request;

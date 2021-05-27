@@ -7,7 +7,6 @@ use App\Models\Currency;
 use BarPay\Controllers\ServiceBunqIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Bunq IBAN service class.

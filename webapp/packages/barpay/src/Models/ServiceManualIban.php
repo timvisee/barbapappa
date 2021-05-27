@@ -6,7 +6,6 @@ use App\Models\Currency;
 use BarPay\Controllers\ServiceManualIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Manual IBAN service class.

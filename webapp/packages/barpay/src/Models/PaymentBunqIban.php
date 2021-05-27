@@ -2,13 +2,9 @@
 
 namespace BarPay\Models;
 
-use App\Models\BunqAccount;
-use App\Models\Notifications\PaymentRequiresUserAction;
-use App\Models\User;
 use BarPay\Controllers\PaymentBunqIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Bunq IBAN payment data class.

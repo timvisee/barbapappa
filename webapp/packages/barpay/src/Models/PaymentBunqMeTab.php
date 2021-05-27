@@ -4,13 +4,9 @@ namespace BarPay\Models;
 
 use App\Jobs\CancelBunqMeTabPayment;
 use App\Jobs\CreateBunqMeTabPayment;
-use App\Models\BunqAccount;
-use App\Models\Notifications\PaymentRequiresUserAction;
-use App\Models\User;
 use BarPay\Controllers\PaymentBunqMeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use bunq\Model\Generated\Object\Amount;
 
 /**
