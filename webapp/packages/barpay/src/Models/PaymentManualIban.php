@@ -3,11 +3,9 @@
 namespace BarPay\Models;
 
 use App\Models\User;
-use App\Models\Notifications\PaymentRequiresUserAction;
 use BarPay\Controllers\PaymentManualIbanController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Manual IBAN payment data class.

@@ -7,7 +7,6 @@ use App\Models\Currency;
 use BarPay\Controllers\ServiceBunqMeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * BunqMe Tab service class.

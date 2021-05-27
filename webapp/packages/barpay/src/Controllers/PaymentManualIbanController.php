@@ -2,7 +2,6 @@
 
 namespace BarPay\Controllers;
 
-use App\Helpers\ValidationDefaults;
 use BarPay\Models\Payment;
 use BarPay\Models\PaymentManualIban;
 use Illuminate\Http\Request;
