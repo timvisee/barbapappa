@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Auth\Authenticator;
+use App\Services\Auth\Authenticator as UserAuthenticator;
+use App\Services\Auth\Kiosk\Authenticator as KioskAuthenticator;
 use Illuminate\Support\Facades\Cookie;
 
 class LogoutController extends Controller {
@@ -17,8 +18,13 @@ class LogoutController extends Controller {
         if(!barauth()->isAuth())
             return $this->finishAndRedirect();
 
-        // Get the session, and invalidate it
+        // Invalidate user session
         $session = barauth()->getAuthState()->getSession();
+        if($session != null)
+            $session->invalidate();
+
+        // Invalidate kiosk session
+        $session = kioskauth()->getAuthState()->getSession();
         if($session != null)
             $session->invalidate();
 
@@ -36,6 +42,7 @@ class LogoutController extends Controller {
         // Redirect the user, and forget the session cookie
         return redirect()
             ->route('index')
-            ->withCookie(Cookie::forget(Authenticator::AUTH_COOKIE));
+            ->withCookie(Cookie::forget(UserAuthenticator::AUTH_COOKIE))
+            ->withCookie(Cookie::forget(KioskAuthenticator::AUTH_COOKIE));
     }
 }
