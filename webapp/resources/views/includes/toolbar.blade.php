@@ -18,22 +18,26 @@
     </h1>
 
     <div class="right">
-        @if(isset($notificationCounts) && $notificationCounts['unread'] > 0)
-            <a href="#"
-                    class="ui red circular tiny label sidebar-toggle"
-                    data-sidebar="messages">
-                {{ $notificationCounts['unread'] }}
-            </a>
-        @elseif(isset($notificationCounts) && $notificationCounts['persistent'] > 0)
-            <a href="#"
-                    class="ui blue circular tiny label sidebar-toggle"
-                    data-sidebar="messages">
-                {{ $notificationCounts['persistent'] }}
-            </a>
+        @if(!kioskauth()->isAuth())
+            @if(isset($notificationCounts) && $notificationCounts['unread'] > 0)
+                <a href="#"
+                        class="ui red circular tiny label sidebar-toggle"
+                        data-sidebar="messages">
+                    {{ $notificationCounts['unread'] }}
+                </a>
+            @elseif(isset($notificationCounts) && $notificationCounts['persistent'] > 0)
+                <a href="#"
+                        class="ui blue circular tiny label sidebar-toggle"
+                        data-sidebar="messages">
+                    {{ $notificationCounts['persistent'] }}
+                </a>
+            @else
+                <a href="#"
+                    class="sidebar-toggle glyphicons glyphicons-message-new toolbar-btn-message"
+                    data-sidebar="messages"></a>
+            @endif
         @else
-            <a href="#"
-                class="sidebar-toggle glyphicons glyphicons-message-new toolbar-btn-message"
-                data-sidebar="messages"></a>
+            <a href="{{ route('kiosk.main') }}" class="sidebar-toggle glyphicons glyphicons-shop"></a>
         @endif
     </div>
 
