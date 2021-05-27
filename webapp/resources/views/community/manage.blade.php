@@ -216,6 +216,10 @@
         @else
             <div class="item disabled">@lang('pages.economies.title')</div>
         @endif
+    </div>
+
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">@lang('misc.extras')</h5>
         @if(perms(CommunityController::permsManage()))
             <a href="{{ route('community.poster.generate', ['communityId' => $community->human_id]) }}" class="item">
                 @lang('pages.community.generatePoster')
