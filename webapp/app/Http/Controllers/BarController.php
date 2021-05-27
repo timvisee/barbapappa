@@ -10,10 +10,12 @@ use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
 use App\Perms\BarRoles;
+use App\Services\Auth\Authenticator as UserAuthenticator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
@@ -225,49 +227,6 @@ class BarController extends Controller {
         return view('bar.manage')
             ->with('economy', $economy)
             ->with('hasProduct', $economy->products()->limit(1)->count() > 0);
-    }
-
-    /**
-     * Page to generate a poster PDF for this bar, allowing some configuration.
-     *
-     * @return Response
-     */
-    public function generatePoster($barId) {
-        return view('bar.poster');
-    }
-
-    /**
-     * Generate the poster PDF, respond with it as a download.
-     *
-     * @return Response
-     */
-    public function doGeneratePoster(Request $request, $barId) {
-        // Get the bar and session user
-        $bar = \Request::get('bar');
-        $withCode = !empty($bar->password) && is_checked($request->input('show_code'));
-
-        // Set the poster locale
-        \App::setLocale($request->input('language'));
-
-        // Configure some parameters
-        $code = $withCode ? $bar->password : null;
-        $plainUrl = preg_replace(
-            '/^https?:\/\//', '',
-            route('bar.show', ['barId' => $bar->human_id])
-        );
-        $qrData = ['barId' => $bar->human_id];
-        if($withCode)
-            $qrData['code'] = $code;
-        $qrUrl = route('bar.join', $qrData);
-
-        // Render the PDF and respond with it as download
-        return \PDF::loadView('poster.pdf', [
-                'type' => 'bar',
-                'plain_url' => $plainUrl,
-                'qr_url' => $qrUrl,
-                'code' => $code,
-            ])
-            ->download(strtolower(__('misc.bar')) . '-poster-' . $bar->human_id . '.pdf');
     }
 
     /**
@@ -1046,6 +1005,96 @@ class BarController extends Controller {
         return redirect()
             ->route('community.manage', ['communityId' => $bar->community->human_id])
             ->with('success', __('pages.bar.deleted'));
+    }
+
+    /**
+     * Page to generate a poster PDF for this bar, allowing some configuration.
+     *
+     * @return Response
+     */
+    public function generatePoster($barId) {
+        return view('bar.poster');
+    }
+
+    /**
+     * Generate the poster PDF, respond with it as a download.
+     *
+     * @return Response
+     */
+    public function doGeneratePoster(Request $request, $barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $withCode = !empty($bar->password) && is_checked($request->input('show_code'));
+
+        // Set the poster locale
+        \App::setLocale($request->input('language'));
+
+        // Configure some parameters
+        $code = $withCode ? $bar->password : null;
+        $plainUrl = preg_replace(
+            '/^https?:\/\//', '',
+            route('bar.show', ['barId' => $bar->human_id])
+        );
+        $qrData = ['barId' => $bar->human_id];
+        if($withCode)
+            $qrData['code'] = $code;
+        $qrUrl = route('bar.join', $qrData);
+
+        // Render the PDF and respond with it as download
+        return \PDF::loadView('poster.pdf', [
+                'type' => 'bar',
+                'plain_url' => $plainUrl,
+                'qr_url' => $qrUrl,
+                'code' => $code,
+            ])
+            ->download(strtolower(__('misc.bar')) . '-poster-' . $bar->human_id . '.pdf');
+    }
+
+    /**
+     * Page to start kiosk mode.
+     *
+     * @return Response
+     */
+    public function startKiosk() {
+        return view('bar.startKiosk');
+    }
+
+    /**
+     * Do start kiosk mode.
+     *
+     * @return Response
+     */
+    public function doStartKiosk(Request $request) {
+        // Get the bar and user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Validate
+        $request->validate([
+            'confirm' => 'accepted',
+        ]);
+
+        // TODO: verify that this user can start kiosk mode
+
+        // Logout user
+        $session = barauth()->getAuthState()->getSession();
+        if($session != null)
+            $session->invalidate();
+
+        // Authenticate kiosk session
+        $result = kioskauth()->getAuthenticator()->createSession($bar, $user);
+
+        // Show an error if the kiosk session failed to create
+        if($result->isErr())
+            return redirect()
+                ->back()
+                ->with('error', __('general.serverError'));
+
+        // Redirect to kiosk page
+        return redirect()
+            ->route('kiosk.main')
+            ->withCookie(Cookie::forget(UserAuthenticator::AUTH_COOKIE))
+            ->with('success', __('pages.bar.startedKiosk'));
     }
 
     /**
