@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Services\Auth\Authenticator;
 use App\Services\Auth\AuthState;
-use App\Models\User;
 use Illuminate\Foundation\Application;
 
 class BarAuthManager {

@@ -71,7 +71,6 @@ class Authenticator {
             return self::finalizeResult(AuthResult::ERR_INVALID_TOKEN);
 
         // Get the corresponding session and make sure it's valid
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         $session = Session::where('token', '=', $token)->first();
         if($session == null)
             return self::finalizeResult(AuthResult::ERR_INVALID_TOKEN);
@@ -122,7 +121,6 @@ class Authenticator {
         $email = trim($email);
 
         // Find the email addresses linked
-        /** @noinspection PhpDynamicAsStaticMethodCallInspection */
         $emailModels = Email::where('email', '=', $email)->get();
 
         // Loop over the email models that have been found
@@ -193,7 +191,6 @@ class Authenticator {
             $token = TokenGenerator::generate(self::SESSION_TOKEN_LENGTH, true);
 
             // Check whether the token exists
-            /** @noinspection PhpDynamicAsStaticMethodCallInspection */
             $exists = Session::where('token', '=', $token)->first() != null;
 
         } while($exists);
@@ -224,17 +221,17 @@ class Authenticator {
                 )
             );
 
-        // Annotate user for Sentry error reporting
-        if($authResult->isOk() && $authState != null && app()->bound('sentry')) {
-            $user_id = $authState->getSessionUser()->id ?? $authState->getUser()->id ?? null;
-            $user_name = $authState->getSessionUser()->name ?? $authState->getUser()->name ?? null;
-            Sentry\configureScope(function(Sentry\State\Scope $scope) use($user_id, $user_name): void {
-                $scope->setUser([
-                    'id' => $user_id,
-                    'name' => $user_name,
-                ]);
-            });
-        }
+            // Annotate user for Sentry error reporting
+            if($authResult->isOk() && $authState != null && app()->bound('sentry')) {
+                $user_id = $authState->getSessionUser()->id ?? $authState->getUser()->id ?? null;
+                $user_name = $authState->getSessionUser()->name ?? $authState->getUser()->name ?? null;
+                Sentry\configureScope(function(Sentry\State\Scope $scope) use($user_id, $user_name): void {
+                    $scope->setUser([
+                        'id' => $user_id,
+                        'name' => $user_name,
+                    ]);
+                });
+            }
 
         // Forget the session cookie if the session became invalid
         else if($authResult->isErr() && $authResult->getResult() != AuthResult::ERR_NO_SESSION)
