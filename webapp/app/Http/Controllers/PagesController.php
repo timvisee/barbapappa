@@ -13,6 +13,10 @@ class PagesController extends Controller {
      * @return $this
      */
     public function index() {
+        // If kiosk is authenticated, redirect to kiosk page
+        if(kioskauth()->isAuth())
+            return redirect()->route('kiosk.main');
+
         // If the user is logged in, redirect to his last bar
         if(barauth()->isAuth())
             return $this->last();
