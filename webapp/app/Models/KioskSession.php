@@ -3,26 +3,35 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Bar;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Session model.
+ * Kiosk session model.
  *
  * @property int id
- * @property int user_id
+ * @property int bar_id
  * @property string token
+ * @property int created_user_id
  * @property string created_ip
  * @property Carbon expire_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
-class Session extends Model {
+class KioskSession extends Model {
 
-    protected $table = 'session';
+    protected $table = 'kiosk_session';
 
     /**
-     * The user this session belongs to.
+     * The bar this session is for.
+     */
+    public function bar() {
+        return $this->belongsTo(Bar::class);
+    }
+
+    /**
+     * The user that initiated this kiosk session.
      */
     public function user() {
         return $this->belongsTo(User::class);
