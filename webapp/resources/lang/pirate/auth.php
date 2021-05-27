@@ -43,7 +43,7 @@ return [
     'iHaveVerificationCode' => 'I have a verification code',
     'verificationCodeInvalid' => 'Invalid verification code',
     'openedInOtherBrowser' => 'Ye opened th\' login link in a different webbrowser.',
-    'enterVerificationCodeOtherBrowser' => 'To continue, switch to th\' webbrowser or app ye tried to login from, and enter dis verification code:',
+    'enterVerificationCodeOtherBrowser' => 'Go back to where ye logged in and enter the following verification code:',
     'continueHereInstead' => 'Sail ho here instead',
 
     'mustVerifyEmail' => 'Ye must verify yer e-bottle coordinate to fully use our service.',

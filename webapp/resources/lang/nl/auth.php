@@ -43,7 +43,7 @@ return [
     'iHaveVerificationCode' => 'Ik heb een verificatiecode',
     'verificationCodeInvalid' => 'Verificatiecode incorrect',
     'openedInOtherBrowser' => 'Je hebt de inloglink in een andere webbrowser geopent.',
-    'enterVerificationCodeOtherBrowser' => 'Om verder te gaan, schakel terug naar de webbrowser of app waarin je geprobeert hebt in te loggen, en vul de onderstaande verificatiecode in:',
+    'enterVerificationCodeOtherBrowser' => 'Ga terug naar waar je hebt ingelogd en vul de onderstaande verificatiecode in:',
     'continueHereInstead' => 'Hier verder gaan',
 
     'mustVerifyEmail' => 'Verifieer je e-mailadres om volledig gebruik te maken van onze service.',
