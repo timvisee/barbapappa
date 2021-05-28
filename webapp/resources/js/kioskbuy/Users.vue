@@ -7,7 +7,7 @@
                     v-on:click.stop.prevent="reset()"
                     href="#"
                     class="reset">
-                {{ __('misc.reset') }}
+                {{ __('pages.kiosk.deselect') }}
             </a>
         </h5>
 
