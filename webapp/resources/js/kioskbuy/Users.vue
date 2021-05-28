@@ -9,6 +9,13 @@
                     class="reset">
                 {{ __('misc.reset') }}
             </a>
+
+            <a v-if="selectedUsers.length == 0 && cart.length > 0"
+                    v-on:click.stop.prevent="resetCart()"
+                    href="#"
+                    class="reset">
+                {{ __('misc.resetAll') }}
+            </a>
         </h5>
 
         <div class="item">
@@ -129,6 +136,11 @@
             // Reset selection
             reset() {
                 this.selectedUsers.splice(0);
+            },
+
+            // Reset carts
+            resetCart() {
+                this.cart.splice(0);
             },
         },
         mounted: function() {

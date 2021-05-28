@@ -25,6 +25,7 @@ return [
     'rename' => 'Hernoemen',
     'delete' => 'Verwijderen',
     'reset' => 'Reset',
+    'resetAll' => 'Reset all',
     'previously' => 'Voorheen',
     'continue' => 'Verder gaan',
     'continueIn' => 'Verder in',
