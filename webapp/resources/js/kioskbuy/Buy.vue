@@ -11,18 +11,17 @@
         <!-- <div class="ui two column doubling grid"> -->
         <div class="ui two column grid">
             <div class="column">
-                <Users :selected="selected"
-                        :cart="cart"
+                <Users :selectedUsers="selectedUsers"
+                        :selected="selected"
                         :buying="buying" />
             </div>
             <div class="column">
-                <Products :selected="selected" />
+                <Products :selectedUsers="selectedUsers"
+                        :selected="selected"
+                        :cart="cart"
+                        :buying="buying" />
             </div>
         </div>
-
-
-
-
 
         <!-- <Products :selected="selected" /> -->
         <!-- <Users v-if="selected.length > 0" --> 
@@ -52,6 +51,8 @@
         },
         data() {
             return {
+                selectedUsers: [],
+                // TODO: remove selected?
                 selected: [],
                 cart: [],
                 buying: false,

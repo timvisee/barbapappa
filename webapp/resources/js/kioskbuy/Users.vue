@@ -18,13 +18,11 @@
         </div>
 
         <a v-for="user in users"
-                v-on:click.prevent.stop="addSelected(user)"
-                v-bind:class="{ disabled: buying, active: user.active }"
+                v-on:click.prevent.stop="toggleSelectUser(user)"
+                v-bind:class="{ disabled: buying, active: selectedUsers.includes(user) }"
                 href="#"
                 class="green item">
             {{ user.name || __('misc.unknownUser') }}
-            <!-- TODO: remove me everywhere -->
-            <span v-if="user.me" class="subtle">({{ __('misc.me') }})</span>
         </a>
 
         <i v-if="!searching && users.length == 0" class="item">
@@ -45,6 +43,7 @@
             };
         },
         props: [
+            'selectedUsers',
             'selected',
             'cart',
             'buying',
@@ -55,42 +54,22 @@
             },
         },
         methods: {
-            addSelected(user) {
-                // Do not add products when currently buying
-                if(this.buying)
-                    return;
+            toggleSelectUser(user) {
+                // Assert we have maximum of one user in the list
+                if(this.selectedUsers.length > 1)
+                    throw 'selected user list cannot have multiple users';
 
-                // Mark user as active for half a second
-                user.active = true;
-                this.$forceUpdate();
-                setTimeout(() => {
-                    user.active = false;
-                    this.$forceUpdate();
-                }, 500);
-
-                // Focus the search field for quick new searches
-                let searchField = document.getElementById("user-search");
-                searchField.focus();
-                searchField.setSelectionRange(0, searchField.value.length)
-
-                // Find the user object, or create a new one
-                let item = this.cart.filter(i => i.user.id == user.id);
-                if(item.length <= 0) {
-                    this.cart.push({
-                        user,
-                        products: JSON.parse(JSON.stringify(this.selected)),
-                    });
+                // Remove from list if already in it
+                const i = this.selectedUsers.indexOf(user);
+                if(i > -1) {
+                    this.selectedUsers.splice(i, 1);
                     return;
                 }
 
-                // Merge selected items one by one into existing list, update quantities
-                this.selected.forEach(product => {
-                    let i = item[0].products.filter(p => p.id == product.id);
-                    if(i.length > 0)
-                        i[0].quantity += product.quantity;
-                    else
-                        item[0].products.push(JSON.parse(JSON.stringify(product)));
-                });
+                // Add user to list
+                // TODO: find better way to clear array
+                this.selectedUsers.splice(0);
+                this.selectedUsers.push(user);
             },
 
             // Search users with the given query

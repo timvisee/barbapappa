@@ -823,9 +823,10 @@ return [
      */
     'kiosk' => [
         'selectUser' => 'Selecteer lid',
-        'selectProducts' => 'Selecteer producten',
         'searchUsers' => 'Zoek leden',
         'noUsersFoundFor' => 'Geen leden gevonden voor :term',
+        'firstSelectUser' => 'Selecteer eerst een lid',
+        'selectProducts' => 'Selecteer producten',
     ],
 
     /**

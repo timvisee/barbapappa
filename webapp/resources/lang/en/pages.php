@@ -823,9 +823,10 @@ return [
      */
     'kiosk' => [
         'selectUser' => 'Select member',
-        'selectProducts' => 'Select products',
         'searchUsers' => 'Search users',
         'noUsersFoundFor' => 'No users found for :term',
+        'firstSelectUser' => 'Select a member first',
+        'selectProducts' => 'Select products',
     ],
 
     /**
