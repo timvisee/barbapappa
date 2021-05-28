@@ -81,7 +81,7 @@
                     return;
                 }
 
-                this.resetCart();
+                this.$emit('cancel');
                 this.setConfirmingCancel(false);
             },
 
@@ -119,18 +119,6 @@
                 // Unset confirming buy
                 if(!!confirming)
                     this.setConfirming(false);
-            },
-
-            // Reset carts
-            resetCart() {
-                this.cart.splice(0);
-
-                // TODO: call reset function in parent instead
-                // TODO: - reset selected users
-                // TODO: - refresh lists
-
-                // Call function for this in Users component instead
-                this.selectedUsers.splice(0);
             },
         }
     }

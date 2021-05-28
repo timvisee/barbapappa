@@ -58,7 +58,6 @@
         },
         props: [
             'selectedUsers',
-            'selected',
             'cart',
             'buying',
         ],
@@ -94,9 +93,10 @@
 
             // Search users with the given query
             search(query = '') {
-                // Create a list of current products, to prioritize the user list
-                let products = JSON.stringify(this.selected.map(p =>
-                    p.product.id));
+                // TODO: include users already having products
+                // // Create a list of current products, to prioritize the user list
+                // let products = JSON.stringify(this.selected.map(p =>
+                //     p.product.id));
 
                 // Fetch the list of users, set searching state
                 // TODO: set fixed URL here

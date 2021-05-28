@@ -12,13 +12,11 @@
         <div class="ui two column grid">
             <div class="column">
                 <Users :selectedUsers="selectedUsers"
-                        :selected="selected"
                         :cart="cart"
                         :buying="buying" />
             </div>
             <div class="column">
                 <Products :selectedUsers="selectedUsers"
-                        :selected="selected"
                         :cart="cart"
                         :buying="buying" />
             </div>
@@ -28,6 +26,7 @@
 
         <Cart v-if="cart.length > 0"
                 v-on:buy="buy"
+                v-on:cancel="cancel"
                 :selectedUsers="selectedUsers"
                 :cart="cart"
                 :buying="buying" />
@@ -51,8 +50,6 @@
         data() {
             return {
                 selectedUsers: [],
-                // TODO: remove selected?
-                selected: [],
                 cart: [],
                 buying: false,
                 successMessage: undefined,
@@ -80,9 +77,8 @@
                             ? this.langChoice('pages.bar.advancedBuy.boughtProducts#', products)
                             : this.langChoice('pages.bar.advancedBuy.boughtProductsUsers#', products, {users});
 
-                        // Clear the selected & cart
-                        this.selected.splice(0);
-                        this.cart.splice(0);
+                        // Cancel all current selections
+                        this.cancel();
 
                         window.scrollTo(0, 0);
                     })
@@ -93,9 +89,17 @@
                     .finally(() => this.buying = false);
             },
 
+            // Cancel everything
+            cancel() {
+                this.selectedUsers.splice(0);
+                this.cart.splice(0);
+
+                // TODO: optionally reload list of users/products
+            },
+
             onClose(event) {
                 // Do not prevent closing if nothing is selected
-                if(this.cart.length == 0 && this.selected.length == 0)
+                if(this.cart.length == 0)
                     return;
 
                 // Prevent closing the page, set a warning message

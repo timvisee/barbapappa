@@ -233,190 +233,190 @@ class KioskController extends Controller {
             });
     }
 
-    // /**
-    //  * API route for buying products in the users advanced buying cart.
-    //  *
-    //  * @return Response
-    //  */
-    // public function apiBuyBuy(Request $request) {
-    //     // Get the bar, current user and the search query
-    //     $bar = \Request::get('bar');
-    //     $economy = $bar->economy;
-    //     $cart = collect($request->post());
-    //     $self = $this;
+    /**
+     * API route for buying products in the users advanced buying cart.
+     *
+     * @return Response
+     */
+    public function apiBuy(Request $request) {
+        // Get the bar, current user and the search query
+        $bar = kioskauth()->getBar();
+        $economy = $bar->economy;
+        $cart = collect($request->post());
+        $self = $this;
 
-    //     // Do everything in a database transaction
-    //     $productCount = 0;
-    //     $userCount = $cart->count();
-    //     DB::transaction(function() use($bar, $economy, $cart, $self, &$productCount) {
-    //         // For each user, purchase the selected products
-    //         $cart->each(function($userItem) use($bar, $economy, $self, &$productCount) {
-    //             $user = $userItem['user'];
-    //             $products = collect($userItem['products']);
+        // Do everything in a database transaction
+        $productCount = 0;
+        $userCount = $cart->count();
+        DB::transaction(function() use($bar, $economy, $cart, $self, &$productCount) {
+            // For each user, purchase the selected products
+            $cart->each(function($userItem) use($bar, $economy, $self, &$productCount) {
+                $user = $userItem['user'];
+                $products = collect($userItem['products']);
 
-    //             // Retrieve user and product models from database
-    //             $member = $economy->members()->findOrFail($user['id']);
-    //             $products = $products->map(function($product) use($economy) {
-    //                 $product['product'] = $economy->products()->findOrFail($product['product']['id']);
-    //                 return $product;
-    //             });
+                // Retrieve user and product models from database
+                $member = $economy->members()->findOrFail($user['id']);
+                $products = $products->map(function($product) use($economy) {
+                    $product['product'] = $economy->products()->findOrFail($product['product']['id']);
+                    return $product;
+                });
 
-    //             // Buy the products, increase product count
-    //             $result = $self->buyProducts($bar, $member, $products);
-    //             $productCount += $result['productCount'];
-    //         });
-    //     });
+                // Buy the products, increase product count
+                $result = $self->buyProducts($bar, $member, $products);
+                $productCount += $result['productCount'];
+            });
+        });
 
-    //     // Return some useful stats
-    //     return [
-    //         'productCount' => $productCount,
-    //         'userCount' => $userCount,
-    //     ];
-    // }
+        // Return some useful stats
+        return [
+            'productCount' => $productCount,
+            'userCount' => $userCount,
+        ];
+    }
 
-    // /**
-    //  * Buy the given list of products for the given user.
-    //  *
-    //  * @param Bar $bar The bar to buy the products in.
-    //  * @param EconomyMember $economy_member The economy member to buy the products for.
-    //  * @param array $products [[quantity: int, product: Product]] List of
-    //  *      products and quantities to buy.
-    //  */
-    // // TODO: support paying in multiple currencies for different products at the same time
-    // // TODO: make a request when paying for other users
-    // function buyProducts(Bar $bar, EconomyMember $economy_member, $products) {
-    //     $products = collect($products);
+    /**
+     * Buy the given list of products for the given user.
+     *
+     * @param Bar $bar The bar to buy the products in.
+     * @param EconomyMember $economy_member The economy member to buy the products for.
+     * @param array $products [[quantity: int, product: Product]] List of
+     *      products and quantities to buy.
+     */
+    // TODO: support paying in multiple currencies for different products at the same time
+    // TODO: make a request when paying for other users
+    function buyProducts(Bar $bar, EconomyMember $economy_member, $products) {
+        $products = collect($products);
 
-    //     // Build a list of preferred currencies for the member, filter currencies
-    //     // with no price
-    //     $currencies = Self::userCurrencies($bar, $economy_member)
-    //         ->filter(function($currency) use($products) {
-    //             $product = $products[0]['product'];
-    //             return $product->prices->contains('currency_id', $currency->id);
-    //         });
-    //     if($currencies->isEmpty())
-    //         throw new \Exception("Could not quick buy product, no supported currencies");
-    //     $currency_ids = $currencies->pluck('id');
+        // Build a list of preferred currencies for the member, filter currencies
+        // with no price
+        // TODO: replace this extern invocation
+        $currencies = BarController::userCurrencies($bar, $economy_member)
+            ->filter(function($currency) use($products) {
+                $product = $products[0]['product'];
+                return $product->prices->contains('currency_id', $currency->id);
+            });
+        if($currencies->isEmpty())
+            throw new \Exception("Could not quick buy product, no supported currencies");
+        $currency_ids = $currencies->pluck('id');
 
-    //     // Get or create a wallet for the economy member, get the price
-    //     $wallet = $economy_member->getOrCreateWallet($currencies);
-    //     $currency = $wallet->currency;
+        // Get or create a wallet for the economy member, get the price
+        $wallet = $economy_member->getOrCreateWallet($currencies);
+        $currency = $wallet->currency;
 
-    //     // Select the price for each product, find the total price
-    //     $products = $products->map(function($item) use($wallet, $currency) {
-    //         // The quantity must be 1 or more
-    //         if($item['quantity'] < 1)
-    //             throw new \Exception('Cannot buy product with quantity < 1');
+        // Select the price for each product, find the total price
+        $products = $products->map(function($item) use($wallet, $currency) {
+            // The quantity must be 1 or more
+            if($item['quantity'] < 1)
+                throw new \Exception('Cannot buy product with quantity < 1');
 
-    //         // Select price for this product
-    //         $price = $item['product']
-    //             ->prices
-    //             ->whereStrict('currency_id', $currency->id)
-    //             ->first()
-    //             ->price;
-    //         if($price == null)
-    //             throw new \Exception('Product does not have price in selected currency');
-    //         $item['priceEach'] = $price * 1;
-    //         $item['priceTotal'] = $price * $item['quantity'];
+            // Select price for this product
+            $price = $item['product']
+                ->prices
+                ->whereStrict('currency_id', $currency->id)
+                ->first()
+                ->price;
+            if($price == null)
+                throw new \Exception('Product does not have price in selected currency');
+            $item['priceEach'] = $price * 1;
+            $item['priceTotal'] = $price * $item['quantity'];
 
-    //         return $item;
-    //     });
-    //     $price = $products->sum('priceTotal');
+            return $item;
+        });
+        $price = $products->sum('priceTotal');
 
-    //     // TODO: notify user if wallet is created?
+        // TODO: notify user if wallet is created?
 
-    //     // Get the user ID
-    //     $user_id = $economy_member->user_id;
+        // Get the user ID
+        $user_id = $economy_member->user_id;
 
-    //     // Determine whether to set different initiating user
-    //     $initiated_by_id = null;
-    //     $initiated_by_other = $user_id != barauth()->getUser()->id;
-    //     if($initiated_by_other)
-    //         $initiated_by_id = barauth()->getUser()->id;
+        // Determine whether to set different initiating user
+        // TODO: set initiated on kiosk instead
+        $initiated_by_id = null;
+        $initiated_by_other = true;
 
-    //     // Start a database transaction for the product transaction
-    //     // TODO: create a nice generic builder for the actions below
-    //     $out = null;
-    //     $productCount = 0;
-    //     DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, &$out, &$productCount, $initiated_by_id, $initiated_by_other) {
-    //         // TODO: last_transaction is used here but never defined
+        // Start a database transaction for the product transaction
+        // TODO: create a nice generic builder for the actions below
+        $out = null;
+        $productCount = 0;
+        DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, &$out, &$productCount, $initiated_by_id, $initiated_by_other) {
+            // TODO: last_transaction is used here but never defined
 
-    //         // Create the transaction or use last transaction
-    //         $transaction = $last_transaction ?? Transaction::create([
-    //             'state' => Transaction::STATE_SUCCESS,
-    //             'owner_id' => $user_id,
-    //             'initiated_by_id' => $initiated_by_id,
-    //             'initiated_by_other' => $initiated_by_other,
-    //         ]);
+            // Create the transaction or use last transaction
+            $transaction = $last_transaction ?? Transaction::create([
+                'state' => Transaction::STATE_SUCCESS,
+                'owner_id' => $user_id,
+                'initiated_by_id' => $initiated_by_id,
+                'initiated_by_other' => $initiated_by_other,
+            ]);
 
-    //         // Determine whether the product was free
-    //         $free = $price == 0;
+            // Determine whether the product was free
+            $free = $price == 0;
 
-    //         // Create the wallet mutation unless product is free
-    //         $mut_wallet = null;
-    //         if(!$free) {
-    //             // Create a new wallet mutation or update the existing
-    //             $mut_wallet = $transaction
-    //                 ->mutations()
-    //                 ->create([
-    //                     'economy_id' => $bar->economy_id,
-    //                     'mutationable_id' => 0,
-    //                     'mutationable_type' => '',
-    //                     'amount' => $price,
-    //                     'currency_id' => $currency->id,
-    //                     'state' => Mutation::STATE_SUCCESS,
-    //                     'owner_id' => $user_id,
-    //                 ]);
-    //             $mut_wallet->setMutationable(
-    //                 MutationWallet::create([
-    //                     'wallet_id' => $wallet->id,
-    //                 ])
-    //             );
-    //         }
+            // Create the wallet mutation unless product is free
+            $mut_wallet = null;
+            if(!$free) {
+                // Create a new wallet mutation or update the existing
+                $mut_wallet = $transaction
+                    ->mutations()
+                    ->create([
+                        'economy_id' => $bar->economy_id,
+                        'mutationable_id' => 0,
+                        'mutationable_type' => '',
+                        'amount' => $price,
+                        'currency_id' => $currency->id,
+                        'state' => Mutation::STATE_SUCCESS,
+                        'owner_id' => $user_id,
+                    ]);
+                $mut_wallet->setMutationable(
+                    MutationWallet::create([
+                        'wallet_id' => $wallet->id,
+                    ])
+                );
+            }
 
-    //         // Create a product mutation for each product type
-    //         $products->each(function($product) use($transaction, $bar, $currency, $user_id, $mut_wallet, &$productCount) {
-    //             // Get the quantity for this product, increase product count
-    //             $quantity = $product['quantity'];
-    //             $productCount += $quantity;
+            // Create a product mutation for each product type
+            $products->each(function($product) use($transaction, $bar, $currency, $user_id, $mut_wallet, &$productCount) {
+                // Get the quantity for this product, increase product count
+                $quantity = $product['quantity'];
+                $productCount += $quantity;
 
-    //             // Create the product mutation
-    //             $mut_product = $transaction
-    //                 ->mutations()
-    //                 ->create([
-    //                     'economy_id' => $bar->economy_id,
-    //                     'mutationable_id' => 0,
-    //                     'mutationable_type' => '',
-    //                     'amount' => -$product['priceTotal'],
-    //                     'currency_id' => $currency->id,
-    //                     'state' => Mutation::STATE_SUCCESS,
-    //                     'owner_id' => $user_id,
-    //                     'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
-    //                 ]);
-    //             $mut_product->setMutationable(
-    //                 MutationProduct::create([
-    //                     'product_id' => $product['product']->id,
-    //                     'bar_id' => $bar->id,
-    //                     'quantity' => $quantity,
-    //                 ])
-    //             );
-    //         });
+                // Create the product mutation
+                $mut_product = $transaction
+                    ->mutations()
+                    ->create([
+                        'economy_id' => $bar->economy_id,
+                        'mutationable_id' => 0,
+                        'mutationable_type' => '',
+                        'amount' => -$product['priceTotal'],
+                        'currency_id' => $currency->id,
+                        'state' => Mutation::STATE_SUCCESS,
+                        'owner_id' => $user_id,
+                        'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
+                    ]);
+                $mut_product->setMutationable(
+                    MutationProduct::create([
+                        'product_id' => $product['product']->id,
+                        'bar_id' => $bar->id,
+                        'quantity' => $quantity,
+                    ])
+                );
+            });
 
-    //         // Update the wallet balance
-    //         // TODO: do this by setting the mutation states instead
-    //         if(!$free)
-    //             $wallet->withdraw($price);
+            // Update the wallet balance
+            // TODO: do this by setting the mutation states instead
+            if(!$free)
+                $wallet->withdraw($price);
 
-    //         // Return the transaction
-    //         $out = $transaction;
-    //     });
+            // Return the transaction
+            $out = $transaction;
+        });
 
-    //     // Return the transaction details
-    //     return [
-    //         'transaction' => $out,
-    //         'productCount' => $productCount,
-    //         'currency' => $currency,
-    //         'price' => $price,
-    //     ];
-    // }
+        // Return the transaction details
+        return [
+            'transaction' => $out,
+            'productCount' => $productCount,
+            'currency' => $currency,
+            'price' => $price,
+        ];
+    }
 }

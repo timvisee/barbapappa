@@ -484,7 +484,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         // TODO: this are API calls, move it somewhere else
         Route::get('/buy/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
         Route::get('/buy/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
-        Route::middleware('throttle:10,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
+        Route::middleware('throttle:7,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');
@@ -675,7 +675,7 @@ Route::prefix('/kiosk')->middleware('kiosk')->group(function() {
     Route::get('/', 'KioskController@main')->name('kiosk.main');
     Route::get('/api/members', 'KioskController@apiMembers');
     Route::get('/api/products', 'KioskController@apiProducts');
-    // Route::middleware('throttle:10,1')->post('/', 'BarController@apiBuyBuy');
+    Route::middleware('throttle:7,1')->post('/', 'KioskController@apiBuy');
 });
 
 // Ajax routes

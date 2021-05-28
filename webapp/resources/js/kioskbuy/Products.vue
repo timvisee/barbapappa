@@ -30,7 +30,7 @@
                 v-on:click.stop.prevent="select(product)"
                 href="#"
                 class="green inverted item"
-                v-bind:class="{ active: getQuantity(product) > 0 }">
+                v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
             <span v-if="getQuantity(product) > 0" class="subtle">{{ getQuantity(product) }}×</span>
 
             {{ product.name }}
@@ -67,6 +67,14 @@
                 this.search(this.query);
             },
         },
+        mounted: function() {
+            this.search();
+        },
+        props: [
+            'selectedUsers',
+            'cart',
+            'buying',
+        ],
         methods: {
             // Get cart instance for user
             getUserCart(user, create = false) {
@@ -181,15 +189,6 @@
                 return this.products.filter(p => p.id == product.id).length > 0;
             },
         },
-        mounted: function() {
-            this.search();
-        },
-        props: [
-            'selectedUsers',
-            'selected',
-            'cart',
-            'buying',
-        ],
     }
 </script>
 
