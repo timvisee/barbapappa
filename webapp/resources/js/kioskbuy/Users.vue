@@ -32,7 +32,7 @@
             {{ user.name || __('misc.unknownUser') }}
 
             <div class="right">
-                <span v-if="getQuantity(user) > 0" class="subtle">{{ getQuantity(user) }}×</span>
+                <span v-if="getQuantity(user) > 0" class="active green">{{ getQuantity(user) }}×</span>
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
@@ -150,5 +150,9 @@
         color: red;
         float: right;
         line-height: 1 !important;
+    }
+
+    .active.green {
+        color: #21ba45 !important;
     }
 </style>
