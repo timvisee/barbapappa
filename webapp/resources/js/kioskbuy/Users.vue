@@ -2,6 +2,13 @@
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectUser') }}
+
+            <a v-if="selectedUsers.length"
+                    v-on:click.stop.prevent="reset()"
+                    href="#"
+                    class="reset">
+                {{ __('misc.reset') }}
+            </a>
         </h5>
 
         <div class="item">
@@ -98,6 +105,11 @@
                     })
                     .finally(() => this.searching = false);
             },
+
+            // Reset selection
+            reset() {
+                this.selectedUsers.splice(0);
+            },
         },
         mounted: function() {
             this.search();
@@ -112,5 +124,11 @@
 
     .item-icon-right::before {
         padding: 0;
+    }
+
+    .reset {
+        color: red;
+        float: right;
+        line-height: 1 !important;
     }
 </style>

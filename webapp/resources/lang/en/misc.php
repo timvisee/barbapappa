@@ -24,6 +24,7 @@ return [
     'change' => 'Change',
     'rename' => 'Rename',
     'delete' => 'Delete',
+    'reset' => 'Reset',
     'previously' => 'Previously',
     'continue' => 'Continue',
     'continueIn' => 'Continue in',

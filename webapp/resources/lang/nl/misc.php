@@ -24,6 +24,7 @@ return [
     'change' => 'Aanpassen',
     'rename' => 'Hernoemen',
     'delete' => 'Verwijderen',
+    'reset' => 'Reset',
     'previously' => 'Voorheen',
     'continue' => 'Verder gaan',
     'continueIn' => 'Verder in',
