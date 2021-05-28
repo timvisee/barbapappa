@@ -134,4 +134,8 @@
         /* TODO: do not use this hack! */
         width: calc(100% - 26px) !important;
     }
+
+    .button {
+        white-space: nowrap;
+    }
 </style>
