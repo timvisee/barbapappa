@@ -7,6 +7,7 @@
         <div class="fluid two ui huge buttons stick-bottom">
             <a href="#"
                     class="ui negative button"
+                    v-bind:class="{ disabled: buying }"
                     v-on:click.prevent.stop="cancel()">
                 {{
                     confirmingCancel
