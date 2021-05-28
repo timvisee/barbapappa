@@ -825,7 +825,7 @@ return [
         'selectUser' => 'Select pirate',
         'searchUsers' => 'Search pirates',
         'noUsersFoundFor' => 'No pirates found for :term',
-        'firstSelectUser' => 'Select a pirate first',
+        'firstSelectUser' => 'Select a pirate on the left to make a purchase for',
         'selectProducts' => 'Select products',
         'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
         'buyProductsUsers#' => '{0} Buy no products for :users pirates|[1,*] Buy :count× for :users pirates',

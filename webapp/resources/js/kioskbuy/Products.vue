@@ -202,4 +202,9 @@
         float: right;
         line-height: 1 !important;
     }
+
+    .dimmer .text {
+        padding: 1em;
+        line-height: 2;
+    }
 </style>

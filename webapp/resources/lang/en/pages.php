@@ -825,7 +825,7 @@ return [
         'selectUser' => 'Select member',
         'searchUsers' => 'Search users',
         'noUsersFoundFor' => 'No users found for :term',
-        'firstSelectUser' => 'Select a member first',
+        'firstSelectUser' => 'Select a member on the left to make a purchase for',
         'selectProducts' => 'Select products',
         'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
         'buyProductsUsers#' => '{0} Buy no products for :users users|[1,*] Buy :count× for :users users',
