@@ -5,7 +5,16 @@
             <div class="ui text">{{ __('pages.kiosk.firstSelectUser') }}</div>
         </div>
 
-        <h5 class="ui item header">{{ __('pages.kiosk.selectProducts') }}</h5>
+        <h5 class="ui item header">
+            {{ __('pages.kiosk.selectProducts') }}
+
+            <a v-if="getCartSize() > 0"
+                    v-on:click.stop.prevent="removeCart()"
+                    href="#"
+                    class="reset">
+                {{ __('misc.reset') }}
+            </a>
+        </h5>
 
         <div class="item">
             <div class="ui transparent icon input">
@@ -73,13 +82,34 @@
             },
         },
         methods: {
+            // Get cart instance for user
+            getUserCart(user, create = false) {
+                let cart = this.cart.filter(c => c.user.id == user.id)[0] || null;
+                if(cart != null || !create)
+                    return cart;
+
+                // Create cart
+                this.cart.push({
+                    user,
+                    products: [],
+                });
+                return this.getUserCart(user, false);
+            },
+
             // Select the given product, add 1 to desired quantity
             select(product) {
-                let item = this.selected.filter(p => p.id == product.id);
+                // Get user and cart, user must be selected
+                let user = this.selectedUsers[0];
+                if(user == null)
+                    return;
+                let userCart = this.getUserCart(user, true);
+
+                // Add products
+                let item = userCart.products.filter(p => p.id == product.id);
                 if(item.length > 0)
                     item[0].quantity += 1;
                 else
-                    this.selected.push({
+                    userCart.products.push({
                         id: product.id,
                         quantity: 1,
                         product,
@@ -88,15 +118,61 @@
 
             // Fully deselect the given product
             deselect(product) {
-                this.selected.splice(
-                    this.selected.findIndex(p => p.id == product.id),
+                // Get user and cart, user must be selected
+                let user = this.selectedUsers[0];
+                if(user == null)
+                    return;
+                let userCart = this.getUserCart(user);
+                if(userCart == null)
+                    return;
+
+                // Remove product from cart
+                userCart.products.splice(
+                    userCart.products.findIndex(p => p.id == product.id),
                     1,
                 );
+
+                // If user does not have products anymore, remove cart
+                if(this.getCartSize() <= 0)
+                    this.removeCart();
+            },
+
+            // Get the number of products in the current user cart
+            getCartSize() {
+                // Get user and cart, user must be selected
+                let user = this.selectedUsers[0];
+                if(user == null)
+                    return 0;
+                let userCart = this.getUserCart(user);
+                if(userCart == null)
+                    return 0;
+
+                return userCart.products.reduce((sum, product) => product.quantity + sum, 0);
+            },
+
+            // Remove cart for the current user
+            removeCart() {
+                // Get user and cart, user must be selected
+                let user = this.selectedUsers[0];
+                if(user == null)
+                    return 0;
+
+                let i = this.cart.findIndex(c => c.user.id == user.id);
+                if(i >= 0)
+                    this.cart.splice(i, 1);
             },
 
             // Get the selection quantity for a given product
             getQuantity(product) {
-                let item = this.selected.filter(p => p.id == product.id);
+                // Get user and cart, user must be selected
+                let user = this.selectedUsers[0];
+                if(user == null)
+                    return 0;
+                let userCart = this.getUserCart(user);
+                if(userCart == null)
+                    return 0;
+
+                let item = userCart.products.filter(p => p.id == product.id);
                 return item.length > 0 ? item[0].quantity : 0;
             },
 
@@ -130,3 +206,11 @@
         ],
     }
 </script>
+
+<style>
+    .reset {
+        color: red;
+        float: right;
+        line-height: 1 !important;
+    }
+</style>

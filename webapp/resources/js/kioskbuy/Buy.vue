@@ -13,6 +13,7 @@
             <div class="column">
                 <Users :selectedUsers="selectedUsers"
                         :selected="selected"
+                        :cart="cart"
                         :buying="buying" />
             </div>
             <div class="column">

@@ -31,8 +31,12 @@
                 class="green item">
             {{ user.name || __('misc.unknownUser') }}
 
-            <span v-if="isUserSelected(user)"
-                    class="item-icon-right glyphicons glyphicons-chevron-right"></span>
+            <div class="right">
+                <span v-if="getQuantity(user) > 0" class="subtle">{{ getQuantity(user) }}×</span>
+
+                <span v-if="isUserSelected(user)"
+                        class="item-icon glyphicons glyphicons-chevron-right"></span>
+            </div>
         </a>
 
         <i v-if="!searching && users.length == 0" class="item">
@@ -106,6 +110,22 @@
                     .finally(() => this.searching = false);
             },
 
+            // Get cart instance for user
+            getUserCart(user) {
+                return this.cart.filter(c => c.user.id == user.id)[0] || null;
+            },
+
+            // Get product quantity for user
+            getQuantity(user) {
+                // Get user cart
+                let userCart = this.getUserCart(user);
+                if(userCart == null)
+                    return 0;
+
+                // Count user products
+                return userCart.products.reduce((sum, product) => product.quantity + sum, 0);
+            },
+
             // Reset selection
             reset() {
                 this.selectedUsers.splice(0);
@@ -118,11 +138,11 @@
 </script>
 
 <style>
-    .item-icon-right {
+    .right {
         float: right;
     }
 
-    .item-icon-right::before {
+    .item-icon::before {
         padding: 0;
     }
 
