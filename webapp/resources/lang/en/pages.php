@@ -819,6 +819,16 @@ return [
     ],
 
     /**
+     * Kiosk page.
+     */
+    'kiosk' => [
+        'selectUser' => 'Select member',
+        'selectProducts' => 'Select products',
+        'searchUsers' => 'Search users',
+        'noUsersFoundFor' => 'No users found for :term',
+    ],
+
+    /**
      * Community/bar statistics pages.
      */
     'stats' => [

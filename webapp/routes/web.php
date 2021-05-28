@@ -673,6 +673,9 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
 Route::prefix('/kiosk')->middleware('kiosk')->group(function() {
     // Main kiosk page
     Route::get('/', 'KioskController@main')->name('kiosk.main');
+    Route::get('/api/members', 'KioskController@apiMembers');
+    Route::get('/api/products', 'KioskController@apiProducts');
+    // Route::middleware('throttle:10,1')->post('/', 'BarController@apiBuyBuy');
 });
 
 // Ajax routes

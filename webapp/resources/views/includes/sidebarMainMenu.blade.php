@@ -22,7 +22,7 @@
     @else
         @if(kioskauth()->isAuth())
             <div class="item header has-alt-button">
-                @lang('misc.kiosk') @lang('misc.for') {{ kioskauth()->getBar()->name }}
+                @lang('misc.kiosk'): {{ kioskauth()->getBar()->name }}
                 <a href="{{ route('logout') }}"
                         class="alt-button logout"
                         title="@lang('auth.logout')">

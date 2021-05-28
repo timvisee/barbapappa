@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-@section('title', $bar->name)
+@section('title', __('misc.kiosk') . ': ' . $bar->name)
 
 @push('scripts')
-    <script type="text/javascript" src="{{ asset('js/advancedbuy.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/kioskbuy.js') }}"></script>
 @endpush
 
 @section('content')
@@ -13,8 +13,7 @@
         </div>
     </h2>
 
-    <div id="advancedbuy">
+    <div id="kioskbuy">
         <div class="ui active centered inline loader"></div>
     </div>
-    <br>
 @endsection

@@ -819,6 +819,16 @@ return [
     ],
 
     /**
+     * Kiosk page.
+     */
+    'kiosk' => [
+        'selectUser' => 'Selecteer lid',
+        'selectProducts' => 'Selecteer producten',
+        'searchUsers' => 'Zoek leden',
+        'noUsersFoundFor' => 'Geen leden gevonden voor :term',
+    ],
+
+    /**
      * Community/bar statistics pages.
      */
     'stats' => [

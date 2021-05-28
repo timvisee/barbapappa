@@ -1,0 +1,110 @@
+<!-- Advanced buy page component -->
+
+<template>
+    <div>
+
+        <div v-if="successMessage" class="ui success message">
+            <span class="halflings halflings-ok-sign icon"></span>
+            {{ successMessage }}
+        </div>
+
+        <!-- <div class="ui two column doubling grid"> -->
+        <div class="ui two column grid">
+            <div class="column">
+                <Users :selected="selected"
+                        :cart="cart"
+                        :buying="buying" />
+            </div>
+            <div class="column">
+                <Products :selected="selected" />
+            </div>
+        </div>
+
+
+
+
+
+        <!-- <Products :selected="selected" /> -->
+        <!-- <Users v-if="selected.length > 0" --> 
+        <!--         :selected="selected" -->
+        <!--         :cart="cart" -->
+        <!--         :buying="buying" /> -->
+        <!-- <Cart v-if="cart.length > 0" -->
+        <!--         v-on:buy="buy" -->
+        <!--         :cart="cart" -->
+        <!--         :buying="buying" /> -->
+
+    </div>
+</template>
+
+<script>
+    import axios from 'axios';
+
+    const Cart = require('./Cart.vue').default;
+    const Products = require('./Products.vue').default;
+    const Users = require('./Users.vue').default;
+
+    export default {
+        components: {
+            Cart,
+            Products,
+            Users,
+        },
+        data() {
+            return {
+                selected: [],
+                cart: [],
+                buying: false,
+                successMessage: undefined,
+            };
+        },
+        created() {
+            // Prevent accidental closing
+            window.addEventListener('beforeunload', this.onClose);
+        },
+        methods: {
+            // Commit the current cart as purchase
+            buy() {
+                // Do not buy if already buying
+                if(this.buying)
+                    return;
+                this.buying = true;
+
+                // Buy the products through an AJAX call
+                axios.post(window.location.href, this.cart)
+                    .then(res => {
+                        // Build the success message
+                        let products = res.data.productCount;
+                        let users = res.data.userCount;
+                        this.successMessage = users <= 1
+                            ? this.langChoice('pages.bar.advancedBuy.boughtProducts#', products)
+                            : this.langChoice('pages.bar.advancedBuy.boughtProductsUsers#', products, {users});
+
+                        // Clear the selected & cart
+                        this.selected.splice(0);
+                        this.cart.splice(0);
+
+                        window.scrollTo(0, 0);
+                    })
+                    .catch(err => {
+                        alert('Failed to purchase products, an error occurred');
+                        console.error(err);
+                    })
+                    .finally(() => this.buying = false);
+            },
+
+            onClose(event) {
+                // Do not prevent closing if nothing is selected
+                if(this.cart.length == 0 && this.selected.length == 0)
+                    return;
+
+                // Prevent closing the page, set a warning message
+                let msg = this.__('pages.bar.advancedBuy.pageCloseWarning');
+                console.log(msg);
+                event.preventDefault();
+                event.returnValue = msg;
+                return msg;
+            },
+        },
+    }
+</script>
