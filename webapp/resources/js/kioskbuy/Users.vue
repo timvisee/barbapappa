@@ -19,7 +19,7 @@
 
         <a v-for="user in users"
                 v-on:click.prevent.stop="toggleSelectUser(user)"
-                v-bind:class="{ disabled: buying, active: selectedUsers.includes(user) }"
+                v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
                 class="green item">
             {{ user.name || __('misc.unknownUser') }}
@@ -60,16 +60,22 @@
                     throw 'selected user list cannot have multiple users';
 
                 // Remove from list if already in it
-                const i = this.selectedUsers.indexOf(user);
-                if(i > -1) {
-                    this.selectedUsers.splice(i, 1);
+                if(this.isUserSelected(user)) {
+                    this.selectedUsers.splice(
+                        this.selectedUsers.findIndex(u => u.id == user.id),
+                        1,
+                    );
                     return;
                 }
 
                 // Add user to list
-                // TODO: find better way to clear array
                 this.selectedUsers.splice(0);
                 this.selectedUsers.push(user);
+            },
+
+            // Check whether given user is in given list.
+            isUserSelected(user) {
+                return this.selectedUsers.some(u => u.id == user.id);
             },
 
             // Search users with the given query
