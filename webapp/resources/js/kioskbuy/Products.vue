@@ -39,6 +39,10 @@
                     v-on:click.stop.prevent="deselect(product)"
                     class="ui red label small basic">×</div>
 
+            <div v-if="getQuantity(product)"
+                    v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
+                    class="ui orange label small basic">+{{ 5 - getQuantity(product) % 5 }}</div>
+
             <div v-if="getQuantity(product) == 0"
                     class="ui blue label">{{ product.price_display }}</div>
         </a>
@@ -91,7 +95,7 @@
             },
 
             // Select the given product, add 1 to desired quantity
-            select(product) {
+            select(product, quantity = 1) {
                 // Get user and cart, user must be selected
                 let user = this.selectedUsers[0];
                 if(user == null)
@@ -101,11 +105,11 @@
                 // Add products
                 let item = userCart.products.filter(p => p.id == product.id);
                 if(item.length > 0)
-                    item[0].quantity += 1;
+                    item[0].quantity += quantity;
                 else
                     userCart.products.push({
                         id: product.id,
-                        quantity: 1,
+                        quantity: quantity,
                         product,
                     });
             },
