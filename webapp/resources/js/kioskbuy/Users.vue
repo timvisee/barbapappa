@@ -23,6 +23,9 @@
                 href="#"
                 class="green item">
             {{ user.name || __('misc.unknownUser') }}
+
+            <span v-if="isUserSelected(user)"
+                    class="item-icon-right glyphicons glyphicons-chevron-right"></span>
         </a>
 
         <i v-if="!searching && users.length == 0" class="item">
@@ -101,3 +104,13 @@
         },
     }
 </script>
+
+<style>
+    .item-icon-right {
+        float: right;
+    }
+
+    .item-icon-right::before {
+        padding: 0;
+    }
+</style>
