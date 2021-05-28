@@ -4,7 +4,7 @@
         <br>
         <br>
 
-        <div class="fluid ui big buttons stick-bottom">
+        <div class="fluid two ui big buttons stick-bottom">
             <a href="#"
                     class="ui button"
                     v-on:click.prevent.stop="cancel()">
@@ -26,8 +26,8 @@
                     confirming
                         ? __('pages.bar.advancedBuy.pressToConfirm')
                         : (cart.length <= 1
-                            ? langChoice('pages.bar.advancedBuy.buyProducts#', quantity())
-                            : langChoice('pages.bar.advancedBuy.buyProductsUsers#', quantity(), {users: this.cart.length}))
+                            ? langChoice('pages.kiosk.buyProducts#', quantity())
+                            : langChoice('pages.kiosk.buyProductsUsers#', quantity(), {users: this.cart.length}))
                 }}
             </a>
         </div>

@@ -827,6 +827,8 @@ return [
         'noUsersFoundFor' => 'No users found for :term',
         'firstSelectUser' => 'Select a member first',
         'selectProducts' => 'Select products',
+        'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
+        'buyProductsUsers#' => '{0} Buy no products for :users users|[1,*] Buy :count× for :users users',
     ],
 
     /**
