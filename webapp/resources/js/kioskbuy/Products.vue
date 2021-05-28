@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical menu fluid">
+    <div class="ui vertical large menu fluid">
 
         <div v-if="selectedUsers.length == 0" class="ui inverted active dimmer">
             <div class="ui text">{{ __('pages.kiosk.firstSelectUser') }}</div>

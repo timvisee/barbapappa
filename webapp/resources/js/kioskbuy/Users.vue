@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical menu fluid">
+    <div class="ui vertical large menu fluid">
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectUser') }}
 
