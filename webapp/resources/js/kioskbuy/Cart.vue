@@ -4,9 +4,9 @@
         <br>
         <br>
 
-        <div class="fluid two ui big buttons stick-bottom">
+        <div class="fluid two ui huge buttons stick-bottom">
             <a href="#"
-                    class="ui button"
+                    class="ui negative button"
                     v-on:click.prevent.stop="cancel()">
                 {{
                     confirmingCancel
@@ -17,7 +17,7 @@
 
             <div class="or" :data-text="__('general.or')"></div>
 
-            <a class="ui primary button"
+            <a class="ui positive button"
                     v-if="cart.length > 0"
                     v-on:click.prevent.stop="buy()"
                     v-bind:class="{ disabled: buying, loading: buying }"
