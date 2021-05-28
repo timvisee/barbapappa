@@ -825,7 +825,7 @@ return [
         'selectUser' => 'Selecteer lid',
         'searchUsers' => 'Zoek leden',
         'noUsersFoundFor' => 'Geen leden gevonden voor :term',
-        'firstSelectUser' => 'Selecteer eerst een lid',
+        'firstSelectUser' => 'Selecteer een lid',
         'selectProducts' => 'Selecteer producten',
     ],
 

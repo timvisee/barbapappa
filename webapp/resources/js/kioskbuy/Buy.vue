@@ -1,4 +1,4 @@
-<!-- Advanced buy page component -->
+<!-- Kiosk buy page component -->
 
 <template>
     <div>
@@ -24,15 +24,13 @@
             </div>
         </div>
 
-        <!-- <Products :selected="selected" /> -->
-        <!-- <Users v-if="selected.length > 0" --> 
-        <!--         :selected="selected" -->
-        <!--         :cart="cart" -->
-        <!--         :buying="buying" /> -->
-        <!-- <Cart v-if="cart.length > 0" -->
-        <!--         v-on:buy="buy" -->
-        <!--         :cart="cart" -->
-        <!--         :buying="buying" /> -->
+        <div class="ui divider hidden"></div>
+
+        <Cart v-if="cart.length > 0"
+                v-on:buy="buy"
+                :selectedUsers="selectedUsers"
+                :cart="cart"
+                :buying="buying" />
 
     </div>
 </template>

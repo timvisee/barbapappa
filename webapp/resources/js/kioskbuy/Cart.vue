@@ -1,23 +1,24 @@
 <template>
     <div>
-        <div class="ui vertical menu fluid">
-            <h5 class="ui item header">{{ __('pages.bar.advancedBuy.inCart') }}</h5>
+        <!-- TODO: we should not need this when position sticky works -->
+        <br>
+        <br>
 
-            <div v-for="item in cart">
-                <i class="ui item">{{ __('misc.for') }} {{ item.user.name || __('misc.unknownUser') }}</i>
-                <div v-for="product in item.products" class="item">
-                    <span class="subtle">{{ product.quantity }}×</span>
+        <div class="fluid ui big buttons stick-bottom">
+            <a href="#"
+                    class="ui button"
+                    v-on:click.prevent.stop="cancel()">
+                {{
+                    confirmingCancel
+                        ? __('pages.bar.advancedBuy.pressToConfirm')
+                        : __('general.cancel')
+                }}
+            </a>
 
-                    {{ product.product.name }}
+            <div class="or" :data-text="__('general.or')"></div>
 
-                    <a v-on:click.stop.prevent="discard(item.user, product)"
-                            class="ui red label basic small" href="#">×</a>
-
-                    <div class="ui blue label">{{ product.product.price_display }}</div>
-                </div>
-            </div>
-
-            <a class="ui bottom attached primary button"
+            <a class="ui primary button"
+                    v-if="cart.length > 0"
                     v-on:click.prevent.stop="buy()"
                     v-bind:class="{ disabled: buying, loading: buying }"
                     href="#">
@@ -38,36 +39,23 @@
         props: [
             'cart',
             'buying',
+            'selectedUsers',
         ],
         data: function() {
             return {
                 confirming: false,
+                confirmingCancel: false,
                 confirmingTimer: null,
+                confirmingCancelTimer: null,
             };
         },
         watch: {
             cart: function() {
                 this.setConfirming(false);
+                this.setConfirmingCancel(false);
             },
         },
         methods: {
-            discard(user, product) {
-                // Find the user item
-                let itemArr = this.cart.filter(i => i.user.id == user.id);
-                if(itemArr.length <= 0)
-                    return;
-                let item = itemArr[0];
-
-                // Remove the product
-                item.products.splice(item.products.findIndex(p => p.id == product.id), 1);
-
-                // Remove the whole user if there are no products left
-                if(item.products.length <= 0)
-                    this.cart.splice(this.cart.findIndex(i => i.user.id == user.id), 1);
-
-                this.setConfirming(false);
-            },
-
             quantity() {
                 return this.cart
                     .map(i => i.products
@@ -87,6 +75,16 @@
                 this.setConfirming(false);
             },
 
+            cancel() {
+                if(this.confirmingCancel !== true) {
+                    this.setConfirmingCancel(true);
+                    return;
+                }
+
+                this.resetCart();
+                this.setConfirmingCancel(false);
+            },
+
             setConfirming(confirming = true) {
                 // Cancel any pending confirming timers
                 if(this.confirmingTimer != null)
@@ -99,7 +97,53 @@
                         this.confirming = false;
                         this.confirmingTimer = null;
                     }, 4000);
+
+                // Unset confirming cancel
+                if(!!confirming)
+                    this.setConfirmingCancel(false);
+            },
+
+            setConfirmingCancel(confirming = true) {
+                // Cancel any pending confirming timers
+                if(this.confirmingCancelTimer != null)
+                    clearTimeout(this.confirmingCancelTimer);
+
+                // Set confirming state, add reset timer
+                this.confirmingCancel = !!confirming;
+                if(this.confirmingCancel)
+                    this.confirmingCancelTimer = setTimeout(() => {
+                        this.confirmingCancel = false;
+                        this.confirmingCancelTimer = null;
+                    }, 4000);
+
+                // Unset confirming buy
+                if(!!confirming)
+                    this.setConfirming(false);
+            },
+
+            // Reset carts
+            resetCart() {
+                this.cart.splice(0);
+
+                // TODO: call reset function in parent instead
+                // TODO: - reset selected users
+                // TODO: - refresh lists
+
+                // Call function for this in Users component instead
+                this.selectedUsers.splice(0);
             },
         }
     }
 </script>
+
+<style>
+    .stick-bottom {
+        position: fixed;
+        bottom: 14px;
+        z-index: 1001;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15) !important;
+
+        /* TODO: do not use this hack! */
+        width: calc(100% - 26px) !important;
+    }
+</style>

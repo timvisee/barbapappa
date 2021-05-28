@@ -39,29 +39,15 @@
                     v-on:click.stop.prevent="deselect(product)"
                     class="ui red label small basic">×</div>
 
-            <div class="ui blue label">{{ product.price_display }}</div>
+            <div v-if="getQuantity(product) == 0"
+                    class="ui blue label">{{ product.price_display }}</div>
         </a>
 
         <i v-if="!searching && products.length == 0" class="item">
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}
         </i>
 
-        <a v-for="product in selected"
-                v-if="!isProductInResult(product.product)"
-                v-on:click.stop.prevent="select(product.product)"
-                href="#"
-                class="green inverted item"
-                v-bind:class="{ active: getQuantity(product.product) > 0 }">
-            <span v-if="getQuantity(product.product) > 0" class="subtle">{{ getQuantity(product.product) }}×</span>
-
-            {{ product.product.name }}
-
-            <div v-if="getQuantity(product.product)"
-                    v-on:click.stop.prevent="deselect(product.product)"
-                    class="ui red label small basic">×</div>
-
-            <div class="ui blue label">{{ product.product.price_display }}</div>
-        </a>
+        <!-- TODO: always show selected products, like with advancedbuy -->
     </div>
 </template>
 
