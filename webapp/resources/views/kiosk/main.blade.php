@@ -7,10 +7,8 @@
 @endpush
 
 @section('content')
-    <h2 class="ui header bar-header">
-        <div>
-            @yield('title')
-        </div>
+    <h2 class="ui header center aligned">
+        @yield('title')
     </h2>
 
     <div id="kioskbuy">
