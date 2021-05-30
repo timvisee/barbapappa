@@ -46,9 +46,7 @@
             </div>
         </a>
 
-        <!-- Always show users having a cart on top if not part of query results -->
-        <a v-for="user in cart.map(c => c.user)"
-                v-if="!users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
+        <a v-for="user in users"
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
@@ -63,7 +61,9 @@
             </div>
         </a>
 
-        <a v-for="user in users"
+        <!-- Always show users having a cart on bottom if not part of query results -->
+        <a v-for="user in cart.map(c => c.user)"
+                v-if="!users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
