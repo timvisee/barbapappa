@@ -5,8 +5,11 @@
             <div class="ui transparent icon input">
                 <input v-model="query" type="text" :placeholder="__('pages.products.search') + '...'" ref="query" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
-                <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon link">
+                <i v-if="!searching && !query" v-on:click.prevent.stop="search(query)" class="icon link">
                     <span class="glyphicons glyphicons-search"></span>
+                </i>
+                <i v-if="!searching && query" v-on:click.prevent.stop="query = ''" class="icon link">
+                    <span class="glyphicons glyphicons-remove"></span>
                 </i>
             </div>
         </div>
