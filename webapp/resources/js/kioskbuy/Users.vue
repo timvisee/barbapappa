@@ -78,6 +78,9 @@
             </div>
         </a>
 
+        <i v-if="searching && users.length == 0" class="item">
+            {{ __('pages.kiosk.searchingFor', {term: query}) }}...
+        </i>
         <i v-if="!searching && users.length == 0" class="item">
             {{ __('pages.kiosk.noUsersFoundFor', {term: query}) }}...
         </i>

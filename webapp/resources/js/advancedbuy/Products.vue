@@ -37,6 +37,9 @@
                 class="ui blue label">{{ product.price_display }}</div>
         </a>
 
+        <i v-if="searching && products.length == 0" class="item">
+            {{ __('pages.products.searchingFor', {term: query}) }}
+        </i>
         <i v-if="!searching && products.length == 0" class="item">
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}
         </i>

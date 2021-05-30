@@ -278,7 +278,8 @@ return [
         'search' => 'Producten zoeken',
         '#products' => '{0} Geen producten|{1} 1 product|[2,*] :count producten',
         'noProducts' => 'Geen producten...',
-        'noProductsFoundFor' => 'Geen producten gevonden voor :term...',
+        'searchingFor' => 'Zoeken naar :term...',
+        'noProductsFoundFor' => 'Geen producten gevonden voor :term',
         'manageProduct' => 'Beheer product',
         'manageProducts' => 'Beheer producten',
         'addProducts' => 'Producten toevoegen',
@@ -839,6 +840,7 @@ return [
     'kiosk' => [
         'selectUser' => 'Selecteer lid',
         'searchUsers' => 'Zoek leden',
+        'searchingFor' => 'Zoeken naar :term...',
         'noUsersFoundFor' => 'Geen leden gevonden voor :term',
         'firstSelectUser' => 'Selecteer links een lid om een aankoop voor te doen',
         'selectProducts' => 'Selecteer producten',
