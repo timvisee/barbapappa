@@ -72,11 +72,6 @@
                     this.$forceUpdate();
                 }, 500);
 
-                // Focus the search field for quick new searches
-                let searchField = document.getElementById("user-search");
-                searchField.focus();
-                searchField.setSelectionRange(0, searchField.value.length)
-
                 // Find the user object, or create a new one
                 let item = this.cart.filter(i => i.user.id == user.id);
                 if(item.length <= 0) {
