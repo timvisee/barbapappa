@@ -41,6 +41,18 @@
     const Products = require('./Products.vue').default;
     const Users = require('./Users.vue').default;
 
+    /**
+     * Order timeout in seconds. Cancel current order after number of seconds of
+     * inactivity.
+     */
+    const ORDER_CANCEL_TIMEOUT = 2.5 * 60;
+
+    /**
+     * Order timeout in seconds. Cancel current order after number of seconds of
+     * inactivity.
+     */
+    const INACTIVITY_REFRESH_TIMEOUT = 2 * 60 * 60;
+
     export default {
         components: {
             Cart,
@@ -53,10 +65,21 @@
                 cart: [],
                 buying: false,
                 successMessage: undefined,
+                // Timer handle after which to clear the success message
                 decayTimer: null,
+                // Timer handle after which to cancel the current order (inactivity cancel)
+                orderCancelTimer: null,
+                // Timer handle after which to force reload the interface
+                inactiveRefreshTimer: null,
             };
         },
         watch: {
+            selectedUsers: function() {
+                this.heartbeat();
+            },
+            cart: function() {
+                this.heartbeat();
+            },
             successMessage: function(newMsg, oldMsg) {
                 if(newMsg != undefined) {
                     clearTimeout(this.decayTimer);
@@ -67,6 +90,9 @@
             },
         },
         created() {
+            // Initial heartbeat
+            this.heartbeat();
+
             // Prevent accidental closing
             window.addEventListener('beforeunload', this.onClose);
         },
@@ -106,6 +132,34 @@
                 this.cart.splice(0);
 
                 // TODO: optionally reload list of users/products
+            },
+
+            // Invoked on any user activity. Manages inactivity timers.
+            heartbeat() {
+                // Reset current timers
+                clearTimeout(this.orderCancelTimer);
+                clearTimeout(this.inactiveRefreshTimer);
+
+                // Set up order inactivity cancel timeout
+                this.orderCancelTimer = setTimeout(() => {
+                    // Skip if no users selected or nothing in cart
+                    if(this.selectedUsers.length == 0 && this.cart.length == 0)
+                        return;
+
+                    // Cancel
+                    this.cancel();
+                }, ORDER_CANCEL_TIMEOUT * 1000);
+
+                // Set up inactive refresh timer
+                this.inactiveRefreshTimer = setTimeout(() => {
+                    // Skip refresh if order is configured
+                    if(this.cart.length > 0)
+                        return;
+
+                    // Force refresh
+                    console.log("Refreshing kiosk page after time of activity");
+                    window.location.reload();
+                }, INACTIVITY_REFRESH_TIMEOUT * 1000);
             },
 
             onClose(event) {
