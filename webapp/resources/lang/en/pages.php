@@ -174,6 +174,13 @@ return [
             'scanQr' => 'scan the QR code with your phone to join and make a purchase',
             'orVisit' => 'Or visit',
         ],
+        'links' => [
+            'title' => 'Useful links',
+            'description' => 'This page lists various shareable links for this community. You may share these through email or print them on a poster. Some of these links allow you to direct users to specific otherwise hidden pages and intents.<br><br>Please be aware that some links change when modifying community settings, and some links contain secret bits.',
+            'linkCommunity' => 'Main community page',
+            'linkJoinCommunity' => 'Invite new user to join community',
+            'linkJoinCommunityCode' => 'Invite new user to join community (with code)',
+        ],
         'checklist' => 'Community checklist',
     ],
 

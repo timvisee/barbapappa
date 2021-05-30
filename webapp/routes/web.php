@@ -149,6 +149,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             // Index
             Route::get('/', 'CommunityController@manage')->middleware(CommunityController::permsManage()->middleware())->name('community.manage');
 
+            // Useful links
+            Route::get('/links', 'CommunityController@links')->name('community.links');
+
             // Generate poster
             Route::get('/generate-poster', 'CommunityController@generatePoster')->name('community.poster.generate');
             Route::post('/generate-poster', 'CommunityController@doGeneratePoster')->name('community.poster.doGenerate');

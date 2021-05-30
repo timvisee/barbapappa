@@ -161,6 +161,15 @@ class CommunityController extends Controller {
     }
 
     /**
+     * Page with useful links.
+     *
+     * @return Response
+     */
+    public function links() {
+        return view('community.links');
+    }
+
+    /**
      * Page to generate a poster PDF for this community, allowing some configuration.
      *
      * @return Response

@@ -174,6 +174,13 @@ return [
             'scanQr' => 'scan de QR code met je telefoon, word lid en doe een aankoop',
             'orVisit' => 'Of bezoek',
         ],
+        'links' => [
+            'title' => 'Handige links',
+            'description' => 'Deze pagina geeft een lijst handige deelbare links voor deze groep. Je kunt deze links bijvoorbeeld delen via e-mail of printen op een poster. Sommige van deze links maken het mogelijk om gebruikers naar specifieke normaal verborgen paginas of doelen te sturen.<br><br>Let er alsjeblieft op dat sommige links veranderen bij het aanpassen van groep instellingen, en sommige links bevatten geheime stukjes.',
+            'linkCommunity' => 'Groep hoofdpagina',
+            'linkJoinCommunity' => 'Nodig nieuwe gebruiker uit',
+            'linkJoinCommunityCode' => 'Nodig nieuwe gebruiker uit (met code)',
+        ],
         'checklist' => 'Groep checklist',
     ],
 

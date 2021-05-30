@@ -182,7 +182,7 @@
                 @lang('pages.bar.links.title')
             </a>
         @else
-            <div class="item disabled">@lang('pages.bar.startKiosk')</div>
+            <div class="item disabled">@lang('pages.bar.links.title')</div>
         @endif
         @if(perms(BarController::permsManage()))
             <a href="{{ route('bar.startKiosk', ['barId' => $bar->human_id]) }}" class="item">
