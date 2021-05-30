@@ -187,6 +187,6 @@
         z-index: 1001;
 
         /* TODO: do not use this hack! */
-        width: calc(100% - 26px) !important;
+        width: calc(100% - 28px) !important;
     }
 </style>

@@ -245,7 +245,6 @@
     }
 
     .item {
-        overflow: hidden;
         white-space: nowrap;
     }
 

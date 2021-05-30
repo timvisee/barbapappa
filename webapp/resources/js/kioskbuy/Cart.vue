@@ -135,7 +135,7 @@
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15) !important;
 
         /* TODO: do not use this hack! */
-        width: calc(100% - 26px) !important;
+        width: calc(100% - 28px) !important;
     }
 
     .button {
