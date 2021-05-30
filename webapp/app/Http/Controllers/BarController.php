@@ -1093,8 +1093,7 @@ class BarController extends Controller {
         // Redirect to kiosk page
         return redirect()
             ->route('kiosk.main')
-            ->withCookie(Cookie::forget(UserAuthenticator::AUTH_COOKIE))
-            ->with('success', __('pages.bar.startedKiosk'));
+            ->withCookie(Cookie::forget(UserAuthenticator::AUTH_COOKIE));
     }
 
     /**
