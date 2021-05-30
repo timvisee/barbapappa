@@ -14,7 +14,7 @@
 @if(isset($token))
 @lang('mail.password.reset.noChangeThenReset')<br>
 
-{{ route('password.reset', ['token' => $token, 'compromised' => true]) }}<br>
+<{{ route('password.reset', ['token' => $token, 'compromised' => true]) }}><br>
 
 @lang('mail.password.reset.orContact', ['contact' => route('contact'), 'app' => config('app.name')])
 @else
