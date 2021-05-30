@@ -88,6 +88,9 @@ mix.copy(
 ).copy(
     'node_modules/semantic-ui-css/semantic.min.js',
     'public/js/semantic.min.js',
+).copy(
+    'node_modules/semantic-ui-css/themes/default',
+    'public/css/themes/default',
 );
 
 // Other static resources
