@@ -36,6 +36,11 @@ class KioskController extends Controller {
     const PRODUCTS_TOP_LIMIT = 10;
 
     /**
+     * Limit of products to show that were recently bought.
+     */
+    const PRODUCT_RECENT_LIMIT = 5;
+
+    /**
      * Kiosk buy page.
      *
      * @return Response
@@ -74,13 +79,13 @@ class KioskController extends Controller {
                 ->get();
 
         // Set and limit fields to repsond with and sort
-        $members = $members->map(function($m) {
-                    $m->name = $m->name;
-                    // $m->me = $m->id == $economy_member->id;
-                    return $m->only(['id', 'name']);
-                })
-                ->sortBy('name')
-                ->values();
+        $members = $members
+            ->map(function($m) {
+                $m->name = $m->name;
+                return $m->only(['id', 'name']);
+            })
+            ->sortBy('name')
+            ->values();
 
         return $members;
     }
@@ -117,13 +122,16 @@ class KioskController extends Controller {
         if(!empty($search))
             $products = $bar->economy->searchProducts($search, [$currency->id]);
         else
-            $products = self::getProductList($bar, [$currency->id]);
+            $products = self::getProductList($bar, self::LIST_LIMIT, [$currency->id]);
 
         // Add formatted price fields
-        $products = $products->map(function($product) use($currencies) {
-            $product->price_display = $product->formatPrice($currencies);
-            return $product;
-        })->sortBy('name')->values();
+        $products = $products
+            ->map(function($product) use($currencies) {
+                $product->price_display = $product->formatPrice($currencies);
+                return $product;
+            })
+            ->sortBy('name')
+            ->values();
 
         return $products;
     }
@@ -135,47 +143,131 @@ class KioskController extends Controller {
      * TODO: define in detail what steps are taken to generate this list
      *
      * @param Bar $bar The bar to get products for.
+     * @parma int $limit The limit of products to return, might be less.
      * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
      *
-     * @return array A list of products.
+     * @return object A list of products.
      */
-    private static function getProductList(Bar $bar, $currency_ids) {
+    private static function getProductList(Bar $bar, $limit, $currency_ids) {
+        // Return nothing if the limit is too low
+        if($limit <= 0)
+            return collect();
+
+        // Get most common products
+        $products = self::getTopProductList($bar, self::PRODUCTS_TOP_LIMIT, $currency_ids);
+
+        // Add recent members
+        $products = $products->concat(
+            self::getRecentProductList($bar, self::PRODUCT_RECENT_LIMIT, $currency_ids, $products->pluck('id'))
+        );
+
+        // TODO: extend list with random products if not LIST_LIMIT yet
+
+        return $products;
+    }
+
+    /**
+     * Get a list of top bought products.
+     *
+     * @param Bar $bar The bar to get products for.
+     * @param int $limit Product limit.
+     * @param [int]|null $currency_ids A list of Currency IDs returned
+     *      products must have a price configured in in at least one of them.
+     *
+     * @return object A list of products.
+     */
+    private static function getTopProductList(Bar $bar, $limit, $currency_ids) {
         // Get facts
         $economy = $bar->economy;
 
-        // Fill the list with the top products bought by any user
-        // Get the last 100 product mutation IDs for any user
-        $mutation_ids = $economy
+        // List latest product mutations
+        // TODO: update select
+        $product_mutations = $economy
             ->mutations()
-            ->select('id')
+            // ->select('id', 'mutationable_type', 'mutationable_id')
             ->where('mutationable_type', MutationProduct::class)
+            ->whereIn('currency_id', $currency_ids)
             ->latest()
             ->limit(100)
-            ->get()
-            ->pluck('id');
+            ->with('mutationable')
+            ->get();
 
-        // Add top products by any user in last 100 mutations not already in list to total of 8
-        $products = $economy->selectTopProducts(
-            $mutation_ids,
-            [],
-            self::PRODUCTS_TOP_LIMIT,
-            $currency_ids
-        );
+        // List product IDs sorted by most bought
+        $product_ids = $product_mutations
+            ->reduce(function($list, $item) {
+                $key = strval($item->mutationable->product_id);
+                if(isset($list[$key]))
+                    $list[$key] += $item->mutationable->quantity;
+                else
+                    $list[$key] = $item->mutationable->quantity;
+                return $list;
+            }, collect())
+            ->sort()
+            ->reverse()
+            ->take($limit)
+            ->keys();
 
-        // Fill with random products
-        if($products->count() < self::LIST_LIMIT) {
-            // Add top products by any user in last 100 mutations not already in list to total of 8
-            $products = $products->merge(
-                $economy->products()
-                    ->havingCurrency($currency_ids)
-                    ->whereNotIn('id', $products->pluck('id'))
-                    ->limit(8 - $products->count())
-                    ->get()
-            );
-        }
+        // Extract list of products from mutations result so we don't have to
+        // query the database again
+        $products = $product_mutations
+            ->reduce(function($products, $p) {
+                $products[strval($p->mutationable->product_id)] = $p->mutationable->product;
+                return $products;
+            }, collect());
 
-        return $products;
+        // Transform list of product IDs into actual products
+        return $product_ids
+            ->map(function($product_id) use($products) {
+                return $products[strval($product_id)];
+            })
+            ->filter(function($product) {
+                return $product != null;
+            });
+    }
+
+    /**
+     * Get a list of recently bought products.
+     *
+     * @param Bar $bar The bar to get products for.
+     * @param int $limit Product limit.
+     * @param [int]|null $currency_ids A list of Currency IDs returned
+     *      products must have a price configured in in at least one of them.
+     * @param [int]|null $ignore_product_ids A list of product IDs to ignore.
+     *
+     * @return object A list of products.
+     */
+    private static function getRecentProductList(Bar $bar, $limit, $currency_ids, $ignore_product_ids = []) {
+        // Get facts
+        $economy = $bar->economy;
+        $ignore_product_ids = collect($ignore_product_ids);
+
+        // List latest product mutations
+        // TODO: update select
+        // TODO: ignore product IDs in this query instead of later on in collection
+        $product_mutations = $economy
+            ->mutations()
+            // ->select('id', 'mutationable_type', 'mutationable_id')
+            ->where('mutationable_type', MutationProduct::class)
+            ->whereIn('currency_id', $currency_ids)
+            ->latest()
+            ->limit(100)
+            ->with('mutationable')
+            ->get();
+
+        // Take limit of recent products, skip null or ignored products
+        return $product_mutations
+            ->filter(function($p) use($ignore_product_ids) {
+                return $p->mutationable->product_id != null
+                    && !$ignore_product_ids->contains($p->mutationable->product_id);
+            })
+            ->unique(function($p) use($ignore_product_ids) {
+                return $p->mutationable->product_id;
+            })
+            ->take($limit)
+            ->map(function($p) {
+                return $p->mutationable->product;
+            });
     }
 
     /**
@@ -186,7 +278,7 @@ class KioskController extends Controller {
      * @parma int $limit The limit of users to return, might be less.
      * @param int[] [$ignore_user_ids] List of user IDs to ignore.
      *
-     * @return EconomyMember[]
+     * @return object A list of members.
      */
     // TODO: return list of top members instead of finding them for transactions
     private static function getMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
@@ -215,7 +307,7 @@ class KioskController extends Controller {
      * @parma int $limit The limit of users to return, might be less.
      * @param int[] [$ignore_user_ids] List of user IDs to ignore.
      *
-     * @return EconomyMember[]
+     * @return object A list of members.
      */
     private static function getRecentMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
         // Return nothing if the limit is too low
@@ -260,9 +352,10 @@ class KioskController extends Controller {
      *
      * @param Bar $bar The bar to get a list of users for.
      * @parma int $limit The limit of users to return, might be less.
-     * @param int[] [$ignore_user_ids] List of user IDs to ignore.
+     *
+     * @return object A list of members.
      */
-    private static function getTopMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
+    private static function getTopMemberList(Bar $bar, $limit) {
         // Return nothing if the limit is too low
         if($limit <= 0)
             return collect();
@@ -271,8 +364,7 @@ class KioskController extends Controller {
         $query = $bar
             ->transactions()
             ->latest('mutation.updated_at')
-            ->whereNotNull('mutation.owner_id')
-            ->whereNotIn('mutation.owner_id', $ignore_user_ids);
+            ->whereNotNull('mutation.owner_id');
 
         // Fetch transaction details for last 100 relevant transactions
         $transactions = $query
