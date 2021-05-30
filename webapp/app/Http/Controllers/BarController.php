@@ -522,12 +522,14 @@ class BarController extends Controller {
             // Specifically for selected products first, then fill gor any
             $limit = 7;
             if(!empty($product_ids))
+                // TODO: use concat instead?
                 $members = $members->merge($this->getProductBuyMemberList(
                     $bar,
                     5,
                     [$user->id],
                     $product_ids
                 ));
+            // TODO: use concat instead?
             $members = $members->merge($this->getProductBuyMemberList(
                 $bar,
                 $limit - $members->count(),
@@ -1145,6 +1147,7 @@ class BarController extends Controller {
             ->where('allow_wallet', true)
             ->whereNotIn('id', $currencies->pluck('id'))
             ->get();
+        // TODO: use concat instead?
         $currencies = $currencies->merge($barCurrencies);
 
         // Return the list of currencies

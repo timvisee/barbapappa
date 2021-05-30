@@ -21,15 +21,19 @@ class KioskController extends Controller {
     const LIST_LIMIT = 15;
 
     /**
-     * The limit of quick buy products to list based on the top bought products
-     * by the current user.
+     * Limit of members to show that are common buyers.
      */
-    const QUICK_BUY_TOP_LIMIT = 5;
+    const MEMBERS_TOP_LIMIT = 5;
 
     /**
-     * The total limit of quick buy products to list.
+     * Limit of members to show that are recent buyers.
      */
-    const QUICK_BUY_TOTAL_LIMIT = 8;
+    const MEMBERS_RECENT_LIMIT = 10;
+
+    /**
+     * Limit of products to show that are commonly bought
+     */
+    const PRODUCTS_TOP_LIMIT = 10;
 
     /**
      * Kiosk buy page.
@@ -71,10 +75,12 @@ class KioskController extends Controller {
 
         // Set and limit fields to repsond with and sort
         $members = $members->map(function($m) {
-            $m->name = $m->name;
-            // $m->me = $m->id == $economy_member->id;
-            return $m->only(['id', 'name']);
-        })->sortBy('name')->values();
+                    $m->name = $m->name;
+                    // $m->me = $m->id == $economy_member->id;
+                    return $m->only(['id', 'name']);
+                })
+                ->sortBy('name')
+                ->values();
 
         return $members;
     }
@@ -153,12 +159,12 @@ class KioskController extends Controller {
         $products = $economy->selectTopProducts(
             $mutation_ids,
             [],
-            Self::QUICK_BUY_TOP_LIMIT,
+            self::PRODUCTS_TOP_LIMIT,
             $currency_ids
         );
 
         // Fill with random products
-        if($products->count() < Self::QUICK_BUY_TOTAL_LIMIT) {
+        if($products->count() < self::LIST_LIMIT) {
             // Add top products by any user in last 100 mutations not already in list to total of 8
             $products = $products->merge(
                 $economy->products()
@@ -176,9 +182,6 @@ class KioskController extends Controller {
      * Get a list of economy members that are most likely to buy new products.
      * This is shown in the advanced product buying page.
      *
-     * A list of product IDs may be given to limit the most lickly buy hunting
-     * to just those products.
-     *
      * @param Bar $bar The bar to get a list of users for.
      * @parma int $limit The limit of users to return, might be less.
      * @param int[] [$ignore_user_ids] List of user IDs to ignore.
@@ -189,18 +192,92 @@ class KioskController extends Controller {
     private static function getMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
         // Return nothing if the limit is too low
         if($limit <= 0)
-            return [];
+            return collect();
 
-        // Find other users that recently made a transaction with these products
+        // Get most common members
+        $members = self::getTopMemberList($bar, self::MEMBERS_TOP_LIMIT);
+
+        // Add recent members
+        // TODO: pluck economy_id instead?
+        $members = $members->concat(
+            self::getRecentMemberList($bar, self::MEMBERS_RECENT_LIMIT, $members->pluck('user_id'))
+        );
+
+        // TODO: extend list with random members if not LIST_LIMIT yet
+
+        return $members;
+    }
+
+    /**
+     * Get a list of members that recently bought products.
+     *
+     * @param Bar $bar The bar to get a list of users for.
+     * @parma int $limit The limit of users to return, might be less.
+     * @param int[] [$ignore_user_ids] List of user IDs to ignore.
+     *
+     * @return EconomyMember[]
+     */
+    private static function getRecentMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
+        // Return nothing if the limit is too low
+        if($limit <= 0)
+            return collect();
+
+        // List last 100 transactions to build recent user list
+        $transactions = $bar
+            ->transactions()
+            ->whereNotNull('mutation.owner_id')
+            ->whereNotIn('mutation.owner_id', $ignore_user_ids)
+            ->latest('mutation.updated_at')
+            ->limit(100)
+            ->get(['mutation.owner_id', 'mutation.updated_at']);
+
+        // Get user IDs for recent transactions
+        // TODO: do unique query on database
+        $user_ids = $transactions
+            ->pluck('owner_id')
+            ->unique()
+            ->values()
+            ->take($limit);
+
+        // Fetch and return the members for these users
+        $econ_members = $bar
+            ->economy
+            ->members()
+            ->whereIn('user_id', $user_ids)
+            ->limit($limit)
+            ->get();
+        return $user_ids
+            ->map(function($user_id) use($econ_members) {
+                return $econ_members->firstWhere('user_id', $user_id);
+            })
+            ->filter(function($member) {
+                return $member != null;
+            });
+    }
+
+    /**
+     * Get a list of members that commonly buy products.
+     *
+     * @param Bar $bar The bar to get a list of users for.
+     * @parma int $limit The limit of users to return, might be less.
+     * @param int[] [$ignore_user_ids] List of user IDs to ignore.
+     */
+    private static function getTopMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
+        // Return nothing if the limit is too low
+        if($limit <= 0)
+            return collect();
+
+        // List recent transactions
         $query = $bar
             ->transactions()
             ->latest('mutation.updated_at')
+            ->whereNotNull('mutation.owner_id')
             ->whereNotIn('mutation.owner_id', $ignore_user_ids);
 
         // Fetch transaction details for last 100 relevant transactions
         $transactions = $query
             ->limit(100)
-            ->get(['mutation.owner_id', 'mutation_product.quantity']);
+            ->get(['mutation.owner_id', 'mutation_product.quantity', 'mutation.updated_at']);
 
         // List user IDs sorted by most bought
         $user_ids = $transactions
