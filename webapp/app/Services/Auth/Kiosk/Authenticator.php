@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Auth;
+namespace App\Services\Auth\Kiosk;
 
-use App\Models\Email;
-use App\Models\Session;
+use App\Models\Bar;
+use App\Models\KioskSession;
 use App\Models\User;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
@@ -14,7 +14,8 @@ use Sentry;
 /**
  * Class Authenticator.
  *
- * This authenticator is used to authenticate new and existing sessions.
+ * This authenticator is used to authenticate new and existing sessions for
+ * kiosks.
  *
  * The current request may be authenticated through it's session token stored in a cookie.
  * Or a request may be authenticated with given user credentials.
@@ -23,19 +24,19 @@ use Sentry;
  * The result defines whether the authentication was successful.
  * The state may then be stored somewhere, such as in the {@see BarAuthManager} class for further use.
  *
- * @package App\Services\Auth
+ * @package App\Services\Auth\Kiosk
  */
 class Authenticator {
 
     /**
      * The name of the authentication token cookie.
      */
-    const AUTH_COOKIE = 'session_token';
+    const AUTH_COOKIE = 'session_token_kiosk';
 
     /**
      * Session expiration time in seconds.
      */
-    const SESSION_EXPIRE = 356 * 24 * 60 * 60;
+    const SESSION_EXPIRE = 5 * 356 * 24 * 60 * 60;
 
     /**
      * Length in characters of the session token.
@@ -71,7 +72,7 @@ class Authenticator {
             return self::finalizeResult(AuthResult::ERR_INVALID_TOKEN);
 
         // Get the corresponding session and make sure it's valid
-        $session = Session::where('token', '=', $token)->first();
+        $session = KioskSession::where('token', '=', $token)->first();
         if($session == null)
             return self::finalizeResult(AuthResult::ERR_INVALID_TOKEN);
 
@@ -80,13 +81,13 @@ class Authenticator {
     }
 
     /**
-     * Authenticate the given session.
+     * Authenticate the given kiosk session.
      *
-     * @param Session $session
+     * @param KioskSession $session
      *
      * @return AuthResult The authentication result state.
      */
-    public function authSession(Session $session) {
+    public function authSession(KioskSession $session) {
         // Make sure a session is given
         if($session == null)
             return self::finalizeResult(AuthResult::ERR_NO_SESSION);
@@ -103,57 +104,18 @@ class Authenticator {
     }
 
     /**
-     * Authenticate the user with the given credentials.
-     * This method will automatically set the session cookie if authentication was successful.
+     * Create a kiosk session for the given bar, initiated by the given user.
      *
-     * @param string $email The users email address.
-     * @param string $password The users password.
-     *
-     * @return AuthResult The authentication result state.
-     */
-    public function authCredentials($email, $password) {
-        // The parameters must be set
-        if($email == null || empty(trim($email)) || $password == null)
-            return self::finalizeResult(AuthResult::ERR_INVALID_CREDENTIALS);
-
-        // Trim the email address
-        // TODO: Format the email address here, lowercase and strip it from dots?
-        $email = trim($email);
-
-        // Find the email addresses linked
-        $emailModels = Email::where('email', '=', $email)->get();
-
-        // Loop over the email models that have been found
-        // TODO: Should we try to authenticate multiple email addresses here?
-        foreach($emailModels as $emailModel) {
-            // Get the user, must be valid
-            /** @var User $user */
-            $user = $emailModel->user;
-            if($user == null)
-                continue;
-
-            // The password must be valid
-            if(!$user->checkPassword($password, true))
-                continue;
-
-            // Create a session for this user, return the result
-            return $this->createSession($user);
-        }
-
-        // The user wasn't found, return the result
-        return self::finalizeResult(AuthResult::ERR_INVALID_CREDENTIALS);
-    }
-
-    /**
-     * Create a session for the given user.
-     *
-     * @param User $user User to create the session for.
+     * @param Bar $bar Bar to create kiosk session for.
+     * @param User $user User that initiated the session creation.
      *
      * @return AuthResult Authentication result.
      */
-    public function createSession(User $user) {
-        // Make sure the user is valid
-        if($user == null)
+    public function createSession(Bar $bar, User $user) {
+        // TODO: enforce that the user has proper permissions
+
+        // Make sure the bar and user user are valid
+        if($bar == null || $user == null)
             return self::finalizeResult(AuthResult::ERR_NO_SESSION);
 
         // Generate an unique token and get the IP address
@@ -161,16 +123,14 @@ class Authenticator {
         $ip = Request::ip();
         $expire = Carbon::now()->addSecond(self::SESSION_EXPIRE);
 
-        // Create the new session object and save it
-        $session = new Session();
+        // Create the new kiosk session object and save it
+        $session = new KioskSession();
+        $session->bar_id = $bar->id;
         $session->user_id = $user->id;
         $session->token = $token;
         $session->created_ip = $ip;
         $session->expire_at = $expire;
         $session->save();
-
-        // Select the user's locale
-        langManager()->useUserLocale($user);
 
         // We're authenticated now, return the state
         return self::finalizeResult(
@@ -191,7 +151,7 @@ class Authenticator {
             $token = TokenGenerator::generate(self::SESSION_TOKEN_LENGTH, true);
 
             // Check whether the token exists
-            $exists = Session::where('token', '=', $token)->first() != null;
+            $exists = KioskSession::where('token', '=', $token)->first() != null;
 
         } while($exists);
 
@@ -221,17 +181,17 @@ class Authenticator {
                 )
             );
 
-            // Annotate user for Sentry error reporting
-            if($authResult->isOk() && $authState != null && app()->bound('sentry')) {
-                $user_id = $authState->getSessionUser()->id ?? $authState->getUser()->id ?? null;
-                $user_name = $authState->getSessionUser()->name ?? $authState->getUser()->name ?? null;
-                Sentry\configureScope(function(Sentry\State\Scope $scope) use($user_id, $user_name): void {
-                    $scope->setUser([
-                        'id' => $user_id,
-                        'name' => $user_name,
-                    ]);
-                });
-            }
+            // // Annotate user for Sentry error reporting
+            // if($authResult->isOk() && $authState != null && app()->bound('sentry')) {
+            //     $user_id = $authState->getSessionUser()->id ?? $authState->getUser()->id ?? null;
+            //     $user_name = $authState->getSessionUser()->name ?? $authState->getUser()->name ?? null;
+            //     Sentry\configureScope(function(Sentry\State\Scope $scope) use($user_id, $user_name): void {
+            //         $scope->setUser([
+            //             'id' => $user_id,
+            //             'name' => $user_name,
+            //         ]);
+            //     });
+            // }
 
         // Forget the session cookie if the session became invalid
         else if($authResult->isErr() && $authResult->getResult() != AuthResult::ERR_NO_SESSION)

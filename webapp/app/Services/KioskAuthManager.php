@@ -2,11 +2,11 @@
 
 namespace App\Services;
 
-use App\Services\Auth\Authenticator;
-use App\Services\Auth\AuthState;
+use App\Services\Auth\Kiosk\Authenticator;
+use App\Services\Auth\Kiosk\AuthState;
 use Illuminate\Foundation\Application;
 
-class BarAuthManager {
+class KioskAuthManager {
 
     /**
      * Application instance.
@@ -27,7 +27,7 @@ class BarAuthManager {
     private $authenticator;
 
     /**
-     * BarAuthManager constructor.
+     * KioskAuthManager constructor.
      *
      * @param Application $app Application instance.
      * @param bool $authRequest=true True to immediately authenticate the current request by a session cookie, false if not.
@@ -81,37 +81,13 @@ class BarAuthManager {
     }
 
     /**
-     * Get the current user.
-     * This returns the current user.
-     * If a linked user account is currently selected a different user than the session owner might be returned.
+     * Get the bar for this kiosk session.
      *
-     * If the user isn't authenticated, null is returned.
+     * If the session isn't authenticated, null is returned.
      *
-     * @return \App\Models\User|null
+     * @return \App\Models\Bar|null
      */
-    public function getUser() {
-        return $this->authState->getUser();
-    }
-
-    /**
-     * Get the session user.
-     * This returns the user that is owner of the current session.
-     * Even if a linked account is currently selected, this always returns the user of the initial session.
-     *
-     * If the user isn't authenticated, null is returned.
-     *
-     * @return \App\Models\User|null
-     */
-    public function getSessionUser() {
-        return $this->authState->getSessionUser();
-    }
-
-    /**
-     * Check whether any of the mail addresses of the user is verified.
-     *
-     * @return bool True if any of the mail addresses is verified, false if not.
-     */
-    public function isVerified() {
-        return $this->authState->isVerified();
+    public function getBar() {
+        return $this->authState->getBar();
     }
 }

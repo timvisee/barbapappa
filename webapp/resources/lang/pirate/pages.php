@@ -780,6 +780,10 @@ return [
         'deleteQuestion' => 'Yer \'bout to permanently sink dis bar. All mateies including yerself will lose access to it, and it nay be possible to link product transactions to it anymore. Th\' products and matey wallets will remain as part of th\' booty that be used in dis bar. Ye be sure ye want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+        'startKiosk' => 'Start kiosk',
+        'startKioskDescription' => 'Here you can start kiosk mode. When you start kiosk mode, ye will be logged out here from your personal account, and a central terminal interface will be started for this bar which everybody can use to purchase products. This mode will be active until you manually turn it off by logging out once more on this device.',
+        'startKioskConfirm' => 'Confirm to enter kiosk mode',
+        'startKioskConfirmDescription' => 'Entering kiosk mode will allow any pirate having access to dis machine to purchase products on anybodies behalf.',
         'generatePoster' => 'Create bar poster',
         'generatePosterDescription' => 'Create a poster for dis bar to hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a QR code with their handheld phoning device.',
         'showCodeOnPoster' => 'Show code to join dis bar on th\' poster',
@@ -811,6 +815,20 @@ return [
             'pageCloseWarning' => 'Ye selected products or has products in cart that have not been bought yet. Ye must add a product selection to at least one pirate and tap th\' Buy button to commit th\' purchase, or the selection will be lost.',
         ],
         'checklist' => 'Bar checklist',
+    ],
+
+    /**
+     * Kiosk page.
+     */
+    'kiosk' => [
+        'selectUser' => 'Select pirate',
+        'searchUsers' => 'Search pirates',
+        'noUsersFoundFor' => 'No pirates found for :term',
+        'firstSelectUser' => 'Select a pirate on the left to make a purchase for',
+        'selectProducts' => 'Select products',
+        'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
+        'buyProductsUsers#' => '{0} Buy no products for :users pirates|[1,*] Buy :count× for :users pirates',
+        'deselect' => 'Deselect',
     ],
 
     /**

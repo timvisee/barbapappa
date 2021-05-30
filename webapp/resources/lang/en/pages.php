@@ -780,6 +780,10 @@ return [
         'deleteQuestion' => 'You\'re about to permanently delete this bar. All members including yourself will lose access to it, and won\'t be possible to link product transactions to it anymore. The products and user wallets will remain as part of the economy that was used in this bar. Are you sure you want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+        'startKiosk' => 'Start kiosk',
+        'startKioskDescription' => 'Here you can start kiosk mode. When you start kiosk mode, you will be logged out here from your personal account, and a central terminal interface will be started for this bar which everybody can use to purchase products. This mode will be active until you manually turn it off by logging out once more on this device.',
+        'startKioskConfirm' => 'Confirm to enter kiosk mode',
+        'startKioskConfirmDescription' => 'Entering kiosk mode will allow any user having access to this machine to purchase products on anybodies behalf.',
         'generatePoster' => 'Create bar poster',
         'generatePosterDescription' => 'Create a poster for this bar to hang on a wall. Visitors will then be able to easily use :app and join this bar by scanning a QR code with their mobile phone.',
         'showCodeOnPoster' => 'Show code to join this bar on the poster',
@@ -811,6 +815,20 @@ return [
             'pageCloseWarning' => 'You have selected products or have products in cart that have not been bought yet. You must add a product selection to at least one user and tap the Buy button to commit the purchase, or the selection will be lost.',
         ],
         'checklist' => 'Bar checklist',
+    ],
+
+    /**
+     * Kiosk page.
+     */
+    'kiosk' => [
+        'selectUser' => 'Select member',
+        'searchUsers' => 'Search users',
+        'noUsersFoundFor' => 'No users found for :term',
+        'firstSelectUser' => 'Select a member on the left to make a purchase for',
+        'selectProducts' => 'Select products',
+        'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
+        'buyProductsUsers#' => '{0} Buy no products for :users users|[1,*] Buy :count× for :users users',
+        'deselect' => 'Deselect',
     ],
 
     /**

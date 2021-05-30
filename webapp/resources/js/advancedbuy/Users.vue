@@ -7,12 +7,17 @@
         <div class="item">
             <div class="ui transparent icon input">
                 <input v-model="query"
-                        :placeholder="__('pages.bar.advancedBuy.searchUsers') + '...'"
+                        @input="e => query = e.target.value"
+                        @focus="e => e.target.select()"
                         id="user-search"
-                        type="text" />
+                        type="text"
+                        :placeholder="__('pages.bar.advancedBuy.searchUsers') + '...'" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
-                <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon link">
+                <i v-if="!searching && !query" v-on:click.prevent.stop="search(query)" class="icon link">
                     <span class="glyphicons glyphicons-search"></span>
+                </i>
+                <i v-if="!searching && query" v-on:click.prevent.stop="query = ''" class="icon link">
+                    <span class="glyphicons glyphicons-remove"></span>
                 </i>
             </div>
         </div>
@@ -66,11 +71,6 @@
                     user.active = false;
                     this.$forceUpdate();
                 }, 500);
-
-                // Focus the search field for quick new searches
-                let searchField = document.getElementById("user-search");
-                searchField.focus();
-                searchField.setSelectionRange(0, searchField.value.length)
 
                 // Find the user object, or create a new one
                 let item = this.cart.filter(i => i.user.id == user.id);

@@ -36,6 +36,18 @@ if(!function_exists('barauth')) {
     }
 }
 
+// Build the kioskauth function
+if(!function_exists('kioskauth')) {
+    /**
+     * Get the kiosk authentication manager singleton instance.
+     *
+     * @return \App\Services\KioskAuthManager
+     */
+    function kioskauth() {
+        return app('kioskauth');
+    }
+}
+
 // Build the lang manager function
 if(!function_exists('langManager')) {
     /**

@@ -19,11 +19,12 @@
 
         @if($transaction->initiated_by_other)
             <br />
-            @lang('misc.by')
-            @if($transaction->initiatedBy != null)
-                {{ $transaction->initiatedBy->name }}
+            @if($transaction->initiated_by_kiosk)
+                @lang('misc.via') @lang('misc.kiosk')
+            @elseif($transaction->initiatedBy != null)
+                @lang('misc.by') {{ $transaction->initiatedBy->name }}
             @else
-                <i>@lang('misc.unknownUser')</i>
+                @lang('misc.by') <i>@lang('misc.unknownUser')</i>
             @endif
         @endif
     </p>
@@ -252,16 +253,24 @@
                         </td>
                     </tr>
                     @if($transaction->initiated_by_other)
-                        <tr>
-                            <td>@lang('misc.madeBy')</td>
-                            <td>
-                                @if($transaction->initiatedBy != null)
-                                    {{ $transaction->initiatedBy->name }}
-                                @else
-                                    <i>@lang('misc.unknownUser')</i>
-                                @endif
-                            </td>
-                        </tr>
+                        @if($transaction->initiated_by_kiosk)
+                            <tr>
+                                <td>@lang('misc.madeVia')</td>
+                                <td>@lang('misc.kiosk')</td>
+                            </tr>
+                        @endif
+                        @if($transaction->initiated_by_id)
+                            <tr>
+                                <td>@lang('misc.madeBy')</td>
+                                <td>
+                                    @if($transaction->initiatedBy != null)
+                                        {{ $transaction->initiatedBy->name }}
+                                    @else
+                                        <i>@lang('misc.unknownUser')</i>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
                     @endif
                     <tr>
                         <td>@lang('misc.firstSeen')</td>

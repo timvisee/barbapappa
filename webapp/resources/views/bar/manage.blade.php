@@ -173,6 +173,17 @@
                 <span class="subtle">@lang('pages.economies.inEconomy')</span>
             </div>
         @endif
+    </div>
+
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">@lang('misc.extras')</h5>
+        @if(perms(BarController::permsManage()))
+            <a href="{{ route('bar.startKiosk', ['barId' => $bar->human_id]) }}" class="item">
+                @lang('pages.bar.startKiosk')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.bar.startKiosk')</div>
+        @endif
         @if(perms(BarController::permsManage()))
             <a href="{{ route('bar.poster.generate', ['barId' => $bar->human_id]) }}" class="item">
                 @lang('pages.bar.generatePoster')

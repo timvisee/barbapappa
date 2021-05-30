@@ -780,6 +780,10 @@ return [
         'deleteQuestion' => 'Je staat op het punt deze bar permanent te verwijderen. Alle leden waaronder jezelf zullen toegang tot de bar verliezen, en product transacties zullen niet meer gelinkt kunnen worden aan deze bar. De producten en portemonnees van leden blijven bestaan als onderdeel van de economie die gebruikt werd binnen deze bar. Weet je zeker dat je door wilt gaan?',
         'exactBarNameVerify' => 'Exacte naam van bar om te verwijderen (Verificatie)',
         'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
+        'startKiosk' => 'Start kiosk',
+        'startKioskDescription' => 'Hier kun je kiosk-modus starten. Als je kiosk-modus start, wordt je hier uitgelog van je persoonlijke account, en wordt een centrale terminal interface gestart waarmee iedereen producten kan kopen. Deze modus blijft actief totdat je het handmatig uitzet door normaals uit te loggen op dit apparaat.',
+        'startKioskConfirm' => 'Bevestig om kiosk-modus te starten',
+        'startKioskConfirmDescription' => 'Het starten van kiosk-modus maakt het voor iedereen die toegang heeft tot deze machine mogelijk om producten te kopen voor elke gebruiker.',
         'generatePoster' => 'Creëer bar poster',
         'generatePosterDescription' => 'Creëer een poster voor deze bar om aan de muur te hangen. Bezoekers kunnen dan gemakklijk gebruik kunnen maken van :app en kunnen lid worden van deze bar door een QR code te scannen met hun mobiele telefoon.',
         'showCodeOnPoster' => 'Toon code om lid te worden op de poster',
@@ -811,6 +815,20 @@ return [
             'pageCloseWarning' => 'Je hebt producten geselecteerd of hebt producten in de winkelwagen die nog niet gekocht zijn. Je moet geselecteerde producten eerst aan ten minste één gebruiker toevoegen en daarna op de Koop knop drukken om de bestelling te voltooien, of de selectie gaat verloren.',
         ],
         'checklist' => 'Bar checklist',
+    ],
+
+    /**
+     * Kiosk page.
+     */
+    'kiosk' => [
+        'selectUser' => 'Selecteer lid',
+        'searchUsers' => 'Zoek leden',
+        'noUsersFoundFor' => 'Geen leden gevonden voor :term',
+        'firstSelectUser' => 'Selecteer links een lid om een aankoop voor te doen',
+        'selectProducts' => 'Selecteer producten',
+        'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',
+        'buyProductsUsers#' => '{0} Koop geen producten voor :users leden|[1,*] Koop :count× voor :users leden',
+        'deselect' => 'Deselect',
     ],
 
     /**

@@ -5,10 +5,17 @@
 
         <div class="item">
             <div class="ui transparent icon input">
-                <input v-model="query" type="text" :placeholder="__('pages.products.search') + '...'" />
+                <input v-model="query"
+                        @input="e => query = e.target.value"
+                        @focus="e => e.target.select()"
+                        type="text"
+                        :placeholder="__('pages.products.search') + '...'" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
-                <i v-if="!searching" v-on:click.prevent.stop="search(query)" class="icon link">
+                <i v-if="!searching && !query" v-on:click.prevent.stop="search(query)" class="icon link">
                     <span class="glyphicons glyphicons-search"></span>
+                </i>
+                <i v-if="!searching && query" v-on:click.prevent.stop="query = ''" class="icon link">
+                    <span class="glyphicons glyphicons-remove"></span>
                 </i>
             </div>
         </div>
@@ -24,9 +31,10 @@
 
             <div v-if="getQuantity(product)"
                     v-on:click.stop.prevent="deselect(product)"
-                    class="ui red label small basic">×</div>
+                    class="ui red compact button action-button">×</div>
 
-            <div class="ui blue label">{{ product.price_display }}</div>
+            <div v-if="getQuantity(product) == 0"
+                class="ui blue label">{{ product.price_display }}</div>
         </a>
 
         <i v-if="!searching && products.length == 0" class="item">
@@ -123,3 +131,16 @@
         ],
     }
 </script>
+
+<style>
+    .item .action-button {
+        float: right;
+        border-radius: 0;
+        margin: -.9em -1.2em 0 1.2em;
+        padding: 1em 1em !important;
+
+        /* TODO: do not use fixed height here */
+        width: 40px;
+        height: 40px;
+    }
+</style>

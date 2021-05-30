@@ -47,6 +47,9 @@ mix.js(
 ).js(
     'resources/js/advancedbuy/advancedbuy.js',
     'public/js',
+).js(
+    'resources/js/kioskbuy/kioskbuy.js',
+    'public/js',
 ).sass(
     'resources/sass/app.scss',
     'public/css',
