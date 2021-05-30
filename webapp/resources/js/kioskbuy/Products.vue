@@ -56,7 +56,26 @@
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}
         </i>
 
-        <!-- TODO: always show selected products, like with advancedbuy -->
+        <a v-for="product in (getUserCart() && getUserCart().products || [])"
+                v-if="!isProductInResult(product.product)"
+                v-on:click.stop.prevent="select(product)"
+                href="#"
+                class="green inverted item"
+                v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
+            <span v-if="getQuantity(product) > 0" class="subtle">{{ getQuantity(product.product) }}×</span>
+
+            {{ product.product.name }}
+
+            <div v-if="getQuantity(product)"
+                    v-on:click.stop.prevent="deselect(product)"
+                    v-bind:class="{ disabled: buying }"
+                    class="ui red compact button action-button">×</div>
+
+            <div v-if="getQuantity(product)"
+                    v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
+                    v-bind:class="{ disabled: buying }"
+                    class="ui compact button action-button">+{{ 5 - getQuantity(product.product) % 5 }}</div>
+        </a>
     </div>
 </template>
 
@@ -87,6 +106,14 @@
         methods: {
             // Get cart instance for user
             getUserCart(user, create = false) {
+                // Get current user if not given
+                if(user == null || user == undefined) {
+                    // Get user and cart, user must be selected
+                    user = this.selectedUsers[0];
+                    if(user == null)
+                        return;
+                }
+
                 let cart = this.cart.filter(c => c.user.id == user.id)[0] || null;
                 if(cart != null || !create)
                     return cart;
