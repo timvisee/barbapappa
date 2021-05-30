@@ -9,6 +9,7 @@ use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -61,8 +62,6 @@ class KioskController extends Controller {
      * @return Response
      */
     public function apiMembers() {
-        // TODO: list 10 latest members, and 5 additional most common
-
         // Get the bar, current user and the search query
         $bar = kioskauth()->getBar();
         $economy = $bar->economy;
@@ -98,8 +97,6 @@ class KioskController extends Controller {
      * @return Response
      */
     public function apiProducts() {
-        // TODO: list 10 most common products, and 5 additional latest
-
         // Get the bar and the search query
         $bar = kioskauth()->getBar();
         $economy = $bar->economy;
@@ -140,7 +137,9 @@ class KioskController extends Controller {
      * Create a list of products personalized for the authenticated in user by
      * estimating their preference, based on buy history inside this economy.
      *
-     * TODO: define in detail what steps are taken to generate this list
+     * This list includes the most bought products, the most recently bought
+     * products and may be topped up with random products to reach the desired
+     * limit. See PRODUCTS_TOP_LIMIT and PRODUCT_RECENT_LIMIT.
      *
      * @param Bar $bar The bar to get products for.
      * @parma int $limit The limit of products to return, might be less.
@@ -186,10 +185,9 @@ class KioskController extends Controller {
         $economy = $bar->economy;
 
         // List latest product mutations
-        // TODO: update select
         $product_mutations = $economy
             ->mutations()
-            // ->select('id', 'mutationable_type', 'mutationable_id')
+            ->select('id', 'mutationable_type', 'mutationable_id')
             ->where('mutationable_type', MutationProduct::class)
             ->whereIn('currency_id', $currency_ids)
             ->latest()
@@ -247,13 +245,20 @@ class KioskController extends Controller {
         $ignore_product_ids = collect($ignore_product_ids);
 
         // List latest product mutations
-        // TODO: update select
-        // TODO: ignore product IDs in this query instead of later on in collection
         $product_mutations = $economy
             ->mutations()
-            // ->select('id', 'mutationable_type', 'mutationable_id')
+            ->select('id', 'mutationable_type', 'mutationable_id')
             ->where('mutationable_type', MutationProduct::class)
             ->whereIn('currency_id', $currency_ids)
+            ->whereHasMorph(
+                'mutationable',
+                MutationProduct::class,
+                function(Builder $query) use($ignore_product_ids) {
+                    $query
+                        ->whereNotNull('product_id')
+                        ->whereNotIn('product_id', $ignore_product_ids);
+                }
+            )
             ->latest()
             ->limit(100)
             ->with('mutationable')
@@ -261,10 +266,6 @@ class KioskController extends Controller {
 
         // Take limit of recent products, skip null or ignored products
         return $product_mutations
-            ->filter(function($p) use($ignore_product_ids) {
-                return $p->mutationable->product_id != null
-                    && !$ignore_product_ids->contains($p->mutationable->product_id);
-            })
             ->unique(function($p) use($ignore_product_ids) {
                 return $p->mutationable->product_id;
             })
@@ -304,13 +305,16 @@ class KioskController extends Controller {
      * Get a list of economy members that are most likely to buy new products.
      * This is shown in the advanced product buying page.
      *
+     * This list includes members that buy the most products, members that most
+     * recently bought a product and may be topped up with random members to
+     * reach the desired limit. See MEMBERS_TOP_LIMIT and MEMBERS_RECENT_LIMIT.
+     *
      * @param Bar $bar The bar to get a list of users for.
      * @parma int $limit The limit of users to return, might be less.
      * @param int[] [$ignore_user_ids] List of user IDs to ignore.
      *
      * @return object A list of members.
      */
-    // TODO: return list of top members instead of finding them for transactions
     private static function getMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
         // Return nothing if the limit is too low
         if($limit <= 0)
