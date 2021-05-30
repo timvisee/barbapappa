@@ -59,8 +59,7 @@
         watch: {
             successMessage: function(newMsg, oldMsg) {
                 if(newMsg != undefined) {
-                    if(this.decayTimer != null)
-                        clearTimeout(this.decayTimer);
+                    clearTimeout(this.decayTimer);
                     this.decayTimer = setTimeout(() => {
                         this.successMessage = undefined;
                     }, 5000);

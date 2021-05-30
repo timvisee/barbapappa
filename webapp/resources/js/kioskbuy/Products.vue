@@ -8,7 +8,7 @@
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectProducts') }}
 
-            <a v-if="getCartSize() > 0"
+            <a v-if="getCartSize() > 0 && !buying"
                     v-on:click.stop.prevent="removeCart()"
                     href="#"
                     class="reset">
@@ -40,10 +40,12 @@
 
             <div v-if="getQuantity(product)"
                     v-on:click.stop.prevent="deselect(product)"
+                    v-bind:class="{ disabled: buying }"
                     class="ui red compact button action-button">×</div>
 
             <div v-if="getQuantity(product)"
                     v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
+                    v-bind:class="{ disabled: buying }"
                     class="ui compact button action-button">+{{ 5 - getQuantity(product) % 5 }}</div>
 
             <div v-if="getQuantity(product) == 0"
