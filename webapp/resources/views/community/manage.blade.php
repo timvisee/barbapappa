@@ -220,6 +220,13 @@
 
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.extras')</h5>
+        @if(perms(BarController::permsManage()))
+            <a href="{{ route('community.links', ['communityId' => $community->human_id]) }}" class="item">
+                @lang('pages.community.links.title')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.community.links.title')</div>
+        @endif
         @if(perms(CommunityController::permsManage()))
             <a href="{{ route('community.poster.generate', ['communityId' => $community->human_id]) }}" class="item">
                 @lang('pages.community.generatePoster')

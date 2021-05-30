@@ -149,6 +149,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
             // Index
             Route::get('/', 'CommunityController@manage')->middleware(CommunityController::permsManage()->middleware())->name('community.manage');
 
+            // Useful links
+            Route::get('/links', 'CommunityController@links')->name('community.links');
+
             // Generate poster
             Route::get('/generate-poster', 'CommunityController@generatePoster')->name('community.poster.generate');
             Route::post('/generate-poster', 'CommunityController@doGeneratePoster')->name('community.poster.doGenerate');
@@ -502,6 +505,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::prefix('/manage')->middleware(BarController::permsManage()->middleware())->group(function() {
             // Index
             Route::get('/', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
+
+            // Useful links
+            Route::get('/links', 'BarController@links')->name('bar.links');
 
             // Start kiosk
             Route::get('/start-kiosk', 'BarController@startKiosk')->name('bar.startKiosk');
