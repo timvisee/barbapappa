@@ -814,6 +814,15 @@ return [
             'boughtProductsUsers#' => '{0} Geen producten gekocht voor :users leden.|{1} Eén product gekocht voor :users leden.|[2,*] :count producten gekocht voor :users leden.',
             'pageCloseWarning' => 'Je hebt producten geselecteerd of hebt producten in de winkelwagen die nog niet gekocht zijn. Je moet geselecteerde producten eerst aan ten minste één gebruiker toevoegen en daarna op de Koop knop drukken om de bestelling te voltooien, of de selectie gaat verloren.',
         ],
+        'links' => [
+            'title' => 'Handige links',
+            'description' => 'Deze pagina geeft een lijst handige deelbare links voor deze bar. Je kunt deze links bijvoorbeeld delen via e-mail of printen op een poster. Sommige van deze links maken het mogelijk om gebruikers naar specifieke normaal verborgen paginas of doelen te sturen.<br><br>Let er alsjeblieft op dat sommige links veranderen bij het aanpassen van bar instellingen, en sommige links bevatten geheime stukjes.',
+            'linkBar' => 'Bar hoofdpagina',
+            'linkJoinBar' => 'Nodig nieuwe gebruiker uit',
+            'linkJoinBarCode' => 'Nodig nieuwe gebruiker uit (met code)',
+            'linkQuickWallet' => 'Toon primaire persoonlijke portemonnee',
+            'linkQuickTopUp' => 'Primaire persoonlijke portemonnee opwaarderen',
+        ],
         'checklist' => 'Bar checklist',
     ],
 

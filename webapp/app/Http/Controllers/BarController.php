@@ -1054,6 +1054,15 @@ class BarController extends Controller {
     }
 
     /**
+     * Page with useful links.
+     *
+     * @return Response
+     */
+    public function links() {
+        return view('bar.links');
+    }
+
+    /**
      * Page to start kiosk mode.
      *
      * @return Response

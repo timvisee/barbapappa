@@ -814,6 +814,15 @@ return [
             'boughtProductsUsers#' => '{0} Bought no products for :users users.|{1} Bought product for :users users.|[2,*] Bought :count products for :users users.',
             'pageCloseWarning' => 'You have selected products or have products in cart that have not been bought yet. You must add a product selection to at least one user and tap the Buy button to commit the purchase, or the selection will be lost.',
         ],
+        'links' => [
+            'title' => 'Useful links',
+            'description' => 'This page lists various shareable links for this bar. You may share these through email or print them on a poster. Some of these links allow you to direct users to specific otherwise hidden pages and intents.<br><br>Please be aware that some links change when modifying bar settings, and some links contain secret bits.',
+            'linkBar' => 'Main bar page',
+            'linkJoinBar' => 'Invite new user to join bar',
+            'linkJoinBarCode' => 'Invite new user to join bar (with code)',
+            'linkQuickWallet' => 'Show main personal wallet',
+            'linkQuickTopUp' => 'Top-up main personal wallet',
+        ],
         'checklist' => 'Bar checklist',
     ],
 

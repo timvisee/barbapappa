@@ -814,6 +814,15 @@ return [
             'boughtProductsUsers#' => '{0} Bought no products for :users pirates.|{1} Bought 1 product for :users pirates.|[2,*] Bought :count products for :users pirates.',
             'pageCloseWarning' => 'Ye selected products or has products in cart that have not been bought yet. Ye must add a product selection to at least one pirate and tap th\' Buy button to commit th\' purchase, or the selection will be lost.',
         ],
+        'links' => [
+            'title' => 'Useful links',
+            'description' => 'Dis page lists various shareable links for dis bar. Ye may share these through e-bottle messages or print dem on a poster. Some of these links allow you to direct other pirates to specific otherwise hidden pages and intents.<br><br>Please be aware that some links change when modifying bar settings, and some links contain secret bits.',
+            'linkBar' => 'Main bar page',
+            'linkJoinBar' => 'Invite new user to join bar',
+            'linkJoinBarCode' => 'Invite new user to join bar (with code)',
+            'linkQuickWallet' => 'Show main personal wallet',
+            'linkQuickTopUp' => 'Top-up main personal wallet',
+        ],
         'checklist' => 'Bar checklist',
     ],
 

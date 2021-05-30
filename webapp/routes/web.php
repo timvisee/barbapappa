@@ -503,6 +503,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             // Index
             Route::get('/', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
+            // Useful links
+            Route::get('/links', 'BarController@links')->name('bar.links');
+
             // Start kiosk
             Route::get('/start-kiosk', 'BarController@startKiosk')->name('bar.startKiosk');
             Route::post('/start-kiosk', 'BarController@doStartKiosk')->name('bar.doStartKiosk');
