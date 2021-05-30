@@ -37,11 +37,11 @@
 
             <div v-if="getQuantity(product)"
                     v-on:click.stop.prevent="deselect(product)"
-                    class="ui red label small basic">×</div>
+                    class="ui red compact button action-button">×</div>
 
             <div v-if="getQuantity(product)"
                     v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
-                    class="ui orange label small basic">+{{ 5 - getQuantity(product) % 5 }}</div>
+                    class="ui compact button action-button">+{{ 5 - getQuantity(product) % 5 }}</div>
 
             <div v-if="getQuantity(product) == 0"
                     class="ui blue label">{{ product.price_display }}</div>
@@ -206,5 +206,16 @@
     .dimmer .text {
         padding: 1em;
         line-height: 2;
+    }
+
+    .item .action-button {
+        float: right;
+        border-radius: 0;
+        margin: -1em -1.2em 0 1.2em;
+        padding: 1em 1em !important;
+
+        /* TODO: do not use fixed height here */
+        width: 43px;
+        height: 43px;
     }
 </style>
