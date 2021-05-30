@@ -570,12 +570,13 @@ class BarController extends Controller {
     private function getProductBuyMemberList(Bar $bar, $limit, $ignore_user_ids = null, $product_ids = null) {
         // Return nothing if the limit is too low
         if($limit <= 0)
-            return [];
+            return collect();
 
         // Find other users that recently made a transaction with these products
         $query = $bar
             ->transactions()
             ->latest('mutation.updated_at')
+            ->whereNotNull('mutation.owner_id')
             ->whereNotIn('mutation.owner_id', $ignore_user_ids);
 
         // Limit to specific product IDs
@@ -585,7 +586,7 @@ class BarController extends Controller {
         // Fetch transaction details for last 100 relevant transactions
         $transactions = $query
             ->limit(100)
-            ->get(['mutation.owner_id', 'mutation_product.quantity']);
+            ->get(['mutation.owner_id', 'mutation_product.quantity', 'mutation.updated_at']);
 
         // List user IDs sorted by most bought
         $user_ids = $transactions
