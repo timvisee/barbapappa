@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical large menu fluid">
+    <div class="ui vertical large menu fluid panel-users">
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectUser') }}
 
@@ -64,6 +64,13 @@
         watch: {
             query: function() {
                 this.search(this.query);
+            },
+            selectedUsers: function (newSelectedUsers, oldSelectedUsers) {
+                // Glow product selection as visual clue
+                if(newSelectedUsers.length > 0)
+                    $('.panel-products')
+                        .transition('stop')
+                        .transition('glow');
             },
         },
         methods: {
