@@ -19,6 +19,7 @@ use App\Perms\CommunityRoles;
  * @property int|null owner_id
  * @property int|null initiated_by_id
  * @property bool initiated_by_other
+ * @property bool initiated_by_kiosk
  * @property-read User|null owner
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -29,7 +30,7 @@ class Transaction extends Model {
 
     protected $with = ['mutations'];
 
-    protected $fillable = ['state', 'description', 'owner_id', 'initiated_by_id', 'initiated_by_other'];
+    protected $fillable = ['state', 'description', 'owner_id', 'initiated_by_id', 'initiated_by_other', 'initiated_by_kiosk'];
 
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
@@ -91,6 +92,7 @@ class Transaction extends Model {
      *
      * @return Relation to the user that initiated this transaction.
      */
+    // TODO: rename this to initiatedByUser?
     public function initiatedBy() {
         return $this->belongsTo('App\Models\User', 'initiated_by_id');
     }

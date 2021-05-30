@@ -329,24 +329,20 @@ class KioskController extends Controller {
         // Get the user ID
         $user_id = $economy_member->user_id;
 
-        // Determine whether to set different initiating user
-        // TODO: set initiated on kiosk instead
-        $initiated_by_id = null;
-        $initiated_by_other = true;
-
         // Start a database transaction for the product transaction
         // TODO: create a nice generic builder for the actions below
         $out = null;
         $productCount = 0;
-        DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, &$out, &$productCount, $initiated_by_id, $initiated_by_other) {
+        DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, &$out, &$productCount) {
             // TODO: last_transaction is used here but never defined
 
             // Create the transaction or use last transaction
             $transaction = $last_transaction ?? Transaction::create([
                 'state' => Transaction::STATE_SUCCESS,
                 'owner_id' => $user_id,
-                'initiated_by_id' => $initiated_by_id,
-                'initiated_by_other' => $initiated_by_other,
+                'initiated_by_id' => null,
+                'initiated_by_other' => true,
+                'initiated_by_kiosk' => true,
             ]);
 
             // Determine whether the product was free
