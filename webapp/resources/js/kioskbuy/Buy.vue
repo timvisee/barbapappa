@@ -3,7 +3,7 @@
 <template>
     <div>
 
-        <div v-if="successMessage" class="ui success message">
+        <div v-if="successMessage" class="ui success message notification">
             <span class="halflings halflings-ok-sign icon"></span>
             {{ successMessage }}
         </div>
@@ -53,7 +53,19 @@
                 cart: [],
                 buying: false,
                 successMessage: undefined,
+                decayTimer: null,
             };
+        },
+        watch: {
+            successMessage: function(newMsg, oldMsg) {
+                if(newMsg != undefined) {
+                    if(this.decayTimer != null)
+                        clearTimeout(this.decayTimer);
+                    this.decayTimer = setTimeout(() => {
+                        this.successMessage = undefined;
+                    }, 5000);
+                }
+            },
         },
         created() {
             // Prevent accidental closing
@@ -112,3 +124,16 @@
         },
     }
 </script>
+
+<style>
+    .notification {
+        position: fixed !important;
+        top: 64px;
+        left: 14px;
+        right: 14px;
+        z-index: 1001;
+
+        /* TODO: do not use this hack! */
+        width: calc(100% - 26px) !important;
+    }
+</style>
