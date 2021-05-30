@@ -157,14 +157,18 @@ class KioskController extends Controller {
         // Get most common products
         $products = self::getTopProductList($bar, self::PRODUCTS_TOP_LIMIT, $currency_ids);
 
-        // Add recent members
+        // Add recent products
         $products = $products->concat(
             self::getRecentProductList($bar, self::PRODUCT_RECENT_LIMIT, $currency_ids, $products->pluck('id'))
         );
 
-        // TODO: extend list with random products if not LIST_LIMIT yet
+        // Add random products
+        if($products->count() < self::LIST_LIMIT)
+            $products = $products->concat(
+                self::getRandomProductList($bar, self::LIST_LIMIT - $products->count(), $currency_ids, $products->pluck('id'))
+            );
 
-        return $products;
+        return $products->take($limit);
     }
 
     /**
@@ -268,6 +272,32 @@ class KioskController extends Controller {
             ->map(function($p) {
                 return $p->mutationable->product;
             });
+    }
+
+    /**
+     * Get a list of random products.
+     * What products are returned is undefined other than the constraints that
+     * are given as parameter.
+     *
+     * @param Bar $bar The bar to get products for.
+     * @param int $limit Product limit.
+     * @param [int]|null $currency_ids A list of Currency IDs returned
+     *      products must have a price configured in in at least one of them.
+     * @param [int]|null $ignore_product_ids A list of product IDs to ignore.
+     *
+     * @return object A list of products.
+     */
+    private static function getRandomProductList(Bar $bar, $limit, $currency_ids, $ignore_product_ids = []) {
+        return $bar
+            ->economy
+            ->products()
+            ->whereNotIn('id', $ignore_product_ids)
+            ->whereHas('prices', function($query) use($currency_ids) {
+                return $query->whereIn('currency_id', $currency_ids);
+            })
+            ->latest()
+            ->limit($limit)
+            ->get();
     }
 
     /**
