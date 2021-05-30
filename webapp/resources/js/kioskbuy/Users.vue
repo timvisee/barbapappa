@@ -27,6 +27,23 @@
             </div>
         </div>
 
+        <!-- Always show selected user on top if not part of query results -->
+        <a v-for="user in selectedUsers"
+                v-if="!users.some(u => u.id == user.id)"
+                v-on:click.prevent.stop="toggleSelectUser(user)"
+                v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
+                href="#"
+                class="green item">
+            {{ user.name || __('misc.unknownUser') }}
+
+            <div class="right">
+                <span v-if="getQuantity(user) > 0" class="active green">{{ getQuantity(user) }}×</span>
+
+                <span v-if="isUserSelected(user)"
+                        class="item-icon glyphicons glyphicons-chevron-right"></span>
+            </div>
+        </a>
+
         <a v-for="user in users"
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"

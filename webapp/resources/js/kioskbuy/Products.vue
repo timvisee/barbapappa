@@ -56,6 +56,7 @@
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}
         </i>
 
+        <!-- Always show selected products if not part of query results -->
         <a v-for="product in (getUserCart() && getUserCart().products || [])"
                 v-if="!isProductInResult(product.product)"
                 v-on:click.stop.prevent="select(product)"
