@@ -320,61 +320,18 @@ class KioskController extends Controller {
         $members = self::getTopMemberList($bar, self::MEMBERS_TOP_LIMIT);
 
         // Add recent members
-        // TODO: pluck economy_id instead?
+        // TODO: use economy member id instead of user id
         $members = $members->concat(
             self::getRecentMemberList($bar, self::MEMBERS_RECENT_LIMIT, $members->pluck('user_id'))
         );
 
-        // TODO: extend list with random members if not LIST_LIMIT yet
+        // Add random members
+        if($members->count() < self::LIST_LIMIT)
+            $members = $members->concat(
+                self::getRandomMemberList($bar, self::LIST_LIMIT - $members->count(), $members->pluck('user_id'))
+            );
 
-        return $members;
-    }
-
-    /**
-     * Get a list of members that recently bought products.
-     *
-     * @param Bar $bar The bar to get a list of users for.
-     * @parma int $limit The limit of users to return, might be less.
-     * @param int[] [$ignore_user_ids] List of user IDs to ignore.
-     *
-     * @return object A list of members.
-     */
-    private static function getRecentMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
-        // Return nothing if the limit is too low
-        if($limit <= 0)
-            return collect();
-
-        // List last 100 transactions to build recent user list
-        $transactions = $bar
-            ->transactions()
-            ->whereNotNull('mutation.owner_id')
-            ->whereNotIn('mutation.owner_id', $ignore_user_ids)
-            ->latest('mutation.updated_at')
-            ->limit(100)
-            ->get(['mutation.owner_id', 'mutation.updated_at']);
-
-        // Get user IDs for recent transactions
-        // TODO: do unique query on database
-        $user_ids = $transactions
-            ->pluck('owner_id')
-            ->unique()
-            ->values()
-            ->take($limit);
-
-        // Fetch and return the members for these users
-        $econ_members = $bar
-            ->economy
-            ->members()
-            ->whereIn('user_id', $user_ids)
-            ->limit($limit)
-            ->get();
-        return $user_ids
-            ->map(function($user_id) use($econ_members) {
-                return $econ_members->firstWhere('user_id', $user_id);
-            })
-            ->filter(function($member) {
-                return $member != null;
-            });
+        return $members->take($limit);
     }
 
     /**
@@ -430,6 +387,74 @@ class KioskController extends Controller {
             ->filter(function($member) {
                 return $member != null;
             });
+    }
+
+    /**
+     * Get a list of members that recently bought products.
+     *
+     * @param Bar $bar The bar to get a list of users for.
+     * @parma int $limit The limit of users to return, might be less.
+     * @param int[] [$ignore_user_ids] List of user IDs to ignore.
+     *
+     * @return object A list of members.
+     */
+    private static function getRecentMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
+        // Return nothing if the limit is too low
+        if($limit <= 0)
+            return collect();
+
+        // List last 100 transactions to build recent user list
+        $transactions = $bar
+            ->transactions()
+            ->whereNotNull('mutation.owner_id')
+            ->whereNotIn('mutation.owner_id', $ignore_user_ids)
+            ->latest('mutation.updated_at')
+            ->limit(100)
+            ->get(['mutation.owner_id', 'mutation.updated_at']);
+
+        // Get user IDs for recent transactions
+        // TODO: do unique query on database
+        $user_ids = $transactions
+            ->pluck('owner_id')
+            ->unique()
+            ->values()
+            ->take($limit);
+
+        // Fetch and return the members for these users
+        $econ_members = $bar
+            ->economy
+            ->members()
+            ->whereIn('user_id', $user_ids)
+            ->limit($limit)
+            ->get();
+        return $user_ids
+            ->map(function($user_id) use($econ_members) {
+                return $econ_members->firstWhere('user_id', $user_id);
+            })
+            ->filter(function($member) {
+                return $member != null;
+            });
+    }
+
+    /**
+     * Get a list of random members.
+     * What members are returned is undefined other than the constraints that
+     * are given as parameter.
+     *
+     * @param Bar $bar The bar to get members for.
+     * @param int $limit Member limit.
+     * @param int[] [$ignore_user_ids] List of user IDs to ignore.
+     *
+     * @return object A list of members.
+     */
+    private static function getRandomMemberList(Bar $bar, $limit, $ignore_user_ids = []) {
+        return $bar
+            ->economy
+            ->members()
+            ->whereNotIn('user_id', $ignore_user_ids)
+            ->latest()
+            ->limit($limit)
+            ->get();
     }
 
     /**
