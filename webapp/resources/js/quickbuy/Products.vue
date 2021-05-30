@@ -5,6 +5,7 @@
             <div class="ui transparent icon input">
                 <input v-model="query"
                         @input="e => query = e.target.value"
+                        @focus="e => e.target.select()"
                         type="text"
                         :placeholder="__('pages.products.search') + '...'" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>

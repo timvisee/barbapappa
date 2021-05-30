@@ -15,6 +15,7 @@
             <div class="ui transparent icon input">
                 <input v-model="query"
                         @input="e => query = e.target.value"
+                        @focus="e => e.target.select()"
                         id="user-search"
                         type="text"
                         :placeholder="__('pages.kiosk.searchUsers') + '...'" />
