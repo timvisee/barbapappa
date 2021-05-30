@@ -244,8 +244,14 @@
         line-height: 2;
     }
 
+    .item {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
     .item .action-button {
         float: right;
+        text-align: center;
         border-radius: 0;
         margin: -1em -1.2em 0 1.2em;
         padding: 1em 1em !important;
