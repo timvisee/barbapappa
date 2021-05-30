@@ -1,5 +1,19 @@
 <div class="ui sidebar mainmenu inverted vertical menu">
-    @if(barauth()->isAuth())
+    @if(kioskauth()->isAuth())
+        <div class="item header has-alt-button">
+            @lang('misc.kiosk'): {{ kioskauth()->getBar()->name }}
+            <a href="{{ route('logout') }}"
+                    class="alt-button logout"
+                    title="@lang('auth.logout')">
+                <i class="glyphicons glyphicons-exit"></i>
+            </a>
+        </div>
+        <a href="{{ route('kiosk.main') }}"
+                class="item {{ Route::currentRouteName() == 'kiosk.main' ? ' active' : '' }}">
+            <i class="glyphicons glyphicons-shop"></i>
+            @lang('misc.kiosk')
+        </a>
+    @elseif(barauth()->isAuth())
         <div class="item header has-alt-button">
             {{ trans_random('general.hellos') }}
             {{ barauth()->getSessionUser()->name }}
@@ -20,17 +34,6 @@
             @lang('pages.dashboard.title')
         </a>
     @else
-        @if(kioskauth()->isAuth())
-            <div class="item header has-alt-button">
-                @lang('misc.kiosk'): {{ kioskauth()->getBar()->name }}
-                <a href="{{ route('logout') }}"
-                        class="alt-button logout"
-                        title="@lang('auth.logout')">
-                    <i class="glyphicons glyphicons-exit"></i>
-                </a>
-            </div>
-        @endif
-
         <a href="{{ route('index') }}"
                 class="item {{ Route::currentRouteName() == 'index' ? ' active' : '' }}">
             <i class="glyphicons glyphicons-home"></i>
