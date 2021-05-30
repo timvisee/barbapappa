@@ -9,7 +9,7 @@
             {{ __('pages.kiosk.selectProducts') }}
 
             <a v-if="getCartSize() > 0 && !buying"
-                    v-on:click.stop.prevent="removeCart()"
+                    v-on:click.stop.prevent="removeCart(); query = ''"
                     href="#"
                     class="reset">
                 {{ __('misc.reset') }}

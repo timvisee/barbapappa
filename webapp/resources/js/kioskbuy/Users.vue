@@ -4,7 +4,7 @@
             {{ __('pages.kiosk.selectUser') }}
 
             <a v-if="selectedUsers.length"
-                    v-on:click.stop.prevent="reset()"
+                    v-on:click.stop.prevent="reset(); query = ''"
                     href="#"
                     class="reset">
                 {{ __('pages.kiosk.deselect') }}
