@@ -7,9 +7,10 @@
         <div class="item">
             <div class="ui transparent icon input">
                 <input v-model="query"
-                        :placeholder="__('pages.bar.advancedBuy.searchUsers') + '...'"
+                        @input="e => query = e.target.value"
                         id="user-search"
-                        type="text" />
+                        type="text"
+                        :placeholder="__('pages.bar.advancedBuy.searchUsers') + '...'" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
                 <i v-if="!searching && !query" v-on:click.prevent.stop="search(query)" class="icon link">
                     <span class="glyphicons glyphicons-search"></span>
