@@ -55,9 +55,10 @@
 
             {{ product.product.name }}
 
-            <div v-if="getQuantity(product.product)"
+            <a href="#"
+                    v-if="getQuantity(product.product)"
                     v-on:click.stop.prevent="deselect(product.product)"
-                    class="ui red label small basic">×</div>
+                    class="ui red compact button action-button">×</a>
 
             <div class="ui blue label">{{ product.product.price_display }}</div>
         </a>
