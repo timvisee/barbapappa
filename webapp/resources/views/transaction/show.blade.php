@@ -3,9 +3,10 @@
 @section('title', __('pages.transactions.details'))
 
 @php
-    use \App\Models\MutationProduct;
-    use \App\Models\Transaction;
-    use \App\Models\Wallet;
+    use App\Models\MutationProduct;
+    use App\Models\Transaction;
+    use App\Models\Wallet;
+    use App\Perms\CommunityRoles;
     use \BarPay\Models\Payment;
 @endphp
 
@@ -90,12 +91,23 @@
     <div class="ui divider large hidden"></div>
 
     @if($transaction->canUndo())
-        <p>
-            <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id]) }}"
-                    class="ui button basic">
-                @lang('misc.undo')
-            </a>
-        </p>
+        <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id]) }}"
+           class="ui button basic">
+           @lang('misc.undo')
+        </a>
+    @endif
+
+    @if(perms(CommunityRoles::presetManager()) && $transaction->canUndo(true))
+        <div class="ui floating right labeled icon dropdown button">
+            <i class="dropdown icon"></i>
+            @lang('misc.admin')
+            <div class="menu">
+                <a href="{{ route('transaction.undo', ['transactionId' => $transaction->id, 'force' => true]) }}"
+                        class="item">
+                    @lang('misc.undo')
+                </a>
+            </div>
+        </div>
     @endif
 
     @if(!empty($realtedObjects[MutationProduct::class]))
