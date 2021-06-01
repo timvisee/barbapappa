@@ -34,14 +34,6 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      */
     const FORWARD_DELAY = 6;
 
-    /**
-     * The number of seconds to wait before retrying the job.
-     * The bunq API has a 30-second cooldown when throttling.
-     *
-     * @var int
-     */
-    public $backoff = 32;
-
     private $accountId;
     private $apiPaymentId;
 
@@ -250,5 +242,16 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
         return isset($matches[2])
             ? strtoupper(str_replace(' ', '', $matches[2]))
             : null;
+    }
+
+    /**
+     * Backoff times in seconds.
+     *
+     * @return array
+     */
+    public function backoff() {
+        // The bunq API has a 30-second cooldown when throttling, retry quickly
+        // a few times because this has high priority for users, then backoff
+        return [2, 3, 5, 10, 32, 60];
     }
 }

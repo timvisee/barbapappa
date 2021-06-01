@@ -25,14 +25,6 @@ class ProcessAllBunqAccountEvents implements ShouldQueue {
     const QUEUE = 'low';
 
     /**
-     * The number of seconds to wait before retrying the job.
-     * The bunq API has a 30-second cooldown when throttling.
-     *
-     * @var int
-     */
-    public $backoff = 32;
-
-    /**
      * Create a new job instance.
      *
      * @return void

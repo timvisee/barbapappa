@@ -3,6 +3,7 @@
 namespace App\Mail\Password;
 
 use App\Mail\PersonalizedEmail;
+use App\Managers\PasswordResetManager;
 use App\Utils\EmailRecipient;
 use Illuminate\Mail\Mailable;
 
@@ -44,5 +45,21 @@ class Reset extends PersonalizedEmail {
      */
     public function build() {
         return parent::build()->markdown(self::VIEW);
+    }
+
+    /**
+     * Backoff times in seconds.
+     *
+     * @return array
+     */
+    public function backoff() {
+        // Quickly retry, this email is important, we want it fast
+        return [1, 1, 2, 3, 5, 8, 10];
+    }
+
+    public function retryUntil() {
+        // It does not make sense to send when it has already expired,
+        // require at least a minute left
+        return now()->addSeconds(PasswordResetManager::EXPIRE_AFTER)->subMinute();
     }
 }
