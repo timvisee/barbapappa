@@ -19,8 +19,9 @@
             </p>
         </center>
 
-        <Products :selected="selected" />
+        <Products :apiUrl="apiUrl" :selected="selected" />
         <Users v-if="selected.length > 0" 
+                :apiUrl="apiUrl"
                 :selected="selected"
                 :cart="cart"
                 :buying="buying" />
@@ -52,6 +53,9 @@
                 successMessage: undefined,
             };
         },
+        props: [
+            'apiUrl',
+        ],
         created() {
             // Prevent accidental closing
             window.addEventListener('beforeunload', this.onClose);
@@ -65,7 +69,7 @@
                 this.buying = true;
 
                 // Buy the products through an AJAX call
-                axios.post(window.location.href, this.cart)
+                axios.post(this.apiUrl + '/buy', this.cart)
                     .then(res => {
                         // Build the success message
                         let products = res.data.productCount;

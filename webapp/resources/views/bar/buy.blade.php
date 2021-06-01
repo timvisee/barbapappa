@@ -4,6 +4,11 @@
 
 @push('scripts')
     <script type="text/javascript" src="{{ mix('js/advancedbuy.js') }}"></script>
+
+    <script type="text/javascript">
+        // Provide API base url to client-side buy widget
+        var barapp_advancedbuy_api_url = '{{ route("bar.buy.api", ["barId" => $bar->human_id]) }}';
+    </script>
 @endpush
 
 @php

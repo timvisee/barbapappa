@@ -1,5 +1,5 @@
 <template>
-    <Products :query="query" />
+    <Products :apiUrl="apiUrl" :query="query" />
 </template>
 
 <script>
@@ -12,6 +12,7 @@
             Products,
         },
         props: [
+            'apiUrl',
             'query',
         ],
     }

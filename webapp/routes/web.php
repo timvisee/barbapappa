@@ -482,12 +482,19 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
         Route::get('/info', 'BarController@info')->name('bar.info');
 
-        // TODO: better define this route, and related
-        Route::get('/buy', 'BarController@buy')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
-        // TODO: this are API calls, move it somewhere else
-        Route::get('/buy/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
-        Route::get('/buy/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
-        Route::middleware('throttle:7,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
+        // Advanced buy
+        Route::prefix('/buy')->group(function() {
+            // Main page
+            Route::get('/', 'BarController@buy')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
+
+            // API calls
+            Route::prefix('/api')->group(function() {
+                Route::get('/', null)->name('bar.buy.api');
+                Route::get('/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
+                Route::get('/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
+                Route::middleware('throttle:7,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
+            });
+        });
 
         // Join/leave
         Route::get('/join', 'BarController@join')->name('bar.join');
@@ -679,9 +686,14 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
 Route::prefix('/kiosk')->middleware('kiosk')->group(function() {
     // Main kiosk page
     Route::get('/', 'KioskController@main')->name('kiosk.main');
-    Route::get('/api/members', 'KioskController@apiMembers');
-    Route::get('/api/products', 'KioskController@apiProducts');
-    Route::middleware('throttle:7,1')->post('/', 'KioskController@apiBuy');
+
+    // API calls
+    Route::prefix('/api')->group(function() {
+        Route::get('/', null)->name('kiosk.api');
+        Route::get('/members', 'KioskController@apiMembers');
+        Route::get('/products', 'KioskController@apiProducts');
+        Route::middleware('throttle:7,1')->post('/buy', 'KioskController@apiBuy');
+    });
 });
 
 // Ajax routes

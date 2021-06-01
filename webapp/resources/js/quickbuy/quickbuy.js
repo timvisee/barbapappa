@@ -8,15 +8,16 @@ const Buy = require('./Buy').default;
  * Replace the static quick buy element with a smart interactive Vue version.
  */
 function showSmartQuickBuy() {
-    // Get current query
+    // Get the API URL and query
+    let apiUrl = window.barapp_quickbuy_api_url;
     let query = event.target.value;
+    if(!apiUrl)
+        console.error('Failed to get API URL');
 
     // Configure some language mixins
     Vue.mixin({
         methods: {
             __: (key, values) => Lang.get(key, values),
-            langGet: (key, values) => Lang.get(key, values),
-            langChoice: (key, count, values) => Lang.choice(key, count, values),
         }
     });
 
@@ -28,10 +29,11 @@ function showSmartQuickBuy() {
         },
         data() {
             return {
+                apiUrl,
                 query,
             };
         },
-        template: '<Buy :query="query" />',
+        template: '<Buy :apiUrl="apiUrl" :query="query" />',
     });
 };
 

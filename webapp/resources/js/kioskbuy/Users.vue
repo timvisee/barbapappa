@@ -102,6 +102,7 @@
             };
         },
         props: [
+            'apiUrl',
             'selectedUsers',
             'cart',
             'buying',
@@ -145,15 +146,9 @@
 
             // Search users with the given query
             search(query = '') {
-                // TODO: include users already having products
-                // // Create a list of current products, to prioritize the user list
-                // let products = JSON.stringify(this.selected.map(p =>
-                //     p.product.id));
-
                 // Fetch the list of users, set searching state
-                // TODO: set fixed URL here
                 this.searching = true;
-                axios.get(window.location.href + `/api/members?q=${encodeURIComponent(query)}`)
+                axios.get(this.apiUrl + `/members?q=${encodeURIComponent(query)}`)
                     .then(res => this.users = res.data)
                     .catch(err => {
                         alert('An error occurred while listing users');
