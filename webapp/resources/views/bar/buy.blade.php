@@ -3,7 +3,7 @@
 @section('title', $bar->name)
 
 @push('scripts')
-    <script type="text/javascript" src="{{ mix('js/advancedbuy.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/widget/advancedbuy.js') }}"></script>
 
     <script type="text/javascript">
         // Provide API base url to client-side buy widget

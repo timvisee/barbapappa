@@ -48,18 +48,21 @@ mix.copyDirectory(
 mix.js(
     ['public/js/app/lang.js', 'resources/js/app.js'],
     'public/js/app.js',
-).js(
-    'resources/js/quickbuy/quickbuy.js',
-    'public/js',
-).js(
-    'resources/js/advancedbuy/advancedbuy.js',
-    'public/js',
-).js(
-    'resources/js/kioskbuy/kioskbuy.js',
-    'public/js',
 ).sass(
     'resources/sass/app.scss',
     'public/css',
+);
+
+// App widgets
+mix.js(
+    'resources/js/quickbuy/quickbuy.js',
+    'public/js/widget',
+).js(
+    'resources/js/advancedbuy/advancedbuy.js',
+    'public/js/widget',
+).js(
+    'resources/js/kioskbuy/kioskbuy.js',
+    'public/js/widget',
 );
 
 // jQuery
