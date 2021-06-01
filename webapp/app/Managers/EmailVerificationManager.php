@@ -6,7 +6,6 @@ use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Mail\Email\Verified;
 use App\Mail\Email\Verify;
 use App\Models\BalanceImportAlias;
-use App\Models\EconomyMember;
 use App\Models\Email;
 use App\Models\EmailVerification;
 use App\Utils\EmailRecipient;
