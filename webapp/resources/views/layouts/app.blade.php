@@ -38,13 +38,12 @@
     <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
     @stack('scripts')
 
-    {{-- Preloads --}}
+    {{-- Preloads/prefetches --}}
     <link rel="preload" href="{{ asset('sw.js') }}" as="worker">
-    <link rel="preload" href="{{ mix('js/widget/quickbuy.js') }}" as="script">
-    <link rel="preload" href="{{ mix('js/widget/advancedbuy.js') }}" as="script">
-    <link rel="preload" href="{{ asset('img/logo/logo_nowrap.svg') }}" as="image">
-    <link rel="preload" href="{{ asset('fonts/glyphicons-regular.woff2') }}" as="font">
-    <link rel="preload" href="{{ asset('css/themes/default/assets/fonts/icons.woff2') }}" as="font">
+    <link rel="prefetch" href="{{ asset('fonts/glyphicons-regular.woff2') }}" as="font">
+    <link rel="prefetch" href="{{ asset('css/themes/default/assets/fonts/icons.woff2') }}" as="font">
+    <link rel="prefetch" href="{{ mix('js/widget/quickbuy.js') }}" as="script">
+    <link rel="prefetch" href="{{ mix('js/widget/advancedbuy.js') }}" as="script">
 
 </head>
 <body>
