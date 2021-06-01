@@ -2,7 +2,9 @@
 
 <template>
     <div>
-        <div v-if="refreshing" class="ui active centered inline text loader">{{ __('misc.refreshing') }}</div>
+        <div v-if="refreshing" class="ui active centered inline text loader">
+            {{ __('misc.refreshing') }}...
+        </div>
 
         <div v-if="!refreshing">
             <div v-if="successMessage" class="ui success message notification">

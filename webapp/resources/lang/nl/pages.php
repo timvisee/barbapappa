@@ -813,6 +813,7 @@ return [
             'tapBuy' => 'Druk op de koop knop om de aankoop te voltooien.',
             'addToCartFor' => 'Voeg geselecteerde aan winkelwagen toe voor',
             'searchUsers' => 'Zoek leden',
+            'searchingFor' => 'Zoeken naar :term',
             'noUsersFoundFor' => 'Geen leden gevonden voor :term',
             'inCart' => 'In winkelwagen',
             'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',

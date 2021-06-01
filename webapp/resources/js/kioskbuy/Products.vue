@@ -57,11 +57,14 @@
                     class="ui blue label">{{ product.price_display }}</div>
         </a>
 
-        <i v-if="searching && products.length == 0" class="item">
+        <i v-if="searching && products.length == 0 && query != ''" class="item">
             {{ __('pages.products.searchingFor', {term: query}) }}...
         </i>
+        <i v-if="searching && products.length == 0 && query == 0" class="item">
+            {{ __('misc.loading') }}...
+        </i>
         <i v-if="!searching && products.length == 0" class="item">
-            {{ __('pages.products.noProductsFoundFor', {term: query}) }}
+            {{ __('pages.products.noProductsFoundFor', {term: query}) }}.
         </i>
 
         <!-- Always show selected products if not part of query results -->

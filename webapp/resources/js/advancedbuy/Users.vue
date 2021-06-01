@@ -31,11 +31,14 @@
             <span v-if="user.me" class="subtle">({{ __('misc.me') }})</span>
         </a>
 
-        <i v-if="searching && users.length == 0" class="item">
+        <i v-if="searching && users.length == 0 && query != ''" class="item">
             {{ __('pages.bar.advancedBuy.searchingFor', {term: query}) }}...
         </i>
+        <i v-if="searching && users.length == 0 && query == ''" class="item">
+            {{ __('misc.loading') }}...
+        </i>
         <i v-if="!searching && users.length == 0" class="item">
-            {{ __('pages.bar.advancedBuy.noUsersFoundFor', {term: query}) }}...
+            {{ __('pages.bar.advancedBuy.noUsersFoundFor', {term: query}) }}.
         </i>
     </div>
 </template>

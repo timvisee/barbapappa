@@ -813,7 +813,7 @@ return [
             'tapBuy' => 'Tap th\' blue buy button to commit the purchase.',
             'addToCartFor' => 'Add selected to cart for',
             'searchUsers' => 'Search pirates',
-            'searchingFor' => 'Searching for :term...',
+            'searchingFor' => 'Searching for :term',
             'noUsersFoundFor' => 'No pirates found for :term',
             'inCart' => 'In cart',
             'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
