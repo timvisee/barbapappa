@@ -1010,4 +1010,39 @@ return [
         'thanks' => 'Bedankt voor het gebruik maken van dit project,<br>dat is geweldig!',
         'copyright' => 'Copyright © :app :year.<br>Alle rechten voorbehouden.',
     ],
+
+    /**
+     * Error pages.
+     */
+    'errors' => [
+        // TODO: move noPermission view into this
+        '401' => [
+            'title' => '401 Unauthorized',
+            'description' => 'Je hebt een verkeerde afslag genomen.<br />Je hebt geen rechten voor deze pagina.',
+        ],
+        '403' => [
+            'title' => '403 Forbidden',
+            'description' => 'Je hebt een verkeerde afslag genomen.<br />Je hebt geen rechten voor deze pagina.',
+        ],
+        '404' => [
+            'title' => '404 Not Found',
+            'description' => 'Je hebt een verkeerde afslag genomen.<br />De pagina die je probeert te bezoeken kan niet gevonden worden.',
+        ],
+        '419' => [
+            'title' => '419 Page Expired',
+            'description' => 'Oeps! Deze pagina is verlopen.',
+        ],
+        '429' => [
+            'title' => '429 Too Many Requests',
+            'description' => 'Oeps! Er zijn recent teveel verzoeken gestuurd voor deze pagina via dit netwerk. Wacht even voordat je het opnieuw probeert.',
+        ],
+        '500' => [
+            'title' => '500 Server Error',
+            'description' => '<i>Houston, we have a problem!</i><br><br>Er is iets fout gegaan aan onze kant. De administrators zijn op de hoogte gesteld en onderzoeken het probleem.',
+        ],
+        '503' => [
+            'title' => '503 Service Unavailable',
+            'description' => '<i>Houston, we have a problem!</i><br><br>Er is iets fout gegaan aan onze kant, daarom kunnen we je verzoek niet behandelen. De administrators zijn op de hoogte gesteld en onderzoeken het probleem.',
+        ],
+    ],
 ];

@@ -1010,4 +1010,39 @@ return [
         'thanks' => 'Thank ye for using dis product.<br>Thank ye for being awesome.',
         'copyright' => 'Copyright © :app :year.<br>All rights reserved.',
     ],
+
+    /**
+     * Error pages.
+     */
+    'errors' => [
+        // TODO: move noPermission view into this
+        '401' => [
+            'title' => '401 Unauthorized',
+            'description' => 'Ye compass be upside down, ye sailed th\' wrong seas.<br />Nay access to th\' sea.',
+        ],
+        '403' => [
+            'title' => '403 Forbidden',
+            'description' => 'Ye compass be upside down, ye sailed th\' wrong seas.<br />Nay access to th\' sea.',
+        ],
+        '404' => [
+            'title' => '404 Not Found',
+            'description' => 'Ye compass be upside down, ye sailed th\' wrong seas.<br />Ye sea ye lookin for nay exist.',
+        ],
+        '419' => [
+            'title' => '419 Page Expired',
+            'description' => 'Whoops! Dis sea be expired.',
+        ],
+        '429' => [
+            'title' => '429 Too Many Requests',
+            'description' => 'Whoops! Too many requests be made to dis page recently on dis network. Please wait some time before trying again.',
+        ],
+        '500' => [
+            'title' => '500 Server Error',
+            'description' => '<i>Houston, we have a problem!</i><br><br>An error occurred on our end. The administrators have been notified and are looking into it.',
+        ],
+        '503' => [
+            'title' => '503 Service Unavailable',
+            'description' => '<i>Houston, we have a problem!</i><br><br>An error occurred on our end, which results in us not being able to serve your request. The administrators have been notified and are looking into it.',
+        ],
+    ],
 ];
