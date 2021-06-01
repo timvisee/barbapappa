@@ -34,10 +34,10 @@ cp ./new/artisan ./live/
 echo "Configuring directories..."
 #mkdir -p ./live/storage
 mkdir -p ./live/bootstrap/cache
-#find ./live/storage -type f -exec chmod 644 {} \; 
-#find ./live/storage -type d -exec chmod 755 {} \; 
-find ./live/bootstrap/cache -type f -exec chmod 644 {} \; 
-find ./live/bootstrap/cache -type d -exec chmod 755 {} \; 
+find ./live/storage -type f -exec chmod 664 {} \; 
+find ./live/storage -type d -exec chmod 775 {} \; 
+find ./live/bootstrap/cache -type f -exec chmod 664 {} \; 
+find ./live/bootstrap/cache -type d -exec chmod 775 {} \; 
 #chown -R timvisee:timvisee ./live/storage
 #chown -R timvisee:timvisee ./live/bootstrap/cache
 
@@ -46,6 +46,7 @@ echo "Caching..."
 php ./live/artisan cache:clear
 php ./live/artisan config:cache
 php ./live/artisan route:cache
+php ./live/artisan view:cache
 
 # Migrate
 echo "Migrating..."
