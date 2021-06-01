@@ -29,19 +29,22 @@
     @endif
 
     {{-- Styles --}}
-    <link href="{{ mix('css/glyphicons-packed.css') }}" rel="stylesheet" />
-    <link href="{{ mix('css/flag-icon.css') }}" rel="stylesheet" />
-    <link href="{{ mix('css/semantic.min.css') }}" rel="stylesheet" />
+    <link href="{{ mix('css/vendor.css') }}" rel="stylesheet" />
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
+    @stack('styles')
 
     {{-- Scripts --}}
-    <script type="text/javascript" src="{{ mix('js/jquery-packed.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('js/semantic.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/lang.js') }}?v={{ config('app.version_name') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
     <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
-
-    @stack('styles')
     @stack('scripts')
+
+    {{-- Preloads/prefetches --}}
+    <link rel="preload" href="{{ asset('sw.js') }}" as="worker">
+    <link rel="preload" href="{{ asset('fonts/glyphicons-regular.woff2') }}" as="font">
+    <link rel="preload" href="{{ asset('fonts/glyphicons-halflings-regular.woff2') }}" as="font">
+    <link rel="preload" href="{{ asset('css/themes/default/assets/fonts/icons.woff2') }}" as="font">
+    <link rel="prefetch" href="{{ mix('js/widget/quickbuy.js') }}" as="script">
+    <link rel="prefetch" href="{{ mix('js/widget/advancedbuy.js') }}" as="script">
 
 </head>
 <body>
