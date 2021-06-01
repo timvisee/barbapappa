@@ -65,37 +65,39 @@
         </div>
     @endif
 
-    <div class="ui top vertical menu fluid">
-        <h5 class="ui item header">
-            @lang('pages.balanceImportChange.unapprovedChanges')
-            ({{ count($unapprovedChanges) }})
-        </h5>
+    @if(count($unapprovedChanges) > 0)
+        <div class="ui top vertical menu fluid">
+            <h5 class="ui item header">
+                @lang('pages.balanceImportChange.unapprovedChanges')
+                ({{ count($unapprovedChanges) }})
+            </h5>
 
-        {{-- Balance import changes --}}
-        @forelse($unapprovedChanges as $change)
-            <a class="item"
-                    href="{{ route('community.economy.balanceimport.change.show', [
-                        // TODO: this is not efficient
-                        'communityId' => $system->economy->community->human_id,
-                        'economyId' => $system->economy_id,
-                        'systemId' => $system->id,
-                        'eventId' => $event->id,
-                        'changeId' => $change->id,
-                    ]) }}">
-                {{ $change->alias->name }}
+            {{-- Balance import changes --}}
+            @foreach($unapprovedChanges as $change)
+                <a class="item"
+                   href="{{ route('community.economy.balanceimport.change.show', [
+                       // TODO: this is not efficient
+                       'communityId' => $system->economy->community->human_id,
+                       'economyId' => $system->economy_id,
+                       'systemId' => $system->id,
+                       'eventId' => $event->id,
+                       'changeId' => $change->id,
+                   ]) }}">
+                   {{ $change->alias->name }}
 
-                {!! $change->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                   {!! $change->formatAmount(BALANCE_FORMAT_LABEL) !!}
 
-                {{-- {1{-- TODO: add nice sub label here --}1} --}}
-                {{-- <span class="sub-label"> --}}
-                {{--     @include('includes.humanTimeDiff', ['time' => $event->created_at]) --}}
-                {{-- </span> --}}
-            </a>
-        @empty
-            <i class="item">@lang('pages.balanceImportChange.noUnapprovedChanges')</i>
-        @endforelse
+                   {{-- {1{-- TODO: add nice sub label here --}1} --}}
+                   {{-- <span class="sub-label"> --}}
+                       {{--     @include('includes.humanTimeDiff', ['time' => $event->created_at]) --}}
+                       {{-- </span> --}}
+                </a>
+            @endforeach
+        </div>
+    @endif
 
-        @if(count($approvedChanges) > 0)
+    @if(count($approvedChanges) > 0)
+        <div class="ui top vertical menu fluid">
             <h5 class="ui item header">
                 @lang('pages.balanceImportChange.approvedChanges')
                 ({{ count($approvedChanges) }})
@@ -122,8 +124,19 @@
                     {{-- </span> --}}
                 </a>
             @endforeach
-        @endif
-    </div>
+        </div>
+    @endif
+
+
+    @if(count($unapprovedChanges) == 0)
+        <div class="ui top vertical menu fluid">
+            <h5 class="ui item header">
+                @lang('pages.balanceImportChange.unapprovedChanges')
+                ({{ count($unapprovedChanges) }})
+            </h5>
+            <i class="item">@lang('pages.balanceImportChange.noUnapprovedChanges')</i>
+        </div>
+    @endif
 
     <p>
         @if(perms(BalanceImportChangeController::permsManage()))
