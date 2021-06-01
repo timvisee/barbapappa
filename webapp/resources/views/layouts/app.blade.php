@@ -39,7 +39,7 @@
     @stack('scripts')
 
     {{-- Preloads --}}
-    <link rel="preload" href="{{ asset('sw.js') }}" as="script">
+    <link rel="preload" href="{{ asset('sw.js') }}" as="worker">
     <link rel="preload" href="{{ mix('js/widget/quickbuy.js') }}" as="script">
     <link rel="preload" href="{{ mix('js/widget/advancedbuy.js') }}" as="script">
     <link rel="preload" href="{{ asset('img/logo/logo_nowrap.svg') }}" as="image">
