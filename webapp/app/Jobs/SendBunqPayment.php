@@ -23,14 +23,6 @@ class SendBunqPayment implements ShouldQueue {
     const QUEUE = 'low';
 
     /**
-     * The number of seconds to wait before retrying the job.
-     * The bunq API has a 30-second cooldown when throttling.
-     *
-     * @var int
-     */
-    public $backoff = 32;
-
-    /**
      * The ID of the bunq account, which the money is sent from.
      *
      * @var int
@@ -109,5 +101,16 @@ class SendBunqPayment implements ShouldQueue {
             null,
             []
         );
+    }
+
+    /**
+     * Backoff times in seconds.
+     *
+     * @return array
+     */
+    public function backoff() {
+        // The bunq API has a 30-second cooldown when throttling, retry quickly
+        // first then backoff
+        return [3, 32, 60, 5 * 60];
     }
 }

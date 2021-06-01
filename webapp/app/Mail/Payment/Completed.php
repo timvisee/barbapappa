@@ -71,4 +71,14 @@ class Completed extends PersonalizedEmail {
     protected function getWorkerQueue() {
         return self::QUEUE;
     }
+
+    /**
+     * Backoff times in seconds.
+     *
+     * @return array
+     */
+    public function backoff() {
+        // Somewhat important, retry somewhat quickly
+        return [1, 3, 5, 8, 10];
+    }
 }

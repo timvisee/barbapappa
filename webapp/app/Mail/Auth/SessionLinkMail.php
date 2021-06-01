@@ -3,7 +3,6 @@
 namespace App\Mail\Auth;
 
 use App\Mail\PersonalizedEmail;
-use App\Models\EmailVerification;
 use App\Models\SessionLink;
 use App\Utils\EmailRecipient;
 use Illuminate\Mail\Mailable;
@@ -66,5 +65,21 @@ class SessionLinkMail extends PersonalizedEmail {
      */
     protected function getWorkerQueue() {
         return self::QUEUE;
+    }
+
+    /**
+     * Backoff times in seconds.
+     *
+     * @return array
+     */
+    public function backoff() {
+        // Quickly retry, this email is important, we want it fast
+        return [1, 1, 2, 3, 5, 8, 10];
+    }
+
+    public function retryUntil() {
+        // It does not make sense to send when it has already expired,
+        // require at least a minute left
+        return now()->addSeconds(config('app.auth_session_link_expire'))->subMinute();
     }
 }

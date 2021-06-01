@@ -27,14 +27,6 @@ class ProcessBunqAccountEvents implements ShouldQueue {
     const QUEUE = 'normal';
 
     /**
-     * The number of seconds to wait before retrying the job.
-     * The bunq API has a 30-second cooldown when throttling.
-     *
-     * @var int
-     */
-    public $backoff = 32;
-
-    /**
      * The maximum number of unhandled events to query from bunq at once.
      *
      * This job will automatically be repeated until all events are handled.
@@ -206,6 +198,17 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 ->delay(
                     now()->addSeconds($events->count() * Self::EVENT_INTERVAL)
                 );
+    }
+
+    /**
+     * Backoff times in seconds.
+     *
+     * @return array
+     */
+    public function backoff() {
+        // The bunq API has a 30-second cooldown when throttling, retry quickly
+        // first then backoff
+        return [3, 32, 60, 5 * 60];
     }
 
     public function retryUntil() {
