@@ -14,12 +14,14 @@
 
             <div class="ui two column grid">
                 <div class="column">
-                    <Users :selectedUsers="selectedUsers"
+                    <Users :apiUrl="apiUrl"
+                            :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
                 </div>
                 <div class="column">
-                    <Products :selectedUsers="selectedUsers"
+                    <Products :apiUrl="apiUrl"
+                            :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
                 </div>
@@ -65,6 +67,7 @@
         },
         data() {
             return {
+                apiUrl: window.barapp_kiosk_api_url,
                 selectedUsers: [],
                 cart: [],
                 buying: false,
@@ -110,7 +113,7 @@
                 this.buying = true;
 
                 // Buy the products through an AJAX call
-                axios.post(window.location.href + '/api/buy', this.cart)
+                axios.post(this.apiUrl + '/buy', this.cart)
                     .then(res => {
                         // Build the success message
                         let products = res.data.productCount;

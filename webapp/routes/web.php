@@ -482,14 +482,18 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::get('/', 'BarController@show')->name('bar.show');
         Route::get('/info', 'BarController@info')->name('bar.info');
 
-        // Advanced buy page
-        Route::get('/buy', 'BarController@buy')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
+        // Advanced buy
+        Route::prefix('/buy')->group(function() {
+            // Main page
+            Route::get('/', 'BarController@buy')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
 
-        // Advanced buy API calls
-        Route::prefix('/buy/api')->group(function() {
-            Route::get('/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
-            Route::get('/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
-            Route::middleware('throttle:7,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
+            // API calls
+            Route::prefix('/api')->group(function() {
+                Route::get('/', null)->name('bar.buy.api');
+                Route::get('/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
+                Route::get('/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
+                Route::middleware('throttle:7,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
+            });
         });
 
         // Join/leave
@@ -685,6 +689,7 @@ Route::prefix('/kiosk')->middleware('kiosk')->group(function() {
 
     // API calls
     Route::prefix('/api')->group(function() {
+        Route::get('/', null)->name('kiosk.api');
         Route::get('/members', 'KioskController@apiMembers');
         Route::get('/products', 'KioskController@apiProducts');
         Route::middleware('throttle:7,1')->post('/buy', 'KioskController@apiBuy');

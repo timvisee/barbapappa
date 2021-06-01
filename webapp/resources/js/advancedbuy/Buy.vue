@@ -19,8 +19,9 @@
             </p>
         </center>
 
-        <Products :selected="selected" />
+        <Products :apiUrl="apiUrl" :selected="selected" />
         <Users v-if="selected.length > 0" 
+                :apiUrl="apiUrl"
                 :selected="selected"
                 :cart="cart"
                 :buying="buying" />
@@ -46,6 +47,7 @@
         },
         data() {
             return {
+                apiUrl: window.barapp_advancedbuy_api_url,
                 selected: [],
                 cart: [],
                 buying: false,
@@ -65,7 +67,7 @@
                 this.buying = true;
 
                 // Buy the products through an AJAX call
-                axios.post(window.location.href + '/api/buy', this.cart)
+                axios.post(this.apiUrl + '/buy', this.cart)
                     .then(res => {
                         // Build the success message
                         let products = res.data.productCount;

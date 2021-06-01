@@ -1,5 +1,5 @@
 <template>
-    <Products :query="query" />
+    <Products :apiUrl="apiUrl" :query="query" />
 </template>
 
 <script>
@@ -10,6 +10,11 @@
     export default {
         components: {
             Products,
+        },
+        data() {
+            return {
+                apiUrl: window.barapp_quickbuy_api_url,
+            };
         },
         props: [
             'query',

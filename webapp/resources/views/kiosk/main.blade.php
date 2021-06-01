@@ -4,6 +4,11 @@
 
 @push('scripts')
     <script type="text/javascript" src="{{ mix('js/kioskbuy.js') }}"></script>
+
+    <script type="text/javascript">
+        // Provide API base url to client-side buy widget
+        var barapp_kiosk_api_url = '{{ route("kiosk.api") }}';
+    </script>
 @endpush
 
 @section('content')
