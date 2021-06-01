@@ -65,7 +65,7 @@
                 this.buying = true;
 
                 // Buy the products through an AJAX call
-                axios.post(window.location.href, this.cart)
+                axios.post(window.location.href + '/api/buy', this.cart)
                     .then(res => {
                         // Build the success message
                         let products = res.data.productCount;

@@ -117,7 +117,7 @@
                 // Fetch a list of products, set the searching state
                 // TODO: set fixed URL here
                 this.searching = true;
-                axios.get(window.location.href + `/products?q=${encodeURIComponent(query)}`)
+                axios.get(window.location.href + `/api/products?q=${encodeURIComponent(query)}`)
                     .then(res => this.products = res.data)
                     .catch(err => {
                         alert('An error occurred while listing products');
