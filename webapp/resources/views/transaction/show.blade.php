@@ -97,7 +97,7 @@
         </a>
     @endif
 
-    @if(perms(CommunityRoles::presetManager()) && $transaction->canUndo(true))
+    @if($transaction->canUndo(true))
         <div class="ui floating right labeled icon dropdown button">
             <i class="dropdown icon"></i>
             @lang('misc.admin')
