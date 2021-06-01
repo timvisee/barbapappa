@@ -75,7 +75,7 @@ This project is currently automatically tested for each commit using CI services
 
 |Service|Platforms|PHP|Branch|Build Status| |
 |---:|:---|:---|:---|:---:|:---|
-|GitLab CI|Linux|7.2|master|[![Pipeline status on Travis CI on master][pipeline-badge]][pipeline-link]|[View Status][pipeline-link]|
+|GitLab CI|Linux|7.3|master|[![Pipeline status on Travis CI on master][pipeline-badge]][pipeline-link]|[View Status][pipeline-link]|
 
 Note: Tests are currently fairly basic, and should be improved at a later time.
 
