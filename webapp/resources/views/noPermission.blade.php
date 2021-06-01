@@ -6,7 +6,7 @@
 @php
     // Get the home route name to use based on the session
     $homeRoute = barauth()->isAuth() ? 'dashboard' : 'index';
-    $homeRouteName = __('pages.' . (barauth()->isAuth() ? 'dashboard.title' : 'index'));
+    $homeRouteName = __('pages.' . (barauth()->isAuth() ? 'dashboard' : 'index') . '.title');
 
     // Determine whether we have a previous URL
     $hasPrevious = url()->previous() != url()->current();
