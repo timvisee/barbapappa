@@ -10,7 +10,8 @@
 
                     {{ product.product.name }}
 
-                    <a v-on:click.stop.prevent="discard(item.user, product)"
+                    <a href="#"
+                            v-on:click.stop.prevent="discard(item.user, product)"
                             class="ui red compact button action-button">×</a>
 
                     <div class="ui blue label">{{ product.product.price_display }}</div>

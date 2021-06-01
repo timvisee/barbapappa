@@ -42,10 +42,11 @@
 
             {{ product.name }}
 
-            <div v-if="getQuantity(product)"
+            <a href="#"
+                    v-if="getQuantity(product)"
                     v-on:click.stop.prevent="deselect(product)"
                     v-bind:class="{ disabled: buying }"
-                    class="ui red compact button action-button">×</div>
+                    class="ui red compact button action-button">×</a>
 
             <div v-if="getQuantity(product)"
                     v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
