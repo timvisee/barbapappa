@@ -15,8 +15,6 @@ function showSmartQuickBuy() {
     Vue.mixin({
         methods: {
             __: (key, values) => Lang.get(key, values),
-            langGet: (key, values) => Lang.get(key, values),
-            langChoice: (key, count, values) => Lang.choice(key, count, values),
         }
     });
 
