@@ -44,7 +44,11 @@ class MutationBalanceImport extends Model {
      * @throws \Exception Throws if we cannot undo right now or if not in a
      *      transaction.
      */
-    public function undo() {}
+    public function undo() {
+        // We're not explicitly undoing balance import here, as this is
+        // automatically done on the database level when this mutationable is
+        // deleted.
+    }
 
     /**
      * Handle changes as effect of a state change.

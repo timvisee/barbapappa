@@ -68,18 +68,18 @@
                     <td>@include('includes.humanTimeDiff', ['time' => $change->approved_at])</td>
                 </tr>
             @endif
-            @if($change->committed_at == null)
-                <tr>
-                    <td>@lang('misc.committed')</td>
-                    <td>@lang('general.no')</td>
-                </tr>
-            @else
-                <tr>
-                    <td>@lang('misc.committedAt')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $change->committed_at])</td>
-                </tr>
-            @endif
             @if($change->mutation_id != null)
+                @if($change->committed_at == null)
+                    <tr>
+                        <td>@lang('misc.committed')</td>
+                        <td>@lang('general.no')</td>
+                    </tr>
+                @else
+                    <tr>
+                        <td>@lang('misc.committedAt')</td>
+                        <td>@include('includes.humanTimeDiff', ['time' => $change->committed_at])</td>
+                    </tr>
+                @endif
                 <tr>
                     <td>@lang('misc.deposited')</td>
                     <td>{!!  $change->mutation->formatAmount(BALANCE_FORMAT_COLOR) !!}</td>
