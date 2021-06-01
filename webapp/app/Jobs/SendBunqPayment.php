@@ -111,6 +111,6 @@ class SendBunqPayment implements ShouldQueue {
     public function backoff() {
         // The bunq API has a 30-second cooldown when throttling, retry quickly
         // first then backoff
-        return [3, 10, 32, 60];
+        return [3, 32, 60, 5 * 60];
     }
 }
