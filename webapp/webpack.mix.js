@@ -1,13 +1,13 @@
 // noinspection JSAnnotator
 let mix = require('laravel-mix');
 const WebpackShellPlugin = require('webpack-shell-plugin');
-const {GenerateSW} = require('workbox-webpack-plugin');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
 // Add shell command plugin configured to create JavaScript language file
 mix.webpackConfig({
     plugins: [
         new WebpackShellPlugin({
-            onBuildStart:['php artisan lang:js --compress --quiet'],
+            onBuildStart:['php artisan lang:js --compress --quiet -- public/js/app/lang.js'],
             onBuildEnd:[],
         }),
         new GenerateSW({
@@ -31,16 +31,23 @@ mix.webpackConfig({
  |
  */
 
-// Static assets.
+// Build list of vendor scripts and styles to bundle
+let vendorScripts = [];
+let vendorStyles = [];
+
+// Static assets
 mix.copyDirectory(
     'resources/assets/img',
     'public/img',
+).copy(
+    '../LICENSE',
+    'public/LICENSE',
 );
 
-// Compile application assets
+// App
 mix.js(
-    'resources/js/app.js',
-    'public/js',
+    ['public/js/app/lang.js', 'resources/js/app.js'],
+    'public/js/app.js',
 ).js(
     'resources/js/quickbuy/quickbuy.js',
     'public/js',
@@ -55,49 +62,41 @@ mix.js(
     'public/css',
 );
 
-// Package jQuery and related resources.
-mix.scripts([
-    'resources/assets/vendor/jquery/jquery-2.1.4.js'
-], 'public/js/jquery-packed.js');
+// jQuery
+vendorScripts.push('resources/assets/vendor/jquery/jquery-2.1.4.js');
 
-// Glyphicons resources
-mix.copyDirectory(
-    'resources/assets/vendor/glyphicons/fonts',
-    'public/fonts',
-).copyDirectory(
-    'resources/assets/vendor/glyphicons-halflings/fonts',
-    'public/fonts',
-).styles([
-    'resources/assets/vendor/glyphicons/css/glyphicons.css',
-    'resources/assets/vendor/glyphicons-halflings/css/glyphicons-halflings.css',
-], 'public/css/glyphicons-packed.css');
-
-// Flag icon resources
+// Flag icons
 mix.sass(
     'node_modules/flag-icon-css/sass/flag-icon.scss',
-    'public/css/flag-icon.css',
-).copyDirectory(
+    'public/css/vendor/flag-icon.css',
+);
+vendorStyles.push('public/css/vendor/flag-icon.css');
+mix.copyDirectory(
     'node_modules/flag-icon-css/flags',
     'public/flags',
 );
 
-// Semantic UI resources
+// Glyphicons
+vendorStyles.push('resources/assets/vendor/glyphicons/css/glyphicons.css');
+vendorStyles.push('resources/assets/vendor/glyphicons-halflings/css/glyphicons-halflings.css');
+mix.copyDirectory([
+        'resources/assets/vendor/glyphicons/fonts',
+        'resources/assets/vendor/glyphicons-halflings/fonts',
+    ],
+    'public/fonts',
+);
+
+// Semantic UI
+vendorScripts.push('node_modules/semantic-ui-css/semantic.min.js');
+vendorStyles.push('node_modules/semantic-ui-css/semantic.min.css');
 mix.copy(
-    'node_modules/semantic-ui-css/semantic.min.css',
-    'public/css/semantic.min.css',
-).copy(
-    'node_modules/semantic-ui-css/semantic.min.js',
-    'public/js/semantic.min.js',
-).copy(
     'node_modules/semantic-ui-css/themes/default',
     'public/css/themes/default',
 );
 
-// Other static resources
-mix.copy(
-    '../LICENSE',
-    'public/LICENSE',
-);
+// Bundle vendor scripts and styles
+mix.scripts(vendorScripts, 'public/js/vendor.js');
+mix.styles(vendorStyles, 'public/css/vendor.css');
 
 // Enable assert versioning for cache busting
 if(mix.inProduction()) {

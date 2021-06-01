@@ -29,15 +29,11 @@
     @endif
 
     {{-- Styles --}}
-    <link href="{{ mix('css/glyphicons-packed.css') }}" rel="stylesheet" />
-    <link href="{{ mix('css/flag-icon.css') }}" rel="stylesheet" />
-    <link href="{{ mix('css/semantic.min.css') }}" rel="stylesheet" />
+    <link href="{{ mix('css/vendor.css') }}" rel="stylesheet" />
     <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
 
     {{-- Scripts --}}
-    <script type="text/javascript" src="{{ mix('js/jquery-packed.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('js/semantic.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/lang.js') }}?v={{ config('app.version_name') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
     <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 
     @stack('styles')
