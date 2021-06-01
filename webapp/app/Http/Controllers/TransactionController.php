@@ -83,100 +83,112 @@ class TransactionController extends Controller {
                 ->route('transaction.show', ['transactionId' => $transactionId])
                 ->with('error', __('pages.transactions.cannotUndo'));
 
-        // List products we can undo
-        $products = self::fetchTransactionProducts($transaction);
+        // Undo the transaction
+        DB::transaction(function() use($transaction, $force) {
+            $transaction->undo($force);
+        });
 
-        // Prepare success response
-        $response_success = redirect()
+        // Redirect back to the bar
+        return redirect()
             // TODO: redirect to better page!
             ->route('last')
             ->with('success', __('pages.transactions.undone'));
 
-        // If there are no products to select, undo full transaction
-        if($products->isEmpty()) {
-            // Undo full transaction
-            DB::transaction(function() use($transaction, $force) {
-                $transaction->undo($force);
-            });
-            return $response_success;
-        }
+        // Logic for undo with product selection
+        // // List products we can undo
+        // $products = self::fetchTransactionProducts($transaction);
 
-        // Build map of [product_id, quantity] to undo
-        $products_to_do = [];
-        $all_selected = true;
-        $none_selected = true;
-        foreach($products as $id => $item) {
-            if(is_checked($request->input('product_' . $id))) {
-                $products_to_do[$id] = ($products_to_do[$id] ?? 0) + $item['quantity'];
-                $none_selected = false;
-            } else
-                $all_selected = false;
-        }
+        // // Prepare success response
+        // $response_success = redirect()
+        //     // TODO: redirect to better page!
+        //     ->route('last')
+        //     ->with('success', __('pages.transactions.undone'));
 
-        // Error if no products are selected
-        if($none_selected) {
-            add_session_error('select_products', __('pages.transactions.noProductsSelected'));
-            return redirect()->back()->with('success', null)->withInput();
-        }
+        // // If there are no products to select, undo full transaction
+        // if($products->isEmpty()) {
+        //     // Undo full transaction
+        //     DB::transaction(function() use($transaction, $force) {
+        //         $transaction->undo($force);
+        //     });
+        //     return $response_success;
+        // }
 
-        // Undo full transaction if all products are selected
-        if($all_selected) {
-            // Undo full transaction
-            DB::transaction(function() use($transaction, $force) {
-                $transaction->undo($force);
-            });
-            return $response_success;
-        }
+        // // Build map of [product_id, quantity] to undo
+        // $products_to_do = [];
+        // $all_selected = true;
+        // $none_selected = true;
+        // foreach($products as $id => $item) {
+        //     if(is_checked($request->input('product_' . $id))) {
+        //         $products_to_do[$id] = ($products_to_do[$id] ?? 0) + $item['quantity'];
+        //         $none_selected = false;
+        //     } else
+        //         $all_selected = false;
+        // }
 
-        // TODO: this logic is dirty, undo per single product instead
-        DB::transaction(function() use($transaction, &$products_to_do) {
-            // List all product mutations
-            $mutations = $transaction
-                ->mutations()
-                ->type(MutationProduct::class)
-                ->get()
-                ->map(function($mutation) {
-                    return [$mutation, $mutation->mutationable];
-                });
+        // // Error if no products are selected
+        // if($none_selected) {
+        //     add_session_error('select_products', __('pages.transactions.noProductsSelected'));
+        //     return redirect()->back()->with('success', null)->withInput();
+        // }
 
-            foreach($mutations as [$mutation_product, $mutationable_product]) {
-                // Skip mutations we don't do anything with
-                if(!isset($products_to_do[$mutationable_product->product_id]))
-                    continue;
+        // // Undo full transaction if all products are selected
+        // if($all_selected) {
+        //     // Undo full transaction
+        //     DB::transaction(function() use($transaction, $force) {
+        //         $transaction->undo($force);
+        //     });
+        //     return $response_success;
+        // }
 
-                // TODO: this is causing trouble. Mutationable's are not
-                // properly deleted along with their respective mutations.
+        // // TODO: this logic is dirty, undo per single product instead
+        // DB::transaction(function() use($transaction, &$products_to_do) {
+        //     // List all product mutations
+        //     $mutations = $transaction
+        //         ->mutations()
+        //         ->type(MutationProduct::class)
+        //         ->get()
+        //         ->map(function($mutation) {
+        //             return [$mutation, $mutation->mutationable];
+        //         });
 
-                // Find related wallet mutation to update
-                $mutation_wallet = $mutation_product->dependOn;
-                $mutationable_wallet = $mutation_wallet->mutationable;
-                if($mutation_wallet->mutationable_type != MutationWallet::class)
-                    throw new \Exception('Failed to undo part of transaction, could not find related wallet mutation');
+        //     foreach($mutations as [$mutation_product, $mutationable_product]) {
+        //         // Skip mutations we don't do anything with
+        //         if(!isset($products_to_do[$mutationable_product->product_id]))
+        //             continue;
 
-                // Subtract from wallet mutation, delete if zero, update wallet balance
-                $price = -$mutation_product->amount;
-                $mutation_wallet->decrement('amount', $price);
-                if($mutation_wallet->amount == 0)
-                    $mutation_wallet->delete();
-                $mutationable_wallet->wallet->deposit($price);
+        //         // TODO: this is causing trouble. Mutationable's are not
+        //         // properly deleted along with their respective mutations.
 
-                // Delete
-                $mutation_product->undo(true, true);
+        //         // Find related wallet mutation to update
+        //         $mutation_wallet = $mutation_product->dependOn;
+        //         $mutationable_wallet = $mutation_wallet->mutationable;
+        //         if($mutation_wallet->mutationable_type != MutationWallet::class)
+        //             throw new \Exception('Failed to undo part of transaction, could not find related wallet mutation');
 
-                // Undo mutation and update to do quantity
-                $products_to_do[$mutationable_product->product_id] -= $mutationable_product->quantity;
+        //         // Subtract from wallet mutation, delete if zero, update wallet balance
+        //         $price = -$mutation_product->amount;
+        //         $mutation_wallet->decrement('amount', $price);
+        //         if($mutation_wallet->amount == 0)
+        //             $mutation_wallet->delete();
+        //         $mutationable_wallet->wallet->deposit($price);
 
-                // Remove product key from to to list if zero quantity left
-                if($products_to_do[$mutationable_product->product_id] == 0)
-                    unset($products_to_do[$mutationable_product->product_id]);
-            }
+        //         // Delete
+        //         $mutation_product->undo(true, true);
 
-            // Assert we have no product to do left
-            if(!empty($products_to_do))
-                throw new \Exception('Failed to undo transaction, could not successfully undo all product transactoins');
-        });
+        //         // Undo mutation and update to do quantity
+        //         $products_to_do[$mutationable_product->product_id] -= $mutationable_product->quantity;
 
-        return $response_success;
+        //         // Remove product key from to to list if zero quantity left
+        //         if($products_to_do[$mutationable_product->product_id] == 0)
+        //             unset($products_to_do[$mutationable_product->product_id]);
+        //     }
+
+        //     // Assert we have no product to do left
+        //     if(!empty($products_to_do))
+        //         throw new \Exception('Failed to undo transaction, could not successfully undo all product transactoins');
+        // });
+
+        // return $response_success;
     }
 
     /**
