@@ -47,13 +47,15 @@
         },
         data() {
             return {
-                apiUrl: window.barapp_advancedbuy_api_url,
                 selected: [],
                 cart: [],
                 buying: false,
                 successMessage: undefined,
             };
         },
+        props: [
+            'apiUrl',
+        ],
         created() {
             // Prevent accidental closing
             window.addEventListener('beforeunload', this.onClose);

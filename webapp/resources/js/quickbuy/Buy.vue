@@ -11,12 +11,8 @@
         components: {
             Products,
         },
-        data() {
-            return {
-                apiUrl: window.barapp_quickbuy_api_url,
-            };
-        },
         props: [
+            'apiUrl',
             'query',
         ],
     }

@@ -3,6 +3,11 @@ window.Vue = require('vue');
 const Buy = require('./Buy').default;
 
 window.addEventListener('load', function() {
+    // Get the API URL
+    let apiUrl = window.barapp_kioskbuy_api_url;
+    if(!apiUrl)
+        console.error('Failed to get API URL');
+
     // Configure some language mixins
     Vue.mixin({
         methods: {
@@ -17,6 +22,11 @@ window.addEventListener('load', function() {
         components: {
             Buy,
         },
-        template: '<Buy />',
+        data() {
+            return {
+                apiUrl,
+            };
+        },
+        template: '<Buy :apiUrl="apiUrl" />',
     });
 });

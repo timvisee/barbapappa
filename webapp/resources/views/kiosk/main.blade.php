@@ -7,7 +7,7 @@
 
     <script type="text/javascript">
         // Provide API base url to client-side buy widget
-        var barapp_kiosk_api_url = '{{ route("kiosk.api") }}';
+        var barapp_kioskbuy_api_url = '{{ route("kiosk.api") }}';
     </script>
 @endpush
 

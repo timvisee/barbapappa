@@ -67,7 +67,6 @@
         },
         data() {
             return {
-                apiUrl: window.barapp_kiosk_api_url,
                 selectedUsers: [],
                 cart: [],
                 buying: false,
@@ -81,6 +80,9 @@
                 inactiveRefreshTimer: null,
             };
         },
+        props: [
+            'apiUrl',
+        ],
         watch: {
             selectedUsers: function() {
                 this.heartbeat();
