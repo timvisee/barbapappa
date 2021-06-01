@@ -15,7 +15,7 @@
     </h2>
     <p>@lang('pages.community.links.description')</p>
 
-    <table class="ui compact celled definition table bottom attached">
+    <table class="ui compact celled definition table">
         <tbody>
             <tr>
                 <td>@lang('pages.community.links.linkCommunity')</td>
