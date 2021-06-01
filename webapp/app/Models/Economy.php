@@ -33,12 +33,12 @@ class Economy extends Model {
      * The limit of quick buy products to list based on the top bought products
      * by the current user.
      */
-    const QUICK_BUY_TOP_LIMIT = 5;
+    const QUICK_BUY_TOP_LIMIT = 6;
 
     /**
      * The total limit of quick buy products to list.
      */
-    const QUICK_BUY_TOTAL_LIMIT = 8;
+    const QUICK_BUY_TOTAL_LIMIT = 9;
 
     /**
      * Get the community this economy is part of.
