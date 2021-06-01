@@ -3,7 +3,7 @@
 @section('title', $bar->name)
 
 @push('scripts')
-    <script type="text/javascript" src="{{ asset('js/advancedbuy.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/advancedbuy.js') }}"></script>
 @endpush
 
 @php

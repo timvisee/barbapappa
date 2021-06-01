@@ -29,16 +29,16 @@
     @endif
 
     {{-- Styles --}}
-    <link href="{{ asset('css/glyphicons-packed.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/flag-icon.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/semantic.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <link href="{{ mix('css/glyphicons-packed.css') }}" rel="stylesheet" />
+    <link href="{{ mix('css/flag-icon.css') }}" rel="stylesheet" />
+    <link href="{{ mix('css/semantic.min.css') }}" rel="stylesheet" />
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet" />
 
     {{-- Scripts --}}
-    <script type="text/javascript" src="{{ asset('js/jquery-packed.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/semantic.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/lang.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/jquery-packed.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/semantic.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/lang.js') }}?v={{ config('app.version_name') }}"></script>
+    <script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 
     @stack('styles')
     @stack('scripts')

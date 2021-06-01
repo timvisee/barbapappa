@@ -98,3 +98,8 @@ mix.copy(
     '../LICENSE',
     'public/LICENSE',
 );
+
+// Enable assert versioning for cache busting
+if(mix.inProduction()) {
+    mix.version();
+}
