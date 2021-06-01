@@ -225,8 +225,8 @@ class Transaction extends Model {
             return __('pages.transactions.descriptions.fromWallet') . $suffix;
 
         // Formulate description based on mutation descriptions
-        $text = $this->mutations->map(function($m) {
-            return $m->describe();
+        $text = $this->mutations->map(function($m) use($details) {
+            return $m->describe($details);
         })->implode(', ');
         return ucfirst(strtolower($text)) . $suffix;
     }
