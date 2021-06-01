@@ -2,35 +2,37 @@
 
 <template>
     <div>
+        <div v-if="refreshing" class="ui active centered inline text loader">{{ __('misc.refreshing') }}</div>
 
-        <div v-if="successMessage" class="ui success message notification">
-            <span class="halflings halflings-ok-sign icon"></span>
-            {{ successMessage }}
-        </div>
-
-        <!-- <div class="ui two column doubling grid"> -->
-        <div class="ui two column grid">
-            <div class="column">
-                <Users :selectedUsers="selectedUsers"
-                        :cart="cart"
-                        :buying="buying" />
+        <div v-if="!refreshing">
+            <div v-if="successMessage" class="ui success message notification">
+                <span class="halflings halflings-ok-sign icon"></span>
+                {{ successMessage }}
             </div>
-            <div class="column">
-                <Products :selectedUsers="selectedUsers"
-                        :cart="cart"
-                        :buying="buying" />
+
+            <div class="ui two column grid">
+                <div class="column">
+                    <Users :selectedUsers="selectedUsers"
+                            :cart="cart"
+                            :buying="buying" />
+                </div>
+                <div class="column">
+                    <Products :selectedUsers="selectedUsers"
+                            :cart="cart"
+                            :buying="buying" />
+                </div>
             </div>
+
+            <div class="ui divider hidden"></div>
+
+            <Cart v-if="cart.length > 0"
+                    v-on:buy="buy"
+                    v-on:cancel="cancel"
+                    :selectedUsers="selectedUsers"
+                    :cart="cart"
+                    :buying="buying" />
+
         </div>
-
-        <div class="ui divider hidden"></div>
-
-        <Cart v-if="cart.length > 0"
-                v-on:buy="buy"
-                v-on:cancel="cancel"
-                :selectedUsers="selectedUsers"
-                :cart="cart"
-                :buying="buying" />
-
     </div>
 </template>
 
@@ -64,6 +66,7 @@
                 selectedUsers: [],
                 cart: [],
                 buying: false,
+                refreshing: false,
                 successMessage: undefined,
                 // Timer handle after which to clear the success message
                 decayTimer: null,
@@ -158,6 +161,7 @@
 
                     // Force refresh
                     console.log("Refreshing kiosk page after time of activity");
+                    this.refreshing = true;
                     window.location.reload();
                 }, INACTIVITY_REFRESH_TIMEOUT * 1000);
             },

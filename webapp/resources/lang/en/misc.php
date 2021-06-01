@@ -37,6 +37,7 @@ return [
     'remove' => 'Remove',
     'restore' => 'Restore',
     'refresh' => 'Refresh',
+    'refreshing' => 'Refreshing...',
     'undo' => 'Undo',
     'saveChanges' => 'Save changes',
     'unspecified' => 'Unspecified',

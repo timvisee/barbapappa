@@ -37,6 +37,7 @@ return [
     'remove' => 'Verwijderen',
     'restore' => 'Herstellen',
     'refresh' => 'Verversen',
+    'refreshing' => 'Verversen...',
     'undo' => 'Ongedaan maken',
     'saveChanges' => 'Aanpassingen opslaan',
     'unspecified' => 'Niet gespecificeerd',
