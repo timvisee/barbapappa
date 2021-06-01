@@ -11,7 +11,7 @@
                     {{ product.product.name }}
 
                     <a v-on:click.stop.prevent="discard(item.user, product)"
-                            class="ui red label basic small" href="#">×</a>
+                            class="ui red compact button action-button">×</a>
 
                     <div class="ui blue label">{{ product.product.price_display }}</div>
                 </div>
@@ -103,3 +103,16 @@
         }
     }
 </script>
+
+<style>
+    .item .action-button {
+        float: right;
+        border-radius: 0;
+        margin: -.9em -1.2em 0 1.2em;
+        padding: 1em 1em !important;
+
+        /* TODO: do not use fixed height here */
+        width: 40px;
+        height: 40px;
+    }
+</style>
