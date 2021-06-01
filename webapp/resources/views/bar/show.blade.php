@@ -2,6 +2,10 @@
 
 @section('title', $bar->name)
 
+@push('scripts')
+    <script type="text/javascript" src="{{ mix('js/quickbuy.js') }}"></script>
+@endpush
+
 @php
     use \App\Http\Controllers\BarController;
     use \App\Http\Controllers\BarMemberController;
@@ -40,10 +44,6 @@
         'icon' => 'group',
     ];
 @endphp
-
-@push('scripts')
-    <script type="text/javascript" src="{{ asset('js/quickbuy.js') }}"></script>
-@endpush
 
 @section('content')
     {{-- Low balance message --}}
