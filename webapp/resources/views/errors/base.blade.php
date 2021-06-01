@@ -3,6 +3,9 @@
 @section('title', __('pages.errors.' . View::getSection('code') . '.title'))
 
 @php
+    // Get some properties
+    $hintLogin = !!View::getSection('hintLogin', false) && !barauth()->isAuth();
+
     // Get the home route name to use based on the session
     $homeRoute = barauth()->isAuth() ? 'dashboard' : 'index';
     $homeRouteName = __('pages.' . (barauth()->isAuth() ? 'dashboard' : 'index') . '.title');
@@ -18,8 +21,15 @@
 
     <br />
 
+    @if($hintLogin)
+        <a class="ui button primary" href="{{ route('login') }}"
+                title="@lang('auth.login')">
+            @lang('auth.login')
+        </a>
+    @endif
+
     @if(barauth()->isAuth())
-        <a href="{{ route('last') }}" class="ui button primary">
+        <a href="{{ route('last') }}" class="ui button {{ $hintLogin ? 'basic' : 'primary'}}">
             @lang('pages.last.title')
         </a>
     @endif
