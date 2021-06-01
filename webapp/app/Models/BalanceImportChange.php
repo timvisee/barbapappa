@@ -43,6 +43,7 @@ class BalanceImportChange extends Model {
         'balance',
         'currency_id',
         'submitter_id',
+        'committed_at',
     ];
 
     protected $casts = [

@@ -44,7 +44,13 @@ class MutationBalanceImport extends Model {
      * @throws \Exception Throws if we cannot undo right now or if not in a
      *      transaction.
      */
-    public function undo() {}
+    public function undo() {
+        // Explicitly unset balance import change commit date
+        if($this->balanceImportChange != null)
+            $this->balanceImportChange->update([
+                'committed_at' => null,
+            ]);
+    }
 
     /**
      * Handle changes as effect of a state change.

@@ -27,7 +27,7 @@
 
     <br />
 
-    {!! Form::open(['action' => ['TransactionController@doUndo', 'transactionId' => $transaction->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
+    {!! Form::open(['action' => ['TransactionController@doUndo', 'transactionId' => $transaction->id, 'force' => $force], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         <div class="ui buttons">
             <a href="{{ route('transaction.show', ['transactionId' => $transaction->id]) }}"
                     class="ui button negative">

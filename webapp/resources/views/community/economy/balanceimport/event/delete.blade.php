@@ -28,7 +28,7 @@
             <a href="{{ route('community.economy.balanceimport.event.show', [
                         'communityId' => $community->human_id,
                         'economyId' => $economy->id,
-                        'systemID' => $system->id,
+                        'systemId' => $system->id,
                         'eventId' => $event->id,
                     ]) }}"
                     class="ui button negative">
