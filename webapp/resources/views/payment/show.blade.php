@@ -201,6 +201,10 @@
                         <td>@lang('misc.state')</td>
                         <td>{{ $payment->stateName() }}</td>
                     </tr>
+                    <tr>
+                        <td>@lang('misc.reference')</td>
+                        <td><code class="literal copy">{{ $payment->getReference() }}</code></td>
+                    </tr>
                     @if($payment->service_id != null)
                         <tr>
                             <td>@lang('pages.paymentService.serviceType')</td>
@@ -223,10 +227,6 @@
                             <td>@include('includes.humanTimeDiff', ['time' => $payment->updated_at])</td>
                         </tr>
                     @endif
-                    <tr>
-                        <td>@lang('misc.reference')</td>
-                        <td><code class="literal">payment#{{ $payment->id }}</code></td>
-                    </tr>
                 </tbody>
             </table>
         </div>
