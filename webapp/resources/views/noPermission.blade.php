@@ -43,7 +43,11 @@
 
     <br />
 
-    @unless(barauth()->isAuth())
+    @if(barauth()->isAuth())
+        <a href="{{ route('last') }}" class="ui button primary">
+            @lang('pages.last.title')
+        </a>
+    @else
         {{-- TODO: redirect to this page after login --}}
         <a class="ui button primary"
                 href="{{ route('login') }}"
@@ -52,15 +56,16 @@
         </a>
     @endif
 
+
     @if($hasPrevious)
-        <a class="ui button {{ barauth()->isAuth() ? 'primary' : 'basic' }}"
+        <a class="ui button basic"
                 href="{{ url()->previous() }}"
                 title="@lang('general.goBack')">
             @lang('general.goBack')
         </a>
     @endif
 
-    <a class="ui button {{ barauth()->isAuth() && !$hasPrevious ? 'primary' : 'basic' }}"
+    <a class="ui button basic"
             href="{{ route($homeRoute) }}"
             title="{{ $homeRouteName }}">
         {{ $homeRouteName }}
