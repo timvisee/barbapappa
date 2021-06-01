@@ -45,9 +45,11 @@ class MutationBalanceImport extends Model {
      *      transaction.
      */
     public function undo() {
-        // We're not explicitly undoing balance import here, as this is
-        // automatically done on the database level when this mutationable is
-        // deleted.
+        // Explicitly unset balance import change commit date
+        if($this->balanceImportChange != null)
+            $this->balanceImportChange->update([
+                'committed_at' => null,
+            ]);
     }
 
     /**
