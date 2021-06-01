@@ -32,14 +32,6 @@ class CreateBunqMeTabPayment implements ShouldQueue {
     const CANCEL_DELAY = 3;
 
     /**
-     * The number of seconds to wait before retrying the job.
-     * The bunq API has a 30-second cooldown when throttling.
-     *
-     * @var int
-     */
-    public $backoff = 32;
-
-    /**
      * The ID of the bunq account, which the money is sent from.
      *
      * @var int
@@ -135,5 +127,16 @@ class CreateBunqMeTabPayment implements ShouldQueue {
                 ->delay(now()->addSeconds(Self::CANCEL_DELAY));
             return;
         }
+    }
+
+    /**
+     * Backoff times in seconds.
+     *
+     * @return array
+     */
+    public function backoff() {
+        // The bunq API has a 30-second cooldown when throttling, retry quickly
+        // a few times because this has high priority for users, then backoff
+        return [2, 3, 5, 10, 32, 60];
     }
 }

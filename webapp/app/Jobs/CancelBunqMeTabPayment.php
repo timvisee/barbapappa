@@ -21,14 +21,6 @@ class CancelBunqMeTabPayment implements ShouldQueue {
     const QUEUE = 'normal';
 
     /**
-     * The number of seconds to wait before retrying the job.
-     * The bunq API has a 30-second cooldown when throttling.
-     *
-     * @var int
-     */
-    public $backoff = 32;
-
-    /**
      * The ID of the bunq account, which the money is sent from.
      *
      * @var int
@@ -83,5 +75,16 @@ class CancelBunqMeTabPayment implements ShouldQueue {
             $account->monetary_account_id,
             'CANCELLED'
         );
+    }
+
+    /**
+     * Backoff times in seconds.
+     *
+     * @return array
+     */
+    public function backoff() {
+        // The bunq API has a 30-second cooldown when throttling, retry quickly
+        // first then backoff
+        return [3, 10, 32, 60];
     }
 }
