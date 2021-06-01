@@ -45,8 +45,9 @@ mix.copyDirectory(
 );
 
 // App
+vendorScripts.push('public/js/app/lang.js');
 mix.js(
-    ['public/js/app/lang.js', 'resources/js/app.js'],
+    'resources/js/app.js',
     'public/js/app.js',
 ).sass(
     'resources/sass/app.scss',
