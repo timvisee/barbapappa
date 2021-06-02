@@ -19,6 +19,7 @@
                                     inputmode="numeric"
                                     pattern="[0-9]*"
                                     min="0"
+                                    max="100"
                                     v-model="quantity"
                                     class="attached"
                                     @focus="e => e.target.select()"

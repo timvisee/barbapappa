@@ -32,6 +32,7 @@
             </div>
 
             <div class="ui divider hidden"></div>
+            <div class="ui divider hidden"></div>
 
             <Cart v-if="cart.length > 0"
                     v-on:buy="buy"

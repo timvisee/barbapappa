@@ -1,8 +1,6 @@
 <template>
     <div class="ui vertical huge menu fluid panel-products">
 
-        <QuantityModal :initialQuantity="quantityModalQuantity" @onSubmit="onQuantityModalSubmit" />
-
         <div v-if="selectedUsers.length == 0"
                 v-on:click="hintUsers()"
                 class="ui inverted active dimmer">
@@ -37,7 +35,44 @@
             </div>
         </div>
 
-        <a v-for="product in products"
+        <!-- Top products -->
+        <a v-if="products"
+                v-for="product in products.top"
+                v-on:click.stop.prevent="changeQuantity(product, 1)"
+                href="#"
+                class="item kiosk-select-item prominent"
+                v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
+            <div class="item-text">
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
+
+                {{ product.name }}
+            </div>
+
+            <div v-if="getQuantity(product) == 0" class="item-label">
+                <div class="ui blue large label">{{ product.price_display }}</div>
+            </div>
+
+            <div v-if="getQuantity(product)" class="item-buttons">
+                <div class="ui two buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="quantityModal(product)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-more"></i>
+                    </a>
+
+                    <a href="#"
+                            v-on:click.stop.prevent="setQuantity(product, 0)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui red large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
+                </div>
+            </div>
+        </a>
+
+        <!-- Main product list (some top, recents, search results) -->
+        <a v-for="product in products.list"
                 v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
                 class="green inverted item kiosk-select-item"
@@ -71,40 +106,41 @@
             </div>
         </a>
 
-        <i v-if="searching && products.length == 0 && query != ''" class="item">
+        <!-- Search indicators -->
+        <i v-if="searching && productCount == 0 && query != ''" class="item">
             {{ __('pages.products.searchingFor', {term: query}) }}...
         </i>
-        <i v-if="searching && products.length == 0 && query == 0" class="item">
+        <i v-if="searching && productCount == 0 && query == 0" class="item">
             {{ __('misc.loading') }}...
         </i>
-        <i v-if="!searching && products.length == 0" class="item">
+        <i v-if="!searching && productCount == 0" class="item">
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}.
         </i>
 
-        <!-- Always show selected products if not part of query results -->
-        <a v-for="product in (getUserCart() && getUserCart().products || [])"
-                v-if="!isProductInResult(product.product)"
+        <!-- Selected products not in list (always show on bottom) -->
+        <a v-for="product in productsBacklog"
                 v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
-                class="green inverted item kiosk-item-select"
+                class="green inverted item kiosk-select-item"
                 v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product.product) }}×</span>
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{
+                    getQuantity(product) }}×</span>
 
-                {{ product.product.name }}
+                {{ product.name }}
             </div>
 
             <div class="item-buttons">
                 <div class="ui two buttons">
                     <a href="#"
-                            v-on:click.stop.prevent="quantityModal(product.product)"
+                            v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-more"></i>
                     </a>
 
                     <a href="#"
-                            v-on:click.stop.prevent="setQuantity(product.product, 0)"
+                            v-on:click.stop.prevent="setQuantity(product, 0)"
                             v-bind:class="{ disabled: buying }"
                             class="ui red large button">
                         <i class="glyphicons glyphicons-remove"></i>
@@ -112,6 +148,9 @@
                 </div>
             </div>
         </a>
+
+        <!-- Product quantity selection modal -->
+        <QuantityModal :initialQuantity="quantityModalQuantity" @onSubmit="onQuantityModalSubmit" />
     </div>
 </template>
 
@@ -128,10 +167,30 @@
             return {
                 query: '',
                 searching: true,
-                products: [],
+                products: {
+                    top: [],
+                    list: [],
+                },
                 quantityModalQuantity: null,
                 quantityModalCallback: null,
             };
+        },
+        computed: {
+            productCount: function() {
+                return this.products != null
+                        ? this.products.top.length + this.products.list.length
+                        : 0;
+            },
+            // Products that are selected but not in current results
+            productsBacklog: function() {
+                let cart = this.getUserCart();
+                if(cart == null)
+                    return [];
+
+                return cart.products
+                    .map(p => p.product)
+                    .filter(p => !this.isProductInResult(p));
+            },
         },
         watch: {
             query: function() {
@@ -264,7 +323,8 @@
 
             // Check if given product is in current search result list
             isProductInResult(product) {
-                return this.products.filter(p => p.id == product.id).length > 0;
+                return this.products.top.filter(p => p.id == product.id).length > 0
+                    || this.products.list.filter(p => p.id == product.id).length > 0;
             },
 
             // Hint to select a user first
@@ -349,12 +409,90 @@
         border-radius: 0 !important;
     }
 
-    .kiosk-select-item .item-buttons .button .glyphicons {
+    .button .glyphicons {
         vertical-align: middle;
     }
 
-    .kiosk-select-item .item-buttons .button .glyphicons::before {
+    .button .glyphicons::before {
         padding: 0;
+    }
+
+    .quantity,
+    .item.active {
+        font-weight: bold !important;
+    }
+
+    /* Prominent items on top of product list */
+    .kiosk-select-item.prominent {
+        font-size: 1.15em;
+        font-weight: bold !important;
+        line-height: 1.7 !important;
+        height: 67.99338px;
+        height: calc(48.5667px * 7 / 5);
+    }
+
+    .kiosk-select-item.prominent:not(.disabled) {
+        border-left: 4px solid #db2828 !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+1) {
+        border-color: #db2828 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+1) .ui.label {
+        background-color: #db2828 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+1).active {
+        color: #db2828 !important;
+        background: rgba(219, 40, 40, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+2) {
+        border-color: #f2711c !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+2) .ui.label {
+        background-color: #f2711c !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+2).active {
+        color: #f2711c !important;
+        background: rgba(242, 113, 28, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+3) {
+        border-color: #fbbd08 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+3) .ui.label {
+        background-color: #fbbd08 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+3).active {
+        color: #fbbd08 !important;
+        background: rgba(251, 189, 8, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+4) {
+        border-color: #b5cc18 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+4) .ui.label {
+        background-color: #b5cc18 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+4).active {
+        color: #b5cc18 !important;
+        background: rgba(181, 204, 24, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+5) {
+        border-color: #21ba45 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+5) .ui.label {
+        background-color: #21ba45 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+5).active {
+        color: #21ba45 !important;
+        background: rgba(33, 186, 69, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent .item-buttons .button {
+        font-size: 1.4rem !important;;
+        line-height: 1.4 !important;;
     }
 
     .reset {
@@ -366,10 +504,5 @@
     .dimmer .text {
         padding: 1em;
         line-height: 2;
-    }
-
-    .quantity,
-    .item.active {
-        font-weight: bold !important;
     }
 </style>

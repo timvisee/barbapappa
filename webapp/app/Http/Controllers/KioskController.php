@@ -17,9 +17,9 @@ use Illuminate\Support\Facades\DB;
 class KioskController extends Controller {
 
     /**
-     * The default limit for items in the kiosk listview.
+     * The limit for the member list.
      */
-    const LIST_LIMIT = 15;
+    const MEMBERS_LIMIT = 15;
 
     /**
      * Limit of members to show that are common buyers.
@@ -32,14 +32,19 @@ class KioskController extends Controller {
     const MEMBERS_RECENT_LIMIT = 10;
 
     /**
+     * The limit for the products list.
+     */
+    const PRODUCTS_LIMIT = 13;
+
+    /**
      * Limit of products to show that are commonly bought
      */
-    const PRODUCTS_TOP_LIMIT = 10;
+    const PRODUCTS_TOP_LIMIT = 9;
 
     /**
      * Limit of products to show that were recently bought.
      */
-    const PRODUCT_RECENT_LIMIT = 5;
+    const PRODUCT_RECENT_LIMIT = 4;
 
     /**
      * Kiosk buy page.
@@ -69,12 +74,12 @@ class KioskController extends Controller {
 
         // Return a default user list, or search based on a given query
         if(empty($search))
-            $members = self::getMemberList($bar, self::LIST_LIMIT);
+            $members = self::getMemberList($bar, self::MEMBERS_LIMIT);
         else
             $members = $economy
                 ->members()
                 ->search($search)
-                ->limit(self::LIST_LIMIT)
+                ->limit(self::MEMBERS_LIMIT)
                 ->get();
 
         // Set and limit fields to repsond with and sort
@@ -116,21 +121,31 @@ class KioskController extends Controller {
 
         // Search, or use top products
         $search = \Request::get('q');
-        if(!empty($search))
+        $isSearch = !empty($search);
+        if($isSearch)
             $products = $bar->economy->searchProducts($search, [$currency->id]);
         else
-            $products = self::getProductList($bar, self::LIST_LIMIT, [$currency->id]);
+            $products = self::getProductList($bar, self::PRODUCTS_LIMIT, [$currency->id]);
 
         // Add formatted price fields
         $products = $products
             ->map(function($product) use($currencies) {
                 $product->price_display = $product->formatPrice($currencies);
                 return $product;
-            })
-            ->sortBy('name')
-            ->values();
+            });
 
-        return $products;
+        // Separate top products from list
+        if($isSearch)
+            $list = $products;
+        else {
+            $top = $products->take(5);
+            $list = $products->skip(5);
+        }
+
+        return [
+            'top' => $top ?? [],
+            'list' => $list->sortBy('name')->values(),
+        ];
     }
 
     /**
@@ -162,9 +177,9 @@ class KioskController extends Controller {
         );
 
         // Add random products
-        if($products->count() < self::LIST_LIMIT)
+        if($products->count() < self::PRODUCTS_LIMIT)
             $products = $products->concat(
-                self::getRandomProductList($bar, self::LIST_LIMIT - $products->count(), $currency_ids, $products->pluck('id'))
+                self::getRandomProductList($bar, self::PRODUCTS_LIMIT - $products->count(), $currency_ids, $products->pluck('id'))
             );
 
         return $products->take($limit);
@@ -330,9 +345,9 @@ class KioskController extends Controller {
         );
 
         // Add random members
-        if($members->count() < self::LIST_LIMIT)
+        if($members->count() < self::MEMBERS_LIMIT)
             $members = $members->concat(
-                self::getRandomMemberList($bar, self::LIST_LIMIT - $members->count(), $members->pluck('user_id'))
+                self::getRandomMemberList($bar, self::MEMBERS_LIMIT - $members->count(), $members->pluck('user_id'))
             );
 
         return $members->take($limit);
