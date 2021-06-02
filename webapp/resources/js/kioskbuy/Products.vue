@@ -1,7 +1,9 @@
 <template>
     <div class="ui vertical huge menu fluid panel-products">
 
-        <div v-if="selectedUsers.length == 0" class="ui inverted active dimmer">
+        <div v-if="selectedUsers.length == 0"
+                v-on:click="hintUsers()"
+                class="ui inverted active dimmer">
             <div class="ui text">{{ __('pages.kiosk.firstSelectUser') }}</div>
         </div>
 
@@ -247,6 +249,13 @@
             // Check if given product is in current search result list
             isProductInResult(product) {
                 return this.products.filter(p => p.id == product.id).length > 0;
+            },
+
+            // Hint to select a user first
+            hintUsers() {
+                if(this.selectedUsers > 0)
+                    return;
+                this.$emit('highlightUsers');
             },
         },
     }

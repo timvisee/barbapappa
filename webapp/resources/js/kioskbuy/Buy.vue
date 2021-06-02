@@ -14,13 +14,17 @@
 
             <div class="ui grid">
                 <div class="seven wide column inline">
-                    <Users :apiUrl="apiUrl"
+                    <Users
+                            v-on:highlightProducts="highlightProducts"
+                            :apiUrl="apiUrl"
                             :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
                 </div>
                 <div class="nine wide column inline">
-                    <Products :apiUrl="apiUrl"
+                    <Products
+                            v-on:highlightUsers="highlightUsers"
+                            :apiUrl="apiUrl"
                             :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
@@ -184,6 +188,22 @@
                 event.preventDefault();
                 event.returnValue = msg;
                 return msg;
+            },
+
+            // Hint to select a user.
+            highlightUsers() {
+                // TODO: propegate to users model
+                $('.panel-users')
+                    .transition('stop')
+                    .transition('glow');
+            },
+
+            // Hint to select products.
+            highlightProducts() {
+                // TODO: propegate to products model
+                $('.panel-products')
+                    .transition('stop')
+                    .transition('glow');
             },
         },
     }

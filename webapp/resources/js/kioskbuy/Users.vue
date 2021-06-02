@@ -126,9 +126,7 @@
             selectedUsers: function (newSelectedUsers, oldSelectedUsers) {
                 // Glow product selection as visual clue
                 if(newSelectedUsers.length > 0)
-                    $('.panel-products')
-                        .transition('stop')
-                        .transition('glow');
+                    this.$emit('highlightProducts');
             },
         },
         methods: {
