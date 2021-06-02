@@ -1,8 +1,6 @@
 <template>
     <div class="ui vertical huge menu fluid panel-products">
 
-        <QuantityModal :initialQuantity="quantityModalQuantity" @onSubmit="onQuantityModalSubmit" />
-
         <div v-if="selectedUsers.length == 0"
                 v-on:click="hintUsers()"
                 class="ui inverted active dimmer">
@@ -37,42 +35,43 @@
             </div>
         </div>
 
-        <div v-if="products" class="item list-big">
-            <a v-for="product in products.top"
-                    v-on:click.stop.prevent="changeQuantity(product, 1)"
-                    href="#"
-                    class="kiosk-select-item item-big"
-                    v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
-                <div class="item-text">
-                    <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
+        <!-- Top products -->
+        <a v-if="products"
+                v-for="product in products.top"
+                v-on:click.stop.prevent="changeQuantity(product, 1)"
+                href="#"
+                class="item kiosk-select-item prominent"
+                v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
+            <div class="item-text">
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
 
-                    {{ product.name }}
+                {{ product.name }}
+            </div>
+
+            <div v-if="getQuantity(product) == 0" class="item-label">
+                <div class="ui blue large label">{{ product.price_display }}</div>
+            </div>
+
+            <div v-if="getQuantity(product)" class="item-buttons">
+                <div class="ui two buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="quantityModal(product)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-more"></i>
+                    </a>
+
+                    <a href="#"
+                            v-on:click.stop.prevent="setQuantity(product, 0)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui red large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
                 </div>
+            </div>
+        </a>
 
-                <div v-if="getQuantity(product) == 0" class="item-label">
-                    <div class="ui blue label">{{ product.price_display }}</div>
-                </div>
-
-                <div v-if="getQuantity(product)" class="item-buttons">
-                    <div class="ui two buttons">
-                        <a href="#"
-                                v-on:click.stop.prevent="quantityModal(product)"
-                                v-bind:class="{ disabled: buying }"
-                                class="ui large button">
-                            <i class="glyphicons glyphicons-more"></i>
-                        </a>
-
-                        <a href="#"
-                                v-on:click.stop.prevent="setQuantity(product, 0)"
-                                v-bind:class="{ disabled: buying }"
-                                class="ui red large button">
-                            <i class="glyphicons glyphicons-remove"></i>
-                        </a>
-                    </div>
-                </div>
-            </a>
-        </div>
-
+        <!-- Main product list (some top, recents, search results) -->
         <a v-for="product in products.list"
                 v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
@@ -107,6 +106,7 @@
             </div>
         </a>
 
+        <!-- Search indicators -->
         <i v-if="searching && productCount == 0 && query != ''" class="item">
             {{ __('pages.products.searchingFor', {term: query}) }}...
         </i>
@@ -117,15 +117,16 @@
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}.
         </i>
 
-        <!-- Always show selected products if not part of query results -->
+        <!-- Selected products not in list (always show on bottom) -->
         <a v-for="product in (getUserCart() && getUserCart().products || [])"
                 v-if="!isProductInResult(product.product)"
-                v-on:click.stop.prevent="changeQuantity(product, 1)"
+                v-on:click.stop.prevent="changeQuantity(product.product, 1)"
                 href="#"
-                class="green inverted item kiosk-item-select"
-                v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
+                class="green inverted item kiosk-select-item"
+                v-bind:class="{ disabled: buying, active: getQuantity(product.product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product.product) }}×</span>
+                <span v-if="getQuantity(product.product) > 0" class="subtle quantity">{{
+                    getQuantity(product.product) }}×</span>
 
                 {{ product.product.name }}
             </div>
@@ -148,6 +149,9 @@
                 </div>
             </div>
         </a>
+
+        <!-- Product quantity selection modal -->
+        <QuantityModal :initialQuantity="quantityModalQuantity" @onSubmit="onQuantityModalSubmit" />
     </div>
 </template>
 
@@ -404,6 +408,84 @@
         padding: 0;
     }
 
+    .quantity,
+    .item.active {
+        font-weight: bold !important;
+    }
+
+    /* Prominent items on top of product list */
+    .kiosk-select-item.prominent {
+        font-size: 1.15em;
+        font-weight: bold !important;
+        line-height: 1.7 !important;
+        height: 67.99338px;
+        height: calc(48.5667px * 7 / 5);
+    }
+
+    .kiosk-select-item.prominent:not(.disabled) {
+        border-left: 4px solid #db2828 !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+1) {
+        border-color: #db2828 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+1) .ui.label {
+        background-color: #db2828 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+1).active {
+        color: #db2828 !important;
+        background: rgba(219, 40, 40, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+2) {
+        border-color: #f2711c !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+2) .ui.label {
+        background-color: #f2711c !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+2).active {
+        color: #f2711c !important;
+        background: rgba(242, 113, 28, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+3) {
+        border-color: #fbbd08 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+3) .ui.label {
+        background-color: #fbbd08 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+3).active {
+        color: #fbbd08 !important;
+        background: rgba(251, 189, 8, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+4) {
+        border-color: #b5cc18 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+4) .ui.label {
+        background-color: #b5cc18 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+4).active {
+        color: #b5cc18 !important;
+        background: rgba(181, 204, 24, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent:nth-of-type(5n+5) {
+        border-color: #21ba45 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+5) .ui.label {
+        background-color: #21ba45 !important;
+    }
+    .kiosk-select-item.prominent:nth-of-type(5n+5).active {
+        color: #21ba45 !important;
+        background: rgba(33, 186, 69, 0.05) !important;
+    }
+
+    .kiosk-select-item.prominent .item-buttons .button {
+        font-size: 1.4rem !important;;
+        line-height: 1.4 !important;;
+    }
+
     .reset {
         color: red;
         float: right;
@@ -413,80 +495,5 @@
     .dimmer .text {
         padding: 1em;
         line-height: 2;
-    }
-
-    .quantity,
-    .item.active {
-        font-weight: bold !important;
-    }
-
-    .item.cards {
-        padding: 0.5em !important;
-    }
-
-    .ui.card {
-        margin: 0.5em 0;
-    }
-
-    .ui.card .description {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    .list-big {
-        padding: 0.5em !important;
-        display: flex !important;
-        flex-direction: column;
-        justify-content: space-between;
-        align-content: center;
-
-        /* 7 * 48.5667px */
-        height: calc(48.5667px * 7);
-    }
-
-    .item-big {
-        color: black;
-        font-weight: bold !important;
-        background: #FFF !important;
-        margin: 0 !important;
-        box-sizing: border-box;
-        border-radius: .28571429rem !important;
-        /* box-shadow: 0 1px 3px 0 #d4d4d5,0 0 0 1px #d4d4d5; */
-        /* box-shadow: 0 0 0 1px #d4d4d5,0 2px 0 0 #db2828,0 1px 3px 0 #d4d4d5; */
-        box-shadow: 0 0 0 1px #d4d4d5,0 1px 3px 0 #d4d4d5;
-        /* font-size: 1.28571429em; */
-        font-size: 1.15em;
-        line-height: 0.9 !important;
-        border-left: 2px solid #db2828 !important;
-    }
-
-    .item-big:hover {
-        color: black;
-    }
-
-    .item-big:nth-child(5n+0) {
-        border-color: #2185d0 !important;
-    }
-
-    .item-big:nth-child(5n+1) {
-        border-color: #f2711c !important;
-    }
-
-    .item-big:nth-child(5n+2) {
-        border-color: #21ba45 !important;
-    }
-
-    .item-big:nth-child(5n+3) {
-        border-color: #6435c9 !important;
-    }
-
-    .item-big:nth-child(5n+4) {
-        border-color: #b5cc18 !important;
-    }
-
-    .item-big.active {
-        color: #21ba45 !important;
-        background: rgba(0,0,0,.05) !important;
     }
 </style>
