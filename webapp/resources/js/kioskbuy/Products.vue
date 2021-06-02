@@ -241,19 +241,10 @@
 </script>
 
 <style>
-    .reset {
-        color: red;
-        float: right;
-        line-height: 1 !important;
-    }
-
-    .dimmer .text {
-        padding: 1em;
-        line-height: 2;
-    }
-
     .item {
         white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .item .action-button {
@@ -266,5 +257,16 @@
         /* TODO: do not use fixed height here */
         width: 43px;
         height: 43px;
+    }
+
+    .reset {
+        color: red;
+        float: right;
+        line-height: 1 !important;
+    }
+
+    .dimmer .text {
+        padding: 1em;
+        line-height: 2;
     }
 </style>

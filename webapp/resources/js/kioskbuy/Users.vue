@@ -185,12 +185,26 @@
 </script>
 
 <style>
-    .right {
-        float: right;
+    .menu {
+        padding: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+        border-radius: 0;
+    }
+
+    .item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .item-icon::before {
         padding: 0;
+    }
+
+    .right {
+        float: right;
     }
 
     .reset {
