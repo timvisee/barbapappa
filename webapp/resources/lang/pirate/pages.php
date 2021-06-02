@@ -843,8 +843,8 @@ return [
     'kiosk' => [
         'selectUser' => 'Select pirate',
         'searchUsers' => 'Search pirates',
-        'searchingFor' => 'Searching for :term...',
-        'noUsersFoundFor' => 'No pirates found for :term',
+        'searchingFor' => 'Searching :term...',
+        'noUsersFoundFor' => 'Nobody for :term',
         'firstSelectUser' => 'Select a pirate on the left to make a purchase for',
         'selectProducts' => 'Select products',
         'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
