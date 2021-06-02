@@ -4,7 +4,7 @@
         <br>
         <br>
 
-        <div class="fluid two ui huge buttons stick-bottom">
+        <div class="fluid two ui massive buttons stick-bottom">
             <a href="#"
                     class="ui negative button"
                     v-bind:class="{ disabled: buying }"
