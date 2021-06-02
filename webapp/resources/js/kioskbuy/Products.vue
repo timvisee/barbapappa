@@ -1,6 +1,8 @@
 <template>
     <div class="ui vertical huge menu fluid panel-products">
 
+        <QuantityModal :initialQuantity="quantityModalQuantity" @onSubmit="onQuantityModalSubmit" />
+
         <div v-if="selectedUsers.length == 0"
                 v-on:click="hintUsers()"
                 class="ui inverted active dimmer">
@@ -36,7 +38,7 @@
         </div>
 
         <a v-for="product in products"
-                v-on:click.stop.prevent="select(product)"
+                v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
                 class="green inverted item kiosk-select-item"
                 v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
@@ -53,12 +55,14 @@
             <div v-if="getQuantity(product)" class="item-buttons">
                 <div class="ui two buttons">
                     <a href="#"
-                            v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
+                            v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button">+{{ 5 - getQuantity(product) % 5 }}</a>
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-more"></i>
+                    </a>
 
                     <a href="#"
-                            v-on:click.stop.prevent="deselect(product)"
+                            v-on:click.stop.prevent="setQuantity(product, 0)"
                             v-bind:class="{ disabled: buying }"
                             class="ui red large button">
                         <i class="glyphicons glyphicons-remove"></i>
@@ -80,9 +84,9 @@
         <!-- Always show selected products if not part of query results -->
         <a v-for="product in (getUserCart() && getUserCart().products || [])"
                 v-if="!isProductInResult(product.product)"
-                v-on:click.stop.prevent="select(product)"
+                v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
-                class="green inverted item"
+                class="green inverted item kiosk-item-select"
                 v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
             <div class="item-text">
                 <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product.product) }}×</span>
@@ -93,14 +97,18 @@
             <div class="item-buttons">
                 <div class="ui two buttons">
                     <a href="#"
-                            v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
+                            v-on:click.stop.prevent="quantityModal(product.product)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button">+{{ 5 - getQuantity(product.product) % 5 }}</a>
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-more"></i>
+                    </a>
 
                     <a href="#"
-                            v-on:click.stop.prevent="deselect(product)"
+                            v-on:click.stop.prevent="setQuantity(product.product, 0)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui red large button">×</a>
+                            class="ui red large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
                 </div>
             </div>
         </a>
@@ -110,17 +118,28 @@
 <script>
     import axios from 'axios';
 
+    const QuantityModal = require('./QuantityModal.vue').default;
+
     export default {
+        components: {
+            QuantityModal,
+        },
         data() {
             return {
                 query: '',
                 searching: true,
                 products: [],
+                quantityModalQuantity: null,
+                quantityModalCallback: null,
             };
         },
         watch: {
             query: function() {
                 this.search(this.query);
+            },
+            cart: function() {
+                // Any modal should close on cart change
+                this.quantityModalQuantity = undefined;
             },
         },
         mounted: function() {
@@ -155,45 +174,54 @@
                 return this.getUserCart(user, false);
             },
 
-            // Select the given product, add 1 to desired quantity
-            select(product, quantity = 1) {
+            // Get the selection quantity for a given product
+            getQuantity(product) {
+                // Get user and cart, user must be selected
+                let user = this.selectedUsers[0];
+                if(user == null)
+                    return 0;
+                let userCart = this.getUserCart(user);
+                if(userCart == null)
+                    return 0;
+
+                let item = userCart.products.filter(p => p.id == product.id);
+                return item.length > 0 ? item[0].quantity : 0;
+            },
+
+            // Set product quantity in user cart.
+            setQuantity(product, quantity) {
                 // Get user and cart, user must be selected
                 let user = this.selectedUsers[0];
                 if(user == null)
                     return;
                 let userCart = this.getUserCart(user, true);
 
-                // Add products
-                let item = userCart.products.filter(p => p.id == product.id);
-                if(item.length > 0)
-                    item[0].quantity += quantity;
-                else
-                    userCart.products.push({
-                        id: product.id,
-                        quantity: quantity,
-                        product,
-                    });
+                if(quantity > 0) {
+                    // Add/get product, set quantity
+                    let item = userCart.products.filter(p => p.id == product.id);
+                    if(item.length > 0)
+                        item[0].quantity = quantity;
+                    else
+                        userCart.products.push({
+                            id: product.id,
+                            quantity: quantity,
+                            product,
+                        });
+                } else {
+                    // Remove product from cart
+                    let i = userCart.products.findIndex(p => p.id == product.id);
+                    if(i >= 0)
+                        userCart.products.splice(i, 1);
+
+                    // If user does not have products anymore, remove cart
+                    if(this.getCartSize() <= 0)
+                        this.removeCart();
+                }
             },
 
-            // Fully deselect the given product
-            deselect(product) {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return;
-                let userCart = this.getUserCart(user);
-                if(userCart == null)
-                    return;
-
-                // Remove product from cart
-                userCart.products.splice(
-                    userCart.products.findIndex(p => p.id == product.id),
-                    1,
-                );
-
-                // If user does not have products anymore, remove cart
-                if(this.getCartSize() <= 0)
-                    this.removeCart();
+            // Change quantity by given amount
+            changeQuantity(product, diff = 1) {
+                this.setQuantity(product, this.getQuantity(product) + diff);
             },
 
             // Get the number of products in the current user cart
@@ -221,20 +249,6 @@
                     this.cart.splice(i, 1);
             },
 
-            // Get the selection quantity for a given product
-            getQuantity(product) {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return 0;
-                let userCart = this.getUserCart(user);
-                if(userCart == null)
-                    return 0;
-
-                let item = userCart.products.filter(p => p.id == product.id);
-                return item.length > 0 ? item[0].quantity : 0;
-            },
-
             // Search products with the given query
             search(query = '') {
                 // Fetch a list of products, set the searching state
@@ -258,6 +272,25 @@
                 if(this.selectedUsers > 0)
                     return;
                 this.$emit('highlightUsers');
+            },
+
+            // Show quantity modal for product
+            quantityModal(product) {
+                this.quantityModalCallback = (q) => this.setQuantity(product, q);
+                this.quantityModalQuantity = this.getQuantity(product);
+            },
+
+            // Called on quantity modal submit
+            onQuantityModalSubmit(quantity) {
+                // Call configured submit callback once
+                if(this.quantityModalCallback != null) {
+                    if(this.quantityModalQuantity != null)
+                        this.quantityModalCallback(quantity);
+                    this.quantityModalCallback = null;
+                }
+
+                // Reset assigned modal
+                this.quantityModalQuantity = undefined;
             },
         },
     }

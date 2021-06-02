@@ -21,6 +21,7 @@ return [
     'no' => 'Nay',
     'noGoBack' => 'Nay, paddl\' back',
     'goBack' => 'Paddl\' back',
+    'accept' => 'Sail ho!',
     'or' => 'o',
     'optional' => 'Optional',
     'cancel' => 'Cancel',

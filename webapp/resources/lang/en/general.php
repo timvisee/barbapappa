@@ -21,6 +21,7 @@ return [
     'no' => 'No',
     'noGoBack' => 'No, go back',
     'goBack' => 'Go back',
+    'accept' => 'Accept',
     'or' => 'or',
     'optional' => 'Optional',
     'cancel' => 'Cancel',
