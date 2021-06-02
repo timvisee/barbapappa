@@ -6,7 +6,7 @@
 return [
     'signature' => [
         'caption' => 'Blimey!|Sail ho!',
-        'signoff' => '~ :app pirate robot',
+        'signoff' => '~ :app pirate',
     ],
 
     /**
