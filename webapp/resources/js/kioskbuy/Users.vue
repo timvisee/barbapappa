@@ -35,11 +35,15 @@
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
-                class="green item">
-            {{ user.name || __('misc.unknownUser') }}
+                class="green item kiosk-select-item">
+            <div class="item-text">
+                {{ user.name || __('misc.unknownUser') }}
+            </div>
 
-            <div class="right">
-                <span v-if="getQuantity(user) > 0" class="active green">{{ getQuantity(user) }}×</span>
+            <div class="item-label">
+                <span v-if="getQuantity(user) > 0" class="active subtle quantity">
+                    {{ getQuantity(user) }}×
+                </span>
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
@@ -50,11 +54,15 @@
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
-                class="green item">
-            {{ user.name || __('misc.unknownUser') }}
+                class="green item kiosk-select-item">
+            <div class="item-text">
+                {{ user.name || __('misc.unknownUser') }}
+            </div>
 
-            <div class="right">
-                <span v-if="getQuantity(user) > 0" class="active green">{{ getQuantity(user) }}×</span>
+            <div class="item-label">
+                <span v-if="getQuantity(user) > 0" class="active subtle quantity">
+                    {{ getQuantity(user) }}×
+                </span>
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
@@ -67,11 +75,15 @@
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
-                class="green item">
-            {{ user.name || __('misc.unknownUser') }}
+                class="green item kiosk-select-item">
+            <div class="item-text">
+                {{ user.name || __('misc.unknownUser') }}
+            </div>
 
-            <div class="right">
-                <span v-if="getQuantity(user) > 0" class="active green">{{ getQuantity(user) }}×</span>
+            <div class="item-label">
+                <span v-if="getQuantity(user) > 0" class="active subtle quantity">
+                    {{ getQuantity(user) }}×
+                </span>
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
@@ -192,6 +204,7 @@
     }
 
     .item-icon::before {
+        margin-left: 0.3em;
         padding: 0;
     }
 
@@ -207,5 +220,10 @@
 
     .active.green {
         color: #21ba45 !important;
+    }
+
+    .quantity,
+    .item.active {
+        font-weight: bold !important;
     }
 </style>

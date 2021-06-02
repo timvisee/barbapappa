@@ -36,25 +36,31 @@
         <a v-for="product in products"
                 v-on:click.stop.prevent="select(product)"
                 href="#"
-                class="green inverted item"
+                class="green inverted item kiosk-select-item"
                 v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
-            <span v-if="getQuantity(product) > 0" class="subtle">{{ getQuantity(product) }}×</span>
+            <div class="item-text">
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
 
-            {{ product.name }}
+                {{ product.name }}
+            </div>
 
-            <a href="#"
-                    v-if="getQuantity(product)"
-                    v-on:click.stop.prevent="deselect(product)"
-                    v-bind:class="{ disabled: buying }"
-                    class="ui red compact button action-button">×</a>
+            <div v-if="getQuantity(product) == 0" class="item-label">
+                <div class="ui blue label">{{ product.price_display }}</div>
+            </div>
 
-            <div v-if="getQuantity(product)"
-                    v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
-                    v-bind:class="{ disabled: buying }"
-                    class="ui compact button action-button">+{{ 5 - getQuantity(product) % 5 }}</div>
+            <div v-if="getQuantity(product)" class="item-buttons">
+                <div class="ui two buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui large button">+{{ 5 - getQuantity(product) % 5 }}</a>
 
-            <div v-if="getQuantity(product) == 0"
-                    class="ui blue label">{{ product.price_display }}</div>
+                    <a href="#"
+                            v-on:click.stop.prevent="deselect(product)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui red large button">×</a>
+                </div>
+            </div>
         </a>
 
         <i v-if="searching && products.length == 0 && query != ''" class="item">
@@ -74,19 +80,25 @@
                 href="#"
                 class="green inverted item"
                 v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
-            <span v-if="getQuantity(product) > 0" class="subtle">{{ getQuantity(product.product) }}×</span>
+            <div class="item-text">
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product.product) }}×</span>
 
-            {{ product.product.name }}
+                {{ product.product.name }}
+            </div>
 
-            <div v-if="getQuantity(product)"
-                    v-on:click.stop.prevent="deselect(product)"
-                    v-bind:class="{ disabled: buying }"
-                    class="ui red compact button action-button">×</div>
+            <div class="item-buttons">
+                <div class="ui two buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui large button">+{{ 5 - getQuantity(product.product) % 5 }}</a>
 
-            <div v-if="getQuantity(product)"
-                    v-on:click.stop.prevent="select(product, 5 - getQuantity(product) % 5)"
-                    v-bind:class="{ disabled: buying }"
-                    class="ui compact button action-button">+{{ 5 - getQuantity(product.product) % 5 }}</div>
+                    <a href="#"
+                            v-on:click.stop.prevent="deselect(product)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui red large button">×</a>
+                </div>
+            </div>
         </a>
     </div>
 </template>
@@ -241,22 +253,56 @@
 </script>
 
 <style>
-    .item {
+    /**
+     * Remove all padding on small screens.
+     */
+    @media only screen and (max-width:767px) {
+        .kiosk-select-item {
+            border-radius: 0 !important;
+        }
+    }
+
+    .kiosk-select-item {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: stretch;
+        overflow: hidden;
+        padding: 0 !important;
+    }
+
+    /* Left aligned text (label) */
+    .kiosk-select-item .item-text {
+        flex-grow: 1;
+        padding: .92857143em 1.14285714em;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    .item .action-button {
-        float: right;
-        text-align: center;
-        border-radius: 0;
-        margin: -1em -1.2em 0 1.2em;
-        padding: 1em 1em !important;
+    /* Right aligned label */
+    .kiosk-select-item .item-label {
+        flex-shrink: 0;
+        padding-right: 1.14285714em;
+        overflow: hidden;
 
-        /* TODO: do not use fixed height here */
-        width: 43px;
-        height: 43px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Right aligned buttons */
+    .kiosk-select-item .item-buttons {
+        overflow: hidden;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .kiosk-select-item .item-buttons .button {
+        text-align: center;
+        padding: .92857143em 1.125em;
+        line-height: 1.1;
+        border-radius: 0 !important;
     }
 
     .reset {
@@ -268,5 +314,10 @@
     .dimmer .text {
         padding: 1em;
         line-height: 2;
+    }
+
+    .quantity,
+    .item.active {
+        font-weight: bold !important;
     }
 </style>
