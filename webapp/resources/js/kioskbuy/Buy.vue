@@ -7,7 +7,7 @@
         </div>
 
         <div v-if="!refreshing">
-            <div v-if="successMessage" class="ui success message notification">
+            <div v-if="successMessage" class="ui success floating message notification">
                 <span class="halflings halflings-ok-sign icon"></span>
                 {{ successMessage }}
             </div>
