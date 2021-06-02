@@ -60,7 +60,9 @@
                     <a href="#"
                             v-on:click.stop.prevent="deselect(product)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui red large button">×</a>
+                            class="ui red large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
                 </div>
             </div>
         </a>
@@ -312,6 +314,14 @@
         padding: .92857143em 1.125em;
         line-height: 1.1;
         border-radius: 0 !important;
+    }
+
+    .kiosk-select-item .item-buttons .button .glyphicons {
+        vertical-align: middle;
+    }
+
+    .kiosk-select-item .item-buttons .button .glyphicons::before {
+        padding: 0;
     }
 
     .reset {
