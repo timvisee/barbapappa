@@ -185,14 +185,6 @@
 </script>
 
 <style>
-    .menu {
-        padding: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-top: 0 !important;
-        border-radius: 0;
-    }
-
     .item {
         white-space: nowrap;
         overflow: hidden;

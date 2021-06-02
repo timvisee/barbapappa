@@ -190,22 +190,27 @@
 </script>
 
 <style>
-    .page {
-        margin-top: 14px;
-    }
+    /**
+     * Remove all padding on small screens.
+     */
+    @media only screen and (max-width:767px) {
+        .page {
+            margin-top: 14px;
+        }
 
-    .column.inline {
-        padding: 0 !important;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        padding-top: 0 !important;
-        border-radius: 0;
-    }
+        .column.inline {
+            padding: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-top: 0 !important;
+            border-radius: 0;
+        }
 
-    .ui.menu,
-    .ui.vertical.menu {
-        border-radius: 0;
-        box-shadow: none !important;
+        .ui.menu,
+        .ui.vertical.menu {
+            border-radius: 0;
+            box-shadow: none !important;
+        }
     }
 
     .notification {
