@@ -841,6 +841,7 @@ return [
      * Kiosk page.
      */
     'kiosk' => [
+        'loading' => 'Kiosk laden',
         'selectUser' => 'Selecteer lid',
         'searchUsers' => 'Zoek leden',
         'searchingFor' => 'Zoeken :term...',

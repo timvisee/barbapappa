@@ -13,6 +13,8 @@
 
 @section('content')
     <div id="kioskbuy">
-        <div class="ui active centered inline loader"></div>
+        <div v-if="refreshing" class="ui active centered large text loader">
+            @lang('pages.kiosk.loading')...
+        </div>
     </div>
 @endsection

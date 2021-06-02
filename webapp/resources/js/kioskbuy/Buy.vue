@@ -2,7 +2,7 @@
 
 <template>
     <div>
-        <div v-if="refreshing" class="ui active centered inline text loader">
+        <div v-if="refreshing" class="ui active centered indeterminate large text loader">
             {{ __('misc.refreshing') }}...
         </div>
 
