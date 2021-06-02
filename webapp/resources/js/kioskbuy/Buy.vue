@@ -12,14 +12,14 @@
                 {{ successMessage }}
             </div>
 
-            <div class="ui two column grid">
-                <div class="column">
+            <div class="ui grid">
+                <div class="seven wide column inline">
                     <Users :apiUrl="apiUrl"
                             :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
                 </div>
-                <div class="column">
+                <div class="nine wide column inline">
                     <Products :apiUrl="apiUrl"
                             :selectedUsers="selectedUsers"
                             :cart="cart"
