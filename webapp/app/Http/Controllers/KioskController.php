@@ -39,12 +39,12 @@ class KioskController extends Controller {
     /**
      * Limit of products to show that are commonly bought
      */
-    const PRODUCTS_TOP_LIMIT = 10;
+    const PRODUCTS_TOP_LIMIT = 9;
 
     /**
      * Limit of products to show that were recently bought.
      */
-    const PRODUCT_RECENT_LIMIT = 5;
+    const PRODUCT_RECENT_LIMIT = 4;
 
     /**
      * Kiosk buy page.
