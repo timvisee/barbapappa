@@ -20,7 +20,7 @@
                 "source": {
                     "url": "https://github.com/timvisee/laravel-hasmany-sync",
                     "type": "git",
-                    "reference": "18308e822164e692f2b8e07736359246488279e2"
+                    "reference": "055eb3f0aa4114b7231b32c2dfefdaa5d94d60b5"
                 },
                 "description": "Laravel has many sync",
                 "type": "library",
