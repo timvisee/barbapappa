@@ -851,7 +851,6 @@ return [
         'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
         'buyProductsUsers#' => '{0} Buy no products for :users users|[1,*] Buy :count× for :users users',
         'deselect' => 'Deselect',
-        'productQuantity' => 'Product quantity',
     ],
 
     /**

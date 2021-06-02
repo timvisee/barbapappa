@@ -3,7 +3,6 @@
         <div class="ui icon header">
             <i class="glyphicons glyphicons-hash logo"
                     @click="quantity = 1 + Math.floor(Math.random() * 10);"></i>
-            {{ __('pages.kiosk.productQuantity') }}:
         </div>
         <div class="content">
             <p>
@@ -15,7 +14,16 @@
                                     @click="changeQuantity(-1)">
                                 <i class="glyphicons glyphicons-minus"></i>
                             </button>
-                            <input type="text" v-model="quantity" class="attached" autofocus>
+                            <input
+                                    type="number"
+                                    inputmode="numeric"
+                                    pattern="[0-9]*"
+                                    min="0"
+                                    v-model="quantity"
+                                    class="attached"
+                                    @focus="e => e.target.select()"
+                                    @keyup.enter.stop.prevent="hide"
+                                    autofocus>
                             <button class="ui right attached inverted huge positive button"
                                     @click="changeQuantity(+1)">
                                 <i class="glyphicons glyphicons-plus"></i>
@@ -113,7 +121,7 @@
 
 <style>
     .glyphicons.logo {
-        font-size: 3.5em;
+        font-size: 3em;
         display: block;
         margin: 0.2em;
     }
@@ -143,11 +151,24 @@
         text-align: center;
     }
 
-    .actions {
+    /* Chrome, Safari, Edge, Opera */
+    .quantity-ticker input::-webkit-outer-spin-button,
+    .quantity-ticker input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    .quantity-ticker input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .ui.modal > .actions {
+        padding-top: 0 !important;
         text-align: center !important;
     }
 
     .actions .button {
-        margin: 1rem !important;
+        margin: 0 !important;
     }
 </style>

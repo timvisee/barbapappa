@@ -851,7 +851,6 @@ return [
         'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',
         'buyProductsUsers#' => '{0} Koop geen producten voor :users leden|[1,*] Koop :count× voor :users leden',
         'deselect' => 'Deselect',
-        'productQuantity' => 'Product aantal',
     ],
 
     /**
