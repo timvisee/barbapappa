@@ -118,30 +118,29 @@
         </i>
 
         <!-- Selected products not in list (always show on bottom) -->
-        <a v-for="product in (getUserCart() && getUserCart().products || [])"
-                v-if="!isProductInResult(product.product)"
-                v-on:click.stop.prevent="changeQuantity(product.product, 1)"
+        <a v-for="product in productsBacklog"
+                v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
                 class="green inverted item kiosk-select-item"
-                v-bind:class="{ disabled: buying, active: getQuantity(product.product) > 0 }">
+                v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product.product) > 0" class="subtle quantity">{{
-                    getQuantity(product.product) }}×</span>
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{
+                    getQuantity(product) }}×</span>
 
-                {{ product.product.name }}
+                {{ product.name }}
             </div>
 
             <div class="item-buttons">
                 <div class="ui two buttons">
                     <a href="#"
-                            v-on:click.stop.prevent="quantityModal(product.product)"
+                            v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-more"></i>
                     </a>
 
                     <a href="#"
-                            v-on:click.stop.prevent="setQuantity(product.product, 0)"
+                            v-on:click.stop.prevent="setQuantity(product, 0)"
                             v-bind:class="{ disabled: buying }"
                             class="ui red large button">
                         <i class="glyphicons glyphicons-remove"></i>
@@ -181,6 +180,16 @@
                 return this.products != null
                         ? this.products.top.length + this.products.list.length
                         : 0;
+            },
+            // Products that are selected but not in current results
+            productsBacklog: function() {
+                let cart = this.getUserCart();
+                if(cart == null)
+                    return [];
+
+                return cart.products
+                    .map(p => p.product)
+                    .filter(p => !this.isProductInResult(p));
             },
         },
         watch: {
