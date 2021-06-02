@@ -23,8 +23,7 @@
                                     v-model="quantity"
                                     class="attached"
                                     @focus="e => e.target.select()"
-                                    @keyup.enter.stop.prevent="hide"
-                                    autofocus>
+                                    @keyup.enter.stop.prevent="hide">
                             <button class="ui right attached inverted huge positive button"
                                     @click="changeQuantity(+1)">
                                 <i class="glyphicons glyphicons-plus"></i>
