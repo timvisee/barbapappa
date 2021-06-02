@@ -37,7 +37,43 @@
             </div>
         </div>
 
-        <a v-for="product in products"
+        <div v-if="products" class="item list-big">
+            <a v-for="product in products.top"
+                    v-on:click.stop.prevent="changeQuantity(product, 1)"
+                    href="#"
+                    class="kiosk-select-item item-big"
+                    v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
+                <div class="item-text">
+                    <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
+
+                    {{ product.name }}
+                </div>
+
+                <div v-if="getQuantity(product) == 0" class="item-label">
+                    <div class="ui blue label">{{ product.price_display }}</div>
+                </div>
+
+                <div v-if="getQuantity(product)" class="item-buttons">
+                    <div class="ui two buttons">
+                        <a href="#"
+                                v-on:click.stop.prevent="quantityModal(product)"
+                                v-bind:class="{ disabled: buying }"
+                                class="ui large button">
+                            <i class="glyphicons glyphicons-more"></i>
+                        </a>
+
+                        <a href="#"
+                                v-on:click.stop.prevent="setQuantity(product, 0)"
+                                v-bind:class="{ disabled: buying }"
+                                class="ui red large button">
+                            <i class="glyphicons glyphicons-remove"></i>
+                        </a>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <a v-for="product in products.list"
                 v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
                 class="green inverted item kiosk-select-item"
@@ -71,13 +107,13 @@
             </div>
         </a>
 
-        <i v-if="searching && products.length == 0 && query != ''" class="item">
+        <i v-if="searching && productCount == 0 && query != ''" class="item">
             {{ __('pages.products.searchingFor', {term: query}) }}...
         </i>
-        <i v-if="searching && products.length == 0 && query == 0" class="item">
+        <i v-if="searching && productCount == 0 && query == 0" class="item">
             {{ __('misc.loading') }}...
         </i>
-        <i v-if="!searching && products.length == 0" class="item">
+        <i v-if="!searching && productCount == 0" class="item">
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}.
         </i>
 
@@ -128,10 +164,20 @@
             return {
                 query: '',
                 searching: true,
-                products: [],
+                products: {
+                    top: [],
+                    list: [],
+                },
                 quantityModalQuantity: null,
                 quantityModalCallback: null,
             };
+        },
+        computed: {
+            productCount: function() {
+                return this.products != null
+                        ? this.products.top.length + this.products.list.length
+                        : 0;
+            },
         },
         watch: {
             query: function() {
@@ -264,7 +310,8 @@
 
             // Check if given product is in current search result list
             isProductInResult(product) {
-                return this.products.filter(p => p.id == product.id).length > 0;
+                return this.products.top.filter(p => p.id == product.id).length > 0
+                    || this.products.list.filter(p => p.id == product.id).length > 0;
             },
 
             // Hint to select a user first
@@ -349,11 +396,11 @@
         border-radius: 0 !important;
     }
 
-    .kiosk-select-item .item-buttons .button .glyphicons {
+    .button .glyphicons {
         vertical-align: middle;
     }
 
-    .kiosk-select-item .item-buttons .button .glyphicons::before {
+    .button .glyphicons::before {
         padding: 0;
     }
 
@@ -371,5 +418,75 @@
     .quantity,
     .item.active {
         font-weight: bold !important;
+    }
+
+    .item.cards {
+        padding: 0.5em !important;
+    }
+
+    .ui.card {
+        margin: 0.5em 0;
+    }
+
+    .ui.card .description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .list-big {
+        padding: 0.5em !important;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        align-content: center;
+
+        /* 7 * 48.5667px */
+        height: calc(48.5667px * 7);
+    }
+
+    .item-big {
+        color: black;
+        font-weight: bold !important;
+        background: #FFF !important;
+        margin: 0 !important;
+        box-sizing: border-box;
+        border-radius: .28571429rem !important;
+        /* box-shadow: 0 1px 3px 0 #d4d4d5,0 0 0 1px #d4d4d5; */
+        /* box-shadow: 0 0 0 1px #d4d4d5,0 2px 0 0 #db2828,0 1px 3px 0 #d4d4d5; */
+        box-shadow: 0 0 0 1px #d4d4d5,0 1px 3px 0 #d4d4d5;
+        /* font-size: 1.28571429em; */
+        font-size: 1.15em;
+        line-height: 0.9 !important;
+        border-left: 2px solid #db2828 !important;
+    }
+
+    .item-big:hover {
+        color: black;
+    }
+
+    .item-big:nth-child(5n+0) {
+        border-color: #2185d0 !important;
+    }
+
+    .item-big:nth-child(5n+1) {
+        border-color: #f2711c !important;
+    }
+
+    .item-big:nth-child(5n+2) {
+        border-color: #21ba45 !important;
+    }
+
+    .item-big:nth-child(5n+3) {
+        border-color: #6435c9 !important;
+    }
+
+    .item-big:nth-child(5n+4) {
+        border-color: #b5cc18 !important;
+    }
+
+    .item-big.active {
+        color: #21ba45 !important;
+        background: rgba(0,0,0,.05) !important;
     }
 </style>

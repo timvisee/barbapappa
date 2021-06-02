@@ -116,7 +116,8 @@ class KioskController extends Controller {
 
         // Search, or use top products
         $search = \Request::get('q');
-        if(!empty($search))
+        $isSearch = !empty($search);
+        if($isSearch)
             $products = $bar->economy->searchProducts($search, [$currency->id]);
         else
             $products = self::getProductList($bar, self::LIST_LIMIT, [$currency->id]);
@@ -126,11 +127,20 @@ class KioskController extends Controller {
             ->map(function($product) use($currencies) {
                 $product->price_display = $product->formatPrice($currencies);
                 return $product;
-            })
-            ->sortBy('name')
-            ->values();
+            });
 
-        return $products;
+        // Separate top products from list
+        if($isSearch)
+            $list = $products;
+        else {
+            $top = $products->take(5);
+            $list = $products->skip(5);
+        }
+
+        return [
+            'top' => $top ?? [],
+            'list' => $list->sortBy('name')->values(),
+        ];
     }
 
     /**
