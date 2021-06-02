@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical large menu fluid panel-users">
+    <div class="ui vertical huge menu fluid panel-users">
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectUser') }}
 
@@ -35,11 +35,15 @@
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
-                class="green item">
-            {{ user.name || __('misc.unknownUser') }}
+                class="green item kiosk-select-item">
+            <div class="item-text">
+                {{ user.name || __('misc.unknownUser') }}
+            </div>
 
-            <div class="right">
-                <span v-if="getQuantity(user) > 0" class="active green">{{ getQuantity(user) }}×</span>
+            <div class="item-label">
+                <span v-if="getQuantity(user) > 0" class="active subtle quantity">
+                    {{ getQuantity(user) }}×
+                </span>
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
@@ -50,11 +54,15 @@
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
-                class="green item">
-            {{ user.name || __('misc.unknownUser') }}
+                class="green item kiosk-select-item">
+            <div class="item-text">
+                {{ user.name || __('misc.unknownUser') }}
+            </div>
 
-            <div class="right">
-                <span v-if="getQuantity(user) > 0" class="active green">{{ getQuantity(user) }}×</span>
+            <div class="item-label">
+                <span v-if="getQuantity(user) > 0" class="active subtle quantity">
+                    {{ getQuantity(user) }}×
+                </span>
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
@@ -67,11 +75,15 @@
                 v-on:click.prevent.stop="toggleSelectUser(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
-                class="green item">
-            {{ user.name || __('misc.unknownUser') }}
+                class="green item kiosk-select-item">
+            <div class="item-text">
+                {{ user.name || __('misc.unknownUser') }}
+            </div>
 
-            <div class="right">
-                <span v-if="getQuantity(user) > 0" class="active green">{{ getQuantity(user) }}×</span>
+            <div class="item-label">
+                <span v-if="getQuantity(user) > 0" class="active subtle quantity">
+                    {{ getQuantity(user) }}×
+                </span>
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
@@ -114,9 +126,7 @@
             selectedUsers: function (newSelectedUsers, oldSelectedUsers) {
                 // Glow product selection as visual clue
                 if(newSelectedUsers.length > 0)
-                    $('.panel-products')
-                        .transition('stop')
-                        .transition('glow');
+                    this.$emit('highlightProducts');
             },
         },
         methods: {
@@ -185,12 +195,19 @@
 </script>
 
 <style>
-    .right {
-        float: right;
+    .item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .item-icon::before {
+        margin-left: 0.3em;
         padding: 0;
+    }
+
+    .right {
+        float: right;
     }
 
     .reset {
@@ -201,5 +218,10 @@
 
     .active.green {
         color: #21ba45 !important;
+    }
+
+    .quantity,
+    .item.active {
+        font-weight: bold !important;
     }
 </style>

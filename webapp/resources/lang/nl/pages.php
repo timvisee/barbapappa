@@ -841,10 +841,11 @@ return [
      * Kiosk page.
      */
     'kiosk' => [
+        'loading' => 'Kiosk laden',
         'selectUser' => 'Selecteer lid',
         'searchUsers' => 'Zoek leden',
-        'searchingFor' => 'Zoeken naar :term...',
-        'noUsersFoundFor' => 'Geen leden gevonden voor :term',
+        'searchingFor' => 'Zoeken :term...',
+        'noUsersFoundFor' => 'Niemand voor :term',
         'firstSelectUser' => 'Selecteer links een lid om een aankoop voor te doen',
         'selectProducts' => 'Selecteer producten',
         'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',

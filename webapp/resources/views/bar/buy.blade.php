@@ -3,12 +3,12 @@
 @section('title', $bar->name)
 
 @push('scripts')
-    <script type="text/javascript" src="{{ mix('js/widget/advancedbuy.js') }}"></script>
-
     <script type="text/javascript">
         // Provide API base url to client-side buy widget
         var barapp_advancedbuy_api_url = '{{ route("bar.buy.api", ["barId" => $bar->human_id]) }}';
     </script>
+
+    <script type="text/javascript" src="{{ mix('js/widget/advancedbuy.js') }}" async></script>
 @endpush
 
 @php

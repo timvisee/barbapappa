@@ -841,10 +841,11 @@ return [
      * Kiosk page.
      */
     'kiosk' => [
+        'loading' => 'Loading Kiosk',
         'selectUser' => 'Select member',
         'searchUsers' => 'Search users',
-        'searchingFor' => 'Searching for :term...',
-        'noUsersFoundFor' => 'No users found for :term',
+        'searchingFor' => 'Searching :term...',
+        'noUsersFoundFor' => 'Nobody for :term',
         'firstSelectUser' => 'Select a member on the left to make a purchase for',
         'selectProducts' => 'Select products',
         'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',

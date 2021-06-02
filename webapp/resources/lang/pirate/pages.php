@@ -841,14 +841,15 @@ return [
      * Kiosk page.
      */
     'kiosk' => [
+        'loading' => 'Loading ship',
         'selectUser' => 'Select pirate',
         'searchUsers' => 'Search pirates',
-        'searchingFor' => 'Searching for :term...',
-        'noUsersFoundFor' => 'No pirates found for :term',
+        'searchingFor' => 'Searching :term...',
+        'noUsersFoundFor' => 'Nay for :term',
         'firstSelectUser' => 'Select a pirate on the left to make a purchase for',
-        'selectProducts' => 'Select products',
-        'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
-        'buyProductsUsers#' => '{0} Buy no products for :users pirates|[1,*] Buy :count× for :users pirates',
+        'selectProducts' => 'Select loot',
+        'buyProducts#' => '{0} Buy no loot|{1} Buy loot|[2,*] Buy :count loot',
+        'buyProductsUsers#' => '{0} Buy no loot for :users pirates|[1,*] Buy :count× for :users pirates',
         'deselect' => 'Deselect',
     ],
 

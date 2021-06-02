@@ -2,25 +2,29 @@
 
 <template>
     <div>
-        <div v-if="refreshing" class="ui active centered inline text loader">
+        <div v-if="refreshing" class="ui active centered indeterminate large text loader">
             {{ __('misc.refreshing') }}...
         </div>
 
         <div v-if="!refreshing">
-            <div v-if="successMessage" class="ui success message notification">
+            <div v-if="successMessage" class="ui success floating message notification">
                 <span class="halflings halflings-ok-sign icon"></span>
                 {{ successMessage }}
             </div>
 
-            <div class="ui two column grid">
-                <div class="column">
-                    <Users :apiUrl="apiUrl"
+            <div class="ui grid">
+                <div class="seven wide column inline">
+                    <Users
+                            v-on:highlightProducts="highlightProducts"
+                            :apiUrl="apiUrl"
                             :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
                 </div>
-                <div class="column">
-                    <Products :apiUrl="apiUrl"
+                <div class="nine wide column inline">
+                    <Products
+                            v-on:highlightUsers="highlightUsers"
+                            :apiUrl="apiUrl"
                             :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
@@ -185,11 +189,50 @@
                 event.returnValue = msg;
                 return msg;
             },
+
+            // Hint to select a user.
+            highlightUsers() {
+                // TODO: propegate to users model
+                $('.panel-users')
+                    .transition('stop')
+                    .transition('glow');
+            },
+
+            // Hint to select products.
+            highlightProducts() {
+                // TODO: propegate to products model
+                $('.panel-products')
+                    .transition('stop')
+                    .transition('glow');
+            },
         },
     }
 </script>
 
 <style>
+    /**
+     * Remove all padding on small screens.
+     */
+    @media only screen and (max-width:767px) {
+        .page {
+            margin-top: 14px;
+        }
+
+        .column.inline {
+            padding: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            padding-top: 0 !important;
+            border-radius: 0;
+        }
+
+        .ui.menu,
+        .ui.vertical.menu {
+            border-radius: 0;
+            box-shadow: none !important;
+        }
+    }
+
     .notification {
         position: fixed !important;
         top: 64px;
