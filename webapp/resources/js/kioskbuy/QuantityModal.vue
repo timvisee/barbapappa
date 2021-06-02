@@ -35,7 +35,10 @@
 
             <div style="text-align: center;">
                 <div v-for="qq in quantities">
-                    <button v-for="q in qq" class="ui huge inverted basic primary button quantity-button" v-on:click.prevent.stop="quantity = q">
+                    <button v-for="q in qq"
+                            class="ui huge inverted basic primary button quantity-button"
+                            v-on:click.prevent.stop="quantity = q"
+                            v-on:dblclick.prevent.stop="hide()">
                         {{ q }}
                     </button>
                 </div>
