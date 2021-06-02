@@ -19,12 +19,12 @@ class KioskController extends Controller {
     /**
      * The default limit for items in the kiosk listview.
      */
-    const LIST_LIMIT = 15;
+    const LIST_LIMIT = 14;
 
     /**
      * Limit of members to show that are common buyers.
      */
-    const MEMBERS_TOP_LIMIT = 5;
+    const MEMBERS_TOP_LIMIT = 4;
 
     /**
      * Limit of members to show that are recent buyers.
@@ -39,7 +39,7 @@ class KioskController extends Controller {
     /**
      * Limit of products to show that were recently bought.
      */
-    const PRODUCT_RECENT_LIMIT = 5;
+    const PRODUCT_RECENT_LIMIT = 4;
 
     /**
      * Kiosk buy page.

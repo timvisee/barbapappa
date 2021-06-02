@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical large menu fluid panel-users">
+    <div class="ui vertical huge menu fluid panel-users">
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectUser') }}
 
