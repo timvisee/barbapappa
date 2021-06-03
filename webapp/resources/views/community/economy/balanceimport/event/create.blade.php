@@ -15,7 +15,7 @@
         'method' => 'POST',
         'class' => 'ui form'
     ]) !!}
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', '', ['placeholder' => __('pages.balanceImportEvent.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}

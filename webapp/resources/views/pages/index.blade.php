@@ -13,7 +13,7 @@
 
         <p class="align-center">@lang('pages.index.emailAndContinue')</p>
 
-        <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
             {{ Form::label('email', __('account.email') . ':') }}
             <div class="ui action input">
                 {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}

@@ -47,7 +47,7 @@
 
         {{-- Role change confirmation checkbox --}}
         <div class="ui bottom attached segment">
-            <div class="field {{ ErrorRenderer::hasError('confirm_role_change') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('confirm_role_change') ? 'error' : '' }}">
                 <div class="ui checkbox">
                     {{ Form::checkbox('confirm_role_change', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                     {{ Form::label('confirm_role_change', __('pages.barMembers.confirmRoleChange')) }}

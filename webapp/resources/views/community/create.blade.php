@@ -7,14 +7,14 @@
 
     {!! Form::open(['action' => ['CommunityController@doCreate'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', '', ['placeholder' => __('pages.community.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
         </div>
 
         <div class="field {{ ErrorRenderer::hasError('description') ? 'error' : '' }}">
-            {{ Form::label('description', __('misc.description') . ' (' .  __('misc.public') . ', ' .  __('general.optional') . '):') }}
+            {{ Form::label('description', __('misc.description') . ' (' .  __('misc.public') . '):') }}
             {{ Form::textarea('description', '', ['placeholder' => __('pages.community.descriptionPlaceholder'), 'rows' => 3]) }}
             {{ ErrorRenderer::inline('description') }}
         </div>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="field {{ ErrorRenderer::hasError('slug') ? 'error' : '' }}">
-            {{ Form::label('slug', __('misc.slug') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('slug', __('misc.slug') . ':') }}
             <div class="ui labeled input">
                 {{ Form::label('slug', '/c/', ['class' => 'ui label']) }}
                 {{ Form::text('slug', '', ['placeholder' => __('pages.community.slugPlaceholder')]) }}
@@ -50,7 +50,7 @@
         </div>
 
         <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
-            {{ Form::label('password', __('misc.code') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('password', __('misc.code') . ':') }}
             {{ Form::text('password', '', ['placeholder' => __('misc.codePlaceholder')]) }}
             {{ ErrorRenderer::inline('password') }}
         </div>

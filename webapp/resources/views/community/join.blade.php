@@ -31,7 +31,7 @@
     {!! Form::open(['action' => ['CommunityController@doJoin', 'communityId' => $community->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
 
         @if($needsPassword)
-            <div class="field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
                 {{ Form::label('code', __('misc.code') . ':') }}
                 {{ Form::text('code', $code, ['placeholder' => __('misc.codePlaceholder')]) }}
                 {{ ErrorRenderer::inline('code') }}

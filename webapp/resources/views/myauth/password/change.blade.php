@@ -9,7 +9,7 @@
     {!! Form::open(['action' => ['PasswordChangeController@doChange'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
         @if($has_password)
-            <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
                 {{ Form::label('password', __('account.currentPassword') . ':') }}
                 {{ Form::password('password') }}
                 {{ ErrorRenderer::inline('password') }}
@@ -17,13 +17,13 @@
         @endif
 
         <div class="two fields">
-            <div class="field {{ ErrorRenderer::hasError('new_password') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('new_password') ? 'error' : '' }}">
                 {{ Form::label('new_password', __('account.newPassword') . ':') }}
                 {{ Form::password('new_password') }}
                 {{ ErrorRenderer::inline('new_password') }}
             </div>
 
-            <div class="field {{ ErrorRenderer::hasError('new_password_confirmation') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('new_password_confirmation') ? 'error' : '' }}">
                 {{ Form::label('new_password_confirmation', __('account.confirmNewPassword') . ':') }}
                 {{ Form::password('new_password_confirmation') }}
                 {{ ErrorRenderer::inline('new_password_confirmation') }}

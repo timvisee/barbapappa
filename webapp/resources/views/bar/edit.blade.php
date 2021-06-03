@@ -7,14 +7,14 @@
 
     {!! Form::open(['action' => ['BarController@doEdit', $bar->human_id], 'method' => 'PUT', 'class' => 'ui form']) !!}
 
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', $bar->name, ['placeholder' => __('pages.bar.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
         </div>
 
         <div class="field {{ ErrorRenderer::hasError('description') ? 'error' : '' }}">
-            {{ Form::label('description', __('misc.description') . ' (' .  __('misc.public') . ', ' .  __('general.optional') . '):') }}
+            {{ Form::label('description', __('misc.description') . ' (' . __('misc.public') . '):') }}
             {{ Form::textarea('description', $bar->description, ['placeholder' => __('pages.bar.descriptionPlaceholder'), 'rows' => 3]) }}
             {{ ErrorRenderer::inline('description') }}
         </div>
@@ -34,7 +34,7 @@
         </div>
 
         <div class="field {{ ErrorRenderer::hasError('slug') ? 'error' : '' }}">
-            {{ Form::label('slug', __('misc.slug') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('slug', __('misc.slug') . ':') }}
             <div class="ui labeled input">
                 {{ Form::label('slug', '/b/', ['class' => 'ui label']) }}
                 {{ Form::text('slug', $bar->slug, ['placeholder' => __('pages.bar.slugPlaceholder')]) }}
@@ -50,7 +50,7 @@
         </div>
 
         <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
-            {{ Form::label('password', __('misc.code') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('password', __('misc.code') . ':') }}
             {{ Form::text('password', $bar->password, ['placeholder' => __('misc.codePlaceholder')]) }}
             {{ ErrorRenderer::inline('password') }}
         </div>
@@ -62,7 +62,7 @@
             <p>@lang('pages.bar.economyDescription')</p>
         </div>
 
-        <div class="field disabled {{ ErrorRenderer::hasError('economy') ? 'error' : '' }}">
+        <div class="required field disabled {{ ErrorRenderer::hasError('economy') ? 'error' : '' }}">
             {{ Form::label('economy', __('pages.community.economy')) }}
 
             <div class="ui fluid selection dropdown">
@@ -87,7 +87,7 @@
         <div class="ui divider"></div>
 
         <div class="field {{ ErrorRenderer::hasError('low_balance_text') ? 'error' : '' }}">
-            {{ Form::label('low_balance_text', __('pages.bar.lowBalanceText') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('low_balance_text', __('pages.bar.lowBalanceText') . ':') }}
             {{ Form::textarea('low_balance_text', $bar->low_balance_text, ['placeholder' => __('pages.bar.lowBalanceTextPlaceholder'), 'rows' => 3]) }}
             {{ ErrorRenderer::inline('low_balance_text') }}
         </div>

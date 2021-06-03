@@ -10,7 +10,7 @@
     <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['EconomyController@doEdit', $community->human_id, $economy->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', $economy->name, ['placeholder' => __('pages.economies.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}

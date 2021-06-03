@@ -45,12 +45,12 @@
         <div class="ui hidden divider"></div>
 
         <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
-            {{ Form::label('name', __('misc.name') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', '', ['placeholder' => __('account.firstNamePlaceholder') . ' ' .  __('account.lastNamePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
         </div>
 
-        <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
             {{ Form::label('email', __('account.email') . ':') }}
             {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
             {{ ErrorRenderer::inline('email') }}

@@ -86,7 +86,7 @@
     </div>
 
     <div class="ui bottom attached segment">
-        <div class="field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('confirm', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('confirm', __('pages.wallets.confirmModifyBalance')) }}

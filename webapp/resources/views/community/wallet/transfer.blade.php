@@ -53,7 +53,7 @@
 
     <div class="ui hidden divider"></div>
 
-    <div class="field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
+    <div class="required field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
         {{ Form::label('amount', __('misc.amountInCurrency', ['currency' => $currency->name]) . ':') }}
         <div class="ui labeled input">
             {{ Form::label('amount', $currency->symbol, ['class' => 'ui label']) }}
@@ -62,7 +62,7 @@
         {{ ErrorRenderer::inline('amount') }}
     </div>
 
-    <div class="field {{ ErrorRenderer::hasError('to_wallet') ? 'error' : '' }}">
+    <div class="required field {{ ErrorRenderer::hasError('to_wallet') ? 'error' : '' }}">
         {{ Form::label('to_wallet', __('pages.wallets.toSelf') . ':') }}
 
         <div class="ui fluid selection dropdown">
