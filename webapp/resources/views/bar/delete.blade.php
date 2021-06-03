@@ -13,7 +13,7 @@
 
     {!! Form::open(['action' => ['BarController@doDelete', 'barId' => $bar->human_id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         <div class="ui attached segment">
-            <div class="field {{ ErrorRenderer::hasError('confirm_name') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('confirm_name') ? 'error' : '' }}">
                 {{ Form::hidden('confirm_name_base', $bar->name) }}
                 {{ Form::label('confirm_name', __('pages.bar.exactBarNameVerify') . ':') }}
                 <div class="ui labeled input">
@@ -30,7 +30,7 @@
 
         {{-- Delete confirmation checkbox --}}
         <div class="ui bottom attached segment">
-            <div class="field {{ ErrorRenderer::hasError('confirm_delete') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('confirm_delete') ? 'error' : '' }}">
                 <div class="ui checkbox">
                     {{ Form::checkbox('confirm_delete', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                     {{ Form::label('confirm_delete', __('misc.iUnderstandDelete')) }}

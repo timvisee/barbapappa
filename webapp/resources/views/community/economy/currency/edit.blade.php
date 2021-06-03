@@ -27,7 +27,7 @@
         <p>@lang('pages.currencies.detailDescription')</p>
 
         <p>@lang('pages.currencies.nameDescription')</p>
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', $currency->name, ['placeholder' => __('pages.currencies.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
@@ -43,14 +43,14 @@
             </a>
         </div>
         <div class="field disabled {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
-            {{ Form::label('code', __('pages.currencies.code') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('code', __('pages.currencies.code') . ':') }}
             {{ Form::text('code', $currency->code, ['placeholder' => __('pages.currencies.codePlaceholder')]) }}
             {{ ErrorRenderer::inline('code') }}
         </div>
         <div class="ui divider hidden"></div>
 
         <p>@lang('pages.currencies.symbolDescription')</p>
-        <div class="field {{ ErrorRenderer::hasError('symbol') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('symbol') ? 'error' : '' }}">
             {{ Form::label('symbol', __('misc.symbol') . ':') }}
             {{ Form::text('symbol', $currency->symbol, ['placeholder' => __('pages.currencies.symbolPlaceholder')]) }}
             {{ ErrorRenderer::inline('symbol') }}
@@ -60,7 +60,7 @@
         <p>@lang('pages.currencies.formatDescription', [
             'app' => config('app.name')
         ])</p>
-        <div class="field {{ ErrorRenderer::hasError('format') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('format') ? 'error' : '' }}">
             {{ Form::label('format', __('pages.currencies.format') . ':') }}
             {{ Form::text('format', $currency->format, ['placeholder' => __('pages.currencies.formatPlaceholder')]) }}
             {{ ErrorRenderer::inline('format') }}

@@ -14,7 +14,7 @@
         'method' => 'POST',
         'class' => 'ui form'
     ]) !!}
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', $clone ? $cloneProduct->name : '', ['placeholder' => __('pages.products.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
@@ -40,7 +40,7 @@
                         : null;
                 @endphp
                 <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
-                    {{ Form::label($field, __('lang.name', [], $locale) . ' (' .  __('general.optional') . '):') }}
+                    {{ Form::label($field, __('lang.name', [], $locale) . ':') }}
                     <div class="ui labeled input">
                         {{ Form::text(
                             $field,
@@ -56,7 +56,7 @@
         <div class="ui divider"></div>
 
         <div class="field {{ ErrorRenderer::hasError('tags') ? 'error' : '' }}">
-            {{ Form::label('tags', __('misc.tags') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('tags', __('misc.tags') . ':') }}
             {{ Form::text('tags', $clone ? $cloneProduct->tags : '', ['placeholder' => __('pages.products.tagsPlaceholder')]) }}
             {{ ErrorRenderer::inline('tags') }}
         </div>
@@ -81,7 +81,7 @@
                             : null;
                     @endphp
                     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
-                        {{ Form::label($field, $currency->name . ' (' .  __('general.optional') . '):') }}
+                        {{ Form::label($field, $currency->name . ':') }}
                         <div class="ui labeled input">
                             {{ Form::label($field, $currency->symbol, ['class' => 'ui label']) }}
                             {{ Form::text(

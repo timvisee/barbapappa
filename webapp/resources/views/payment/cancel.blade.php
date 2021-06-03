@@ -40,7 +40,7 @@
     ], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         {{-- Delete confirmation checkbox --}}
         <div class="ui bottom attached segment">
-            <div class="field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
                 <div class="ui checkbox">
                     {{ Form::checkbox('confirm', 1, false, [
                         'tabindex' => 0,

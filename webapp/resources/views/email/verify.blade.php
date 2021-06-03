@@ -7,7 +7,7 @@
 
     {!! Form::open(['action' => ['EmailVerifyController@doVerify'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        <div class="field {{ ErrorRenderer::hasError('token') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('token') ? 'error' : '' }}">
             {{ Form::label('token', __('misc.token') . ':') }}
             @if(empty($token))
                 {{ Form::text('token', '') }}

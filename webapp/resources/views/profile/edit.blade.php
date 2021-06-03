@@ -8,13 +8,13 @@
     {!! Form::open(['action' => ['ProfileController@update', $user->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
 
         <div class="two fields">
-            <div class="field {{ ErrorRenderer::hasError('first_name') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('first_name') ? 'error' : '' }}">
                 {{ Form::label('first_name', __('account.firstName') . ':') }}
                 {{ Form::text('first_name', $user->first_name, ['placeholder' => __('account.firstNamePlaceholder')]) }}
                 {{ ErrorRenderer::inline('first_name') }}
             </div>
 
-            <div class="field {{ ErrorRenderer::hasError('last_name') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('last_name') ? 'error' : '' }}">
                 {{ Form::label('last_name', __('account.lastName') . ':') }}
                 {{ Form::text('last_name', $user->last_name, ['placeholder' => __('account.lastNamePlaceholder')]) }}
                 {{ ErrorRenderer::inline('last_name') }}

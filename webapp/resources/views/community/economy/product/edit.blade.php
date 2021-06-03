@@ -15,7 +15,7 @@
         'method' => 'PUT',
         'class' => 'ui form'
     ]) !!}
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', $product->name, ['placeholder' => __('pages.products.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
@@ -39,7 +39,7 @@
                         ->first();
                 @endphp
                 <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
-                    {{ Form::label($field, __('lang.name', [], $locale) . ' (' .  __('general.optional') . '):') }}
+                    {{ Form::label($field, __('lang.name', [], $locale) . ':') }}
                     <div class="ui labeled input">
                         {{ Form::text(
                             $field,
@@ -55,7 +55,7 @@
         <div class="ui divider"></div>
 
         <div class="field {{ ErrorRenderer::hasError('tags') ? 'error' : '' }}">
-            {{ Form::label('tags', __('misc.tags') . ' (' .  __('general.optional') . '):') }}
+            {{ Form::label('tags', __('misc.tags') . ':') }}
             {{ Form::text('tags', $product->tags, ['placeholder' => __('pages.products.tagsPlaceholder')]) }}
             {{ ErrorRenderer::inline('tags') }}
         </div>
@@ -79,7 +79,7 @@
                             ->first();
                     @endphp
                     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
-                        {{ Form::label($field, $currency->name . ' (' .  __('general.optional') . '):') }}
+                        {{ Form::label($field, $currency->name . ':') }}
                         <div class="ui labeled input">
                             {{ Form::label($field, $currency->symbol, ['class' => 'ui label']) }}
                             {{ Form::text($field, $value, ['id' => $field, 'placeholder' => '1.23']) }}

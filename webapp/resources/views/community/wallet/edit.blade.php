@@ -6,7 +6,7 @@
     <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['WalletController@doEdit', $community->human_id, $economy->id, $wallet->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', $wallet->name, ['placeholder' => __('pages.wallets.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}

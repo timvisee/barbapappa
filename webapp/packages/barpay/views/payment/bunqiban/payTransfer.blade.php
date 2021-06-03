@@ -70,7 +70,7 @@
     <div class="ui divider hidden"></div>
 
     <p>@lang('barpay::payment.bunqiban.enterOwnIban')</p>
-    <div class="field {{ ErrorRenderer::hasError('iban') ? 'error' : '' }}">
+    <div class="required field {{ ErrorRenderer::hasError('iban') ? 'error' : '' }}">
         {{ Form::label('iban', __('barpay::misc.yourIban') . ':') }}
         {{ Form::text('iban', '', ['placeholder' => __('barpay::misc.ibanPlaceholder')]) }}
         {{ ErrorRenderer::inline('iban') }}
@@ -78,7 +78,7 @@
 
     <div class="ui divider hidden"></div>
 
-    <div class="inline field {{ ErrorRenderer::hasError('confirm_transfer') ? 'error' : '' }}">
+    <div class="inline required field {{ ErrorRenderer::hasError('confirm_transfer') ? 'error' : '' }}">
         <div class="ui checkbox">
             {{ Form::checkbox('confirm_transfer', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
             {{ Form::label('confirm_transfer', __('barpay::payment.bunqiban.confirmTransfer')) }}

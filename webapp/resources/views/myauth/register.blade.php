@@ -11,20 +11,20 @@
 
     {!! Form::open(['action' => ['RegisterController@doRegister'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-    <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }} {{ ($email_lock ?? false) ? 'disabled' : '' }}">
+    <div class="required field {{ ErrorRenderer::hasError('email') ? 'error' : '' }} {{ ($email_lock ?? false) ? 'disabled' : '' }}">
         {{ Form::label('email', __('account.email') . ':') }}
         {{ Form::text('email', $email ?? '', ['placeholder' => __('account.emailPlaceholder')]) }}
         {{ ErrorRenderer::inline('email') }}
     </div>
 
     <div class="two fields">
-        <div class="field {{ ErrorRenderer::hasError('first_name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('first_name') ? 'error' : '' }}">
             {{ Form::label('first_name', __('account.firstName') . ':') }}
             {{ Form::text('first_name', '', ['placeholder' => __('account.firstNamePlaceholder')]) }}
             {{ ErrorRenderer::inline('first_name') }}
         </div>
 
-        <div class="field {{ ErrorRenderer::hasError('last_name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('last_name') ? 'error' : '' }}">
             {{ Form::label('last_name', __('account.lastName') . ':') }}
             {{ Form::text('last_name', '', ['placeholder' => __('account.lastNamePlaceholder')]) }}
             {{ ErrorRenderer::inline('last_name') }}
@@ -33,13 +33,13 @@
 
     @unless(config('app.auth_session_link'))
         <div class="two fields">
-            <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
                 {{ Form::label('password', __('account.password') . ':') }}
                 {{ Form::password('password') }}
                 {{ ErrorRenderer::inline('password') }}
             </div>
 
-            <div class="field {{ ErrorRenderer::hasError('password_confirmation') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('password_confirmation') ? 'error' : '' }}">
                 {{ Form::label('password_confirmation', __('account.confirmPassword') . ':') }}
                 {{ Form::password('password_confirmation') }}
                 {{ ErrorRenderer::inline('password_confirmation') }}
@@ -49,7 +49,7 @@
 
     <br />
 
-    <div class="inline field {{ ErrorRenderer::hasError('accept_terms') ? 'error' : '' }}">
+    <div class="inline required field {{ ErrorRenderer::hasError('accept_terms') ? 'error' : '' }}">
         <div class="ui checkbox">
             {{ Form::checkbox('accept_terms', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
             <label for="accept_terms">@lang('auth.iAgreeToTerms', ['terms' => route('terms'), 'privacy' => route('privacy')])</label>

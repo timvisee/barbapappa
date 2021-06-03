@@ -6,7 +6,7 @@
     <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['BunqAccountController@doCreateSandbox', $community->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.descriptiveName') . ' :') }}
             {{ Form::text('name', '', ['placeholder' => __('pages.bunqAccounts.descriptionPlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
@@ -29,7 +29,7 @@
         </div>
 
         <div class="ui segment bottom attached">
-            <div class="inline field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
+            <div class="inline required field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
                 <div class="ui checkbox">
                     {{ Form::checkbox('confirm', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                     {{ Form::label('confirm', __('pages.bunqAccounts.confirm')) }}

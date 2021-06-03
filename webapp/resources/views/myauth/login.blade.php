@@ -7,13 +7,13 @@
 
     {!! Form::open(['action' => ['LoginController@doLogin'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-    <div class="field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
+    <div class="required field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
         {{ Form::label('email', __('account.email') . ':') }}
         {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
         {{ ErrorRenderer::inline('email') }}
     </div>
 
-    <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
+    <div class="required field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
         {{ Form::label('password', __('account.password') . ':') }}
         {{ Form::password('password') }}
         {{ ErrorRenderer::inline('password') }}

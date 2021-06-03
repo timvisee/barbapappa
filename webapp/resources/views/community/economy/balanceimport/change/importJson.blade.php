@@ -90,7 +90,7 @@
 
         <p>@lang('pages.balanceImportChange.importJsonDataDescription')</p>
 
-        <div class="field {{ ErrorRenderer::hasError('data') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('data') ? 'error' : '' }}">
             {{ Form::label('data', __('pages.balanceImportChange.jsonData') . ':') }}
             {{ Form::textarea('data', '', [
                 'id' => 'data',

@@ -8,7 +8,7 @@
 
     {!! Form::open(['action' => ['PasswordResetController@doReset'], 'method' => 'POST', 'class' =>'ui form']) !!}
 
-        <div class="field {{ ErrorRenderer::hasError('token') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('token') ? 'error' : '' }}">
             {{ Form::label('token', __('misc.token') . ':') }}
             @if(!empty($token))
                 {{ Form::text('token', $token) }}
@@ -23,13 +23,13 @@
         <p>@lang('pages.passwordReset.enterNewPassword')</p>
 
         <div class="two fields">
-            <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
                 {{ Form::label('password', __('account.password') . ':') }}
                 {{ Form::password('password') }}
                 {{ ErrorRenderer::inline('password') }}
             </div>
 
-            <div class="field {{ ErrorRenderer::hasError('password_confirmation') ? 'error' : '' }}">
+            <div class="required field {{ ErrorRenderer::hasError('password_confirmation') ? 'error' : '' }}">
                 {{ Form::label('password_confirmation', __('account.confirmPassword') . ':') }}
                 {{ Form::password('password_confirmation') }}
                 {{ ErrorRenderer::inline('password_confirmation') }}

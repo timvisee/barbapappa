@@ -6,13 +6,13 @@
     <h2 class="ui header">@yield('title')</h2>
 
     {!! Form::open(['action' => ['BunqAccountController@doEdit', $community->human_id, $account->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
-        <div class="field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.descriptiveName') . ' :') }}
             {{ Form::text('name', $account->name, ['placeholder' => __('pages.bunqAccounts.descriptionPlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
         </div>
 
-        <div class="field {{ ErrorRenderer::hasError('account_holder') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('account_holder') ? 'error' : '' }}">
             {{ Form::label('account_holder', __('barpay::misc.accountHolder') . ':') }}
             {{ Form::text('account_holder', $account->account_holder, [
                 'placeholder' => __('account.firstNamePlaceholder') . ' ' .  __('account.lastNamePlaceholder'),

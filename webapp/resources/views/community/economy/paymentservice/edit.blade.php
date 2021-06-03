@@ -34,7 +34,7 @@
             {{ ErrorRenderer::inline('enabled') }}
         </div>
 
-        <div class="field {{ ErrorRenderer::hasError('currency') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('currency') ? 'error' : '' }}">
             {{ Form::label('currency', __('misc.currency')) }}
 
             <div class="ui fluid selection dropdown">

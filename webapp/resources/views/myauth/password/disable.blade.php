@@ -8,7 +8,7 @@
 
     {!! Form::open(['action' => ['PasswordChangeController@doDisable'], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        <div class="field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('password') ? 'error' : '' }}">
             {{ Form::label('password', __('account.currentPassword') . ':') }}
             {{ Form::password('password') }}
             {{ ErrorRenderer::inline('password') }}

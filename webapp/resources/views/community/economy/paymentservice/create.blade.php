@@ -31,7 +31,7 @@
         </div>
 
         {{-- TODO: smart field, show 'no currencies' if none --}}
-        <div class="field {{ ErrorRenderer::hasError('currency') ? 'error' : '' }}">
+        <div class="reqeuired field {{ ErrorRenderer::hasError('currency') ? 'error' : '' }}">
             {{ Form::label('currency', __('misc.currency')) }}
 
             <div class="ui fluid selection dropdown">

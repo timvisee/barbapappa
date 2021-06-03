@@ -50,7 +50,7 @@
         <br>
 
         <div class="field {{ ErrorRenderer::hasError('message') ? 'error' : '' }}">
-            {{ Form::label('message', __('pages.balanceImportMailBalance.extraMessage') . ' (' . __('general.optional') . '):') }}
+            {{ Form::label('message', __('pages.balanceImportMailBalance.extraMessage') . ' :') }}
             {{ Form::textarea('message', '', ['rows' => 3]) }}
             {{ ErrorRenderer::inline('message') }}
         </div>
@@ -112,7 +112,7 @@
         <div class="ui divider"></div>
 
         {{-- Mail send confirmation checkbox --}}
-        <div class="field {{ ErrorRenderer::hasError('confirm_send_mail') ? 'error' : '' }}">
+        <div class="required field {{ ErrorRenderer::hasError('confirm_send_mail') ? 'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('confirm_send_mail', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('confirm_send_mail', __('pages.balanceImportMailBalance.confirmSendMessage')) }}
