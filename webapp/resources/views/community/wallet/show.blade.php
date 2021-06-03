@@ -155,7 +155,7 @@
                     @lang('pages.wallets.transferToSelf')
                 </a>
                 <a href="{{ route('community.wallet.transfer.user', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                        class="item">
+                        class="item disabled">
                     @lang('pages.wallets.transferToUser')
                 </a>
                 <div class="divider"></div>
