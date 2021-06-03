@@ -19,15 +19,15 @@ return [
     'newPassword' => 'Shiny passcode',
     'confirmNewPassword' => 'Shiny passcode check',
     'currentPassword' => 'Barnacle-covered passcode',
-    'resetPassword' => 'Reset yer password',
+    'resetPassword' => 'Reset yer passcode',
 
     /**
      * Name.
      */
     'name' => 'Pirate name',
-    'firstName' => 'First name',
-    'firstNamePlaceholder' => 'Edward',
-    'lastName' => 'Last name',
+    'firstName' => 'First call sign',
+    'firstNamePlaceholder' => 'Captain Edward',
+    'lastName' => 'Last call sign',
     'lastNamePlaceholder' => 'Blackbeard',
 
     /**

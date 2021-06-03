@@ -820,7 +820,7 @@ return [
             'inCart' => 'In cart',
             'buyProducts#' => '{0} Buy no loot|{1} Buy loot|[2,*] Buy :count loot',
             'buyProductsUsers#' => '{0} Buy no loot for :users pirates|{1} Buy loot for :users pirates|[2,*] Buy :count loot for :users pirates',
-            'pressToConfirm' => 'Tap again to confirm',
+            'pressToConfirm' => 'Sail ho?',
             'boughtProducts#' => '{0} Not looted.|[1,*] :count looted.',
             'boughtProductsUsers#' => '{0} No loot for :users pirates.|[1,*] :count loot for :users pirates.',
             'pageCloseWarning' => 'Ye selected or has loot in cart that have not been bought yet. Ye must add loot selection to at least one pirate and tap th\' Buy button to commit th\' purchase, or the selection will be lost.',
