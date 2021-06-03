@@ -23,7 +23,6 @@ return [
     'goBack' => 'Ga terug',
     'accept' => 'Accepteren',
     'or' => 'of',
-    'optional' => 'Optioneel',
     'cancel' => 'Annuleren',
 
     'notYetImplemented' => 'Nog niet geimplementeerd.',

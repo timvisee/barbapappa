@@ -23,7 +23,6 @@ return [
     'goBack' => 'Go back',
     'accept' => 'Accept',
     'or' => 'or',
-    'optional' => 'Optional',
     'cancel' => 'Cancel',
 
     'notYetImplemented' => 'Not yet implemented.',

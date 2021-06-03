@@ -6,7 +6,7 @@ return [
      * Common actions.
      */
     'login' => 'Enter ship',
-    'loginPassword' => 'Login wit\' password',
+    'loginPassword' => 'Login wit\' passcode',
     'loginEmail' => 'Login via email',
     'logout' => 'Abandon ship',
     'register' => 'New ship',

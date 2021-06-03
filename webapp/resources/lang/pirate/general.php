@@ -23,7 +23,6 @@ return [
     'goBack' => 'Paddl\' back',
     'accept' => 'Sail ho!',
     'or' => 'o',
-    'optional' => 'Optional',
     'cancel' => 'Cancel',
 
     'notYetImplemented' => 'Nay yet implemented.',
