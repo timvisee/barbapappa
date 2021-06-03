@@ -58,9 +58,8 @@
         data() {
             return {
                 quantities: [
-                    [1,  3,  5,  8],
-                    [10, 15, 20, 25],
-                    [30, 35, 40, 45],
+                    [1, 2, 3, 4],
+                    [5, 6, 12, 24],
                 ],
                 showing: false,
                 modal: undefined,
