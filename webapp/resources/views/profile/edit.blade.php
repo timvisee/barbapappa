@@ -40,7 +40,13 @@
                     @foreach($locales as $locale => $name)
                         <div class="item" data-value="{{ $locale }}">
                             <span class="{{ langManager()->getLocaleFlagClass($locale, false, true) }} flag"></span>
-                            {{ $name }}
+
+                            {{-- Localized language name --}}
+                            @if(Lang::has('lang.lang.' . $locale . '.name'))
+                                @lang('lang.lang.' . $locale . '.name')
+                            @else
+                                @lang('lang.name', [], $locale)
+                            @endif
                         </div>
                     @endforeach
                 </div>

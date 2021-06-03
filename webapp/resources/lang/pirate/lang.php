@@ -11,5 +11,15 @@ return [
     'choose' => 'Choose yer speak',
     'visit' => 'Visit in Pirate Speak',
 
+    // Customized language names
+    'lang' => [
+        'en' => [
+            'name' => 'England',
+        ],
+        'nl' => [
+            'name' => 'Lowlands',
+        ],
+    ],
+
     'unknownLanguage' => 'Unknown speak',
 ];

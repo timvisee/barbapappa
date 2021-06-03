@@ -29,7 +29,13 @@
                         <i class="icon">
                             <span class="{{ langManager()->getLocaleFlagClass($locale, false, true) }}"></span>
                         </i>
-                        @lang('lang.name', [], $locale)
+
+                        {{-- Localized language name --}}
+                        @if(Lang::has('lang.lang.' . $locale . '.name'))
+                            @lang('lang.lang.' . $locale . '.name')
+                        @else
+                            @lang('lang.name', [], $locale)
+                        @endif
                     </a>
                 </div>
             @endforeach
