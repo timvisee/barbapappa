@@ -3,7 +3,7 @@
     use App\Models\BunqAccount;
 @endphp
 
-<div class="field {{ ErrorRenderer::hasError('bunq_account') ? 'error' : '' }}">
+<div class="required field {{ ErrorRenderer::hasError('bunq_account') ? 'error' : '' }}">
     {{ Form::label('bunq_account', __('pages.bunqAccounts.bunqAccount') . ':') }}
 
     <div class="ui fluid selection dropdown">
@@ -44,7 +44,7 @@
     @lang('barpay::misc.mustBeCorrect')
 </div>
 
-<div class="field {{ ErrorRenderer::hasError('account_holder') ? 'error' : '' }}">
+<div class="required field {{ ErrorRenderer::hasError('account_holder') ? 'error' : '' }}">
     {{ Form::label('account_holder', __('barpay::misc.accountHolder') . ':') }}
     {{ Form::text('account_holder', '', [
         'placeholder' => __('account.firstNamePlaceholder') . ' ' .  __('account.lastNamePlaceholder'),
@@ -53,7 +53,7 @@
 </div>
 
 <div class="two fields">
-    <div class="field {{ ErrorRenderer::hasError('iban') ? 'error' : '' }}">
+    <div class="required field {{ ErrorRenderer::hasError('iban') ? 'error' : '' }}">
         {{ Form::label('iban', __('barpay::misc.iban') . ':') }}
         {{ Form::text('iban', '', [
             'placeholder' => __('barpay::misc.ibanPlaceholder'),
@@ -62,7 +62,7 @@
     </div>
 
     <div class="field {{ ErrorRenderer::hasError('bic') ? 'error' : '' }}">
-        {{ Form::label('bic', __('barpay::misc.bic') .  ' (' .  __('general.optional') . '):') }}
+        {{ Form::label('bic', __('barpay::misc.bic') . ':') }}
         {{ Form::text('bic', '', [
             'placeholder' => __('barpay::misc.bicPlaceholder'),
         ]) }}

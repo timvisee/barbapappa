@@ -105,7 +105,7 @@
         @lang('misc.cannotBeUndone')
     </div>
     <div class="ui segment bottom attached">
-        <div class="inline field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
+        <div class="inline required field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
             <div class="ui checkbox">
                 {{ Form::checkbox('confirm', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('confirm', __('barpay::misc.confirmChoice')) }}
