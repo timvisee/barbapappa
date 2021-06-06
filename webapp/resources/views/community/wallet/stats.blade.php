@@ -3,12 +3,7 @@
 @section('title', __('pages.walletStats.title'))
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
-@endpush
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.css">
+    <script src="{{ mix('js/vendor/chart.js') }}"></script>
 @endpush
 
 @php
@@ -97,8 +92,10 @@
                                 type: 'doughnut',
                                 data: data,
                                 options: {
-                                    legend: {
-                                        position: 'bottom',
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                        },
                                     },
                                 },
                             }
@@ -142,7 +139,9 @@
                                 type: 'bar',
                                 data: data,
                                 options: {
-                                    legend: false,
+                                    plugins: {
+                                        legend: false,
+                                    },
                                     scales: {
                                         yAxes: [{
                                             ticks: {
@@ -180,7 +179,9 @@
                                 type: 'bar',
                                 data: data,
                                 options: {
-                                    legend: false,
+                                    plugins: {
+                                        legend: false,
+                                    },
                                     scales: {
                                         yAxes: [{
                                             ticks: {
@@ -214,17 +215,24 @@
                     <script>
                         var data = JSON.parse('{!! json_encode($buyHistogramData) !!}');
                         data.datasets[0].backgroundColor = '#3366cc';
+                        data.datasets[0].borderColor = '#3366cc';
                         var chartBuyHistogram = new Chart(
                             document.getElementById('chartBuyHistogram').getContext('2d'),
                             {
                                 type: 'bar',
-                                animation: false,
                                 data: data,
                                 options: {
-                                    legend: false,
+                                    plugins: {
+                                        legend: false,
+                                    },
+                                    barPercentage: 1.3,
+                                    categoryPercentage: 1.3,
+                                    offset: false,
+                                    gridLines: {
+                                        offsetGridLines: false,
+                                    },
                                     scales: {
-                                        xAxes: [{
-                                            display: true,
+                                        x: {
                                             type: 'time',
                                             time: {
                                                 parser: 'YYYY-MM-DD',
@@ -235,8 +243,11 @@
                                                     'day': 'll'
                                                 }
                                             },
-                                            barPercentage: 1.3,
-                                        }],
+                                            grid: {
+                                                color: false,
+                                                tickColor: 'darkgrey',
+                                            },
+                                        },
                                         yAxes: [{
                                             ticks: {
                                                 beginAtZero: true,

@@ -102,6 +102,13 @@ mix.copy(
 mix.scripts(vendorScripts, 'public/js/vendor.js');
 mix.styles(vendorStyles, 'public/css/vendor.css');
 
+// Chart.js bundle
+mix.scripts([
+    'node_modules/chart.js/dist/chart.js',
+    'node_modules/moment/moment.js',
+    'node_modules/chartjs-adapter-moment/dist/chartjs-adapter-moment.js',
+], 'public/js/vendor/chart.js');
+
 // Enable assert versioning for cache busting
 if(mix.inProduction()) {
     mix.version();
