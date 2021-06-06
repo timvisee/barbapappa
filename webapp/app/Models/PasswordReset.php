@@ -26,7 +26,11 @@ class PasswordReset extends Model {
      * @param \Builder $query The query builder.
      */
     public function scopeExpired($query) {
-        return $query->whereNull('expire_at')->orWhere('expire_at', '<=', now());
+        return $query
+            ->where(function($query) {
+                $query->whereNull('expire_at')
+                      ->orWhere('expire_at', '<=', now());
+            });
     }
 
     /**

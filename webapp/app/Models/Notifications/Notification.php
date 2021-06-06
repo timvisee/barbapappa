@@ -19,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string notificationable_type
  * @property bool persistent
  * @property Carbon read_at
- * @property Carbon expire_at
+ * @property Carbon|null expire_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -102,7 +102,11 @@ class Notification extends Model {
      * @param \Builder $query The query builder.
      */
     public function scopeExpired($query) {
-        return $query->where('expire_at', '<=', now());
+        return $query
+            ->where(function($query) {
+                $query->whereNull('expire_at')
+                      ->orWhere('expire_at', '<=', now());
+            });
     }
 
     /**
