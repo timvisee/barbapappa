@@ -20,6 +20,22 @@ class EmailVerification extends Model {
 
     protected $table = 'email_verification';
 
+    /**
+     * A scope for email verification tokens that have expired.
+     *
+     * @param \Builder $query The query builder.
+     */
+    public function scopeExpired($query) {
+        return $query
+            ->where(function($query) {
+                $query->whereNull('expire_at')
+                      ->orWhere('expire_at', '<=', now());
+            });
+    }
+
+    /**
+     * Get relation to email this is verifying.
+     */
     public function email() {
         return $this->belongsTo(Email::class);
     }

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\ExpireEmailVerifications;
 use App\Jobs\ExpireNotifications;
 use App\Jobs\ExpirePasswordResets;
 use App\Jobs\ExpirePayments;
@@ -54,6 +55,11 @@ class Kernel extends ConsoleKernel {
         // Expire all old password reset tokens
         // Interval also defined in: ExpirePasswordResets::retryUntil
         $schedule->job(new ExpirePasswordResets)
+            ->hourly();
+
+        // Expire all old email verification tokens
+        // Interval also defined in: ExpireEmailVerifications::retryUntil
+        $schedule->job(new ExpireEmailVerifications)
             ->hourly();
 
         // Send balance updates
