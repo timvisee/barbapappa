@@ -218,6 +218,7 @@
                             document.getElementById('chartBuyHistogram').getContext('2d'),
                             {
                                 type: 'bar',
+                                animation: false,
                                 data: data,
                                 options: {
                                     legend: false,
@@ -234,6 +235,7 @@
                                                     'day': 'll'
                                                 }
                                             },
+                                            barPercentage: 1.3,
                                         }],
                                         yAxes: [{
                                             ticks: {
