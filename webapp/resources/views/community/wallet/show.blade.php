@@ -99,9 +99,23 @@
                         plugins: {
                             legend: false,
                         },
+                        borderCapStyle: 'butt',
+                        borderJoinStyle: 'miter',
                         scales: {
                             x: {
-                                display: false,
+                                max: '{{ now()->toDateTimeString() }}',
+                                type: 'time',
+                                time: {
+                                    tooltipFormat: 'll',
+                                    unit: 'day',
+                                    unitStepSize: 1,
+                                    displayFormats: {
+                                        day: 'll'
+                                    },
+                                },
+                                ticks: {
+                                    display: false,
+                                },
                             },
                             y: {
                                 ticks: {
@@ -109,7 +123,7 @@
                                         return  '{{ $wallet->currency->symbol }} ' + value;
                                     }
                                 }
-                            }
+                            },
                         }
                     }
                 },

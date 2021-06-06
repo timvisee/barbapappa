@@ -113,10 +113,14 @@ class WalletController extends Controller {
         // Build graph data
         if($balance_graph_items->count() >= 5) {
             $balance_graph_items->each(function($t) use(&$balance_graph_data) {
-                $balance_graph_data['labels'][] = $t['time']->longRelativeDiffForHumans() . ' (' . $t['time']->format('Y-m-d H:m') . ')';
+                $balance_graph_data['labels'][] = $t['time']->toDateTimeString();
                 $balance_graph_data['datasets'][0]['data'][] = $t['balance'];
             });
         }
+
+        // Add current time as additional point
+        $balance_graph_data['labels'][] = now()->toDateTimeString();
+        $balance_graph_data['datasets'][0]['data'][] = $balance_graph_items->last()['balance'];
 
         return view('community.wallet.show')
             ->with('economy', $economy)
