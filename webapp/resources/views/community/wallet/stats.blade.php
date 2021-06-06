@@ -145,12 +145,12 @@
                                         legend: false,
                                     },
                                     scales: {
-                                        yAxes: [{
+                                        y: {
                                             ticks: {
                                                 beginAtZero: true,
                                                 precision: 0,
-                                            }
-                                        }]
+                                            },
+                                        },
                                     }
                                 }
                             },
@@ -186,12 +186,12 @@
                                         legend: false,
                                     },
                                     scales: {
-                                        yAxes: [{
+                                        y: {
                                             ticks: {
                                                 beginAtZero: true,
                                                 precision: 0,
-                                            }
-                                        }]
+                                            },
+                                        },
                                     }
                                 }
                             },
@@ -244,7 +244,7 @@
                                                 unit: 'day',
                                                 unitStepSize: 1,
                                                 displayFormats: {
-                                                    'day': 'll'
+                                                    day: 'll'
                                                 }
                                             },
                                             grid: {
@@ -252,11 +252,11 @@
                                                 tickColor: 'darkgrey',
                                             },
                                         },
-                                        yAxes: [{
+                                        y: {
                                             ticks: {
                                                 beginAtZero: true,
                                             }
-                                        }]
+                                        },
                                     }
                                 }
                             },
