@@ -125,6 +125,9 @@
                                 ticks: {
                                     display: false,
                                 },
+                                grid: {
+                                    tickColor: false,
+                                },
                             },
                             y: {
                                 ticks: {
