@@ -607,6 +607,16 @@ return [
             'title' => 'Purchased products',
             'chartName' => 'Product distribution chart',
         ],
+        'smartText' => [
+            'main' => 'In the :period you were active on <b>:active-days</b>:best-day. During this period you bought <b>:products</b>:products-unique.',
+            'mainDays' => '{0} no days|{1} one day|[2,*] :count different days',
+            'mainBestDay' => ' of which <b>:day</b> was your best day',
+            'mainUniqueProducts' => ', of which :unique unique',
+            'productCount' => '{0} no products|{1} one product|[2,*] :count products',
+            'productUniqueCount' => '{0} none|{1} <b>one</b> was|[2,*] <b>:count</b> were',
+            'partBestProduct' => 'You bought <b>:product</b> the most:extra.',
+            'partBestProductExtra' => ', followed by <b>:product</b>:extra',
+        ],
     ],
 
     /**

@@ -66,10 +66,6 @@
 
     <div class="ui hidden divider"></div>
 
-    <p>@lang('pages.walletStats.description')</p>
-
-    <div class="ui hidden divider"></div>
-
     <script>
         /**
         * A color wheel function.
@@ -87,8 +83,59 @@
 
     <div class="ui two column stackable grid">
 
+        <div class="column">
+            <div class="ui segment">
+
+                <h3 class="ui header">@lang('pages.walletStats.title')</h3>
+
+                <p>
+                    @lang('pages.walletStats.description')
+                </p>
+
+                <p>
+                    {!! $smartText !!}
+                </p>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui segment">
+
+                <h3 class="ui header">@lang('pages.walletStats.transactions')</h3>
+
+                <div class="ui hidden divider"></div>
+
+                <div class="ui two small statistics">
+                    <div class="statistic">
+                        <div class="value">{{ $transactionCount }}</div>
+                        <div class="label">@lang('pages.walletStats.transactions')</div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">{{ $mutationCount }}</div>
+                        <div
+                            class="label">@lang('pages.walletStats.mutations')</div>
+                    </div>
+                </div>
+
+                <div class="ui hidden divider"></div>
+
+                <div class="ui two small statistics">
+                    <div class="statistic">
+                        <div class="value">{{ $productsBought }}</div>
+                        <div class="label">@lang('pages.walletStats.products')</div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">{{ $differentProducts }}</div>
+                        <div
+                            class="label">@lang('pages.walletStats.differentProducts')</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         {{-- TODO: do not show if no values --}}
-        <div class="sixteen wide column">
+        <div class="{{ $period != 'week' ? 'sixteen wide' : '' }} column">
             <div class="ui segment">
 
                 <h3 class="ui header">
@@ -161,44 +208,7 @@
         </div>
 
         {{-- TODO: do not show if no values --}}
-        <div class="column">
-            <div class="ui segment">
-
-                <h3 class="ui header">@lang('pages.walletStats.transactions')</h3>
-
-                <div class="ui hidden divider"></div>
-
-                <div class="ui two small statistics">
-                    <div class="statistic">
-                        <div class="value">{{ $transactionCount }}</div>
-                        <div class="label">@lang('pages.walletStats.transactions')</div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">{{ $mutationCount }}</div>
-                        <div
-                            class="label">@lang('pages.walletStats.mutations')</div>
-                    </div>
-                </div>
-
-                <div class="ui hidden divider"></div>
-
-                <div class="ui two small statistics">
-                    <div class="statistic">
-                        <div class="value">{{ $productsBought }}</div>
-                        <div class="label">@lang('pages.walletStats.products')</div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">{{ $differentProducts }}</div>
-                        <div
-                            class="label">@lang('pages.walletStats.differentProducts')</div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        {{-- TODO: do not show if no values --}}
-        <div class="column">
+        <div class="{{ $period != 'week' ? 'sixteen wide' : '' }} column">
             <div class="ui segment">
 
                 <h3 class="ui header">
@@ -207,7 +217,7 @@
 
                 <div>
                     <canvas id="chartBuyHistogram"
-                        height="125"
+                        height="100"
                         aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
                         role="img"></canvas>
                     <script>

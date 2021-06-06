@@ -607,6 +607,16 @@ return [
             'title' => 'Gekochte producten',
             'chartName' => 'Productdistributiegrafiek',
         ],
+        'smartText' => [
+            'main' => 'In de :period was je actief op <b>:active-days</b>:best-day. Tijdens deze periode heb je <b>:products</b> gekocht:products-unique.',
+            'mainDays' => '{0} geen dagen|{1} één dag|[2,*] :count verschillende dagen',
+            'mainBestDay' => ' waarvan <b>:day</b> je beste dag was',
+            'mainUniqueProducts' => ', waarvan :unique uniek',
+            'productCount' => '{0} geen producten|{1} één product|[2,*] :count producten',
+            'productUniqueCount' => '{0} none|{1} <b>één</b>|[2,*] <b>:count</b>',
+            'partBestProduct' => 'Je hebt <b>:product</b> het meest gekocht:extra.',
+            'partBestProductExtra' => ', gevolgd door <b>:product</b>:extra',
+        ],
     ],
 
     /**

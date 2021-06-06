@@ -983,11 +983,49 @@ class WalletController extends Controller {
         $buyTimeDayData = self::chartProductBuyTimeDay($wallet, $period_from);
         $buyHistogramData = self::chartProductBuyHistogram($wallet, $period_from);
 
+        // Build smart text
+        $daysActive = $buyHistogramData["datasets"][0]["data"]->count();
+        $bestDay = collect($buyTimeDayData["datasets"][0]["data"])->sortDesc()->keys()->first();
+        $smartText = __('pages.walletStats.smartText.main', [
+            'period' => strtolower(__('pages.walletStats.period.' . $period)),
+            'active-days' => trans_choice(
+                'pages.walletStats.smartText.mainDays',
+                $daysActive,
+            ),
+            'best-day' => $bestDay == null
+                ? ''
+                : __('pages.walletStats.smartText.mainBestDay', [
+                        'day' => __('misc.days.' . $bestDay),
+                    ]),
+            'products' => trans_choice('pages.walletStats.smartText.productCount', $productsBought),
+            'products-unique' => $differentProducts == 0
+                ? ''
+                : __('pages.walletStats.smartText.mainUniqueProducts', [
+                    'unique' => trans_choice('pages.walletStats.smartText.productUniqueCount', $differentProducts),
+                ])
+        ]);
+
+        // Add best day if available
+        $bestProduct = collect($productDistData["labels"])->first();
+        if($bestProduct != null) {
+            $bestProductTwo = collect($productDistData["labels"])->skip(1)->first();
+            $smartText .= ' ' . __('pages.walletStats.smartText.partBestProduct', [
+                'product' => $bestProduct,
+                'extra' => $bestProductTwo == null
+                    ? ''
+                    : __('pages.walletStats.smartText.partBestProductExtra', [
+                        'product' => $bestProductTwo,
+                        'extra' => '',
+                    ])
+                ]);
+        }
+
         return view('community.wallet.stats')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
             ->with('period', $period)
             ->with('periodFrom', $period_from)
+            ->with('smartText', $smartText)
             ->with('transactionCount', $transactionCount)
             ->with('mutationCount', $mutationCount)
             ->with('productsBought', $productsBought)
