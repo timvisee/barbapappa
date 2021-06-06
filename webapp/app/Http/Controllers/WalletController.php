@@ -1083,7 +1083,9 @@ class WalletController extends Controller {
         // Set labels and values data
         $data['labels'] = $dist->take($limit)->pluck('product_id')
             ->map(function($id) use($products) {
-                return $products->firstWhere('id', $id)->name ?? __('pages.products.deletedProduct');
+                $name = $products->firstWhere('id', $id)->name ?? __('pages.products.deletedProduct');
+                // Rendering names with quotes does not work, use other quote
+                return str_replace("'", "’", $name);
             });
         $data['datasets'][] = [
             'label' => __('pages.walletStats.typeProductDist.title'),
