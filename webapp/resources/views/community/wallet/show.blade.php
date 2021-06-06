@@ -3,10 +3,7 @@
 @section('title', $wallet->name)
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-@endpush
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.css">
+    <script src="{{ mix('js/vendor/chart.js') }}"></script>
 @endpush
 
 @php
@@ -99,18 +96,46 @@
                     data: data,
                     options: {
                         animation: false,
-                        legend: false,
-                        scales: {
-                            xAxes: [{
-                                display: false,
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                    callback: function(value, index, values) {
-                                        return '€ ' + value;
+                        plugins: {
+                            legend: false,
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return '{{ $wallet->currency->symbol }} ' + context.parsed.y.toFixed(2);
                                     }
                                 }
-                            }]
+                            }
+                        },
+                        borderCapStyle: 'round',
+                        borderJoinStyle: 'round',
+                        cubicInterpolationMode: 'monotone',
+                        fill: true,
+                        scales: {
+                            x: {
+                                max: '{{ now()->toDateString() }}',
+                                type: 'time',
+                                time: {
+                                    tooltipFormat: 'll',
+                                    unit: 'day',
+                                    unitStepSize: 1,
+                                    displayFormats: {
+                                        day: 'll'
+                                    },
+                                },
+                                ticks: {
+                                    display: false,
+                                },
+                                grid: {
+                                    tickColor: false,
+                                },
+                            },
+                            y: {
+                                ticks: {
+                                    callback: function(value, index, values) {
+                                        return  '{{ $wallet->currency->symbol }} ' + value;
+                                    }
+                                }
+                            },
                         }
                     }
                 },
