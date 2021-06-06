@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\ExpireEmailVerifications;
+use App\Jobs\ExpireKioskSessions;
 use App\Jobs\ExpireNotifications;
 use App\Jobs\ExpirePasswordResets;
 use App\Jobs\ExpirePayments;
@@ -45,6 +46,11 @@ class Kernel extends ConsoleKernel {
         // Expire all old sessions
         // Interval also defined in: ExpireSessions::retryUntil
         $schedule->job(new ExpireSessions)
+            ->hourly();
+
+        // Expire all old kiosk sessions
+        // Interval also defined in: ExpireKioskSessions::retryUntil
+        $schedule->job(new ExpireKioskSessions)
             ->hourly();
 
         // Expire all old session links
