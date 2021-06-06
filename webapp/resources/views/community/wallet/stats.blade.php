@@ -59,118 +59,132 @@
         };
     </script>
 
-    <h3 class="ui horizontal divider header">
-        @lang('pages.walletStats.purchaseDistribution')
-    </h3>
+    <div class="ui two column stackable grid">
+        <div class="column">
+            <div class="ui segment">
 
-    <canvas id="chartProductDist"
-        height="200"
-        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-        role="img"></canvas>
-    <script>
-        var data = JSON.parse('{!! json_encode($productDistData) !!}');
-        data.datasets[0].backgroundColor = function(context) {
-                return colorWheel(context.dataIndex, 0.5);
-            };
-        data.datasets[0].borderColor = function(context) {
-                return colorWheel(context.dataIndex, 0.8);
-            };
-        data.datasets[0].hoverBackgroundColor = function(context) {
-                return colorWheel(context.dataIndex, 0.8);
-            };
-        data.datasets[0].hoverBorderColor = function(context) {
-                return colorWheel(context.dataIndex, 1);
-            };
-        var chartProductDist = new Chart(
-            document.getElementById('chartProductDist').getContext('2d'),
-            {
-                type: 'doughnut',
-                data: data,
-            }
-        );
-    </script>
+                <h3 class="ui header">
+                    @lang('pages.walletStats.purchaseDistribution')
+                </h3>
 
-    <h3 class="ui horizontal divider header">
-        @lang('pages.walletStats.purchasePerHourDay')
-    </h3>
-
-    <canvas id="chartBuyTimeHour"
-        height="125"
-        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-        role="img"></canvas>
-    <script>
-        var data = JSON.parse('{!! json_encode($buyTimeHourData) !!}');
-        data.datasets[0].backgroundColor = function(context) {
-                return colorWheel(context.dataIndex, 0.5);
-            };
-        data.datasets[0].borderColor = function(context) {
-                return colorWheel(context.dataIndex, 0.8);
-            };
-        data.datasets[0].hoverBackgroundColor = function(context) {
-                return colorWheel(context.dataIndex, 0.8);
-            };
-        data.datasets[0].hoverBorderColor = function(context) {
-                return colorWheel(context.dataIndex, 1);
-            };
-        var chartBuyTimeHour = new Chart(
-            document.getElementById('chartBuyTimeHour').getContext('2d'),
-            {
-                type: 'bar',
-                data: data,
-                options: {
-                    legend: false,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                precision: 0,
+                <div>
+                    <canvas id="chartProductDist"
+                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                        role="img"></canvas>
+                    <script>
+                        var data = JSON.parse('{!! json_encode($productDistData) !!}');
+                        data.datasets[0].backgroundColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.5);
+                            };
+                        data.datasets[0].borderColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.8);
+                            };
+                        data.datasets[0].hoverBackgroundColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.8);
+                            };
+                        data.datasets[0].hoverBorderColor = function(context) {
+                                return colorWheel(context.dataIndex, 1);
+                            };
+                        var chartProductDist = new Chart(
+                            document.getElementById('chartProductDist').getContext('2d'),
+                            {
+                                type: 'doughnut',
+                                data: data,
                             }
-                        }]
-                    }
-                }
-            },
-        );
-    </script>
+                        );
+                    </script>
+                </div>
 
-    <canvas id="chartBuyTimeDay"
-        height="125"
-        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-        role="img"></canvas>
-    <script>
-        var data = JSON.parse('{!! json_encode($buyTimeDayData) !!}');
-        data.datasets[0].backgroundColor = function(context) {
-                return colorWheel(context.dataIndex, 0.5);
-            };
-        data.datasets[0].borderColor = function(context) {
-                return colorWheel(context.dataIndex, 0.8);
-            };
-        data.datasets[0].hoverBackgroundColor = function(context) {
-                return colorWheel(context.dataIndex, 0.8);
-            };
-        data.datasets[0].hoverBorderColor = function(context) {
-                return colorWheel(context.dataIndex, 1);
-            };
-        var chartBuyTimeDay = new Chart(
-            document.getElementById('chartBuyTimeDay').getContext('2d'),
-            {
-                type: 'bar',
-                data: data,
-                options: {
-                    legend: false,
-                    scales: {
-                        yAxes: [{
-                            ticks: {
-                                beginAtZero: true,
-                                precision: 0,
-                            }
-                        }]
-                    }
-                }
-            },
-        );
-    </script>
+            </div>
+        </div>
+        <div class="column">
+            <div class="ui segment">
 
-    <div class="ui hidden divider"></div>
+                <h3 class="ui header">
+                    @lang('pages.walletStats.purchasePerHourDay')
+                </h3>
+
+                <div>
+                    <canvas id="chartBuyTimeHour"
+                        height="125"
+                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                        role="img"></canvas>
+                    <script>
+                        var data = JSON.parse('{!! json_encode($buyTimeHourData) !!}');
+                        data.datasets[0].backgroundColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.5);
+                            };
+                        data.datasets[0].borderColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.8);
+                            };
+                        data.datasets[0].hoverBackgroundColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.8);
+                            };
+                        data.datasets[0].hoverBorderColor = function(context) {
+                                return colorWheel(context.dataIndex, 1);
+                            };
+                        var chartBuyTimeHour = new Chart(
+                            document.getElementById('chartBuyTimeHour').getContext('2d'),
+                            {
+                                type: 'bar',
+                                data: data,
+                                options: {
+                                    legend: false,
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
+                                                precision: 0,
+                                            }
+                                        }]
+                                    }
+                                }
+                            },
+                        );
+                    </script>
+
+                    <canvas id="chartBuyTimeDay"
+                        height="125"
+                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                        role="img"></canvas>
+                    <script>
+                        var data = JSON.parse('{!! json_encode($buyTimeDayData) !!}');
+                        data.datasets[0].backgroundColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.5);
+                            };
+                        data.datasets[0].borderColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.8);
+                            };
+                        data.datasets[0].hoverBackgroundColor = function(context) {
+                                return colorWheel(context.dataIndex, 0.8);
+                            };
+                        data.datasets[0].hoverBorderColor = function(context) {
+                                return colorWheel(context.dataIndex, 1);
+                            };
+                        var chartBuyTimeDay = new Chart(
+                            document.getElementById('chartBuyTimeDay').getContext('2d'),
+                            {
+                                type: 'bar',
+                                data: data,
+                                options: {
+                                    legend: false,
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
+                                                precision: 0,
+                                            }
+                                        }]
+                                    }
+                                }
+                            },
+                        );
+                    </script>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <p>
         <a href="{{ route('community.wallet.show', [
