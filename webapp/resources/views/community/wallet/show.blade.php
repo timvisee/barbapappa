@@ -99,8 +99,8 @@
                         plugins: {
                             legend: false,
                         },
-                        borderCapStyle: 'butt',
-                        borderJoinStyle: 'miter',
+                        borderCapStyle: 'round',
+                        borderJoinStyle: 'round',
                         scales: {
                             x: {
                                 max: '{{ now()->toDateTimeString() }}',
