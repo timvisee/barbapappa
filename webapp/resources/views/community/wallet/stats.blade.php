@@ -4,6 +4,8 @@
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
 @endpush
 @push('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.css">
@@ -62,6 +64,8 @@
     </script>
 
     <div class="ui two column stackable grid">
+
+        {{-- TODO: do not show if no values --}}
         <div class="column">
             <div class="ui segment">
 
@@ -104,6 +108,8 @@
 
             </div>
         </div>
+
+        {{-- TODO: do not show if no values --}}
         <div class="column">
             <div class="ui segment">
 
@@ -180,6 +186,58 @@
                                             ticks: {
                                                 beginAtZero: true,
                                                 precision: 0,
+                                            }
+                                        }]
+                                    }
+                                }
+                            },
+                        );
+                    </script>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- TODO: do not show if no values --}}
+        <div class="column">
+            <div class="ui segment">
+
+                <h3 class="ui header">
+                    @lang('pages.walletStats.purchaseHistogram')
+                </h3>
+
+                <div>
+                    <canvas id="chartBuyHistogram"
+                        height="125"
+                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                        role="img"></canvas>
+                    <script>
+                        var data = JSON.parse('{!! json_encode($buyHistogramData) !!}');
+                        data.datasets[0].backgroundColor = '#3366cc';
+                        var chartBuyHistogram = new Chart(
+                            document.getElementById('chartBuyHistogram').getContext('2d'),
+                            {
+                                type: 'bar',
+                                data: data,
+                                options: {
+                                    legend: false,
+                                    scales: {
+                                        xAxes: [{
+                                            display: true,
+                                            type: 'time',
+                                            time: {
+                                                parser: 'YYYY-MM-DD',
+                                                tooltipFormat: 'll',
+                                                unit: 'day',
+                                                unitStepSize: 1,
+                                                displayFormats: {
+                                                    'day': 'll'
+                                                }
+                                            },
+                                        }],
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true,
                                             }
                                         }]
                                     }

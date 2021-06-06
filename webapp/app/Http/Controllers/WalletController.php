@@ -964,13 +964,15 @@ class WalletController extends Controller {
         $productDistData = self::chartProductDist($wallet);
         $buyTimeHourData = self::chartProductBuyTimeHour($wallet);
         $buyTimeDayData = self::chartProductBuyTimeDay($wallet);
+        $buyHistogramData = self::chartProductBuyHistogram($wallet);
 
         return view('community.wallet.stats')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
             ->with('productDistData', $productDistData)
             ->with('buyTimeHourData', $buyTimeHourData)
-            ->with('buyTimeDayData', $buyTimeDayData);
+            ->with('buyTimeDayData', $buyTimeDayData)
+            ->with('buyHistogramData', $buyHistogramData);
     }
 
     /**
@@ -983,6 +985,7 @@ class WalletController extends Controller {
         $limit = 10;
 
         // Fetch product distributions
+        // TODO: only completed mutations
         $dist = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
@@ -1025,6 +1028,7 @@ class WalletController extends Controller {
      */
     static function chartProductBuyTimeHour(Wallet $wallet) {
         // Fetch product buy times
+        // TODO: only completed mutations
         $times = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
@@ -1054,6 +1058,7 @@ class WalletController extends Controller {
      */
     static function chartProductBuyTimeDay(Wallet $wallet) {
         // Fetch product buy times
+        // TODO: only completed mutations
         $times = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
@@ -1071,6 +1076,35 @@ class WalletController extends Controller {
             $data['labels'][] = now()->startOfWeek()->addDays($i)->shortDayName;
             $data['datasets'][0]['data'][] = $times->firstWhere('day', $i)->quantity ?? 0;
         }
+
+        return $data;
+    }
+
+    /**
+     * Get data for wallet histogram.
+     *
+     * @param Wallet $wallet The wallet to get data for.
+     * @return object Product buy time histogram.
+     */
+    static function chartProductBuyHistogram(Wallet $wallet) {
+        // Fetch product buy times
+        // TODO: only completed mutations
+        $times = $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->leftJoin('product', 'product.id', 'mutation_product.product_id')
+            ->addSelect(DB::raw('CAST( mutation.created_at AS DATE) AS day'), DB::raw('SUM(quantity) AS quantity'))
+            ->groupBy('day')
+            ->orderBy('mutation.created_at')
+            ->get();
+
+        // Set labels and values data
+        $data['labels'] = $times->pluck('day');
+        $data['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'data' => $times->pluck('quantity'),
+            'borderWidth' => 1,
+        ];
 
         return $data;
     }
