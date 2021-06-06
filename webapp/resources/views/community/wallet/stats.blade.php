@@ -92,6 +92,7 @@
                                 type: 'doughnut',
                                 data: data,
                                 options: {
+                                    animation: false,
                                     plugins: {
                                         legend: {
                                             position: 'bottom',
@@ -139,6 +140,7 @@
                                 type: 'bar',
                                 data: data,
                                 options: {
+                                    animation: false,
                                     plugins: {
                                         legend: false,
                                     },
@@ -179,6 +181,7 @@
                                 type: 'bar',
                                 data: data,
                                 options: {
+                                    animation: false,
                                     plugins: {
                                         legend: false,
                                     },
@@ -222,6 +225,7 @@
                                 type: 'bar',
                                 data: data,
                                 options: {
+                                    animation: false,
                                     plugins: {
                                         legend: false,
                                     },
