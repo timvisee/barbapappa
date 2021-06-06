@@ -68,6 +68,15 @@ class SessionLink extends Model {
     const CODE_KEYSPACE = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
     /**
+     * A scope for session links that have expired.
+     *
+     * @param \Builder $query The query builder.
+     */
+    public function scopeExpired($query) {
+        return $query->whereNull('expire_at')->orWhere('expire_at', '<=', now());
+    }
+
+    /**
      * A scope for session links that have not yet expired.
      *
      * @param \Builder $query The query builder.

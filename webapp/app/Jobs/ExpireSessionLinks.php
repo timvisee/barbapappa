@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Models\Notifications\Notification;
+use App\Models\SessionLink;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,12 +11,9 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Delete all notifications that have expired, based on their `expire_at` time.
- *
- * This does not delete any notifications not linked to anything anymore. A
- * different job is used for that.
+ * Delete all expired session links, based on their `expire_at` time.
  */
-class ExpireNotifications implements ShouldQueue {
+class ExpireSessionLinks implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -55,8 +52,8 @@ class ExpireNotifications implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // Delete all notifications that reached their expiry time
-        Notification::withoutGlobalScopes()
+        // Delete all session links that reached their expiry time
+        SessionLink::withoutGlobalScopes()
             ->expired()
             ->delete();
     }

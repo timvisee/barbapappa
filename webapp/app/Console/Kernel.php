@@ -3,10 +3,11 @@
 namespace App\Console;
 
 use App\Jobs\ExpireNotifications;
+use App\Jobs\ExpirePayments;
+use App\Jobs\ExpireSessionLinks;
 use App\Jobs\ProcessAllBunqAccountEvents;
 use App\Jobs\SendBalanceUpdates;
 use App\Jobs\UpdatePaymentStates;
-use App\Jobs\ExpirePayments;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -36,6 +37,11 @@ class Kernel extends ConsoleKernel {
         // Expire all old notifications
         // Interval also defined in: ExpireNotifications::retryUntil
         $schedule->job(new ExpireNotifications)
+            ->hourly();
+
+        // Expire all old session links
+        // Interval also defined in: SessionLink::retryUntil
+        $schedule->job(new ExpireSessionLinks)
             ->hourly();
 
         // Send balance updates
