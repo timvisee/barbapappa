@@ -21,7 +21,7 @@ class EmailVerificationManager {
      * The number of seconds a email verification expires after.
      * @type int
      */
-    const EXPIRE_AFTER = 2 * 24 * 60 * 60; // 48 hours
+    const EXPIRE_AFTER = 7 * 24 * 60 * 60; // 1 week
 
     /**
      * The length in characters of verification tokens.
