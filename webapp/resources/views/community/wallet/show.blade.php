@@ -3,10 +3,7 @@
 @section('title', $wallet->name)
 
 @push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-@endpush
-@push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.css">
+    <script src="{{ mix('js/vendor/chart.js') }}"></script>
 @endpush
 
 @php
@@ -99,18 +96,20 @@
                     data: data,
                     options: {
                         animation: false,
-                        legend: false,
+                        plugins: {
+                            legend: false,
+                        },
                         scales: {
-                            xAxes: [{
+                            x: {
                                 display: false,
-                            }],
-                            yAxes: [{
+                            },
+                            y: {
                                 ticks: {
                                     callback: function(value, index, values) {
-                                        return '€ ' + value;
+                                        return  '{{ $wallet->currency->symbol }} ' + value;
                                     }
                                 }
-                            }]
+                            }
                         }
                     }
                 },

@@ -5,7 +5,7 @@
     "/js/widget/advancedbuy.js": "/js/widget/advancedbuy.js",
     "/js/widget/kioskbuy.js": "/js/widget/kioskbuy.js",
     "/js/widget/quickbuy.js": "/js/widget/quickbuy.js",
-    "/js/vendor/chart.js": "/js/vendor/chart.js",
     "/js/vendor.js": "/js/vendor.js",
-    "/css/vendor.css": "/css/vendor.css"
+    "/css/vendor.css": "/css/vendor.css",
+    "/js/vendor/chart.js": "/js/vendor/chart.js"
 }
