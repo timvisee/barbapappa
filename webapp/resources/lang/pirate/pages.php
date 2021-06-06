@@ -593,6 +593,7 @@ return [
         'mutations' => 'Mutations',
         'products' => 'Loot',
         'differentProducts' => 'Unique loot',
+        'balanceHistory' => 'Balance history',
         'purchaseDistribution' => 'Product distribution',
         'purchasePerHourDay' => 'Product purchases by hour/day',
         'purchaseHistogram' => 'Product purchase histogram',

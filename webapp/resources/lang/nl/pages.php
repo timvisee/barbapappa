@@ -593,6 +593,7 @@ return [
         'mutations' => 'Mutaties',
         'products' => 'Producten',
         'differentProducts' => 'Unieke producten',
+        'balanceHistory' => 'Saldohistorie',
         'purchaseDistribution' => 'Productdistributie',
         'purchasePerHourDay' => 'Productaankopen per uur/dag',
         'purchaseHistogram' => 'Productaankoop histogram',

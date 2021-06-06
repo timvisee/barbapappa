@@ -112,7 +112,7 @@
                         fill: true,
                         scales: {
                             x: {
-                                max: '{{ now()->toDateString() }}',
+                                max: '{{ today()->toDateString() }}',
                                 type: 'time',
                                 time: {
                                     tooltipFormat: 'll',

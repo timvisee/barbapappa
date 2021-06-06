@@ -88,6 +88,79 @@
     <div class="ui two column stackable grid">
 
         {{-- TODO: do not show if no values --}}
+        <div class="sixteen wide column">
+            <div class="ui segment">
+
+                <h3 class="ui header">
+                    @lang('pages.walletStats.balanceHistory')
+                </h3>
+
+                <div>
+                    <canvas id="chartBalanceGraph"
+                        height="100"
+                        aria-label="@lang('misc.balance')"
+                        role="img"></canvas>
+                    <script>
+                        var data = JSON.parse('{!! json_encode($balanceGraphData) !!}');
+                        data.datasets[0].borderColor = 'rgb(75, 192, 192)';
+                        data.datasets[0].backgroundColor = 'rgba(75, 192, 192, 0.5)';
+                        new Chart(
+                            document.getElementById('chartBalanceGraph').getContext('2d'),
+                            {
+                                type: 'line',
+                                data: data,
+                                options: {
+                                    animation: false,
+                                    plugins: {
+                                        legend: false,
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function(context) {
+                                                    return '{{ $wallet->currency->symbol }} ' + context.parsed.y.toFixed(2);
+                                                }
+                                            }
+                                        }
+                                    },
+                                    borderCapStyle: 'round',
+                                    borderJoinStyle: 'round',
+                                    cubicInterpolationMode: 'monotone',
+                                    fill: true,
+                                    scales: {
+                                        x: {
+                                            min: '{{ $periodFrom->subDay()->toDateString() }}',
+                                            max: '{{ today()->toDateString() }}',
+                                            type: 'time',
+                                            time: {
+                                                tooltipFormat: 'll',
+                                                unit: 'day',
+                                                unitStepSize: 1,
+                                                displayFormats: {
+                                                    day: 'll'
+                                                },
+                                            },
+                                            grid: {
+                                                color: false,
+                                                tickColor: 'darkgrey',
+                                            },
+                                        },
+                                        y: {
+                                            ticks: {
+                                                callback: function(value, index, values) {
+                                                    return  '{{ $wallet->currency->symbol }} ' + value;
+                                                }
+                                            }
+                                        },
+                                    }
+                                }
+                            },
+                        );
+                    </script>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- TODO: do not show if no values --}}
         <div class="column">
             <div class="ui segment">
 

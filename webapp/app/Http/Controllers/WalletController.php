@@ -977,6 +977,7 @@ class WalletController extends Controller {
         $differentProducts = $productCount->count();
 
         // Fetch and build chart data
+        $balanceGraphData = self::chartBalanceGraph($wallet, $period_from);
         $productDistData = self::chartProductDist($wallet, $period_from);
         $buyTimeHourData = self::chartProductBuyTimeHour($wallet, $period_from);
         $buyTimeDayData = self::chartProductBuyTimeDay($wallet, $period_from);
@@ -991,6 +992,7 @@ class WalletController extends Controller {
             ->with('mutationCount', $mutationCount)
             ->with('productsBought', $productsBought)
             ->with('differentProducts', $differentProducts)
+            ->with('balanceGraphData', $balanceGraphData)
             ->with('productDistData', $productDistData)
             ->with('buyTimeHourData', $buyTimeHourData)
             ->with('buyTimeDayData', $buyTimeDayData)
@@ -1001,16 +1003,20 @@ class WalletController extends Controller {
      * Get data for balance history graph.
      *
      * @param Wallet $wallet Wallet to create graph for.
+     * @param Carbon|null $period_from An optional period to start the graph
+     *      from. If given, the full period will be graphed. If not given, the
+     *      graph will only cover the last 100 transactions.
      * @return object|null Graph data, may be null.
      */
-    static function chartBalanceGraph(Wallet $wallet) {
-        $from_date = today()->sub(self::WALLET_BALANCE_HISTORY_PERIOD);
+    static function chartBalanceGraph(Wallet $wallet, $period_from = null) {
+        $full_period = $period_from != null;
+        $from_date = $period_from ?? today()->sub(self::WALLET_BALANCE_HISTORY_PERIOD);
         $balance = $wallet->balance;
         $day_balances = collect();
 
         // Get wallet mutations grouped by day
         $mutations = $wallet
-            ->lastTransactions(100)
+            ->lastTransactions($full_period ? null : 100)
             ->where('mutation.created_at', '>=', $from_date)
             ->addSelect('*')
             ->addSelect(DB::raw('CAST(mutation.created_at AS DATE) AS day'))
@@ -1042,6 +1048,14 @@ class WalletController extends Controller {
                 if(!$mutations->has($prev_day))
                     $day_balances[$prev_day] = $balance;
             });
+
+        // Add earliest day if it isn't in our datapoints and we're showing the full period
+        if($full_period) {
+            $earliest = $from_date->clone()->subDay()->toDateString();
+            if(!$mutations->has($earliest))
+                $day_balances[$earliest] = $day_balances->last();
+        }
+
         $day_balances = $day_balances->reverse();
 
         // Build graph data
