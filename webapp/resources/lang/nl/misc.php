@@ -156,4 +156,15 @@ return [
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',
     'viewingAccountOf' => 'Je bekijkt het account van',
     'confirmCancel' => 'Ik bevestig dat ik wil annuleren',
+
+    'days' => [
+        '0' => 'maandag',
+        '1' => 'dinsdag',
+        '2' => 'woensdag',
+        '3' => 'donderdag',
+        '4' => 'vrijdag',
+        '5' => 'zaterdag',
+        '6' => 'zondag',
+        '7' => 'maandag',
+    ],
 ];

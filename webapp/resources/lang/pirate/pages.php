@@ -588,14 +588,34 @@ return [
      */
     'walletStats' => [
         'title' => 'Wallet stats',
-        'description' => 'Here are some wallet stats, for the lifetime of the wallet.',
-        'purchaseDistribution' => 'Purchase distribution',
-        'purchasePerHourDay' => 'Purchases by hour/day',
-        'purchaseHistogram' => 'Purchase histogram',
+        'description' => 'Here are some wallet stats for the selected period.',
+        'transactions' => 'Transactions',
+        'mutations' => 'Mutations',
+        'products' => 'Loot',
+        'differentProducts' => 'Unique loot',
+        'balanceHistory' => 'Balance history',
+        'purchaseDistribution' => 'Product distribution',
+        'purchasePerHourDay' => 'Product purchases by hour/day',
+        'purchaseHistogram' => 'Product purchase histogram',
         'noStatsNoTransactions' => 'No stats to show. Wallet does not have any transactions.',
+        'period' => [
+            'week' => 'Last week',
+            'month' => 'Last month',
+            'year' => 'Last year',
+        ],
         'typeProductDist' => [
             'title' => 'Purchased loot',
             'chartName' => 'Loot distribution chart',
+        ],
+        'smartText' => [
+            'main' => 'In th\' :period ye be active on <b>:active-days</b>:best-day. During dis period ye bought <b>:products</b>:products-unique.',
+            'mainDays' => '{0} no days|{1} one day|[2,*] :count different days',
+            'mainBestDay' => ' of which <b>:day</b> was yer best day',
+            'mainUniqueProducts' => ', of which :unique unique',
+            'productCount' => '{0} nay loot|{1} one loot|[2,*] :count loot',
+            'productUniqueCount' => '{0} nay|{1} <b>one</b> was|[2,*] <b>:count</b> were',
+            'partBestProduct' => 'Ye bought <b>:product</b> the most:extra.',
+            'partBestProductExtra' => ', followed by <b>:product</b>:extra',
         ],
     ],
 

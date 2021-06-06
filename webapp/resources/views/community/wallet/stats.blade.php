@@ -39,7 +39,30 @@
         </div>
     </h2>
 
-    <p>@lang('pages.walletStats.description')</p>
+    {{-- Period selector --}}
+    <div class="ui three item menu">
+        <a href="{{ route('community.wallet.stats', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                    'period' => 'week',
+                ]) }}"
+                class="item {{ $period == 'week' ? 'active' : '' }}">@lang('pages.walletStats.period.week')</a>
+        <a href="{{ route('community.wallet.stats', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                    'period' => 'month',
+                ]) }}"
+                class="item {{ $period == 'month' ? 'active' : '' }}">@lang('pages.walletStats.period.month')</a>
+        <a href="{{ route('community.wallet.stats', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                    'period' => 'year',
+                ]) }}"
+                class="item {{ $period == 'year' ? 'active' : '' }}">@lang('pages.walletStats.period.year')</a>
+    </div>
 
     <div class="ui hidden divider"></div>
 
@@ -59,6 +82,200 @@
     </script>
 
     <div class="ui two column stackable grid">
+
+        <div class="column">
+            <div class="ui segment">
+
+                <h3 class="ui header">@lang('pages.walletStats.title')</h3>
+
+                <p>
+                    @lang('pages.walletStats.description')
+                </p>
+
+                <p>
+                    {!! $smartText !!}
+                </p>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="ui segment">
+
+                <h3 class="ui header">@lang('pages.walletStats.transactions')</h3>
+
+                <div class="ui hidden divider"></div>
+
+                <div class="ui two small statistics">
+                    <div class="statistic">
+                        <div class="value">{{ $transactionCount }}</div>
+                        <div class="label">@lang('pages.walletStats.transactions')</div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">{{ $mutationCount }}</div>
+                        <div
+                            class="label">@lang('pages.walletStats.mutations')</div>
+                    </div>
+                </div>
+
+                <div class="ui hidden divider"></div>
+
+                <div class="ui two small statistics">
+                    <div class="statistic">
+                        <div class="value">{{ $productsBought }}</div>
+                        <div class="label">@lang('pages.walletStats.products')</div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">{{ $differentProducts }}</div>
+                        <div
+                            class="label">@lang('pages.walletStats.differentProducts')</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- TODO: do not show if no values --}}
+        <div class="{{ $period != 'week' ? 'sixteen wide' : '' }} column">
+            <div class="ui segment">
+
+                <h3 class="ui header">
+                    @lang('pages.walletStats.balanceHistory')
+                </h3>
+
+                <div>
+                    <canvas id="chartBalanceGraph"
+                        height="100"
+                        aria-label="@lang('misc.balance')"
+                        role="img"></canvas>
+                    <script>
+                        var data = JSON.parse('{!! json_encode($balanceGraphData) !!}');
+                        data.datasets[0].borderColor = 'rgb(75, 192, 192)';
+                        data.datasets[0].backgroundColor = 'rgba(75, 192, 192, 0.5)';
+                        new Chart(
+                            document.getElementById('chartBalanceGraph').getContext('2d'),
+                            {
+                                type: 'line',
+                                data: data,
+                                options: {
+                                    animation: false,
+                                    plugins: {
+                                        legend: false,
+                                        tooltip: {
+                                            callbacks: {
+                                                label: function(context) {
+                                                    return '{{ $wallet->currency->symbol }} ' + context.parsed.y.toFixed(2);
+                                                }
+                                            }
+                                        }
+                                    },
+                                    borderCapStyle: 'round',
+                                    borderJoinStyle: 'round',
+                                    cubicInterpolationMode: 'monotone',
+                                    fill: true,
+                                    scales: {
+                                        x: {
+                                            min: '{{ $periodFrom->subDay()->toDateString() }}',
+                                            max: '{{ today()->toDateString() }}',
+                                            type: 'time',
+                                            time: {
+                                                tooltipFormat: 'll',
+                                                unit: 'day',
+                                                unitStepSize: 1,
+                                                displayFormats: {
+                                                    day: 'll'
+                                                },
+                                            },
+                                            grid: {
+                                                color: false,
+                                                tickColor: 'darkgrey',
+                                            },
+                                        },
+                                        y: {
+                                            ticks: {
+                                                callback: function(value, index, values) {
+                                                    return  '{{ $wallet->currency->symbol }} ' + value;
+                                                }
+                                            }
+                                        },
+                                    }
+                                }
+                            },
+                        );
+                    </script>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- TODO: do not show if no values --}}
+        <div class="{{ $period != 'week' ? 'sixteen wide' : '' }} column">
+            <div class="ui segment">
+
+                <h3 class="ui header">
+                    @lang('pages.walletStats.purchaseHistogram')
+                </h3>
+
+                <div>
+                    <canvas id="chartBuyHistogram"
+                        height="100"
+                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                        role="img"></canvas>
+                    <script>
+                        var data = JSON.parse('{!! json_encode($buyHistogramData) !!}');
+                        data.datasets[0].backgroundColor = '#3366cc';
+                        data.datasets[0].borderColor = '#3366cc';
+                        var chartBuyHistogram = new Chart(
+                            document.getElementById('chartBuyHistogram').getContext('2d'),
+                            {
+                                type: 'bar',
+                                data: data,
+                                options: {
+                                    animation: false,
+                                    plugins: {
+                                        legend: false,
+                                    },
+                                    @if($period == 'year')
+                                        barPercentage: 1,
+                                        categoryPercentage: 1,
+                                        barThickness: 2,
+                                        offset: false,
+                                    @endif
+                                    gridLines: {
+                                        offsetGridLines: false,
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            min: '{{ $periodFrom->toDateString() }}',
+                                            max: '{{ today()->toDateString() }}',
+                                            time: {
+                                                parser: 'YYYY-MM-DD',
+                                                tooltipFormat: 'll',
+                                                unit: 'day',
+                                                unitStepSize: 1,
+                                                displayFormats: {
+                                                    day: 'll'
+                                                }
+                                            },
+                                            grid: {
+                                                color: false,
+                                                tickColor: 'darkgrey',
+                                            },
+                                        },
+                                        y: {
+                                            ticks: {
+                                                beginAtZero: true,
+                                            }
+                                        },
+                                    }
+                                }
+                            },
+                        );
+                    </script>
+                </div>
+
+            </div>
+        </div>
 
         {{-- TODO: do not show if no values --}}
         <div class="column">
@@ -202,71 +419,9 @@
             </div>
         </div>
 
-        {{-- TODO: do not show if no values --}}
-        <div class="column">
-            <div class="ui segment">
-
-                <h3 class="ui header">
-                    @lang('pages.walletStats.purchaseHistogram')
-                </h3>
-
-                <div>
-                    <canvas id="chartBuyHistogram"
-                        height="125"
-                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-                        role="img"></canvas>
-                    <script>
-                        var data = JSON.parse('{!! json_encode($buyHistogramData) !!}');
-                        data.datasets[0].backgroundColor = '#3366cc';
-                        data.datasets[0].borderColor = '#3366cc';
-                        var chartBuyHistogram = new Chart(
-                            document.getElementById('chartBuyHistogram').getContext('2d'),
-                            {
-                                type: 'bar',
-                                data: data,
-                                options: {
-                                    animation: false,
-                                    plugins: {
-                                        legend: false,
-                                    },
-                                    barPercentage: 1.3,
-                                    categoryPercentage: 1.3,
-                                    offset: false,
-                                    gridLines: {
-                                        offsetGridLines: false,
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                parser: 'YYYY-MM-DD',
-                                                tooltipFormat: 'll',
-                                                unit: 'day',
-                                                unitStepSize: 1,
-                                                displayFormats: {
-                                                    day: 'll'
-                                                }
-                                            },
-                                            grid: {
-                                                color: false,
-                                                tickColor: 'darkgrey',
-                                            },
-                                        },
-                                        y: {
-                                            ticks: {
-                                                beginAtZero: true,
-                                            }
-                                        },
-                                    }
-                                }
-                            },
-                        );
-                    </script>
-                </div>
-
-            </div>
-        </div>
     </div>
+
+    <div class="ui hidden divider"></div>
 
     <p>
         <a href="{{ route('community.wallet.show', [

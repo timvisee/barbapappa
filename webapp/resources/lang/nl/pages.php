@@ -588,14 +588,34 @@ return [
      */
     'walletStats' => [
         'title' => 'Portemonnee statistieken',
-        'description' => 'Hier zie je statistieken voor de gehele levensduur van de portemonnee.',
-        'purchaseDistribution' => 'Aankoopdistributie',
-        'purchasePerHourDay' => 'Aankopen per uur/dag',
-        'purchaseHistogram' => 'Aankoophistogram',
+        'description' => 'Hier zie je statistieken van je portemonnee in de geselecteerde periode.',
+        'transactions' => 'Transacties',
+        'mutations' => 'Mutaties',
+        'products' => 'Producten',
+        'differentProducts' => 'Unieke producten',
+        'balanceHistory' => 'Saldohistorie',
+        'purchaseDistribution' => 'Productdistributie',
+        'purchasePerHourDay' => 'Productaankopen per uur/dag',
+        'purchaseHistogram' => 'Productaankoop histogram',
         'noStatsNoTransactions' => 'Geen statistieken om te tonen. Portemonnee heeft nog geen transacties.',
+        'period' => [
+            'week' => 'Afgelopen week',
+            'month' => 'Afgelopen maand',
+            'year' => 'Afgelopen jaar',
+        ],
         'typeProductDist' => [
             'title' => 'Gekochte producten',
             'chartName' => 'Productdistributiegrafiek',
+        ],
+        'smartText' => [
+            'main' => 'In de :period was je actief op <b>:active-days</b>:best-day. Tijdens deze periode heb je <b>:products</b> gekocht:products-unique.',
+            'mainDays' => '{0} geen dagen|{1} één dag|[2,*] :count verschillende dagen',
+            'mainBestDay' => ' waarvan <b>:day</b> je beste dag was',
+            'mainUniqueProducts' => ', waarvan :unique uniek',
+            'productCount' => '{0} geen producten|{1} één product|[2,*] :count producten',
+            'productUniqueCount' => '{0} none|{1} <b>één</b>|[2,*] <b>:count</b>',
+            'partBestProduct' => 'Je hebt <b>:product</b> het meest gekocht:extra.',
+            'partBestProductExtra' => ', gevolgd door <b>:product</b>:extra',
         ],
     ],
 

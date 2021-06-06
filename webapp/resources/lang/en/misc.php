@@ -156,4 +156,15 @@ return [
     'trashingCanBeUndone' => 'The item will be trashed. This operation can be reverted, by restoring the item from the trash.',
     'viewingAccountOf' => 'You\'re viewing the account of',
     'confirmCancel' => 'I confirm I want to cancel',
+
+    'days' => [
+        '0' => 'Monday',
+        '1' => 'Tuesday',
+        '2' => 'Wednesday',
+        '3' => 'Thursday',
+        '4' => 'Friday',
+        '5' => 'Saturday',
+        '6' => 'Sunday',
+        '7' => 'Monday',
+    ],
 ];
