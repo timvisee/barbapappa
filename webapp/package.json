@@ -12,11 +12,14 @@
   "devDependencies": {
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
+    "chart.js": "^3.3.2",
+    "chartjs-adapter-moment": "^1.0.0",
     "cross-env": "^5.2.1",
     "flag-icon-css": "^2.9.0",
     "jquery": "^3.5.1",
     "laravel-mix": "^5.0.7",
     "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "resolve-url-loader": "^2.3.2",
     "sass": "^1.27.0",
@@ -24,9 +27,8 @@
     "semantic-ui-css": "^2.4.0",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.12",
-    "webpack-shell-plugin": "^0.5.0"
-  },
-  "dependencies": {
+    "webpack-shell-plugin": "^0.5.0",
     "workbox-webpack-plugin": "^5.1.4"
-  }
+  },
+  "dependencies": {}
 }
