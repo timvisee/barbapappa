@@ -101,17 +101,18 @@
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
-                                        return '{{ $wallet->currency->symbol }} ' + context.parsed.y;
+                                        return '{{ $wallet->currency->symbol }} ' + context.parsed.y.toFixed(2);
                                     }
                                 }
                             }
                         },
                         borderCapStyle: 'round',
                         borderJoinStyle: 'round',
+                        cubicInterpolationMode: 'monotone',
                         fill: true,
                         scales: {
                             x: {
-                                max: '{{ now()->toDateTimeString() }}',
+                                max: '{{ now()->toDateString() }}',
                                 type: 'time',
                                 time: {
                                     tooltipFormat: 'll',

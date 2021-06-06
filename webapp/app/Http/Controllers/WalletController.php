@@ -15,10 +15,16 @@ use App\Models\Wallet;
 use App\Perms\CommunityRoles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class WalletController extends Controller {
+
+    /**
+     * The maximum wallet balance history period.
+     */
+    const WALLET_BALANCE_HISTORY_PERIOD = '1 month';
 
     const PAGINATE_ITEMS = 50;
 
@@ -83,50 +89,16 @@ class WalletController extends Controller {
         if(!$wallet->hasViewPermission())
             return response(view('noPermission'));
 
-        $transactions = $wallet->lastTransactions();
+        $transactions = $wallet->lastTransactions()->get();
 
-        // Build balance graph item data
-        $balance_graph_items = $wallet
-            // TODO: choose proper limit
-            ->lastTransactions(35)
-            ->get()
-            ->filter(function($t) {
-                return $t->state == Transaction::STATE_SUCCESS;
-            })
-            ->map(function($t) use($wallet) {
-                // TODO: add date and some other parameters as well
-                return [
-                    'time' => $t->created_at,
-                    'amount' => $t->cost($wallet),
-                ];
-            });
-        $balance_accum = $wallet->balance;
-        $balance_graph_items = $balance_graph_items
-            ->map(function($data) use(&$balance_accum) {
-                $data['balance'] = $balance_accum;
-                $balance_accum = round($balance_accum - $data['amount'], 2);
-                return $data;
-            })
-            ->reverse()
-            ->values();
-
-        // Build graph data
-        if($balance_graph_items->count() >= 5) {
-            $balance_graph_items->each(function($t) use(&$balance_graph_data) {
-                $balance_graph_data['labels'][] = $t['time']->toDateTimeString();
-                $balance_graph_data['datasets'][0]['data'][] = $t['balance'];
-            });
-        }
-
-        // Add current time as additional point
-        $balance_graph_data['labels'][] = now()->toDateTimeString();
-        $balance_graph_data['datasets'][0]['data'][] = $balance_graph_items->last()['balance'];
+        // Get balance graph data
+        $balance_graph_data = self::chartBalanceGraph($wallet);
 
         return view('community.wallet.show')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
-            ->with('transactions', $transactions->get())
-            ->with('balance_graph_data', $balance_graph_data ?? null);
+            ->with('transactions', $transactions)
+            ->with('balance_graph_data', $balance_graph_data);
     }
 
     /**
@@ -980,6 +952,64 @@ class WalletController extends Controller {
     }
 
     /**
+     * Get data for balance history graph.
+     *
+     * @param Wallet $wallet Wallet to create graph for.
+     * @return object|null Graph data, may be null.
+     */
+    static function chartBalanceGraph(Wallet $wallet) {
+        $from_date = today()->sub(self::WALLET_BALANCE_HISTORY_PERIOD);
+        $balance = $wallet->balance;
+        $day_balances = collect();
+
+        // Get wallet mutations grouped by day
+        $mutations = $wallet
+            ->lastTransactions(100)
+            ->where('mutation.created_at', '>=', $from_date)
+            ->addSelect('*')
+            ->addSelect(DB::raw('CAST(mutation.created_at AS DATE) AS day'))
+            ->get()
+            ->filter(function($t) {
+                return $t->state == Transaction::STATE_SUCCESS;
+            })
+            ->groupBy('day');
+        if($mutations->isEmpty())
+            return null;
+
+        // Add current day if it isn't in our datapoints
+        $today = now()->toDateString();
+        if(!$mutations->has($today))
+            $day_balances[$today] = $balance;
+
+        // Build list of daily balances
+        $mutations
+            ->each(function($day_muts, $day) use($mutations, &$balance, &$day_balances) {
+                $prev_day = (new Carbon($day))->subDay()->toDateString();
+                $day_balances[$day] = $balance;
+
+                $diff = $day_muts->reduce(function($carry, $item) {
+                    return round($carry - $item->amount, 2);
+                }, 0);
+                $balance = round($balance - $diff, 2);
+
+                // Add diff for previous day if we have no datapoint for it
+                if(!$mutations->has($prev_day))
+                    $day_balances[$prev_day] = $balance;
+            });
+        $day_balances = $day_balances->reverse();
+
+        // Build graph data
+        if($day_balances->count() >= 4) {
+            $day_balances->each(function($balance, $date) use(&$data) {
+                $data['labels'][] = $date;
+                $data['datasets'][0]['data'][] = $balance;
+            });
+        }
+
+        return $data ?? null;
+    }
+
+    /**
      * Get data for wallet product distribution chart.
      *
      * @param Wallet $wallet The wallet to get data for.
@@ -1097,7 +1127,7 @@ class WalletController extends Controller {
             ->mutations(false)
             ->type(MutationProduct::class)
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
-            ->addSelect(DB::raw('CAST( mutation.created_at AS DATE) AS day'), DB::raw('SUM(quantity) AS quantity'))
+            ->addSelect(DB::raw('CAST(mutation.created_at AS DATE) AS day'), DB::raw('SUM(quantity) AS quantity'))
             ->groupBy('day')
             ->orderBy('mutation.created_at')
             ->get();
