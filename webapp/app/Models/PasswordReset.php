@@ -20,6 +20,18 @@ class PasswordReset extends Model {
 
     protected $table = 'password_reset';
 
+    /**
+     * A scope for password reset tokens that have expired.
+     *
+     * @param \Builder $query The query builder.
+     */
+    public function scopeExpired($query) {
+        return $query->whereNull('expire_at')->orWhere('expire_at', '<=', now());
+    }
+
+    /**
+     * Get relation to user this password reset token belongs to.
+     */
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
