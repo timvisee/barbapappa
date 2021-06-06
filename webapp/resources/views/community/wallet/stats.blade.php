@@ -44,6 +44,8 @@
 
     <p>@lang('pages.walletStats.description')</p>
 
+    <div class="ui hidden divider"></div>
+
     <script>
         /**
         * A color wheel function.
@@ -90,6 +92,11 @@
                             {
                                 type: 'doughnut',
                                 data: data,
+                                options: {
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                },
                             }
                         );
                     </script>

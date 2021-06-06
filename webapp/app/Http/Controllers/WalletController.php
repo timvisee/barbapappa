@@ -11,6 +11,7 @@ use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\Wallet;
 use App\Perms\CommunityRoles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -959,58 +960,10 @@ class WalletController extends Controller {
                 ])
                 ->with('info', __('pages.walletStats.noStatsNoTransactions'));
 
-        // Get a query for product mutations
-        // TODO: only completed mutations
-        $productMutations = $wallet
-            ->mutations(false)
-            ->type(MutationProduct::class)
-            ->leftJoin('product', 'product.id', 'mutation_product.product_id');
-
-        // Fetch product distributions, build chart data
-        $productDist = (clone $productMutations)
-            ->groupBy('product_id')
-            // TODO: should we use two arguments here?
-            ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
-            ->orderBy('quantity', 'DESC')
-            ->get();
-        $products = Product::whereIn('id', $productDist->pluck('product_id'))->get();
-        $productDistData['labels'] = $productDist->pluck('product_id')
-            ->map(function($id) use($products) {
-                return $products->firstWhere('id', $id)->name ?? __('pages.products.deletedProduct');
-            });
-        $productDistData['datasets'][] = [
-            'label' => __('pages.walletStats.typeProductDist.title'),
-            'data' => $productDist->pluck('quantity'),
-            'borderWidth' => 1,
-        ];
-
-        // Fetch product distributions, build chart data
-        $buyTimeHour = (clone $productMutations)
-            ->addSelect(DB::raw('HOUR(mutation.created_at) AS hour'), DB::raw('SUM(quantity) AS quantity'))
-            ->groupBy('hour')
-            ->get();
-        $buyTimeHourData['datasets'][] = [
-            'label' => __('pages.walletStats.typeProductDist.title'),
-            'borderWidth' => 1,
-        ];
-        for($i = 0; $i < 24; $i++) {
-            $buyTimeHourData['labels'][] = $i;
-            $buyTimeHourData['datasets'][0]['data'][] = $buyTimeHour->firstWhere('hour', $i)->quantity ?? 0;
-        }
-
-        // Fetch product distributions, build chart data
-        $buyTimeDay = (clone $productMutations)
-            ->addSelect(DB::raw('DAYOFWEEK(mutation.created_at) - 2 AS day'), DB::raw('SUM(quantity) AS quantity'))
-            ->groupBy('day')
-            ->get();
-        $buyTimeDayData['datasets'][] = [
-            'label' => __('pages.walletStats.typeProductDist.title'),
-            'borderWidth' => 1,
-        ];
-        for($i = 0; $i < 7; $i++) {
-            $buyTimeDayData['labels'][] = now()->startOfWeek()->addDays($i)->shortDayName;
-            $buyTimeDayData['datasets'][0]['data'][] = $buyTimeDay->firstWhere('day', $i)->quantity ?? 0;
-        }
+        // Fetch and build chart data
+        $productDistData = self::chartProductDist($wallet);
+        $buyTimeHourData = self::chartProductBuyTimeHour($wallet);
+        $buyTimeDayData = self::chartProductBuyTimeDay($wallet);
 
         return view('community.wallet.stats')
             ->with('economy', $economy)
@@ -1018,5 +971,107 @@ class WalletController extends Controller {
             ->with('productDistData', $productDistData)
             ->with('buyTimeHourData', $buyTimeHourData)
             ->with('buyTimeDayData', $buyTimeDayData);
+    }
+
+    /**
+     * Get data for wallet product distribution chart.
+     *
+     * @param Wallet $wallet The wallet to get data for.
+     * @return object Produt distribution data.
+     */
+    static function chartProductDist(Wallet $wallet) {
+        $limit = 10;
+
+        // Fetch product distributions
+        $dist = $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->leftJoin('product', 'product.id', 'mutation_product.product_id')
+            ->groupBy('product_id')
+            ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
+            ->orderBy('quantity', 'DESC')
+            ->get();
+        $products = Product::whereIn(
+            'id',
+            $dist->take($limit)->pluck('product_id')
+        )->get();
+
+        // Set labels and values data
+        $data['labels'] = $dist->take($limit)->pluck('product_id')
+            ->map(function($id) use($products) {
+                return $products->firstWhere('id', $id)->name ?? __('pages.products.deletedProduct');
+            });
+        $data['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'data' => $dist->take($limit)->pluck('quantity'),
+            'borderWidth' => 1,
+        ];
+
+        // Add other item if over limit
+        if($dist->count() > $limit) {
+            $i = $data['labels']->count() - 1;
+            $data['labels'][$i] = __('misc.other');
+            $data['datasets'][0]['data'][$i] = $dist->skip($limit)->sum('quantity');
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get data for wallet product hourly buy time.
+     *
+     * @param Wallet $wallet The wallet to get data for.
+     * @return object Product hourly buy time data.
+     */
+    static function chartProductBuyTimeHour(Wallet $wallet) {
+        // Fetch product buy times
+        $times = $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->leftJoin('product', 'product.id', 'mutation_product.product_id')
+            ->addSelect(DB::raw('HOUR(mutation.created_at) AS hour'), DB::raw('SUM(quantity) AS quantity'))
+            ->groupBy('hour')
+            ->get();
+
+        // Fetch product distributions, build chart data
+        $data['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'borderWidth' => 1,
+        ];
+        for($i = 0; $i < 24; $i++) {
+            $data['labels'][] = $i;
+            $data['datasets'][0]['data'][] = $times->firstWhere('hour', $i)->quantity ?? 0;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get data for wallet product daily buy time.
+     *
+     * @param Wallet $wallet The wallet to get data for.
+     * @return object Product daily buy time data.
+     */
+    static function chartProductBuyTimeDay(Wallet $wallet) {
+        // Fetch product buy times
+        $times = $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->leftJoin('product', 'product.id', 'mutation_product.product_id')
+            ->addSelect(DB::raw('DAYOFWEEK(mutation.created_at) - 2 AS day'), DB::raw('SUM(quantity) AS quantity'))
+            ->groupBy('day')
+            ->get();
+
+        // Fetch product distributions, build chart data
+        $data['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'borderWidth' => 1,
+        ];
+        for($i = 0; $i < 7; $i++) {
+            $data['labels'][] = now()->startOfWeek()->addDays($i)->shortDayName;
+            $data['datasets'][0]['data'][] = $times->firstWhere('day', $i)->quantity ?? 0;
+        }
+
+        return $data;
     }
 }
