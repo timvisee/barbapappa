@@ -42,8 +42,8 @@ class ExpireNotifications implements ShouldQueue {
      */
     public function middleware() {
         return [
+            // Release exclusive lock after a day (failure)
             (new WithoutOverlapping())
-                // Release exclusive lock after a day (failure)
                 ->expireAfter(24 * 60 * 60)
                 ->dontRelease()
         ];
@@ -62,7 +62,7 @@ class ExpireNotifications implements ShouldQueue {
     }
 
     public function retryUntil() {
-        // Matches interval in \App\Console\Kernel::schedule
+        // Matches interval in \App\Console\Kernel::schedule for ExpirePayments
         return now()->addHour();
     }
 }

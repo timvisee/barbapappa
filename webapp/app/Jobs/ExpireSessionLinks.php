@@ -2,8 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Jobs\ExpirePayment;
-use BarPay\Models\Payment;
+use App\Models\SessionLink;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,9 +11,9 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Check for payments that should expire, and schedule a job to expire them.
+ * Delete all expired session links, based on their `expire_at` time.
  */
-class ExpirePayments implements ShouldQueue {
+class ExpireSessionLinks implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -40,8 +39,8 @@ class ExpirePayments implements ShouldQueue {
      */
     public function middleware() {
         return [
+            // Release exclusive lock after a day (failure)
             (new WithoutOverlapping())
-                // Release exclusive lock after a day (failure)
                 ->expireAfter(24 * 60 * 60)
                 ->dontRelease()
         ];
@@ -53,13 +52,10 @@ class ExpirePayments implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // List all payments to expire
-        $payments = Payment::toExpire()->get();
-
-        // Schedule a job to expire each payment
-        $payments->each(function($payment) {
-            ExpirePayment::dispatch($payment->id);
-        });
+        // Delete all session links that reached their expiry time
+        SessionLink::withoutGlobalScopes()
+            ->expired()
+            ->delete();
     }
 
     public function retryUntil() {

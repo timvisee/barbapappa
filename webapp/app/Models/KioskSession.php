@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string token
  * @property int created_user_id
  * @property string created_ip
- * @property Carbon expire_at
+ * @property Carbon|null expire_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -24,14 +24,14 @@ class KioskSession extends Model {
     protected $table = 'kiosk_session';
 
     /**
-     * The bar this session is for.
+     * Get a relation to the bar this kiosk session is for.
      */
     public function bar() {
         return $this->belongsTo(Bar::class);
     }
 
     /**
-     * The user that initiated this kiosk session.
+     * Get a relation to the user that initiated this kiosk session.
      */
     public function user() {
         return $this->belongsTo(User::class);
