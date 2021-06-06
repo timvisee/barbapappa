@@ -2,8 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Jobs\ExpirePayment;
-use BarPay\Models\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -12,9 +10,9 @@ use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
 
 /**
- * Check for payments that should expire, and schedule a job to expire them.
+ * An hourly job to start other expiration jobs.
  */
-class ExpirePayments implements ShouldQueue {
+class ExpireHourly implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -40,8 +38,8 @@ class ExpirePayments implements ShouldQueue {
      */
     public function middleware() {
         return [
+            // Release exclusive lock after a day (failure)
             (new WithoutOverlapping())
-                // Release exclusive lock after a day (failure)
                 ->expireAfter(24 * 60 * 60)
                 ->dontRelease()
         ];
@@ -53,17 +51,17 @@ class ExpirePayments implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // List all payments to expire
-        $payments = Payment::toExpire()->get();
-
-        // Schedule a job to expire each payment
-        $payments->each(function($payment) {
-            ExpirePayment::dispatch($payment->id);
-        });
+        ExpireEmailVerifications::dispatch();
+        ExpireKioskSessions::dispatch();
+        ExpireNotifications::dispatch();
+        ExpirePasswordResets::dispatch();
+        ExpirePayments::dispatch();
+        ExpireSessionLinks::dispatch();
+        ExpireSessions::dispatch();
     }
 
     public function retryUntil() {
-        // Matches interval in \App\Console\Kernel::schedule for ExpirePayments
+        // Matches interval in \App\Console\Kernel::schedule for ExpireHourly
         return now()->addHour();
     }
 }

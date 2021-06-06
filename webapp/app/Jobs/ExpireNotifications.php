@@ -62,7 +62,7 @@ class ExpireNotifications implements ShouldQueue {
     }
 
     public function retryUntil() {
-        // Matches interval in \App\Console\Kernel::schedule
+        // Matches interval in \App\Console\Kernel::schedule for ExpirePayments
         return now()->addHour();
     }
 }

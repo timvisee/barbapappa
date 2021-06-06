@@ -2,13 +2,7 @@
 
 namespace App\Console;
 
-use App\Jobs\ExpireEmailVerifications;
-use App\Jobs\ExpireKioskSessions;
-use App\Jobs\ExpireNotifications;
-use App\Jobs\ExpirePasswordResets;
-use App\Jobs\ExpirePayments;
-use App\Jobs\ExpireSessionLinks;
-use App\Jobs\ExpireSessions;
+use App\Jobs\ExpireHourly;
 use App\Jobs\ProcessAllBunqAccountEvents;
 use App\Jobs\SendBalanceUpdates;
 use App\Jobs\UpdatePaymentStates;
@@ -38,34 +32,9 @@ class Kernel extends ConsoleKernel {
         $schedule->job(new UpdatePaymentStates)
             ->everyFifteenMinutes();
 
-        // Expire all old notifications
-        // Interval also defined in: ExpireNotifications::retryUntil
-        $schedule->job(new ExpireNotifications)
-            ->hourly();
-
-        // Expire all old sessions
-        // Interval also defined in: ExpireSessions::retryUntil
-        $schedule->job(new ExpireSessions)
-            ->hourly();
-
-        // Expire all old kiosk sessions
-        // Interval also defined in: ExpireKioskSessions::retryUntil
-        $schedule->job(new ExpireKioskSessions)
-            ->hourly();
-
-        // Expire all old session links
-        // Interval also defined in: ExpireSessionLinks::retryUntil
-        $schedule->job(new ExpireSessionLinks)
-            ->hourly();
-
-        // Expire all old password reset tokens
-        // Interval also defined in: ExpirePasswordResets::retryUntil
-        $schedule->job(new ExpirePasswordResets)
-            ->hourly();
-
-        // Expire all old email verification tokens
-        // Interval also defined in: ExpireEmailVerifications::retryUntil
-        $schedule->job(new ExpireEmailVerifications)
+        // Expire hourly job, invokes other expiration jobs
+        // Interval also defined in: ExpireHourly::retryUntil
+        $schedule->job(new ExpireHourly)
             ->hourly();
 
         // Send balance updates
@@ -77,11 +46,6 @@ class Kernel extends ConsoleKernel {
         // Interval also defined in: ProcessAllBunqAccountEvents::retryUntil
         $schedule->job(new ProcessAllBunqAccountEvents)
             ->twiceDaily(0, 12);
-
-        // Expire payments
-        // Interval also defined in: ExpirePayments::retryUntil
-        $schedule->job(new ExpirePayments)
-            ->hourly();
     }
 
     /**
