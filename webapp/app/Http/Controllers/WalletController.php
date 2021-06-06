@@ -918,13 +918,29 @@ class WalletController extends Controller {
      *
      * @return Response
      */
-    public function stats($communityId, $economyId, $walletId) {
+    public function stats(Request $request, $communityId, $economyId, $walletId) {
         // Get the user, community, find the economy and wallet
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
+
+        // Select period
+        switch($request->query('period')) {
+            case 'week':
+                $period = 'week';
+                $period_from = today()->subWeek();
+                break;
+            case 'year':
+                $period = 'year';
+                $period_from = today()->subYear();
+                break;
+            case 'month':
+            default:
+                $period = 'month';
+                $period_from = today()->subMonth();
+        }
 
         // Wallet must have mutations
         if($wallet->walletMutations()->limit(1)->count() == 0)
@@ -938,24 +954,41 @@ class WalletController extends Controller {
 
         // Fetch some stats
         // TODO: only completed mutations
+        $transactionCount = $wallet
+            ->mutations(false)
+            ->where('mutation.created_at', '>=', $period_from)
+            ->select('transaction.id')
+            ->pluck('transaction.id')
+            ->unique()
+            ->count();
+        $mutationCount = $wallet
+            ->mutations(false)
+            // ->type(MutationWallet::class)
+            ->where('mutation.created_at', '>=', $period_from)
+            ->count();
         $productCount = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
             ->groupBy('product_id')
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
+            ->where('mutation.created_at', '>=', $period_from)
             ->get();
         $productsBought = $productCount->sum('quantity');
         $differentProducts = $productCount->count();
 
         // Fetch and build chart data
-        $productDistData = self::chartProductDist($wallet);
-        $buyTimeHourData = self::chartProductBuyTimeHour($wallet);
-        $buyTimeDayData = self::chartProductBuyTimeDay($wallet);
-        $buyHistogramData = self::chartProductBuyHistogram($wallet);
+        $productDistData = self::chartProductDist($wallet, $period_from);
+        $buyTimeHourData = self::chartProductBuyTimeHour($wallet, $period_from);
+        $buyTimeDayData = self::chartProductBuyTimeDay($wallet, $period_from);
+        $buyHistogramData = self::chartProductBuyHistogram($wallet, $period_from);
 
         return view('community.wallet.stats')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
+            ->with('period', $period)
+            ->with('periodFrom', $period_from)
+            ->with('transactionCount', $transactionCount)
+            ->with('mutationCount', $mutationCount)
             ->with('productsBought', $productsBought)
             ->with('differentProducts', $differentProducts)
             ->with('productDistData', $productDistData)
@@ -1028,7 +1061,7 @@ class WalletController extends Controller {
      * @param Wallet $wallet The wallet to get data for.
      * @return object Produt distribution data.
      */
-    static function chartProductDist(Wallet $wallet) {
+    static function chartProductDist(Wallet $wallet, Carbon $period_from) {
         $limit = 10;
 
         // Fetch product distributions
@@ -1039,6 +1072,7 @@ class WalletController extends Controller {
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
             ->groupBy('product_id')
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
+            ->where('mutation.created_at', '>=', $period_from)
             ->orderBy('quantity', 'DESC')
             ->get();
         $products = Product::whereIn(
@@ -1073,7 +1107,7 @@ class WalletController extends Controller {
      * @param Wallet $wallet The wallet to get data for.
      * @return object Product hourly buy time data.
      */
-    static function chartProductBuyTimeHour(Wallet $wallet) {
+    static function chartProductBuyTimeHour(Wallet $wallet, Carbon $period_from) {
         // Fetch product buy times
         // TODO: only completed mutations
         $times = $wallet
@@ -1081,6 +1115,7 @@ class WalletController extends Controller {
             ->type(MutationProduct::class)
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
             ->addSelect(DB::raw('HOUR(mutation.created_at) AS hour'), DB::raw('SUM(quantity) AS quantity'))
+            ->where('mutation.created_at', '>=', $period_from)
             ->groupBy('hour')
             ->get();
 
@@ -1103,7 +1138,7 @@ class WalletController extends Controller {
      * @param Wallet $wallet The wallet to get data for.
      * @return object Product daily buy time data.
      */
-    static function chartProductBuyTimeDay(Wallet $wallet) {
+    static function chartProductBuyTimeDay(Wallet $wallet, Carbon $period_from) {
         // Fetch product buy times
         // TODO: only completed mutations
         $times = $wallet
@@ -1111,6 +1146,7 @@ class WalletController extends Controller {
             ->type(MutationProduct::class)
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
             ->addSelect(DB::raw('DAYOFWEEK(mutation.created_at) - 2 AS day'), DB::raw('SUM(quantity) AS quantity'))
+            ->where('mutation.created_at', '>=', $period_from)
             ->groupBy('day')
             ->get();
 
@@ -1133,7 +1169,7 @@ class WalletController extends Controller {
      * @param Wallet $wallet The wallet to get data for.
      * @return object Product buy time histogram.
      */
-    static function chartProductBuyHistogram(Wallet $wallet) {
+    static function chartProductBuyHistogram(Wallet $wallet, Carbon $period_from) {
         // Fetch product buy times
         // TODO: only completed mutations
         $times = $wallet
@@ -1143,6 +1179,7 @@ class WalletController extends Controller {
             ->addSelect(DB::raw('CAST(mutation.created_at AS DATE) AS day'), DB::raw('SUM(quantity) AS quantity'))
             ->groupBy('day')
             ->orderBy('mutation.created_at')
+            ->where('mutation.created_at', '>=', $period_from)
             ->get();
 
         // Set labels and values data

@@ -588,14 +588,20 @@ return [
      */
     'walletStats' => [
         'title' => 'Portemonnee statistieken',
-        'description' => 'Hier zie je statistieken voor de gehele levensduur van de portemonnee.',
-        'purchases' => 'Aankopen',
+        'description' => 'Hier zie je statistieken van je portemonnee in de geselecteerde periode.',
+        'transactions' => 'Transacties',
+        'mutations' => 'Mutaties',
         'products' => 'Producten',
-        'differentProducts' => 'Verschillende producten',
-        'purchaseDistribution' => 'Aankoopdistributie',
-        'purchasePerHourDay' => 'Aankopen per uur/dag',
-        'purchaseHistogram' => 'Aankoophistogram',
+        'differentProducts' => 'Unieke producten',
+        'purchaseDistribution' => 'Productdistributie',
+        'purchasePerHourDay' => 'Productaankopen per uur/dag',
+        'purchaseHistogram' => 'Productaankoop histogram',
         'noStatsNoTransactions' => 'Geen statistieken om te tonen. Portemonnee heeft nog geen transacties.',
+        'period' => [
+            'week' => 'Afgelopen week',
+            'month' => 'Afgelopen maand',
+            'year' => 'Afgelopen jaar',
+        ],
         'typeProductDist' => [
             'title' => 'Gekochte producten',
             'chartName' => 'Productdistributiegrafiek',

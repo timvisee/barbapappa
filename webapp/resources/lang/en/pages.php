@@ -588,14 +588,20 @@ return [
      */
     'walletStats' => [
         'title' => 'Wallet stats',
-        'description' => 'Here are some wallet stats, for the lifetime of the wallet.',
-        'purchases' => 'Purchases',
+        'description' => 'Here are some wallet stats for the selected period.',
+        'transactions' => 'Transactions',
+        'mutations' => 'Mutations',
         'products' => 'Products',
         'differentProducts' => 'Different products',
-        'purchaseDistribution' => 'Purchase distribution',
-        'purchasePerHourDay' => 'Purchases by hour/day',
-        'purchaseHistogram' => 'Purchase histogram',
+        'purchaseDistribution' => 'Product distribution',
+        'purchasePerHourDay' => 'Product purchases by hour/day',
+        'purchaseHistogram' => 'Product purchase histogram',
         'noStatsNoTransactions' => 'No stats to show. Wallet does not have any transactions.',
+        'period' => [
+            'week' => 'Last week',
+            'month' => 'Last month',
+            'year' => 'Last year',
+        ],
         'typeProductDist' => [
             'title' => 'Purchased products',
             'chartName' => 'Product distribution chart',
