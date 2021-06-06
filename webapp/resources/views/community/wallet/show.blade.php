@@ -98,9 +98,17 @@
                         animation: false,
                         plugins: {
                             legend: false,
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return '{{ $wallet->currency->symbol }} ' + context.parsed.y;
+                                    }
+                                }
+                            }
                         },
                         borderCapStyle: 'round',
                         borderJoinStyle: 'round',
+                        fill: true,
                         scales: {
                             x: {
                                 max: '{{ now()->toDateTimeString() }}',
