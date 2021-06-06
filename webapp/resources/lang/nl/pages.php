@@ -589,6 +589,9 @@ return [
     'walletStats' => [
         'title' => 'Portemonnee statistieken',
         'description' => 'Hier zie je statistieken voor de gehele levensduur van de portemonnee.',
+        'purchases' => 'Aankopen',
+        'products' => 'Producten',
+        'differentProducts' => 'Verschillende producten',
         'purchaseDistribution' => 'Aankoopdistributie',
         'purchasePerHourDay' => 'Aankopen per uur/dag',
         'purchaseHistogram' => 'Aankoophistogram',

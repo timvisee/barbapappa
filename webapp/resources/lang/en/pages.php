@@ -589,6 +589,9 @@ return [
     'walletStats' => [
         'title' => 'Wallet stats',
         'description' => 'Here are some wallet stats, for the lifetime of the wallet.',
+        'purchases' => 'Purchases',
+        'products' => 'Products',
+        'differentProducts' => 'Different products',
         'purchaseDistribution' => 'Purchase distribution',
         'purchasePerHourDay' => 'Purchases by hour/day',
         'purchaseHistogram' => 'Purchase histogram',

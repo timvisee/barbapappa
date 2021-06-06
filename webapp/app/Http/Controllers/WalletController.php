@@ -936,6 +936,17 @@ class WalletController extends Controller {
                 ])
                 ->with('info', __('pages.walletStats.noStatsNoTransactions'));
 
+        // Fetch some stats
+        // TODO: only completed mutations
+        $productCount = $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->groupBy('product_id')
+            ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
+            ->get();
+        $productsBought = $productCount->sum('quantity');
+        $differentProducts = $productCount->count();
+
         // Fetch and build chart data
         $productDistData = self::chartProductDist($wallet);
         $buyTimeHourData = self::chartProductBuyTimeHour($wallet);
@@ -945,6 +956,8 @@ class WalletController extends Controller {
         return view('community.wallet.stats')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
+            ->with('productsBought', $productsBought)
+            ->with('differentProducts', $differentProducts)
             ->with('productDistData', $productDistData)
             ->with('buyTimeHourData', $buyTimeHourData)
             ->with('buyTimeDayData', $buyTimeDayData)

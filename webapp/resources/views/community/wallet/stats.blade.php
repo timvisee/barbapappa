@@ -64,6 +64,29 @@
         <div class="column">
             <div class="ui segment">
 
+                <h3 class="ui header">@lang('pages.walletStats.purchases')</h3>
+
+                <div class="ui hidden divider"></div>
+
+                <div class="ui two small statistics">
+                    <div class="statistic">
+                        <div class="value">{{ $productsBought }}</div>
+                        <div class="label">@lang('pages.walletStats.products')</div>
+                    </div>
+                    <div class="statistic">
+                        <div class="value">{{ $differentProducts }}</div>
+                        <div
+                            class="label">@lang('pages.walletStats.differentProducts')</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        {{-- TODO: do not show if no values --}}
+        <div class="column">
+            <div class="ui segment">
+
                 <h3 class="ui header">
                     @lang('pages.walletStats.purchaseDistribution')
                 </h3>
