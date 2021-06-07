@@ -84,338 +84,316 @@
     <div class="ui two column stackable grid">
 
         <div class="column">
-            <div class="ui segment">
+            <h3 class="ui horizontal divider header">@lang('pages.walletStats.title')</h3>
 
-                <h3 class="ui header">@lang('pages.walletStats.title')</h3>
+            <p>@lang('pages.walletStats.description')</p>
 
-                <p>
-                    @lang('pages.walletStats.description')
-                </p>
-
-                <p>
-                    {!! $smartText !!}
-                </p>
-            </div>
+            <p>{!! $smartText !!}</p>
         </div>
 
         <div class="column">
-            <div class="ui segment">
+            <h3 class="ui horizontal divider header">@lang('pages.walletStats.transactions')</h3>
 
-                <h3 class="ui header">@lang('pages.walletStats.transactions')</h3>
+            <div class="ui hidden divider"></div>
 
-                <div class="ui hidden divider"></div>
-
-                <div class="ui two small statistics">
-                    <div class="statistic">
-                        <div class="value">{{ $transactionCount }}</div>
-                        <div class="label">@lang('pages.walletStats.transactions')</div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">{{ $mutationCount }}</div>
-                        <div
-                            class="label">@lang('pages.walletStats.mutations')</div>
-                    </div>
+            <div class="ui two small statistics">
+                <div class="statistic">
+                    <div class="value">{{ $transactionCount }}</div>
+                    <div class="label">@lang('pages.walletStats.transactions')</div>
                 </div>
-
-                <div class="ui hidden divider"></div>
-
-                <div class="ui two small statistics">
-                    <div class="statistic">
-                        <div class="value">{{ $productsBought }}</div>
-                        <div class="label">@lang('pages.walletStats.products')</div>
-                    </div>
-                    <div class="statistic">
-                        <div class="value">{{ $differentProducts }}</div>
-                        <div
-                            class="label">@lang('pages.walletStats.differentProducts')</div>
-                    </div>
+                <div class="statistic">
+                    <div class="value">{{ $mutationCount }}</div>
+                    <div
+                        class="label">@lang('pages.walletStats.mutations')</div>
                 </div>
+            </div>
 
+            <div class="ui hidden divider"></div>
+
+            <div class="ui two small statistics">
+                <div class="statistic">
+                    <div class="value">{{ $productsBought }}</div>
+                    <div class="label">@lang('pages.walletStats.products')</div>
+                </div>
+                <div class="statistic">
+                    <div class="value">{{ $differentProducts }}</div>
+                    <div
+                        class="label">@lang('pages.walletStats.differentProducts')</div>
+                </div>
             </div>
         </div>
 
         {{-- TODO: do not show if no values --}}
         <div class="{{ $period != 'week' ? 'sixteen wide' : '' }} column">
-            <div class="ui segment">
+            <h3 class="ui horizontal divider header">
+                @lang('pages.walletStats.balanceHistory')
+            </h3>
 
-                <h3 class="ui header">
-                    @lang('pages.walletStats.balanceHistory')
-                </h3>
-
-                <div>
-                    <canvas id="chartBalanceGraph"
-                        height="100"
-                        aria-label="@lang('misc.balance')"
-                        role="img"></canvas>
-                    <script>
-                        var data = JSON.parse('{!! json_encode($balanceGraphData) !!}');
-                        data.datasets[0].borderColor = 'rgb(75, 192, 192)';
-                        data.datasets[0].backgroundColor = 'rgba(75, 192, 192, 0.5)';
-                        new Chart(
-                            document.getElementById('chartBalanceGraph').getContext('2d'),
-                            {
-                                type: 'line',
-                                data: data,
-                                options: {
-                                    animation: false,
-                                    plugins: {
-                                        legend: false,
-                                        tooltip: {
-                                            callbacks: {
-                                                label: function(context) {
-                                                    return '{{ $wallet->currency->symbol }} ' + context.parsed.y.toFixed(2);
-                                                }
+            <div>
+                <canvas id="chartBalanceGraph"
+                    height="100"
+                    aria-label="@lang('misc.balance')"
+                    role="img"></canvas>
+                <script>
+                    var data = JSON.parse('{!! json_encode($balanceGraphData) !!}');
+                    data.datasets[0].borderColor = 'rgb(75, 192, 192)';
+                    data.datasets[0].backgroundColor = 'rgba(75, 192, 192, 0.5)';
+                    new Chart(
+                        document.getElementById('chartBalanceGraph').getContext('2d'),
+                        {
+                            type: 'line',
+                            data: data,
+                            options: {
+                                animation: false,
+                                plugins: {
+                                    legend: false,
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                return '{{ $wallet->currency->symbol }} ' + context.parsed.y.toFixed(2);
+                                            }
+                                        }
+                                    }
+                                },
+                                borderCapStyle: 'round',
+                                borderJoinStyle: 'round',
+                                cubicInterpolationMode: 'monotone',
+                                fill: true,
+                                scales: {
+                                    x: {
+                                        min: '{{ $periodFrom->subDay()->toDateString() }}',
+                                        max: '{{ today()->toDateString() }}',
+                                        type: 'time',
+                                        time: {
+                                            tooltipFormat: 'll',
+                                            unit: 'day',
+                                            unitStepSize: 1,
+                                            displayFormats: {
+                                                day: 'll'
+                                            },
+                                        },
+                                        grid: {
+                                            color: false,
+                                            tickColor: 'darkgrey',
+                                        },
+                                    },
+                                    y: {
+                                        ticks: {
+                                            callback: function(value, index, values) {
+                                                return  '{{ $wallet->currency->symbol }} ' + value;
                                             }
                                         }
                                     },
-                                    borderCapStyle: 'round',
-                                    borderJoinStyle: 'round',
-                                    cubicInterpolationMode: 'monotone',
-                                    fill: true,
-                                    scales: {
-                                        x: {
-                                            min: '{{ $periodFrom->subDay()->toDateString() }}',
-                                            max: '{{ today()->toDateString() }}',
-                                            type: 'time',
-                                            time: {
-                                                tooltipFormat: 'll',
-                                                unit: 'day',
-                                                unitStepSize: 1,
-                                                displayFormats: {
-                                                    day: 'll'
-                                                },
-                                            },
-                                            grid: {
-                                                color: false,
-                                                tickColor: 'darkgrey',
-                                            },
-                                        },
-                                        y: {
-                                            ticks: {
-                                                callback: function(value, index, values) {
-                                                    return  '{{ $wallet->currency->symbol }} ' + value;
-                                                }
-                                            }
-                                        },
-                                    }
                                 }
-                            },
-                        );
-                    </script>
-                </div>
-
+                            }
+                        },
+                    );
+                </script>
             </div>
         </div>
 
         {{-- TODO: do not show if no values --}}
         <div class="{{ $period != 'week' ? 'sixteen wide' : '' }} column">
-            <div class="ui segment">
 
-                <h3 class="ui header">
-                    @lang('pages.walletStats.purchaseHistogram')
-                </h3>
+            <h3 class="ui horizontal divider header">
+                @lang('pages.walletStats.purchaseHistogram')
+            </h3>
 
-                <div>
-                    <canvas id="chartBuyHistogram"
-                        height="100"
-                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-                        role="img"></canvas>
-                    <script>
-                        var data = JSON.parse('{!! json_encode($buyHistogramData) !!}');
-                        data.datasets[0].backgroundColor = '#3366cc';
-                        data.datasets[0].borderColor = '#3366cc';
-                        var chartBuyHistogram = new Chart(
-                            document.getElementById('chartBuyHistogram').getContext('2d'),
-                            {
-                                type: 'bar',
-                                data: data,
-                                options: {
-                                    animation: false,
-                                    plugins: {
-                                        legend: false,
-                                    },
-                                    @if($period == 'year')
-                                        barPercentage: 1,
-                                        categoryPercentage: 1,
-                                        barThickness: 2,
-                                        offset: false,
-                                    @endif
-                                    gridLines: {
-                                        offsetGridLines: false,
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            min: '{{ $periodFrom->toDateString() }}',
-                                            max: '{{ today()->toDateString() }}',
-                                            time: {
-                                                parser: 'YYYY-MM-DD',
-                                                tooltipFormat: 'll',
-                                                unit: 'day',
-                                                unitStepSize: 1,
-                                                displayFormats: {
-                                                    day: 'll'
-                                                }
-                                            },
-                                            grid: {
-                                                color: false,
-                                                tickColor: 'darkgrey',
-                                            },
-                                        },
-                                        y: {
-                                            ticks: {
-                                                beginAtZero: true,
+            <div>
+                <canvas id="chartBuyHistogram"
+                    height="100"
+                    aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                    role="img"></canvas>
+                <script>
+                    var data = JSON.parse('{!! json_encode($buyHistogramData) !!}');
+                    data.datasets[0].backgroundColor = '#3366cc';
+                    data.datasets[0].borderColor = '#3366cc';
+                    var chartBuyHistogram = new Chart(
+                        document.getElementById('chartBuyHistogram').getContext('2d'),
+                        {
+                            type: 'bar',
+                            data: data,
+                            options: {
+                                animation: false,
+                                plugins: {
+                                    legend: false,
+                                },
+                                @if($period == 'year')
+                                    barPercentage: 1,
+                                    categoryPercentage: 1,
+                                    barThickness: 2,
+                                    offset: false,
+                                @endif
+                                gridLines: {
+                                    offsetGridLines: false,
+                                },
+                                scales: {
+                                    x: {
+                                        type: 'time',
+                                        min: '{{ $periodFrom->toDateString() }}',
+                                        max: '{{ today()->toDateString() }}',
+                                        time: {
+                                            parser: 'YYYY-MM-DD',
+                                            tooltipFormat: 'll',
+                                            unit: 'day',
+                                            unitStepSize: 1,
+                                            displayFormats: {
+                                                day: 'll'
                                             }
                                         },
-                                    }
+                                        grid: {
+                                            color: false,
+                                            tickColor: 'darkgrey',
+                                        },
+                                    },
+                                    y: {
+                                        ticks: {
+                                            beginAtZero: true,
+                                        }
+                                    },
                                 }
-                            },
-                        );
-                    </script>
-                </div>
-
+                            }
+                        },
+                    );
+                </script>
             </div>
+
         </div>
 
         {{-- TODO: do not show if no values --}}
         <div class="column">
-            <div class="ui segment">
 
-                <h3 class="ui header">
-                    @lang('pages.walletStats.purchaseDistribution')
-                </h3>
+            <h3 class="ui horizontal divider header">
+                @lang('pages.walletStats.purchaseDistribution')
+            </h3>
 
-                <div>
-                    <canvas id="chartProductDist"
-                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-                        role="img"></canvas>
-                    <script>
-                        var data = JSON.parse('{!! json_encode($productDistData) !!}');
-                        data.datasets[0].backgroundColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.5);
-                            };
-                        data.datasets[0].borderColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.8);
-                            };
-                        data.datasets[0].hoverBackgroundColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.8);
-                            };
-                        data.datasets[0].hoverBorderColor = function(context) {
-                                return colorWheel(context.dataIndex, 1);
-                            };
-                        var chartProductDist = new Chart(
-                            document.getElementById('chartProductDist').getContext('2d'),
-                            {
-                                type: 'doughnut',
-                                data: data,
-                                options: {
-                                    animation: false,
-                                    plugins: {
-                                        legend: {
-                                            position: 'bottom',
-                                        },
+            <div>
+                <canvas id="chartProductDist"
+                    aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                    role="img"></canvas>
+                <script>
+                    var data = JSON.parse('{!! json_encode($productDistData) !!}');
+                    data.datasets[0].backgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.5);
+                        };
+                    data.datasets[0].borderColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBackgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBorderColor = function(context) {
+                            return colorWheel(context.dataIndex, 1);
+                        };
+                    var chartProductDist = new Chart(
+                        document.getElementById('chartProductDist').getContext('2d'),
+                        {
+                            type: 'doughnut',
+                            data: data,
+                            options: {
+                                animation: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
                                     },
                                 },
-                            }
-                        );
-                    </script>
-                </div>
-
+                            },
+                        }
+                    );
+                </script>
             </div>
+
         </div>
 
         {{-- TODO: do not show if no values --}}
         <div class="column">
-            <div class="ui segment">
 
-                <h3 class="ui header">
-                    @lang('pages.walletStats.purchasePerHourDay')
-                </h3>
+            <h3 class="ui horizontal divider header">
+                @lang('pages.walletStats.purchasePerHourDay')
+            </h3>
 
-                <div>
-                    <canvas id="chartBuyTimeHour"
-                        height="125"
-                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-                        role="img"></canvas>
-                    <script>
-                        var data = JSON.parse('{!! json_encode($buyTimeHourData) !!}');
-                        data.datasets[0].backgroundColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.5);
-                            };
-                        data.datasets[0].borderColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.8);
-                            };
-                        data.datasets[0].hoverBackgroundColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.8);
-                            };
-                        data.datasets[0].hoverBorderColor = function(context) {
-                                return colorWheel(context.dataIndex, 1);
-                            };
-                        var chartBuyTimeHour = new Chart(
-                            document.getElementById('chartBuyTimeHour').getContext('2d'),
-                            {
-                                type: 'bar',
-                                data: data,
-                                options: {
-                                    animation: false,
-                                    plugins: {
-                                        legend: false,
-                                    },
-                                    scales: {
-                                        y: {
-                                            ticks: {
-                                                beginAtZero: true,
-                                                precision: 0,
-                                            },
+            <div>
+                <canvas id="chartBuyTimeHour"
+                    height="125"
+                    aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                    role="img"></canvas>
+                <script>
+                    var data = JSON.parse('{!! json_encode($buyTimeHourData) !!}');
+                    data.datasets[0].backgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.5);
+                        };
+                    data.datasets[0].borderColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBackgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBorderColor = function(context) {
+                            return colorWheel(context.dataIndex, 1);
+                        };
+                    var chartBuyTimeHour = new Chart(
+                        document.getElementById('chartBuyTimeHour').getContext('2d'),
+                        {
+                            type: 'bar',
+                            data: data,
+                            options: {
+                                animation: false,
+                                plugins: {
+                                    legend: false,
+                                },
+                                scales: {
+                                    y: {
+                                        ticks: {
+                                            beginAtZero: true,
+                                            precision: 0,
                                         },
-                                    }
-                                }
-                            },
-                        );
-                    </script>
-
-                    <canvas id="chartBuyTimeDay"
-                        height="125"
-                        aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-                        role="img"></canvas>
-                    <script>
-                        var data = JSON.parse('{!! json_encode($buyTimeDayData) !!}');
-                        data.datasets[0].backgroundColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.5);
-                            };
-                        data.datasets[0].borderColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.8);
-                            };
-                        data.datasets[0].hoverBackgroundColor = function(context) {
-                                return colorWheel(context.dataIndex, 0.8);
-                            };
-                        data.datasets[0].hoverBorderColor = function(context) {
-                                return colorWheel(context.dataIndex, 1);
-                            };
-                        var chartBuyTimeDay = new Chart(
-                            document.getElementById('chartBuyTimeDay').getContext('2d'),
-                            {
-                                type: 'bar',
-                                data: data,
-                                options: {
-                                    animation: false,
-                                    plugins: {
-                                        legend: false,
                                     },
-                                    scales: {
-                                        y: {
-                                            ticks: {
-                                                beginAtZero: true,
-                                                precision: 0,
-                                            },
-                                        },
-                                    }
                                 }
-                            },
-                        );
-                    </script>
-                </div>
+                            }
+                        },
+                    );
+                </script>
 
+                <canvas id="chartBuyTimeDay"
+                    height="125"
+                    aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                    role="img"></canvas>
+                <script>
+                    var data = JSON.parse('{!! json_encode($buyTimeDayData) !!}');
+                    data.datasets[0].backgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.5);
+                        };
+                    data.datasets[0].borderColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBackgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBorderColor = function(context) {
+                            return colorWheel(context.dataIndex, 1);
+                        };
+                    var chartBuyTimeDay = new Chart(
+                        document.getElementById('chartBuyTimeDay').getContext('2d'),
+                        {
+                            type: 'bar',
+                            data: data,
+                            options: {
+                                animation: false,
+                                plugins: {
+                                    legend: false,
+                                },
+                                scales: {
+                                    y: {
+                                        ticks: {
+                                            beginAtZero: true,
+                                            precision: 0,
+                                        },
+                                    },
+                                }
+                            }
+                        },
+                    );
+                </script>
             </div>
         </div>
 
