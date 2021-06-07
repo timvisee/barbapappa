@@ -82,7 +82,7 @@ class PaymentBunqMeTab extends Model {
      *
      * @var int
      */
-    const COMPLETED_CANCEL_DELAY = 15 * 60;
+    const COMPLETED_CANCEL_DELAY = 10 * 60;
 
     /**
      * An ordered list of steps in this payment.
