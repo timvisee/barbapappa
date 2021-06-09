@@ -964,7 +964,7 @@ return [
      * Kiosk join pages.
      */
     'kioskJoin' => [
-        'title' => 'Gebruiker toevoegen / lid worden',
+        'title' => 'Nieuwe gebruiker / lid worden',
         'joinBar' => 'Lid worden van :bar',
         'description' => 'Nieuwe gebruikers kunnen zichzelf toevoegen aan deze bar door een account te registreren.',
         'scanQr' => 'Scan de QR-code hieronder met je telefoon om te starten:',
