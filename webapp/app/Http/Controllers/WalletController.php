@@ -979,8 +979,8 @@ class WalletController extends Controller {
         // Fetch and build chart data
         $balanceGraphData = self::chartBalanceGraph($wallet, $period_from);
         $productDistData = self::chartProductDist($wallet, $period_from);
-        $buyTimeHourData = self::chartProductBuyTimeHour($wallet, $period_from);
         $buyTimeDayData = self::chartProductBuyTimeDay($wallet, $period_from);
+        $buyTimeHourData = self::chartProductBuyTimeHour($wallet, $period_from);
         $buyHistogramData = self::chartProductBuyHistogram($wallet, $period_from);
 
         // Build smart text
@@ -1032,8 +1032,8 @@ class WalletController extends Controller {
             ->with('uniqueProductCount', $uniqueProductCount)
             ->with('balanceGraphData', $balanceGraphData)
             ->with('productDistData', $productDistData)
-            ->with('buyTimeHourData', $buyTimeHourData)
             ->with('buyTimeDayData', $buyTimeDayData)
+            ->with('buyTimeHourData', $buyTimeHourData)
             ->with('buyHistogramData', $buyHistogramData);
     }
 

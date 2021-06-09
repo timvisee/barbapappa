@@ -313,6 +313,53 @@
             </h3>
 
             <div>
+                <canvas id="chartBuyTimeDay"
+                    height="125"
+                    aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                    role="img"></canvas>
+                <script>
+                    var data = JSON.parse('{!! json_encode($buyTimeDayData) !!}');
+                    data.datasets[0].backgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.5);
+                        };
+                    data.datasets[0].borderColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBackgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBorderColor = function(context) {
+                            return colorWheel(context.dataIndex, 1);
+                        };
+                    var chartBuyTimeDay = new Chart(
+                        document.getElementById('chartBuyTimeDay').getContext('2d'),
+                        {
+                            type: 'bar',
+                            data: data,
+                            options: {
+                                animation: false,
+                                plugins: {
+                                    legend: false,
+                                },
+                                scales: {
+                                    y: {
+                                        ticks: {
+                                            beginAtZero: true,
+                                            precision: 0,
+                                        },
+                                    },
+                                }
+                            }
+                        },
+                    );
+                </script>
+            </div>
+
+            <h3 class="ui horizontal divider header">
+                @lang('pages.walletStats.purchasePerHour')
+            </h3>
+
+            <div>
                 <canvas id="chartBuyTimeHour"
                     height="125"
                     aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
@@ -355,52 +402,6 @@
                 </script>
             </div>
 
-            <h3 class="ui horizontal divider header">
-                @lang('pages.walletStats.purchasePerHour')
-            </h3>
-
-            <div>
-                <canvas id="chartBuyTimeDay"
-                    height="125"
-                    aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-                    role="img"></canvas>
-                <script>
-                    var data = JSON.parse('{!! json_encode($buyTimeDayData) !!}');
-                    data.datasets[0].backgroundColor = function(context) {
-                            return colorWheel(context.dataIndex, 0.5);
-                        };
-                    data.datasets[0].borderColor = function(context) {
-                            return colorWheel(context.dataIndex, 0.8);
-                        };
-                    data.datasets[0].hoverBackgroundColor = function(context) {
-                            return colorWheel(context.dataIndex, 0.8);
-                        };
-                    data.datasets[0].hoverBorderColor = function(context) {
-                            return colorWheel(context.dataIndex, 1);
-                        };
-                    var chartBuyTimeDay = new Chart(
-                        document.getElementById('chartBuyTimeDay').getContext('2d'),
-                        {
-                            type: 'bar',
-                            data: data,
-                            options: {
-                                animation: false,
-                                plugins: {
-                                    legend: false,
-                                },
-                                scales: {
-                                    y: {
-                                        ticks: {
-                                            beginAtZero: true,
-                                            precision: 0,
-                                        },
-                                    },
-                                }
-                            }
-                        },
-                    );
-                </script>
-            </div>
         </div>
 
     </div>
