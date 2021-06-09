@@ -13,6 +13,7 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\Wallet;
 use App\Perms\CommunityRoles;
+use App\Utils\MoneyAmount;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
@@ -925,6 +926,7 @@ class WalletController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->firstOrFail();
         $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $currency = $wallet->currency;
 
         // Select period
         switch($request->query('period')) {
@@ -961,11 +963,6 @@ class WalletController extends Controller {
             ->pluck('transaction.id')
             ->unique()
             ->count();
-        $mutationCount = $wallet
-            ->mutations(false)
-            // ->type(MutationWallet::class)
-            ->where('mutation.created_at', '>=', $period_from)
-            ->count();
         $productMutations = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
@@ -975,6 +972,35 @@ class WalletController extends Controller {
             ->get();
         $productCount = $productMutations->sum('quantity');
         $uniqueProductCount = $productMutations->count();
+
+        // Calcualte income and expenses
+        // TODO: only completed mutations
+        $income = new MoneyAmount($currency, -1 * $wallet
+            ->mutations(false)
+            ->type(MutationWallet::class)
+            ->select('amount')
+            ->where('mutation.created_at', '>=', $period_from)
+            ->where('amount', '<', 0)
+            ->sum('amount'));
+        $expenses = new MoneyAmount($currency, 1 * $wallet
+            ->mutations(false)
+            ->type(MutationWallet::class)
+            ->select('amount')
+            ->where('mutation.created_at', '>=', $period_from)
+            ->where('amount', '>', 0)
+            ->sum('amount'));
+        $paymentIncome = new MoneyAmount($currency, 1 * $wallet
+            ->mutations(false)
+            ->type(MutationPayment::class)
+            ->select('amount')
+            ->where('mutation.created_at', '>=', $period_from)
+            ->sum('amount'));
+        $productExpenses = new MoneyAmount($currency, -1 * $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->select('amount')
+            ->where('mutation.created_at', '>=', $period_from)
+            ->sum('amount'));
 
         // Fetch and build chart data
         $balanceGraphData = self::chartBalanceGraph($wallet, $period_from);
@@ -1027,7 +1053,10 @@ class WalletController extends Controller {
             ->with('periodFrom', $period_from)
             ->with('smartText', $smartText)
             ->with('transactionCount', $transactionCount)
-            ->with('mutationCount', $mutationCount)
+            ->with('expenses', $expenses)
+            ->with('income', $income)
+            ->with('paymentIncome', $paymentIncome)
+            ->with('productExpenses', $productExpenses)
             ->with('productCount', $productCount)
             ->with('uniqueProductCount', $uniqueProductCount)
             ->with('balanceGraphData', $balanceGraphData)
@@ -1156,37 +1185,6 @@ class WalletController extends Controller {
     }
 
     /**
-     * Get data for wallet product hourly buy time.
-     *
-     * @param Wallet $wallet The wallet to get data for.
-     * @return object Product hourly buy time data.
-     */
-    static function chartProductBuyTimeHour(Wallet $wallet, Carbon $period_from) {
-        // Fetch product buy times
-        // TODO: only completed mutations
-        $times = $wallet
-            ->mutations(false)
-            ->type(MutationProduct::class)
-            ->leftJoin('product', 'product.id', 'mutation_product.product_id')
-            ->addSelect(DB::raw('HOUR(mutation.created_at) AS hour'), DB::raw('SUM(quantity) AS quantity'))
-            ->where('mutation.created_at', '>=', $period_from)
-            ->groupBy('hour')
-            ->get();
-
-        // Fetch product distributions, build chart data
-        $data['datasets'][] = [
-            'label' => __('pages.walletStats.typeProductDist.title'),
-            'borderWidth' => 1,
-        ];
-        for($i = 0; $i < 24; $i++) {
-            $data['labels'][] = $i;
-            $data['datasets'][0]['data'][] = $times->firstWhere('hour', $i)->quantity ?? 0;
-        }
-
-        return $data;
-    }
-
-    /**
      * Get data for wallet product daily buy time.
      *
      * @param Wallet $wallet The wallet to get data for.
@@ -1212,6 +1210,37 @@ class WalletController extends Controller {
         for($i = 0; $i < 7; $i++) {
             $data['labels'][] = now()->startOfWeek()->addDays($i)->shortDayName;
             $data['datasets'][0]['data'][] = $times->firstWhere('day', $i)->quantity ?? 0;
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get data for wallet product hourly buy time.
+     *
+     * @param Wallet $wallet The wallet to get data for.
+     * @return object Product hourly buy time data.
+     */
+    static function chartProductBuyTimeHour(Wallet $wallet, Carbon $period_from) {
+        // Fetch product buy times
+        // TODO: only completed mutations
+        $times = $wallet
+            ->mutations(false)
+            ->type(MutationProduct::class)
+            ->leftJoin('product', 'product.id', 'mutation_product.product_id')
+            ->addSelect(DB::raw('HOUR(mutation.created_at) AS hour'), DB::raw('SUM(quantity) AS quantity'))
+            ->where('mutation.created_at', '>=', $period_from)
+            ->groupBy('hour')
+            ->get();
+
+        // Fetch product distributions, build chart data
+        $data['datasets'][] = [
+            'label' => __('pages.walletStats.typeProductDist.title'),
+            'borderWidth' => 1,
+        ];
+        for($i = 0; $i < 24; $i++) {
+            $data['labels'][] = $i;
+            $data['datasets'][0]['data'][] = $times->firstWhere('hour', $i)->quantity ?? 0;
         }
 
         return $data;

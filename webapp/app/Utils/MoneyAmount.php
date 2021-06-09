@@ -58,13 +58,15 @@ class MoneyAmount {
      * Format the amount.
      *
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     * @param array [$options=null] An array of options.
      *
      * @return string Formatted balance
      */
-    public function formatAmount($format = BALANCE_FORMAT_PLAIN) {
-        $prefix = $this->approximate ? '&asymp; ' : '';
+    public function formatAmount($format = BALANCE_FORMAT_PLAIN, $options = []) {
+        $prefix = ($options['prefix'] ?? '') . ($this->approximate ? '&asymp; ' : '');
+        $options['prefix'] = $prefix;
         return $this
             ->currency
-            ->format($this->amount, $format, ['prefix' => $prefix]);
+            ->format($this->amount, $format, $options);
     }
 }

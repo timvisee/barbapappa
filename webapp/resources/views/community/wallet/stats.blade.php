@@ -101,10 +101,31 @@
                     <div class="value">{{ $transactionCount }}</div>
                     <div class="label">@lang('pages.walletStats.transactions')</div>
                 </div>
+            </div>
+
+            <div class="ui hidden divider"></div>
+
+            <div class="ui two small statistics">
                 <div class="statistic">
-                    <div class="value">{{ $mutationCount }}</div>
-                    <div
-                        class="label">@lang('pages.walletStats.mutations')</div>
+                    <div class="value">{!! $income->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.income')</div>
+                </div>
+                <div class="statistic">
+                    <div class="value">{!! $expenses->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.expenses')</div>
+                </div>
+            </div>
+
+            <div class="ui hidden divider"></div>
+
+            <div class="ui two small statistics">
+                <div class="statistic">
+                    <div class="value">{!! $paymentIncome->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.paymentIncome')</div>
+                </div>
+                <div class="statistic">
+                    <div class="value">{!! $productExpenses->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.productExpenses')</div>
                 </div>
             </div>
 
@@ -121,6 +142,7 @@
                         class="label">@lang('pages.walletStats.differentProducts')</div>
                 </div>
             </div>
+
         </div>
 
         {{-- TODO: do not show if no values --}}
