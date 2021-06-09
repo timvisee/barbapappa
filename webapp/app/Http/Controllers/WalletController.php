@@ -921,12 +921,14 @@ class WalletController extends Controller {
      */
     public function stats(Request $request, $communityId, $economyId, $walletId) {
         // Get the user, community, find the economy and wallet
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
-        $wallet = $economy_member->wallets()->findOrFail($walletId);
+        $wallet = $economy->wallets()->findOrFail($walletId);
         $currency = $wallet->currency;
+
+        // User must have permission
+        if(!$wallet->hasViewPermission())
+            return response(view('noPermission'));
 
         // Select period
         switch($request->query('period')) {
