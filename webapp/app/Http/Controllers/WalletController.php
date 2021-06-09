@@ -966,15 +966,15 @@ class WalletController extends Controller {
             // ->type(MutationWallet::class)
             ->where('mutation.created_at', '>=', $period_from)
             ->count();
-        $productCount = $wallet
+        $productMutations = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
             ->groupBy('product_id')
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
             ->where('mutation.created_at', '>=', $period_from)
             ->get();
-        $productsBought = $productCount->sum('quantity');
-        $differentProducts = $productCount->count();
+        $productCount = $productMutations->sum('quantity');
+        $uniqueProductCount = $productMutations->count();
 
         // Fetch and build chart data
         $balanceGraphData = self::chartBalanceGraph($wallet, $period_from);
@@ -997,11 +997,11 @@ class WalletController extends Controller {
                 : __('pages.walletStats.smartText.mainBestDay', [
                         'day' => __('misc.days.' . $bestDay),
                     ]),
-            'products' => trans_choice('pages.walletStats.smartText.productCount', $productsBought),
-            'products-unique' => $differentProducts == 0
+            'products' => trans_choice('pages.walletStats.smartText.productCount', $productCount),
+            'products-unique' => $uniqueProductCount == 0
                 ? ''
                 : __('pages.walletStats.smartText.mainUniqueProducts', [
-                    'unique' => trans_choice('pages.walletStats.smartText.productUniqueCount', $differentProducts),
+                    'unique' => trans_choice('pages.walletStats.smartText.productUniqueCount', $uniqueProductCount),
                 ])
         ]);
 
@@ -1028,8 +1028,8 @@ class WalletController extends Controller {
             ->with('smartText', $smartText)
             ->with('transactionCount', $transactionCount)
             ->with('mutationCount', $mutationCount)
-            ->with('productsBought', $productsBought)
-            ->with('differentProducts', $differentProducts)
+            ->with('productCount', $productCount)
+            ->with('uniqueProductCount', $uniqueProductCount)
             ->with('balanceGraphData', $balanceGraphData)
             ->with('productDistData', $productDistData)
             ->with('buyTimeHourData', $buyTimeHourData)

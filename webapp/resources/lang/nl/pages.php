@@ -595,7 +595,8 @@ return [
         'differentProducts' => 'Unieke producten',
         'balanceHistory' => 'Saldohistorie',
         'purchaseDistribution' => 'Productdistributie',
-        'purchasePerHourDay' => 'Productaankopen per uur/dag',
+        'purchasePerDay' => 'Productaankopen per weekdag (UTC)',
+        'purchasePerHour' => 'Productaankopen per dag uur (UTC)',
         'purchaseHistogram' => 'Productaankoop histogram',
         'noStatsNoTransactions' => 'Geen statistieken om te tonen. Portemonnee heeft nog geen transacties.',
         'period' => [

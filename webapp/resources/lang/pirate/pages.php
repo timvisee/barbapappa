@@ -595,7 +595,8 @@ return [
         'differentProducts' => 'Unique loot',
         'balanceHistory' => 'Balance history',
         'purchaseDistribution' => 'Product distribution',
-        'purchasePerHourDay' => 'Product purchases by hour/day',
+        'purchasePerDay' => 'Product purchases per weekday (UTC)',
+        'purchasePerHour' => 'Product purchases per day hour (UTC)',
         'purchaseHistogram' => 'Product purchase histogram',
         'noStatsNoTransactions' => 'No stats to show. Wallet does not have any transactions.',
         'period' => [

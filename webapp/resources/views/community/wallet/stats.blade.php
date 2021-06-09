@@ -112,11 +112,11 @@
 
             <div class="ui two small statistics">
                 <div class="statistic">
-                    <div class="value">{{ $productsBought }}</div>
+                    <div class="value">{{ $productCount }}</div>
                     <div class="label">@lang('pages.walletStats.products')</div>
                 </div>
                 <div class="statistic">
-                    <div class="value">{{ $differentProducts }}</div>
+                    <div class="value">{{ $uniqueProductCount }}</div>
                     <div
                         class="label">@lang('pages.walletStats.differentProducts')</div>
                 </div>
@@ -309,7 +309,7 @@
         <div class="column">
 
             <h3 class="ui horizontal divider header">
-                @lang('pages.walletStats.purchasePerHourDay')
+                @lang('pages.walletStats.purchasePerDay')
             </h3>
 
             <div>
@@ -353,7 +353,13 @@
                         },
                     );
                 </script>
+            </div>
 
+            <h3 class="ui horizontal divider header">
+                @lang('pages.walletStats.purchasePerHour')
+            </h3>
+
+            <div>
                 <canvas id="chartBuyTimeDay"
                     height="125"
                     aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
