@@ -13,6 +13,11 @@
             <i class="glyphicons glyphicons-shop"></i>
             @lang('misc.kiosk')
         </a>
+        <a href="{{ route('kiosk.join') }}"
+                class="item {{ Route::currentRouteName() == 'kiosk.join' ? ' active' : '' }}">
+            <i class="glyphicons glyphicons-user-add"></i>
+            @lang('pages.kioskJoin.title')
+        </a>
     @elseif(barauth()->isAuth())
         <div class="item header has-alt-button">
             {{ trans_random('general.hellos') }}

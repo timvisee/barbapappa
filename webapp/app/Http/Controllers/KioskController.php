@@ -62,6 +62,27 @@ class KioskController extends Controller {
     }
 
     /**
+     * Kiosk join page.
+     *
+     * @return Response
+     */
+    public function join() {
+        // Get the bar and session user
+        $bar = kioskauth()->getBar();
+
+        // Build QR-code URL
+        $qrData = ['barId' => $bar->human_id];
+        if($bar->password != null)
+            $qrData['code'] = $bar->password;
+        $qrUrl = route('bar.join', $qrData);
+
+        // Show the kiosk join page
+        return view('kiosk.join')
+            ->with('bar', $bar)
+            ->with('qr_url', $qrUrl);
+    }
+
+    /**
      * API route for listing economy members in this bar.
      *
      * @return Response
