@@ -13,6 +13,10 @@
             text-align: center;
         }
 
+        .center {
+            text-align: center;
+        }
+
         .bigger {
             font-size: 1.28571429rem;
             text-align: center;
@@ -26,11 +30,11 @@
 
 @section('content')
 
-    <div style="text-align: center;">
-    <a href="{{ route('kiosk.main') }}"
-                class="ui big basic button center aligned">
-        @lang('pages.kiosk.backToKiosk')
-    </a>
+    <div class="center">
+        <a href="{{ route('kiosk.main') }}"
+                    class="ui big basic button center aligned">
+            @lang('pages.kiosk.backToKiosk')
+        </a>
     </div>
 
     <h2 class="ui header center aligned">@yield('title')</h2>
