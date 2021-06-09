@@ -111,8 +111,8 @@
                     <div class="label">@lang('pages.walletStats.income')</div>
                 </div>
                 <div class="statistic">
-                    <div class="value">{!! $expenses->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
-                    <div class="label">@lang('pages.walletStats.expenses')</div>
+                    <div class="value">{!! $paymentIncome->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.paymentIncome')</div>
                 </div>
             </div>
 
@@ -120,8 +120,8 @@
 
             <div class="ui two small statistics">
                 <div class="statistic">
-                    <div class="value">{!! $paymentIncome->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
-                    <div class="label">@lang('pages.walletStats.paymentIncome')</div>
+                    <div class="value">{!! $expenses->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.expenses')</div>
                 </div>
                 <div class="statistic">
                     <div class="value">{!! $productExpenses->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
