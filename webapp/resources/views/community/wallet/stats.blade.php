@@ -101,10 +101,18 @@
                     <div class="value">{{ $transactionCount }}</div>
                     <div class="label">@lang('pages.walletStats.transactions')</div>
                 </div>
+            </div>
+
+            <div class="ui hidden divider"></div>
+
+            <div class="ui two small statistics">
                 <div class="statistic">
-                    <div class="value">{{ $mutationCount }}</div>
-                    <div
-                        class="label">@lang('pages.walletStats.mutations')</div>
+                    <div class="value">{!! $income->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.income')</div>
+                </div>
+                <div class="statistic">
+                    <div class="value">{!! $paymentIncome->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.paymentIncome')</div>
                 </div>
             </div>
 
@@ -112,15 +120,29 @@
 
             <div class="ui two small statistics">
                 <div class="statistic">
-                    <div class="value">{{ $productsBought }}</div>
+                    <div class="value">{!! $expenses->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.expenses')</div>
+                </div>
+                <div class="statistic">
+                    <div class="value">{!! $productExpenses->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => true]) !!}</div>
+                    <div class="label">@lang('pages.walletStats.productExpenses')</div>
+                </div>
+            </div>
+
+            <div class="ui hidden divider"></div>
+
+            <div class="ui two small statistics">
+                <div class="statistic">
+                    <div class="value">{{ $productCount }}</div>
                     <div class="label">@lang('pages.walletStats.products')</div>
                 </div>
                 <div class="statistic">
-                    <div class="value">{{ $differentProducts }}</div>
+                    <div class="value">{{ $uniqueProductCount }}</div>
                     <div
                         class="label">@lang('pages.walletStats.differentProducts')</div>
                 </div>
             </div>
+
         </div>
 
         {{-- TODO: do not show if no values --}}
@@ -309,7 +331,54 @@
         <div class="column">
 
             <h3 class="ui horizontal divider header">
-                @lang('pages.walletStats.purchasePerHourDay')
+                @lang('pages.walletStats.purchasePerDay')
+            </h3>
+
+            <div>
+                <canvas id="chartBuyTimeDay"
+                    height="125"
+                    aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
+                    role="img"></canvas>
+                <script>
+                    var data = JSON.parse('{!! json_encode($buyTimeDayData) !!}');
+                    data.datasets[0].backgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.5);
+                        };
+                    data.datasets[0].borderColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBackgroundColor = function(context) {
+                            return colorWheel(context.dataIndex, 0.8);
+                        };
+                    data.datasets[0].hoverBorderColor = function(context) {
+                            return colorWheel(context.dataIndex, 1);
+                        };
+                    var chartBuyTimeDay = new Chart(
+                        document.getElementById('chartBuyTimeDay').getContext('2d'),
+                        {
+                            type: 'bar',
+                            data: data,
+                            options: {
+                                animation: false,
+                                plugins: {
+                                    legend: false,
+                                },
+                                scales: {
+                                    y: {
+                                        ticks: {
+                                            beginAtZero: true,
+                                            precision: 0,
+                                        },
+                                    },
+                                }
+                            }
+                        },
+                    );
+                </script>
+            </div>
+
+            <h3 class="ui horizontal divider header">
+                @lang('pages.walletStats.purchasePerHour')
             </h3>
 
             <div>
@@ -353,48 +422,8 @@
                         },
                     );
                 </script>
-
-                <canvas id="chartBuyTimeDay"
-                    height="125"
-                    aria-label="@lang('pages.walletStats.typeProductDist.chartName')"
-                    role="img"></canvas>
-                <script>
-                    var data = JSON.parse('{!! json_encode($buyTimeDayData) !!}');
-                    data.datasets[0].backgroundColor = function(context) {
-                            return colorWheel(context.dataIndex, 0.5);
-                        };
-                    data.datasets[0].borderColor = function(context) {
-                            return colorWheel(context.dataIndex, 0.8);
-                        };
-                    data.datasets[0].hoverBackgroundColor = function(context) {
-                            return colorWheel(context.dataIndex, 0.8);
-                        };
-                    data.datasets[0].hoverBorderColor = function(context) {
-                            return colorWheel(context.dataIndex, 1);
-                        };
-                    var chartBuyTimeDay = new Chart(
-                        document.getElementById('chartBuyTimeDay').getContext('2d'),
-                        {
-                            type: 'bar',
-                            data: data,
-                            options: {
-                                animation: false,
-                                plugins: {
-                                    legend: false,
-                                },
-                                scales: {
-                                    y: {
-                                        ticks: {
-                                            beginAtZero: true,
-                                            precision: 0,
-                                        },
-                                    },
-                                }
-                            }
-                        },
-                    );
-                </script>
             </div>
+
         </div>
 
     </div>
