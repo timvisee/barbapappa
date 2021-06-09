@@ -117,7 +117,7 @@
                                 time: {
                                     tooltipFormat: 'll',
                                     unit: 'day',
-                                    unitStepSize: 1,
+                                    stepSize: 1,
                                     displayFormats: {
                                         day: 'll'
                                     },

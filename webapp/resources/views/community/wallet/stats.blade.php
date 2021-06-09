@@ -189,7 +189,7 @@
                                         time: {
                                             tooltipFormat: 'll',
                                             unit: 'day',
-                                            unitStepSize: 1,
+                                            stepSize: 1,
                                             displayFormats: {
                                                 day: 'll'
                                             },
@@ -258,7 +258,7 @@
                                             parser: 'YYYY-MM-DD',
                                             tooltipFormat: 'll',
                                             unit: 'day',
-                                            unitStepSize: 1,
+                                            stepSize: 1,
                                             displayFormats: {
                                                 day: 'll'
                                             }
