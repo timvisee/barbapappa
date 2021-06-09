@@ -25,6 +25,14 @@
 @endpush
 
 @section('content')
+
+    <div style="text-align: center;">
+    <a href="{{ route('kiosk.main') }}"
+                class="ui big basic button center aligned">
+        @lang('pages.kiosk.backToKiosk')
+    </a>
+    </div>
+
     <h2 class="ui header center aligned">@yield('title')</h2>
 
     <div class="bigger center aligned">
@@ -64,13 +72,6 @@
                 @endif
             </tbody>
         </table>
-
-        <div class="ui hidden divider"></div>
-
-        <a href="{{ route('kiosk.main') }}"
-                 class="ui big basic button">
-            @lang('pages.kiosk.backToKiosk')
-        </a>
 
     </div>
 
