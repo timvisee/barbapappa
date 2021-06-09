@@ -684,8 +684,9 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
 
 // Kiosk routes
 Route::prefix('/kiosk')->middleware('kiosk')->group(function() {
-    // Main kiosk page
+    // Kiosk pages
     Route::get('/', 'KioskController@main')->name('kiosk.main');
+    Route::get('/join', 'KioskController@join')->name('kiosk.join');
 
     // API calls
     Route::prefix('/api')->group(function() {

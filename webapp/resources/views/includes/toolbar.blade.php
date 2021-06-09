@@ -18,7 +18,10 @@
     </h1>
 
     <div class="right">
-        @if(!kioskauth()->isAuth())
+        @if(kioskauth()->isAuth())
+            <a href="{{ route('kiosk.join') }}" class="glyphicons glyphicons-user-add"></a>
+            <a href="{{ route('kiosk.main') }}" class="glyphicons glyphicons-shop"></a>
+        @elseif(barauth()->isAuth())
             @if(isset($notificationCounts) && $notificationCounts['unread'] > 0)
                 <a href="#"
                         class="ui red circular tiny label sidebar-toggle"
@@ -37,7 +40,8 @@
                     data-sidebar="messages"></a>
             @endif
         @else
-            <a href="{{ route('kiosk.main') }}" class="glyphicons glyphicons-shop"></a>
+            <a href="{{ route('login') }}"
+                class="glyphicons glyphicons-user-key"></a>
         @endif
     </div>
 

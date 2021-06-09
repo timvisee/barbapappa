@@ -876,6 +876,7 @@ return [
         'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
         'buyProductsUsers#' => '{0} Buy no products for :users users|[1,*] Buy :count× for :users users',
         'deselect' => 'Deselect',
+        'backToKiosk' => 'Back to kiosk',
     ],
 
     /**
@@ -957,6 +958,17 @@ return [
         'expired' => 'The token has expired. Please request a new password reset.',
         'used' => 'Your password has already been changed using this token.',
         'changed' => 'As good as new! Your password has been changed.',
+    ],
+
+    /**
+     * Kiosk join pages.
+     */
+    'kioskJoin' => [
+        'title' => 'Add user / join',
+        'joinBar' => 'Join :bar',
+        'description' => 'New users can add themselves to this bar by registering an account.',
+        'scanQr' => 'Scan the QR-code below with your phone to start:',
+        'orUrl' => 'Or visit the following link in your browser:',
     ],
 
     /**
