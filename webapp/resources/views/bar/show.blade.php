@@ -13,7 +13,6 @@
 
 @php
     use \App\Http\Controllers\BarController;
-    use \App\Http\Controllers\BarMemberController;
 
     // Define menulinks
     $menulinks[] = [

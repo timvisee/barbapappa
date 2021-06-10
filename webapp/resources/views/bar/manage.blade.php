@@ -178,6 +178,13 @@
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.extras')</h5>
         @if(perms(BarController::permsManage()))
+            <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}" class="item">
+                @lang('pages.bar.purchaseHistory')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.bar.purchaseHistory')</div>
+        @endif
+        @if(perms(BarController::permsManage()))
             <a href="{{ route('bar.links', ['barId' => $bar->human_id]) }}" class="item">
                 @lang('pages.bar.links.title')
             </a>

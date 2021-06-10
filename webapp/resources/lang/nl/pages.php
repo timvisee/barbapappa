@@ -596,7 +596,7 @@ return [
         'productExpenses' => 'Productuitgaven',
         'products' => 'Producten',
         'differentProducts' => 'Unieke producten',
-        'balanceHistory' => 'Saldohistorie',
+        'balanceHistory' => 'Saldogeschiedenis',
         'purchaseDistribution' => 'Productdistributie',
         'purchasePerDay' => 'Productaankopen per weekdag (UTC)',
         'purchasePerHour' => 'Productaankopen per dag uur (UTC)',
@@ -824,6 +824,9 @@ return [
         'showCodeOnPoster' => 'Toon code om lid te worden op de poster',
         'lowBalanceText' => 'Negatief saldo tekst',
         'lowBalanceTextPlaceholder' => 'Je hebt op dit moment een negatief saldo. Waardeer je saldo alsjeblieft op voordat je nieuwe producten koopt.',
+        'purchaseHistory' => 'Aankoopgeschiedenis',
+        'purchaseHistoryDescription' => 'Deze pagina toont een geschiedenis van alle productaankopen in deze bar.',
+        'noPurchases' => 'Geen aankopen',
         'poster' => [
             'thisBarUses' => 'Deze bar gebruikt',
             'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties:',

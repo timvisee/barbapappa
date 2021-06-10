@@ -824,6 +824,9 @@ return [
         'showCodeOnPoster' => 'Show code to join this bar on the poster',
         'lowBalanceText' => 'Negative balance text',
         'lowBalanceTextPlaceholder' => 'You currently have a negative balance. Please top-up your wallet now before buying new products.',
+        'purchaseHistory' => 'Purchase history',
+        'purchaseHistoryDescription' => 'This page shows a history of all purchased products in this bar.',
+        'noPurchases' => 'No purchases',
         'poster' => [
             'thisBarUses' => 'This bar uses',
             'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',
