@@ -11,6 +11,18 @@
     <script type="text/javascript" src="{{ mix('js/widget/kioskbuy.js') }}" async></script>
 @endpush
 
+@push('styles')
+    <style>
+        /* TODO: a hack to center toolbar logo, fix this */
+        .toolbar-logo {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+@endpush
+
 @section('content')
     <div id="kioskbuy">
         <div v-if="refreshing" class="ui active centered large text loader">

@@ -25,6 +25,14 @@
         .bigger table {
             margin: auto !important;
         }
+
+        /* TODO: a hack to center toolbar logo, fix this */
+        .toolbar-logo {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 @endpush
 

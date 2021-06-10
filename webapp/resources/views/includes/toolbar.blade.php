@@ -12,7 +12,7 @@
             $homeRouteName = __('pages.' . (barauth()->isAuth() ?  'dashboard' : 'index') . '.title');
         @endphp
 
-        <a href="{{ route($homeRoute) }}" title="{{ $homeRouteName }}">
+        <a href="{{ route($homeRoute) }}" title="{{ $homeRouteName }}" class="toolbar-logo">
             {{ logo()->element(false, false) }}
         </a>
     </h1>
