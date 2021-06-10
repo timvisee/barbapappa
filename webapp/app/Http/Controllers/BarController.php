@@ -126,7 +126,8 @@ class BarController extends Controller {
             $products = $bar->economy->quickBuyProducts($currency_ids);
 
         // List the last product mutations
-        $productMutations = $bar->productMutations()
+        $productMutations = $bar
+            ->productMutations()
             ->latest()
             ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
             ->limit(5)

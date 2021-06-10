@@ -62,6 +62,28 @@ class KioskController extends Controller {
     }
 
     /**
+     * Kiosk history page.
+     *
+     * @return Response
+     */
+    public function history() {
+        // Get the bar and session user
+        $bar = kioskauth()->getBar();
+
+        // List the last product mutations
+        $productMutations = $bar
+            ->productMutations()
+            ->latest()
+            ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
+            ->get();
+
+        // Show the kiosk join page
+        return view('kiosk.history')
+            ->with('bar', $bar)
+            ->with('productMutations', $productMutations);
+    }
+
+    /**
      * Kiosk join page.
      *
      * @return Response
