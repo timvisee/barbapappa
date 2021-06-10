@@ -139,7 +139,7 @@
                 <div class="statistic">
                     <div class="value">{{ $uniqueProductCount }}</div>
                     <div
-                        class="label">@lang('pages.walletStats.differentProducts')</div>
+                        class="label">@lang('pages.walletStats.uniqueProducts')</div>
                 </div>
             </div>
 

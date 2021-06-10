@@ -595,7 +595,7 @@ return [
         'paymentIncome' => 'Betalingsinkomsten',
         'productExpenses' => 'Productuitgaven',
         'products' => 'Producten',
-        'differentProducts' => 'Unieke producten',
+        'uniqueProducts' => 'Unieke producten',
         'balanceHistory' => 'Saldogeschiedenis',
         'purchaseDistribution' => 'Productdistributie',
         'purchasePerDay' => 'Productaankopen per weekdag (UTC)',

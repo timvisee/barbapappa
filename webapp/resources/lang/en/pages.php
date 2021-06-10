@@ -595,7 +595,7 @@ return [
         'paymentIncome' => 'Payment income',
         'productExpenses' => 'Product spendings',
         'products' => 'Products',
-        'differentProducts' => 'Different products',
+        'uniqueProducts' => 'Unique products',
         'balanceHistory' => 'Balance history',
         'purchaseDistribution' => 'Product distribution',
         'purchasePerDay' => 'Product purchases per weekday (UTC)',
