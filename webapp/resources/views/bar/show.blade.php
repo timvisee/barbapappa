@@ -13,7 +13,6 @@
 
 @php
     use \App\Http\Controllers\BarController;
-    use \App\Http\Controllers\BarMemberController;
 
     // Define menulinks
     $menulinks[] = [
@@ -161,6 +160,13 @@
                     </div>
                 @endif
             @endforeach
+
+            @if(perms(BarController::permsManage()))
+                <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                        class="ui bottom attached button">
+                    @lang('misc.more')...
+                </a>
+            @endif
         </div>
     @endif
 @endsection

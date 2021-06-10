@@ -513,6 +513,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             // Index
             Route::get('/', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
+            // History
+            Route::get('/history', 'BarController@history')->name('bar.history');
+
             // Useful links
             Route::get('/links', 'BarController@links')->name('bar.links');
 

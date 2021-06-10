@@ -129,7 +129,8 @@ class BarController extends Controller {
         $productMutations = $bar->productMutations()
             ->latest()
             ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
-            ->limit(5);
+            ->limit(5)
+            ->get();
 
         // Show the bar page
         return view('bar.show')
@@ -139,7 +140,7 @@ class BarController extends Controller {
             ->with('userBalance', $bar->economy->calcUserBalance())
             ->with('products', $products)
             ->with('currencies', $currencies)
-            ->with('productMutations', $productMutations->get());
+            ->with('productMutations', $productMutations);
     }
 
     /**
@@ -210,6 +211,26 @@ class BarController extends Controller {
             ->with('soldProductCountHour', $soldProductCountHour)
             ->with('soldProductCountDay', $soldProductCountDay)
             ->with('soldProductCountMonth', $soldProductCountMonth);
+    }
+
+    /**
+     * Bar history page.
+     *
+     * @return Response
+     */
+    public function history($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+
+        // List the last product mutations
+        $productMutations = $bar
+            ->productMutations()
+            ->latest()
+            ->paginate(25);
+
+        // Show the bar page
+        return view('bar.history')
+            ->with('productMutations', $productMutations);
     }
 
     /**
