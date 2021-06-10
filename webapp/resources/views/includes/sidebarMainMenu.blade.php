@@ -13,6 +13,11 @@
             <i class="glyphicons glyphicons-shop"></i>
             @lang('misc.kiosk')
         </a>
+        <a href="{{ route('kiosk.history') }}"
+                class="item {{ Route::currentRouteName() == 'kiosk.history' ? ' active' : '' }}">
+            <i class="glyphicons glyphicons-history"></i>
+            @lang('pages.bar.purchaseHistory')
+        </a>
         <a href="{{ route('kiosk.join') }}"
                 class="item {{ Route::currentRouteName() == 'kiosk.join' ? ' active' : '' }}">
             <i class="glyphicons glyphicons-user-add"></i>
