@@ -243,8 +243,7 @@ class WalletController extends Controller {
                 ->with('error', __('pages.wallets.cannotDeleteNonZeroBalance', ['zero' => $zero]));
         }
 
-        // TODO: ensure there are no other constraints that prevent deleting the
-        // wallet
+        // TODO: ensure there are no other constraints that prevent deleting the wallet
 
         return view('community.wallet.delete')
             ->with('economy', $economy)
@@ -269,8 +268,7 @@ class WalletController extends Controller {
         if(!$wallet->hasManagePermission())
             return response(view('noPermission'));
 
-        // TODO: ensure there are no other constraints that prevent deleting the
-        // wallet
+        // TODO: ensure there are no other constraints that prevent deleting the wallet
 
         // Delete the wallet
         $wallet->delete();
@@ -957,9 +955,9 @@ class WalletController extends Controller {
                 ->with('info', __('pages.walletStats.noStatsNoTransactions'));
 
         // Fetch some stats
-        // TODO: only completed mutations
         $transactionCount = $wallet
             ->mutations(false)
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
             ->where('mutation.created_at', '>=', $period_from)
             ->select('transaction.id')
             ->pluck('transaction.id')
@@ -968,19 +966,20 @@ class WalletController extends Controller {
         $productMutations = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
+            ->where('mutation.created_at', '>=', $period_from)
             ->groupBy('product_id')
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
-            ->where('mutation.created_at', '>=', $period_from)
             ->get();
         $productCount = $productMutations->sum('quantity');
         $uniqueProductCount = $productMutations->count();
 
         // Calcualte income and expenses
-        // TODO: only completed mutations
         $income = new MoneyAmount($currency, -1 * $wallet
             ->mutations(false)
             ->type(MutationWallet::class)
             ->select('amount')
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
             ->where('mutation.created_at', '>=', $period_from)
             ->where('amount', '<', 0)
             ->sum('amount'));
@@ -988,6 +987,7 @@ class WalletController extends Controller {
             ->mutations(false)
             ->type(MutationWallet::class)
             ->select('amount')
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
             ->where('mutation.created_at', '>=', $period_from)
             ->where('amount', '>', 0)
             ->sum('amount'));
@@ -995,12 +995,14 @@ class WalletController extends Controller {
             ->mutations(false)
             ->type(MutationPayment::class)
             ->select('amount')
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
             ->where('mutation.created_at', '>=', $period_from)
             ->sum('amount'));
         $productExpenses = new MoneyAmount($currency, -1 * $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
             ->select('amount')
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
             ->where('mutation.created_at', '>=', $period_from)
             ->sum('amount'));
 
@@ -1086,13 +1088,11 @@ class WalletController extends Controller {
         // Get wallet mutations grouped by day
         $mutations = $wallet
             ->lastTransactions($full_period ? null : 100)
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
             ->where('mutation.created_at', '>=', $from_date)
             ->addSelect('*')
             ->addSelect(DB::raw('CAST(mutation.created_at AS DATE) AS day'))
             ->get()
-            ->filter(function($t) {
-                return $t->state == Transaction::STATE_SUCCESS;
-            })
             ->groupBy('day');
         if($mutations->isEmpty())
             return null;
@@ -1148,14 +1148,14 @@ class WalletController extends Controller {
         $limit = 10;
 
         // Fetch product distributions
-        // TODO: only completed mutations
         $dist = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
+            ->where('mutation.created_at', '>=', $period_from)
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
             ->groupBy('product_id')
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
-            ->where('mutation.created_at', '>=', $period_from)
             ->orderBy('quantity', 'DESC')
             ->get();
         $products = Product::whereIn(
@@ -1194,13 +1194,13 @@ class WalletController extends Controller {
      */
     static function chartProductBuyTimeDay(Wallet $wallet, Carbon $period_from) {
         // Fetch product buy times
-        // TODO: only completed mutations
         $times = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
+            ->where('mutation.created_at', '>=', $period_from)
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
             ->addSelect(DB::raw('DAYOFWEEK(mutation.created_at) - 2 AS day'), DB::raw('SUM(quantity) AS quantity'))
-            ->where('mutation.created_at', '>=', $period_from)
             ->groupBy('day')
             ->get();
 
@@ -1225,13 +1225,13 @@ class WalletController extends Controller {
      */
     static function chartProductBuyTimeHour(Wallet $wallet, Carbon $period_from) {
         // Fetch product buy times
-        // TODO: only completed mutations
         $times = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
+            ->where('mutation.created_at', '>=', $period_from)
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
             ->addSelect(DB::raw('HOUR(mutation.created_at) AS hour'), DB::raw('SUM(quantity) AS quantity'))
-            ->where('mutation.created_at', '>=', $period_from)
             ->groupBy('hour')
             ->get();
 
@@ -1256,15 +1256,15 @@ class WalletController extends Controller {
      */
     static function chartProductBuyHistogram(Wallet $wallet, Carbon $period_from) {
         // Fetch product buy times
-        // TODO: only completed mutations
         $times = $wallet
             ->mutations(false)
             ->type(MutationProduct::class)
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
+            ->where('mutation.created_at', '>=', $period_from)
             ->leftJoin('product', 'product.id', 'mutation_product.product_id')
             ->addSelect(DB::raw('CAST(mutation.created_at AS DATE) AS day'), DB::raw('SUM(quantity) AS quantity'))
             ->groupBy('day')
             ->orderBy('mutation.created_at')
-            ->where('mutation.created_at', '>=', $period_from)
             ->get();
 
         // Set labels and values data
