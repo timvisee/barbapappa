@@ -47,7 +47,7 @@
 
             </a>
         @empty
-            <i class="item">@lang('pages.bar.noPurchases')</i>
+            <i class="item">@lang('pages.bar.noPurchases')...</i>
         @endforelse
     </div>
 
