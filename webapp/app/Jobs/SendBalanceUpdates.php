@@ -31,7 +31,7 @@ class SendBalanceUpdates implements ShouldQueue {
     const UPDATE_INTERVAL = 60 * 60 * 24 * 30;
 
     /**
-     * Time in seconds for the first updat eemail to be send to each user.
+     * Time in seconds for the first update email to be send to each user.
      */
     const UPDATE_FIRST_DELAY = 60 * 60 * 24 * 3;
 
@@ -92,7 +92,10 @@ class SendBalanceUpdates implements ShouldQueue {
                     ->from('email_history')
                     ->whereRaw('email_history.user_id = user.id')
                     ->whereNotNull('last_at')
-                    ->where('last_at', '>=', now()->subSeconds(Self::UPDATE_INTERVAL - Self::UPDATE_INTERVAL_PLAY));
+                    ->where('last_at', '>=', now()
+                            ->subSeconds(Self::UPDATE_INTERVAL)
+                            ->subSeconds(Self::UPDATE_INTERVAL_PLAY)
+                    );
             })
             ->get();
 
@@ -105,11 +108,16 @@ class SendBalanceUpdates implements ShouldQueue {
                     ->first();
 
                 // Create new entry if non existant
+                // This sets a new last email time to one month back, adding the
+                // first update delay. This ensures that the user is now
+                // properly tracked for balance update emails.
                 if($email_history == null) {
                     $email_history = new EmailHistory();
                     $email_history->user_id = $user->id;
                     $email_history->type = EmailHistory::TYPE_BALANCE_UPDATE;
-                    $email_history->last_at = now()->subSeconds(Self::UPDATE_INTERVAL)->addSeconds(Self::UPDATE_FIRST_DELAY);
+                    $email_history->last_at = now()
+                            ->subSeconds(Self::UPDATE_INTERVAL)
+                            ->addSeconds(Self::UPDATE_FIRST_DELAY);
                     $email_history->save();
                     return;
                 }
