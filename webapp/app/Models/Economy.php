@@ -442,9 +442,9 @@ class Economy extends Model {
      *      returned products must have a price configured in in at least one of
      *      them.
      *
-     * @return array An array of product models that were found.
+     * @return object An array of product models that were found.
      */
-    function selectTopProducts($mutation_ids = null, $exclude_product_ids = null, $limit = 0, $currency_ids = null) {
+    static function selectTopProducts($mutation_ids = null, $exclude_product_ids = null, $limit = 0, $currency_ids = null) {
         // Return nothing if limit is zero
         if($limit <= 0)
             return collect();
@@ -495,54 +495,50 @@ class Economy extends Model {
      * This method does not have any preference for quantity, and just returns
      * distinct products in order putting the last ordered first.
      *
-     * @param array $mutation_ids A list of IDs of mutations to search in.
-     * @param array $exclude_product_ids A list of product IDs to exclude from
+     * @param object|array $mutation_ids A list of IDs of mutations to search in.
+     * @param object|array $exclude_product_ids A list of product IDs to exclude from
      *      the search.
      * @param int $limit The maximum number of products to return.
-     * @param [int]|null $currency_ids A list of Currency IDs returned
+     * @param array(int)|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
      *
-     * @return array An array of product models that were found.
+     * @return object An array of product models that were found.
      */
-    function selectLastProducts($mutation_ids, $exclude_product_ids, $limit, $currency_ids) {
+    static function selectLastProducts($mutation_ids, $exclude_product_ids, $limit, $currency_ids) {
         // Return nothing if limit is zero
         if($limit <= 0)
             return collect();
 
-        // TODO: use join to limit economy instead
+        // Prepare parameters
+        $mutation_ids = collect($mutation_ids);
+        $exclude_product_ids = collect($exclude_product_ids);
 
-        // Build a sub query for selecting the last 100 product mutations
-        $product_ids = MutationProduct::select('product_id')
-            ->distinct();
-        if($mutation_ids != null)
-            $product_ids = $product_ids
-                ->whereExists(function($query) use($mutation_ids) {
-                    $query->selectRaw('1')
-                        ->from('mutation')
-                        ->whereRaw('mutation.mutationable_id = mutation_product.id')
-                        ->whereIn('mutation.id', $mutation_ids);
-                });
-        if($exclude_product_ids != null)
-            $product_ids = $product_ids->whereNotIn('product_id', $exclude_product_ids);
-        $product_ids = $product_ids
-            ->latest()
-            ->limit($limit)
-            ->get()
-            ->pluck('product_id');
+        // Take list of product IDs from mutations ordered by latest
+        $mutations = Mutation::with('mutationable')->findMany($mutation_ids);
+        $product_ids = $mutation_ids
+            ->map(function($id) use($mutations) {
+                $mutation = $mutations->firstWhere('id', $id);
+                // TODO: ensure mutationable isn't causing extra queries
+                return $mutation != null && $mutation->mutationable != null
+                    ? $mutation->mutationable->product_id
+                    : null;
+            })
+            ->filter(function($product_id) use($exclude_product_ids) {
+                return $product_id != null
+                    && !$exclude_product_ids->contains($product_id);
+            })
+            ->unique();
 
-        // Find all corresponding products that have a price in allowed currency
-        $products = Product::whereIn('id', $product_ids)
-            ->havingCurrency($currency_ids)
-            ->get();
-
-        // Rebuild the list of products in order, based on ID list order
+        // Build list of products, take limit
+        $products = Product::havingCurrency($currency_ids)->findMany($product_ids);
         return $product_ids
             ->map(function($id) use($products) {
                 return $products->firstWhere('id', $id);
             })
-            ->filter(function($p) {
-                return $p != null;
-            });
+            ->filter(function($product) {
+                return $product != null;
+            })
+            ->take($limit);
     }
 
     /**
@@ -554,7 +550,7 @@ class Economy extends Model {
      * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
      *
-     * @return array A list of products.
+     * @return object A list of products.
      */
     public function quickBuyProducts($currency_ids) {
         // Get the last 100 product mutation IDs for the current user
@@ -569,20 +565,20 @@ class Economy extends Model {
             ->pluck('id');
 
         // Get top 5 user bought products in last 100 mutations
-        $products = $this->selectTopProducts(
+        $products = self::selectTopProducts(
             $mutation_ids,
             null,
             Self::QUICK_BUY_TOP_LIMIT,
-            $currency_ids
+            $currency_ids,
         );
 
         // Add products last bought by user not in list already to total of 8
-        $products = $products->merge(
-            $this->selectLastProducts(
+        $products = $products->concat(
+            self::selectLastProducts(
                 $mutation_ids,
                 $products->pluck('id'),
                 Self::QUICK_BUY_TOTAL_LIMIT - $products->count(),
-                $currency_ids
+                $currency_ids,
             )
         );
 
@@ -599,12 +595,12 @@ class Economy extends Model {
                 ->pluck('id');
 
             // Add top products by any user in last 100 mutations not already in list to total of 8
-            $products = $products->merge(
-                $this->selectTopProducts(
+            $products = $products->concat(
+                self::selectTopProducts(
                     $mutation_ids,
                     $products->pluck('id'),
                     Self::QUICK_BUY_TOTAL_LIMIT - $products->count(),
-                    $currency_ids
+                    $currency_ids,
                 )
             );
         }
@@ -612,12 +608,12 @@ class Economy extends Model {
         // Fill with random products
         if($products->count() < Self::QUICK_BUY_TOTAL_LIMIT) {
             // Add top products by any user in last 100 mutations not already in list to total of 8
-            $products = $products->merge(
+            $products = $products->concat(
                 $this->products()
                     ->havingCurrency($currency_ids)
                     ->whereNotIn('id', $products->pluck('id'))
-                    ->limit(8 - $products->count())
-                    ->get()
+                    ->limit(Self::QUICK_BUY_TOTAL_LIMIT - $products->count())
+                    ->get(),
             );
         }
 
@@ -633,7 +629,7 @@ class Economy extends Model {
      * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
      *
-     * @return array A list of products matching the query.
+     * @return object A list of products matching the query.
      */
     public function searchProducts($search = null, $currency_ids) {
         // Get a relation to the products we should search
@@ -677,7 +673,7 @@ class Economy extends Model {
      *
      * See `canDelete()` as well.
      *
-     * @return array List of entities that block community deletion.
+     * @return object List of entities that block community deletion.
      */
     public function getDeleteBlockers() {
         return $this
