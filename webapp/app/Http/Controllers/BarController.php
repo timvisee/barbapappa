@@ -24,6 +24,11 @@ class BarController extends Controller {
     use HasFactory;
 
     /**
+     * The limit for advanced buy products to show.
+     */
+    const ADVANCED_BUY_PRODUCT_LIMIT = 8;
+
+    /**
      * Bar creation page.
      *
      * @return Response
@@ -508,7 +513,7 @@ class BarController extends Controller {
         if(!empty($search))
             $products = $bar->economy->searchProducts($search, $currency_ids);
         else
-            $products = $bar->economy->quickBuyProducts($currency_ids);
+            $products = $bar->economy->quickBuyProducts($currency_ids, Self::ADVANCED_BUY_PRODUCT_LIMIT);
 
         // Add formatted price fields
         $products = $products->map(function($product) use($currencies) {
