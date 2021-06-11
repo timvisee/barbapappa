@@ -83,7 +83,7 @@
 
                     </div>
 
-                    <span class="ui blue label">
+                    <span class="ui label">
                         @lang('misc.to')
                         {!! $currency->format($wallet->balance + $amount) !!}
                     </span>
