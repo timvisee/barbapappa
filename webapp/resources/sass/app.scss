@@ -247,6 +247,13 @@ ul.ui-listview.center > li > a.ui-btn {
     line-height: normal;
 }
 
+// Inline field in checkbox list (for custom amount field on payment page)
+.checkbox-list-inline-field {
+    display: inline-block !important;
+    margin-left: 0.25em !important;
+    width: 7em !important;
+}
+
 // Pirate easter-egg in sidebar
 .pirate {
     position: sticky;
