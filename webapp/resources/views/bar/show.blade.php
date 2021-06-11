@@ -71,7 +71,7 @@
     </div>
 
     {{-- Quick buy list --}}
-    <div id="quickbuy" class="ui vertical menu fluid">
+    <div id="quickbuy" class="ui large vertical menu fluid">
         {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
             <div class="item">
                 <div class="ui transparent icon input">
@@ -102,16 +102,14 @@
         @endforelse
 
         <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
-                class="ui bottom attached button">
+                class="ui large bottom attached button">
             @lang('pages.products.all')...
         </a>
     </div>
 
-    <div class="ui divider hidden"></div>
-
     {{-- Recently bought products list --}}
     @if($productMutations->isNotEmpty())
-        <div class="ui top vertical menu fluid">
+        <div class="ui large top vertical menu fluid">
             <h5 class="ui item header">
                 {{ trans_choice('pages.products.recentlyBoughtProducts#', $productMutations->sum('quantity')) }}
             </h5>
@@ -163,7 +161,7 @@
 
             @if(perms(BarController::permsManage()))
                 <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                        class="ui bottom attached button">
+                        class="ui large bottom attached button">
                     @lang('pages.bar.allPurchases')...
                 </a>
             @endif

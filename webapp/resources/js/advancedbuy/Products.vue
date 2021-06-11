@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical menu fluid">
+    <div class="ui large vertical menu fluid">
 
         <h5 class="ui item header">{{ __('pages.products.select') }}</h5>
 
@@ -144,11 +144,11 @@
     .item .action-button {
         float: right;
         border-radius: 0;
-        margin: -.9em -1.2em 0 1.2em;
+        margin: -.95em -1.2em 0 1.2em;
         padding: 1em 1em !important;
 
         /* TODO: do not use fixed height here */
-        width: 40px;
-        height: 40px;
+        width: 42.8667px;
+        height: 42.8667px;
     }
 </style>

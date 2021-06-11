@@ -549,10 +549,12 @@ class Economy extends Model {
      *
      * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
+     * @param int [$limit=QUICK_BUY_TOTAL_LIMIT] Limit of products to show,
+     *      unless searching.
      *
      * @return object A list of products.
      */
-    public function quickBuyProducts($currency_ids) {
+    public function quickBuyProducts($currency_ids, $limit = Self::QUICK_BUY_TOTAL_LIMIT) {
         // Get the last 100 product mutation IDs for the current user
         $mutation_ids = $this
             ->mutations()
@@ -577,13 +579,13 @@ class Economy extends Model {
             self::selectLastProducts(
                 $mutation_ids,
                 $products->pluck('id'),
-                Self::QUICK_BUY_TOTAL_LIMIT - $products->count(),
+                $limit - $products->count(),
                 $currency_ids,
             )
         );
 
         // Fill the list with the top products bought by any user
-        if($products->count() < Self::QUICK_BUY_TOTAL_LIMIT) {
+        if($products->count() < $limit) {
             // Get the last 100 product mutation IDs for any user
             $mutation_ids = $this
                 ->mutations()
@@ -599,20 +601,20 @@ class Economy extends Model {
                 self::selectTopProducts(
                     $mutation_ids,
                     $products->pluck('id'),
-                    Self::QUICK_BUY_TOTAL_LIMIT - $products->count(),
+                    $limit - $products->count(),
                     $currency_ids,
                 )
             );
         }
 
         // Fill with random products
-        if($products->count() < Self::QUICK_BUY_TOTAL_LIMIT) {
+        if($products->count() < $limit) {
             // Add top products by any user in last 100 mutations not already in list to total of 8
             $products = $products->concat(
                 $this->products()
                     ->havingCurrency($currency_ids)
                     ->whereNotIn('id', $products->pluck('id'))
-                    ->limit(Self::QUICK_BUY_TOTAL_LIMIT - $products->count())
+                    ->limit($limit - $products->count())
                     ->get(),
             );
         }

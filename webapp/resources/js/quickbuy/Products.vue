@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical menu fluid">
+    <div class="ui large vertical menu fluid">
 
         <div class="item">
             <div class="ui transparent icon input">
@@ -41,7 +41,7 @@
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}.
         </i>
 
-        <a :href="url + '/products'" class="ui bottom attached button">
+        <a :href="url + '/products'" class="ui large bottom attached button">
             {{ __('misc.catalog') }}
         </a>
     </div>

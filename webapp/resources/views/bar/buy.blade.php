@@ -72,7 +72,9 @@
     </div>
 
     <div id="advancedbuy">
-        <div class="ui active centered inline loader"></div>
+        <div class="ui active centered large loader"></div>
     </div>
+
+    <br>
     <br>
 @endsection
