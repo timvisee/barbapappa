@@ -630,6 +630,7 @@ return [
         'title' => 'Transactions',
         'details' => 'Transaction details',
         'last#' => '{0} Last transactions|{1} Last transaction|[2,*] Last :count transactions',
+        'noTransactions' => 'No transactions',
         'backToTransaction' => 'Back to transaction',
         'toTransaction' => 'to transaction',
         'fromTransaction' => 'from transaction',

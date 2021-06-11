@@ -630,6 +630,7 @@ return [
         'title' => 'Transacties',
         'details' => 'Transactie details',
         'last#' => '{0} Laatste transacties|{1} Laatste transactie|[2,*] Laatste :count transacties',
+        'noTransactions' => 'Geen transacties',
         'backToTransaction' => 'Terug naar transactie',
         'toTransaction' => 'naar transactie',
         'fromTransaction' => 'van transactie',

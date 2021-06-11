@@ -10,8 +10,7 @@
         @endif
 
         {{-- Transactions --}}
-        {{-- TODO: show empty message if no transactions --}}
-        @foreach($group['transactions'] as $transaction)
+        @forelse($group['transactions'] as $transaction)
             <a class="item"
                     href="{{ route('transaction.show', [
                         'transactionId' => $transaction->id,
@@ -23,7 +22,9 @@
                     @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at, 'short' => true])
                 </span>
             </a>
-        @endforeach
+        @empty
+            <i class="item">@lang('pages.transactions.noTransactions')...</i>
+        @endforelse
     @endforeach
 
     {{-- Bottom button --}}
