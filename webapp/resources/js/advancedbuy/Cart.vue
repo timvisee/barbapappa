@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="ui vertical menu fluid">
+        <div class="ui large vertical menu fluid">
             <h5 class="ui item header">{{ __('pages.bar.advancedBuy.inCart') }}</h5>
 
             <div v-for="item in cart">
@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <a class="ui bottom attached primary button"
+            <a class="ui huge bottom attached primary button"
                     v-on:click.prevent.stop="buy()"
                     v-bind:class="{ disabled: buying, loading: buying }"
                     href="#">
@@ -109,11 +109,11 @@
     .item .action-button {
         float: right;
         border-radius: 0;
-        margin: -.9em -1.2em 0 1.2em;
+        margin: -.95em -1.2em 0 1.2em;
         padding: 1em 1em !important;
 
         /* TODO: do not use fixed height here */
-        width: 40px;
-        height: 40px;
+        width: 42.8667px;
+        height: 42.8667px;
     }
 </style>

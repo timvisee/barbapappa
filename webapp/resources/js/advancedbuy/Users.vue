@@ -1,5 +1,5 @@
 <template>
-    <div class="ui vertical menu fluid">
+    <div class="ui large vertical menu fluid">
         <h5 class="ui item header">
             {{ __('pages.bar.advancedBuy.addToCartFor') }}
         </h5>
