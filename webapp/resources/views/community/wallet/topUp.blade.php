@@ -83,7 +83,7 @@
 
                     </div>
 
-                    <span class="ui label">
+                    <span class="ui blue label">
                         @lang('misc.to')
                         {!! $currency->format($wallet->balance + $amount) !!}
                     </span>
@@ -117,8 +117,12 @@
                 <div class="item inline {{ ErrorRenderer::hasError('payment_service') ? 'error' : '' }}">
                     <div class="ui radio checkbox">
                         {{ Form::radio('payment_service', $service->id, false, ['class' => 'hidden', 'tabindex' => 0]) }}
-                        {{ Form::label('payment_service', $service->displayName() .  ' (' . $service->serviceable->__('duration') . ')') }}
+                        {{ Form::label('payment_service', $service->displayName()) }}
                     </div>
+
+                    <span class="ui orange label">
+                        {{ $service->serviceable->__('duration') }}
+                    </span>
                 </div>
             @endforeach
         </div>
