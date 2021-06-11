@@ -103,7 +103,7 @@
 
         <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
                 class="ui bottom attached button">
-            @lang('misc.catalog')
+            @lang('pages.products.all')...
         </a>
     </div>
 
@@ -164,7 +164,7 @@
             @if(perms(BarController::permsManage()))
                 <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
                         class="ui bottom attached button">
-                    @lang('misc.more')...
+                    @lang('pages.bar.allPurchases')...
                 </a>
             @endif
         </div>

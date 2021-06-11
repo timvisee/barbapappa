@@ -825,6 +825,7 @@ return [
         'showCodeOnPoster' => 'Show code to join dis bar on th\' poster',
         'lowBalanceText' => 'Negative balance text',
         'lowBalanceTextPlaceholder' => 'Ye currently have a negative balance. Please top-up yer wallet now before buying new loot.',
+        'allPurchases' => 'All purchases',
         'purchaseHistory' => 'Purchase history',
         'purchaseHistoryDescription' => 'Dis page shows a history of all purchased loot in dis bar.',
         'noPurchases' => 'No purchases',
