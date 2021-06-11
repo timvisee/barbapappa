@@ -20,3 +20,9 @@
 .steps.unstackable {
     overflow-x: auto;
 }
+
+// Do not flow pagination buttons out of screen, make scrollable instead
+.pagination {
+    overflow-x: auto;
+    max-width: 100%;
+}
