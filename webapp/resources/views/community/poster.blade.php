@@ -54,7 +54,7 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('show_code') ?  'error' : '' }} {{ empty($community->password) ? 'disabled' : '' }}">
             <div class="ui toggle checkbox">
-                {{ Form::checkbox('show_core', true, !empty($community->password), ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::checkbox('show_code', true, !empty($community->password), ['tabindex' => 0, 'class' => 'hidden']) }}
                 {{ Form::label('show_code', __('pages.community.showCodeOnPoster')) }}
             </div>
             <br />

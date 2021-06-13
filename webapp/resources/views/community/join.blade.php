@@ -12,7 +12,7 @@
         $code = Request::query('code');
 
         // Whether to show the code field, we simplify the join view if not showing
-        $showCode = $needsCode && (!isset($code) || ErrorRenderer::hasError('code'));
+        $showCode = $needsCode && (!empty($code) || ErrorRenderer::hasError('code'));
     @endphp
 
     @if($showCode)
