@@ -276,6 +276,7 @@ return [
         'all' => 'All products',
         'select' => 'Select products',
         'search' => 'Search products',
+        'clickBuyOrSearch' => 'Click products to buy or search',
         '#products' => '{0} No products|{1} 1 product|[2,*] :count products',
         'noProducts' => 'No products...',
         'searchingFor' => 'Searching for :term...',
@@ -603,9 +604,9 @@ return [
         'purchaseHistogram' => 'Product purchase histogram',
         'noStatsNoTransactions' => 'No stats to show. Wallet does not have any transactions.',
         'period' => [
-            'week' => 'Last week',
-            'month' => 'Last month',
-            'year' => 'Last year',
+            'week' => 'Past week',
+            'month' => 'Past month',
+            'year' => 'Past year',
         ],
         'typeProductDist' => [
             'title' => 'Purchased products',

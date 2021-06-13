@@ -276,6 +276,7 @@ return [
         'all' => 'All loot',
         'select' => 'Select loot',
         'search' => 'Scavenge loot',
+        'clickBuyOrSearch' => 'Click loot to buy or search',
         '#products' => '{0} Nay loot|{1} 1 loot|[2,*] :count loot',
         'noProducts' => 'Nay loot...',
         'searchingFor' => 'Scavenging for :term...',
@@ -603,9 +604,9 @@ return [
         'purchaseHistogram' => 'Product purchase histogram',
         'noStatsNoTransactions' => 'No stats to show. Wallet does not have any transactions.',
         'period' => [
-            'week' => 'Last week',
-            'month' => 'Last month',
-            'year' => 'Last year',
+            'week' => 'Past week',
+            'month' => 'Past month',
+            'year' => 'Past year',
         ],
         'typeProductDist' => [
             'title' => 'Purchased loot',
@@ -836,7 +837,7 @@ return [
             'orVisit' => 'Or see',
         ],
         'buy' => [
-            'forMe' => 'Buy myself',
+            'forMe' => 'Buy yerself',
             'forOthers' => 'For crew/more',
         ],
         'advancedBuy' => [

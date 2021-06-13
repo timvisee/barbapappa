@@ -77,7 +77,7 @@
                 <div class="ui transparent icon input">
                     {{ Form::text('q', Request::input('q'), [
                         'id' => 'quickbuy-search',
-                        'placeholder' => __('pages.products.search') . '...',
+                        'placeholder' => __('pages.products.clickBuyOrSearch') . '...',
                     ]) }}
                     <i class="icon link">
                         <span class="glyphicons glyphicons-search"></span>
