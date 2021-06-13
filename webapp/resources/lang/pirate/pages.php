@@ -165,13 +165,13 @@ return [
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
         'cannotDeleteDependents' => 'Dis community cannot be sunk, as entities be depending on it which nay just be deleted.',
         'generatePoster' => 'Create crew poster',
-        'generatePosterDescription' => 'Create a poster for dis crew to hang on a wall. Fellow mateies will then be able to easily use :app and join dis crew by scanning a QR code with their handheld phoning device.',
+        'generatePosterDescription' => 'Create a poster for dis crew to hang on a wall. Fellow mateies will then be able to easily use :app and join dis crew by scanning a Q-ARRRR code with their handheld phoning device.',
         'showCodeOnPoster' => 'Show code to join dis crew on th\' poster',
         'posterBarPreferred' => 'It be usually preferred to generate a poster for a bar instead of a crew, as mateies joining a crew doesn\'t give them acces to purchasing loot without joining a bar as well. Visit the management hub of a specific bar to create a poster for it.',
         'poster' => [
             'thisCommunityUses' => 'Dis crew uses',
             'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',
-            'scanQr' => 'scan the QR code below to join and make a purchase',
+            'scanQr' => 'scan the Q-ARRRR code below to join and make a purchase',
             'orVisit' => 'Or see',
         ],
         'links' => [
@@ -822,7 +822,7 @@ return [
         'startKioskConfirm' => 'Confirm to enter kiosk mode',
         'startKioskConfirmDescription' => 'Entering kiosk mode will allow any pirate having access to dis machine to purchase loot on anybodies behalf.',
         'generatePoster' => 'Create bar poster',
-        'generatePosterDescription' => 'Create a poster for dis bar to hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a QR code with their handheld phoning device.',
+        'generatePosterDescription' => 'Create a poster for dis bar to hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a Q-ARRRR code with their handheld phoning device.',
         'showCodeOnPoster' => 'Show code to join dis bar on th\' poster',
         'lowBalanceText' => 'Negative balance text',
         'lowBalanceTextPlaceholder' => 'Ye currently have a negative balance. Please top-up yer wallet now before buying new loot.',
@@ -833,7 +833,7 @@ return [
         'poster' => [
             'thisBarUses' => 'Dis bar uses',
             'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',
-            'scanQr' => 'scan the QR code below to join and make a purchase',
+            'scanQr' => 'scan the Q-ARRRR code below to join and make a purchase',
             'orVisit' => 'Or see',
         ],
         'buy' => [
@@ -973,7 +973,7 @@ return [
         'title' => 'Add pirate / join',
         'joinBar' => 'Join :bar',
         'description' => 'New pirates can add themselves to dis bar by registering an account.',
-        'scanQr' => 'Scan th\' QR-code below with yer phone to start:',
+        'scanQr' => 'Scan th\' Q-ARRRR code below with yer phone to start:',
         'orUrl' => 'Or visit th\' following link in yer browser:',
     ],
 

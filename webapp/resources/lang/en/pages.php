@@ -973,7 +973,7 @@ return [
         'title' => 'Add user / join',
         'joinBar' => 'Join :bar',
         'description' => 'New users can add themselves to this bar by registering an account.',
-        'scanQr' => 'Scan the QR-code below with your phone to start:',
+        'scanQr' => 'Scan the QR code below with your phone to start:',
         'orUrl' => 'Or visit the following link in your browser:',
     ],
 
