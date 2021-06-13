@@ -8,45 +8,57 @@
 
     @php
         $user = barauth()->getSessionUser();
-        $needsPassword = $bar->needsPassword($user);
+        $needsCode = $bar->needsPassword($user);
         $code = Request::query('code');
+
+        // Whether to show the code field, we simplify the join view if not showing
+        $showCode = $needsCode && (!isset($code) || ErrorRenderer::hasError('code'));
     @endphp
 
-    @if($needsPassword)
-        <div class="ui divider"></div>
+    @if($showCode)
+        <div class="ui hidden divider"></div>
 
-        @if(empty($code))
-            <div class="ui warning message visible">
-                <div class="header">@lang('misc.protected')</div>
-                <p>@lang('pages.bar.protectedByCode')</p>
-            </div>
-        @else
-            <div class="ui info message visible">
-                <div class="header">@lang('misc.protected')</div>
-                <p>@lang('pages.bar.protectedByCodeFilled')</p>
-            </div>
-        @endif
+        <div class="ui warning message visible">
+            <div class="header">@lang('misc.protected')</div>
+            <p>@lang('pages.bar.protectedByCode')</p>
+        </div>
     @endif
 
     {!! Form::open(['action' => ['BarController@doJoin', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}
 
-        @if($needsPassword)
+        @if($showCode)
             <div class="required field {{ ErrorRenderer::hasError('code') ? 'error' : '' }}">
                 {{ Form::label('code', __('misc.code') . ':') }}
                 {{ Form::text('code', $code, ['placeholder' => __('misc.codePlaceholder')]) }}
                 {{ ErrorRenderer::inline('code') }}
             </div>
+        @elseif($needsCode)
+            {{ Form::hidden('code', $code) }}
         @endif
 
-        <br />
+        <div class="ui divider hidden"></div>
 
-        <div class="ui buttons">
-            <button class="ui button positive" type="submit">@lang('pages.bar.yesJoin')</button>
-            <div class="or" data-text="@lang('general.or')"></div>
-            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
-                    class="ui button negative">
-                @lang('general.noGoBack')
-            </a>
-        </div>
+        @if($showCode)
+            <div class="ui buttons">
+                <button class="ui button positive" type="submit">@lang('pages.bar.yesJoin')</button>
+                <div class="or" data-text="@lang('general.or')"></div>
+                <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+                        class="ui button negative">
+                    @lang('general.noGoBack')
+                </a>
+            </div>
+        @else
+            <p>
+                <button class="ui large button positive" type="submit">@lang('pages.bar.yesJoin')</button>
+
+                @lang('general.or')
+
+                <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
+                        class="subtle link">
+                    @lang('general.noGoBack')
+                </a>
+            </p>
+        @endif
+
     {!! Form::close() !!}
 @endsection

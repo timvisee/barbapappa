@@ -247,6 +247,17 @@ ul.ui-listview.center > li > a.ui-btn {
     line-height: normal;
 }
 
+// Nice plain links
+a.subtle.link {
+    color: rgba(0,0,0,.4);
+    -webkit-transition: .1s color ease;
+    transition: .1s color ease;
+}
+
+a.subtle.link:hover {
+    color: rgba(0,0,0,.8);
+}
+
 // Inline field in checkbox list (for custom amount field on payment page)
 .checkbox-list-inline-field {
     display: inline-block !important;
