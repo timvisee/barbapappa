@@ -74,7 +74,7 @@
     <div id="quickbuy" class="ui large vertical menu fluid">
         {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
             <div class="item">
-                <div class="ui transparent icon input">
+                <div class="ui large transparent icon input">
                     {{ Form::text('q', Request::input('q'), [
                         'id' => 'quickbuy-search',
                         'placeholder' => __('pages.products.clickBuyOrSearch') . '...',
