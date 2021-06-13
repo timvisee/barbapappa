@@ -63,7 +63,7 @@
 
     <div class="ui hidden divider"></div>
 
-    <div class="field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
+    <div class="required field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
         {{ Form::label('amount', __('pages.paymentService.amountInCurrency', ['currency' => $currency->name]) . ':') }}
         <div class="ui labeled input">
             {{ Form::label('amount', $currency->symbol, ['class' => 'ui label']) }}
