@@ -144,7 +144,7 @@
     .item .action-button {
         float: right;
         border-radius: 0;
-        margin: -.95em -1.2em 0 1.2em;
+        margin: -.95em -1.3em 0 1.2em;
         padding: 1em 1em !important;
 
         /* TODO: do not use fixed height here */
