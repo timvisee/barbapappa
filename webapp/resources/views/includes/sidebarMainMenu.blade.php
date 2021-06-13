@@ -110,7 +110,8 @@
                 <i class="glyphicons glyphicons-{{ (langManager()->getLocale() != 'pirate' ? 'fingerprint' : 'skull') }}"></i>
                 @lang('pages.privacy.title')
             </a>
-            <a href="{{ route('license') }}" class="item">
+            <a href="{{ route('license') }}"
+                    class="item{{ Route::currentRouteName() == 'license' ? ' active' : '' }}">
                 <i class="glyphicons glyphicons-scale-classic"></i>
                 @lang('pages.license.title')
             </a>

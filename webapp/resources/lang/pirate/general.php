@@ -22,7 +22,7 @@ return [
     'noGoBack' => 'Nay, paddl\' back',
     'goBack' => 'Paddl\' back',
     'accept' => 'Sail ho!',
-    'or' => 'o',
+    'or' => 'o\'',
     'cancel' => 'Cancel',
 
     'notYetImplemented' => 'Nay yet implemented.',
