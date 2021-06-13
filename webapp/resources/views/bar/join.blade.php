@@ -50,9 +50,7 @@
         @else
             <p>
                 <button class="ui large button positive" type="submit">@lang('pages.bar.yesJoin')</button>
-
                 @lang('general.or')
-
                 <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
                         class="subtle link">
                     @lang('general.noGoBack')
