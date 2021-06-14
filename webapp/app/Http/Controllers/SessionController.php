@@ -55,4 +55,31 @@ class SessionController extends Controller {
         return view('account.session.show')
             ->with('session', $session);
     }
+
+    /**
+     * Do session expiry.
+     *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     * @param string $sessionId The session ID.
+     *
+     * @return Response
+     */
+    public function doExpire($userId, $sessionId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+
+        // Get user and session
+        $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
+        $session = $user->sessions()->findOrFail($sessionId);
+
+        // Invalidate session
+        $session->invalidate();
+
+        // Redirect to the sessions page, show a success message
+        return redirect()
+            ->route('account.sessions', ['userId' => $userId])
+            ->with('success', __('account.invalidatedSession'));
+    }
 }

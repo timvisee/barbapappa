@@ -44,5 +44,7 @@ return [
     'invalidateOtherSessions' => 'Log uit op andere apparaten',
     'thisSession' => 'Huidige sessie',
     'thisNetwork' => 'Zelfde netwerk',
+    'expireNow' => 'Expire now',
+    'invalidatedSession' => 'De sessie is ongeldig gemaakt en is nu verlopen.',
     'backToSessions' => 'Terug naar sessies',
 ];

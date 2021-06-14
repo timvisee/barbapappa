@@ -44,5 +44,7 @@ return [
     'invalidateOtherSessions' => 'Log out on other devices',
     'thisSession' => 'This session',
     'thisNetwork' => 'This network',
+    'expireNow' => 'Expire now',
+    'invalidatedSession' => 'The session has been invalidated and has now expired.',
     'backToSessions' => 'Back to sessions',
 ];

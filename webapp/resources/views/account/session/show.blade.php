@@ -72,9 +72,19 @@
         </tbody>
     </table>
 
-    <a href="{{ route('account.sessions', ['userId' => $user->id]) }}"
-            class="ui button basic">
-        @lang('account.backToSessions')
-    </a>
+    @if(!$session->isExpired() && !$session->isCurrent())
+        <p>
+            {!! Form::open(['action' => ['SessionController@doExpire', 'userId' => $user->id, 'sessionId' => $session->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
+                <button class="ui negative button" type="submit">@lang('account.expireNow')</button>
+            {!! Form::close() !!}
+        </p>
+    @endif
+
+    <p>
+        <a href="{{ route('account.sessions', ['userId' => $user->id]) }}"
+                class="ui button basic">
+            @lang('account.backToSessions')
+        </a>
+    </p>
 @endsection
 

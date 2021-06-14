@@ -44,5 +44,7 @@ return [
     'invalidateOtherSessions' => 'Sink other ships. Sail ho!',
     'thisSession' => '\'his session',
     'thisNetwork' => '\'his network',
+    'expireNow' => 'Expire now',
+    'invalidatedSession' => 'Th\' session be invalidated and be sunk.',
     'backToSessions' => 'Back to sessions',
 ];
