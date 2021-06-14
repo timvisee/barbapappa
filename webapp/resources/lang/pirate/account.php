@@ -33,6 +33,12 @@ return [
     /**
      * Session.
      */
+    'sessions' => 'Sessions',
+    'activeSessions' => 'Active sessions',
+    'expiredSessions' => 'Sunk sessions',
+    'manageSessions' => 'Manage sessions',
+    'noSessions' => 'No sessions',
+    'sessionsDescription' => 'Dis page shows yer active and sunk account sessions. Click on an active session to see details or to expire it. Sunk sessions are automatically forgotten after a while.',
     'invalidateAllSessions' => 'Sink all yer ships. Sail ho!',
     'invalidateOtherSessions' => 'Sink other ships. Sail ho!',
 ];

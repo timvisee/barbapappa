@@ -15,6 +15,7 @@ return [
     'add' => 'Toevoegen',
     'clone' => 'Dupliceren',
     'start' => 'Start',
+    'started' => 'Gestart',
     'addAndClone' => 'Toevoegen & Dupliceren',
     'import' => 'Importeren',
     'imported' => 'Geïmporteerd',
@@ -151,6 +152,7 @@ return [
     'admin' => 'Admin',
     'kiosk' => 'Kiosk',
     'other' => 'Anders',
+    'expired' => 'Verlopen',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',
