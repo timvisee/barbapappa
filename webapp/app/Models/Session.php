@@ -21,6 +21,32 @@ class Session extends Model {
 
     protected $table = 'session';
 
+    protected $casts = [
+        'expire_at' => 'datetime',
+    ];
+
+    /**
+     * A scope for active sessions.
+     *
+     * @param Builder $query Query builder.
+     */
+    public function scopeActive($query) {
+        $query->whereNotNull('expire_at')
+            ->where('expire_at', '>', now());
+    }
+
+    /**
+     * A scope for expired sessions.
+     *
+     * @param Builder $query Query builder.
+     */
+    public function scopeExpired($query) {
+        $query->where(function($query) {
+            $query->whereNull('expire_at')
+                ->orWhere('expire_at', '<=', now());
+        });
+    }
+
     /**
      * The user this session belongs to.
      */
