@@ -70,6 +70,22 @@ class Session extends Model {
     }
 
     /**
+     * Check whether this session is the current session.
+     * Always returns false if the session is expired.
+     *
+     * @return bool True if expired, false if not.
+     */
+    public function isCurrent() {
+        // Always false if expired or not authenticated
+        if($this->isExpired() || !barauth()->isAuth())
+            return false;
+
+        // Check whehter this is the current session
+        $session = barauth()->getAuthState()->getSession();
+        return $session != null && $session->id == $this->id;
+    }
+
+    /**
      * Invalidate this session.
      * This makes the session expire from this moment, so it can't be used anymore for authentication.
      * If the session has already expired, nothing is changed.

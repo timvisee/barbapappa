@@ -11,14 +11,14 @@ use App\Perms\AppRoles;
 class SessionController extends Controller {
 
     /**
-     * Sessions page.
+     * User session index.
      *
      * @param Request $request The request.
      * @param string $userId The user ID.
      *
      * @return Response
      */
-    public function overview($userId) {
+    public function index($userId) {
         // To edit a different user, ensure we have administrator privileges
         if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
             return response(view('noPermission'));
@@ -30,8 +30,29 @@ class SessionController extends Controller {
         $activeSessions = $user->sessions()->active()->latest()->get();
         $expiredSessions = $user->sessions()->expired()->latest('expire_at')->get();
 
-        return view('account.session.overview')
+        return view('account.session.index')
             ->with('activeSessions', $activeSessions)
             ->with('expiredSessions', $expiredSessions);
+    }
+
+    /**
+     * Session show page.
+     *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     *
+     * @return Response
+     */
+    public function show($userId, $sessionId) {
+        // To edit a different user, ensure we have administrator privileges
+        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            return response(view('noPermission'));
+
+        // Get user and session
+        $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
+        $session = $user->sessions()->findOrFail($sessionId);
+
+        return view('account.session.show')
+            ->with('session', $session);
     }
 }

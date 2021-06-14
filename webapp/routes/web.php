@@ -85,7 +85,8 @@ Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(f
         Route::delete('/delete/{emailId}', 'EmailController@doDelete')->name('account.emails.doDelete');
     });
     Route::prefix("/sessions")->group(function() {
-        Route::get('/', 'SessionController@overview')->name('account.sessions');
+        Route::get('/', 'SessionController@index')->name('account.sessions');
+        Route::get('/{sessionId}', 'SessionController@show')->name('account.sessions.show');
     });
 });
 Route::prefix('/account')->middleware(['auth'])->group(function() {

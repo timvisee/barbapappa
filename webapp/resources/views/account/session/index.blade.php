@@ -21,14 +21,23 @@
         </h5>
 
         @forelse($activeSessions as $session)
-            <div class="item">
-                {{ $session->created_ip }}
+            <a class="item"
+                    href="{{ route('account.sessions.show', [
+                        'userId' => $user->id,
+                        'sessionId' => $session->id,
+                    ]) }}">
+
+                @if($session->created_ip)
+                    {{ $session->created_ip }}
+                @else
+                    <i>@lang('misc.unknown')</i>
+                @endif
 
                 <span class="sub-label">
                     {{ strtolower(__('misc.started')) }}
                     @include('includes.humanTimeDiff', ['time' => $session->created_at])
                 </span>
-            </div>
+            </a>
         @empty
             <i class="item">@lang('account.noSessions')...</i>
         @endforelse
@@ -40,14 +49,23 @@
         </h5>
 
         @forelse($expiredSessions as $session)
-            <div class="item">
-                {{ $session->created_ip }}
+            <a class="item"
+                    href="{{ route('account.sessions.show', [
+                        'userId' => $user->id,
+                        'sessionId' => $session->id,
+                    ]) }}">
+
+                @if($session->created_ip)
+                    {{ $session->created_ip }}
+                @else
+                    <i>@lang('misc.unknown')</i>
+                @endif
 
                 <span class="sub-label">
                     {{ strtolower(__('misc.expired')) }}
                     @include('includes.humanTimeDiff', ['time' => $session->expire_at])
                 </span>
-            </div>
+            </a>
         @empty
             <i class="item">@lang('account.noSessions')...</i>
         @endforelse
