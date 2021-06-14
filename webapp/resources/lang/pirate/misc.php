@@ -15,6 +15,7 @@ return [
     'add' => 'Add',
     'clone' => 'Clone',
     'start' => 'Start',
+    'started' => 'Started',
     'addAndClone' => 'Add \'n Clone',
     'import' => 'Import',
     'imported' => 'Imported',
@@ -150,6 +151,9 @@ return [
     'admin' => 'Admin',
     'kiosk' => 'Kiosk',
     'other' => 'Other',
+    'expired' => 'Sunk',
+    'expiry' => 'Sinking',
+    'ip' => 'IP address',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

@@ -19,6 +19,11 @@
         'link' => route('account.emails', ['userId' => $user->id]),
         'icon' => 'envelope',
     ];
+    $menulinks[] = [
+        'name' => __('account.manageSessions'),
+        'link' => route('account.sessions', ['userId' => $user->id]),
+        'icon' => 'user-key',
+    ];
 @endphp
 
 @section('content')
@@ -88,6 +93,28 @@
                 <th></th>
                 <th>
                     <a href="{{ route('account.emails', ['userId' => $user->id]) }}" class="ui button small">@lang('account.manageEmails')</a>
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+
+    <h3>@lang('account.sessions')</h3>
+    <table class="ui compact celled definition table">
+        <tbody>
+            <tr>
+                <td>@lang('account.activeSessions')</td>
+                <td>{{ $activeSessions }}</td>
+            </tr>
+            <tr>
+                <td>@lang('account.expiredSessions')</td>
+                <td>{{ $expiredSessions }}</td>
+            </tr>
+        </tbody>
+        <tfoot class="full-width">
+            <tr>
+                <th></th>
+                <th>
+                    <a href="{{ route('account.sessions', ['userId' => $user->id]) }}" class="ui button small">@lang('account.manageSessions')</a>
                 </th>
             </tr>
         </tfoot>

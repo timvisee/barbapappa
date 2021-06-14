@@ -21,6 +21,32 @@ class Session extends Model {
 
     protected $table = 'session';
 
+    protected $casts = [
+        'expire_at' => 'datetime',
+    ];
+
+    /**
+     * A scope for active sessions.
+     *
+     * @param Builder $query Query builder.
+     */
+    public function scopeActive($query) {
+        $query->whereNotNull('expire_at')
+            ->where('expire_at', '>', now());
+    }
+
+    /**
+     * A scope for expired sessions.
+     *
+     * @param Builder $query Query builder.
+     */
+    public function scopeExpired($query) {
+        $query->where(function($query) {
+            $query->whereNull('expire_at')
+                ->orWhere('expire_at', '<=', now());
+        });
+    }
+
     /**
      * The user this session belongs to.
      */
@@ -41,6 +67,32 @@ class Session extends Model {
 
         // Check whether the time is expired
         return Carbon::parse($expireAt)->isPast();
+    }
+
+    /**
+     * Check whether this session is the current session.
+     * Always returns false if the session is expired.
+     *
+     * @return bool True if expired, false if not.
+     */
+    public function isCurrent() {
+        // Always false if expired or not authenticated
+        if($this->isExpired() || !barauth()->isAuth())
+            return false;
+
+        // Check whehter this is the current session
+        $session = barauth()->getAuthState()->getSession();
+        return $session != null && $session->id == $this->id;
+    }
+
+    /**
+     * Check whether the current IP is the same as the session IP.
+     *
+     * @return bool True if IP is the same.
+     */
+    public function isSameIp() {
+        return $this->created_ip != null
+            && $this->created_ip == \Request::ip();
     }
 
     /**

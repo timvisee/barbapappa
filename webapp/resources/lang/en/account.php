@@ -33,6 +33,18 @@ return [
     /**
      * Session.
      */
+    'sessions' => 'Sessions',
+    'sessionDetails' => 'Session details',
+    'activeSessions' => 'Active sessions',
+    'expiredSessions' => 'Expired sessions',
+    'manageSessions' => 'Manage sessions',
+    'noSessions' => 'No sessions',
+    'sessionsDescription' => 'This page shows your active and expired account sessions. Click on an active session to see details or to expire it. Expired sessions are automatically forgotten after a while.',
     'invalidateAllSessions' => 'Log out on all devices',
     'invalidateOtherSessions' => 'Log out on other devices',
+    'thisSession' => 'This session',
+    'thisNetwork' => 'This network',
+    'expireNow' => 'Expire now',
+    'invalidatedSession' => 'The session has been invalidated and has now expired.',
+    'backToSessions' => 'Back to sessions',
 ];
