@@ -42,8 +42,12 @@
                 <td>{{ yesno($session->isExpired()) }}</td>
             </tr>
             <tr>
-                <td>@lang('account.currentSession')</td>
+                <td>@lang('account.thisSession')</td>
                 <td>{{ yesno($session->isCurrent()) }}</td>
+            </tr>
+            <tr>
+                <td>@lang('account.thisNetwork')</td>
+                <td>{{ yesno($session->isSameIp()) }}</td>
             </tr>
             <tr>
                 <td>@lang('misc.ip')</td>

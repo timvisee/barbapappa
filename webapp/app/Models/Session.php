@@ -86,6 +86,16 @@ class Session extends Model {
     }
 
     /**
+     * Check whether the current IP is the same as the session IP.
+     *
+     * @return bool True if IP is the same.
+     */
+    public function isSameIp() {
+        return $this->created_ip != null
+            && $this->created_ip == \Request::ip();
+    }
+
+    /**
      * Invalidate this session.
      * This makes the session expire from this moment, so it can't be used anymore for authentication.
      * If the session has already expired, nothing is changed.

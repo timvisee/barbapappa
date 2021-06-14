@@ -37,11 +37,12 @@ return [
     'sessionDetails' => 'Sessie details',
     'activeSessions' => 'Actieve sessies',
     'expiredSessions' => 'Verlopen sessies',
-    'currentSession' => 'Huidige sessie',
     'manageSessions' => 'Beheer sessies',
     'noSessions' => 'Geen sessies',
     'sessionsDescription' => 'deze pagina toont je actieve en verlopen accountsessies. Klik op een actieve sessies om details te zien of om de sessie te verwijderen. Verlopen sessies worden na enige tijd automatisch vergeten.',
     'invalidateAllSessions' => 'Log uit op alle apparaten',
     'invalidateOtherSessions' => 'Log uit op andere apparaten',
+    'thisSession' => 'Huidige sessie',
+    'thisNetwork' => 'Zelfde netwerk',
     'backToSessions' => 'Terug naar sessies',
 ];

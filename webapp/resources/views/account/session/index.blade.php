@@ -33,6 +33,16 @@
                     <i>@lang('misc.unknown')</i>
                 @endif
 
+                @if($session->isCurrent())
+                    <span class="ui green label">
+                        {{ lcfirst(__('account.thisSession')) }}
+                    </span>
+                @elseif($session->isSameIp())
+                    <span class="ui olive label">
+                        {{ lcfirst(__('account.thisNetwork')) }}
+                    </span>
+                @endif
+
                 <span class="sub-label">
                     {{ strtolower(__('misc.started')) }}
                     @include('includes.humanTimeDiff', ['time' => $session->created_at])
@@ -59,6 +69,12 @@
                     {{ $session->created_ip }}
                 @else
                     <i>@lang('misc.unknown')</i>
+                @endif
+
+                @if($session->isSameIp())
+                    <span class="ui label">
+                        {{ lcfirst(__('account.thisNetwork')) }}
+                    </span>
                 @endif
 
                 <span class="sub-label">
