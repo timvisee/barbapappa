@@ -42,12 +42,18 @@
                 <td>{{ yesno($session->isExpired()) }}</td>
             </tr>
             <tr>
-                <td>@lang('account.thisSession')</td>
-                <td>{{ yesno($session->isCurrent()) }}</td>
-            </tr>
-            <tr>
-                <td>@lang('account.thisNetwork')</td>
-                <td>{{ yesno($session->isSameIp()) }}</td>
+                <td>@lang('misc.tags')</td>
+                <td>
+                    @if($session->isCurrent())
+                        <span class="ui green label">@lang('account.thisSession')</span>
+                    @endif
+                    @if($session->isSameIp())
+                        <span class="ui olive label">@lang('account.thisNetwork')</span>
+                    @endif
+                    @if(!$session->isCurrent() && !$session->isSameIp())
+                        <i>@lang('misc.none')</i>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>@lang('misc.ip')</td>
