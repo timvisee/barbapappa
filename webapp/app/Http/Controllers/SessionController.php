@@ -11,6 +11,22 @@ use App\Perms\AppRoles;
 class SessionController extends Controller {
 
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        // User must have permission to manage the current user
+        $this->middleware(function($request, $next) {
+            $userId = $request->route('userId');
+            if($userId != null && barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+                return response(view('noPermission'));
+
+            return $next($request);
+        });
+    }
+
+    /**
      * User session index.
      *
      * @param Request $request The request.
@@ -19,14 +35,8 @@ class SessionController extends Controller {
      * @return Response
      */
     public function index($userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
-        // Get user
+        // Get user and sessions
         $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
-
-        // Fetch sessions
         $activeSessions = $user->sessions()->active()->latest()->get();
         $expiredSessions = $user->sessions()->expired()->latest('expire_at')->get();
 
@@ -44,10 +54,6 @@ class SessionController extends Controller {
      * @return Response
      */
     public function show($userId, $sessionId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
         // Get user and session
         $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
         $session = $user->sessions()->findOrFail($sessionId);
@@ -66,10 +72,6 @@ class SessionController extends Controller {
      * @return Response
      */
     public function doExpire($userId, $sessionId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
         // Get user and session
         $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
         $session = $user->sessions()->findOrFail($sessionId);
@@ -92,10 +94,6 @@ class SessionController extends Controller {
      * @return Response
      */
     public function expireAll($userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
         return view('account.session.expireAll');
     }
 
@@ -108,10 +106,6 @@ class SessionController extends Controller {
      * @return Response
      */
     public function doExpireAll(Request $request, $userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
         // Get user and active sessions
         $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
         $sessions = $user->sessions()->active()->get();
@@ -119,7 +113,6 @@ class SessionController extends Controller {
         // Get settings
         $expireCurrent = is_checked($request->input('expire_current'));
         $expireSameNetwork = is_checked($request->input('expire_same_network'));
-        $expireOther =is_checked($request->input('expire_other'));
 
         // Loop through all sessions, invalidate based on settings
         $count = 0;

@@ -11,15 +11,27 @@ use App\Perms\AppRoles;
 class ProfileController extends Controller {
 
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        // User must have permission to manage the current user
+        $this->middleware(function($request, $next) {
+            $userId = $request->route('userId');
+            if($userId != null && barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+                return response(view('noPermission'));
+
+            return $next($request);
+        });
+    }
+
+    /**
      * Profile edit page.
      *
      * @return Response
      */
-    public function edit(Request $request, $userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
+    public function edit($userId) {
         return view('profile.edit');
     }
 
@@ -32,10 +44,6 @@ class ProfileController extends Controller {
      * @return Response
      */
     public function update(Request $request, $userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
         // Get the user we're editing from middleware
         $user = \Request::get('user');
 
