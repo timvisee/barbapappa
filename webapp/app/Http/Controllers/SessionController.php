@@ -126,8 +126,8 @@ class SessionController extends Controller {
             }
         }
 
-        // Build redirect, redirect to sessions or index if invalidating current
-        if($expireCurrent)
+        // Build redirect, redirect to sessions or index if invalidating current session for our user
+        if($expireCurrent && barauth()->getSessionUser()->id == $userId)
             $redirect = redirect()
                 ->route('index');
         else
