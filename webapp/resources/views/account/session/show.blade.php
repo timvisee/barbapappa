@@ -57,7 +57,15 @@
             </tr>
             <tr>
                 <td>@lang('misc.ip')</td>
-                <td>{{ $session->created_ip }}</td>
+                <td><code class="literal">{{ $session->created_ip }}</code></td>
+            </tr>
+            <tr>
+                <td>@lang('misc.userAgent')</td>
+                @if($session->created_user_agent)
+                    <td><code class="literal">{{ $session->created_user_agent }}</code></td>
+                @else
+                    <td><i>@lang('misc.unknown')</i></td>
+                @endif
             </tr>
             <tr>
                 <td>@lang('misc.firstSeen')</td>

@@ -159,6 +159,7 @@ class Authenticator {
         // Generate an unique token and get the IP address
         $token = self::generateUniqueToken();
         $ip = Request::ip();
+        $userAgent = Request::userAgent();
         $expire = Carbon::now()->addSecond(self::SESSION_EXPIRE);
 
         // Create the new session object and save it
@@ -166,6 +167,7 @@ class Authenticator {
         $session->user_id = $user->id;
         $session->token = $token;
         $session->created_ip = $ip;
+        $session->created_user_agent = $userAgent;
         $session->expire_at = $expire;
         $session->save();
 
