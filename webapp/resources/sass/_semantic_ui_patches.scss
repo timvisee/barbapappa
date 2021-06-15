@@ -26,3 +26,8 @@
     overflow-x: auto;
     max-width: 100%;
 }
+
+// Allow form to show inline
+form.inline {
+    display: inline-block;
+}

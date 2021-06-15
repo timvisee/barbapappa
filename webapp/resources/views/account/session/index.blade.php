@@ -27,8 +27,8 @@
                         'sessionId' => $session->id,
                     ]) }}">
 
-                @if($session->created_ip)
-                    {{ $session->created_ip }}
+                @if(($label = $session->describe(true, true)) != null)
+                    {{ $label }}
                 @else
                     <i>@lang('misc.unknown')</i>
                 @endif
@@ -53,6 +53,12 @@
         @endforelse
     </div>
 
+    <a class="ui negative button" href="{{ route('account.sessions.expireAll', [
+                'userId' => $user->id
+            ]) }}">
+        @lang('account.expireAllSessions')
+    </a>
+
     <div class="ui top vertical menu fluid">
         <h5 class="ui item header">
             @lang('account.expiredSessions') ({{ $expiredSessions->count() }})
@@ -65,8 +71,8 @@
                         'sessionId' => $session->id,
                     ]) }}">
 
-                @if($session->created_ip)
-                    {{ $session->created_ip }}
+                @if(($label = $session->describe(true, true)) != null)
+                    {{ $label }}
                 @else
                     <i>@lang('misc.unknown')</i>
                 @endif

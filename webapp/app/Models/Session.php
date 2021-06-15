@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use \Browser;
 
 /**
  * Session model.
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int user_id
  * @property string token
  * @property string created_ip
+ * @property string created_user_agent
  * @property Carbon expire_at
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -93,6 +95,49 @@ class Session extends Model {
     public function isSameIp() {
         return $this->created_ip != null
             && $this->created_ip == \Request::ip();
+    }
+
+    /**
+     * Describe to the user what device this session was created on.
+     *
+     * @param bool [$ipFallback=true] Whether to return IP address if we cannot
+     *      describe, otherwise null is returned.
+     * @return string|null Session description or null.
+     */
+    public function describe($short = false, $ipFallback = true) {
+        // Return IP if user agent is unknown
+        if(empty($this->created_user_agent))
+            return $ipFallback ? $this->created_ip : null;
+
+        // Parse browser details
+        $browser = Browser::parse($this->created_user_agent);
+
+        // Describe browser
+        $description = $browser->browserFamily();
+
+        // Describe device manufacturer
+        $hasBrowserFamily = $browser->deviceFamily() != null && $browser->deviceFamily() != "Unknown";
+        if($hasBrowserFamily) {
+            $description .= ' ' . lcfirst(__('misc.using')) . ' ' . $browser->deviceFamily();
+            if(!empty($browser->deviceModel()))
+                $description .= ' ' . $browser->deviceModel();
+        }
+
+        // Describe platform
+        if(!$short || !$hasBrowserFamily)
+            $description .= ' ' . lcfirst(__('misc.on')) . ' ' . $browser->platformName();
+
+        // Add device class identifier
+        if(!$short) {
+            if($browser->isDesktop())
+                $description .= ' (Desktop)';
+            elseif($browser->isTablet())
+                $description .= ' (Tablet)';
+            elseif($browser->isMobile())
+                $description .= ' (Mobile)';
+        }
+
+        return $description;
     }
 
     /**

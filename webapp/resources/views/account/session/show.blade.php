@@ -41,28 +41,44 @@
                 <td>@lang('misc.expired')</td>
                 <td>{{ yesno($session->isExpired()) }}</td>
             </tr>
+            @if(($description = $session->describe(false, false)) != null)
+                <tr>
+                    <td>@lang('misc.description')</td>
+                    <td>
+                        {{ $description }}
+                    </td>
+                </tr>
+            @endif
             <tr>
-                <td>@lang('account.thisSession')</td>
-                <td>{{ yesno($session->isCurrent()) }}</td>
-            </tr>
-            <tr>
-                <td>@lang('account.thisNetwork')</td>
-                <td>{{ yesno($session->isSameIp()) }}</td>
+                <td>@lang('misc.tags')</td>
+                <td>
+                    @if($session->isCurrent())
+                        <span class="ui green label">@lang('account.thisSession')</span>
+                    @endif
+                    @if($session->isSameIp())
+                        <span class="ui olive label">@lang('account.thisNetwork')</span>
+                    @endif
+                    @if(!$session->isCurrent() && !$session->isSameIp())
+                        <i>@lang('misc.none')</i>
+                    @endif
+                </td>
             </tr>
             <tr>
                 <td>@lang('misc.ip')</td>
-                <td>{{ $session->created_ip }}</td>
+                <td><code class="literal">{{ $session->created_ip }}</code></td>
+            </tr>
+            <tr>
+                <td>@lang('misc.userAgent')</td>
+                @if($session->created_user_agent)
+                    <td><code class="literal">{{ $session->created_user_agent }}</code></td>
+                @else
+                    <td><i>@lang('misc.unknown')</i></td>
+                @endif
             </tr>
             <tr>
                 <td>@lang('misc.firstSeen')</td>
                 <td>@include('includes.humanTimeDiff', ['time' => $session->created_at])</td>
             </tr>
-            @if($session->created_at != $session->updated_at)
-                <tr>
-                    <td>@lang('misc.lastUpdated')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $session->updated_at])</td>
-                </tr>
-            @endif
             @if($session->expire_at != null)
                 <tr>
                     <td>@lang('misc.expiry')</td>
@@ -73,18 +89,14 @@
     </table>
 
     @if(!$session->isExpired() && !$session->isCurrent())
-        <p>
-            {!! Form::open(['action' => ['SessionController@doExpire', 'userId' => $user->id, 'sessionId' => $session->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
-                <button class="ui negative button" type="submit">@lang('account.expireNow')</button>
-            {!! Form::close() !!}
-        </p>
+        {!! Form::open(['action' => ['SessionController@doExpire', 'userId' => $user->id, 'sessionId' => $session->id], 'method' => 'DELETE', 'class' => 'ui inline form']) !!}
+            <button class="ui negative button" type="submit">@lang('account.expireNow')</button>
+        {!! Form::close() !!}
     @endif
 
-    <p>
-        <a href="{{ route('account.sessions', ['userId' => $user->id]) }}"
-                class="ui button basic">
-            @lang('account.backToSessions')
-        </a>
-    </p>
+    <a href="{{ route('account.sessions', ['userId' => $user->id]) }}"
+            class="ui button basic">
+        @lang('account.backToSessions')
+    </a>
 @endsection
 

@@ -14,6 +14,22 @@ use App\Perms\AppRoles;
 class EmailController extends Controller {
 
     /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        // User must have permission to manage the current user
+        $this->middleware(function($request, $next) {
+            $userId = $request->route('userId');
+            if($userId != null && barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+                return response(view('noPermission'));
+
+            return $next($request);
+        });
+    }
+
+    /**
      * Emails page.
      *
      * @param Request $request The request.
@@ -21,11 +37,7 @@ class EmailController extends Controller {
      *
      * @return Response
      */
-    public function show(Request $request, $userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
+    public function show() {
         return view('account.email.overview');
     }
 
@@ -37,11 +49,7 @@ class EmailController extends Controller {
      *
      * @return Response
      */
-    public function create(Request $request, $userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
+    public function create() {
         return view('account.email.create');
     }
 
@@ -54,10 +62,6 @@ class EmailController extends Controller {
      * @return Response
      */
     public function doCreate(Request $request, $userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
         // Validate
         $this->validate($request, [
             'email' => 'required|' . ValidationDefaults::EMAIL,
@@ -112,9 +116,7 @@ class EmailController extends Controller {
             return redirect()
                 ->route('account.user.emails.unverified', ['userId' => barauth()->getUser()->id]);
 
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
+        // Get user
         $user = User::findOrFail($userId);
 
         // List the unverified addresses
@@ -137,10 +139,8 @@ class EmailController extends Controller {
      * @param Request $request The request.
      * @param string $userId The user ID.
      */
-    public function doVerifyAll(Request $request, $userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
+    public function doVerifyAll($userId) {
+        // Get user
         $user = User::findOrFail($userId);
 
         // List the unverified addresses
@@ -164,10 +164,8 @@ class EmailController extends Controller {
      * @param Request $request The request.
      * @param string $userId The user ID.
      */
-    public function verified(Request $request, $userId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
+    public function verified($userId) {
+        // Get user
         $user = User::findOrFail($userId);
 
         // List unverified emails, redirect to last bar if there are none
@@ -189,14 +187,9 @@ class EmailController extends Controller {
      *
      * @return Response
      */
-    public function reverify(Request $request, $userId, $emailId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
+    public function reverify($userId, $emailId) {
         // Get the selected email address and user
         $email = Email::findOrFail($emailId);
-        $user = \Request::get('user');
 
         // Ensure it isn't verified
         if($email->isVerified()) {
@@ -224,10 +217,6 @@ class EmailController extends Controller {
      * @return Response
      */
     public function delete($userId, $emailId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
         // Get the selected email address and user
         $email = Email::findOrFail($emailId);
         $user = \Request::get('user');
@@ -266,11 +255,7 @@ class EmailController extends Controller {
      *
      * @return Response
      */
-    public function doDelete(Request $request, $userId, $emailId) {
-        // To edit a different user, ensure we have administrator privileges
-        if(barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
-            return response(view('noPermission'));
-
+    public function doDelete($userId, $emailId) {
         // Get the selected email address and user
         $email = Email::findOrFail($emailId);
         $user = \Request::get('user');

@@ -86,6 +86,8 @@ Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(f
     });
     Route::prefix("/sessions")->group(function() {
         Route::get('/', 'SessionController@index')->name('account.sessions');
+        Route::get('/expire-all', 'SessionController@expireAll')->name('account.sessions.expireAll');
+        Route::delete('/expire-all', 'SessionController@doExpireAll')->name('account.sessions.doExpireAll');
         Route::get('/{sessionId}', 'SessionController@show')->name('account.sessions.show');
         Route::delete('/expire/{sessionId}', 'SessionController@doExpire')->name('account.sessions.doExpire');
     });
