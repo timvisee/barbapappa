@@ -45,6 +45,12 @@ return [
     'thisSession' => 'This session',
     'thisNetwork' => 'This network',
     'expireNow' => 'Expire now',
+    'expireAllSessions' => 'Expire all sessions',
+    'expireAllQuestion' => 'Are you sure that you want to expire all your account sessions?',
+    'expireCurrentSession' => 'Expire this session (will log you out here)',
+    'expireSameNetworkSessions' => 'Expire sessions on the same network',
+    'expireOtherSessions' => 'Expire all other sessions',
     'invalidatedSession' => 'The session has been invalidated and has now expired.',
+    'invalidatedSessions#' => '{0} Invalidated and expired no session.|{1} Invalidated and expired one session.|[2,*] Invalidated and expired :count sessions.',
     'backToSessions' => 'Back to sessions',
 ];

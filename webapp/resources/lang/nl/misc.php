@@ -153,7 +153,7 @@ return [
     'kiosk' => 'Kiosk',
     'other' => 'Anders',
     'expired' => 'Verlopen',
-    'expiry' => 'Verloopt in',
+    'expiry' => 'Verloopt',
     'ip' => 'IP-adres',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',

@@ -53,6 +53,12 @@
         @endforelse
     </div>
 
+    <a class="ui negative button" href="{{ route('account.sessions.expireAll', [
+                'userId' => $user->id
+            ]) }}">
+        @lang('account.expireAllSessions')
+    </a>
+
     <div class="ui top vertical menu fluid">
         <h5 class="ui item header">
             @lang('account.expiredSessions') ({{ $expiredSessions->count() }})
