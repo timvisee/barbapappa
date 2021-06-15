@@ -27,8 +27,8 @@
                         'sessionId' => $session->id,
                     ]) }}">
 
-                @if($session->created_ip)
-                    {{ $session->created_ip }}
+                @if(($label = $session->describe()) != null)
+                    {{ $label }}
                 @else
                     <i>@lang('misc.unknown')</i>
                 @endif
@@ -71,8 +71,8 @@
                         'sessionId' => $session->id,
                     ]) }}">
 
-                @if($session->created_ip)
-                    {{ $session->created_ip }}
+                @if(($label = $session->describe()) != null)
+                    {{ $label }}
                 @else
                     <i>@lang('misc.unknown')</i>
                 @endif

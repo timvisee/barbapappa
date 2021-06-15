@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use \Browser;
 
 /**
  * Session model.
@@ -94,6 +95,24 @@ class Session extends Model {
     public function isSameIp() {
         return $this->created_ip != null
             && $this->created_ip == \Request::ip();
+    }
+
+    /**
+     * Describe to the user what device this session was created on.
+     *
+     * @param bool [$ipFallback=true] Whether to return IP address if we cannot
+     *      describe, otherwise null is returned.
+     * @return string|null Session description or null.
+     */
+    public function describe($ipFallback = true) {
+        // Return IP if user agent is unknown
+        if(empty($this->created_user_agent))
+            return $ipFallback ? $this->created_ip : null;
+
+        // Parse browser details
+        $browser = Browser::parse($this->created_user_agent);
+
+        return $browser->browserName();
     }
 
     /**
