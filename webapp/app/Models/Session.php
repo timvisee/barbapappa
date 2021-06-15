@@ -104,7 +104,7 @@ class Session extends Model {
      *      describe, otherwise null is returned.
      * @return string|null Session description or null.
      */
-    public function describe($ipFallback = true) {
+    public function describe($short = false, $ipFallback = true) {
         // Return IP if user agent is unknown
         if(empty($this->created_user_agent))
             return $ipFallback ? $this->created_ip : null;
@@ -112,7 +112,32 @@ class Session extends Model {
         // Parse browser details
         $browser = Browser::parse($this->created_user_agent);
 
-        return $browser->browserName();
+        // Describe browser
+        $description = $browser->browserFamily();
+
+        // Describe device manufacturer
+        $hasBrowserFamily = $browser->deviceFamily() != null && $browser->deviceFamily() != "Unknown";
+        if($hasBrowserFamily) {
+            $description .= ' ' . lcfirst(__('misc.using')) . ' ' . $browser->deviceFamily();
+            if(!empty($browser->deviceModel()))
+                $description .= ' ' . $browser->deviceModel();
+        }
+
+        // Describe platform
+        if(!$short || !$hasBrowserFamily)
+            $description .= ' ' . lcfirst(__('misc.on')) . ' ' . $browser->platformName();
+
+        // Add device class identifier
+        if(!$short) {
+            if($browser->isDesktop())
+                $description .= ' (Desktop)';
+            elseif($browser->isTablet())
+                $description .= ' (Tablet)';
+            elseif($browser->isMobile())
+                $description .= ' (Mobile)';
+        }
+
+        return $description;
     }
 
     /**

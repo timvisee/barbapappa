@@ -41,7 +41,7 @@
                 <td>@lang('misc.expired')</td>
                 <td>{{ yesno($session->isExpired()) }}</td>
             </tr>
-            @if(($description = $session->describe(false)) != null)
+            @if(($description = $session->describe(false, false)) != null)
                 <tr>
                     <td>@lang('misc.description')</td>
                     <td>
