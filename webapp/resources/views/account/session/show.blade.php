@@ -63,12 +63,6 @@
                 <td>@lang('misc.firstSeen')</td>
                 <td>@include('includes.humanTimeDiff', ['time' => $session->created_at])</td>
             </tr>
-            @if($session->created_at != $session->updated_at)
-                <tr>
-                    <td>@lang('misc.lastUpdated')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $session->updated_at])</td>
-                </tr>
-            @endif
             @if($session->expire_at != null)
                 <tr>
                     <td>@lang('misc.expiry')</td>
