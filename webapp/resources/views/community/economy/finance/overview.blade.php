@@ -48,7 +48,7 @@
     <div class="ui one small statistics">
         <div class="statistic">
             <div class="value">
-                {!! $paymentProgressingSum->formatAmount(BALANCE_FORMAT_COLOR) !!}
+                {!! $paymentProgressingSum->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => $paymentProgressingSum->amount != 0]) !!}
             </div>
             <div class="label">@lang('pages.finance.paymentsInProgress')</div>
         </div>
