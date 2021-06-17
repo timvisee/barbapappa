@@ -32,8 +32,10 @@ use bunq\Model\Generated\Object\NotificationFilterUrl;
  * @property string account_holder
  * @property string iban
  * @property string bic
+ * @property int|null last_event_id
+ * @property Carbon|null checked_at
+ * @property Carbon|null renewed_at
  * @property Carbon|null deleted_at
- * @property Carbon renewed_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -50,8 +52,9 @@ class BunqAccount extends Model {
     protected $table = 'bunq_account';
 
     protected $casts = [
-        'deleted_at' => 'datetime',
+        'checked_at' => 'datetime',
         'renewed_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [

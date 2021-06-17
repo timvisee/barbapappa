@@ -537,6 +537,9 @@ return [
         'noHttpsNoCallbacks' => 'This site does not use HTTPS, real time bunq payments are not supported. Payment events will be processed daily.',
         'manageCommunityAccounts' => 'Manage community bunq accounts',
         'manageAppAccounts' => 'Manage application global bunq accounts',
+        'lastCheckedAt' => 'Last checked at',
+        'lastRenewedAt' => 'API last renewed at',
+        'notRenewedYet' => 'Not yet renewed',
     ],
 
     /**

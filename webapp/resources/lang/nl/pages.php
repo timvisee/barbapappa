@@ -538,6 +538,9 @@ return [
         'noHttpsNoCallbacks' => 'Deze site gebruikt geen HTTPS, real time bunq betalingen zijn daarom niet ondersteund. Betalingen zullen eens per dag verwerkt worden.',
         'manageCommunityAccounts' => 'Beheer bunq accounts voor groep',
         'manageAppAccounts' => 'Beheer bunq accounts voor gehele applicatie',
+        'lastCheckedAt' => 'Laatst gechecked op',
+        'lastRenewedAt' => 'API laatst vernieuwd op',
+        'notRenewedYet' => 'Nog niet verieuwd',
     ],
 
     /**
