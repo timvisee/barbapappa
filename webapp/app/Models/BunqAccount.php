@@ -164,16 +164,18 @@ class BunqAccount extends Model {
         if($expireIn > Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD)
             return;
 
-        // Immediately renew session if already expired, refresh API context
-        if($expireIn <= 1) {
+        // Immediately renew session if already almost expired, refresh API context
+        if($expireIn <= 10) {
             RenewBunqApiContext::dispatchSync($this);
+            $this->renewed_at = now();
+            $this->save();
             $this->refresh();
             $apiContext = $this->api_context;
             return;
         }
 
         // Do not spawn renewal job if already recently renewed/renewing
-        if(!is_null($this->renewed_at) && $this->renewed_at <= now()->subSeconds(Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD))
+        if(!is_null($this->renewed_at) && $this->renewed_at >= now()->subSeconds(Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD))
             return;
 
         // Dispatch a job to renew the session, update the renew time
