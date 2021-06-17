@@ -72,7 +72,7 @@
 
     {{-- Quick buy list --}}
     <div id="quickbuy" class="ui large vertical menu fluid">
-        {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
+        {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET']) !!}
             <div class="item">
                 <div class="ui large transparent icon input">
                     {{ Form::text('q', Request::input('q'), [
