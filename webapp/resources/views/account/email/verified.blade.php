@@ -21,7 +21,7 @@
         @endforeach
     </div>
 
-    <a href="{{ url()->current() }}" class="ui button primary small">
+    <a href="{{ url()->current() }}" class="ui basic button">
         @lang('pages.accountPage.email.iVerifiedAll')
     </a>
 @endsection
