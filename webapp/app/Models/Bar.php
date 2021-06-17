@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
  * Bar model.
  *
  * @property int id
+ * @property string name
  * @property int community_id
  * @property int economy_id
  * @property string|null slug

@@ -181,23 +181,30 @@ class Authenticator {
                 )
             );
 
-        // // Annotate user for Sentry error reporting
-        // if($authResult->isOk() && $authState != null && app()->bound('sentry')) {
-        //     $user_id = $authState->getSessionUser()->id ?? $authState->getUser()->id ?? null;
-        //     $user_name = $authState->getSessionUser()->name ?? $authState->getUser()->name ?? null;
-        //     Sentry\configureScope(function(Sentry\State\Scope $scope) use($user_id, $user_name): void {
-        //         $scope->setUser([
-        //             'id' => $user_id,
-        //             'name' => $user_name,
-        //         ]);
-        //     });
-        // }
-
         // Forget the session cookie if the session became invalid
-        if($authResult->isErr() && $authResult->getResult() != AuthResult::ERR_NO_SESSION)
+        else if($authResult->isErr() && $authResult->getResult() != AuthResult::ERR_NO_SESSION)
             Cookie::queue(
                 Cookie::forget(self::AUTH_COOKIE)
             );
+
+        // Annotate authentication details for Sentry error reporting
+        Sentry\configureScope(function(Sentry\State\Scope $scope) use($authResult, $authState): void {
+            // Set authentication type
+            $isAuth = $authResult->isOk();
+            $scope->setTag("auth.type", $isAuth != null ? "kiosk" : "none");
+
+            // Annotate current session user
+            if($isAuth) {
+                $bar_id = $authState->getBar()->id ?? null;
+                $scope->setTag("auth.bar_id", $bar_id);
+                $scope->setTag("auth.kiosk_session_id", $authState->getSession()->id);
+                $scope->setUser([
+                    'id' => $bar_id,
+                    'ip' => Request::ip(),
+                    'name' => $authState->getBar()->name ?? 'Kiosk',
+                ]);
+            }
+        });
 
         return $authResult;
     }
