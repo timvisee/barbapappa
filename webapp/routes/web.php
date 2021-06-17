@@ -526,9 +526,12 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             // Useful links
             Route::get('/links', 'BarController@links')->name('bar.links');
 
-            // Start kiosk
-            Route::get('/start-kiosk', 'BarController@startKiosk')->name('bar.startKiosk');
-            Route::post('/start-kiosk', 'BarController@doStartKiosk')->name('bar.doStartKiosk');
+            // Kiosk pages
+            Route::prefix("/kiosk")->group(function() {
+                // Start kiosk
+                Route::get('/start', 'BarController@startKiosk')->name('bar.kiosk.start');
+                Route::post('/start', 'BarController@doStartKiosk')->name('bar.kiosk.doStart');
+            });
 
             // Generate poster
             Route::get('/generate-poster', 'BarController@generatePoster')->name('bar.poster.generate');

@@ -1095,7 +1095,7 @@ class BarController extends Controller {
      * @return Response
      */
     public function startKiosk() {
-        return view('bar.startKiosk');
+        return view('bar.kiosk.start');
     }
 
     /**
