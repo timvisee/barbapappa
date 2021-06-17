@@ -526,9 +526,21 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             // Useful links
             Route::get('/links', 'BarController@links')->name('bar.links');
 
-            // Start kiosk
-            Route::get('/start-kiosk', 'BarController@startKiosk')->name('bar.startKiosk');
-            Route::post('/start-kiosk', 'BarController@doStartKiosk')->name('bar.doStartKiosk');
+            // Kiosk pages
+            Route::prefix("/kiosk")->group(function() {
+                // Start kiosk
+                Route::get('/start', 'BarController@startKiosk')->name('bar.kiosk.start');
+                Route::post('/start', 'BarController@doStartKiosk')->name('bar.kiosk.doStart');
+
+                // Session management
+                Route::prefix("/sessions")->group(function() {
+                    Route::get('/', 'KioskSessionController@index')->name('bar.kiosk.sessions');
+                    Route::get('/expire-all', 'KioskSessionController@expireAll')->name('bar.kiosk.sessions.expireAll');
+                    Route::delete('/expire-all', 'KioskSessionController@doExpireAll')->name('bar.kiosk.sessions.doExpireAll');
+                    Route::get('/{sessionId}', 'KioskSessionController@show')->name('bar.kiosk.sessions.show');
+                    Route::delete('/expire/{sessionId}', 'KioskSessionController@doExpire')->name('bar.kiosk.sessions.doExpire');
+                });
+            });
 
             // Generate poster
             Route::get('/generate-poster', 'BarController@generatePoster')->name('bar.poster.generate');

@@ -6,7 +6,7 @@
     // Define menulinks
     $menulinks[] = [
         'name' => __('account.backToSessions'),
-        'link' => route('account.sessions', ['userId' => $user->id]),
+        'link' => route('bar.kiosk.sessions', ['barId' => $bar->human_id]),
         'icon' => 'undo',
     ];
 @endphp
@@ -50,18 +50,8 @@
                 </tr>
             @endif
             <tr>
-                <td>@lang('misc.tags')</td>
-                <td>
-                    @if($session->isCurrent())
-                        <span class="ui green label">@lang('account.thisSession')</span>
-                    @endif
-                    @if($session->isSameIp())
-                        <span class="ui olive label">@lang('account.thisNetwork')</span>
-                    @endif
-                    @if(!$session->isCurrent() && !$session->isSameIp())
-                        <i>@lang('misc.none')</i>
-                    @endif
-                </td>
+                <td>@lang('misc.createdBy')</td>
+                <td>{{ $session->user->name }}</td>
             </tr>
             <tr>
                 <td>@lang('misc.ip')</td>
@@ -88,13 +78,13 @@
         </tbody>
     </table>
 
-    @if(!$session->isExpired() && !$session->isCurrent())
-        {!! Form::open(['action' => ['SessionController@doExpire', 'userId' => $user->id, 'sessionId' => $session->id], 'method' => 'DELETE', 'class' => 'ui inline form']) !!}
+    @if(!$session->isExpired())
+        {!! Form::open(['action' => ['KioskSessionController@doExpire', 'barId' => $bar->human_id, 'sessionId' => $session->id], 'method' => 'DELETE', 'class' => 'ui inline form']) !!}
             <button class="ui negative button" type="submit">@lang('account.expireNow')</button>
         {!! Form::close() !!}
     @endif
 
-    <a href="{{ route('account.sessions', ['userId' => $user->id]) }}"
+    <a href="{{ route('bar.kiosk.sessions', ['barId' => $bar->human_id]) }}"
             class="ui button basic">
         @lang('account.backToSessions')
     </a>

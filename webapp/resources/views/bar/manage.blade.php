@@ -50,6 +50,34 @@
             'icon' => 'shopping-bag',
         ];
 
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bar.purchaseHistory'),
+            'link' => route('bar.history', ['barId' => $bar->human_id]),
+            'icon' => 'history',
+        ];
+
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bar.links.title'),
+            'link' => route('bar.links', ['barId' => $bar->human_id]),
+            'icon' => 'link',
+        ];
+
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bar.startKiosk'),
+            'link' => route('bar.kiosk.start', ['barId' => $bar->human_id]),
+            'icon' => 'shop',
+        ];
+
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bar.kioskSessions'),
+            'link' => route('bar.kiosk.sessions', ['barId' => $bar->human_id]),
+            'icon' => 'shop',
+        ];
+
     if(perms(BarController::permsManage()))
         $menulinks[] = [
             'name' => __('pages.bar.generatePoster'),
@@ -192,11 +220,18 @@
             <div class="item disabled">@lang('pages.bar.links.title')</div>
         @endif
         @if(perms(BarController::permsManage()))
-            <a href="{{ route('bar.startKiosk', ['barId' => $bar->human_id]) }}" class="item">
+            <a href="{{ route('bar.kiosk.start', ['barId' => $bar->human_id]) }}" class="item">
                 @lang('pages.bar.startKiosk')
             </a>
         @else
             <div class="item disabled">@lang('pages.bar.startKiosk')</div>
+        @endif
+        @if(perms(BarController::permsManage()))
+            <a href="{{ route('bar.kiosk.sessions', ['barId' => $bar->human_id]) }}" class="item">
+                @lang('pages.bar.kioskSessions')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.bar.kioskSessions')</div>
         @endif
         @if(perms(BarController::permsManage()))
             <a href="{{ route('bar.poster.generate', ['barId' => $bar->human_id]) }}" class="item">
