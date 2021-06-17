@@ -2,7 +2,7 @@
     <div class="ui large vertical menu fluid">
 
         <div class="item">
-            <div class="ui large transparent icon input">
+            <div class="ui transparent icon input">
                 <input v-model="query"
                         @input="e => query = e.target.value"
                         @focus="e => e.target.select()"
