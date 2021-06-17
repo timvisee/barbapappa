@@ -87,6 +87,7 @@ class KioskSession extends Model {
      *      describe, otherwise null is returned.
      * @return string|null Session description or null.
      */
+    // TODO: this is similar to Session::describe, merge
     public function describe($short = false, $ipFallback = true) {
         // Return IP if user agent is unknown
         if(empty($this->created_user_agent))

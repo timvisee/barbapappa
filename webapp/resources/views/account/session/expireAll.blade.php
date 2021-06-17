@@ -5,8 +5,8 @@
 @php
     // Define menulinks
     $menulinks[] = [
-        'name' => __('pages.accountPage.backToAccount'),
-        'link' => route('account', ['userId' => $user->id]),
+        'name' => __('account.backToSessions'),
+        'link' => route('account.sessions', ['userId' => $user->id]),
         'icon' => 'undo',
     ];
 @endphp

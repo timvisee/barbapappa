@@ -826,6 +826,7 @@ return [
         'startKioskConfirmDescription' => 'Entering kiosk mode will allow any user having access to this machine to purchase products on anybodies behalf.',
         'kioskSessions' => 'Kiosk sessions',
         'kioskSessionsDescription' => 'This page shows the active and expired kiosk sessions for this bar. Click on an active session to see details or to expire it. Expired sessions are automatically forgotten after a while.',
+        'expireAllKioskSessionsQuestion' => 'Are you sure you want to expire all kiosk sessions? This will log out all kiosks for this bar.',
         'generatePoster' => 'Create bar poster',
         'generatePosterDescription' => 'Create a poster for this bar to hang on a wall. Visitors will then be able to easily use :app and join this bar by scanning a QR code with their mobile phone.',
         'showCodeOnPoster' => 'Show code to join this bar on the poster',
