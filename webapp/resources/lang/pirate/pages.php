@@ -83,6 +83,7 @@ return [
             'verify#' => '{0} Verify no e-bottle coordinates|{1} Verify e-bottle coordinate|[2,*] Verify :count e-bottle coordinates',
             'verifiedDescription' => 'We sent a new verification message to yer e-bottle coordinates listed below. Tap th\' link in th\' message to complete verification.',
             'iVerifiedAll' => 'I verified all',
+            'someStillUnverified' => 'Some of yer e-bottle coordinates still be unverified. Please see th\' list below. Check yer e-bottle inbox for a verification message.',
             'verifySent' => 'A fresh verification e-bottle be sally forth.',
             'alreadyVerified' => 'Th\' e-bottle coordinate be verified.',
             'allVerified' => 'All yer e-bottle coordinates be verified.',
