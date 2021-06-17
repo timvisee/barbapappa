@@ -15,7 +15,7 @@ class LogoutController extends Controller {
      */
     public function logout() {
         // Redirect the user to the index page if not authenticated
-        if(!barauth()->isAuth())
+        if(!barauth()->isAuth() && !kioskauth()->isAuth())
             return $this->finishAndRedirect();
 
         // Invalidate user session
@@ -29,7 +29,8 @@ class LogoutController extends Controller {
             $session->invalidate();
 
         // Finish
-        return $this->finishAndRedirect()
+        return $this
+            ->finishAndRedirect()
             ->with('success', __('auth.loggedOut'));
     }
 
