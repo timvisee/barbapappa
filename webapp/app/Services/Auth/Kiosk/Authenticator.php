@@ -181,20 +181,20 @@ class Authenticator {
                 )
             );
 
-            // // Annotate user for Sentry error reporting
-            // if($authResult->isOk() && $authState != null && app()->bound('sentry')) {
-            //     $user_id = $authState->getSessionUser()->id ?? $authState->getUser()->id ?? null;
-            //     $user_name = $authState->getSessionUser()->name ?? $authState->getUser()->name ?? null;
-            //     Sentry\configureScope(function(Sentry\State\Scope $scope) use($user_id, $user_name): void {
-            //         $scope->setUser([
-            //             'id' => $user_id,
-            //             'name' => $user_name,
-            //         ]);
-            //     });
-            // }
+        // // Annotate user for Sentry error reporting
+        // if($authResult->isOk() && $authState != null && app()->bound('sentry')) {
+        //     $user_id = $authState->getSessionUser()->id ?? $authState->getUser()->id ?? null;
+        //     $user_name = $authState->getSessionUser()->name ?? $authState->getUser()->name ?? null;
+        //     Sentry\configureScope(function(Sentry\State\Scope $scope) use($user_id, $user_name): void {
+        //         $scope->setUser([
+        //             'id' => $user_id,
+        //             'name' => $user_name,
+        //         ]);
+        //     });
+        // }
 
         // Forget the session cookie if the session became invalid
-        else if($authResult->isErr() && $authResult->getResult() != AuthResult::ERR_NO_SESSION)
+        if($authResult->isErr() && $authResult->getResult() != AuthResult::ERR_NO_SESSION)
             Cookie::queue(
                 Cookie::forget(self::AUTH_COOKIE)
             );
