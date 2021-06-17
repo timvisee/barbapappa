@@ -78,6 +78,18 @@ class BunqAccount extends Model {
     }
 
     /**
+     * Scope a query to filter only to bunq accounts that have periodic checks
+     * enabled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeChecksEnabled($query) {
+        return $query->where('enable_checks', true);
+    }
+
+    /**
      * Get the relation to the economy this product is part of.
      * This might be null if this account is not linked to a specific community.
      *

@@ -56,8 +56,9 @@ class ProcessAllBunqAccountEvents implements ShouldQueue {
      */
     public function handle() {
         // Get all accounts, spawn a event processing job
-        // TODO: include hidden
-        BunqAccount::all()
+        BunqAccount::withoutGlobalScope()
+            ->checksEnabled()
+            ->get()
             ->each(function($account, $i) {
                 ProcessBunqAccountEvents::dispatch($account)
                     ->delay(now()->addMinutes($i));
