@@ -133,8 +133,12 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 $pagination->getUrlParamsNextPage()
             ), [])->getValue();
         $events = collect($events)->reverse();
-        if($events->isEmpty())
+        if($events->isEmpty()) {
+            // Update last checked time, since we've now covered all events
+            $account->checked_at = now();
+            $account->save();
             return;
+        }
 
         // Update last event ID we've processed, check whether we're done
         $account->last_event_id = $events->last()->getId();
