@@ -23,9 +23,7 @@
                                 'communityId' => $community->human_id,
                                 'economyId' => $economy->id
                             ]) }}"
-                            class="ui right pointing label red label-top-up"
-                            data-title="@lang('pages.bar.joined')"
-                            data-content="@lang('pages.bar.joinedClickToLeave')">
+                            class="ui right pointing label red label-top-up">
                         <u>@lang('pages.wallets.topUpNow')</u>
                     </a>
                 @endif
