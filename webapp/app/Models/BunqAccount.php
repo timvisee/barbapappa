@@ -173,7 +173,7 @@ class BunqAccount extends Model {
         }
 
         // Do not spawn renewal job if already recently renewed/renewing
-        if(!is_null($this->renewed_at) && $this->renewed_at >= now()->subSeconds(Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD))
+        if(!is_null($this->renewed_at) && $this->renewed_at <= now()->subSeconds(Self::BUNQ_SESSION_EXPIRY_RENEW_PERIOD))
             return;
 
         // Dispatch a job to renew the session, update the renew time
