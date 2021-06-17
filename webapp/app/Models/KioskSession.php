@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string token
  * @property int created_user_id
  * @property string created_ip
+ * @property string created_user_agent
  * @property Carbon|null expire_at
  * @property Carbon created_at
  * @property Carbon updated_at
