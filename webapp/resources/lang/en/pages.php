@@ -129,7 +129,6 @@ return [
         'leave' => 'Leave',
         'notJoined' => 'Not joined',
         'hintJoin' => 'You aren\'t part of this community yet.',
-        'joinedClickToLeave' => 'Click to leave.',
         'joinQuestion' => 'Would you like to join this community?',
         'joinedThisCommunity' => 'You\'ve joined this community.',
         'cannotSelfEnroll' => 'You cannot join this community yourself, it is disabled.',
@@ -779,7 +778,6 @@ return [
         'leave' => 'Leave',
 
         'hintJoin' => 'You aren\'t part of this bar yet.',
-        'joinedClickToLeave' => 'Click to leave.',
         'joinQuestion' => 'Would you like to join this bar?',
         'alsoJoinCommunity' => 'Also join their community',
         'alreadyJoinedTheirCommunity' => 'You already are a member of their community',

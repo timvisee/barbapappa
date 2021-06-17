@@ -129,7 +129,6 @@ return [
         'leave' => 'Leave',
         'notJoined' => 'Strangers!',
         'hintJoin' => 'Ye be not part of th\' crew.',
-        'joinedClickToLeave' => 'Click to be sunk.',
         'joinQuestion' => 'Ye like be joined th\' crew?',
         'joinedThisCommunity' => 'Ye joined th\' crew.',
         'leaveQuestion' => 'Ye be sure to sink th\' crew?',
@@ -188,7 +187,7 @@ return [
      */
     'communityMembers' => [
         'title' => 'Crew maties',
-        'description' => 'Dis page shows th\' overview o\' all crew maties.<br>Clicking a matey allows ye to remove the matey, or change be rank.',
+        'description' => 'Dis page shows th\' overview o\' all crew maties.<br>Tapping a matey allows ye to remove the matey, or change be rank.',
         'noMembers' => 'Dis crew be nay maties...',
         'memberSince' => 'Matey since',
         'lastVisit' => 'Last visit',
@@ -210,7 +209,7 @@ return [
      */
     'economies' => [
         'title' => 'Booties',
-        'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Click a booty to manage it, or create new booty for a new bar.',
+        'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Tapping a booty to manage it, or create new booty for a new bar.',
         'manage' => 'Manage booties',
         'noEconomies' => 'Dis crew be nay booties...',
         'createEconomy' => 'Create booty',
@@ -233,7 +232,7 @@ return [
      */
     'currencies' => [
         'title' => 'Currencies',
-        'description' => 'Dis page shows \'n overview of currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add new currency, or click one to manage.',
+        'description' => 'Dis page shows \'n overview of currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add new currency, or tap one to manage.',
         'change' => 'Change currency',
         'noCurrencies' => 'Dis booty be nay currencies...',
         'createCurrency' => 'Add currency',
@@ -275,7 +274,7 @@ return [
         'all' => 'All loot',
         'select' => 'Select loot',
         'search' => 'Scavenge loot',
-        'clickBuyOrSearch' => 'Click loot to get or search',
+        'clickBuyOrSearch' => 'Tap loot to get or search',
         '#products' => '{0} Nay loot|{1} 1 loot|[2,*] :count loot',
         'noProducts' => 'Nay loot...',
         'searchingFor' => 'Scavenging for :term...',
@@ -508,7 +507,7 @@ return [
     'bunqAccounts' => [
         'title' => 'bunq accounts',
         'bunqAccount' => 'bunq account',
-        'description' => 'Click on one of yer bunq accounts to manage it, or add a new one.',
+        'description' => 'Tap on one of yer bunq accounts to manage it, or add a new one.',
         'noAccounts' => 'Yer nay be any bunq accounts added yet...',
         'addAccount' => 'Add bunq account',
         'addAccountDescription' => 'This page allows you to add a bunq account for automatic payment processing.<br><br>Create an API token and an empty monetary account in the bunq app. Enter the token and the IBAN of the monetary account below.<br><br>Would you like to use a test account instead?',
@@ -541,7 +540,7 @@ return [
      */
     'wallets' => [
         'title' => 'Wallets',
-        'description' => 'Click on one of yer wallets to manage it, or create a fresh one.',
+        'description' => 'Tap on one of yer wallets to manage it, or create a fresh one.',
         'walletEconomies' => 'Wallet booties',
         'myWallets' => 'Me wallets',
         '#wallets' => '{0} No wallets|{1} 1 wallet|[2,*] :count wallets',
@@ -779,7 +778,6 @@ return [
         'leave' => 'Leave',
 
         'hintJoin' => 'Ye be not part of th\' bar.',
-        'joinedClickToLeave' => 'Click to be sunk.',
         'joinQuestion' => 'Ye like be joined th\' bar?',
         'alsoJoinCommunity' => 'Also be join their crew',
         'alreadyJoinedTheirCommunity' => 'Ye already be a pirate of their crew',
@@ -903,7 +901,7 @@ return [
      */
     'barMembers' => [
         'title' => 'Bar mateies',
-        'description' => 'Dis page shows th\' overview o\' all bar mateies.<br>Clicking a matey allows ye to remove the matey, or change be rank.',
+        'description' => 'Dis page shows th\' overview o\' all bar mateies.<br>Tap a matey allows ye to remove the matey, or change be rank.',
         'noMembers' => 'Dis bar be nay mateies...',
         'memberSince' => 'Matey since',
         'lastVisit' => 'Last visit',

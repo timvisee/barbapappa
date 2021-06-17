@@ -129,7 +129,6 @@ return [
         'leave' => 'Uitschrijven',
         'notJoined' => 'Niet ingeschreven',
         'hintJoin' => 'Je maakt nog geen deel uit van deze groep.',
-        'joinedClickToLeave' => 'Klik om uit te schrijven.',
         'joinQuestion' => 'Wil je je bij deze groep inschrijven?',
         'joinedThisCommunity' => 'Je bent ingeschreven bij deze groep.',
         'cannotSelfEnroll' => 'Je kunt jezelf niet inschrijven voor deze groep, de functie is uitgeschakeld.',
@@ -780,7 +779,6 @@ return [
         'leave' => 'Uitschrijven',
 
         'hintJoin' => 'Je maakt nog geen deel uit van deze bar.',
-        'joinedClickToLeave' => 'Klik om uit te schrijven.',
         'joinQuestion' => 'Wil je je bij deze bar inschrijven?',
         'alsoJoinCommunity' => 'Ook inschrijven bij de bijbehorende groep',
         'alreadyJoinedTheirCommunity' => 'Je bent al lid van de bijbehorende groep',
