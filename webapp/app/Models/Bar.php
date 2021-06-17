@@ -250,4 +250,11 @@ class Bar extends Model {
         // TODO: placeholder for when localized descriptions are available
         return $this->description;
     }
+
+    /**
+     * Get a relation to kiosk sessions for this bar.
+     */
+    public function kioskSessions() {
+        return $this->hasMany(KioskSession::class);
+    }
 }

@@ -130,6 +130,7 @@ class Authenticator {
         $session->user_id = $user->id;
         $session->token = $token;
         $session->created_ip = $ip;
+        $session->created_user_agent = $userAgent;
         $session->expire_at = $expire;
         $session->save();
 
