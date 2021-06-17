@@ -121,6 +121,7 @@ class Authenticator {
         // Generate an unique token and get the IP address
         $token = self::generateUniqueToken();
         $ip = Request::ip();
+        $userAgent = Request::userAgent();
         $expire = Carbon::now()->addSecond(self::SESSION_EXPIRE);
 
         // Create the new kiosk session object and save it
