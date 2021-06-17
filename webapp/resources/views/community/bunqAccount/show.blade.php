@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <td>@lang('misc.enabled')</td>
-                <td>{{ yesno($account->enabled) }}</td>
+                <td>{{ yesno($account->enable_payments) }}</td>
             </tr>
             <tr>
                 <td>@lang('barpay::misc.accountHolder')</td>

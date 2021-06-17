@@ -23,7 +23,8 @@ use bunq\Model\Generated\Object\NotificationFilterUrl;
  * @property int id
  * @property int community_id
  * @property-read Community community
- * @property boolean enabled
+ * @property boolean enable_payments
+ * @property boolean enable_checks
  * @property string|null name
  * @property string api_context_encrypted
  * @property string api_context
@@ -55,7 +56,8 @@ class BunqAccount extends Model {
 
     protected $fillable = [
         'community_id',
-        'enabled',
+        'enable_payments',
+        'enable_checks',
         'name',
         'account_holder',
         'iban',
@@ -70,7 +72,9 @@ class BunqAccount extends Model {
 
     public static function boot() {
         parent::boot();
-        static::addGlobalScope(new EnabledScope);
+
+        // TODO: this is ambiguous, remove it, there are more 'enabled' fields
+        static::addGlobalScope(new EnabledScope('enable_payments'));
     }
 
     /**

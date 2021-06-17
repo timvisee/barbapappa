@@ -27,11 +27,10 @@ class BunqAccountController extends Controller {
      * @return Response
      */
     public function index(Request $request, $communityId) {
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $accounts = $community
             ->bunqAccounts()
-            ->withoutGlobalScope(new EnabledScope)
+            ->withoutGlobalScope(new EnabledScope('enable_payments'))
             ->get();
 
         return view('community.bunqAccount.index')
@@ -140,7 +139,7 @@ class BunqAccountController extends Controller {
         // Add the bunq account to the database
         $account = new BunqAccount();
         $account->community_id = $community->id;
-        $account->enabled = is_checked($request->input('enabled'));
+        $account->enable_payments = is_checked($request->input('enable_payments'));
         $account->name = $request->input('name');
         $account->api_context = $apiContext;
         $account->monetary_account_id = $monetaryAccount->getId();
@@ -251,7 +250,7 @@ class BunqAccountController extends Controller {
         // Add the bunq account to the database
         $account = new BunqAccount();
         $account->community_id = $community->id;
-        $account->enabled = is_checked($request->input('enabled'));
+        $account->enable_payments = is_checked($request->input('enable_payments'));
         $account->name = $request->input('name');
         $account->api_context = $apiContext;
         $account->monetary_account_id = $monetaryAccount->getId();
@@ -341,7 +340,7 @@ class BunqAccountController extends Controller {
         $community = \Request::get('community');
         $account = $community
             ->bunqAccounts()
-            ->withoutGlobalScope(new EnabledScope)
+            ->withoutGlobalScope(new EnabledScope('enable_payments'))
             ->findOrFail($accountId);
 
         return view('community.bunqAccount.show')
@@ -396,7 +395,7 @@ class BunqAccountController extends Controller {
         $community = \Request::get('community');
         $account = $community
             ->bunqAccounts()
-            ->withoutGlobalScope(new EnabledScope)
+            ->withoutGlobalScope(new EnabledScope('enable_payments'))
             ->findOrFail($accountId);
 
         return view('community.bunqAccount.edit')
@@ -419,7 +418,7 @@ class BunqAccountController extends Controller {
         $community = \Request::get('community');
         $account = $community
             ->bunqAccounts()
-            ->withoutGlobalScope(new EnabledScope)
+            ->withoutGlobalScope(new EnabledScope('enable_payments'))
             ->findOrFail($accountId);
 
         // Validate
@@ -430,7 +429,7 @@ class BunqAccountController extends Controller {
 
         // Edit the account
         $account->name = $request->input('name');
-        $account->enabled = is_checked($request->input('enabled'));
+        $account->enable_payments = is_checked($request->input('enable_payments'));
         $account->account_holder = $request->input('account_holder');
         $account->save();
 

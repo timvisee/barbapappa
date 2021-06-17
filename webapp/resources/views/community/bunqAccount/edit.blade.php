@@ -22,11 +22,11 @@
 
         <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
             <div class="ui checkbox">
-                {{ Form::checkbox('enabled', true, $account->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
-                {{ Form::label('enabled', __('pages.bunqAccounts.enabled')) }}
+                {{ Form::checkbox('enable_payments', true, $account->enable_payments, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('enable_payments', __('pages.bunqAccounts.enabled')) }}
             </div>
             <br />
-            {{ ErrorRenderer::inline('enabled') }}
+            {{ ErrorRenderer::inline('enable_payments') }}
         </div>
 
         <div class="ui divider hidden"></div>
