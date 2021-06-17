@@ -497,7 +497,7 @@ return [
         'title' => 'Financial report',
         'walletSum' => 'Cumulative balance',
         'paymentsInProgress' => 'In progress',
-        'fromBalanceImport' => 'from balance import',
+        'noAccountImport' => 'No account (import)',
         'membersWithNonZeroBalance' => 'Members with balance',
         'description' => 'This shows a simple financial report for the current economy state. Users from balance imports, that have not registered and joined this economy, are currently not listed here.',
     ],

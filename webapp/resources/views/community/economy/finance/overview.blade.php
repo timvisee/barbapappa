@@ -70,7 +70,7 @@
 
                     @if($member['member']->user_id == null)
                         <span class="sub-label">
-                            @lang('pages.finance.fromBalanceImport')
+                            {{ lcfirst(__('pages.finance.noAccountImport')) }}
                         </span>
                     @endif
                 @endif
