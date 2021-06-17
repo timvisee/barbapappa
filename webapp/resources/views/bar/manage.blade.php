@@ -50,6 +50,34 @@
             'icon' => 'shopping-bag',
         ];
 
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bar.purchaseHistory'),
+            'link' => route('bar.history', ['barId' => $bar->human_id]),
+            'icon' => 'history',
+        ];
+
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bar.links.title'),
+            'link' => route('bar.links', ['barId' => $bar->human_id]),
+            'icon' => 'link',
+        ];
+
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bar.startKiosk'),
+            'link' => route('bar.kiosk.start', ['barId' => $bar->human_id]),
+            'icon' => 'shop',
+        ];
+
+    if(perms(ProductController::permsView()))
+        $menulinks[] = [
+            'name' => __('pages.bar.kioskSessions'),
+            'link' => route('bar.kiosk.sessions', ['barId' => $bar->human_id]),
+            'icon' => 'shop',
+        ];
+
     if(perms(BarController::permsManage()))
         $menulinks[] = [
             'name' => __('pages.bar.generatePoster'),
