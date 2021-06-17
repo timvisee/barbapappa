@@ -30,8 +30,12 @@
                 <td>{{ $account->name }}</td>
             </tr>
             <tr>
-                <td>@lang('misc.enabled')</td>
+                <td>@lang('pages.bunqAccounts.paymentsEnabled')</td>
                 <td>{{ yesno($account->enable_payments) }}</td>
+            </tr>
+            <tr>
+                <td>@lang('pages.bunqAccounts.checksEnabled')</td>
+                <td>{{ yesno($account->enable_checks) }}</td>
             </tr>
             <tr>
                 <td>@lang('barpay::misc.accountHolder')</td>

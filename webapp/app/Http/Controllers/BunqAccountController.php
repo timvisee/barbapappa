@@ -140,6 +140,7 @@ class BunqAccountController extends Controller {
         $account = new BunqAccount();
         $account->community_id = $community->id;
         $account->enable_payments = is_checked($request->input('enable_payments'));
+        $account->enable_checks = is_checked($request->input('enable_checks'));
         $account->name = $request->input('name');
         $account->api_context = $apiContext;
         $account->monetary_account_id = $monetaryAccount->getId();
@@ -251,6 +252,7 @@ class BunqAccountController extends Controller {
         $account = new BunqAccount();
         $account->community_id = $community->id;
         $account->enable_payments = is_checked($request->input('enable_payments'));
+        $account->enable_checks = is_checked($request->input('enable_checks'));
         $account->name = $request->input('name');
         $account->api_context = $apiContext;
         $account->monetary_account_id = $monetaryAccount->getId();
@@ -430,6 +432,7 @@ class BunqAccountController extends Controller {
         // Edit the account
         $account->name = $request->input('name');
         $account->enable_payments = is_checked($request->input('enable_payments'));
+        $account->enable_checks = is_checked($request->input('enable_checks'));
         $account->account_holder = $request->input('account_holder');
         $account->save();
 
