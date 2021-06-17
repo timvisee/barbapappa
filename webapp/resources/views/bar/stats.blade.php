@@ -78,10 +78,18 @@
 
     <h3 class="ui horizontal divider header">@lang('misc.sold')</h3>
     <div class="ui two small statistics">
-        <div class="statistic">
-            <div class="value">{{ $soldProductCount }}</div>
-            <div class="label">@lang('pages.products.title')</div>
-        </div>
+        @if(perms(BarMemberController::permsView()))
+            <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                    class="statistic">
+                <div class="value">{{ $soldProductCount }}</div>
+                <div class="label">@lang('pages.products.title')</div>
+            </a>
+        @else
+            <div class="statistic">
+                <div class="value">{{ $soldProductCount }}</div>
+                <div class="label">@lang('pages.products.title')</div>
+            </div>
+        @endif
         <div class="statistic">
             <div class="value">{{ $transactionCount }}</div>
             <div class="label">@lang('pages.transactions.title')</div>
