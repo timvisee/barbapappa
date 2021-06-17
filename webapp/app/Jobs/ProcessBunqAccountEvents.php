@@ -184,6 +184,10 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 throw new \Exception('Attempting to handle bunq event with unhandled type');
         });
 
+        // Update last checked time, since we've now covered all events
+        $account->checked_at = now();
+        $account->save();
+
         // If no events were found, reschedule job after a few seconds
         if($this->retryCountIfNone > 0 && $events->isEmpty()) {
             Self::dispatch($account, $this->retryCountIfNone - 1)
