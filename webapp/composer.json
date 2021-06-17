@@ -65,7 +65,7 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.0",
         "mariuzzo/laravel-js-localization": "^1.4",
-        "sentry/sentry-laravel": "^1.0.2",
+        "sentry/sentry-laravel": "^2.7.0",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "staudenmeir/eloquent-has-many-deep": "^1.8",
         "timvisee/barpay": "@dev",
