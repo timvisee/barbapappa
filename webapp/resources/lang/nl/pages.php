@@ -83,6 +83,7 @@ return [
             'verify#' => '{0} Verifiëer geen e-mailadres|{1} Verifiëer e-mailadres|[2,*] Verifiëer :count e-mailadressen',
             'verifiedDescription' => 'We hebben je een verificatie e-mail gestuurd naar de onderstaande e-mailadressen. Klik op de link in het bericht om het verificatieproces te voltooien.',
             'iVerifiedAll' => 'Ik heb alles geverifiëerd',
+            'someStillUnverified' => 'Nog niet al je e-mailadressen zijn geverifiëerd. Zie de onderstaande lijst. Controleer je e-mail inbox voor een verificatie bericht.',
             'verifySent' => 'Een nieuwe verificatie-e-mail zal zo spoedig mogelijk verzonden worden.',
             'alreadyVerified' => 'Dit e-mailadres is al geverifiëerd.',
             'allVerified' => 'Al je e-mailadressen zijn geverifiëerd.',

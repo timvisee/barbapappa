@@ -83,6 +83,7 @@ return [
             'verify#' => '{0} Verify no email addresses|{1} Verify email address|[2,*] Verify :count email addresses',
             'verifiedDescription' => 'We sent a new verification message to your email addresses listed below. Click the link in the message to complete verification.',
             'iVerifiedAll' => 'I verified all',
+            'someStillUnverified' => 'Some of your email addresses are still unverified. Please see the list below. Check your email inbox for a verification message.',
             'verifySent' => 'A new verification email will be sent shortly.',
             'alreadyVerified' => 'This email address has already been verified.',
             'allVerified' => 'All your email addresses have been verified.',

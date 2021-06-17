@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Support\ViewErrorBag;
 
@@ -301,7 +302,7 @@ if(!function_exists('add_session_error')) {
             'errors',
             $errors->put(
                 'default',
-                ($errors->getBag('default') ?? new MessagBag)->add($field, $message)
+                ($errors->getBag('default') ?? new MessageBag)->add($field, $message)
             )
         );
     }

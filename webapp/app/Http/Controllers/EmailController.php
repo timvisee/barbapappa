@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-
 use App\Helpers\ValidationDefaults;
 use App\Managers\EmailVerificationManager;
 use App\Models\Email;
 use App\Models\User;
 use App\Perms\AppRoles;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 class EmailController extends Controller {
 
@@ -172,6 +173,11 @@ class EmailController extends Controller {
         $emails = $user->emails()->unverified()->get();
         if($emails->isEmpty())
             return redirect()->route('last');
+
+        // Show verification warning if user reloaded the page
+        $is_reload = url()->previous() == url()->current();
+        if($is_reload)
+            session()->flash('warning', __('pages.accountPage.email.someStillUnverified'));
 
         // Keep showing current page until all email addresses are verified
         return view('account.email.verified')
