@@ -8,6 +8,17 @@ use Illuminate\Database\Eloquent\Builder;
 
 class EnabledScope implements Scope {
 
+    protected $field;
+
+    /**
+     * Enabled scope.
+     *
+     * @param string [$field='enabled'] Enabled field name.
+     */
+    public function __construct($field = 'enabled') {
+        $this->field = $field;
+    }
+
     /**
      * Apply the enabled scope to a given Eloquent query builder.
      *
@@ -16,6 +27,6 @@ class EnabledScope implements Scope {
      * @return void
      */
     public function apply(Builder $builder, Model $model) {
-        $builder->where('enabled', true);
+        $builder->where($this->field, true);
     }
 }

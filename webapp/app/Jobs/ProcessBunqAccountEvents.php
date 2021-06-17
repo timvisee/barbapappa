@@ -133,8 +133,12 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 $pagination->getUrlParamsNextPage()
             ), [])->getValue();
         $events = collect($events)->reverse();
-        if($events->isEmpty())
+        if($events->isEmpty()) {
+            // Update last checked time, since we've now covered all events
+            $account->checked_at = now();
+            $account->save();
             return;
+        }
 
         // Update last event ID we've processed, check whether we're done
         $account->last_event_id = $events->last()->getId();
@@ -183,6 +187,10 @@ class ProcessBunqAccountEvents implements ShouldQueue {
             else
                 throw new \Exception('Attempting to handle bunq event with unhandled type');
         });
+
+        // Update last checked time, since we've now covered all events
+        $account->checked_at = now();
+        $account->save();
 
         // If no events were found, reschedule job after a few seconds
         if($this->retryCountIfNone > 0 && $events->isEmpty()) {

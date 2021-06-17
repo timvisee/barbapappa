@@ -30,8 +30,12 @@
                 <td>{{ $account->name }}</td>
             </tr>
             <tr>
-                <td>@lang('misc.enabled')</td>
-                <td>{{ yesno($account->enabled) }}</td>
+                <td>@lang('pages.bunqAccounts.paymentsEnabled')</td>
+                <td>{{ yesno($account->enable_payments) }}</td>
+            </tr>
+            <tr>
+                <td>@lang('pages.bunqAccounts.checksEnabled')</td>
+                <td>{{ yesno($account->enable_checks) }}</td>
             </tr>
             <tr>
                 <td>@lang('barpay::misc.accountHolder')</td>
@@ -50,6 +54,22 @@
                         <i>@lang('misc.unspecified')</i>
                     @endif
                 </td>
+            </tr>
+            <tr>
+                <td>@lang('pages.bunqAccounts.lastCheckedAt')</td>
+                @if($account->checked_at != null)
+                    <td>@include('includes.humanTimeDiff', ['time' => $account->checked_at])</td>
+                @else
+                    <td><i>@lang('misc.unknown')</i></td>
+                @endif
+            </tr>
+            <tr>
+                <td>@lang('pages.bunqAccounts.lastRenewedAt')</td>
+                @if($account->renewed_at != null)
+                    <td>@include('includes.humanTimeDiff', ['time' => $account->renewed_at])</td>
+                @else
+                    <td><i>@lang('pages.bunqAccounts.notRenewedYet')</i></td>
+                @endif
             </tr>
             <tr>
                 <td>@lang('misc.createdAt')</td>

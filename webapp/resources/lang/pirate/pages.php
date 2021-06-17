@@ -526,7 +526,10 @@ return [
         'notZeroBalance' => 'Account does not have a balance of €0.00, create a new monitary account',
         'added' => 'The bunq account be added.',
         'changed' => 'The bunq account be changed.',
-        'enabled' => 'Enabled, allow usage for payments',
+        'paymentsEnabled' => 'Payments enabled',
+        'checksEnabled' => 'Checks enabled',
+        'enablePayments' => 'Enable payments: allow usage for new payments',
+        'enableChecks' => 'Enable checks: check periodically for newly received payments',
         'confirm' => 'I agree with this and meet th\' requirements',
         'environment' => 'bunq API environment',
         'runHousekeeping' => 'Run housekeeping',
@@ -534,6 +537,9 @@ return [
         'noHttpsNoCallbacks' => 'Dis site does nay be HTTPS, real time bunq payments nay be supported. Payment events be processed daily.',
         'manageCommunityAccounts' => 'Manage community bunq accounts',
         'manageAppAccounts' => 'Manage application global bunq accounts',
+        'lastCheckedAt' => 'Last checked at',
+        'lastRenewedAt' => 'API last renewed at',
+        'notRenewedYet' => 'Not yet renewed',
     ],
 
     /**

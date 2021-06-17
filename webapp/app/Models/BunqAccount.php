@@ -23,7 +23,8 @@ use bunq\Model\Generated\Object\NotificationFilterUrl;
  * @property int id
  * @property int community_id
  * @property-read Community community
- * @property boolean enabled
+ * @property boolean enable_payments
+ * @property boolean enable_checks
  * @property string|null name
  * @property string api_context_encrypted
  * @property string api_context
@@ -31,8 +32,10 @@ use bunq\Model\Generated\Object\NotificationFilterUrl;
  * @property string account_holder
  * @property string iban
  * @property string bic
+ * @property int|null last_event_id
+ * @property Carbon|null checked_at
+ * @property Carbon|null renewed_at
  * @property Carbon|null deleted_at
- * @property Carbon renewed_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -49,13 +52,15 @@ class BunqAccount extends Model {
     protected $table = 'bunq_account';
 
     protected $casts = [
-        'deleted_at' => 'datetime',
+        'checked_at' => 'datetime',
         'renewed_at' => 'datetime',
+        'deleted_at' => 'datetime',
     ];
 
     protected $fillable = [
         'community_id',
-        'enabled',
+        'enable_payments',
+        'enable_checks',
         'name',
         'account_holder',
         'iban',
@@ -70,7 +75,21 @@ class BunqAccount extends Model {
 
     public static function boot() {
         parent::boot();
-        static::addGlobalScope(new EnabledScope);
+
+        // TODO: this is ambiguous, remove it, there are more 'enabled' fields
+        static::addGlobalScope(new EnabledScope('enable_payments'));
+    }
+
+    /**
+     * Scope a query to filter only to bunq accounts that have periodic checks
+     * enabled.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeChecksEnabled($query) {
+        return $query->where('enable_checks', true);
     }
 
     /**
@@ -147,7 +166,7 @@ class BunqAccount extends Model {
 
         // Immediately renew session if already expired, refresh API context
         if($expireIn <= 1) {
-            RenewBunqApiContext::dispatchNow($this);
+            RenewBunqApiContext::dispatchSync($this);
             $this->refresh();
             $apiContext = $this->api_context;
             return;
@@ -204,7 +223,7 @@ class BunqAccount extends Model {
         // Set the filters
         NotificationFilterUrlMonetaryAccountInternal::createWithListResponse(
             $this->monetary_account_id,
-            $filters
+            $filters,
         );
 
         return $message;

@@ -25,6 +25,7 @@ return [
     'accept' => 'Accept',
     'or' => 'or',
     'cancel' => 'Cancel',
+    'recommended' => 'Recommended',
 
     'notYetImplemented' => 'Not yet implemented.',
 ];

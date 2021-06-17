@@ -25,7 +25,7 @@ class AppBunqAccountController extends Controller {
      * @return Response
      */
     public function index(Request $request) {
-        $accounts = BunqAccount::withoutGlobalScope(new EnabledScope)
+        $accounts = BunqAccount::withoutGlobalScope(new EnabledScope('enable_payments'))
             ->where('community_id', null)
             ->get();
 
@@ -131,7 +131,8 @@ class AppBunqAccountController extends Controller {
         // Add the bunq account to the database
         $account = new BunqAccount();
         $account->community_id = null;
-        $account->enabled = is_checked($request->input('enabled'));
+        $account->enable_payments = is_checked($request->input('enable_payments'));
+        $account->enable_checks = is_checked($request->input('enable_checks'));
         $account->name = $request->input('name');
         $account->api_context = $apiContext;
         $account->monetary_account_id = $monetaryAccount->getId();
@@ -237,7 +238,8 @@ class AppBunqAccountController extends Controller {
         // Add the bunq account to the database
         $account = new BunqAccount();
         $account->community_id = null;
-        $account->enabled = is_checked($request->input('enabled'));
+        $account->enable_payments = is_checked($request->input('enable_payments'));
+        $account->enable_checks = is_checked($request->input('enable_checks'));
         $account->name = $request->input('name');
         $account->api_context = $apiContext;
         $account->monetary_account_id = $monetaryAccount->getId();
@@ -322,7 +324,7 @@ class AppBunqAccountController extends Controller {
      */
     public function show($accountId) {
         // Find the bunq account
-        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope('enable_payments'))
             ->where('community_id', null)
             ->findOrFail($accountId);
 
@@ -343,7 +345,7 @@ class AppBunqAccountController extends Controller {
      */
     public function doHousekeep($accountId) {
         // Find the bunq account
-        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope('enable_payments'))
             ->where('community_id', null)
             ->findOrFail($accountId);
 
@@ -372,7 +374,7 @@ class AppBunqAccountController extends Controller {
      */
     public function edit($accountId) {
         // Find the bunq account
-        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope('enable_payments'))
             ->where('community_id', null)
             ->findOrFail($accountId);
 
@@ -392,7 +394,7 @@ class AppBunqAccountController extends Controller {
         // TODO: with trashed?
 
         // Find the bunq account
-        $account = BunqAccount::withoutGlobalScope(new EnabledScope)
+        $account = BunqAccount::withoutGlobalScope(new EnabledScope('enable_payments'))
             ->where('community_id', null)
             ->findOrFail($accountId);
 
@@ -404,7 +406,8 @@ class AppBunqAccountController extends Controller {
 
         // Edit the account
         $account->name = $request->input('name');
-        $account->enabled = is_checked($request->input('enabled'));
+        $account->enable_payments = is_checked($request->input('enable_payments'));
+        $account->enable_checks = is_checked($request->input('enable_checks'));
         $account->account_holder = $request->input('account_holder');
         $account->save();
 

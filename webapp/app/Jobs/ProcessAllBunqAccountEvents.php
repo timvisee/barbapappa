@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\BunqAccount;
+use App\Scopes\EnabledScope;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -56,8 +57,9 @@ class ProcessAllBunqAccountEvents implements ShouldQueue {
      */
     public function handle() {
         // Get all accounts, spawn a event processing job
-        // TODO: include hidden
-        BunqAccount::all()
+        BunqAccount::withoutGlobalScope(new EnabledScope('enable_payments'))
+            ->checksEnabled()
+            ->get()
             ->each(function($account, $i) {
                 ProcessBunqAccountEvents::dispatch($account)
                     ->delay(now()->addMinutes($i));

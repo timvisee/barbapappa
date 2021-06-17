@@ -527,7 +527,10 @@ return [
         'notZeroBalance' => 'Account heeft geen saldo van €0.00, maak een nieuwe monitair account',
         'added' => 'Het bunq account is toegevoegd.',
         'changed' => 'Het bunq account is aangepast.',
-        'enabled' => 'Ingeschakeld, sta gebruik voor betalingen toe',
+        'paymentsEnabled' => 'Betalingen ingeschakeld',
+        'checksEnabled' => 'Checks ingeschakeld',
+        'enablePayments' => 'Betalingen inschakelen: sta gebruik voor nieuwe betalingen toe',
+        'enableChecks' => 'Checks inschakelen: voor een periodieke controle uit voor nieuw ontvangen betalingen',
         'confirm' => 'Ik ga hiermee akkoord en voldoe aan de eisen',
         'environment' => 'bunq API environment',
         'runHousekeeping' => 'Voer huishouden uit',
@@ -535,6 +538,9 @@ return [
         'noHttpsNoCallbacks' => 'Deze site gebruikt geen HTTPS, real time bunq betalingen zijn daarom niet ondersteund. Betalingen zullen eens per dag verwerkt worden.',
         'manageCommunityAccounts' => 'Beheer bunq accounts voor groep',
         'manageAppAccounts' => 'Beheer bunq accounts voor gehele applicatie',
+        'lastCheckedAt' => 'Laatst gechecked op',
+        'lastRenewedAt' => 'API laatst vernieuwd op',
+        'notRenewedYet' => 'Nog niet verieuwd',
     ],
 
     /**

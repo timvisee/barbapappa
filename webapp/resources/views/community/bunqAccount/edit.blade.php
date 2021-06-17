@@ -20,13 +20,22 @@
             {{ ErrorRenderer::inline('account_holder') }}
         </div>
 
-        <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
+        <div class="inline field {{ ErrorRenderer::hasError('enable_payments') ? 'error' : '' }}">
             <div class="ui checkbox">
-                {{ Form::checkbox('enabled', true, $account->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
-                {{ Form::label('enabled', __('pages.bunqAccounts.enabled')) }}
+                {{ Form::checkbox('enable_payments', true, $account->enable_payments, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('enable_payments', __('pages.bunqAccounts.enablePayments')) }}
             </div>
             <br />
-            {{ ErrorRenderer::inline('enabled') }}
+            {{ ErrorRenderer::inline('enable_payments') }}
+        </div>
+
+        <div class="inline field {{ ErrorRenderer::hasError('enable_checks') ? 'error' : '' }}">
+            <div class="ui checkbox">
+                {{ Form::checkbox('enable_checks', true, $account->enable_checks, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('enable_checks', __('pages.bunqAccounts.enableChecks') . ' (' . __('general.recommended') . ')') }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('enable_checks') }}
         </div>
 
         <div class="ui divider hidden"></div>
