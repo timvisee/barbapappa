@@ -166,7 +166,7 @@ class BunqAccount extends Model {
 
         // Immediately renew session if already expired, refresh API context
         if($expireIn <= 1) {
-            RenewBunqApiContext::dispatchNow($this);
+            RenewBunqApiContext::dispatchSync($this);
             $this->refresh();
             $apiContext = $this->api_context;
             return;
@@ -223,7 +223,7 @@ class BunqAccount extends Model {
         // Set the filters
         NotificationFilterUrlMonetaryAccountInternal::createWithListResponse(
             $this->monetary_account_id,
-            $filters
+            $filters,
         );
 
         return $message;

@@ -64,8 +64,8 @@ class RenewBunqApiContext implements ShouldQueue {
      */
     public function handle() {
         // Obtain the account ID, get the API context
-        // TODO: also find deleted accounts
-        $account = BunqAccount::findOrFail($this->account_id);
+        $account = BunqAccount::withoutGlobalScopes()
+            ->findOrFail($this->account_id);
         $apiContext = $account->api_context;
 
         // Renew the context, update it in the database

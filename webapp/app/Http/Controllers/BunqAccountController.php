@@ -363,7 +363,10 @@ class BunqAccountController extends Controller {
     public function doHousekeep($communityId, $accountId) {
         // Get the community, find the bunq account
         $community = \Request::get('community');
-        $account = $community->bunqAccounts()->findOrFail($accountId);
+        $account = $community
+            ->bunqAccounts()
+            ->withoutGlobalScope(new EnabledScope('enable_payments'))
+            ->findOrFail($accountId);
 
         // Load the bunq API context
         $account->loadBunqContext();
