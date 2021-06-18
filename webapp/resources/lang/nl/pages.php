@@ -902,9 +902,11 @@ return [
         'communityStats' => 'Groep statistieken',
         'activePastHour' => 'Actief afgelopen uur',
         'activePastDay' => 'Actief afgelopen dag',
+        'activePastWeek' => 'Actief afgelopen week',
         'activePastMonth' => 'Actief afgelopen maand',
         'productsPastHour' => 'Producten afgelopen uur',
         'productsPastDay' => 'Producten afgelopen dag',
+        'productsPastWeek' => 'Producten afgelopen week',
         'productsPastMonth' => 'Producten afgelopen maand',
     ],
 
