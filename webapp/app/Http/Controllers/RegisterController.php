@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
-use App\Managers\EmailVerificationManager;
 use App\Models\Email;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -61,9 +60,6 @@ class RegisterController extends Controller {
         $email->user_id = $user->id;
         $email->email = $request->input('email');
         $email->save();
-
-        // Make an email verification request
-        EmailVerificationManager::createAndSend($email, true);
 
         // Create a user session and store the result
         $authResult = barauth()->getAuthenticator()->createSession($user);

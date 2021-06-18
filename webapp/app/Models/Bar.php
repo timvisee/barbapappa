@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Managers\EmailVerificationManager;
 use App\Traits\HasPassword;
 use App\Traits\HasSlug;
 use App\Traits\Joinable;
@@ -177,6 +178,14 @@ class Bar extends Model {
                 $economy->join($user);
             $bar->memberJoin($user);
         });
+
+        // Send verification emails if user did not verify any mail yet
+        if(!EmailVerificationManager::hasSentRecentlyOrVerified($user->emails)) {
+            $isNewUser = $user->created_at >= now()->subWeek();
+            $user->emails->each(function($email) use($isNewUser) {
+                EmailVerificationManager::createAndSend($email, $isNewUser);
+            });
+        }
     }
 
     /**
