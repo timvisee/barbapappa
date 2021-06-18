@@ -61,6 +61,46 @@ class EmailVerificationManager {
     }
 
     /**
+     * Check wheher we've recently sent a verification message for this email or
+     * if it has already been verified.
+     *
+     * This only returns false if:
+     * - not yet verified
+     * - no verification email has been sent
+     * - or a verification email is sent but it has already expired
+     *
+     * If multiple emails are given, this only returns false if the above
+     * constraints are false for all emails.
+     *
+     * @param array(Email)|Email $emails The email or emails.
+     * @return bool True if sent, false if not.
+     */
+    public static function hasSentRecentlyOrVerified($emails) {
+        $emails = collect($emails);
+
+        foreach($emails as $email) {
+            // Check if already verified
+            if($email->isVerified())
+                return true;
+
+            // We didn't verify if there are no verifications
+            if($email->verifications->isEmpty())
+                continue;
+
+            // We did sent recently if any verification is still valid
+            $anySent = $email
+                ->verifications
+                ->contains(function($verification) {
+                    return !$verification->isExpired();
+                });
+            if($anySent)
+                return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Create a new email verification token and send a verification email to the user.
      * With this token the email address can be verified.
      *
