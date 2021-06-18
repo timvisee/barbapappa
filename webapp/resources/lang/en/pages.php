@@ -900,9 +900,11 @@ return [
         'communityStats' => 'Community statistics',
         'activePastHour' => 'Active past hour',
         'activePastDay' => 'Active past day',
+        'activePastWeek' => 'Active past week',
         'activePastMonth' => 'Active past month',
         'productsPastHour' => 'Products past hour',
         'productsPastDay' => 'Products past day',
+        'productsPastWeek' => 'Products past week',
         'productsPastMonth' => 'Products past month',
     ],
 

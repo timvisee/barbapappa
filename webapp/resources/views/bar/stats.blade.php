@@ -62,6 +62,10 @@
             <div class="label">@lang('pages.stats.activePastDay')</div>
         </div>
         <div class="statistic">
+            <div class="value">{{ $memberCountWeek }}</div>
+            <div class="label">@lang('pages.stats.activePastWeek')</div>
+        </div>
+        <div class="statistic">
             <div class="value">{{ $memberCountMonth }}</div>
             <div class="label">@lang('pages.stats.activePastMonth')</div>
         </div>
@@ -103,6 +107,10 @@
         <div class="statistic">
             <div class="value">{{ $soldProductCountDay }}</div>
             <div class="label">@lang('pages.stats.productsPastDay')</div>
+        </div>
+        <div class="statistic">
+            <div class="value">{{ $soldProductCountWeek }}</div>
+            <div class="label">@lang('pages.stats.productsPastWeek')</div>
         </div>
         <div class="statistic">
             <div class="value">{{ $soldProductCountMonth }}</div>

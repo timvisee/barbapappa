@@ -185,6 +185,10 @@ class BarController extends Controller {
             ->memberUsers()
             ->wherePivot('visited_at', '>=', Carbon::now()->subDay())
             ->count();
+        $memberCountWeek = $bar
+            ->memberUsers()
+            ->wherePivot('visited_at', '>=', Carbon::now()->subWeek())
+            ->count();
         $memberCountMonth = $bar
             ->memberUsers()
             ->wherePivot('visited_at', '>=', Carbon::now()->subMonth())
@@ -201,6 +205,10 @@ class BarController extends Controller {
             ->productMutations()
             ->where('created_at', '>=', Carbon::now()->subDay())
             ->sum('quantity');
+        $soldProductCountWeek = $bar
+            ->productMutations()
+            ->where('created_at', '>=', Carbon::now()->subWeek())
+            ->sum('quantity');
         $soldProductCountMonth = $bar
             ->productMutations()
             ->where('created_at', '>=', Carbon::now()->subMonth())
@@ -210,12 +218,14 @@ class BarController extends Controller {
         return view('bar.stats')
             ->with('memberCountHour', $memberCountHour)
             ->with('memberCountDay', $memberCountDay)
+            ->with('memberCountWeek', $memberCountWeek)
             ->with('memberCountMonth', $memberCountMonth)
             ->with('productCount', $productCount)
             ->with('soldProductCount', $soldProductCount)
             ->with('transactionCount', $transactionCount)
             ->with('soldProductCountHour', $soldProductCountHour)
             ->with('soldProductCountDay', $soldProductCountDay)
+            ->with('soldProductCountWeek', $soldProductCountWeek)
             ->with('soldProductCountMonth', $soldProductCountMonth);
     }
 
