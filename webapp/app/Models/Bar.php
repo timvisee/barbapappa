@@ -180,6 +180,7 @@ class Bar extends Model {
         });
 
         // Send verification emails if user did not verify any mail yet
+        // We send this now, not after registering, see: https://gitlab.com/timvisee/barbapappa/-/issues/428
         if(!EmailVerificationManager::hasSentRecentlyOrVerified($user->emails)) {
             $isNewUser = $user->created_at >= now()->subWeek();
             $user->emails->each(function($email) use($isNewUser) {
