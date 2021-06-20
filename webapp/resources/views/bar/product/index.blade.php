@@ -27,16 +27,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title') ({{ $products->count() }})
-
-        <div class="sub header">
-            in
-            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}">
-                {{ $bar->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title') ({{ $products->count() }})</h2>
 
     <div class="ui two item menu">
         <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forMe')</a>
