@@ -51,6 +51,14 @@ class EmailController extends Controller {
      * @return Response
      */
     public function create() {
+        $user = \Request::get('user');
+
+        // Do not allow user to go over email limit
+        if($user->emails()->count() >= (int) config('app.email_limit'))
+            return redirect()
+                ->back()
+                ->with('error', __('pages.accountPage.addEmail.cannotAddMore'));
+
         return view('account.email.create');
     }
 
@@ -68,6 +76,14 @@ class EmailController extends Controller {
             'email' => 'required|' . ValidationDefaults::EMAIL,
         ]);
 
+        $user = \Request::get('user');
+
+        // Do not allow user to go over email limit
+        if($user->emails()->count() >= (int) config('app.email_limit'))
+            return redirect()
+                ->back()
+                ->with('error', __('pages.accountPage.addEmail.cannotAddMore'));
+
         // Do not allow if already verified or recently added by someone else
         $used = Email::where('email', $request->input('email'))
             ->where(function($query) use($userId) {
@@ -82,9 +98,6 @@ class EmailController extends Controller {
             add_session_error('email', __('auth.emailUsed'));
             return redirect()->back();
         }
-
-        // Get the user
-        $user = \Request::get('user');
 
         // Delete any existing email entries
         Email::where('email', $request->input('email'))

@@ -97,6 +97,7 @@ return [
             'title' => 'E-mailadres toevoegen',
             'description' => 'Vul het e-mailadres in dat je wilt toevoegen.',
             'added' => 'E-mailadres toegevoegd. Er is een verificatie-e-mail gestuurd.',
+            'cannotAddMore' => 'Je kunt niet nog een e-mailadres toevoegen aan je account. Verwijder eerst een adres om een nieuwe toe te voegen.',
         ],
         'backToAccount' => 'Terug naar account',
     ],
