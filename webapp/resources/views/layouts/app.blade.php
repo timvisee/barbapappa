@@ -60,7 +60,7 @@
             @endif
 
             {{-- Breadcrumbs --}}
-            @if(isset($breadcrumbs))
+            @if(isset($breadcrumbs) && $breadcrumbs->count() > 1)
                 @include('partials.breadcrumbs', $breadcrumbs)
             @endif
 

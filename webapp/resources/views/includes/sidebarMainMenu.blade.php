@@ -129,7 +129,7 @@
     </div>
 
     {{-- Breadcrumbs --}}
-    @if(isset($breadcrumbs))
+    @if(isset($breadcrumbs) && $breadcrumbs->count() > 1)
         <div class="item">
             <div class="header">@lang('misc.breadcrumbTrail')</div>
             <div class="menu">
