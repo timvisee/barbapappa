@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('title', __('pages.dashboard.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('dashboard');
+@endphp
 
 @section('content')
-    {{ Breadcrumbs::render('dashboard') }}
-
     {{-- Explore notice if user does not have bars or communities --}}
     @if($communities->isEmpty() && $bars->isEmpty())
         <div class="ui info message visible">

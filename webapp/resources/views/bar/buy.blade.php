@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $bar->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.show', $bar);
+@endphp
 
 @push('scripts')
     <script type="text/javascript">
@@ -51,8 +54,6 @@
 @endphp
 
 @section('content')
-    {{ Breadcrumbs::render('bar.show', $bar) }}
-
     {{-- Low balance message --}}
     @if(isset($userBalance) && $userBalance->amount < 0 && !empty($bar->low_balance_text))
         <div class="ui error message">

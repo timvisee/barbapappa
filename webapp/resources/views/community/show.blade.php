@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $community->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.show', $community);
+@endphp
 
 @php
     use \App\Http\Controllers\BarController;
@@ -38,8 +41,6 @@
 @endphp
 
 @section('content')
-    {{ Breadcrumbs::render('community.show', $community) }}
-
     @include('community.include.communityHeader')
     @include('community.include.joinBanner')
 

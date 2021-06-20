@@ -128,6 +128,28 @@
         </div>
     </div>
 
+    {{-- Breadcrumbs --}}
+    @if(isset($breadcrumbs))
+        <div class="item">
+            <div class="header">@lang('misc.breadcrumbTrail')</div>
+            <div class="menu">
+                @foreach($breadcrumbs as $breadcrumb)
+                    @if($breadcrumb->url)
+                        <a href="{{ $breadcrumb->url }}" class="item {{ $loop->last ? 'active' : '' }}">
+                            <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
+                            {{ $loop->index + 1 }}. {{ $breadcrumb->title }}
+                        </a>
+                    @else
+                        <div class="item {{ $loop->last ? 'active' : '' }}">
+                            <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
+                            {{ $loop->index + 1 }}. {{ $breadcrumb->title }}
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     {{-- Pirate language easter egg --}}
     @if(Route::currentRouteName() == 'about' || rand_float() <= (float) config('app.pirate_chance'))
         <a href="{{ route('language', [
