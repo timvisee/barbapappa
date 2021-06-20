@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.stats.communityStats'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.show', $community);
+@endphp
 
 @php
     use \App\Http\Controllers\CommunityMemberController;

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.accountPage.email.verifyEmails'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('account.emails', $user);
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

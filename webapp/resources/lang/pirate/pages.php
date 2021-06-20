@@ -74,6 +74,7 @@ return [
         'description' => 'Th\' page shows an overview of ye ship.',
         'email' => [
             'description' => 'Th\' page shows an overview of ye e-bottle coordinates.',
+            'emails' => 'E-bottles',
             'yourEmails' => 'Ye e-bottles',
             'unverifiedEmails' => 'Unverified e-bottles',
             'verifyEmails' => 'Verify e-bottles',

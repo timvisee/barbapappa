@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.explore.exploreBars'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('explore');
+@endphp
 
 @php
     // Define menulinks

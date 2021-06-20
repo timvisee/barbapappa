@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.about.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('about');
+@endphp
 
 @section('content')
     <div class="highlight-box">

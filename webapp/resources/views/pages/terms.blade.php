@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.terms.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('terms');
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

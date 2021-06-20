@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $product->displayName())
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.product.index', $bar);
+@endphp
 
 @php
     use \App\Http\Controllers\CommunityController;

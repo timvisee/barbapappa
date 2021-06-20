@@ -74,6 +74,7 @@ return [
         'description' => 'This page shows an overview of your account.',
         'email' => [
             'description' => 'This page shows your email addresses.',
+            'emails' => 'Email addresses',
             'yourEmails' => 'Your email addresses',
             'unverifiedEmails' => 'Unverified email addresses',
             'verifyEmails' => 'Verify email addresses',

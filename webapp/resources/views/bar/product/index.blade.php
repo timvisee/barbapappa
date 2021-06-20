@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.products.' . (empty(Request::input('q')) ? 'all' : 'search')))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.product.index', $bar);
+@endphp
 
 @php
     use \App\Http\Controllers\CommunityController;

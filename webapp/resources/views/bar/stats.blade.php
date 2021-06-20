@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.stats.barStats'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.show', $bar);
+@endphp
 
 @php
     use \App\Http\Controllers\BarMemberController;
