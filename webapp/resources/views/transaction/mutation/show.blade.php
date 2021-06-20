@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('title', __('pages.mutations.details'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('transaction.index');
+@endphp
+
 @php
     use \App\Models\Mutation;
     use \App\Models\MutationBalanceImport;
@@ -15,8 +20,6 @@
         'icon' => 'undo',
     ];
 @endphp
-
-@section('title', __('pages.mutations.details'))
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

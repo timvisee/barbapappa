@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.payments.details'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('payment.index');
+@endphp
 
 @php
     use \BarPay\Models\Payment;

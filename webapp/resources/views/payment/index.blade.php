@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.payments.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('payment.index');
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

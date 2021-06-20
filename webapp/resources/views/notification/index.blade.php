@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.notifications.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('notification.index');
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
