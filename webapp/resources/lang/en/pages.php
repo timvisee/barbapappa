@@ -97,6 +97,7 @@ return [
             'title' => 'Add email address',
             'description' => 'Fill in the email address you\'d like to add.',
             'added' => 'Email address added. A verification email has been sent.',
+            'cannotAddMore' => 'You can\'t add more email addresses to your account. Delete an existing address in order to add a new one.',
         ],
         'backToAccount' => 'Back to account',
     ],

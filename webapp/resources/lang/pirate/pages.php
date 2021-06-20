@@ -97,6 +97,7 @@ return [
             'title' => 'Add e-bottle coordinate',
             'description' => 'Enter yer e-bottle coordinate to conquer.',
             'added' => 'E-bottle coordinate added. \'ll verification be sent.',
+            'cannotAddMore' => 'Ye nay add more e-bottle coordinates to yer account. Sink an existing coordinate in order to add a new one.',
         ],
         'backToAccount' => 'Back to account',
     ],
