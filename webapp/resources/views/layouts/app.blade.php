@@ -59,6 +59,9 @@
                 @include('includes.impersonate')
             @endif
 
+            {{-- Breadcrumbs --}}
+            @include('partials.breadcrumbs', $breadcrumbs)
+
             @include('includes.message')
 
             @yield('content')
