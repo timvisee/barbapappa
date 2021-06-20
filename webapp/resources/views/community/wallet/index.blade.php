@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.wallets.walletEconomies'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.wallet.index', $community);
+@endphp
 
 @php
     // Define menulinks
@@ -12,16 +15,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            in
-            <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}">
-                {{ $community->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <p>@lang('pages.wallets.economySelectDescription')</p>
 

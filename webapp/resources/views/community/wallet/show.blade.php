@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $wallet->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.wallet.show', $community, $wallet);
+@endphp
 
 @push('scripts')
     <script src="{{ mix('js/vendor/chart.js') }}"></script>
@@ -37,20 +40,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.in')
-            <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}">
-                {{ $community->name }}
-            </a>
-            @lang('misc.for')
-            <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
-                {{ $economy->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <div class="ui divider hidden"></div>
 
