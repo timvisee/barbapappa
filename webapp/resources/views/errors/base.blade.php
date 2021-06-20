@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.errors.' . View::getSection('code') . '.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('error');
+@endphp
 
 @php
     // Get some properties

@@ -93,3 +93,8 @@ Breadcrumbs::for('contact', function(BreadcrumbTrail $trail) {
     $trail->parent('pages');
     $trail->push(__('pages.contact.title'), route('contact'));
 });
+
+Breadcrumbs::for('error', function(BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push(__('general.error'));
+});
