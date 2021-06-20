@@ -31,3 +31,15 @@
 form.inline {
     display: inline-block;
 }
+
+// Only show breadcrumbs on big screens
+@media not screen, (max-width: 1200px) {
+    .ui.breadcrumb {
+        display: none !important;
+    }
+}
+
+// Always mark active breadcrumb black
+.ui.breadcrumb a.active.section {
+    color: rgba(0, 0, 0, 0.87) !important;
+}
