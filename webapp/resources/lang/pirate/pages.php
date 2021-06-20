@@ -15,7 +15,7 @@ return [
     'yourAccount' => 'Ye ship',
     'requestPasswordReset' => 'Request passcode reset',
     'changePassword' => 'Change passcode',
-    'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny, fresh n\' new passcode to take abroad.',
+    'changePasswordDescription' => 'First enter yer ol\' n\' passcode. Den enter ye shiny n\' fresh passcode to take abroad.',
 
     /**
      * App pages.
@@ -81,7 +81,7 @@ return [
             'resendVerify' => 'Sally forth verification',
             'unverified#' => '{0} No unverified emails|{1} Unverified email|[2,*] :count unverified emails',
             'verify#' => '{0} Verify no e-bottle coordinates|{1} Verify e-bottle coordinate|[2,*] Verify :count e-bottle coordinates',
-            'verifiedDescription' => 'We sent a new verification message to yer e-bottle coordinates listed below. Tap th\' link in th\' message to complete verification.',
+            'verifiedDescription' => 'We sent a fresh verification message to yer e-bottle coordinates listed below. Tap th\' link in th\' message to complete verification.',
             'iVerifiedAll' => 'I verified all',
             'someStillUnverified' => 'Some of yer e-bottle coordinates still be unverified. Please see th\' list below. Check yer e-bottle inbox for a verification message.',
             'verifySent' => 'A fresh verification e-bottle be sally forth.',
@@ -97,7 +97,7 @@ return [
             'title' => 'Add e-bottle coordinate',
             'description' => 'Enter yer e-bottle coordinate to conquer.',
             'added' => 'E-bottle coordinate added. \'ll verification be sent.',
-            'cannotAddMore' => 'Ye nay add more e-bottle coordinates to yer account. Sink an existing coordinate in order to add a new one.',
+            'cannotAddMore' => 'Ye nay add more e-bottle coordinates to yer account. Sink an existing coordinate in order to add a fresh one.',
         ],
         'backToAccount' => 'Back to account',
     ],
@@ -178,8 +178,8 @@ return [
             'title' => 'Useful links',
             'description' => 'Dis page lists various shareable links for dis crew. Ye may share these through e-bottle messages or print dem on a poster. Some of these links allow you to direct other pirates to specific otherwise hidden pages and intents.<br><br>Please be aware that some links change when modifying crew settings, and some links contain secret bits.',
             'linkCommunity' => 'Main crew page',
-            'linkJoinCommunity' => 'Invite new pirates to join crew',
-            'linkJoinCommunityCode' => 'Invite new pirates to join crew (with code)',
+            'linkJoinCommunity' => 'Invite fresh pirates to join crew',
+            'linkJoinCommunityCode' => 'Invite fresh pirates to join crew (with code)',
         ],
         'checklist' => 'Crew checklist',
     ],
@@ -211,7 +211,7 @@ return [
      */
     'economies' => [
         'title' => 'Booties',
-        'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Tapping a booty to manage it, or create new booty for a new bar.',
+        'description' => 'Dis page shows th\' overview o\' all booties of dis crew.<br>Tapping a booty to manage it, or create shiny booty for a fresh bar.',
         'manage' => 'Manage booties',
         'noEconomies' => 'Dis crew be nay booties...',
         'createEconomy' => 'Create booty',
@@ -234,7 +234,7 @@ return [
      */
     'currencies' => [
         'title' => 'Currencies',
-        'description' => 'Dis page shows \'n overview of currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add new currency, or tap one to manage.',
+        'description' => 'Dis page shows \'n overview of currencies in th\' booty.<br>At least one currency must be enabled to use dis booty for a bar.<br>Add shiny currency, or tap one to manage.',
         'change' => 'Change currency',
         'noCurrencies' => 'Dis booty be nay currencies...',
         'createCurrency' => 'Add currency',
@@ -247,7 +247,7 @@ return [
         'changeCurrencyTitle' => 'Change currency?',
         'changeCurrencyDescription' => 'Ye must only make very small changes to th\' currency properties, to prevent introducing issues where dis currency be used. Consider to add a fresh currency instead.',
         'allowWallets' => 'Allow wallet creation',
-        'allowWalletsDescription' => 'With dis option ye specify whether bar mateies be create a new personal wallet for dis currency. Existing wallets always be kept afloat.',
+        'allowWalletsDescription' => 'With dis option ye specify whether bar mateies be create a fresh personal wallet for dis currency. Existing wallets always be kept afloat.',
         'manage' => 'Manage currencies',
         'namePlaceholder' => 'Euro',
         'detailDescription' => 'Configure properties for th\' fresh currency. Make sure these be accurate when adding an internationally used currency, because payment services rely on these properties. Some properties cannot be changed anymore after adding.',
@@ -284,7 +284,7 @@ return [
         'manageProduct' => 'Manage loot',
         'manageProducts' => 'Manage loot',
         'addProducts' => 'Add loot',
-        'newProduct' => 'New loot',
+        'newProduct' => 'Fresh loot',
         'cloneProduct' => 'Clone loot',
         'editProduct' => 'Edit loot',
         'created' => 'The loot be added.',
@@ -350,7 +350,7 @@ return [
         'viewService' => 'View service',
         'unknownService' => 'Unknown payment service',
         'startedWillUseOldDetails' => 'Payments that already be initiated might still use old details, even after changing them here.',
-        'startedWillComplete' => 'Nay new payments be accepted using dis service. However, payments that have already been initiated still be completed.',
+        'startedWillComplete' => 'Nay fresh payments be accepted using dis service. However, payments that have already been initiated still be completed.',
         'amountInCurrency' => 'Amount in :currency',
         'amountToTopUpInCurrency' => 'Amount to top up wit\' in :currency',
         'pay' => 'Pay',
@@ -461,7 +461,7 @@ return [
         'mustApproveAllPreviousFirst' => 'Ye must approve all previous booty import changes for the changes ye want to approve now that be a balance update first.',
         'cannotApproveWithFollowingApproved' => 'Ye nay approve a change, having a later change be approved already.',
         'cannotDeleteMustUndo' => 'Ye nay sink a change that be approved. Ye must undo it first.',
-        'cannotUndoIfNewerApproved' => 'Ye nay undo dis booty import change, because there be a newer balance change for dis user that still be accepted.',
+        'cannotUndoIfNewerApproved' => 'Ye nay undo dis booty import change, because there be a fresher balance change for dis user that still be accepted.',
     ],
 
     /**
@@ -480,7 +480,7 @@ return [
      */
     'balanceImportMailBalance' => [
         'title' => 'Send balance e-bottle message',
-        'description' => 'Send pirates in dis booty import event a balance update e-bottle message. Dis may be used to notify pirates when a new booty list is imported. A message will only be sent for approved changes in dis import event. Pirates with zero booty will not receive a message.',
+        'description' => 'Send pirates in dis booty import event a balance update e-bottle message. Dis may be used to notify pirates when a shiny booty list is imported. A message will only be sent for approved changes in dis import event. Pirates with zero booty will not receive a message.',
         'mailUnregisteredUsers' => 'Message unregistered pirates (no account)',
         'mailNotJoinedUsers' => 'Message not-joined pirates (with account, not a bar member)',
         'mailJoinedUsers' => 'Message joined pirates (with account, and a bar member)',
@@ -509,14 +509,14 @@ return [
     'bunqAccounts' => [
         'title' => 'bunq accounts',
         'bunqAccount' => 'bunq account',
-        'description' => 'Tap on one of yer bunq accounts to manage it, or add a new one.',
+        'description' => 'Tap on one of yer bunq accounts to manage it, or add a fresh one.',
         'noAccounts' => 'Yer nay be any bunq accounts added yet...',
         'addAccount' => 'Add bunq account',
         'addAccountDescription' => 'This page allows you to add a bunq account for automatic payment processing.<br><br>Create an API token and an empty monetary account in the bunq app. Enter the token and the IBAN of the monetary account below.<br><br>Would you like to use a test account instead?',
         'createSandboxAccount' => 'Create bunq sandbox account',
         'descriptionPlaceholder' => 'bunq account for automating bar payments',
-        'tokenDescription' => 'Create a new API key in the developer section of th\' bunq app on yer handheld phoning device, and enter the freshly created token in dis field. Th\' token must never be shared with anyone else.',
-        'ibanDescription' => 'Enter the IBAN of a monetary account in your bunq profile. This monetary account will be dedicated to payment processing and cannot be used for anything else. It is recommended to create a new monetary account through the bunq application for this.',
+        'tokenDescription' => 'Create a fresh API key in the developer section of th\' bunq app on yer handheld phoning device, and enter the freshly created token in dis field. Th\' token must never be shared with anyone else.',
+        'ibanDescription' => 'Enter the IBAN of a monetary account in your bunq profile. This monetary account will be dedicated to payment processing and cannot be used for anything else. It is recommended to create a fresh monetary account through the bunq application for this.',
         'invalidApiToken' => 'Invalid API token',
         'addConfirm' => 'By adding this bunq account, you give :app full control over the monitary account assigned to the specified IBAN. That account will be dedicated to automated payment processing, until this link between :app and bunq is dropped. Never drop this link through the mobile bunq app by deleting the API key, but drop it through :app to ensure any ongoing payments can be finished properly. The account must have a current balance of €0.00. You cannot use this monetary account for any other payments, applications or :app instances, and you might risk serious money-flow issues if you do so. :app is not responsible for any damage caused by linking your bunq account to this application.',
         'createSandboxConfirm' => 'This will create a bunq sandbox account for testing purposes. Please be aware that this will allow anyone to top-up their :app wallet without paying real money. :app is not responsible for any damage caused by linking your bunq account to this application.',
@@ -524,13 +524,13 @@ return [
         'accountAlreadyUsed' => 'This monetary is already used',
         'noAccountWithIban' => 'No active monetary account with this IBAN',
         'onlyEuroSupported' => 'Only accounts using EURO currency are supported',
-        'notZeroBalance' => 'Account does not have a balance of €0.00, create a new monitary account',
+        'notZeroBalance' => 'Account does not have a balance of €0.00, create a fresh monitary account',
         'added' => 'The bunq account be added.',
         'changed' => 'The bunq account be changed.',
         'paymentsEnabled' => 'Payments enabled',
         'checksEnabled' => 'Checks enabled',
-        'enablePayments' => 'Enable payments: allow usage for new payments',
-        'enableChecks' => 'Enable checks: check periodically for newly received payments',
+        'enablePayments' => 'Enable payments: allow usage for fresh payments',
+        'enableChecks' => 'Enable checks: check periodically for fresh received payments',
         'confirm' => 'I agree with this and meet th\' requirements',
         'environment' => 'bunq API environment',
         'runHousekeeping' => 'Run housekeeping',
@@ -710,7 +710,7 @@ return [
     'notifications' => [
         'title' => 'Notifications',
         'notification' => 'Notification',
-        'description' => 'Dis shows all yer notifications, both new and read.',
+        'description' => 'Dis shows all yer notifications, both fresh and read.',
         'unread#' => '{0} Nay unread notifications|{1} Unread notification|[2,*] :count unread notifications',
         'persistent#' => '{0} Nay persistent notifications|{1} Persistent notification|[2,*] :count persistent notifications',
         'read#' => '{0} Nay read notifications|{1} Read notification|[2,*] :count read notifications',
@@ -832,7 +832,7 @@ return [
         'generatePosterDescription' => 'Create a poster for dis bar to hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a Q-ARRRR code with their handheld phoning device.',
         'showCodeOnPoster' => 'Show code to join dis bar on th\' poster',
         'lowBalanceText' => 'Negative balance text',
-        'lowBalanceTextPlaceholder' => 'Ye currently have a negative balance. Please top-up yer wallet now before getting new loot.',
+        'lowBalanceTextPlaceholder' => 'Ye currently have a negative balance. Please top-up yer wallet now before getting fresh loot.',
         'allPurchases' => 'All purchases',
         'purchaseHistory' => 'Purchase history',
         'purchaseHistoryDescription' => 'Dis page shows a history of all purchased loot in dis bar.',
@@ -867,8 +867,8 @@ return [
             'title' => 'Useful links',
             'description' => 'Dis page lists various shareable links for dis bar. Ye may share these through e-bottle messages or print dem on a poster. Some of these links allow you to direct other pirates to specific otherwise hidden pages and intents.<br><br>Please be aware that some links change when modifying bar settings, and some links contain secret bits.',
             'linkBar' => 'Main bar page',
-            'linkJoinBar' => 'Invite new pirates to join bar',
-            'linkJoinBarCode' => 'Invite new pirates to join bar (with code)',
+            'linkJoinBar' => 'Invite fresh pirates to join bar',
+            'linkJoinBarCode' => 'Invite fresh pirates to join bar (with code)',
             'linkQuickWallet' => 'Show main personal wallet',
             'linkQuickTopUp' => 'Top-up main personal wallet',
         ],
@@ -949,7 +949,7 @@ return [
      */
     'passwordRequestSent' => [
         'title' => 'Check for bottle messages',
-        'message' => 'If yer e-bottle coordinate ye entered be known by our captain, our jolly crew sent ye instructions for a shiny new passcode to yer e-bottle-box.<br><br>'
+        'message' => 'If yer e-bottle coordinate ye entered be known by our captain, our jolly crew sent ye instructions for a shiny passcode to yer e-bottle-box.<br><br>'
             . 'Please note that them instructions would only be valid for <b>:hours turns o\'the hourglass</b>.<br><br>'
             . 'Ye may burn dis parchment now.',
     ],
@@ -981,7 +981,7 @@ return [
     'kioskJoin' => [
         'title' => 'Add pirate / join',
         'joinBar' => 'Join :bar',
-        'description' => 'New pirates can add themselves to dis bar by registering an account.',
+        'description' => 'Fresh pirates can add themselves to dis bar by registering an account.',
         'scanQr' => 'Scan th\' Q-ARRRR code below with yer phone to start:',
         'orUrl' => 'Or visit th\' following link in yer browser:',
     ],
@@ -1025,7 +1025,7 @@ return [
         'title' => 'Contact',
         'contactUs' => 'Contact us',
         'description' => 'Use th\' following coordinates to contact Arrbapappa:',
-        'issuesDescription' => 'Dis ship is open-source, and its schematics are therefore openly available.<br>Before reporting bugs, please check the \'Issue list\' to see if it has been registered already.<br>If it isn\'t yet, ye may create a new issue on the issues overview page. Alternatively, ye can send an e-bottle message describing the issue to the \'Report issue e-bottle\' coordinate below, which will immediately add th\' issue to th\' list as well without having to create an account.',
+        'issuesDescription' => 'Dis ship is open-source, and its schematics are therefore openly available.<br>Before reporting bugs, please check the \'Issue list\' to see if it has been registered already.<br>If it isn\'t yet, ye may create a fresh issue on the issues overview page. Alternatively, ye can send an e-bottle message describing the issue to the \'Report issue e-bottle\' coordinate below, which will immediately add th\' issue to th\' list as well without having to create an account.',
         'issueList' => 'Issue list',
         'newIssueMail' => 'Report issue e-bottle',
         'thisAppIsOpenSource' => 'Dis ship be free to loot',
