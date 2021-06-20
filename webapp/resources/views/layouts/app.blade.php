@@ -60,7 +60,9 @@
             @endif
 
             {{-- Breadcrumbs --}}
-            @include('partials.breadcrumbs', $breadcrumbs)
+            @if(isset($breadcrumbs))
+                @include('partials.breadcrumbs', $breadcrumbs)
+            @endif
 
             @include('includes.message')
 
