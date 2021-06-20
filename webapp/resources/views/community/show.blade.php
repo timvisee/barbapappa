@@ -38,6 +38,8 @@
 @endphp
 
 @section('content')
+    {{ Breadcrumbs::render('community.show', $community) }}
+
     @include('community.include.communityHeader')
     @include('community.include.joinBanner')
 

@@ -50,6 +50,8 @@
 @endphp
 
 @section('content')
+    {{ Breadcrumbs::render('bar.show', $bar) }}
+
     {{-- Low balance message --}}
     @if(isset($userBalance) && $userBalance->amount < 0 && !empty($bar->low_balance_text))
         <div class="ui error message">
