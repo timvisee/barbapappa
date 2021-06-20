@@ -34,7 +34,9 @@ $(document).ready(function() {
     // Sidebar toggle
     $('.sidebar-toggle').click(function() {
         let sidebarClass = $(this).data('sidebar');
-        $('.ui.sidebar.' + sidebarClass).sidebar('toggle');
+        $('.ui.sidebar.' + sidebarClass)
+            .sidebar('setting', 'transition', 'overlay')
+            .sidebar('toggle');
         return false;
     });
 
