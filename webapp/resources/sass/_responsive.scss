@@ -1,5 +1,5 @@
 // Only show breadcrumbs on big screens
-@media (max-width: 1200px) {
+@media not screen, (max-width: 1200px) {
     .ui.breadcrumb {
         display: none !important;
     }
