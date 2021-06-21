@@ -2,7 +2,7 @@
 
 @section('title', __('pages.walletStats.title'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('community.wallet.show', $community, $wallet);
+    $breadcrumbs = Breadcrumbs::generate('community.wallet.stats', $community, $wallet);
 @endphp
 
 @push('scripts')

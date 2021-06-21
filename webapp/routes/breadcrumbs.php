@@ -201,6 +201,15 @@ Breadcrumbs::for('community.wallet.show', function(BreadcrumbTrail $trail, $comm
     ]));
 });
 
+Breadcrumbs::for('community.wallet.stats', function(BreadcrumbTrail $trail, $community, $wallet) {
+    $trail->parent('community.wallet.show', $community, $wallet);
+    $trail->push(__('misc.stats'), route('community.wallet.stats', [
+        'communityId' => $community->human_id,
+        'economyId' => $wallet->currency->economy_id,
+        'walletId' => $wallet->id,
+    ]));
+});
+
 Breadcrumbs::for('community.bunqaccount.index', function(BreadcrumbTrail $trail, $community) {
     $trail->parent('community.manage', $community);
     $trail->push(__('pages.bunqAccounts.title'), route('community.bunqAccount.index', ['communityId' => $community->human_id]));

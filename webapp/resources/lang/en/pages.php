@@ -595,8 +595,8 @@ return [
      * Wallet stats pages.
      */
     'walletStats' => [
-        'title' => 'Wallet stats',
-        'description' => 'Here are some wallet stats for the selected period.',
+        'title' => 'Wallet statistics',
+        'description' => 'Here are some wallet statistics for the selected period.',
         'transactions' => 'Transactions',
         'income' => 'Income',
         'expenses' => 'Expenses',
@@ -609,7 +609,7 @@ return [
         'purchasePerDay' => 'Product purchases per weekday (UTC)',
         'purchasePerHour' => 'Product purchases per day hour (UTC)',
         'purchaseHistogram' => 'Product purchase histogram',
-        'noStatsNoTransactions' => 'No stats to show. Wallet does not have any transactions.',
+        'noStatsNoTransactions' => 'No statistics to show. Wallet does not have any transactions.',
         'period' => [
             'week' => 'Past week',
             'month' => 'Past month',
