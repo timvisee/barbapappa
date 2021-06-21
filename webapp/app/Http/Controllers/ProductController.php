@@ -18,8 +18,7 @@ class ProductController extends Controller {
      * @return Response
      */
     public function index(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the products
-        $user = barauth()->getUser();
+        // Get the community, find the products
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $trashed = is_checked($request->query('trashed'));
@@ -37,8 +36,7 @@ class ProductController extends Controller {
      * @return Response
      */
     public function create(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the products
-        $user = barauth()->getUser();
+        // Get the community, find the products
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $locales = langManager()->getLocales(true, true);
@@ -63,8 +61,7 @@ class ProductController extends Controller {
      * @return Response
      */
     public function doCreate(Request $request, $communityId, $economyId) {
-        // Get the user, community, find the products
-        $user = barauth()->getUser();
+        // Get the community, find the products
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $locales = collect(langManager()->getLocales(true, true));
@@ -158,8 +155,7 @@ class ProductController extends Controller {
      * @return Response
      */
     public function show($communityId, $economyId, $productId) {
-        // Get the user, community, find the product
-        $user = barauth()->getUser();
+        // Get the community, find the product
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
@@ -177,8 +173,7 @@ class ProductController extends Controller {
     public function edit($communityId, $economyId, $productId) {
         // TODO: with trashed?
 
-        // Get the user, community, find the product
-        $user = barauth()->getUser();
+        // Get the community, find the product
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->findOrFail($productId);
@@ -200,8 +195,7 @@ class ProductController extends Controller {
     public function doEdit(Request $request, $communityId, $economyId, $productId) {
         // TODO: with trashed?
 
-        // Get the user, community, find the product
-        $user = barauth()->getUser();
+        // Get the community, find the product
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->findOrFail($productId);
@@ -289,8 +283,7 @@ class ProductController extends Controller {
      * @return Response
      */
     public function restore($communityId, $economyId, $productId) {
-        // Get the user, community, find the product
-        $user = barauth()->getUser();
+        // Get the community, find the product
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
@@ -318,8 +311,7 @@ class ProductController extends Controller {
     public function doRestore($communityId, $economyId, $productId) {
         // TODO: delete trashed, and allow trashing?
 
-        // Get the user, community, find the product
-        $user = barauth()->getUser();
+        // Get the community, find the product
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
@@ -343,8 +335,7 @@ class ProductController extends Controller {
      * @return Response
      */
     public function delete($communityId, $economyId, $productId) {
-        // Get the user, community, find the product
-        $user = barauth()->getUser();
+        // Get the community, find the product
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
@@ -363,8 +354,7 @@ class ProductController extends Controller {
      * @return Response
      */
     public function doDelete(Request $request, $communityId, $economyId, $productId) {
-        // Get the user, community, find the product
-        $user = barauth()->getUser();
+        // Get the community, find the product
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
