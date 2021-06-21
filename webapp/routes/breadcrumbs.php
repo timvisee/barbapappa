@@ -33,8 +33,8 @@ Breadcrumbs::for('community.wallet.show', function(BreadcrumbTrail $trail, $comm
 });
 
 Breadcrumbs::for('bar.show', function(BreadcrumbTrail $trail, $bar) {
-    // TODO: do not link to community, use as root instead?
-    $trail->parent('community.show', $bar->community);
+    // $trail->parent('community.show', $bar->community);
+    $trail->parent('dashboard');
     $trail->push($bar->name, route('bar.show', ['barId' => $bar->human_id]));
 });
 
