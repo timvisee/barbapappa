@@ -133,7 +133,11 @@
         <div class="item">
             <div class="header">@lang('misc.breadcrumbTrail')</div>
             <div class="menu">
-                @foreach($breadcrumbs as $breadcrumb)
+                <a href="{{ $breadcrumbs[0]->url }}" class="item">
+                    <i class="glyphicons glyphicons-home"></i>
+                    1. {{ $breadcrumbs[0]->title }}
+                </a>
+                @foreach($breadcrumbs->skip(1) as $breadcrumb)
                     @if($breadcrumb->url)
                         <a href="{{ $breadcrumb->url }}" class="item {{ $loop->last ? 'active' : '' }}">
                             <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
