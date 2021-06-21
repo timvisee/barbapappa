@@ -20,12 +20,27 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     {{-- Title --}}
-    @hasSection('title')
-        <title>@yield('title') - {{ config('app.name', 'Barbapappa') }}</title>
-        <meta name="title" content="@yield('title') - {{ config('app.name', 'Barbapappa') }}">
+    @if(isset($breadcrumbs) && $breadcrumbs->count() > 1)
+        @php
+            $page_title = $breadcrumbs
+                ->skip(1)
+                ->reverse()
+                ->map(function($breadcrumb) {
+                    return $breadcrumb->title;
+                })
+                ->join(' / ')
+                . ' - ' . config('app.name', 'Barbapappa');
+        @endphp
+        <title>{{ $page_title }}</title>
+        <meta name="title" content="{{ $page_title }}">
     @else
-        <title>{{ config('app.name', 'Barbapappa') }}</title>
-        <meta name="title" content="{{ config('app.name', 'Barbapappa') }}">
+        @hasSection('title')
+            <title>@yield('title') - {{ config('app.name', 'Barbapappa') }}</title>
+            <meta name="title" content="@yield('title') - {{ config('app.name', 'Barbapappa') }}">
+        @else
+            <title>{{ config('app.name', 'Barbapappa') }}</title>
+            <meta name="title" content="{{ config('app.name', 'Barbapappa') }}">
+        @endif
     @endif
 
     {{-- Styles --}}
