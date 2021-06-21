@@ -2,7 +2,7 @@
 
 @section('title', $product->displayName())
 @php
-    $breadcrumbs = Breadcrumbs::generate('bar.product.index', $bar);
+    $breadcrumbs = Breadcrumbs::generate('bar.product.show', $bar, $product);
 @endphp
 
 @php

@@ -27,7 +27,7 @@ Breadcrumbs::for('community.wallet.show', function(BreadcrumbTrail $trail, $comm
     $trail->parent('community.wallet.index', $community);
     $trail->push($wallet->name, route('community.wallet.show', [
         'communityId' => $community->human_id,
-        'economyId' => $wallet->currency->economy_id,
+        'economyId' => $wallet->economy_id,
         'walletId' => $wallet->id,
     ]));
 });
@@ -40,6 +40,14 @@ Breadcrumbs::for('bar.show', function(BreadcrumbTrail $trail, $bar) {
 Breadcrumbs::for('bar.product.index', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.show', $bar);
     $trail->push(__('pages.products.title'), route('bar.product.index', ['barId' => $bar->human_id]));
+});
+
+Breadcrumbs::for('bar.product.show', function(BreadcrumbTrail $trail, $bar, $product) {
+    $trail->parent('bar.product.index', $bar);
+    $trail->push($product->displayName(), route('bar.product.show', [
+        'barId' => $bar->human_id,
+        'productId' => $product->id,
+    ]));
 });
 
 Breadcrumbs::for('account', function(BreadcrumbTrail $trail, $user) {
