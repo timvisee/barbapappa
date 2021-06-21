@@ -96,14 +96,29 @@ Breadcrumbs::for('transaction.index', function(BreadcrumbTrail $trail) {
     $trail->push(__('pages.transactions.title'));
 });
 
-Breadcrumbs::for('transaction.mutation.index', function(BreadcrumbTrail $trail) {
+Breadcrumbs::for('transaction.show', function(BreadcrumbTrail $trail, $transaction) {
     $trail->parent('transaction.index');
+    $trail->push('#' . $transaction->id, route('transaction.show', ['transactionId' => $transaction->id]));
+});
+
+Breadcrumbs::for('transaction.mutation.index', function(BreadcrumbTrail $trail, $transaction) {
+    $trail->parent('transaction.show', $transaction);
     $trail->push(__('pages.mutations.title'));
+});
+
+Breadcrumbs::for('transaction.mutation.show', function(BreadcrumbTrail $trail, $mutation) {
+    $trail->parent('transaction.mutation.index', $mutation->transaction);
+    $trail->push('#' . $mutation->id);
 });
 
 Breadcrumbs::for('payment.index', function(BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
     $trail->push(__('pages.payments.title'), route('payment.index'));
+});
+
+Breadcrumbs::for('payment.show', function(BreadcrumbTrail $trail, $payment) {
+    $trail->parent('payment.index');
+    $trail->push($payment->getReference(false, true), route('payment.show', ['paymentId' => $payment->id]));
 });
 
 // Generic info pages

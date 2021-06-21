@@ -2,7 +2,7 @@
 
 @section('title', __('pages.mutations.details'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('transaction.index');
+    $breadcrumbs = Breadcrumbs::generate('transaction.mutation.show', $mutation);
 @endphp
 
 @php

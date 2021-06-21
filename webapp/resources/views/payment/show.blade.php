@@ -2,7 +2,7 @@
 
 @section('title', __('pages.payments.details'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('payment.index');
+    $breadcrumbs = Breadcrumbs::generate('payment.show', $payment);
 @endphp
 
 @php

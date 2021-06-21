@@ -2,7 +2,7 @@
 
 @section('title', __('pages.transactions.details'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('transaction.index');
+    $breadcrumbs = Breadcrumbs::generate('transaction.show', $transaction);
 @endphp
 
 @php
