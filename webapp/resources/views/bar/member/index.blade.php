@@ -2,7 +2,7 @@
 
 @section('title', __('pages.barMembers.title'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('bar.member.index', $community);
+    $breadcrumbs = Breadcrumbs::generate('bar.member.index', $bar);
 @endphp
 
 @php
