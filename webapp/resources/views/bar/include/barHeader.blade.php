@@ -11,7 +11,11 @@
 
 <h2 class="ui header bar-header">
     <div>
-        @yield('title')
+        @if(isset($title))
+            {{ $title }}
+        @else
+            @yield('title')
+        @endif
     </div>
 
     @if($joined || $economy->userHasBalance())

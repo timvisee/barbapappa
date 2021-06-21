@@ -21,17 +21,6 @@
     <p>@lang('pages.barMembers.description')</p>
 
     <div class="ui vertical menu fluid">
-        {{--
-            <div class="item">
-                <div class="ui transparent icon input">
-                    {{ Form::text('search', '', ['placeholder' => 'Search bars...']) }}
-                    <i class="icon link">
-                        <span class="glyphicons glyphicons-search"></span>
-                    </i>
-                </div>
-            </div>
-        --}}
-
         @forelse($members as $member)
             <a href="{{ route('bar.member.show', [
                 'barId' => $bar->human_id,

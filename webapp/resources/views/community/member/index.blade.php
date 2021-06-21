@@ -21,17 +21,6 @@
     <p>@lang('pages.communityMembers.description')</p>
 
     <div class="ui vertical menu fluid">
-        {{--
-            <div class="item">
-                <div class="ui transparent icon input">
-                    {{ Form::text('search', '', ['placeholder' => 'Search communities...']) }}
-                    <i class="icon link">
-                        <span class="glyphicons glyphicons-search"></span>
-                    </i>
-                </div>
-            </div>
-        --}}
-
         @forelse($members as $member)
             <a href="{{ route('community.member.show', [
                 'communityId' => $community->human_id,
