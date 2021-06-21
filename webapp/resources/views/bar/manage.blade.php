@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('misc.managementHub'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.manage', $bar);
+@endphp
 
 @php
     use \App\Http\Controllers\BarController;
@@ -100,16 +103,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}">
-                {{ $bar->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {{-- Checklist --}}
     <div class="ui vertical menu fluid">

@@ -1,12 +1,14 @@
 @extends('layouts.app')
 
 @section('title', __('pages.transactions.details'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('transaction.show', $transaction);
+@endphp
 
 @php
     use App\Models\MutationProduct;
     use App\Models\Transaction;
     use App\Models\Wallet;
-    use App\Perms\CommunityRoles;
     use \BarPay\Models\Payment;
 @endphp
 

@@ -74,6 +74,7 @@ return [
         'description' => 'Deze pagina laat een overzicht van je account zien.',
         'email' => [
             'description' => 'Deze pagina laat een overzicht van je e-mailaddressen zien.',
+            'emails' => 'E-mailadressen',
             'yourEmails' => 'Jouw e-mailadressen',
             'unverifiedEmails' => 'Ongeverifiëerde e-mails',
             'verifyEmails' => 'Verifiëer e-mails',

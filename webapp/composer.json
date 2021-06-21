@@ -57,6 +57,7 @@
         "barryvdh/laravel-debugbar": "^3.2.3",
         "barryvdh/laravel-dompdf": "^0.8.4",
         "bunq/sdk_php": "^1.14.18",
+        "diglactic/laravel-breadcrumbs": "^7.0",
         "doctrine/dbal": "^3.0",
         "fruitcake/laravel-cors": "^2.0",
         "hisorange/browser-detect": "^4.4",

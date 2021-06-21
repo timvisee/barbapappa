@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $currency->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.currency.show', $currency);
+@endphp
 
 @php
     use \App\Http\Controllers\CurrencyController;

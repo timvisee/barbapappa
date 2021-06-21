@@ -1,18 +1,13 @@
 @extends('layouts.app')
 
 @section('title', __('pages.community.generatePoster'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.poster', $community);
+@endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
+    <h2 class="ui header">@yield('title')</h2>
 
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}">
-                {{ $community->name }}
-            </a>
-        </div>
-    </h2>
     <p>@lang('pages.community.generatePosterDescription', ['app' => config('app.name')])</p>
 
     <div class="ui info message">

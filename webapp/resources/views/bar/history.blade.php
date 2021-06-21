@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.bar.purchaseHistory'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.history', $bar);
+@endphp
 
 @php
     use \App\Http\Controllers\BarController;

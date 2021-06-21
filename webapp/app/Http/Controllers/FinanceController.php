@@ -14,7 +14,7 @@ class FinanceController extends Controller {
      *
      * @return Response
      */
-    public function overview(Request $request, $communityId, $economyId) {
+    public function overview($communityId, $economyId) {
         // Get the user, community, find the products
         $user = barauth()->getUser();
         $community = \Request::get('community');

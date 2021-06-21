@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.wallets.mergeWallets'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.wallet.index', $community);
+@endphp
 
 @php
     // Define menulinks
@@ -12,20 +15,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.in')
-            <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}">
-                {{ $community->name }}
-            </a>
-            @lang('misc.for')
-            <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
-                {{ $economy->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <p>@lang('pages.wallets.mergeDescription')</p>
 

@@ -2,6 +2,9 @@
 @extends('layouts.app', ['dontLeak' => true])
 
 @section('title', __('pages.noPermission.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('error');
+@endphp
 
 @php
     // Get the home route name to use based on the session

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $system->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.balanceimport.show', $system);
+@endphp
 
 @php
     use \App\Http\Controllers\BalanceImportSystemController;

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.dashboard.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('dashboard');
+@endphp
 
 @section('content')
     {{-- Explore notice if user does not have bars or communities --}}

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $product->displayName())
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.product.show', $bar, $product);
+@endphp
 
 @php
     use \App\Http\Controllers\CommunityController;
@@ -25,16 +28,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            in
-            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}">
-                {{ $bar->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <table class="ui compact celled definition table">
         <tbody>
@@ -64,8 +58,7 @@
                             @endforeach
                         </div>
                     @else
-                        {{-- TODO: use style for this --}}
-                        <i style="color: red;">@lang('misc.none')</i>
+                        <i class="ui text red">@lang('misc.none')</i>
                     @endif
                 </td>
             </tr>

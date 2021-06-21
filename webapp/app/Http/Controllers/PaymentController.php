@@ -15,7 +15,7 @@ class PaymentController extends Controller {
      *
      * @return Response
      */
-    public function index(Request $request) {
+    public function index() {
         $user = barauth()->getUser();
 
         // Get payments in different stages
@@ -182,7 +182,7 @@ class PaymentController extends Controller {
      *
      * @return Response
      */
-    public function approveList(Request $request) {
+    public function approveList() {
         // Get the user, community, find the products
         $user = barauth()->getUser();
 

@@ -1,18 +1,12 @@
 @extends('layouts.app')
 
 @section('title', __('pages.bunqAccounts.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('app.bunqaccount.index');
+@endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title') ({{ count($accounts) }})
-
-        <div class="sub header">
-            @lang('misc.in')
-            <a href="{{ route('app.manage') }}">
-                {{ config('app.name') }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <p>@lang('pages.bunqAccounts.description')</p>
 

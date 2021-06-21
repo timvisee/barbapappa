@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('account.sessionDetails'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.kiosk.sessions', $bar);
+@endphp
 
 @php
     // Define menulinks

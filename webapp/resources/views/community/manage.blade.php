@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('misc.managementHub'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.manage', $community);
+@endphp
 
 @php
     use App\Http\Controllers\AppController;
@@ -75,16 +78,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}">
-                {{ $community->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {{-- Checklist --}}
     <div class="ui vertical menu fluid">

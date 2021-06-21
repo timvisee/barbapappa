@@ -3,16 +3,8 @@
 @section('title', __('pages.bar.startKiosk'))
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
+    <h2 class="ui header">@yield('title')</h2>
 
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}">
-                {{ $bar->name }}
-            </a>
-        </div>
-    </h2>
     <p>@lang('pages.bar.startKioskDescription', ['app' => config('app.name')])</p>
 
     {!! Form::open(['action' => ['BarController@doStartKiosk', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form']) !!}

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.balanceImportEvent.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.balanceimport.event.index', $system);
+@endphp
 
 @php
     use \App\Http\Controllers\BalanceImportEventController;
@@ -14,27 +17,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.in')
-            <a href="{{ route('community.economy.balanceimport.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                        'systemId' => $system->id,
-                    ]) }}">
-                {{ $system->name }}
-            </a>
-            @lang('misc.in')
-            <a href="{{ route('community.economy.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                    ]) }}">
-                {{ $economy->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <div class="ui top vertical menu fluid">
         <h5 class="ui item header">

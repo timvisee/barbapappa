@@ -1,18 +1,12 @@
 @extends('layouts.app')
 
 @section('title', __('pages.bar.links.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.links', $bar);
+@endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}">
-                {{ $bar->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.bar.links.description')</p>
 
     <table class="ui compact celled definition table">

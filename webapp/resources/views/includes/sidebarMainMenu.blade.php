@@ -123,10 +123,38 @@
             <a href="{{ route('language') }}"
                     class="item {{ Route::currentRouteName() == 'language' ? ' active' : '' }}">
                 @lang('lang.language')
-                {{ langManager()->renderFlag(null, true, true) }}
+                <span class="right">{{ langManager()->renderFlag(null, true, true) }}</span>
             </a>
         </div>
     </div>
+
+    {{-- Breadcrumbs --}}
+    @if(isset($breadcrumbs) && $breadcrumbs->count() > 1)
+        <div class="item">
+            <div class="header">@lang('misc.breadcrumbTrail')</div>
+            <div class="menu">
+                <a href="{{ $breadcrumbs[0]->url }}" class="item">
+                    <i class="glyphicons glyphicons-home"></i>
+                    {{ $breadcrumbs[0]->title }}
+                </a>
+                @foreach($breadcrumbs->skip(1) as $breadcrumb)
+                    @if($breadcrumb->url)
+                        <a href="{{ $breadcrumb->url }}" class="item {{ $loop->last ? 'active' : '' }}">
+                            <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
+                            <span class="subtle">&#8627;</span>
+                            {{ $breadcrumb->title }}
+                        </a>
+                    @else
+                        <div class="item {{ $loop->last ? 'active' : '' }}">
+                            <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
+                            <span class="subtle">&#8627;</span>
+                            {{ $breadcrumb->title }}
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+        </div>
+    @endif
 
     {{-- Pirate language easter egg --}}
     @if(Route::currentRouteName() == 'about' || rand_float() <= (float) config('app.pirate_chance'))

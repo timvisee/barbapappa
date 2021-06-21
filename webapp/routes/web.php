@@ -29,11 +29,11 @@ use App\Http\Controllers\ProductController;
 // Regular public pages
 Route::get('/', 'PagesController@index')->name('index');
 Route::get('/about', 'PagesController@about')->name('about');
-Route::get('/contact', 'PagesController@contact')->name('contact');
 Route::get('/terms', 'PagesController@terms')->name('terms');
 Route::get('/privacy', 'PagesController@privacy')->name('privacy');
 Route::get('/license', 'PagesController@license')->name('license');
 Route::get('/license/raw', 'PagesController@licenseRaw')->name('license.raw');
+Route::get('/contact', 'PagesController@contact')->name('contact');
 Route::get('/language/{locale?}', 'PagesController@language')->name('language');
 
 // Regular authenticated pages
@@ -521,6 +521,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             Route::get('/', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
             // History
+            // TODO: rename to bar.manage.history?
             Route::get('/history', 'BarController@history')->name('bar.history');
 
             // Useful links

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.license.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('license');
+@endphp
 
 @php
     // Define menulinks

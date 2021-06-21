@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.privacy.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('privacy');
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

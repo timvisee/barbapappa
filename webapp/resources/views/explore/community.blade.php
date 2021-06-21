@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.explore.exploreCommunities'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('explore');
+@endphp
 
 @php
     use \App\Http\Controllers\CommunityController;

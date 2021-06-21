@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.yourAccount'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('account', $user);
+@endphp
 
 @php
     // Define menulinks

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.stats.barStats'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.stats', $bar);
+@endphp
 
 @php
     use \App\Http\Controllers\BarMemberController;
@@ -14,16 +17,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}">
-                {{ $bar->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <h3 class="ui horizontal divider header">@lang('misc.bar')</h3>
     <div class="ui one small statistics">

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.accountPage.email.unverifiedEmails'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('account.emails', $user);
+@endphp
 
 @php
     // Define menulinks

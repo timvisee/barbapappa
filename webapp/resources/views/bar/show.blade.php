@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $bar->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.show', $bar);
+@endphp
 
 @push('scripts')
     <script type="text/javascript">
