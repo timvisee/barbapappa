@@ -1,18 +1,13 @@
 @extends('layouts.app')
 
 @section('title', __('pages.bar.generatePoster'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.poster', $bar);
+@endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
+    <h2 class="ui header">@yield('title')</h2>
 
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}">
-                {{ $bar->name }}
-            </a>
-        </div>
-    </h2>
     <p>@lang('pages.bar.generatePosterDescription', ['app' => config('app.name')])</p>
 
     {!! Form::open(['action' => ['BarController@doGeneratePoster', 'barId' => $bar->human_id], 'method' => 'POST', 'class' => 'ui form', 'target' => '_blank']) !!}

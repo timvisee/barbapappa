@@ -54,6 +54,11 @@ Breadcrumbs::for('community.links', function(BreadcrumbTrail $trail, $community)
     $trail->push(__('pages.community.links.title'), route('community.links', ['communityId' => $community->human_id]));
 });
 
+Breadcrumbs::for('community.poster', function(BreadcrumbTrail $trail, $community) {
+    $trail->parent('community.manage', $community);
+    $trail->push(__('misc.poster'), route('community.poster.generate', ['communityId' => $community->human_id]));
+});
+
 Breadcrumbs::for('community.member.index', function(BreadcrumbTrail $trail, $community) {
     $trail->parent('community.manage', $community);
     $trail->push(__('misc.members'), route('community.member.index', ['communityId' => $community->human_id]));
@@ -192,11 +197,18 @@ Breadcrumbs::for('community.wallet.index', function(BreadcrumbTrail $trail, $com
     $trail->push(__('pages.wallets.title'), route('community.wallet.index', ['communityId' => $community->human_id]));
 });
 
-Breadcrumbs::for('community.wallet.show', function(BreadcrumbTrail $trail, $community, $wallet) {
+Breadcrumbs::for('community.wallet.list', function(BreadcrumbTrail $trail, $economy) {
+    $community = $economy->community;
     $trail->parent('community.wallet.index', $community);
+    $trail->push($economy->name, route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]));
+});
+
+Breadcrumbs::for('community.wallet.show', function(BreadcrumbTrail $trail, $community, $wallet) {
+    $economy = $wallet->currency->economy;
+    $trail->parent('community.wallet.list', $economy);
     $trail->push($wallet->name, route('community.wallet.show', [
         'communityId' => $community->human_id,
-        'economyId' => $wallet->currency->economy_id,
+        'economyId' => $economy->id,
         'walletId' => $wallet->id,
     ]));
 });
@@ -262,6 +274,11 @@ Breadcrumbs::for('bar.history', function(BreadcrumbTrail $trail, $bar) {
 Breadcrumbs::for('bar.links', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
     $trail->push(__('pages.bar.links.title'), route('bar.links', ['barId' => $bar->human_id]));
+});
+
+Breadcrumbs::for('bar.poster', function(BreadcrumbTrail $trail, $bar) {
+    $trail->parent('bar.manage', $bar);
+    $trail->push(__('misc.poster'), route('bar.poster.generate', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('bar.member.index', function(BreadcrumbTrail $trail, $bar) {
