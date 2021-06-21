@@ -141,12 +141,12 @@
                     @if($breadcrumb->url)
                         <a href="{{ $breadcrumb->url }}" class="item {{ $loop->last ? 'active' : '' }}">
                             <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
-                            {{ $loop->index + 1 }}. {{ $breadcrumb->title }}
+                            {{ $loop->index + 2 }}. {{ $breadcrumb->title }}
                         </a>
                     @else
                         <div class="item {{ $loop->last ? 'active' : '' }}">
                             <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
-                            {{ $loop->index + 1 }}. {{ $breadcrumb->title }}
+                            {{ $loop->index + 2 }}. {{ $breadcrumb->title }}
                         </div>
                     @endif
                 @endforeach
