@@ -35,7 +35,7 @@ form.inline {
 // Only show breadcrumbs on big screens
 @media not screen, (max-width: 1200px) {
     .ui.breadcrumb {
-        display: none !important;
+        display: none;
     }
 }
 
