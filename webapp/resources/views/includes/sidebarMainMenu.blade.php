@@ -123,7 +123,7 @@
             <a href="{{ route('language') }}"
                     class="item {{ Route::currentRouteName() == 'language' ? ' active' : '' }}">
                 @lang('lang.language')
-                {{ langManager()->renderFlag(null, true, true) }}
+                <span class="right">{{ langManager()->renderFlag(null, true, true) }}</span>
             </a>
         </div>
     </div>
@@ -135,18 +135,20 @@
             <div class="menu">
                 <a href="{{ $breadcrumbs[0]->url }}" class="item">
                     <i class="glyphicons glyphicons-home"></i>
-                    1. {{ $breadcrumbs[0]->title }}
+                    {{ $breadcrumbs[0]->title }}
                 </a>
                 @foreach($breadcrumbs->skip(1) as $breadcrumb)
                     @if($breadcrumb->url)
                         <a href="{{ $breadcrumb->url }}" class="item {{ $loop->last ? 'active' : '' }}">
                             <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
-                            {{ $loop->index + 2 }}. {{ $breadcrumb->title }}
+                            <span class="subtle">&#8627;</span>
+                            {{ $breadcrumb->title }}
                         </a>
                     @else
                         <div class="item {{ $loop->last ? 'active' : '' }}">
                             <i class="glyphicons {{ $loop->last ? 'glyphicons-ok-circle' : 'glyphicons-download' }}"></i>
-                            {{ $loop->index + 2 }}. {{ $breadcrumb->title }}
+                            <span class="subtle">&#8627;</span>
+                            {{ $breadcrumb->title }}
                         </div>
                     @endif
                 @endforeach
