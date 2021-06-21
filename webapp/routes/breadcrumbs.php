@@ -27,7 +27,7 @@ Breadcrumbs::for('community.wallet.show', function(BreadcrumbTrail $trail, $comm
     $trail->parent('community.wallet.index', $community);
     $trail->push($wallet->name, route('community.wallet.show', [
         'communityId' => $community->human_id,
-        'economyId' => $wallet->economy_id,
+        'economyId' => $wallet->currency->economy_id,
         'walletId' => $wallet->id,
     ]));
 });
