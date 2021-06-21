@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $product->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.product.show', $product);
+@endphp
 
 @php
     use \App\Http\Controllers\ProductController;

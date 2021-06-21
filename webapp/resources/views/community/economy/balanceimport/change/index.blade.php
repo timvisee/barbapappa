@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.balanceImportChange.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.balanceimport.change.index', $event);
+@endphp
 
 @php
     use \App\Http\Controllers\BalanceImportChangeController;
@@ -18,36 +21,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.in')
-            <a href="{{ route('community.economy.balanceimport.event.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                        'systemId' => $system->id,
-                        'eventId' => $event->id,
-                    ]) }}">
-                {{ $event->name }}
-            </a>
-            @lang('misc.in')
-            <a href="{{ route('community.economy.balanceimport.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                        'systemId' => $system->id,
-                    ]) }}">
-                {{ $system->name }}
-            </a>
-            @lang('misc.in')
-            <a href="{{ route('community.economy.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                    ]) }}">
-                {{ $economy->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     @if(count($unapprovedChanges) > 0)
         <div class="ui warning message visible">

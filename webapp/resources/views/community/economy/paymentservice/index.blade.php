@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.paymentService.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.paymentservice.index', $economy);
+@endphp
 
 @php
     use \App\Http\Controllers\PaymentServiceController;
@@ -14,19 +17,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('community.economy.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                    ]) }}">
-                {{ $economy->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {{-- Payment service list --}}
     @php

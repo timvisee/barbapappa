@@ -2,7 +2,7 @@
 
 @section('title', $community->name)
 @php
-    $breadcrumbs = Breadcrumbs::generate('community.show', $community);
+    $breadcrumbs = Breadcrumbs::generate('community.info', $community);
 @endphp
 
 @php

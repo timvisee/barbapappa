@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.communityMembers.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.member.index', $community);
+@endphp
 
 @php
     use \App\Perms\CommunityRoles;

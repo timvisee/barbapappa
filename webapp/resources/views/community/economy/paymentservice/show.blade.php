@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.paymentService.service'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.paymentservice.show', $service);
+@endphp
 
 @php
     use \App\Http\Controllers\PaymentServiceController;

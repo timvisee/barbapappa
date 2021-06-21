@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $economy->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.show', $economy);
+@endphp
 
 @php
     use \App\Http\Controllers\EconomyController;
@@ -55,16 +58,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.in')
-            <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}">
-                {{ $community->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     @if(perms(EconomyController::permsManage()))
         <div class="ui vertical menu fluid">

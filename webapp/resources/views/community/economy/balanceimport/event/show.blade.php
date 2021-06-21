@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $event->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.balanceimport.event.show', $event);
+@endphp
 
 @php
     use \App\Http\Controllers\BalanceImportEventController;

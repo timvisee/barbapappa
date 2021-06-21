@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.balanceImportChange.change'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.balanceimport.change.show', $change);
+@endphp
 
 @php
     use \App\Http\Controllers\BalanceImportChangeController;

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('misc.managementHub'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('app.manage');
+@endphp
 
 @php
     use App\Http\Controllers\BunqAccountController;
@@ -16,16 +19,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('about') }}">
-                {{ config('app.name') }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.assets')</h5>

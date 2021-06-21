@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $account->name)
+@php
+    $breadcrumbs = Breadcrumbs::generate('app.bunqaccount.show', $account);
+@endphp
 
 @php
     // Define menulinks
@@ -12,16 +15,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.in')
-            <a href="{{ route('app.manage') }}">
-                {{ config('app.name') }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <table class="ui compact celled definition table">
         <tbody>

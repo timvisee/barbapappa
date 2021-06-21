@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.products.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.product.index', $economy);
+@endphp
 
 @php
     use \App\Http\Controllers\ProductController;
@@ -14,19 +17,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.in')
-            <a href="{{ route('community.economy.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                    ]) }}">
-                {{ $economy->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     {{-- Product list menu --}}
     <div class="ui top menu fluid top attached">

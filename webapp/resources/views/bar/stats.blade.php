@@ -2,7 +2,7 @@
 
 @section('title', __('pages.stats.barStats'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('bar.show', $bar);
+    $breadcrumbs = Breadcrumbs::generate('bar.stats', $bar);
 @endphp
 
 @php

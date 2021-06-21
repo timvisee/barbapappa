@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.balanceImport.exportUserList'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.balanceimport.show', $system);
+@endphp
 
 @php
     use \App\Http\Controllers\BalanceImportSystemController;
@@ -18,20 +21,7 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">
-        @yield('title')
-
-        <div class="sub header">
-            @lang('misc.for')
-            <a href="{{ route('community.economy.balanceimport.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                        'systemId' => $system->id,
-                    ]) }}">
-                {{ $system->name }}
-            </a>
-        </div>
-    </h2>
+    <h2 class="ui header">@yield('title')</h2>
 
     <p>@lang('pages.balanceImport.exportUserListDescription', [
         'app' => config('app.name')

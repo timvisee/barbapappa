@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.barMembers.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('bar.member.index', $community);
+@endphp
 
 @php
     use \App\Perms\BarRoles;

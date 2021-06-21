@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.currencies.title'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.currency.index', $economy);
+@endphp
 
 @php
     use \App\Http\Controllers\CurrencyController;
@@ -14,8 +17,8 @@
 @endphp
 
 @section('content')
-    <h2 class="ui header">@yield('title') ({{ count($enabled) }})</h2>
-    {{-- TODO: show breadcrumbs including the community and current economy --}}
+    <h2 class="ui header">@yield('title')</h2>
+
     <p>@lang('pages.currencies.description')</p>
 
     <div class="ui vertical menu fluid">

@@ -2,7 +2,7 @@
 
 @section('title', $bar->name)
 @php
-    $breadcrumbs = Breadcrumbs::generate('bar.show', $bar);
+    $breadcrumbs = Breadcrumbs::generate('bar.info', $bar);
 @endphp
 
 @php
