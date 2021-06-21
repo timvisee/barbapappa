@@ -33,6 +33,7 @@ Breadcrumbs::for('community.wallet.show', function(BreadcrumbTrail $trail, $comm
 });
 
 Breadcrumbs::for('bar.show', function(BreadcrumbTrail $trail, $bar) {
+    // TODO: do not link to community, use as root instead?
     $trail->parent('community.show', $bar->community);
     $trail->push($bar->name, route('bar.show', ['barId' => $bar->human_id]));
 });
@@ -48,6 +49,26 @@ Breadcrumbs::for('bar.product.show', function(BreadcrumbTrail $trail, $bar, $pro
         'barId' => $bar->human_id,
         'productId' => $product->id,
     ]));
+});
+
+Breadcrumbs::for('bar.manage', function(BreadcrumbTrail $trail, $bar) {
+    $trail->parent('bar.show', $bar);
+    $trail->push(__('misc.manage'), route('bar.manage', ['barId' => $bar->human_id]));
+});
+
+Breadcrumbs::for('bar.history', function(BreadcrumbTrail $trail, $bar) {
+    $trail->parent('bar.manage', $bar);
+    $trail->push(__('pages.bar.purchaseHistory'), route('bar.history', ['barId' => $bar->human_id]));
+});
+
+Breadcrumbs::for('bar.links', function(BreadcrumbTrail $trail, $bar) {
+    $trail->parent('bar.manage', $bar);
+    $trail->push(__('pages.bar.links.title'), route('bar.links', ['barId' => $bar->human_id]));
+});
+
+Breadcrumbs::for('bar.kiosk.sessions', function(BreadcrumbTrail $trail, $bar) {
+    $trail->parent('bar.manage', $bar);
+    $trail->push(__('pages.bar.kioskSessions'), route('bar.kiosk.sessions', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('account', function(BreadcrumbTrail $trail, $user) {

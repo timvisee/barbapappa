@@ -521,6 +521,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             Route::get('/', 'BarController@manage')->middleware(BarController::permsManage()->middleware())->name('bar.manage');
 
             // History
+            // TODO: rename to bar.manage.history?
             Route::get('/history', 'BarController@history')->name('bar.history');
 
             // Useful links
