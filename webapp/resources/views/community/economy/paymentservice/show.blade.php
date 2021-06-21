@@ -53,8 +53,7 @@
                 <tr>
                     <td>@lang('misc.trashed')</td>
                     <td>
-                        {{-- TODO: use style for this --}}
-                        <span style="color: red;">
+                        <span class="ui text red">
                             @include('includes.humanTimeDiff', ['time' => $service->deleted_at])
                         </span>
                     </td>

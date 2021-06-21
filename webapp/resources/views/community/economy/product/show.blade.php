@@ -55,8 +55,7 @@
                             @endforeach
                         </div>
                     @else
-                        {{-- TODO: use style for this --}}
-                        <i style="color: red;">@lang('misc.none')</i>
+                        <i class="ui text red">@lang('misc.none')</i>
                     @endif
                 </td>
             </tr>
@@ -90,8 +89,7 @@
                 <tr>
                     <td>@lang('misc.trashed')</td>
                     <td>
-                        {{-- TODO: use style for this --}}
-                        <span style="color: red;">
+                        <span class="ui text red">
                             @include('includes.humanTimeDiff', ['time' => $product->deleted_at])
                         </span>
                     </td>

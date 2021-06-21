@@ -58,8 +58,7 @@
                             @endforeach
                         </div>
                     @else
-                        {{-- TODO: use style for this --}}
-                        <i style="color: red;">@lang('misc.none')</i>
+                        <i class="ui text red">@lang('misc.none')</i>
                     @endif
                 </td>
             </tr>
