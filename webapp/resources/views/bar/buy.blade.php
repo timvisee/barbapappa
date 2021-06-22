@@ -3,6 +3,7 @@
 @section('title', $bar->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.show', $bar);
+    $menusection = 'bar';
 @endphp
 
 @push('scripts')
@@ -13,45 +14,6 @@
 
     <script type="text/javascript" src="{{ mix('js/widget/advancedbuy.js') }}" async></script>
 @endpush
-
-@php
-    use \App\Http\Controllers\BarController;
-    use \App\Http\Controllers\BarMemberController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('misc.information'),
-        'link' => route('bar.info', ['barId' => $bar->human_id]),
-        'icon' => 'info-sign',
-    ];
-
-    if(perms(BarController::permsUser()))
-        $menulinks[] = [
-            'name' => __('pages.stats.title'),
-            'link' => route('bar.stats', ['barId' => $bar->human_id]),
-            'icon' => 'stats',
-        ];
-
-    if($joined)
-        $menulinks[] = [
-            'name' => __('pages.wallets.myWallets'),
-            'link' => route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]),
-            'icon' => 'wallet',
-        ];
-
-    if(perms(BarController::permsManage()))
-        $menulinks[] = [
-            'name' => __('misc.manage'),
-            'link' => route('bar.manage', ['barId' => $bar->human_id]),
-            'icon' => 'edit',
-        ];
-
-    $menulinks[] = [
-        'name' => __('pages.community.viewCommunity'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
-        'icon' => 'group',
-    ];
-@endphp
 
 @section('content')
     {{-- Low balance message --}}

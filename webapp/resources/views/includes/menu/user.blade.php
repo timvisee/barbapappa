@@ -10,32 +10,10 @@
     </a>
 </div>
 
-{{-- Menu items --}}
-<a href="{{ route('last') }}" class="item">
-    <i class="glyphicons glyphicons-undo"></i>
-    @lang('pages.last.title')
-</a>
-<a href="{{ route('dashboard') }}"
-        class="item {{ Route::currentRouteName() == 'dashboard' ? ' active' : '' }}">
-    <i class="glyphicons glyphicons-dashboard"></i>
-    @lang('pages.dashboard.title')
-</a>
+@if(isset($menusection))
+    @include('includes.menu.section.' . $menusection)
 
-{{-- TODO: remove this --}}
-{{-- Page specific links --}}
-@if(!empty($menulinks))
-    <div class="item active">
-        <div class="header">@yield('title')</div>
-        <div class="menu">
-            @foreach($menulinks as $menulink)
-                <a href="{{ $menulink['link'] }}" class="item">
-                    <i class="glyphicons glyphicons-{{ $menulink['icon'] ?? 'chevron-right' }}"></i>
-                    {{ $menulink['name'] }}
-                </a>
-            @endforeach
-        </div>
-    </div>
+    <div class="item header spaced">@lang('misc.app'):</div>
 @endif
 
-<div class="item header spaced">Site:</div>
-@include('includes.menu.section.site')
+@include('includes.menu.section.app')

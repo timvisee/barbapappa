@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.wallets.transferToUser'))
+@php
+    $menusection = 'community';
+@endphp
 
 @section('content')
     <h2 class="ui header">

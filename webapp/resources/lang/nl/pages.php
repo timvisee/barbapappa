@@ -818,6 +818,7 @@ return [
         'quickBuy' => 'Nu kopen',
         'boughtProductForPrice' => ':product gekocht voor :price',
         'noDescription' => 'Deze bar heeft geen beschrijving',
+        'manageBar' => 'Beheer bar',
         'barInfo' => 'Bar informatie',
         'viewBar' => 'Bar bekijken',
         'deleted' => 'De bar is verwijderd.',

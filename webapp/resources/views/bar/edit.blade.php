@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.bar.editBar'))
+@php
+    $menusection = 'bar_manage';
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

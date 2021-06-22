@@ -3,17 +3,7 @@
 @section('title', $product->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.product.show', $product);
-@endphp
-
-@php
-    use \App\Http\Controllers\ProductController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('community.economy.product.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
-        'icon' => 'undo',
-    ];
+    $menusection = 'community_manage';
 @endphp
 
 @section('content')

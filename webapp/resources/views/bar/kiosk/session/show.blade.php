@@ -3,15 +3,7 @@
 @section('title', __('account.sessionDetails'))
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.kiosk.sessions', $bar);
-@endphp
-
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('account.backToSessions'),
-        'link' => route('bar.kiosk.sessions', ['barId' => $bar->human_id]),
-        'icon' => 'undo',
-    ];
+    $menusection = 'bar_manage';
 @endphp
 
 @section('content')

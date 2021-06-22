@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.bunqAccounts.addAccount'))
+@php
+    $menusection = 'community_manage';
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

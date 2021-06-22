@@ -1,5 +1,3 @@
-<div class="item header spaced">@lang('misc.site'):</div>
-
 <a href="{{ route('dashboard') }}"
         class="item {{ Route::currentRouteName() == 'dashboard' ? ' active' : '' }}">
     <i class="glyphicons glyphicons-dashboard"></i>

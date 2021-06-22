@@ -3,6 +3,7 @@
 @section('title', __('pages.bar.links.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.links', $bar);
+    $menusection = 'bar_manage';
 @endphp
 
 @section('content')

@@ -1,14 +1,8 @@
 @extends('layouts.app')
 
 @section('title', __('account.expireAllSessions'))
-
 @php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('account.backToSessions'),
-        'link' => route('bar.kiosk.sessions', ['barId' => $bar->human_id]),
-        'icon' => 'undo',
-    ];
+    $menusection = 'bar_manage';
 @endphp
 
 @section('content')

@@ -3,17 +3,9 @@
 @section('title', __('pages.barMembers.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.member.index', $bar);
-@endphp
+    $menusection = 'bar_manage';
 
-@php
-    use \App\Perms\BarRoles;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.bar.backToBar'),
-        'link' => route('bar.show', ['barId' => $bar->human_id]),
-        'icon' => 'undo',
-    ];
+    use App\Perms\BarRoles;
 @endphp
 
 @section('content')

@@ -3,6 +3,7 @@
 @section('title', $account->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('community.bunqaccount.show', $account);
+    $menusection = 'community_manage';
 @endphp
 
 @php

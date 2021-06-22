@@ -5,6 +5,7 @@
  */
 return [
     'link' => 'Link',
+    'links' => 'Links',
     'token' => 'Token',
     'verify' => 'Verifiëren',
     'verified' => 'Geverifieerd',
@@ -90,7 +91,7 @@ return [
     'view' => 'Bekijken',
     'details' => 'Details',
     'review' => 'Beoordelen',
-    'manage' => 'Beheren',
+    'manage' => 'Beheer',
     'managementHub' => 'Beheer hub',
     'in' => 'in',
     'for' => 'voor',

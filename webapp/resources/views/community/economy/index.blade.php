@@ -3,6 +3,7 @@
 @section('title', __('pages.economies.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.index', $community);
+    $menusection = 'community_manage';
 @endphp
 
 @php

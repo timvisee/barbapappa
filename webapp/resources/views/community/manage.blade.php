@@ -3,9 +3,8 @@
 @section('title', __('misc.managementHub'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.manage', $community);
-@endphp
+    $menusection = 'community_manage';
 
-@php
     use App\Http\Controllers\AppController;
     use App\Http\Controllers\BarController;
     use App\Http\Controllers\BunqAccountController;
@@ -13,68 +12,6 @@
     use App\Http\Controllers\CommunityMemberController;
     use App\Http\Controllers\EconomyController;
     use App\Http\Controllers\CurrencyController;
-
-    // Define menulinks
-    if(perms(CommunityController::permsAdminister())) {
-        $menulinks[] = [
-            'name' => __('pages.community.editCommunity'),
-            'link' => route('community.edit', ['communityId' => $community->human_id]),
-            'icon' => 'edit',
-        ];
-        $menulinks[] = [
-            'name' => __('pages.community.deleteCommunity'),
-            'link' => route('community.delete', ['communityId' => $community->human_id]),
-            'icon' => 'delete',
-        ];
-    }
-
-    if(perms(EconomyController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.economies.title'),
-            'link' => route('community.economy.index', ['communityId' => $community->human_id]),
-            'icon' => 'money',
-        ];
-
-    if(perms(CommunityMemberController::permsView()))
-        $menulinks[] = [
-            'name' => __('misc.members'),
-            'link' => route('community.member.index', ['communityId' => $community->human_id]),
-            'icon' => 'user-structure',
-        ];
-
-    if(perms(BunqAccountController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.bunqAccounts.title'),
-            'link' => route('community.bunqAccount.index', ['communityId' => $community->human_id]),
-            'icon' => 'credit-card',
-        ];
-
-    if(perms(CommunityController::permsManage()))
-        $menulinks[] = [
-            'name' => __('pages.community.generatePoster'),
-            'link' => route('community.poster.generate', ['communityId' => $community->human_id]),
-            'icon' => 'qrcode',
-        ];
-
-    if(perms(BarController::permsCreate()))
-        $menulinks[] = [
-            'name' => __('pages.bar.createBar'),
-            'link' => route('bar.create', ['communityId' => $community->human_id]),
-            'icon' => 'plus',
-        ];
-
-    if(perms(AppController::permsAdminister()))
-        $menulinks[] = [
-            'name' => __('pages.app.manageApp'),
-            'link' => route('app.manage'),
-            'icon' => 'settings',
-        ];
-
-    $menulinks[] = [
-        'name' => __('pages.community.backToCommunity'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
 @endphp
 
 @section('content')
@@ -214,7 +151,7 @@
 
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.extras')</h5>
-        @if(perms(BarController::permsManage()))
+        @if(perms(CommunityController::permsManage()))
             <a href="{{ route('community.links', ['communityId' => $community->human_id]) }}" class="item">
                 @lang('pages.community.links.title')
             </a>

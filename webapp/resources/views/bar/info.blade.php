@@ -3,24 +3,9 @@
 @section('title', $bar->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.info', $bar);
-@endphp
+    $menusection = 'bar';
 
-@php
     use \App\Http\Controllers\BarMemberController;
-
-    // Define menulinks
-    if($page == 'info')
-        $menulinks[] = [
-            'name' => __('pages.bar.backToBar'),
-            'link' => route('bar.show', ['barId' => $bar->human_id]),
-            'icon' => 'undo',
-        ];
-
-    $menulinks[] = [
-        'name' => __('pages.community.viewCommunity'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
-        'icon' => 'group',
-    ];
 @endphp
 
 @section('content')

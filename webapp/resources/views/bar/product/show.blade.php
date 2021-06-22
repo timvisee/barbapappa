@@ -3,28 +3,7 @@
 @section('title', $product->displayName())
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.product.show', $bar, $product);
-@endphp
-
-@php
-    use \App\Http\Controllers\CommunityController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.products.backToProducts'),
-        'link' => route('bar.product.index', ['barId' => $bar->human_id]),
-        'icon' => 'undo',
-    ];
-
-    if(perms(CommunityController::permsManage()))
-        $menulinks[] = [
-            'name' => __('pages.products.manageProduct'),
-            'link' => route('community.economy.product.show', [
-                'communityId' => $bar->community_id,
-                'economyId' => $bar->economy_id,
-                'productId' => $product->id,
-            ]),
-            'icon' => 'edit',
-        ];
+    $menusection = 'bar';
 @endphp
 
 @section('content')
@@ -92,6 +71,8 @@
             {!! Form::close() !!}
         </p>
     @endif
+
+    {{-- TODO: admin button to manage product --}}
 
     <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
             class="ui button basic">

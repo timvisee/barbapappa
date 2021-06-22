@@ -3,17 +3,9 @@
 @section('title', __('pages.balanceImportEvent.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.balanceimport.event.index', $system);
-@endphp
+    $menusection = 'community_manage';
 
-@php
-    use \App\Http\Controllers\BalanceImportEventController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.balanceImport.backToSystems'),
-        'link' => route('community.economy.balanceimport.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
-        'icon' => 'undo',
-    ];
+    use App\Http\Controllers\BalanceImportEventController;
 @endphp
 
 @section('content')

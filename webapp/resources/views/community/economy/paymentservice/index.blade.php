@@ -3,17 +3,9 @@
 @section('title', __('pages.paymentService.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.paymentservice.index', $economy);
-@endphp
+    $menusection = 'community_manage';
 
-@php
-    use \App\Http\Controllers\PaymentServiceController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.economies.backToEconomy'),
-        'link' => route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
-        'icon' => 'undo',
-    ];
+    use App\Http\Controllers\PaymentServiceController;
 @endphp
 
 @section('content')

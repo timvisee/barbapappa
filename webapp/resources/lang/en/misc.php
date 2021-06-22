@@ -5,6 +5,7 @@
  */
 return [
     'link' => 'Link',
+    'links' => 'Links',
     'token' => 'Token',
     'verify' => 'Verify',
     'verified' => 'Verified',

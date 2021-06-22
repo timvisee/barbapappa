@@ -3,27 +3,7 @@
 @section('title', __('pages.products.' . (empty(Request::input('q')) ? 'all' : 'search')))
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.product.index', $bar);
-@endphp
-
-@php
-    use \App\Http\Controllers\CommunityController;
-
-    // Define menulinks
-    if(perms(CommunityController::permsManage()))
-        $menulinks[] = [
-            'name' => __('pages.products.manageProducts'),
-            'link' => route('community.economy.product.index', [
-                    'communityId' => $bar->community_id,
-                    'economyId' => $bar->economy_id,
-                ]),
-            'icon' => 'edit',
-        ];
-
-    $menulinks[] = [
-        'name' => __('pages.bar.backToBar'),
-        'link' => route('bar.show', ['barId' => $bar->human_id]),
-        'icon' => 'undo',
-    ];
+    $menusection = 'bar';
 @endphp
 
 @section('content')
@@ -61,6 +41,8 @@
             <i class="item">@lang('pages.products.noProducts')</i>
         @endforelse
     </div>
+
+    {{-- TODO: admin button to manage products --}}
 
     <p>
         <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"

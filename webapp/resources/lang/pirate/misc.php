@@ -5,6 +5,7 @@
  */
 return [
     'link' => 'Coordinate',
+    'links' => 'Coordinates',
     'token' => 'Token',
     'verify' => 'Verify',
     'verified' => 'Verified',

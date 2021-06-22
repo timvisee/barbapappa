@@ -3,103 +3,13 @@
 @section('title', __('misc.managementHub'))
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.manage', $bar);
-@endphp
+    $menusection = 'bar_manage';
 
-@php
-    use \App\Http\Controllers\BarController;
-    use \App\Http\Controllers\BarMemberController;
-    use \App\Http\Controllers\CommunityController;
-    use \App\Http\Controllers\EconomyController;
-    use \App\Http\Controllers\ProductController;
-
-    // Define menulinks
-    if(perms(BarController::permsAdminister())) {
-        $menulinks[] = [
-            'name' => __('pages.bar.editBar'),
-            'link' => route('bar.edit', ['barId' => $bar->human_id]),
-            'icon' => 'edit',
-        ];
-        $menulinks[] = [
-            'name' => __('pages.bar.deleteBar'),
-            'link' => route('bar.delete', ['barId' => $bar->human_id]),
-            'icon' => 'delete',
-        ];
-    }
-
-    if(perms(BarMemberController::permsView()))
-        $menulinks[] = [
-            'name' => __('misc.members'),
-            'link' => route('bar.member.index', ['barId' => $bar->human_id]),
-            'icon' => 'user-structure',
-        ];
-
-    if(perms(EconomyController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.community.economy'),
-            'link' => route('community.economy.show', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $bar->economy_id
-                ]),
-            'icon' => 'money',
-        ];
-
-    if(perms(ProductController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.products.title'),
-            'link' => route('community.economy.product.index', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $bar->economy_id
-                ]),
-            'icon' => 'shopping-bag',
-        ];
-
-    if(perms(ProductController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.bar.purchaseHistory'),
-            'link' => route('bar.history', ['barId' => $bar->human_id]),
-            'icon' => 'history',
-        ];
-
-    if(perms(ProductController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.bar.links.title'),
-            'link' => route('bar.links', ['barId' => $bar->human_id]),
-            'icon' => 'link',
-        ];
-
-    if(perms(ProductController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.bar.startKiosk'),
-            'link' => route('bar.kiosk.start', ['barId' => $bar->human_id]),
-            'icon' => 'shop',
-        ];
-
-    if(perms(ProductController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.bar.kioskSessions'),
-            'link' => route('bar.kiosk.sessions', ['barId' => $bar->human_id]),
-            'icon' => 'shop',
-        ];
-
-    if(perms(BarController::permsManage()))
-        $menulinks[] = [
-            'name' => __('pages.bar.generatePoster'),
-            'link' => route('bar.poster.generate', ['barId' => $bar->human_id]),
-            'icon' => 'qrcode',
-        ];
-
-    if(perms(CommunityController::permsManage()))
-        $menulinks[] = [
-            'name' => __('pages.community.manageCommunity'),
-            'link' => route('community.manage', ['communityId' => $bar->community->human_id]),
-            'icon' => 'group',
-        ];
-
-    $menulinks[] = [
-        'name' => __('pages.bar.backToBar'),
-        'link' => route('bar.show', ['barId' => $bar->human_id]),
-        'icon' => 'undo',
-    ];
+    use App\Http\Controllers\BarController;
+    use App\Http\Controllers\BarMemberController;
+    use App\Http\Controllers\CommunityController;
+    use App\Http\Controllers\EconomyController;
+    use App\Http\Controllers\ProductController;
 @endphp
 
 @section('content')

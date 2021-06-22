@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $wallet->name)
+@php
+    $menusection = 'community';
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

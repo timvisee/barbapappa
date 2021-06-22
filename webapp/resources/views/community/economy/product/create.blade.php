@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.products.' . ($clone ? 'clone' : 'new') . 'Product'))
+@php
+    $menusection = 'community_manage';
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

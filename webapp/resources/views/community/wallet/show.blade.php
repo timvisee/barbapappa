@@ -3,41 +3,14 @@
 @section('title', $wallet->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('community.wallet.show', $community, $wallet);
+    $menusection = 'community';
+
+    use App\Perms\CommunityRoles;
 @endphp
 
 @push('scripts')
     <script src="{{ mix('js/vendor/chart.js') }}"></script>
 @endpush
-
-@php
-    use App\Perms\CommunityRoles;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
-        'icon' => 'undo',
-    ];
-    $menulinks[] = [
-        'name' => __('misc.topUp'),
-        'link' => route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]),
-        'icon' => 'credit-card',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.wallets.transfer'),
-        'link' => route('community.wallet.transfer', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]),
-        'icon' => 'transfer',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.transactions.title'),
-        'link' => route('community.wallet.transactions', [
-                'communityId' => $community->human_id,
-                'economyId' => $economy->id,
-                'walletId' => $wallet->id
-            ]),
-        'icon' => 'fees-payments',
-    ];
-@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

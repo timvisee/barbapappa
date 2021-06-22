@@ -3,19 +3,10 @@
 @section('title', __('misc.managementHub'))
 @php
     $breadcrumbs = Breadcrumbs::generate('app.manage');
-@endphp
+    $menusection = 'app_manage';
 
-@php
-    use App\Http\Controllers\BunqAccountController;
+    use App\Http\Controllers\AppBunqAccountController;
     use App\Http\Controllers\CommunityController;
-
-    // Define menulinks
-    if(perms(BunqAccountController::permsView()))
-        $menulinks[] = [
-            'name' => __('pages.bunqAccounts.title'),
-            'link' => route('app.bunqAccount.index'),
-            'icon' => 'credit-card',
-        ];
 @endphp
 
 @section('content')
@@ -23,7 +14,7 @@
 
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.assets')</h5>
-        @if(perms(BunqAccountController::permsView()))
+        @if(perms(AppBunqAccountController::permsView()))
             <a href="{{ route('app.bunqAccount.index') }}" class="item">
                 @lang('pages.bunqAccounts.title')
             </a>

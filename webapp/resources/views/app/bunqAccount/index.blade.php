@@ -3,6 +3,7 @@
 @section('title', __('pages.bunqAccounts.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('app.bunqaccount.index');
+    $menusection = 'app_manage';
 @endphp
 
 @section('content')

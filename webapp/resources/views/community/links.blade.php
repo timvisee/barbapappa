@@ -3,6 +3,7 @@
 @section('title', __('pages.community.links.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.links', $community);
+    $menusection = 'community_manage';
 @endphp
 
 @section('content')

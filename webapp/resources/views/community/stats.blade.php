@@ -3,17 +3,9 @@
 @section('title', __('pages.stats.communityStats'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.stats', $community);
-@endphp
+    $menusection = 'community';
 
-@php
     use \App\Http\Controllers\CommunityMemberController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.community.backToCommunity'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
 @endphp
 
 @section('content')

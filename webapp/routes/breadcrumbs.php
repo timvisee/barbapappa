@@ -51,7 +51,7 @@ Breadcrumbs::for('community.manage', function(BreadcrumbTrail $trail, $community
 
 Breadcrumbs::for('community.links', function(BreadcrumbTrail $trail, $community) {
     $trail->parent('community.manage', $community);
-    $trail->push(__('pages.community.links.title'), route('community.links', ['communityId' => $community->human_id]));
+    $trail->push(__('misc.links'), route('community.links', ['communityId' => $community->human_id]));
 });
 
 Breadcrumbs::for('community.poster', function(BreadcrumbTrail $trail, $community) {
@@ -273,7 +273,7 @@ Breadcrumbs::for('bar.history', function(BreadcrumbTrail $trail, $bar) {
 
 Breadcrumbs::for('bar.links', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
-    $trail->push(__('pages.bar.links.title'), route('bar.links', ['barId' => $bar->human_id]));
+    $trail->push(__('misc.links'), route('bar.links', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('bar.poster', function(BreadcrumbTrail $trail, $bar) {

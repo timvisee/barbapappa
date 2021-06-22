@@ -3,6 +3,7 @@
 @section('title', __('pages.wallets.transferToSelf'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.wallet.show', $community, $wallet);
+    $menusection = 'community';
 @endphp
 
 @section('content')
