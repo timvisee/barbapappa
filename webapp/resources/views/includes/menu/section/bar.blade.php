@@ -12,28 +12,28 @@
     <i class="glyphicons glyphicons-beer"></i>
     @lang('misc.bar')
 </a>
-<a href="{{ route('bar.info', ['barId' => $bar->human_id]) }}"
-        class="item {{ $r == 'bar.info' ? ' active' : '' }}">
-    <i class="glyphicons glyphicons-info-sign"></i>
-    @lang('misc.information')
-</a>
 <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
         class="item {{ str_starts_with($r, 'bar.product.') ? ' active' : '' }}">
     <i class="glyphicons glyphicons-shopping-bag"></i>
     @lang('pages.products.title')
+</a>
+@if($bar->isJoined(barauth()->getSessionUser()))
+    <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
+            class="item {{ $r == 'community.wallet.list' ? ' active' : '' }}">
+        <i class="glyphicons glyphicons-wallet"></i>
+        @lang('pages.wallets.title')
+    </a>
+@endif
+<a href="{{ route('bar.info', ['barId' => $bar->human_id]) }}"
+        class="item {{ $r == 'bar.info' ? ' active' : '' }}">
+    <i class="glyphicons glyphicons-info-sign"></i>
+    @lang('misc.information')
 </a>
 @if(perms(BarController::permsUser()))
     <a href="{{ route('bar.stats', ['barId' => $bar->human_id]) }}"
             class="item {{ $r == 'bar.stats' ? ' active' : '' }}">
         <i class="glyphicons glyphicons-stats"></i>
         @lang('pages.stats.title')
-    </a>
-@endif
-@if($bar->isJoined(barauth()->getSessionUser()))
-    <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
-            class="item {{ $r == 'community.wallet.list' ? ' active' : '' }}">
-        <i class="glyphicons glyphicons-wallet"></i>
-        @lang('pages.wallets.title')
     </a>
 @endif
 @if(perms(BarController::permsManage()))
