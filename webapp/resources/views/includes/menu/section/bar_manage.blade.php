@@ -53,8 +53,8 @@
         <i class="glyphicons glyphicons-shop"></i>
         @lang('pages.bar.startKiosk')
     </a>
-    <a href="{{ route('bar.kiosk.sessions', ['barId' => $bar->human_id]) }}"
-            class="item {{ str_starts_with($r, 'bar.kiosk.sessions') ? ' active' : '' }}">
+    <a href="{{ route('bar.kiosk.sessions.index', ['barId' => $bar->human_id]) }}"
+            class="item {{ str_starts_with($r, 'bar.kiosk.sessions.') ? ' active' : '' }}">
         <i class="glyphicons glyphicons-shop"></i>
         @lang('pages.bar.kioskSessions')
     </a>

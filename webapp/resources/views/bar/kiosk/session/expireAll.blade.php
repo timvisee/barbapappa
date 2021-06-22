@@ -13,7 +13,7 @@
 
     {!! Form::open(['action' => ['KioskSessionController@doExpireAll', 'barId' => $bar->human_id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
         <div class="ui buttons">
-            <a href="{{ route('bar.kiosk.sessions', ['barId' => $bar->human_id]) }}"
+            <a href="{{ route('bar.kiosk.sessions.index', ['barId' => $bar->human_id]) }}"
                     class="ui button negative">
                 @lang('general.noGoBack')
             </a>

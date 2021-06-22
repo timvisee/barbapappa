@@ -2,7 +2,7 @@
 
 @section('title', __('account.sessions'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('bar.kiosk.sessions', $bar);
+    $breadcrumbs = Breadcrumbs::generate('bar.kiosk.sessions.index', $bar);
     $menusection = 'bar_manage';
 @endphp
 

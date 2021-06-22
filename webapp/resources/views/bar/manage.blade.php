@@ -131,7 +131,7 @@
             <div class="item disabled">@lang('pages.bar.startKiosk')</div>
         @endif
         @if(perms(BarController::permsManage()))
-            <a href="{{ route('bar.kiosk.sessions', ['barId' => $bar->human_id]) }}" class="item">
+            <a href="{{ route('bar.kiosk.sessions.index', ['barId' => $bar->human_id]) }}" class="item">
                 @lang('pages.bar.kioskSessions')
             </a>
         @else

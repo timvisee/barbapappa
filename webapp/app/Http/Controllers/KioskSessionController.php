@@ -63,7 +63,7 @@ class KioskSessionController extends Controller {
 
         // Redirect to the sessions page, show a success message
         return redirect()
-            ->route('bar.kiosk.sessions', ['barId' => $barId])
+            ->route('bar.kiosk.sessions.index', ['barId' => $barId])
             ->with('success', __('account.invalidatedSession'));
     }
 
@@ -98,7 +98,7 @@ class KioskSessionController extends Controller {
 
         // Redirect to sessions or index if invalidating current session for our user
         return redirect()
-            ->route('bar.kiosk.sessions', ['barId' => $barId])
+            ->route('bar.kiosk.sessions.index', ['barId' => $barId])
             ->with('success', trans_choice('account.invalidatedSessions#', $sessions->count()));
     }
 }

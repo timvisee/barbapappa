@@ -291,9 +291,9 @@ Breadcrumbs::for('bar.member.show', function(BreadcrumbTrail $trail, $member) {
     $trail->push($member->name, route('bar.member.show', ['barId' => $member->bar_id, 'memberId' => $member->id]));
 });
 
-Breadcrumbs::for('bar.kiosk.sessions', function(BreadcrumbTrail $trail, $bar) {
+Breadcrumbs::for('bar.kiosk.sessions.index', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
-    $trail->push(__('pages.bar.kioskSessions'), route('bar.kiosk.sessions', ['barId' => $bar->human_id]));
+    $trail->push(__('pages.bar.kioskSessions'), route('bar.kiosk.sessions.index', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('account', function(BreadcrumbTrail $trail, $user) {
