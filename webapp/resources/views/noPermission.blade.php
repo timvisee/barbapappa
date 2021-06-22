@@ -3,7 +3,7 @@
 
 @section('title', __('pages.noPermission.title'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('error');
+    $breadcrumbs = Breadcrumbs::generate('error', __('misc.noPermission'));
 @endphp
 
 @php

@@ -377,7 +377,8 @@ Breadcrumbs::for('contact', function(BreadcrumbTrail $trail) {
     $trail->push(__('pages.contact.title'), route('contact'));
 });
 
-Breadcrumbs::for('error', function(BreadcrumbTrail $trail) {
+Breadcrumbs::for('error', function(BreadcrumbTrail $trail, $error) {
     $trail->parent('dashboard');
     $trail->push(__('general.error'));
+    $trail->push($error);
 });

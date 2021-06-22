@@ -2,7 +2,7 @@
 
 @section('title', __('pages.errors.' . View::getSection('code') . '.title'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('error');
+    $breadcrumbs = Breadcrumbs::generate('error', __('pages.errors.' . View::getSection('code') . '.title'));
 @endphp
 
 @php
