@@ -16,3 +16,7 @@
     <i class="glyphicons glyphicons-user"></i>
     @lang('pages.account')
 </a>
+<a href="{{ route('payment.index') }}" class="item {{ str_starts_with($r, 'payment.') ? ' active' : '' }}">
+    <i class="glyphicons glyphicons-small-payments"></i>
+    @lang('pages.payments.title')
+</a>
