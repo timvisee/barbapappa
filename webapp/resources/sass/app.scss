@@ -212,6 +212,12 @@ ul.ui-listview.center > li > a.ui-btn {
   }
 }
 
+// Spaced headers in sidebar
+.sidebar .item.header.spaced {
+    padding-top: 2.5em;
+    font-style: italic;
+}
+
 .sidebar .has-alt-button {
   padding-right: 50px !important;
   white-space: nowrap;
