@@ -2,7 +2,7 @@
     use \App\Http\Controllers\BarController;
 
     if(!isset($r))
-        $r = Route::currentRouteName();
+        $r = Route::currentRouteName() ?? 'error';
 @endphp
 
 <div class="item header spaced">{{ $bar->name }}:</div>

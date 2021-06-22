@@ -6,7 +6,7 @@
     use \App\Http\Controllers\ProductController;
 
     if(!isset($r))
-        $r = Route::currentRouteName();
+        $r = Route::currentRouteName() ?? 'error';
 @endphp
 
 <div class="item header spaced">@lang('misc.manage') {{ $bar->name }}:</div>

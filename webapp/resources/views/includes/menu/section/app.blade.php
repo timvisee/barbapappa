@@ -1,6 +1,6 @@
 @php
     if(!isset($r))
-        $r = Route::currentRouteName();
+        $r = Route::currentRouteName() ?? 'error';
 @endphp
 
 <a href="{{ route('dashboard') }}"

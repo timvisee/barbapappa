@@ -5,7 +5,7 @@
     use App\Http\Controllers\EconomyController;
 
     if(!isset($r))
-        $r = Route::currentRouteName();
+        $r = Route::currentRouteName() ?? 'error';
 @endphp
 
 <div class="item header spaced">@lang('misc.manage') {{ $community->name }}:</div>

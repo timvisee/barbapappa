@@ -1,6 +1,6 @@
 @php
     if(!isset($r))
-        $r = Route::currentRouteName();
+        $r = Route::currentRouteName() ?? 'error';
 @endphp
 
 <div class="item header spaced">@lang('misc.site'):</div>

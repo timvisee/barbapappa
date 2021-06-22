@@ -2,7 +2,7 @@
     use App\Http\Controllers\AppBunqAccountController;
 
     if(!isset($r))
-        $r = Route::currentRouteName();
+        $r = Route::currentRouteName() ?? 'error';
 @endphp
 
 <div class="item header spaced">@lang('pages.app.manageApp'):</div>
