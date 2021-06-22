@@ -6,19 +6,6 @@
     $menusection = 'community';
 @endphp
 
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.wallets.backToWallet'),
-        'link' => route('community.wallet.show', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                    'walletId' => $wallet->id,
-                ]),
-        'icon' => 'undo',
-    ];
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 

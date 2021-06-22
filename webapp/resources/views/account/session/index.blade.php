@@ -5,17 +5,9 @@
     $breadcrumbs = Breadcrumbs::generate('account.sessions', $user);
 @endphp
 
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.accountPage.backToAccount'),
-        'link' => route('account', ['userId' => $user->id]),
-        'icon' => 'undo',
-    ];
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
+
     <p>@lang('account.sessionsDescription')</p>
 
     <div class="ui top vertical menu fluid">

@@ -6,15 +6,6 @@
     $menusection = 'community_manage';
 @endphp
 
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('community.bunqAccount.index', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 

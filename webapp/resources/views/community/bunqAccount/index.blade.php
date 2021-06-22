@@ -6,15 +6,6 @@
     $menusection = 'community_manage';
 @endphp
 
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.community.goTo'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 

@@ -13,19 +13,6 @@
 
     // Determine whether we have a previous URL
     $hasPrevious = url()->previous() != url()->current();
-
-    // Define menulinks
-    if($hasPrevious)
-        $menulinks[] = [
-            'name' => __('general.goBack'),
-            'link' => url()->previous(),
-            'icon' => 'undo',
-        ];
-    $menulinks[] = [
-        'name' => $homeRouteName,
-        'link' => route($homeRoute),
-        'icon' => 'text-underline',
-    ];
 @endphp
 
 @section('content')

@@ -5,15 +5,6 @@
     $breadcrumbs = Breadcrumbs::generate('explore');
 @endphp
 
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.communities'),
-        'link' => route('explore.community'),
-        'icon' => 'group',
-    ];
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 

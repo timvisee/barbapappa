@@ -5,30 +5,6 @@
     $breadcrumbs = Breadcrumbs::generate('account', $user);
 @endphp
 
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.editProfile.name'),
-        'link' => route('profile.edit', ['userId' => $user->id]),
-        'icon' => 'edit',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.changePassword'),
-        'link' => route('password.change'),
-        'icon' => 'rotation-lock',
-    ];
-    $menulinks[] = [
-        'name' => __('account.manageEmails'),
-        'link' => route('account.emails', ['userId' => $user->id]),
-        'icon' => 'envelope',
-    ];
-    $menulinks[] = [
-        'name' => __('account.manageSessions'),
-        'link' => route('account.sessions', ['userId' => $user->id]),
-        'icon' => 'user-key',
-    ];
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.accountPage.description')</p>
