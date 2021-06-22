@@ -3,7 +3,9 @@
     use App\Http\Controllers\CommunityController;
     use App\Http\Controllers\CommunityMemberController;
     use App\Http\Controllers\EconomyController;
-    $r = Route::currentRouteName();
+
+    if(!isset($r))
+        $r = Route::currentRouteName();
 @endphp
 
 <div class="item header spaced">@lang('misc.manage') {{ $community->name }}:</div>

@@ -1,6 +1,8 @@
 @php
     use \App\Http\Controllers\BarController;
-    $r = Route::currentRouteName();
+
+    if(!isset($r))
+        $r = Route::currentRouteName();
 @endphp
 
 <div class="item header spaced">{{ $bar->name }}:</div>

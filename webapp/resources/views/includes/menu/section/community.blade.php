@@ -1,6 +1,8 @@
 @php
     use \App\Http\Controllers\CommunityController;
-    $r = Route::currentRouteName();
+
+    if(!isset($r))
+        $r = Route::currentRouteName();
 @endphp
 
 <div class="item header spaced">{{ $community->name }}:</div>

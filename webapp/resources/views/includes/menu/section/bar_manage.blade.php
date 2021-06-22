@@ -4,7 +4,9 @@
     use \App\Http\Controllers\CommunityController;
     use \App\Http\Controllers\EconomyController;
     use \App\Http\Controllers\ProductController;
-    $r = Route::currentRouteName();
+
+    if(!isset($r))
+        $r = Route::currentRouteName();
 @endphp
 
 <div class="item header spaced">@lang('misc.manage') {{ $bar->name }}:</div>
