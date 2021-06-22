@@ -36,6 +36,7 @@ $(document).ready(function() {
         let sidebarClass = $(this).data('sidebar');
         $('.ui.sidebar.' + sidebarClass)
             .sidebar('setting', 'transition', 'overlay')
+            .sidebar('setting', 'mobileTransition', 'overlay')
             .sidebar('toggle');
         return false;
     });
