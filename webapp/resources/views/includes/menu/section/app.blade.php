@@ -12,7 +12,7 @@
     <i class="glyphicons glyphicons-search"></i>
     @lang('pages.explore.title')
 </a>
-<a href="{{ route('account') }}" class="item {{ $r == 'account' ? ' active' : '' }}">
+<a href="{{ route('account') }}" class="item {{ str_starts_with($r, 'account') || str_starts_with($r, 'profile') ? ' active' : '' }}">
     <i class="glyphicons glyphicons-user"></i>
     @lang('pages.account')
 </a>

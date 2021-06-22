@@ -33,7 +33,7 @@
     <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
             class="item {{ $r == 'community.wallet.list' ? ' active' : '' }}">
         <i class="glyphicons glyphicons-wallet"></i>
-        @lang('pages.wallets.myWallets')
+        @lang('pages.wallets.title')
     </a>
 @endif
 @if(perms(BarController::permsManage()))
