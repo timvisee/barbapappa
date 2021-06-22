@@ -816,6 +816,7 @@ return [
         'quickBuy' => 'Get now',
         'boughtProductForPrice' => 'Got :product for :price',
         'noDescription' => 'Dis bar be nay description',
+        'manageBar' => 'Manage bar',
         'barInfo' => 'Bar info',
         'viewBar' => 'View bar',
         'deleted' => 'Th\' bar be sunk.',
@@ -865,8 +866,8 @@ return [
             'pageCloseWarning' => 'Ye selected or has loot in cart that nay be gotten yet. Ye must add loot selection to at least one pirate and tap th\' Get button to commit th\' purchase, or the selection will be lost.',
         ],
         'links' => [
-            'title' => 'Useful links',
-            'description' => 'Dis page lists various shareable links for dis bar. Ye may share these through e-bottle messages or print dem on a placard. Some of these links allow you to direct other pirates to specific otherwise hidden pages and intents.<br><br>Please be aware that some links change when modifying bar settings, and some links contain secret bits.',
+            'title' => 'Useful coordinates',
+            'description' => 'Dis page lists various shareable coordinates for dis bar. Ye may share these through e-bottle messages or print dem on a placard. Some of these coordinates allow you to direct other pirates to specific otherwise hidden pages and intents.<br><br>Please be aware that some coordinates change when modifying bar settings, and some coordinates contain secret bits.',
             'linkBar' => 'Main bar page',
             'linkJoinBar' => 'Invite fresh pirates to join bar',
             'linkJoinBarCode' => 'Invite fresh pirates to join bar (with code)',

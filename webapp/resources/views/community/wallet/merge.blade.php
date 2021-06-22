@@ -3,15 +3,7 @@
 @section('title', __('pages.wallets.mergeWallets'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.wallet.index', $community);
-@endphp
-
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
-        'icon' => 'undo',
-    ];
+    $menusection = 'community';
 @endphp
 
 @section('content')

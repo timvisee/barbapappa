@@ -3,22 +3,13 @@
 @section('title', __('pages.mutations.details'))
 @php
     $breadcrumbs = Breadcrumbs::generate('transaction.mutation.show', $mutation);
-@endphp
 
-@php
-    use \App\Models\Mutation;
-    use \App\Models\MutationBalanceImport;
-    use \App\Models\MutationMagic;
-    use \App\Models\MutationPayment;
-    use \App\Models\MutationProduct;
-    use \App\Models\MutationWallet;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.transactions.backToTransaction'),
-        'link' => route('transaction.show', ['transactionId' => $transaction->id]),
-        'icon' => 'undo',
-    ];
+    use App\Models\Mutation;
+    use App\Models\MutationBalanceImport;
+    use App\Models\MutationMagic;
+    use App\Models\MutationPayment;
+    use App\Models\MutationProduct;
+    use App\Models\MutationWallet;
 @endphp
 
 @section('content')
@@ -129,15 +120,6 @@
                         </tbody>
                     </table>
                 @elseif($data instanceof MutationWallet && $data->wallet_id != null)
-                    @php
-                        // Extend page links
-                        $menulinks[] = [
-                            'name' => __('pages.wallets.view'),
-                            'link' => $data->wallet->getUrlShow(),
-                            'icon' => 'wallet',
-                        ];
-                    @endphp
-
                     <p>
                         {{-- TODO: inefficient querying here, improve this! --}}
                         <a href="{{ $data->wallet->getUrlShow() }}"
@@ -146,25 +128,6 @@
                         </a>
                     </p>
                 @elseif($data instanceof MutationProduct)
-                    @php
-                        // Extend page links
-                        $menulinks[] = [
-                            'name' => __('pages.products.viewProduct'),
-                            'link' => route('bar.product.show', [
-                                    'barId' => $data->bar->human_id,
-                                    'productId' => $data->product_id,
-                                ]),
-                            'icon' => 'shopping-bag',
-                        ];
-                        $menulinks[] = [
-                            'name' => __('pages.bar.viewBar'),
-                            'link' => route('bar.show', [
-                                    'barId' => $data->bar->human_id,
-                                ]),
-                            'icon' => 'beer',
-                        ];
-                    @endphp
-
                     <div class="ui top vertical menu fluid">
                         <h5 class="ui item header">@lang('misc.product')</h5>
 
@@ -191,17 +154,6 @@
                         </a>
                     </div>
                 @elseif($data instanceof MutationPayment)
-                    @php
-                        // Extend page links
-                        $menulinks[] = [
-                            'name' => __('pages.payments.viewPayment'),
-                            'link' => route('payment.show', [
-                                'paymentId' => $data->payment_id,
-                            ]),
-                            'icon' => 'credit-card',
-                        ];
-                    @endphp
-
                     <div class="ui top vertical menu fluid">
                         <h5 class="ui item header">@lang('misc.payment')</h5>
 

@@ -3,24 +3,8 @@
 @section('title', __('pages.explore.exploreCommunities'))
 @php
     $breadcrumbs = Breadcrumbs::generate('explore');
-@endphp
 
-@php
-    use \App\Http\Controllers\CommunityController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.bars'),
-        'link' => route('explore.bar'),
-        'icon' => 'beer',
-    ];
-
-    if(perms(CommunityController::permsCreate()))
-        $menulinks[] = [
-            'name' => __('pages.community.createCommunity'),
-            'link' => route('community.create'),
-            'icon' => 'plus',
-        ];
+    use App\Http\Controllers\CommunityController;
 @endphp
 
 @section('content')

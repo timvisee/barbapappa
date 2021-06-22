@@ -535,7 +535,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 
                 // Session management
                 Route::prefix("/sessions")->group(function() {
-                    Route::get('/', 'KioskSessionController@index')->name('bar.kiosk.sessions');
+                    Route::get('/', 'KioskSessionController@index')->name('bar.kiosk.sessions.index');
                     Route::get('/expire-all', 'KioskSessionController@expireAll')->name('bar.kiosk.sessions.expireAll');
                     Route::delete('/expire-all', 'KioskSessionController@doExpireAll')->name('bar.kiosk.sessions.doExpireAll');
                     Route::get('/{sessionId}', 'KioskSessionController@show')->name('bar.kiosk.sessions.show');

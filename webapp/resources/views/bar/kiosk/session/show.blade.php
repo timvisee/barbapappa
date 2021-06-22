@@ -2,16 +2,8 @@
 
 @section('title', __('account.sessionDetails'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('bar.kiosk.sessions', $bar);
-@endphp
-
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('account.backToSessions'),
-        'link' => route('bar.kiosk.sessions', ['barId' => $bar->human_id]),
-        'icon' => 'undo',
-    ];
+    $breadcrumbs = Breadcrumbs::generate('bar.kiosk.sessions.index', $bar);
+    $menusection = 'bar_manage';
 @endphp
 
 @section('content')
@@ -87,7 +79,7 @@
         {!! Form::close() !!}
     @endif
 
-    <a href="{{ route('bar.kiosk.sessions', ['barId' => $bar->human_id]) }}"
+    <a href="{{ route('bar.kiosk.sessions.index', ['barId' => $bar->human_id]) }}"
             class="ui button basic">
         @lang('account.backToSessions')
     </a>

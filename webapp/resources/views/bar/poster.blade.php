@@ -3,6 +3,7 @@
 @section('title', __('pages.bar.generatePoster'))
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.poster', $bar);
+    $menusection = 'bar_manage';
 @endphp
 
 @section('content')

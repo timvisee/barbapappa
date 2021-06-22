@@ -3,17 +3,9 @@
 @section('title', __('pages.communityMembers.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.member.index', $community);
-@endphp
+    $menusection = 'community_manage';
 
-@php
-    use \App\Perms\CommunityRoles;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.community.backToCommunity'),
-        'link' => route('community.manage', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
+    use App\Perms\CommunityRoles;
 @endphp
 
 @section('content')

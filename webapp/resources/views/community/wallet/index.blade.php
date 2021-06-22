@@ -3,15 +3,7 @@
 @section('title', __('pages.wallets.walletEconomies'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.wallet.index', $community);
-@endphp
-
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.community.goTo'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
+    $menusection = 'community';
 @endphp
 
 @section('content')
@@ -20,17 +12,6 @@
     <p>@lang('pages.wallets.economySelectDescription')</p>
 
     <div class="ui vertical menu fluid">
-        {{--
-            <div class="item">
-                <div class="ui transparent icon input">
-                    {{ Form::text('search', '', ['placeholder' => 'Search communities...']) }}
-                    <i class="icon link">
-                        <span class="glyphicons glyphicons-search"></span>
-                    </i>
-                </div>
-            </div>
-        --}}
-
         @forelse($economies as $economy)
             <a href="{{ route('community.wallet.list', [
                         'communityId' => $community->human_id,

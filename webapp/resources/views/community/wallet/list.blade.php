@@ -3,20 +3,7 @@
 @section('title', __('pages.wallets.myWallets'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.wallet.list', $economy);
-@endphp
-
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.community.goTo'),
-        'link' => route('community.show', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.wallets.all'),
-        'link' => route('community.wallet.index', ['communityId' => $community->human_id]),
-        'icon' => 'wallet',
-    ];
+    $menusection = 'community';
 @endphp
 
 @section('content')

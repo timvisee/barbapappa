@@ -3,9 +3,8 @@
 @section('title', __('pages.bar.purchaseHistory'))
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.history', $bar);
-@endphp
+    $menusection = 'bar_manage';
 
-@php
     use \App\Http\Controllers\BarController;
 @endphp
 

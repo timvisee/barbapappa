@@ -51,7 +51,7 @@ Breadcrumbs::for('community.manage', function(BreadcrumbTrail $trail, $community
 
 Breadcrumbs::for('community.links', function(BreadcrumbTrail $trail, $community) {
     $trail->parent('community.manage', $community);
-    $trail->push(__('pages.community.links.title'), route('community.links', ['communityId' => $community->human_id]));
+    $trail->push(__('misc.links'), route('community.links', ['communityId' => $community->human_id]));
 });
 
 Breadcrumbs::for('community.poster', function(BreadcrumbTrail $trail, $community) {
@@ -273,7 +273,7 @@ Breadcrumbs::for('bar.history', function(BreadcrumbTrail $trail, $bar) {
 
 Breadcrumbs::for('bar.links', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
-    $trail->push(__('pages.bar.links.title'), route('bar.links', ['barId' => $bar->human_id]));
+    $trail->push(__('misc.links'), route('bar.links', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('bar.poster', function(BreadcrumbTrail $trail, $bar) {
@@ -291,9 +291,9 @@ Breadcrumbs::for('bar.member.show', function(BreadcrumbTrail $trail, $member) {
     $trail->push($member->name, route('bar.member.show', ['barId' => $member->bar_id, 'memberId' => $member->id]));
 });
 
-Breadcrumbs::for('bar.kiosk.sessions', function(BreadcrumbTrail $trail, $bar) {
+Breadcrumbs::for('bar.kiosk.sessions.index', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
-    $trail->push(__('pages.bar.kioskSessions'), route('bar.kiosk.sessions', ['barId' => $bar->human_id]));
+    $trail->push(__('pages.bar.kioskSessions'), route('bar.kiosk.sessions.index', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('account', function(BreadcrumbTrail $trail, $user) {
@@ -377,7 +377,8 @@ Breadcrumbs::for('contact', function(BreadcrumbTrail $trail) {
     $trail->push(__('pages.contact.title'), route('contact'));
 });
 
-Breadcrumbs::for('error', function(BreadcrumbTrail $trail) {
+Breadcrumbs::for('error', function(BreadcrumbTrail $trail, $error) {
     $trail->parent('dashboard');
     $trail->push(__('general.error'));
+    $trail->push($error);
 });

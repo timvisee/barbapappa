@@ -3,58 +3,10 @@
 @section('title', $economy->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.show', $economy);
-@endphp
+    $menusection = 'community_manage';
 
-@php
-    use \App\Http\Controllers\EconomyController;
-    use \App\Http\Controllers\CurrencyController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.economies.backToEconomies'),
-        'link' => route('community.economy.index', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.currencies.manage'),
-        'link' => route('community.economy.currency.index', [
-            'communityId' => $community->human_id,
-            'economyId' => $economy->id
-        ]),
-        'icon' => 'currency-conversion',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.products.manageProducts'),
-        'link' => route('community.economy.product.index', [
-            'communityId' => $community->human_id,
-            'economyId' => $economy->id
-        ]),
-        'icon' => 'shopping-bag',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.paymentService.manageServices'),
-        'link' => route('community.economy.payservice.index', [
-            'communityId' => $community->human_id,
-            'economyId' => $economy->id
-        ]),
-        'icon' => 'credit-card',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.balanceImport.manageSystems'),
-        'link' => route('community.economy.balanceimport.index', [
-            'communityId' => $community->human_id,
-            'economyId' => $economy->id
-        ]),
-        'icon' => 'file-import',
-    ];
-    $menulinks[] = [
-        'name' => __('pages.finance.title'),
-        'link' => route('community.economy.finance.overview', [
-            'communityId' => $community->human_id,
-            'economyId' => $economy->id
-        ]),
-        'icon' => 'charts',
-    ];
+    use App\Http\Controllers\EconomyController;
+    use App\Http\Controllers\CurrencyController;
 @endphp
 
 @section('content')

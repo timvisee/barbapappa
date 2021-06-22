@@ -5,6 +5,7 @@
  */
 return [
     'link' => 'Coordinate',
+    'links' => 'Coordinates',
     'token' => 'Token',
     'verify' => 'Verify',
     'verified' => 'Verified',
@@ -159,6 +160,7 @@ return [
     'on' => 'on',
     'breadcrumbTrail' => 'Breadcrumb trail',
     'poster' => 'Placard',
+    'noPermission' => 'Nay permission',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

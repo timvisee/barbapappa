@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.community.createCommunity'))
+@php
+    $menusection = 'app_manage';
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

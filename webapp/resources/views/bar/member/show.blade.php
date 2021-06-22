@@ -3,19 +3,11 @@
 @section('title', $member->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.member.show', $member);
-@endphp
+    $menusection = 'bar_manage';
 
-@php
-    use \App\Http\Controllers\BarMemberController;
-    use \App\Perms\BarRoles;
+    use App\Http\Controllers\BarMemberController;
+    use App\Perms\BarRoles;
     use \Carbon\Carbon;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('bar.member.index', ['barId' => $bar->human_id]),
-        'icon' => 'undo',
-    ];
 @endphp
 
 @section('content')

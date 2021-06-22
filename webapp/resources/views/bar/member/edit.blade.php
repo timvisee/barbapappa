@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('title', $member->name)
-
 @php
-    use \App\Perms\BarRoles;
+    $menusection = 'bar_manage';
+
+    use App\Perms\BarRoles;
 @endphp
 
 @section('content')

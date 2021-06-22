@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $bar->name)
+@php
+    $menusection = 'bar';
+@endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>

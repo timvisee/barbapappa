@@ -3,20 +3,12 @@
 @section('title', __('pages.economies.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.index', $community);
-@endphp
+    $menusection = 'community_manage';
 
-@php
-    use \App\Http\Controllers\EconomyController;
+    use App\Http\Controllers\EconomyController;
 
     // Get a list of economies
     $economies = $community->economies()->get();
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.community.backToCommunity'),
-        'link' => route('community.manage', ['communityId' => $community->human_id]),
-        'icon' => 'group',
-    ];
 @endphp
 
 @section('content')

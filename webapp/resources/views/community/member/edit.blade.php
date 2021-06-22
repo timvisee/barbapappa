@@ -1,9 +1,10 @@
 @extends('layouts.app')
 
 @section('title', $member->name)
-
 @php
-    use \App\Perms\CommunityRoles;
+    $menusection = 'community_manage';
+
+    use App\Perms\CommunityRoles;
 @endphp
 
 @section('content')

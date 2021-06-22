@@ -3,17 +3,9 @@
 @section('title', $currency->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.currency.show', $currency);
-@endphp
+    $menusection = 'community_manage';
 
-@php
-    use \App\Http\Controllers\CurrencyController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('community.economy.currency.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
-        'icon' => 'undo',
-    ];
+    use App\Http\Controllers\CurrencyController;
 @endphp
 
 @section('content')

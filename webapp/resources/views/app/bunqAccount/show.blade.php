@@ -3,15 +3,7 @@
 @section('title', $account->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('app.bunqaccount.show', $account);
-@endphp
-
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('app.bunqAccount.index'),
-        'icon' => 'undo',
-    ];
+    $menusection = 'app_manage';
 @endphp
 
 @section('content')

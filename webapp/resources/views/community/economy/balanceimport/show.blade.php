@@ -3,17 +3,9 @@
 @section('title', $system->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.balanceimport.show', $system);
-@endphp
+    $menusection = 'community_manage';
 
-@php
-    use \App\Http\Controllers\BalanceImportSystemController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('community.economy.balanceimport.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
-        'icon' => 'undo',
-    ];
+    use App\Http\Controllers\BalanceImportSystemController;
 @endphp
 
 @section('content')

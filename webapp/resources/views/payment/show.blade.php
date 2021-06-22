@@ -3,44 +3,8 @@
 @section('title', __('pages.payments.details'))
 @php
     $breadcrumbs = Breadcrumbs::generate('payment.show', $payment);
-@endphp
 
-@php
-    use \BarPay\Models\Payment;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.payments.backToPayments'),
-        'link' => route('payment.index'),
-        'icon' => 'undo',
-    ];
-
-    if($payment->isInProgress())
-        $menulinks[] = [
-            'name' => __('misc.showProgress'),
-            'link' => route('payment.pay', [
-                'paymentId' => $payment->id,
-            ]),
-            'icon' => 'hourglass',
-        ];
-
-    if($payment->canCancel())
-        $menulinks[] = [
-            'name' => __('pages.payments.cancelPayment'),
-            'link' => route('payment.cancel', [
-                'paymentId' => $payment->id,
-            ]),
-            'icon' => 'remove-sign',
-        ];
-
-    if(!empty($transaction))
-        $menulinks[] = [
-            'name' => __('pages.transactions.viewTransaction'),
-            'link' => route('transaction.show', [
-                'transactionId' => $transaction->id,
-            ]),
-            'icon' => 'shopping-bag',
-        ];
+    use BarPay\Models\Payment;
 @endphp
 
 @section('content')

@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('title', $economy->name)
-
 @php
+    $menusection = 'community_manage';
+
     use \App\Http\Controllers\CurrencyController;
 @endphp
 

@@ -2,17 +2,9 @@
 
 @section('title', __('account.expireAllSessions'))
 
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('account.backToSessions'),
-        'link' => route('account.sessions', ['userId' => $user->id]),
-        'icon' => 'undo',
-    ];
-@endphp
-
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
+
     <p>@lang('account.expireAllQuestion')</p>
 
     <div class="ui hidden divider"></div>

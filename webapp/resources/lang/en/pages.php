@@ -816,6 +816,7 @@ return [
         'quickBuy' => 'Buy now',
         'boughtProductForPrice' => 'Bought :product for :price',
         'noDescription' => 'This bar has no description',
+        'manageBar' => 'Manage bar',
         'barInfo' => 'Bar info',
         'viewBar' => 'View bar',
         'deleted' => 'The bar has been deleted.',

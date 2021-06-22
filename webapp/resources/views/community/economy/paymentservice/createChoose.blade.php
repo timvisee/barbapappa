@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('title', __('pages.paymentService.newService'))
-
 @php
+    $menusection = 'community_manage';
+
     use BarPay\Models\Service as PayService;
 @endphp
 

@@ -3,15 +3,7 @@
 @section('title', $account->name)
 @php
     $breadcrumbs = Breadcrumbs::generate('community.bunqaccount.show', $account);
-@endphp
-
-@php
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('general.goBack'),
-        'link' => route('community.bunqAccount.index', ['communityId' => $community->human_id]),
-        'icon' => 'undo',
-    ];
+    $menusection = 'community_manage';
 @endphp
 
 @section('content')

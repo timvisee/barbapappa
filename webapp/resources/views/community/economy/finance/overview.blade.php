@@ -3,17 +3,7 @@
 @section('title', __('pages.finance.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.finance.overview', $economy);
-@endphp
-
-@php
-    use \App\Http\Controllers\FinanceController;
-
-    // Define menulinks
-    $menulinks[] = [
-        'name' => __('pages.economies.backToEconomy'),
-        'link' => route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]),
-        'icon' => 'undo',
-    ];
+    $menusection = 'community_manage';
 @endphp
 
 @section('content')
