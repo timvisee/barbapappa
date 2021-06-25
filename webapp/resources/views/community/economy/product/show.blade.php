@@ -4,6 +4,8 @@
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.product.show', $product);
     $menusection = 'community_manage';
+
+    use App\Http\Controllers\ProductController;
 @endphp
 
 @section('content')
