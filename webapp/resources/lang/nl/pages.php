@@ -278,7 +278,7 @@ return [
         'all' => 'Alle producten',
         'select' => 'Selecteer producten',
         'search' => 'Producten zoeken',
-        'clickBuyOrSearch' => 'Klik producten om te kopen of zoek',
+        'clickBuyOrSearch' => 'Klik op producten om te kopen of zoek',
         '#products' => '{0} Geen producten|{1} 1 product|[2,*] :count producten',
         'noProducts' => 'Geen producten...',
         'searchingFor' => 'Zoeken naar :term...',
