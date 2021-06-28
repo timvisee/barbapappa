@@ -91,6 +91,10 @@ class BarMember extends Pivot {
      * This function is expensive.
      */
     public function fetchEconomyMember() {
+        // Assert user isn't null
+        if($this->user_id == null)
+            throw new \Exception("Cannot get economy member for bar member with no user");
+
         return $this
             ->bar
             ->economy

@@ -58,6 +58,34 @@
             </div>
         </div>
 
+        {{-- Visibility toggles --}}
+        @if($economy_member != null)
+            <div class="ui divider"></div>
+
+            <div class="ui message">
+                <div class="header">@lang('pages.barMember.visibility')</div>
+                <p>@lang('pages.barMember.visibilityDescription')</p>
+            </div>
+
+            <div class="inline field">
+                <div class="ui toggle checkbox">
+                    {{ Form::checkbox('show_in_buy', true, $economy_member->show_in_buy, ['tabindex' => 0, 'class' => 'hidden']) }}
+                    {{ Form::label('show_in_buy', __('pages.barMember.showInBuy') . ' (' . __('general.recommended') . ')') }}
+                </div>
+                {{ ErrorRenderer::inline('show_in_buy') }}
+            </div>
+
+            <div class="inline field">
+                <div class="ui toggle checkbox">
+                    {{ Form::checkbox('show_in_kiosk', true, $economy_member->show_in_kiosk, ['tabindex' => 0, 'class' => 'hidden']) }}
+                    {{ Form::label('show_in_kiosk', __('pages.barMember.showInKiosk') . ' (' . __('general.recommended') . ')') }}
+                </div>
+                {{ ErrorRenderer::inline('show_in_kiosk') }}
+            </div>
+        @endif
+
+        <div class="ui hidden divider"></div>
+
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
         <a href="{{ route('bar.member.show', [
             'barId' => $bar->human_id,
