@@ -168,6 +168,25 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar membership page.
+     *
+     * @return Response
+     */
+    public function member($barId) {
+        // Get the bar
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+        $bar_member = $bar->members()->user($user)->first();
+        $economy = $bar->economy;
+        $economy_member = $economy->members()->user($user)->first();
+
+        // Show the bar member page
+        return view('bar.member')
+            ->with('bar_member', $bar_member)
+            ->with('economy_member', $economy_member);
+    }
+
+    /**
      * Bar stats page.
      *
      * @return Response

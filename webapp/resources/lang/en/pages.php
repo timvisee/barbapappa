@@ -186,6 +186,13 @@ return [
     ],
 
     /**
+     * Community membership page.
+     */
+    'communityMember' => [
+        'title' => 'Membership',
+    ],
+
+    /**
      * Community member pages.
      */
     'communityMembers' => [
@@ -875,6 +882,13 @@ return [
             'linkQuickTopUp' => 'Top-up main personal wallet',
         ],
         'checklist' => 'Bar checklist',
+    ],
+
+    /**
+     * Bar membership page.
+     */
+    'barMember' => [
+        'title' => 'Membership',
     ],
 
     /**

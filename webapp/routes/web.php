@@ -136,6 +136,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
     // Community specific, members
     Route::prefix('/{communityId}')->middleware(['selectCommunity', CommunityController::permsUser()->middleware()])->group(function() {
+        // Membership
+        Route::get('/member', 'CommunityController@member')->name('community.member');
+
         // Stats
         Route::get('/stats', 'CommunityController@stats')->name('community.stats');
 
@@ -512,6 +515,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 
     // Bar specific, members
     Route::prefix('/{barId}')->middleware(['selectBar', BarController::permsUser()->middleware()])->group(function() {
+        // Membership
+        Route::get('/member', 'BarController@member')->name('bar.member');
+
         // Stats
         Route::get('/stats', 'BarController@stats')->name('bar.stats');
 

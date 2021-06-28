@@ -187,6 +187,13 @@ return [
     ],
 
     /**
+     * Community membership page.
+     */
+    'communityMember' => [
+        'title' => 'Lidmaadschap',
+    ],
+
+    /**
      * Community member pages.
      */
     'communityMembers' => [
@@ -877,6 +884,13 @@ return [
             'linkQuickTopUp' => 'Primaire persoonlijke portemonnee opwaarderen',
         ],
         'checklist' => 'Bar checklist',
+    ],
+
+    /**
+     * Bar membership page.
+     */
+    'barMember' => [
+        'title' => 'Lidmaadschap',
     ],
 
     /**
