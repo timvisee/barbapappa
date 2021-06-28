@@ -939,6 +939,8 @@ return [
     'barMembers' => [
         'title' => 'Bar leden',
         'description' => 'Op deze pagina zie je een overzicht van alle bar leden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
+        'nickname' => 'Bijnaam',
+        'nicknameDescription' => 'Je kunt een bijnaam voor jezelf instellen. Als je een bijnaam instelt, wordt je volledige naam verborgen en zal je bijnaam getoont worden in koop- en schermen. Als je een bijnaam instelt, kies dan alsjeblieft iets duidelijks, andere gebruikers kunnen anders moeite hebben met het vinden van je. Het is aanbevolen om geen bijnaam in te stellen.',
         'noMembers' => 'Deze bar heeft geen leden...',
         'memberSince' => 'Lid sinds',
         'lastVisit' => 'Laatste bezoek',

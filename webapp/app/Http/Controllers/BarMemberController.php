@@ -95,6 +95,7 @@ class BarMemberController extends Controller {
         // Build validation rules, validate
         $rules = [
             'role' => 'required|' . ValidationDefaults::barRoles(),
+            'nickname' => 'nullable|' . ValidationDefaults::NICKNAME,
         ];
         if($newRole != $curRole)
             $rules['confirm_role_change'] = 'accepted';
@@ -129,6 +130,7 @@ class BarMemberController extends Controller {
 
         // Set visibility
         if($economy_member != null) {
+            $economy_member->nickname = $request->input('nickname');
             $economy_member->show_in_buy = is_checked($request->input('show_in_buy'));
             $economy_member->show_in_kiosk = is_checked($request->input('show_in_kiosk'));
             $economy_member->save();

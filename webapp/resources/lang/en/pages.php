@@ -937,6 +937,8 @@ return [
     'barMembers' => [
         'title' => 'Bar members',
         'description' => 'This page shows an overview of all bar members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
+        'nickname' => 'Nickname',
+        'nicknameDescription' => 'You can set a nickname for yourself. With a nickname set, your full name will be hidden and your nickname will be shown in buy and kiosk screens. If you set a nickname, please choose something descriptive, as other users may otherwise have trouble finding you. It is recommended not to set a nickname.',
         'noMembers' => 'This bar has no members...',
         'memberSince' => 'Member since',
         'lastVisit' => 'Last visit',

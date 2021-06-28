@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\DB;
  * @property-read Economy economy
  * @property int user_id
  * @property-read user
- * @property-read show_in_buy
- * @property-read show_in_kiosk
+ * @property-read string|null nickname
+ * @property-read bool show_in_buy
+ * @property-read bool show_in_kiosk
  * @property-read aliases
  * @property-read wallets
  * @property Carbon created_at
@@ -43,9 +44,18 @@ class EconomyMember extends Pivot {
     public function __get($name) {
         switch($name) {
             case 'name':
-                return $this->user != null
-                    ? $this->user->first_name . ' ' . $this->user->last_name
-                    : $this->aliases()->firstOrFail()->name;
+                // Nickname if set
+                if(!empty($this->nickname))
+                    return $this->nickname;
+
+                // Users full name
+                if($this->user != null)
+                    return $this->user->first_name . ' ' . $this->user->last_name;
+
+                // Fall back to alias or null if unavailable
+                if(($alias = $this->aliases()->first()) != null)
+                    return $alias->name;
+                return null;
             default:
                 return parent::__get($name);
         }
@@ -114,7 +124,7 @@ class EconomyMember extends Pivot {
         //     ->orWhere('last_name', 'LIKE', '%' . escape_like($search) . '%');
 
         // Search for each word separately in the first/last name fields
-        return $query
+        $query = $query
             ->where(function($query) use($search) {
                 foreach(explode(' ', $search) as $word)
                     if(!empty($word))
@@ -134,7 +144,13 @@ class EconomyMember extends Pivot {
                                         ->orWhere('last_name', 'LIKE', '%' . escape_like($word) . '%');
                                 });
                         });
-        });
+            });
+
+        // Search for each word separately in nickname field
+        foreach(explode(' ', $search) as $word)
+            $query = $query->orWhere('nickname', 'LIKE', '%' . escape_like($word) . '%');
+
+        return $query;
     }
 
     /**
