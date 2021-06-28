@@ -218,6 +218,12 @@ class BarController extends Controller {
         $economy = $bar->economy;
         $economy_member = $economy->members()->user($user)->first();
 
+        // Validate
+        $this->validate($request, [
+            'nickname' => 'nullable|' . ValidationDefaults::NICKNAME,
+        ]);
+
+        $economy_member->nickname = $request->input('nickname');
         $economy_member->show_in_buy = is_checked($request->input('show_in_buy'));
         $economy_member->show_in_kiosk = is_checked($request->input('show_in_kiosk'));
         $economy_member->save();

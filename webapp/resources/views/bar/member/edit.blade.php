@@ -63,6 +63,19 @@
             <div class="ui divider"></div>
 
             <div class="ui message">
+                <div class="header">@lang('pages.barMembers.nickname')</div>
+                <p>@lang('pages.barMembers.nicknameDescription')</p>
+            </div>
+
+            <div class="field {{ ErrorRenderer::hasError('nickname') ? 'error' : '' }}">
+                {{ Form::label('nickname', __('pages.barMembers.nickname') . ':') }}
+                {{ Form::text('nickname', $economy_member->nickname, ['placeholder' => '']) }}
+                {{ ErrorRenderer::inline('nickname') }}
+            </div>
+
+            <div class="ui hidden divider"></div>
+
+            <div class="ui message">
                 <div class="header">@lang('pages.barMember.visibility')</div>
                 <p>@lang('pages.barMember.visibilityDescription')</p>
             </div>

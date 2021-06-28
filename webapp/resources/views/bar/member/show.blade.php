@@ -25,6 +25,14 @@
             </tr>
             @if($economy_member != null)
                 <tr>
+                    <td>@lang('pages.barMembers.nickname')</td>
+                    @if(!empty($economy_member->nickname))
+                        <td>{{ $economy_member->nickname }}</td>
+                    @else
+                        <td><i>@lang('misc.none')</i></td>
+                    @endif
+                </tr>
+                <tr>
                     <td>@lang('pages.barMember.showInBuy')</td>
                     <td>{{ yesno($economy_member->show_in_buy) }}</td>
                 </tr>
