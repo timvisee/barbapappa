@@ -4,6 +4,8 @@
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.product.index', $bar);
     $menusection = 'bar';
+
+    use App\Perms\CommunityRoles;
 @endphp
 
 @section('content')
@@ -42,9 +44,19 @@
         @endforelse
     </div>
 
-    {{-- TODO: admin button to manage products --}}
-
     <p>
+        @if(perms(CommunityRoles::presetManager()))
+            <div class="ui floating right labeled icon dropdown button">
+                <i class="dropdown icon"></i>
+                @lang('misc.admin')
+                <div class="menu">
+                    <a href="{{ route('community.economy.product.index', ['communityId' => $community->human_id, 'economyId' => $product->economy->id]) }}" class="item">
+                        @lang('pages.products.manageProducts')
+                    </a>
+                </div>
+            </div>
+        @endif
+
         <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')

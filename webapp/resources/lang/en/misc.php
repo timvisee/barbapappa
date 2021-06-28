@@ -22,6 +22,7 @@ return [
     'imported' => 'Imported',
     'importAll' => 'Import all',
     'download' => 'Download',
+    'show' => 'Show',
     'edit' => 'Edit',
     'change' => 'Change',
     'rename' => 'Rename',

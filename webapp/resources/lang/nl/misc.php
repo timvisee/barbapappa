@@ -22,6 +22,7 @@ return [
     'imported' => 'Geïmporteerd',
     'importAll' => 'Importeer alles',
     'download' => 'Downloaden',
+    'show' => 'Bekijken',
     'edit' => 'Aanpassen',
     'change' => 'Aanpassen',
     'rename' => 'Hernoemen',

@@ -4,6 +4,8 @@
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.product.show', $bar, $product);
     $menusection = 'bar';
+
+    use App\Perms\CommunityRoles;
 @endphp
 
 @section('content')
@@ -54,12 +56,12 @@
         </tbody>
     </table>
 
-    @if(($format_price = $product->formatPrice($currencies, BALANCE_FORMAT_PLAIN)) != null)
-        <p>
+    <p>
+        @if(($format_price = $product->formatPrice($currencies, BALANCE_FORMAT_PLAIN)) != null)
             {!! Form::open(['action' => [
                 'BarController@quickBuy',
                 $bar->human_id,
-            ], 'method' => 'POST', 'class' => 'ui form']) !!}
+            ], 'method' => 'POST', 'class' => 'ui inline form']) !!}
                 {!! Form::hidden('product_id', $product->id) !!}
 
                 <div class="ui labeled button" tabindex="0">
@@ -69,13 +71,33 @@
                     </div>
                 </div>
             {!! Form::close() !!}
-        </p>
-    @endif
+        @endif
 
-    {{-- TODO: admin button to manage product --}}
+        @if(perms(CommunityRoles::presetManager()))
+            <div class="ui floating right labeled icon dropdown button">
+                <i class="dropdown icon"></i>
+                @lang('misc.admin')
+                <div class="menu">
+                    <a href="{{ route('community.economy.product.show', ['communityId' => $community->human_id, 'economyId' => $product->economy->id, 'productId' => $product->id]) }}" class="item">
+                        @lang('misc.show')
+                    </a>
+                    <a href="{{ route('community.economy.product.edit', ['communityId' => $community->human_id, 'economyId' => $product->economy->id, 'productId' => $product->id]) }}"
+                            class="item">
+                        @lang('misc.edit')
+                    </a>
+                    <a href="{{ route('community.economy.product.delete', ['communityId' => $community->human_id, 'economyId' => $product->economy->id, 'productId' => $product->id]) }}"
+                            class="item">
+                        @lang('misc.delete')
+                    </a>
+                </div>
+            </div>
+        @endif
+    </p>
 
-    <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
-            class="ui button basic">
-        @lang('pages.products.backToProducts')
-    </a>
+    <p>
+        <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
+                class="ui button basic">
+            @lang('pages.products.backToProducts')
+        </a>
+    </p>
 @endsection
