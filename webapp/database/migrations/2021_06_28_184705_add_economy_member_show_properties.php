@@ -14,7 +14,7 @@ class AddEconomyMemberShowProperties extends Migration {
     public function up() {
         Schema::table('economy_member', function(Blueprint $table) {
             $table->boolean('show_in_buy')->after('user_id')->default(true);
-            $table->boolean('show_in_kiosk')->after('user_id')->default(true);
+            $table->boolean('show_in_kiosk')->after('show_in_buy')->default(true);
         });
     }
 
