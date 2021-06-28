@@ -889,8 +889,12 @@ return [
      */
     'barMember' => [
         'title' => 'Membership',
+        'memberSettings' => 'Membership settings',
         'showInBuy' => 'Visible in buy screens',
         'showInKiosk' => 'Visible in kiosk',
+        'updated' => 'Your settings have been saved.',
+        'visibility' => 'Visibility',
+        'visibilityDescription' => 'Below you can toggle your visibility as bar member. Disabling visibility is useful if you want to prevent other users from buying products on your behalf. It is recommended to keep all toggles on.<br><br>Visibility in buy screens specifies whether you are shown in the list of users when buying products using their phone, and whether people can buy products on behalf of you. Visibility in kiosk specifies whether you are shown in the list of users on a central bar kiosk device, and whether users can buy products on behalf of you.',
     ],
 
     /**

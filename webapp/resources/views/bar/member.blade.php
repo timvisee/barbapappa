@@ -37,6 +37,11 @@
     </table>
 
     <p>
+        <a href="{{ route('bar.editMember', ['barId' => $bar->human_id]) }}"
+                class="ui primary button basic">
+            @lang('misc.change')
+        </a>
+
         <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')

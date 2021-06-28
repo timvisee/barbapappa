@@ -889,8 +889,12 @@ return [
      */
     'barMember' => [
         'title' => 'Membership',
+        'memberSettings' => 'Membership settings',
         'showInBuy' => 'Visible in buy screens',
         'showInKiosk' => 'Visible in kiosk',
+        'updated' => 'Ye settings be stowed.',
+        'visibility' => 'Visibility',
+        'visibilityDescription' => 'Below be may toggle yer visibility as bar mateie. Disabling visibility be useful if ye want to prevent other pirates from getting loot on yer behalf. It be recommended to keep all toggles on.<br><br>Visibility in buy screens specifies whether ye be shown in th\' list of mateies when getting loot using their phone, and whether pirates can get loot on behalf of ye. Visibility in kiosk specifies whether ye be shown in th\' list of pirates on a central bar kiosk device, and whether pirates can get loot on behalf of ye.',
     ],
 
     /**

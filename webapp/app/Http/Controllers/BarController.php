@@ -187,6 +187,48 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar membership edit page.
+     *
+     * @return Response
+     */
+    public function editMember($barId) {
+        // Get the bar
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+        $bar_member = $bar->members()->user($user)->first();
+        $economy = $bar->economy;
+        $economy_member = $economy->members()->user($user)->first();
+
+        // Show the bar member edit page
+        return view('bar.memberEdit')
+            ->with('bar_member', $bar_member)
+            ->with('economy_member', $economy_member);
+    }
+
+    /**
+     * Bar membership edit page.
+     *
+     * @return Response
+     */
+    public function doEditMember(Request $request, $barId) {
+        // Get the bar
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+        $bar_member = $bar->members()->user($user)->first();
+        $economy = $bar->economy;
+        $economy_member = $economy->members()->user($user)->first();
+
+        $economy_member->show_in_buy = is_checked($request->input('show_in_buy'));
+        $economy_member->show_in_kiosk = is_checked($request->input('show_in_kiosk'));
+        $economy_member->save();
+
+        // Redirect the user to member page
+        return redirect()
+            ->route('bar.member', ['barId' => $bar->human_id])
+            ->with('success', __('pages.barMember.updated'));
+    }
+
+    /**
      * Bar stats page.
      *
      * @return Response

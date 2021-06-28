@@ -891,8 +891,12 @@ return [
      */
     'barMember' => [
         'title' => 'Lidmaadschap',
+        'memberSettings' => 'Lidmaadschap instellingen',
         'showInBuy' => 'Zichtbaar in koopscherm',
         'showInKiosk' => 'Zichtbaar in kiosk',
+        'updated' => 'Je instellingen zijn opgeslagen.',
+        'visibility' => 'Zichtbaarheid',
+        'visibilityDescription' => 'Hieronder kun je jouw zichtbaarheid als een barlid omschakelen. Zichtbaarheid uitschakelen is handig als je wilt voorkomen dat gebruikers producten namens jouw kopen. Het is aanbevolen om alle schakelaars aan te laten.<br><br>Zichtbaarheid in het koopscherm specificeert of je getoont wordt in de lijst gebruikers wanneer je producten koopt met je telefoon, en of gebruikers producten namens jouw kunnen kopen. Zichtbaarheid in de kiosk specificeert of je getoont wordt in de lijst gebruikers op een centraal bar-kiosk apparaat, en of gebruikers producten namens jouw kunnen kopen.',
     ],
 
     /**
