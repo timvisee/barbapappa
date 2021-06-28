@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\DB;
  * @property-read Economy economy
  * @property int user_id
  * @property-read user
- * @property-read show_in_buy
- * @property-read show_in_kiosk
+ * @property-read string|null nickname
+ * @property-read bool show_in_buy
+ * @property-read bool show_in_kiosk
  * @property-read aliases
  * @property-read wallets
  * @property Carbon created_at
