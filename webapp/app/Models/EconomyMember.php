@@ -138,6 +138,28 @@ class EconomyMember extends Pivot {
     }
 
     /**
+     * Scope to visibility in buy screens.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeShowInBuy($query) {
+        return $query->where('show_in_buy', true);
+    }
+
+    /**
+     * Scope to visibility in kiosk.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeShowInKiosk($query) {
+        return $query->where('show_in_kiosk', true);
+    }
+
+    /**
      * Get the member economy.
      *
      * @return Economy The economy.

@@ -122,6 +122,7 @@ class KioskController extends Controller {
             $members = $economy
                 ->members()
                 ->search($search)
+                ->showInKiosk()
                 ->limit(self::MEMBERS_LIMIT)
                 ->get();
 
@@ -439,6 +440,7 @@ class KioskController extends Controller {
         $econ_members = $bar
             ->economy
             ->members()
+            ->showInKiosk()
             ->whereIn('user_id', $user_ids)
             ->limit($limit)
             ->get();
@@ -486,6 +488,7 @@ class KioskController extends Controller {
         $econ_members = $bar
             ->economy
             ->members()
+            ->showInKiosk()
             ->whereIn('user_id', $user_ids)
             ->limit($limit)
             ->get();
@@ -513,6 +516,7 @@ class KioskController extends Controller {
         return $bar
             ->economy
             ->members()
+            ->showInKiosk()
             ->whereNotIn('user_id', $ignore_user_ids)
             ->latest()
             ->limit($limit)
@@ -541,7 +545,7 @@ class KioskController extends Controller {
                 $products = collect($userItem['products']);
 
                 // Retrieve user and product models from database
-                $member = $economy->members()->findOrFail($user['id']);
+                $member = $economy->members()->showInKiosk()->findOrFail($user['id']);
                 $products = $products->map(function($product) use($economy) {
                     $product['product'] = $economy->products()->findOrFail($product['product']['id']);
                     return $product;
