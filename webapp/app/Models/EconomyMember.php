@@ -115,7 +115,7 @@ class EconomyMember extends Pivot {
         //     ->orWhere('last_name', 'LIKE', '%' . escape_like($search) . '%');
 
         // Search for each word separately in the first/last name fields
-        return $query
+        $query = $query
             ->where(function($query) use($search) {
                 foreach(explode(' ', $search) as $word)
                     if(!empty($word))
@@ -135,7 +135,13 @@ class EconomyMember extends Pivot {
                                         ->orWhere('last_name', 'LIKE', '%' . escape_like($word) . '%');
                                 });
                         });
-        });
+            });
+
+        // Search for each word separately in nickname field
+        foreach(explode(' ', $search) as $word)
+            $query = $query->orWhere('nickname', 'LIKE', '%' . escape_like($word) . '%');
+
+        return $query;
     }
 
     /**
