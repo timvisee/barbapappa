@@ -44,9 +44,18 @@ class EconomyMember extends Pivot {
     public function __get($name) {
         switch($name) {
             case 'name':
-                return $this->user != null
-                    ? $this->user->first_name . ' ' . $this->user->last_name
-                    : $this->aliases()->firstOrFail()->name;
+                // Nickname if set
+                if(!empty($this->nickname))
+                    return $this->nickname;
+
+                // Users full name
+                if($this->user != null)
+                    return $this->user->first_name . ' ' . $this->user->last_name;
+
+                // Fall back to alias or null if unavailable
+                if(($alias = $this->aliases()->first()) != null)
+                    return $alias->name;
+                return null;
             default:
                 return parent::__get($name);
         }
