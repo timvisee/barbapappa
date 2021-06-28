@@ -23,6 +23,16 @@
                 <td>@lang('misc.role')</td>
                 <td>{{ BarRoles::roleName($member->role) }}</td>
             </tr>
+            @if($economy_member != null)
+                <tr>
+                    <td>@lang('pages.barMember.showInBuy')</td>
+                    <td>{{ yesno($economy_member->show_in_buy) }}</td>
+                </tr>
+                <tr>
+                    <td>@lang('pages.barMember.showInKiosk')</td>
+                    <td>{{ yesno($economy_member->show_in_kiosk) }}</td>
+                </tr>
+            @endif
             @if($member->visited_at != null)
                 <tr>
                     <td>@lang('pages.barMembers.lastVisit')</td>

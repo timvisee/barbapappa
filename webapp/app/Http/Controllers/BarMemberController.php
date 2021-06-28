@@ -41,9 +41,11 @@ class BarMemberController extends Controller {
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->members()->findOrFail($memberId);
+        $economy_member = $member->fetchEconomyMember();
 
         return view('bar.member.show')
-            ->with('member', $member);
+            ->with('member', $member)
+            ->with('economy_member', $economy_member);
     }
 
     /**
@@ -55,6 +57,7 @@ class BarMemberController extends Controller {
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->members()->findOrFail($memberId);
+        $economy_member = $member->fetchEconomyMember();
 
         // Current role must be higher than user role
         $config = Builder::build()->raw(BarRoles::SCOPE, $member->role)->inherit();
@@ -65,7 +68,8 @@ class BarMemberController extends Controller {
 
         // Show the edit view
         return view('bar.member.edit')
-            ->with('member', $member);
+            ->with('member', $member)
+            ->with('economy_member', $economy_member);
     }
 
     /**
@@ -77,6 +81,7 @@ class BarMemberController extends Controller {
         // Get the bar, find the member
         $bar = \Request::get('bar');
         $member = $bar->members()->findOrFail($memberId);
+        $economy_member = $member->fetchEconomyMember();
         $curRole = $member->role;
         $newRole = $request->input('role');
 
@@ -121,6 +126,13 @@ class BarMemberController extends Controller {
         // Set the role ID, save the member
         $member->role = $newRole;
         $member->save();
+
+        // Set visibility
+        if($economy_member != null) {
+            $economy_member->show_in_buy = is_checked($request->input('show_in_buy'));
+            $economy_member->show_in_kiosk = is_checked($request->input('show_in_kiosk'));
+            $economy_member->save();
+        }
 
         // Redirect to the show view after editing
         return redirect()

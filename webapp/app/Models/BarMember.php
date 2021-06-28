@@ -56,6 +56,18 @@ class BarMember extends Pivot {
     }
 
     /**
+     * Scope to a specific user.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param User $user The user.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeUser($query, User $user) {
+        return $query->where('user_id', $user->id);
+    }
+
+    /**
      * Get the member bar.
      *
      * @return Bar The bar.
@@ -79,6 +91,10 @@ class BarMember extends Pivot {
      * This function is expensive.
      */
     public function fetchEconomyMember() {
+        // Assert user isn't null
+        if($this->user_id == null)
+            throw new \Exception("Cannot get economy member for bar member with no user");
+
         return $this
             ->bar
             ->economy

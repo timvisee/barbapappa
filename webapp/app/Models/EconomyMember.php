@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
  * @property-read Economy economy
  * @property int user_id
  * @property-read user
+ * @property-read show_in_buy
+ * @property-read show_in_kiosk
  * @property-read aliases
  * @property-read wallets
  * @property Carbon created_at
@@ -133,6 +135,28 @@ class EconomyMember extends Pivot {
                                 });
                         });
         });
+    }
+
+    /**
+     * Scope to visibility in buy screens.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeShowInBuy($query) {
+        return $query->where('show_in_buy', true);
+    }
+
+    /**
+     * Scope to visibility in kiosk.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeShowInKiosk($query) {
+        return $query->where('show_in_kiosk', true);
     }
 
     /**

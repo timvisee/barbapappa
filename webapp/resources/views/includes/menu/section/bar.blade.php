@@ -23,6 +23,11 @@
         <i class="glyphicons glyphicons-wallet"></i>
         @lang('pages.wallets.title')
     </a>
+    <a href="{{ route('bar.member', ['barId' => $bar->human_id]) }}"
+            class="item {{ $r == 'bar.member' ? ' active' : '' }}">
+        <i class="glyphicons glyphicons-user-asterisk"></i>
+        @lang('pages.barMember.title')
+    </a>
 @endif
 <a href="{{ route('bar.info', ['barId' => $bar->human_id]) }}"
         class="item {{ $r == 'bar.info' ? ' active' : '' }}">

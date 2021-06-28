@@ -18,6 +18,11 @@
         <i class="glyphicons glyphicons-wallet"></i>
         @lang('pages.wallets.title')
     </a>
+    <a href="{{ route('community.member', ['communityId' => $community->human_id]) }}"
+            class="item {{ $r == 'community.member' ? ' active' : '' }}">
+        <i class="glyphicons glyphicons-user-asterisk"></i>
+        @lang('pages.communityMember.title')
+    </a>
 @endif
 <a href="{{ route('community.info', ['communityId' => $community->human_id]) }}"
         class="item {{ $r == 'community.info' ? ' active' : '' }}">

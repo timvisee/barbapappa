@@ -57,7 +57,6 @@
     </div>
 
     @include('community.include.joinBanner')
-    @include('community.include.joinedBanner')
 
     @if($page == 'info')
         <p>

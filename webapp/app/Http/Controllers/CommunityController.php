@@ -108,6 +108,22 @@ class CommunityController extends Controller {
     }
 
     /**
+     * Community membership page.
+     *
+     * @return Response
+     */
+    public function member($communityId) {
+        // Get the community
+        $community = \Request::get('community');
+        $user = barauth()->getSessionUser();
+        $community_member = $community->members()->user($user)->firstOrFail();
+
+        // Show the community member page
+        return view('community.member')
+            ->with('community_member', $community_member);
+    }
+
+    /**
      * Community stats page.
      *
      * @return Response

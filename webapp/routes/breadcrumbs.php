@@ -39,6 +39,11 @@ Breadcrumbs::for('community.info', function(BreadcrumbTrail $trail, $community) 
     $trail->push(__('misc.information'), route('community.info', ['communityId' => $community->human_id]));
 });
 
+Breadcrumbs::for('community.member', function(BreadcrumbTrail $trail, $community) {
+    $trail->parent('community.show', $community);
+    $trail->push(__('pages.communityMember.title'), route('community.member', ['communityId' => $community->human_id]));
+});
+
 Breadcrumbs::for('community.stats', function(BreadcrumbTrail $trail, $community) {
     $trail->parent('community.show', $community);
     $trail->push(__('pages.stats.title'), route('community.stats', ['communityId' => $community->human_id]));
@@ -241,6 +246,11 @@ Breadcrumbs::for('bar.show', function(BreadcrumbTrail $trail, $bar) {
 Breadcrumbs::for('bar.info', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.show', $bar);
     $trail->push(__('misc.information'), route('bar.info', ['barId' => $bar->human_id]));
+});
+
+Breadcrumbs::for('bar.member', function(BreadcrumbTrail $trail, $bar) {
+    $trail->parent('bar.show', $bar);
+    $trail->push(__('pages.barMember.title'), route('bar.member', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('bar.stats', function(BreadcrumbTrail $trail, $bar) {
