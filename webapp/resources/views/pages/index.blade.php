@@ -16,7 +16,7 @@
         <div class="required field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
             {{ Form::label('email', __('account.email') . ':') }}
             <div class="ui action input">
-                {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
+                {{ Form::text('email', '', ['type' => 'email', 'placeholder' => __('account.emailPlaceholder')]) }}
                 <button class="ui button positive" type="submit">@lang('misc.continue')</button>
             </div>
             {{ ErrorRenderer::inline('email') }}

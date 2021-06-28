@@ -18,7 +18,7 @@
         {!! Form::open(['action' => ['BarProductController@index', $bar->human_id], 'method' => 'GET', 'class' => 'ui form']) !!}
             <div class="item">
                 <div class="ui transparent icon input">
-                    {{ Form::text('q', Request::input('q'), [
+                    {{ Form::search('q', Request::input('q'), [
                         'placeholder' => __('pages.products.search') . '...',
                     ]) }}
                     <i class="icon link">
