@@ -13,7 +13,7 @@
 
     <div class="required field {{ ErrorRenderer::hasError('email') ? 'error' : '' }} {{ ($email_lock ?? false) ? 'disabled' : '' }}">
         {{ Form::label('email', __('account.email') . ':') }}
-        {{ Form::text('email', $email ?? '', ['placeholder' => __('account.emailPlaceholder')]) }}
+        {{ Form::text('email', $email ?? '', ['type' => 'email', 'placeholder' => __('account.emailPlaceholder')]) }}
         {{ ErrorRenderer::inline('email') }}
     </div>
 

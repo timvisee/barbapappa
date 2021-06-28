@@ -9,7 +9,7 @@
 
         <div class="required field {{ ErrorRenderer::hasError('email') ? 'error' : '' }}">
             {{ Form::label('email', __('account.email') . ':') }}
-            {{ Form::text('email', '', ['placeholder' => __('account.emailPlaceholder')]) }}
+            {{ Form::text('email', '', ['type' => 'email', 'placeholder' => __('account.emailPlaceholder')]) }}
             {{ ErrorRenderer::inline('email') }}
         </div>
 
