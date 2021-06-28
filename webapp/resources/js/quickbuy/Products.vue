@@ -7,7 +7,7 @@
                         @input="e => query = e.target.value"
                         @focus="e => e.target.select()"
                         id="quickbuy-search"
-                        type="text"
+                        type="search"
                         :placeholder="__('pages.products.clickBuyOrSearch') + '...'" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
                 <i v-if="!searching && !query" v-on:click.prevent.stop="search(query)" class="icon link">

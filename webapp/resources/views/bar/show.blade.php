@@ -43,7 +43,7 @@
         {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET']) !!}
             <div class="item">
                 <div class="ui transparent icon input">
-                    {{ Form::text('q', Request::input('q'), [
+                    {{ Form::search('q', Request::input('q'), [
                         'id' => 'quickbuy-search',
                         'placeholder' => __('pages.products.clickBuyOrSearch') . '...',
                     ]) }}
