@@ -889,6 +889,8 @@ return [
      */
     'barMember' => [
         'title' => 'Membership',
+        'showInBuy' => 'Visible in buy screens',
+        'showInKiosk' => 'Visible in kiosk',
     ],
 
     /**

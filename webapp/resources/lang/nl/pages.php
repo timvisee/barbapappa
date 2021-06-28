@@ -891,6 +891,8 @@ return [
      */
     'barMember' => [
         'title' => 'Lidmaadschap',
+        'showInBuy' => 'Zichtbaar in koopscherm',
+        'showInKiosk' => 'Zichtbaar in kiosk',
     ],
 
     /**

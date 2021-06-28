@@ -9,6 +9,7 @@
 @endphp
 
 @section('content')
+    {{-- Joined, leave button --}}
     <div class="ui success message visible">
         <div class="header">@lang('pages.community.joined')</div>
         <p>@lang('pages.community.youAreJoined')</p>
@@ -17,6 +18,15 @@
             @lang('pages.community.leave')
         </a>
     </div>
+
+    <table class="ui compact celled definition table">
+        <tbody>
+            <tr>
+                <td>@lang('pages.communityMembers.memberSince')</td>
+                <td>@include('includes.humanTimeDiff', ['time' => $community_member->created_at])</td>
+            </tr>
+        </tbody>
+    </table>
 
     <p>
         <a href="{{ route('community.show', ['communityId' => $community->human_id]) }}"
