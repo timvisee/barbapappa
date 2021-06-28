@@ -58,7 +58,7 @@
         {{ Form::label('amount', __('pages.paymentService.amountInCurrency', ['currency' => $currency->name]) . ':') }}
         <div class="ui labeled input">
             {{ Form::label('amount', $currency->symbol, ['class' => 'ui label']) }}
-            {{ Form::text('amount', '', ['id' => 'amount', 'placeholder' => '1.23']) }}
+            {{ Form::text('amount', '', ['id' => 'amount', 'inputmode' => 'decimal', 'placeholder' => '1.23']) }}
         </div>
         {{ ErrorRenderer::inline('amount') }}
     </div>

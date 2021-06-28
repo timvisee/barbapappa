@@ -90,7 +90,7 @@
                 <div class="field checkbox-list-inline-field {{ ErrorRenderer::hasError('amount_custom') ? 'error' : '' }}">
                     <div class="ui inline labeled input">
                         {{ Form::label('amount_custom', $currency->symbol, ['class' => 'ui label']) }}
-                        {{ Form::text('amount_custom', '', ['id' => 'amount_custom', 'placeholder' => '1.23']) }}
+                        {{ Form::text('amount_custom', '', ['id' => 'amount_custom', 'inputmode' => 'decimal', 'placeholder' => '1.23']) }}
                     </div>
                 </div>
             </div>
