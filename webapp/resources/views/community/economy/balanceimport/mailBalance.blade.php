@@ -14,11 +14,10 @@
 
     {!! Form::open([
         'action' => [
-            'BalanceImportEventController@doMailBalance',
+            'BalanceImportSystemController@doMailBalance',
             $community->human_id,
             $economy->id,
             $system->id,
-            $event->id,
         ],
         'method' => 'POST',
         'class' => 'ui form'
@@ -129,11 +128,10 @@
         <button class="ui button primary" type="submit" name="submit" value="">
             @lang('misc.send')
         </button>
-        <a href="{{ route('community.economy.balanceimport.change.index', [
+        <a href="{{ route('community.economy.balanceimport.event.index', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id,
                     'systemId' => $system->id,
-                    'eventId' => $event->id,
                 ]) }}"
                 class="ui button basic">
             @lang('general.cancel')

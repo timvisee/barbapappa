@@ -134,11 +134,10 @@
             @lang('pages.balanceImportEvent.viewEvent')
         </a>
 
-        <a href="{{ route('community.economy.balanceimport.event.mailBalance', [
+        <a href="{{ route('community.economy.balanceimport.mailBalance', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id,
-                    'systemId' => $system->id,
-                    'eventId' => $event->id,
+                    'systemId' => $system->id
                 ]) }}"
                 class="ui button basic">
             @lang('pages.balanceImportMailBalance.title')

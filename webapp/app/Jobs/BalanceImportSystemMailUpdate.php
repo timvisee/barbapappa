@@ -16,9 +16,9 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Mail balance import event users a balance update.
+ * Mail balance import system users a balance update.
  */
-class BalanceImportEventMailUpdate implements ShouldQueue {
+class BalanceImportSystemMailUpdate implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

@@ -11,9 +11,9 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Mail balance import event users a balance update.
+ * Mail balance import system users a balance update.
  */
-class BalanceImportEventMailUpdates implements ShouldQueue {
+class BalanceImportSystemMailUpdates implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,6 +22,7 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
      */
     const QUEUE = 'low';
 
+    private $system_id;
     private $event_id;
     private $mail_unregistered_users;
     private $mail_not_joined_users;
@@ -33,7 +34,8 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
     /**
      * Create a new job instance.
      *
-     * @param int $event_id Event ID.
+     * @param int $system_id System ID.
+     * @param int|null $event_id Event ID.
      * @param bool $mail_unregistered_users Whether to mail unregistered users.
      * @param bool $mail_not_joined_users Whether to mail not-joined users.
      * @param bool $mail_joined_users Whether to mail joined users.
@@ -43,7 +45,8 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
      *      locale is unknown.
      */
     public function __construct(
-        int $event_id,
+        int $system_id,
+        ?int $event_id,
         bool $mail_unregistered_users,
         bool $mail_not_joined_users,
         bool $mail_joined_users,
@@ -54,6 +57,7 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
+        $this->system_id = $system_id;
         $this->event_id = $event_id;
         $this->mail_unregistered_users = $mail_unregistered_users;
         $this->mail_not_joined_users = $mail_not_joined_users;
@@ -69,6 +73,8 @@ class BalanceImportEventMailUpdates implements ShouldQueue {
      * @return void
      */
     public function handle() {
+        // TODO: get list of aliases to send update for, if event is given, limit aliases to the ones part of the event
+
         // Get the event
         $event = BalanceImportEvent::find($this->event_id);
         if($event == null)

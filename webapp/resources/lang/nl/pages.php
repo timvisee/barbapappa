@@ -497,7 +497,7 @@ return [
         'inviteToJoinBar' => 'Uitnodigen deel te nemen aan bar',
         'doNotInvite' => 'Niet uitnodigen',
         'confirmSendMessage' => 'Bevestig om e-mailberichten te versturen.',
-        'sentBalanceUpdateEmail' => 'Een saldo update e-mail zal nu verzonden worden naar de geselecteerde gebruikers. Het kan enkele minuten duren voordat het bericht aankomst.',
+        'sentBalanceUpdateEmail' => 'Een saldo update e-mail zal nu verzonden worden naar de geselecteerde gebruikers. Het kan enkele minuten duren voordat het bericht aankomt.',
     ],
 
     /**
