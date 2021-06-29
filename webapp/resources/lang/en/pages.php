@@ -894,7 +894,7 @@ return [
         'showInKiosk' => 'Visible in kiosk',
         'updated' => 'Your settings have been saved.',
         'visibility' => 'Visibility',
-        'visibilityDescription' => 'Below you can toggle your visibility as bar member. Disabling visibility is useful if you want to prevent other users from buying products on your behalf. It is recommended to keep all toggles on.<br><br>Visibility in buy screens specifies whether you are shown in the list of users when buying products using their phone, and whether people can buy products on behalf of you. Visibility in kiosk specifies whether you are shown in the list of users on a central bar kiosk device, and whether users can buy products on behalf of you.',
+        'visibilityDescription' => 'Below you can configure your visibility as bar member. Disabling visibility is useful if you want to prevent other users from buying products on your behalf. It is recommended to keep all toggles on.<br><br>Visibility in buy screens specifies whether you are shown in the list of users when buying products using their phone. Visibility in kiosk specifies whether you are shown in the list of users on a central bar kiosk device.',
     ],
 
     /**
@@ -938,7 +938,7 @@ return [
         'title' => 'Bar members',
         'description' => 'This page shows an overview of all bar members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
         'nickname' => 'Nickname',
-        'nicknameDescription' => 'You can set a nickname for yourself. With a nickname set, your full name will be hidden and your nickname will be shown in buy and kiosk screens. If you set a nickname, please choose something descriptive, as other users may otherwise have trouble finding you. It is recommended not to set a nickname.',
+        'nicknameDescription' => 'You can set a nickname for yourself. With a nickname set, your full name will be hidden and your nickname will be shown in buy and kiosk screens. This intended for special users/accounts where showing their own name doesn\'t make sense. To prevent confusion set a clear and descriptive name or better yet, don\'t set a name at all.',
         'noMembers' => 'This bar has no members...',
         'memberSince' => 'Member since',
         'lastVisit' => 'Last visit',
