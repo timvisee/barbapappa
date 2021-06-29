@@ -894,7 +894,7 @@ return [
         'showInKiosk' => 'Visible in kiosk',
         'updated' => 'Ye settings be stowed.',
         'visibility' => 'Visibility',
-        'visibilityDescription' => 'Below be may toggle yer visibility as bar mateie. Disabling visibility be useful if ye want to prevent other pirates from getting loot on yer behalf. It be recommended to keep all toggles on.<br><br>Visibility in buy screens specifies whether ye be shown in th\' list of mateies when getting loot using their phone, and whether pirates can get loot on behalf of ye. Visibility in kiosk specifies whether ye be shown in th\' list of pirates on a central bar kiosk device, and whether pirates can get loot on behalf of ye.',
+        'visibilityDescription' => 'Below be may configure yer visibility as bar mateie. Disabling visibility be useful if ye want to prevent other pirates from getting loot on yer behalf. It be recommended to keep all toggles on.<br><br>Visibility in buy screens specifies whether ye be shown in th\' list of mateies when getting loot using their phone. Visibility in kiosk specifies whether ye be shown in th\' list of pirates on a central bar kiosk device.',
     ],
 
     /**
@@ -938,7 +938,7 @@ return [
         'title' => 'Bar mateies',
         'description' => 'Dis page shows th\' overview o\' all bar mateies.<br>Tap a matey allows ye to remove the matey, or change be rank.',
         'nickname' => 'Nickname',
-        'nicknameDescription' => 'Ye may set a nickname for yerself. With a nickname set, yer name be hidden and yer nickname will be shown in buy and kiosk screens If ye set a nickname, please choose something descriptive, as other pirates may otherwise have trouble finding ye. It be recommended not to set a nickname.',
+        'nicknameDescription' => 'Ye may set a nickname for yerself. With a nickname set, yer name be hidden and yer nickname will be shown in buy and kiosk screens. Dis be intended for special pirates where showing their own name doesn\'t make sense. To prevent confusion set a clear and descriptive name or better yet, don\'t set a name at all.',
         'noMembers' => 'Dis bar be nay mateies...',
         'memberSince' => 'Matey since',
         'lastVisit' => 'Last visit',

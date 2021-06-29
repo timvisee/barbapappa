@@ -896,7 +896,7 @@ return [
         'showInKiosk' => 'Zichtbaar in kiosk',
         'updated' => 'Je instellingen zijn opgeslagen.',
         'visibility' => 'Zichtbaarheid',
-        'visibilityDescription' => 'Hieronder kun je jouw zichtbaarheid als een barlid omschakelen. Zichtbaarheid uitschakelen is handig als je wilt voorkomen dat gebruikers producten namens jouw kopen. Het is aanbevolen om alle schakelaars aan te laten.<br><br>Zichtbaarheid in het koopscherm specificeert of je getoont wordt in de lijst gebruikers wanneer je producten koopt met je telefoon, en of gebruikers producten namens jouw kunnen kopen. Zichtbaarheid in de kiosk specificeert of je getoont wordt in de lijst gebruikers op een centraal bar-kiosk apparaat, en of gebruikers producten namens jouw kunnen kopen.',
+        'visibilityDescription' => 'Hieronder kun je jouw zichtbaarheid als barlid instellen. Zichtbaarheid uitschakelen is handig als je wilt voorkomen dat gebruikers producten namens jou kopen. Het is aanbevolen om alle schakelaars aan te laten.<br><br>Zichtbaarheid in het koopscherm specificeert of je getoont wordt in de lijst gebruikers wanneer je producten koopt met je telefoon. Zichtbaarheid in de kiosk specificeert of je getoont wordt in de lijst gebruikers op een centraal bar-kiosk apparaat.',
     ],
 
     /**
@@ -940,7 +940,7 @@ return [
         'title' => 'Bar leden',
         'description' => 'Op deze pagina zie je een overzicht van alle bar leden.<br>Als je op een lid klikt kun je dit lid verwijderen, of zijn/haar rol aanpassen.',
         'nickname' => 'Bijnaam',
-        'nicknameDescription' => 'Je kunt een bijnaam voor jezelf instellen. Als je een bijnaam instelt, wordt je volledige naam verborgen en zal je bijnaam getoont worden in koop- en schermen. Als je een bijnaam instelt, kies dan alsjeblieft iets duidelijks, andere gebruikers kunnen anders moeite hebben met het vinden van je. Het is aanbevolen om geen bijnaam in te stellen.',
+        'nicknameDescription' => 'Je kunt een bijnaam voor jezelf instellen. Als je een bijnaam instelt, wordt je volledige naam verborgen en zal je bijnaam getoont worden in koop- en schermen. Deze functie is bedoeld voor speciale gebruikers/accounts waar het tonen van hun eigen naam niet logisch is. Stel om verwarring te voorkomen een duidelijke bijnaam in of beter, stel geen bijnaam in.',
         'noMembers' => 'Deze bar heeft geen leden...',
         'memberSince' => 'Lid sinds',
         'lastVisit' => 'Laatste bezoek',
