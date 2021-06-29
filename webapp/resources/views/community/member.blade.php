@@ -9,6 +9,8 @@
 @endphp
 
 @section('content')
+    <h2 class="ui header bar-header">@yield('title')</h2>
+
     {{-- Joined, leave button --}}
     <div class="ui success message visible">
         <div class="header">@lang('pages.community.joined')</div>
