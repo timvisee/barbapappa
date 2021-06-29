@@ -87,7 +87,7 @@ class BalanceImportSystemMailUpdates implements ShouldQueue {
             $changes = $event->changes()->approved()->get();
             foreach($changes as $change) {
                 // Dispatch background jobs to send update to change user
-                BalanceImportEventMailUpdate::dispatch(
+                BalanceImportSystemMailUpdate::dispatch(
                     $change->id,
                     $self->mail_unregistered_users,
                     $self->mail_not_joined_users,

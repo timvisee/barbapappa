@@ -235,7 +235,9 @@ class BalanceImportSystemController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
-        $last_event = $system->events()->latest()->firstOrFail();
+        $last_event = $system->events()->latest()->first();
+
+        // TODO: there must be an event to send updates for
 
         return view('community.economy.balanceimport.mailBalance')
             ->with('economy', $economy)
@@ -253,7 +255,7 @@ class BalanceImportSystemController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
-        $last_event = $system->events()->latest()->firstOrFail();
+        $last_event = $system->events()->latest()->first();
 
         // Validate
         $this->validate($request, [
@@ -266,6 +268,7 @@ class BalanceImportSystemController extends Controller {
         $mail_unregistered_users = is_checked($request->input('mail_unregistered_users'));
         $mail_not_joined_users = is_checked($request->input('mail_not_joined_users'));
         $mail_joined_users = is_checked($request->input('mail_joined_users'));
+        $limit_last_event = is_checked($request->input('limit_last_event'));
         $message = $request->input('message');
         $invite_to_bar_id = (int) $request->input('invite_to_bar');
         if($invite_to_bar_id == 0)
@@ -276,12 +279,13 @@ class BalanceImportSystemController extends Controller {
         if(!langManager()->isValidLocale($default_locale))
             $default_locale = null;
 
-        // TODO: should we provide last event? base this on toggle
+        // TODO: ensure we've found any aliases to send updates for, report
+        // error otherwise!
 
         // Dispatch background jobs to send updates
         BalanceImportSystemMailUpdates::dispatch(
             $system->id,
-            $last_event->id,
+            $limit_last_event ? $last_event->id : null,
             $mail_unregistered_users,
             $mail_not_joined_users,
             $mail_joined_users,

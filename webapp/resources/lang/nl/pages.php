@@ -496,6 +496,7 @@ return [
         'extraMessage' => 'Extra bericht',
         'inviteToJoinBar' => 'Uitnodigen deel te nemen aan bar',
         'doNotInvite' => 'Niet uitnodigen',
+        'limitToLastEvent' => 'Limiteer tot gebruikers en leden in laatste event',
         'confirmSendMessage' => 'Bevestig om e-mailberichten te versturen.',
         'sentBalanceUpdateEmail' => 'Een saldo update e-mail zal nu verzonden worden naar de geselecteerde gebruikers. Het kan enkele minuten duren voordat het bericht aankomt.',
     ],

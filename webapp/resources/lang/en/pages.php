@@ -495,6 +495,7 @@ return [
         'extraMessage' => 'Extra message',
         'inviteToJoinBar' => 'Invite to join bar',
         'doNotInvite' => 'Do not invite',
+        'limitToLastEvent' => 'Limit to users and members in last event',
         'confirmSendMessage' => 'Confirm to send an email message',
         'sentBalanceUpdateEmail' => 'A balance update mail will now be sent to the selected balance import users. It may take a few minutes for it to arrive.',
     ],

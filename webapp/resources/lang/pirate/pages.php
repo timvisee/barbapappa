@@ -495,6 +495,7 @@ return [
         'extraMessage' => 'Extra notes',
         'inviteToJoinBar' => 'Invite to enter bar',
         'doNotInvite' => 'Do not invite',
+        'limitToLastEvent' => 'Limit to pirates in last event',
         'confirmSendMessage' => 'Confirm to send an e-bottle message',
         'sentBalanceUpdateEmail' => 'A balance update message will now be sent to the selected balance import pirates. It may take a few minutes for it to arrive.',
     ],
