@@ -3,6 +3,8 @@
 
     if(!isset($r))
         $r = Route::currentRouteName() ?? 'error';
+
+    $communityJoined = $community->isJoined(barauth()->getSessionUser());
 @endphp
 
 <div class="item header spaced">{{ $community->name }}:</div>
@@ -12,16 +14,11 @@
     <i class="glyphicons glyphicons-group"></i>
     @lang('misc.community')
 </a>
-@if($community->isJoined(barauth()->getSessionUser()))
+@if($communityJoined)
     <a href="{{ route('community.wallet.index', ['communityId' => $community->human_id]) }}"
             class="item {{ str_starts_with($r, 'community.wallet.') ? ' active' : '' }}">
         <i class="glyphicons glyphicons-wallet"></i>
         @lang('pages.wallets.title')
-    </a>
-    <a href="{{ route('community.member', ['communityId' => $community->human_id]) }}"
-            class="item {{ $r == 'community.member' ? ' active' : '' }}">
-        <i class="glyphicons glyphicons-user-asterisk"></i>
-        @lang('pages.communityMember.title')
     </a>
 @endif
 <a href="{{ route('community.info', ['communityId' => $community->human_id]) }}"
@@ -34,6 +31,13 @@
             class="item {{ $r == 'community.stats' ? ' active' : '' }}">
         <i class="glyphicons glyphicons-stats"></i>
         @lang('pages.stats.title')
+    </a>
+@endif
+@if($communityJoined)
+    <a href="{{ route('community.member', ['communityId' => $community->human_id]) }}"
+            class="item {{ $r == 'community.member' ? ' active' : '' }}">
+        <i class="glyphicons glyphicons-user-asterisk"></i>
+        @lang('pages.communityMember.title')
     </a>
 @endif
 @if(perms(CommunityController::permsManage()))

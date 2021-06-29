@@ -3,6 +3,8 @@
 
     if(!isset($r))
         $r = Route::currentRouteName() ?? 'error';
+
+    $barJoined = $bar->isJoined(barauth()->getSessionUser());
 @endphp
 
 <div class="item header spaced">{{ $bar->name }}:</div>
@@ -17,16 +19,11 @@
     <i class="glyphicons glyphicons-shopping-bag"></i>
     @lang('pages.products.title')
 </a>
-@if($bar->isJoined(barauth()->getSessionUser()))
+@if($barJoined)
     <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
             class="item {{ $r == 'community.wallet.list' ? ' active' : '' }}">
         <i class="glyphicons glyphicons-wallet"></i>
         @lang('pages.wallets.title')
-    </a>
-    <a href="{{ route('bar.member', ['barId' => $bar->human_id]) }}"
-            class="item {{ $r == 'bar.member' ? ' active' : '' }}">
-        <i class="glyphicons glyphicons-user-asterisk"></i>
-        @lang('pages.barMember.title')
     </a>
 @endif
 <a href="{{ route('bar.info', ['barId' => $bar->human_id]) }}"
@@ -39,6 +36,13 @@
             class="item {{ $r == 'bar.stats' ? ' active' : '' }}">
         <i class="glyphicons glyphicons-stats"></i>
         @lang('pages.stats.title')
+    </a>
+@endif
+@if($barJoined)
+    <a href="{{ route('bar.member', ['barId' => $bar->human_id]) }}"
+            class="item {{ $r == 'bar.member' ? ' active' : '' }}">
+        <i class="glyphicons glyphicons-user-asterisk"></i>
+        @lang('pages.barMember.title')
     </a>
 @endif
 @if(perms(BarController::permsManage()))
