@@ -21,7 +21,7 @@
 
         <div class="field {{ ErrorRenderer::hasError('nickname') ? 'error' : '' }}">
             {{ Form::label('nickname', __('pages.barMembers.nickname') . ':') }}
-            {{ Form::text('nickname', $economy_member->nickname, ['placeholder' => '']) }}
+            {{ Form::text('nickname', $economy_member->nickname, ['placeholder' => $economy_member->real_name]) }}
             {{ ErrorRenderer::inline('nickname') }}
         </div>
 

@@ -937,8 +937,8 @@ return [
     'barMembers' => [
         'title' => 'Bar mateies',
         'description' => 'Dis page shows th\' overview o\' all bar mateies.<br>Tap a matey allows ye to remove the matey, or change be rank.',
-        'nickname' => 'Nickname',
-        'nicknameDescription' => 'Ye may set a nickname for yerself. With a nickname set, yer name be hidden and yer nickname will be shown in buy and kiosk screens. Dis be intended for special pirates where showing their own name doesn\'t make sense. To prevent confusion set a clear and descriptive name or better yet, don\'t set a name at all.',
+        'nickname' => 'Display name',
+        'nicknameDescription' => 'Ye may set a custom display name for yerself. With a display name set, yer name be hidden and yer custom name will be shown in buy and kiosk screens. Dis be intended for special pirates where showing their own name doesn\'t make sense. To prevent confusion set a clear and descriptive name or better yet, don\'t set a name at all.',
         'noMembers' => 'Dis bar be nay mateies...',
         'memberSince' => 'Matey since',
         'lastVisit' => 'Last visit',

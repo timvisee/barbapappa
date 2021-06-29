@@ -48,6 +48,10 @@ class EconomyMember extends Pivot {
                 if(!empty($this->nickname))
                     return $this->nickname;
 
+                // Use real name
+                return $this->real_name;
+
+            case 'real_name':
                 // Users full name
                 if($this->user != null)
                     return $this->user->first_name . ' ' . $this->user->last_name;
@@ -56,6 +60,7 @@ class EconomyMember extends Pivot {
                 if(($alias = $this->aliases()->first()) != null)
                     return $alias->name;
                 return null;
+
             default:
                 return parent::__get($name);
         }
