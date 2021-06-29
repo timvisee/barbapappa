@@ -489,14 +489,14 @@ return [
      */
     'balanceImportMailBalance' => [
         'title' => 'Stuur saldo e-mail',
-        'description' => 'Stuur gebruikers in deze balansimportgebeurtenis een e-mail update. Dit kun je gebruiken om de saldo update bij gebruikers te melden wanneer deze geïmporteerd wordt. Er wordt alleen een bericht gestuurd als de veranderingen zijn goedgekeurd. Gebruikers met een saldo van nul zullen geen bericht ontvangen.',
+        'description' => 'Stuur gebruikers in deze balansimportgebeurtenis een e-mail update. Dit kun je gebruiken om de saldo update bij gebruikers te melden wanneer deze geïmporteerd wordt. Er wordt alleen een bericht gestuurd als de veranderingen zijn goedgekeurd. Het laatst bekende saldo binnen dit systeem wordt altijd gebruikt. Gebruikers met een saldo van nul zullen geen bericht ontvangen.',
         'mailUnregisteredUsers' => 'Bericht ongeregistreerde gebruikers (geen account)',
         'mailNotJoinedUsers' => 'Bericht niet-leden (met account, geen bar lid)',
         'mailJoinedUsers' => 'Bericht leden (met account, en bar lid)',
         'extraMessage' => 'Extra bericht',
         'inviteToJoinBar' => 'Uitnodigen deel te nemen aan bar',
         'doNotInvite' => 'Niet uitnodigen',
-        'limitToLastEvent' => 'Limiteer tot gebruikers en leden in laatste event',
+        'limitToLastEvent' => 'Limiteer tot gebruikers en leden in de laatste event',
         'confirmSendMessage' => 'Bevestig om e-mailberichten te versturen.',
         'sentBalanceUpdateEmail' => 'Een saldo update e-mail zal nu verzonden worden naar de geselecteerde gebruikers. Het kan enkele minuten duren voordat het bericht aankomt.',
     ],

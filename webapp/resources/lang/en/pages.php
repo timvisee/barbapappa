@@ -488,14 +488,14 @@ return [
      */
     'balanceImportMailBalance' => [
         'title' => 'Send balance email',
-        'description' => 'Send users in this balance import event a balance update email. This may be used to notify users when a new list of balances is imported. A message will only be sent for approved changes in this balance import event. Users with a balance of zero will not receive a message.',
+        'description' => 'Send users in this balance import event a balance update email. This may be used to notify users when a new list of balances is imported. A message will only be sent for approved changes in this balance import event. The last known balance of users within this system will always be used. Users with a balance of zero will not receive a message.',
         'mailUnregisteredUsers' => 'Mail unregistered users (no account)',
         'mailNotJoinedUsers' => 'Mail not-joined users (with account, not a bar member)',
         'mailJoinedUsers' => 'Mail joined users (with account, and a bar member)',
         'extraMessage' => 'Extra message',
         'inviteToJoinBar' => 'Invite to join bar',
         'doNotInvite' => 'Do not invite',
-        'limitToLastEvent' => 'Limit to users and members in last event',
+        'limitToLastEvent' => 'Limit to users and members in the last event',
         'confirmSendMessage' => 'Confirm to send an email message',
         'sentBalanceUpdateEmail' => 'A balance update mail will now be sent to the selected balance import users. It may take a few minutes for it to arrive.',
     ],
