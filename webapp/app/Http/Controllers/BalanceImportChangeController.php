@@ -211,7 +211,8 @@ class BalanceImportChangeController extends Controller {
         $alias_ids = [];
         foreach($data as &$item) {
             $name = $item['name'];
-            $email = strtolower($item['email']);
+            // TODO: duplicate, use central function to normalize email addresses
+            $email = strtolower(trim($item['email']));
 
             // Obtain the user alias, make sure it is created
             $alias = BalanceImportAlias::getOrCreate(
@@ -256,9 +257,9 @@ class BalanceImportChangeController extends Controller {
         }
 
         // Create the balance import changes
-        DB::transaction(function() use($economy, $data, $event, $currency_id, $user) {
+        DB::transaction(function() use($data, $event, $currency_id, $user) {
             foreach($data as $item) {
-                $change = $event->changes()->create([
+                $event->changes()->create([
                     'alias_id' => $item['alias_id'],
                     'balance' => normalize_price($item['balance_new']),
                     'currency_id' => $currency_id,
