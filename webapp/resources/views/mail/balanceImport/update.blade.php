@@ -76,7 +76,14 @@
 
 @component('mail::button', ['url' => route('bar.join', ['barId' => $bar->human_id, 'code' => $bar->password])])
 @lang('mail.balanceImport.update.joinBarButton', ['name' => $bar->name])
-@endcomponent
+@endcomponent  
+@if($topUpUrl != null)
+
+
+@lang('mail.balanceImport.update.afterJoinTopUp', [
+    'here' => '<a href="' . $topUpUrl . '">' . lcfirst(__('misc.here')) . '</a>',
+])
+@endif
 @endcomponent
 @endif
 

@@ -149,6 +149,7 @@ return [
             'payInAppButton' => 'Pay in Barbapappa',
             'joinBarDescription' => 'This bar manages payments through Barbapappa. Click the button below to join :name in Barbapappa. Verify your account after that to move your balance in your Barbapappa wallet.',
             'joinBarButton' => 'Join :name',
+            'afterJoinTopUp' => 'After that, you can easily top up your balance through Barbapappa :here.',
             'verifyMailDescription' => 'Please verify the email address on your Barbapappa account to automatically merge this balance into your wallet.',
             'verifyMailButton' => 'Verify email',
             'pleaseTopUp' => 'Please pay any negative balance now, and always make sure you\'ve enough available for the upcoming period.',
