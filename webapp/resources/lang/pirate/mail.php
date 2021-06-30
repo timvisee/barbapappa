@@ -54,10 +54,10 @@ return [
          * Session link email.
          */
         'sessionLink' => [
-            'subject' => 'Sign in to Barbapappa',
-            'subtitle' => 'Tap th\' button to sign in to yer Barbapappa account.',
+            'subject' => 'Sign in to Arrbapappa',
+            'subtitle' => 'Tap th\' button to sign in to yer Arrbapappa account.',
             'soon' => 'The link expires **within :expire**, and can be used once.',
-            'button' => 'Sign in to Barbapappa',
+            'button' => 'Sign in to Arrbapappa',
             'mayIgnore' => 'If ye nay requested dis, ye may safely ignore dis message.',
             'manual' => 'If th\' above button don\'t work, open th\' following link in yer web browser:',
         ],
@@ -130,7 +130,7 @@ return [
          * Balance update email.
          */
         'balance' => [
-            'subject' => 'Balance update for Barbapappa',
+            'subject' => 'Balance update for Arrbapappa',
             'subtitle' => 'Here be \'n update for yer Arrbapappa wallet balances.',
             'pleaseTopUp' => 'Please top up yer wallets with negative balance now, and always make sure ye have enough available for th\' upcoming period.',
             'noUpdateZeroBalance' => 'As soon as th\' balance of all wallets be zero, ye nay receive any further periodic updates.',
@@ -145,10 +145,11 @@ return [
             'subject' => 'Balance update',
             'subtitle' => 'Here be a balance update for ye on :economy.',
             'subtitleWithBar' => 'Here be a balance update for ye at :name on :economy.',
-            'payInAppDescription' => 'Ye can pay any outstanding balance through Barbapappa by topping up yer wallet.',
+            'payInAppDescription' => 'Ye can pay any outstanding balance through Arrbapappa by topping up yer wallet.',
             'payInAppButton' => 'Pay in Arrbapappa',
             'joinBarDescription' => 'Dis bar manages payments through Arrbapappa. Click th\' button below to enter :name in Arrbapappa. Verify yer account after that to move yer balance in yer Arrbapappa wallet.',
             'joinBarButton' => 'Enter :name',
+            'afterJoinTopUp' => 'After that, ye can easily top up yer balance through Arrbapappa :here.',
             'verifyMailDescription' => 'Please verify yer e-bottle coordinate on yer Arrbapappa account to automatically merge dis balance into yer wallet.',
             'verifyMailButton' => 'Verify e-bottle',
             'pleaseTopUp' => 'Please pay any negative balance now, and always make sure ye have enough available for the upcoming period.',
