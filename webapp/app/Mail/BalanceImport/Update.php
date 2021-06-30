@@ -73,12 +73,19 @@ class Update extends PersonalizedEmail {
 
     /**
      * Balance change.
-     * @bar MoneyAmount
+     * @var MoneyAmount
      */
     private $balance_change;
 
     /**
+     * Whether the user joined the application.
+     * @var bool
+     */
+    private $joined;
+
+    /**
      * Whether to request the user to verify their email address.
+     * @var bool
      */
     private $request_to_verify;
 
@@ -93,6 +100,7 @@ class Update extends PersonalizedEmail {
      * @param bool $invite_to_bar True to invite user to bar.
      * @param MoneyAmountBag $balance The current balance.
      * @param MoneyAmount|null $balance_change The balance change.
+     * @param bool $joined Whether the user has joined the platform.
      * @param bool $request_to_verify Whether to request the user to verify
      *          their email address.
      */
@@ -106,6 +114,7 @@ class Update extends PersonalizedEmail {
         bool $invite_to_bar,
         MoneyAmountBag $balance,
         ?MoneyAmount $balance_change,
+        bool $joined,
         bool $request_to_verify
     ) {
         // Construct the parent
@@ -119,6 +128,7 @@ class Update extends PersonalizedEmail {
         $this->invite_to_bar = $invite_to_bar;
         $this->balance = $balance;
         $this->balance_change = $balance_change;
+        $this->joined = $joined;
         $this->request_to_verify = $request_to_verify;
     }
 
@@ -167,6 +177,7 @@ class Update extends PersonalizedEmail {
             ->with('message', $this->message)
             ->with('bar', $this->bar)
             ->with('invite_to_bar', $this->invite_to_bar)
+            ->with('joined', $this->joined)
             ->with('request_to_verify', $this->request_to_verify)
             ->markdown(self::VIEW);
     }

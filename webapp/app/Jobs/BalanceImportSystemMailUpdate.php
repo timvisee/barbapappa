@@ -111,7 +111,8 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
         // Get user state for alias, do not invite to bar if already joined
         $user_state = $alias->getUserState();
         $request_to_verify = ($user_state != BalanceImportAlias::USER_STATE_UNREGISTERED) && $alias->hasUnverifiedEmail();
-        $invite_to_bar = $bar != null && $this->invite_to_bar && $user_state != BalanceImportAlias::USER_STATE_JOINED;
+        $joined = $user_state == BalanceImportAlias::USER_STATE_JOINED;
+        $invite_to_bar = $bar != null && $this->invite_to_bar && !$joined;
 
         // User must meet filter requirements
         switch($user_state) {
@@ -157,6 +158,7 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
             $invite_to_bar,
             $balances,
             null, // TODO: impl change: $balanceChange,
+            $joined,
             $request_to_verify,
         ));
     }

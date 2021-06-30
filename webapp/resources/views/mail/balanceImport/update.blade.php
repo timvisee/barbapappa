@@ -91,8 +91,8 @@
 @endcomponent
 @endif
 
-{{-- Top-up button, don't show if inviting because user has no wallet yet --}}
-@if(!$invite_to_bar && $topUpUrl != null)
+{{-- Top-up button, if user has joined --}}
+@if($joined && $topUpUrl != null)
 @component('mail::notice')
 @lang('mail.balanceImport.update.payInAppDescription')<br>
 
