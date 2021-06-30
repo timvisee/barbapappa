@@ -159,7 +159,7 @@ class EmailVerificationManager {
             $email->verified_ip = Request::ip();
             $email->save();
 
-            // Link user to balance import aliasses and to alias economy members
+            // Link user to balance import aliases and to alias economy members
             BalanceImportAlias::where('email', $email->email)
                 ->update(['user_id' => $email->user_id]);
 

@@ -104,12 +104,12 @@ class Economy extends Model {
     }
 
     /**
-     * Get a relation to all configured balance import aliasses linked to this
+     * Get a relation to all configured balance import aliases linked to this
      * economy.
      *
-     * @return List of balance import aliasses.
+     * @return List of balance import aliases.
      */
-    public function balanceImportAliasses() {
+    public function balanceImportAliases() {
         return $this->hasMany(BalanceImportAlias::class);
     }
 

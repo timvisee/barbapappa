@@ -151,7 +151,7 @@ class BalanceImportAlias extends Model {
 
         // Find the alias by this email address, update it and return
         $alias = $economy
-            ->balanceImportAliasses()
+            ->balanceImportAliases()
             ->where('email', $email)
             ->first();
         if($alias != null) {
@@ -174,7 +174,7 @@ class BalanceImportAlias extends Model {
         }
 
         // Create a new alias for this email address
-        return $economy->balanceImportAliasses()->create([
+        return $economy->balanceImportAliases()->create([
             'user_id' => $user != null ? $user->id : null,
             'name' => $name,
             'email' => $email,
@@ -274,7 +274,7 @@ class BalanceImportAlias extends Model {
         // We must be in a database transaction
         assert_transaction();
 
-        // Get all aliasses for the user
+        // Get all aliases for the user
         $aliases = $user->balanceImportAliases()->hasApproved()->get();
         foreach($aliases as $alias) {
             // Remove this alias from economy members being a different user
