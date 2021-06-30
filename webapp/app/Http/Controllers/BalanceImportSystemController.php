@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\BalanceImportSystemMailUpdates;
 use App\Models\BalanceImportAlias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -222,6 +223,87 @@ class BalanceImportSystemController extends Controller {
             ->with('economy', $economy)
             ->with('system', $system)
             ->with('data', $data);
+    }
+
+    /**
+     * Page to send a balance update mail with.
+     *
+     * @return Response
+     */
+    public function mailBalance($communityId, $economyId, $systemId) {
+        // Get the community, economy, find the system
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $last_event = $system->events()->latest()->first();
+
+        // TODO: there must be an event to send updates for
+
+        return view('community.economy.balanceimport.mailBalance')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('last_event', $last_event);
+    }
+
+    /**
+     * Do send balance update mail.
+     *
+     * @return Response
+     */
+    public function doMailBalance(Request $request, $communityId, $economyId, $systemId) {
+        // Get the community, economy, find the system
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $last_event = $system->events()->latest()->first();
+
+        // Validate
+        $this->validate($request, [
+            'message' => 'nullable|string',
+            'invite_to_bar' => 'integer|prohibited_if:related_bar,0',
+            'confirm_send_mail' => 'accepted',
+        ], [
+            'invite_to_bar.prohibited_if' => __('pages.balanceImportMailBalance.mustSelectBarToInvite'),
+        ]);
+
+        // Read input fields
+        $mail_unregistered_users = is_checked($request->input('mail_unregistered_users'));
+        $mail_not_joined_users = is_checked($request->input('mail_not_joined_users'));
+        $mail_joined_users = is_checked($request->input('mail_joined_users'));
+        $limit_last_event = is_checked($request->input('limit_last_event'));
+        $message = $request->input('message');
+        $related_bar_id = (int) $request->input('related_bar');
+        $invite_to_bar = is_checked($request->input('invite_to_bar'));
+
+        // Get selected locale, reset if invalid
+        $default_locale = $request->input('language');
+        if(!langManager()->isValidLocale($default_locale))
+            $default_locale = null;
+
+        // TODO: ensure we've found any aliases to send updates for, report
+        // error otherwise!
+
+        // Dispatch background jobs to send updates
+        BalanceImportSystemMailUpdates::dispatch(
+            $system->id,
+            $limit_last_event ? $last_event->id : null,
+            $mail_unregistered_users,
+            $mail_not_joined_users,
+            $mail_joined_users,
+            $message,
+            $related_bar_id,
+            $invite_to_bar,
+            $default_locale,
+        );
+
+        // Redirect to the index page after deleting
+        return redirect()
+            ->route('community.economy.balanceimport.event.index', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+            ])
+            ->with('success', __('pages.balanceImportMailBalance.sentBalanceUpdateEmail'));
     }
 
     /**

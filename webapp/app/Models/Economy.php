@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Traits\Joinable;
 use App\Utils\MoneyAmount;
+use App\Utils\MoneyAmountBag;
 use BarPay\Models\Payment as PayPayment;
 use BarPay\Models\Service as PayService;
 use Carbon\Carbon;
@@ -104,12 +105,12 @@ class Economy extends Model {
     }
 
     /**
-     * Get a relation to all configured balance import aliasses linked to this
+     * Get a relation to all configured balance import aliases linked to this
      * economy.
      *
-     * @return List of balance import aliasses.
+     * @return List of balance import aliases.
      */
-    public function balanceImportAliasses() {
+    public function balanceImportAliases() {
         return $this->hasMany(BalanceImportAlias::class);
     }
 
@@ -310,64 +311,6 @@ class Economy extends Model {
     }
 
     /**
-     * Go through the given list of models, and sum all money amounts in a
-     * shared currency.
-     *
-     * This method automatically selects the best currency to return in, and
-     * notes whether the returned value is approximate or not. Balances in other
-     * currencies are automatically converted using the latest known exchange
-     * rates from the currencies table. The method also notes whether the
-     * returned value is approximate, which is true when multiple currencies
-     * ware summed.
-     *
-     * @return MoneyAmount The summed amount.
-     */
-    // TODO: move this to some utilty class, maybe into MoneyAmount
-    public static function sumAmounts($models, string $amountKey) {
-        // Return zero if no models are given
-        if($models->isEmpty())
-            return null;
-
-        // Build a map with per currency sums
-        $sums = [];
-        foreach($models as $model) {
-            $code = $model->currency->code;
-            $sums[$code] = ($sums[$code] ?? 0) + $model->$amountKey;
-        }
-
-        // Find the currency with the biggest difference from zero, is it approx
-        $code = key($sums);
-        $diff = 0;
-        foreach($sums as $c => $b)
-            if(abs($b) > $diff) {
-                $code = $c;
-                $diff = abs($b);
-            }
-        $approximate = count($sums) > 1;
-
-        // Sum the balance, convert other currencies
-        $balance = collect($sums)
-            ->map(function($b, $c) use($code) {
-                if($code == $c)
-                    return $b;
-
-                // Convert currencies in a different balance
-                // TODO: convert currencies
-                // throw new Exception('Unable to convert currency here, not yet implemented');
-                // return currency($b, $c, $code, false);
-                return $b;
-            })
-            ->sum();
-
-        // Find the currency that matches this code
-        foreach($models as $model)
-            if($model->currency->code == $code)
-                $currency = $model->currency;
-
-        return new MoneyAmount($currency, $balance, $approximate);
-    }
-
-    /**
      * Go through all wallets of the current user in this economy, and calculate
      * the total balance.
      *
@@ -390,6 +333,34 @@ class Economy extends Model {
         // Obtain the wallets, return zero with default currency if none
         $wallets = $economy_member != null ? $economy_member->wallets()->with('currency')->get() : collect();
         return Self::sumAmounts($wallets, 'balance');
+    }
+
+    /**
+     * Go through the given list of models, and sum all money amounts in a
+     * shared currency.
+     *
+     * This method automatically selects the best currency to return in, and
+     * notes whether the returned value is approximate or not. Balances in other
+     * currencies are automatically converted using the latest known exchange
+     * rates from the currencies table. The method also notes whether the
+     * returned value is approximate, which is true when multiple currencies
+     * ware summed.
+     *
+     * @return MoneyAmount The summed amount.
+     */
+    // TODO: move this to some utilty class, maybe into MoneyAmount
+    // TODO: deprecate and remove?
+    public static function sumAmounts($models, string $amountKey) {
+        // Return zero if no models are given
+        if($models->isEmpty())
+            return null;
+
+        // Convert into money amounts, sum through money amount bag
+        $amounts = $models
+            ->map(function($model) use($amountKey) {
+                return new MoneyAmount($model->currency, $model->$amountKey);
+            });
+        return (new MoneyAmountBag($amounts))->sumAmounts();
     }
 
     /**

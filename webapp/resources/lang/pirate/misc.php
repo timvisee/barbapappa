@@ -21,6 +21,7 @@ return [
     'import' => 'Import',
     'imported' => 'Imported',
     'importAll' => 'Import all',
+    'lastImport' => 'Last import',
     'download' => 'Download',
     'show' => 'Show',
     'edit' => 'Edit',
@@ -162,6 +163,7 @@ return [
     'breadcrumbTrail' => 'Breadcrumb trail',
     'poster' => 'Placard',
     'noPermission' => 'Nay permission',
+    'here' => 'Here',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Perms\CommunityRoles;
+use App\Utils\MoneyAmount;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -156,6 +157,15 @@ class Wallet extends Model {
         return $this
             ->transactions()
             ->limit($limit);
+    }
+
+    /**
+     * Get the wallet balance as money amount.
+     *
+     * @return MoneyAmount The balance as money amount.
+     */
+    public function getMoneyAmount() {
+        return new MoneyAmount($this->currency, $this->balance);
     }
 
     /**

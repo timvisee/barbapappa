@@ -17,11 +17,11 @@ class MoneyAmount {
      * The currency.
      * @var Currency
      */
-    private $currency;
+    public $currency;
 
     /**
      * The amount.
-     * @var decimal
+     * @var float
      */
     public $amount;
 
@@ -29,7 +29,7 @@ class MoneyAmount {
      * Whether the amount is approximate.
      * @var bool
      */
-    private $approximate;
+    public $approximate;
 
     /**
      * Constructor.
@@ -45,6 +45,38 @@ class MoneyAmount {
     }
 
     /**
+     * Add another money amount.
+     *
+     * Throws an excpetion if the currencies differ.
+     *
+     * @param MoneyAmount $amount Amount to add in same currency.
+     * @return MoneyAmount This money amount.
+     * @throws \Exception Throws if the currencies differ.
+     */
+    public function add(MoneyAmount $amount) {
+        if($this->currency != $amount->currency)
+            throw new \Exception("Cannot sum amounts, incompatible currencies");
+        $this->amount += $amount->amount;
+        return $this;
+    }
+
+    /**
+     * Subtract another money amount.
+     *
+     * Throws an excpetion if the currencies differ.
+     *
+     * @param MoneyAmount $amount Amount to subtract in same currency.
+     * @return MoneyAmount This money amount.
+     * @throws \Exception Throws if the currencies differ.
+     */
+    public function sub(MoneyAmount $amount) {
+        if($this->currency != $amount->currency)
+            throw new \Exception("Cannot sum amounts, incompatible currencies");
+        $this->amount -= $amount->amount;
+        return $this;
+    }
+
+    /**
      * Create a money amount instance being zero with the default currency.
      *
      * @param Currency $currency The currency.
@@ -52,6 +84,15 @@ class MoneyAmount {
      */
     public static function zero(Currency $currency) {
         return new MoneyAmount($currency, 0, false);
+    }
+
+    /**
+     * Check whether the amount is zero.
+     *
+     * @return bool True if zero, false if not.
+     */
+    public function isZero() {
+        return $this->amount == null || $this->amount == 0;
     }
 
     /**

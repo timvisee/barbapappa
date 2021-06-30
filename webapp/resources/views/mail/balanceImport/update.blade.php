@@ -11,14 +11,16 @@
     $details = [];
     $details[] = [
         'key' => __('misc.balance'),
-        'valueHtml' => $balance->formatAmount(BALANCE_FORMAT_COLOR),
+        'valueHtml' => $balances->formatAmount(BALANCE_FORMAT_COLOR),
     ];
-    if($balanceChange != null)
+    // TODO: remove this?
+    if($balance_change != null)
         $details[] = [
             'key' => __('misc.difference'),
-            'valueHtml' => $balanceChange->formatAmount(BALANCE_FORMAT_COLOR),
+            'valueHtml' => $balance_change->formatAmount(BALANCE_FORMAT_COLOR),
         ];
-    if($wallet != null)
+    // TODO: remove this?
+    if(isset($wallet) && $wallet != null)
         $details[] = [
             'key' => __('misc.wallet'),
             'valueHtml' => '<a href="' . route('community.wallet.show', [
@@ -27,13 +29,13 @@
                     'walletId' => $wallet->id,
                 ]) . '">' . $wallet->name . '</a>',
         ];
-    if($change != null)
+    if($last_change != null)
         $details[] = [
-            'key' => __('misc.imported'),
-            'value' => $change->created_at->toFormattedDateString()
-                . ' (' . $change->created_at->diffForHumans() . ') '
+            'key' => __('misc.lastImport'),
+            'value' => $last_change->created_at->toFormattedDateString()
+                . ' (' . $last_change->created_at->diffForHumans() . ') '
                 . ' ' . __('misc.by') . ' '
-                . $change->submitter->name,
+                . $last_change->submitter->name,
         ];
     if($event != null)
         $details[] = [
@@ -45,6 +47,13 @@
             'key' => __('misc.source'),
             'value' => $system->name,
         ];
+
+    if(isset($wallet) && $wallet != null)
+        $topUpUrl = route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]);
+    elseif(isset($economy) && $economy != null)
+        $topUpUrl = route('community.wallet.quickTopUp', ['communityId' => $community->human_id, 'economyId' => $economy->id]);
+    else
+        $topUpUrl = null;
 @endphp
 @if(!empty($details))
 @component('mail::details', ['table' => $details])
@@ -60,33 +69,43 @@
 <br>
 @endif
 
-@if(!empty($wallet))
-@component('mail::notice')
-@lang('mail.balanceImport.update.payInAppDescription')<br>
-
-@component('mail::button', ['url' => route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id])])
-@lang('mail.balanceImport.update.payInAppButton')
-@endcomponent
-@endcomponent
-@endif
-
+{{-- Bar sign up button for new users --}}
 {{-- TODO: this should lead to payment page --}}
-@if(!empty($invite_to_bar))
+@if($invite_to_bar)
 @component('mail::notice')
-@lang('mail.balanceImport.update.joinBarDescription', ['name' => $invite_to_bar->name])<br>
+@lang('mail.balanceImport.update.joinBarDescription', ['name' => $bar->name])<br>
 
-@component('mail::button', ['url' => route('bar.join', ['barId' => $invite_to_bar->human_id, 'code' => $invite_to_bar->password])])
-@lang('mail.balanceImport.update.joinBarButton', ['name' => $invite_to_bar->name])
-@endcomponent
+@component('mail::button', ['url' => route('bar.join', ['barId' => $bar->human_id, 'code' => $bar->password])])
+@lang('mail.balanceImport.update.joinBarButton', ['name' => $bar->name])
+@endcomponent  
+@if($topUpUrl != null)
+
+
+@lang('mail.balanceImport.update.afterJoinTopUp', [
+    'here' => '<a href="' . $topUpUrl . '">' . lcfirst(__('misc.here')) . '</a>',
+])
+@endif
 @endcomponent
 @endif
 
+{{-- Email verification button --}}
 @if($request_to_verify)
 @component('mail::notice')
 @lang('mail.balanceImport.update.verifyMailDescription')<br>
 
 @component('mail::button', ['url' => route('account.emails.unverified')])
 @lang('mail.balanceImport.update.verifyMailButton')
+@endcomponent
+@endcomponent
+@endif
+
+{{-- Top-up button, if user has joined --}}
+@if($joined && $topUpUrl != null)
+@component('mail::notice')
+@lang('mail.balanceImport.update.payInAppDescription')<br>
+
+@component('mail::button', ['url' => $topUpUrl])
+@lang('mail.balanceImport.update.payInAppButton')
 @endcomponent
 @endcomponent
 @endif
