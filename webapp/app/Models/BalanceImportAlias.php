@@ -149,7 +149,8 @@ class BalanceImportAlias extends Model {
      * @return BalanceImportAlias|null The balance import alias.
      */
     public static function getOrCreate(Economy $economy, $name, $email) {
-        $email = strtolower($email);
+        // TODO: duplicate, use central function to normalize email addresses
+        $email = strtolower(trim($email));
 
         // Find the alias by this email address, update it and return
         $alias = $economy
