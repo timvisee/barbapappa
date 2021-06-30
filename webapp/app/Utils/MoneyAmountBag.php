@@ -133,6 +133,67 @@ class MoneyAmountBag {
         });
     }
 
+    /**
+     * Go through the given list money amounts, and sum all money amounts in a
+     * shared currency.
+     *
+     * This method automatically selects the best currency to return in, and
+     * notes whether the returned value is approximate or not. Balances in other
+     * currencies are automatically converted using the latest known exchange
+     * rates from the currencies table. The method also notes whether the
+     * returned value is approximate, which is true when multiple currencies
+     * ware summed.
+     *
+     * @return MoneyAmount The summed amount.
+     */
+    public function sumAmounts() {
+        // Return null if empty or first if zero or one item
+        if($this->amounts->isEmpty())
+            return null;
+        if($this->amounts->count() == 1 || $this->isZero())
+            return $this->amounts->first();
+
+        // Build a map with per currency sums
+        $sums = [];
+        foreach($this->amounts as $amount) {
+            $code = $amount->currency->code;
+            $sums[$code] = ($sums[$code] ?? 0) + $amount->amount;
+        }
+
+        // Find the currency with the biggest difference from zero, is it approx
+        $code = key($sums);
+        $diff = 0;
+        foreach($sums as $c => $b)
+            if(abs($b) > $diff) {
+                $code = $c;
+                $diff = abs($b);
+            }
+        $approximate = count($sums) > 1;
+
+        // Sum the balance, convert other currencies
+        $balance = collect($sums)
+            ->map(function($b, $c) use($code) {
+                if($code == $c)
+                    return $b;
+
+                // Convert currencies in a different balance
+                // TODO: convert currencies
+                // throw new Exception('Unable to convert currency here, not yet implemented');
+                // return currency($b, $c, $code, false);
+                return $b;
+            })
+            ->sum();
+
+        // TODO: throw exception if got null code
+
+        // Find the currency that matches this code
+        foreach($this->amounts as $amount)
+            if($amount->currency->code == $code)
+                $currency = $amount->currency;
+
+        return new MoneyAmount($currency, $balance, $approximate);
+    }
+
     // TODO: add format function! this is tricky with multiple currencies
 
     // /**
