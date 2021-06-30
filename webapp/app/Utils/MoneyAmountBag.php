@@ -194,21 +194,17 @@ class MoneyAmountBag {
         return new MoneyAmount($currency, $balance, $approximate);
     }
 
-    // TODO: add format function! this is tricky with multiple currencies
-
-    // /**
-    //  * Format the amount.
-    //  *
-    //  * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
-    //  * @param array [$options=null] An array of options.
-    //  *
-    //  * @return string Formatted balance
-    //  */
-    // public function formatAmount($format = BALANCE_FORMAT_PLAIN, $options = []) {
-    //     $prefix = ($options['prefix'] ?? '') . ($this->approximate ? '&asymp; ' : '');
-    //     $options['prefix'] = $prefix;
-    //     return $this
-    //         ->currency
-    //         ->format($this->amount, $format, $options);
-    // }
+    /**
+     * Format the amount.
+     *
+     * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
+     * @param array [$options=null] An array of options.
+     *
+     * @return string Formatted balance
+     */
+    public function formatAmount($format = BALANCE_FORMAT_PLAIN, $options = []) {
+        return $this
+            ->sumAmounts()
+            ->formatAmount($format, $options);
+    }
 }

@@ -11,8 +11,9 @@
     $details = [];
     $details[] = [
         'key' => __('misc.balance'),
-        'valueHtml' => $balance->formatAmount(BALANCE_FORMAT_COLOR),
+        'valueHtml' => $balances->formatAmount(BALANCE_FORMAT_COLOR),
     ];
+    // TODO: remove this?
     if($balance_change != null)
         $details[] = [
             'key' => __('misc.difference'),

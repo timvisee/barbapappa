@@ -69,7 +69,7 @@ class Update extends PersonalizedEmail {
      * The current balance.
      * @var MoneyAmountBag
      */
-    private $balance;
+    private $balances;
 
     /**
      * Balance change.
@@ -98,7 +98,7 @@ class Update extends PersonalizedEmail {
      * @param string|null $message An extra message.
      * @param Bar|null $bar Bar this import change is for.
      * @param bool $invite_to_bar True to invite user to bar.
-     * @param MoneyAmountBag $balance The current balance.
+     * @param MoneyAmountBag $balances The current balance.
      * @param MoneyAmount|null $balance_change The balance change.
      * @param bool $joined Whether the user has joined the platform.
      * @param bool $request_to_verify Whether to request the user to verify
@@ -112,7 +112,7 @@ class Update extends PersonalizedEmail {
         ?string $message,
         ?Bar $bar,
         bool $invite_to_bar,
-        MoneyAmountBag $balance,
+        MoneyAmountBag $balances,
         ?MoneyAmount $balance_change,
         bool $joined,
         bool $request_to_verify
@@ -126,7 +126,7 @@ class Update extends PersonalizedEmail {
         $this->message = $message;
         $this->bar = $bar;
         $this->invite_to_bar = $invite_to_bar;
-        $this->balance = $balance;
+        $this->balances = $balances;
         $this->balance_change = $balance_change;
         $this->joined = $joined;
         $this->request_to_verify = $request_to_verify;
@@ -154,20 +154,11 @@ class Update extends PersonalizedEmail {
             ? __('mail.balanceImport.update.subtitleWithBar', ['name' => $this->bar->name, 'economy' => $economy->name])
             : __('mail.balanceImport.update.subtitle', ['economy' => $economy->name]);
 
-        // TODO: report all balances!
-        $balance = $this
-            ->balance
-            ->amounts()
-            ->sortByDesc(function($amount) {
-                 return abs($amount->amount);
-            })
-            ->first();
-
         // Bind values to mail
         // TODO: provide specific wallet
         $mail->with('subtitle', $subtitle)
             ->with('user_name', $user_name)
-            ->with('balance', $balance)
+            ->with('balances', $this->balances)
             ->with('balance_change', $this->balance_change)
             ->with('last_change', $this->last_change)
             ->with('event', $event)
