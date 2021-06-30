@@ -271,8 +271,6 @@ class BalanceImportSystemController extends Controller {
         $limit_last_event = is_checked($request->input('limit_last_event'));
         $message = $request->input('message');
         $invite_to_bar_id = (int) $request->input('invite_to_bar');
-        if($invite_to_bar_id == 0)
-            $invite_to_bar_id = null;
 
         // Get selected locale, reset if invalid
         $default_locale = $request->input('language');
@@ -291,6 +289,7 @@ class BalanceImportSystemController extends Controller {
             $mail_joined_users,
             $message,
             $invite_to_bar_id,
+            $invite_to_bar_id > 0,
             $default_locale,
         );
 

@@ -69,7 +69,7 @@
         </div>
 
         <div class="field {{ ErrorRenderer::hasError('invite_to_bar') ? 'error' : '' }}">
-            {{ Form::label('bunq_account', __('pages.balanceImportMailBalance.inviteToJoinBar') . ':') }}
+            {{ Form::label('bunq_account', __('pages.balanceImportMailBalance.inviteToJoinBar') . ' (' . __('general.recommended') . '):') }}
 
             <div class="ui fluid selection dropdown">
                 {{ Form::hidden('invite_to_bar', 0) }}

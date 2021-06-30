@@ -90,6 +90,8 @@ class BalanceImportAlias extends Model {
     /**
      * Get a relation to the linked economy members.
      *
+     * TODO: shouldn't this only have one economy member?
+     *
      * @return Relation to the economy members.
      */
     public function economyMembers() {

@@ -21,6 +21,7 @@ return [
     'import' => 'Import',
     'imported' => 'Imported',
     'importAll' => 'Import all',
+    'lastImport' => 'Last import',
     'download' => 'Download',
     'show' => 'Show',
     'edit' => 'Edit',
