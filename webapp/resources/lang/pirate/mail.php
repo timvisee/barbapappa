@@ -147,7 +147,7 @@ return [
             'subtitleWithBar' => 'Here be a balance update for ye at :name on :economy.',
             'payInAppDescription' => 'Ye can pay any outstanding balance through Barbapappa by topping up yer wallet.',
             'payInAppButton' => 'Pay in Arrbapappa',
-            'joinBarDescription' => 'Dis bar manages payments through Arrbapappa. Click th\' button below to enter :name in Arrbapappa.',
+            'joinBarDescription' => 'Dis bar manages payments through Arrbapappa. Click th\' button below to enter :name in Arrbapappa. Verify yer account after that to move yer balance in yer Arrbapappa wallet.',
             'joinBarButton' => 'Enter :name',
             'verifyMailDescription' => 'Please verify yer e-bottle coordinate on yer Arrbapappa account to automatically merge dis balance into yer wallet.',
             'verifyMailButton' => 'Verify e-bottle',

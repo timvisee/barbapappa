@@ -147,7 +147,7 @@ return [
             'subtitleWithBar' => 'Here is a balance update for you at :name on :economy.',
             'payInAppDescription' => 'You can pay any outstanding balance through Barbapappa by topping up your wallet.',
             'payInAppButton' => 'Pay in Barbapappa',
-            'joinBarDescription' => 'This bar manages payments through Barbapappa. Click the button below to join :name in Barbapappa.',
+            'joinBarDescription' => 'This bar manages payments through Barbapappa. Click the button below to join :name in Barbapappa. Verify your account after that to move your balance in your Barbapappa wallet.',
             'joinBarButton' => 'Join :name',
             'verifyMailDescription' => 'Please verify the email address on your Barbapappa account to automatically merge this balance into your wallet.',
             'verifyMailButton' => 'Verify email',

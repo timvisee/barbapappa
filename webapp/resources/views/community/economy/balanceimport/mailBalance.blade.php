@@ -68,17 +68,19 @@
             {{ ErrorRenderer::inline('message') }}
         </div>
 
-        <div class="field {{ ErrorRenderer::hasError('invite_to_bar') ? 'error' : '' }}">
-            {{ Form::label('bunq_account', __('pages.balanceImportMailBalance.inviteToJoinBar') . ' (' . __('general.recommended') . '):') }}
+        <div class="ui hidden divider"></div>
+
+        <div class="field {{ ErrorRenderer::hasError('related_bar') ? 'error' : '' }}">
+            {{ Form::label('related_bar', __('pages.balanceImportMailBalance.relatedBar') . ' (' . __('general.recommended') . '):') }}
 
             <div class="ui fluid selection dropdown">
-                {{ Form::hidden('invite_to_bar', 0) }}
+                {{ Form::hidden('related_bar', $community->bars->pluck('id')->first() ?? 0) }}
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.pleaseSpecify')</div>
                 <div class="menu">
                     <div class="item" data-value="0">
-                        <i>@lang('pages.balanceImportMailBalance.doNotInvite')</i>
+                        <i>@lang('pages.balanceImportMailBalance.noRelatedBar')...</i>
                     </div>
                     {{-- TODO: only select joinable bars here --}}
                     @foreach($community->bars as $bar)
@@ -89,8 +91,19 @@
                 </div>
             </div>
 
+            {{ ErrorRenderer::inline('related_bar') }}
+        </div>
+
+        <div class="field {{ ErrorRenderer::hasError('invite_to_bar') ? 'error' : '' }}">
+            <div class="ui toggle checkbox">
+                {{ Form::checkbox('invite_to_bar', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('invite_to_bar', __('pages.balanceImportMailBalance.inviteToJoinBar') . ' (' . __('general.recommended') . ')') }}
+            </div>
+            <br />
             {{ ErrorRenderer::inline('invite_to_bar') }}
         </div>
+
+        <div class="ui hidden divider"></div>
 
         @php
             // Create a locales map for the selection box

@@ -110,8 +110,8 @@ class BalanceImportSystemMailUpdates implements ShouldQueue {
             foreach($alias_ids as $alias_id) {
                 // Dispatch background jobs to send update to alias user
                 BalanceImportSystemMailUpdate::dispatch(
-                    $alias_id,
                     $self->system_id,
+                    $alias_id,
                     $self->event_id,
                     $self->mail_unregistered_users,
                     $self->mail_not_joined_users,

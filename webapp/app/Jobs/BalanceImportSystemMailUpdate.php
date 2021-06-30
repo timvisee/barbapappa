@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Mail\BalanceImport\Update;
 use App\Models\BalanceImportAlias;
-use App\Models\BalanceImportChange;
 use App\Models\BalanceImportEvent;
 use App\Models\BalanceImportSystem;
 use App\Models\Bar;
@@ -29,8 +28,8 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
      */
     const QUEUE = 'low';
 
-    private $alias_id;
     private $system_id;
+    private $alias_id;
     private $event_id;
     private $mail_unregistered_users;
     private $mail_not_joined_users;
@@ -43,8 +42,8 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
     /**
      * Create a new job instance.
      *
+     * @param int $system_id System ID.
      * @param int $alias_id Alias ID.
-     * @param int|null $system_id Optional system ID to limit to.
      * @param int|null $event_id Optional event ID to limit to.
      * @param bool $mail_unregistered_users Whether to mail unregistered users.
      * @param bool $mail_not_joined_users Whether to mail not-joined users.
@@ -56,8 +55,8 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
      *      locale is unknown.
      */
     public function __construct(
+        int $system_id,
         int $alias_id,
-        ?int $system_id,
         ?int $event_id,
         bool $mail_unregistered_users,
         bool $mail_not_joined_users,
@@ -70,8 +69,8 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
-        $this->alias_id = $alias_id;
         $this->system_id = $system_id;
+        $this->alias_id = $alias_id;
         $this->event_id = $event_id;
         $this->mail_unregistered_users = $mail_unregistered_users;
         $this->mail_not_joined_users = $mail_not_joined_users;
@@ -88,14 +87,14 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
      * @return void
      */
     public function handle() {
-        // Get alias, select bar
+        // Get system, alias, select bar
+        $system = BalanceImportSystem::find($this->system_id);
         $alias = BalanceImportAlias::find($this->alias_id);
-        if($alias == null)
+        if($system == null || $alias == null)
             return;
         $bar = Bar::find($this->bar_id);
 
         // Get system and event if available
-        $system = BalanceImportSystem::find($this->system_id);
         // TODO: remove event, we aren't using it?
         $event = BalanceImportEvent::find($this->event_id);
 
@@ -151,6 +150,7 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
         Mail::send(new Update(
             $recipients,
             $alias,
+            $event,
             $last_change,
             $this->message,
             $bar,
@@ -190,7 +190,7 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
             ->approved()
             ->committed(false)
             ->latest()
-            ->with('event.system')
+            ->with('event')
             ->get();
         $systemChanges = $changes->groupBy(function($change) {
             return $change->event->system_id;

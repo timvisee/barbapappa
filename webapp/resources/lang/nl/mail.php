@@ -147,7 +147,7 @@ return [
             'subtitleWithBar' => 'Hier is een saldo update voor je bij :name op :economy.',
             'payInAppDescription' => 'Je kunt een openstaand saldo betalen via Barbapappa door een bedrag op je portemonnee te storten.',
             'payInAppButton' => 'Betalen in Barbapappa',
-            'joinBarDescription' => 'Deze bar beheert betalingen met Barbapappa. Klik op de knop hieronder om deel te nemen aan :name in Barbapappa.',
+            'joinBarDescription' => 'Deze bar beheert betalingen met Barbapappa. Klik op de knop hieronder om deel te nemen aan :name in Barbapappa. Verifieer vervolgens je account om je saldo op te nemen in een Barbapappa portemonnee.',
             'joinBarButton' => 'Deelnemen aan :name',
             'verifyMailDescription' => 'Verifieer alsjeblieft je e-mailadres op je Barbapappa account om dit saldo automatisch in je portemonnee te verwerken.',
             'verifyMailButton' => 'Verifieer e-mail',

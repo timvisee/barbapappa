@@ -4,6 +4,7 @@ namespace App\Mail\BalanceImport;
 
 use App\Mail\PersonalizedEmail;
 use App\Models\BalanceImportAlias;
+use App\Models\BalanceImportEvent;
 use App\Models\BalanceImportChange;
 use App\Models\Bar;
 use App\Utils\EmailRecipient;
@@ -30,22 +31,31 @@ class Update extends PersonalizedEmail {
 
     /**
      * Balance import alias.
+     * @var BalanceImportAlias
      */
     private $alias;
 
     /**
+     * Related event.
+     * @bar ?BalanceImportEvent
+     */
+    private $event;
+
+    /**
      * The last balance import change.
+     * @var ?BalanceImportChange
      */
     private $last_change;
 
     /**
      * An optional extra message.
+     * @var ?string
      */
     private $message;
 
     /**
      * The related bar.
-     * @var Bar
+     * @var ?Bar
      */
     private $bar;
 
@@ -89,6 +99,7 @@ class Update extends PersonalizedEmail {
     public function __construct(
         $recipients,
         BalanceImportAlias $alias,
+        ?BalanceImportEvent $event,
         ?BalanceImportChange $last_change,
         ?string $message,
         ?Bar $bar,
@@ -101,6 +112,7 @@ class Update extends PersonalizedEmail {
         parent::__construct($recipients, self::SUBJECT);
 
         $this->alias = $alias;
+        $this->event = $event;
         $this->last_change = $last_change;
         $this->message = $message;
         $this->bar = $bar;
@@ -119,7 +131,7 @@ class Update extends PersonalizedEmail {
         // Get change/balance update details
         $alias = $this->alias;
         $economy = $alias->economy;
-        $event = $this->last_change != null ? $this->last_change->event : null;
+        $event = $this->event ?? ($this->last_change != null ? $this->last_change->event : null);
         $system = $event != null ? $event->system : null;
         $user = $alias->user()->first();
         $user_name = $user != null ? $user->first_name : $alias->name;

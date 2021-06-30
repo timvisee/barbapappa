@@ -260,8 +260,10 @@ class BalanceImportSystemController extends Controller {
         // Validate
         $this->validate($request, [
             'message' => 'nullable|string',
-            'invite_to_bar' => 'integer',
+            'invite_to_bar' => 'integer|prohibited_if:related_bar,0',
             'confirm_send_mail' => 'accepted',
+        ], [
+            'invite_to_bar.prohibited_if' => __('pages.balanceImportMailBalance.mustSelectBarToInvite'),
         ]);
 
         // Read input fields
@@ -270,7 +272,8 @@ class BalanceImportSystemController extends Controller {
         $mail_joined_users = is_checked($request->input('mail_joined_users'));
         $limit_last_event = is_checked($request->input('limit_last_event'));
         $message = $request->input('message');
-        $invite_to_bar_id = (int) $request->input('invite_to_bar');
+        $related_bar_id = (int) $request->input('related_bar');
+        $invite_to_bar = is_checked($request->input('invite_to_bar'));
 
         // Get selected locale, reset if invalid
         $default_locale = $request->input('language');
@@ -288,8 +291,8 @@ class BalanceImportSystemController extends Controller {
             $mail_not_joined_users,
             $mail_joined_users,
             $message,
-            $invite_to_bar_id,
-            $invite_to_bar_id > 0,
+            $related_bar_id,
+            $invite_to_bar,
             $default_locale,
         );
 
