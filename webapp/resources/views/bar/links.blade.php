@@ -10,7 +10,10 @@
     <h2 class="ui header">@yield('title')</h2>
     <p>@lang('pages.bar.links.description')</p>
 
-    <table class="ui compact celled definition table">
+    <table class="ui single line compact table">
+        <thead>
+            <tr><th colspan="3">@lang('misc.bar')</th></tr>
+        </thead>
         <tbody>
             <tr>
                 <td>@lang('pages.bar.links.linkBar')</td>
@@ -28,6 +31,14 @@
                     <td><code class="literal copy">{{ route('bar.join', ['barId' => $bar->human_id, 'code' => $bar->password]) }}</code></td>
                 </tr>
             @endif
+        </tbody>
+    </table>
+
+    <table class="ui single line compact table">
+        <thead>
+            <tr><th colspan="3">@lang('misc.user') (@lang('misc.personal'))</th></tr>
+        </thead>
+        <tbody>
             <tr>
                 <td>@lang('pages.bar.links.linkQuickWallet')</td>
                 <td><code class="literal copy">{{ route('community.wallet.quickShow', [

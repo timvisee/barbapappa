@@ -64,6 +64,7 @@ return [
     'tags' => 'Tags',
     'reference' => 'Reference',
     'user' => 'User',
+    'personal' => 'Personal',
     'owner' => 'Owner',
     'madeBy' => 'Made by',
     'madeVia' => 'Made via',
