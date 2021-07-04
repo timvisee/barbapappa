@@ -6,7 +6,6 @@
 return [
     'pages' => 'Parchments',
     'emailPreferences' => 'E-bottle preferences',
-    'emailPreferencesNotYetImplemented' => 'Email preferences are not yet implemented, please check back later.',
     // TODO: move to misc?
     'communities' => 'Crews',
     // TODO: move to misc?

@@ -310,7 +310,7 @@ class EmailController extends Controller {
      * @return Response
      */
     public function preferences() {
-        return (new PagesController)->index()
-            ->with('info', __('pages.emailPreferencesNotYetImplemented'));
+        return redirect()
+            ->route('account.emails', ['userId' => '-']);
     }
 }
