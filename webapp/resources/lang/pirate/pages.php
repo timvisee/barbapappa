@@ -6,7 +6,6 @@
 return [
     'pages' => 'Parchments',
     'emailPreferences' => 'E-bottle preferences',
-    'emailPreferencesNotYetImplemented' => 'Email preferences are not yet implemented, please check back later.',
     // TODO: move to misc?
     'communities' => 'Crews',
     // TODO: move to misc?
@@ -883,6 +882,7 @@ return [
             'linkJoinBarCode' => 'Invite fresh pirates to join bar (with code)',
             'linkQuickWallet' => 'Show main personal wallet',
             'linkQuickTopUp' => 'Top-up main personal wallet',
+            'linkVerifyEmail' => 'Verify e-bottle coordinates',
         ],
         'checklist' => 'Bar checklist',
     ],

@@ -18,8 +18,9 @@ class ProfileController extends Controller {
     public function __construct() {
         // User must have permission to manage the current user
         $this->middleware(function($request, $next) {
-            $userId = $request->route('userId');
-            if($userId != null && barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            // Get user from middleware
+            $user = \Request::get('user');
+            if($user != null && barauth()->getSessionUser()->id != $user->id && !perms(AppRoles::presetAdmin()))
                 return response(view('noPermission'));
 
             return $next($request);
@@ -44,7 +45,7 @@ class ProfileController extends Controller {
      * @return Response
      */
     public function update(Request $request, $userId) {
-        // Get the user we're editing from middleware
+        // Get user from middleware
         $user = \Request::get('user');
 
         // Validate

@@ -6,7 +6,6 @@
 return [
     'pages' => 'Pagina\'s',
     'emailPreferences' => 'E-mailvoorkeuren',
-    'emailPreferencesNotYetImplemented' => 'E-mailvoorkeuren zijn nog niet geimplementeerd, kom hier later voor terug.',
     // TODO: move to misc?
     'communities' => 'Groepen',
     // TODO: move to misc?
@@ -885,6 +884,7 @@ return [
             'linkJoinBarCode' => 'Nodig nieuwe gebruiker uit (met code)',
             'linkQuickWallet' => 'Toon primaire persoonlijke portemonnee',
             'linkQuickTopUp' => 'Primaire persoonlijke portemonnee opwaarderen',
+            'linkVerifyEmail' => 'Verifieer e-mailadressen',
         ],
         'checklist' => 'Bar checklist',
     ],

@@ -6,7 +6,6 @@
 return [
     'pages' => 'Pages',
     'emailPreferences' => 'Email preferences',
-    'emailPreferencesNotYetImplemented' => 'Email preferences are not yet implemented, please check back later.',
     // TODO: move to misc?
     'communities' => 'Communities',
     // TODO: move to misc?
@@ -883,6 +882,7 @@ return [
             'linkJoinBarCode' => 'Invite new user to join bar (with code)',
             'linkQuickWallet' => 'Show main personal wallet',
             'linkQuickTopUp' => 'Top-up main personal wallet',
+            'linkVerifyEmail' => 'Verify email addresses',
         ],
         'checklist' => 'Bar checklist',
     ],

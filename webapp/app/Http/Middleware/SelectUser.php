@@ -30,13 +30,13 @@ class SelectUser {
 
         // Get the selected user, use authenticated user as default if not specified
         $user = $request->route('userId');
-        if($user != null)
-            $user = User::findOrFail($user);
-        if($user == null)
+        if($user == null || $user == '-')
             $user = barauth()->getSessionUser();
+        else
+            $user = User::findOrFail($user);
 
         // Determine whehter we're provindg a user other than the authenticated user
-        $isOtherUser = barauth()->getSessionUser()->id != $user->id;
+        $isOtherUser = barauth()->getUser()->id != $user->id;
 
         // Make selected user available in the request and views
         $request->attributes->add(['user' => $user, 'isOtherUser' => $isOtherUser]);

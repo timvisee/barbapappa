@@ -64,6 +64,7 @@ return [
     'tags' => 'Tags',
     'reference' => 'Referentie',
     'user' => 'Gebruiker',
+    'personal' => 'Persoonlijk',
     'owner' => 'Eigenaar',
     'madeBy' => 'Gemaakt door',
     'madeVia' => 'Gemaakt via',

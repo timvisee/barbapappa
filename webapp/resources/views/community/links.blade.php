@@ -11,24 +11,41 @@
 
     <p>@lang('pages.community.links.description')</p>
 
-    <table class="ui compact celled definition table">
+    <table class="ui single line compact table">
+        <thead>
+            <tr><th colspan="2">@lang('misc.community')</th></tr>
+        </thead>
         <tbody>
             <tr>
-                <td>@lang('pages.community.links.linkCommunity')</td>
+                <td>@lang('pages.community.links.linkCommunity'):</td>
                 <td><code class="literal copy">{{ route('community.show', ['communityId' => $community->human_id]) }}</code></td>
             </tr>
             @if($community->self_enroll)
                 <tr>
-                    <td>@lang('pages.community.links.linkJoinCommunity')</td>
+                    <td>@lang('pages.community.links.linkJoinCommunity'):</td>
                     <td><code class="literal copy">{{ route('community.join', ['communityId' => $community->human_id]) }}</code></td>
                 </tr>
             @endif
             @if($community->self_enroll && $community->password)
                 <tr>
-                    <td>@lang('pages.community.links.linkJoinCommunityCode')</td>
+                    <td>@lang('pages.community.links.linkJoinCommunityCode'):</td>
                     <td><code class="literal copy">{{ route('community.join', ['communityId' => $community->human_id, 'code' => $community->password]) }}</code></td>
                 </tr>
             @endif
+        </tbody>
+    </table>
+
+    <table class="ui single line compact table">
+        <thead>
+            <tr><th colspan="3">@lang('misc.user') (@lang('misc.personal'))</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@lang('pages.bar.links.linkVerifyEmail'):</td>
+                <td><code class="literal copy">{{ route('account.user.emails.unverified', [
+                    'userId' => '-',
+                ]) }}</code></td>
+            </tr>
         </tbody>
     </table>
 

@@ -9,8 +9,6 @@ use App\Models\User;
 use App\Perms\AppRoles;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\MessageBag;
-use Illuminate\Support\ViewErrorBag;
 
 class EmailController extends Controller {
 
@@ -22,8 +20,9 @@ class EmailController extends Controller {
     public function __construct() {
         // User must have permission to manage the current user
         $this->middleware(function($request, $next) {
-            $userId = $request->route('userId');
-            if($userId != null && barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            // Get user from middleware
+            $user = \Request::get('user');
+            if($user != null && barauth()->getSessionUser()->id != $user->id && !perms(AppRoles::presetAdmin()))
                 return response(view('noPermission'));
 
             return $next($request);
@@ -51,6 +50,7 @@ class EmailController extends Controller {
      * @return Response
      */
     public function create() {
+        // Get user from middleware
         $user = \Request::get('user');
 
         // Do not allow user to go over email limit
@@ -76,6 +76,7 @@ class EmailController extends Controller {
             'email' => 'required|' . ValidationDefaults::EMAIL,
         ]);
 
+        // Get user from middleware
         $user = \Request::get('user');
 
         // Do not allow user to go over email limit
@@ -86,10 +87,10 @@ class EmailController extends Controller {
 
         // Do not allow if already verified or recently added by someone else
         $used = Email::where('email', $request->input('email'))
-            ->where(function($query) use($userId) {
+            ->where(function($query) use($user) {
                 $query
                     ->whereNotNull('verified_at')
-                    ->orWhere('user_id', $userId)
+                    ->orWhere('user_id', $user->id)
                     ->orWhere('created_at', '>', now()->subMinutes(15));
             })
             ->limit(1)
@@ -124,14 +125,9 @@ class EmailController extends Controller {
      * @param Request $request The request.
      * @param string $userId The user ID.
      */
-    public function unverified($userId = null) {
-        // Redirect to user page if user is undefined
-        if($userId == null)
-            return redirect()
-                ->route('account.user.emails.unverified', ['userId' => barauth()->getUser()->id]);
-
-        // Get user
-        $user = User::findOrFail($userId);
+    public function unverified($userId) {
+        // Get user from middleware
+        $user = \Request::get('user');
 
         // List the unverified addresses
         $emails = $user->emails()->unverified()->get();
@@ -154,8 +150,8 @@ class EmailController extends Controller {
      * @param string $userId The user ID.
      */
     public function doVerifyAll($userId) {
-        // Get user
-        $user = User::findOrFail($userId);
+        // Get user from middleware
+        $user = \Request::get('user');
 
         // List the unverified addresses
         $emails = $user->emails()->unverified()->get();
@@ -179,8 +175,8 @@ class EmailController extends Controller {
      * @param string $userId The user ID.
      */
     public function verified($userId) {
-        // Get user
-        $user = User::findOrFail($userId);
+        // Get user from middleware
+        $user = \Request::get('user');
 
         // List unverified emails, redirect to last bar if there are none
         $emails = $user->emails()->unverified()->get();
@@ -236,7 +232,7 @@ class EmailController extends Controller {
      * @return Response
      */
     public function delete($userId, $emailId) {
-        // Get the selected email address and user
+        // Get the selected email address and user from middleware
         $email = Email::findOrFail($emailId);
         $user = \Request::get('user');
 
@@ -314,7 +310,7 @@ class EmailController extends Controller {
      * @return Response
      */
     public function preferences() {
-        return (new PagesController)->index()
-            ->with('info', __('pages.emailPreferencesNotYetImplemented'));
+        return redirect()
+            ->route('account.emails', ['userId' => '-']);
     }
 }

@@ -17,8 +17,9 @@ class SessionController extends Controller {
     public function __construct() {
         // User must have permission to manage the current user
         $this->middleware(function($request, $next) {
-            $userId = $request->route('userId');
-            if($userId != null && barauth()->getSessionUser()->id != $userId && !perms(AppRoles::presetAdmin()))
+            // Get user from middleware
+            $user = \Request::get('user');
+            if($user != null && barauth()->getSessionUser()->id != $user->id && !perms(AppRoles::presetAdmin()))
                 return response(view('noPermission'));
 
             return $next($request);
@@ -34,8 +35,8 @@ class SessionController extends Controller {
      * @return Response
      */
     public function index($userId) {
-        // Get user and sessions
-        $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
+        // Get user from middleware, get sessions
+        $user = \Request::get('user');
         $activeSessions = $user->sessions()->active()->latest()->get();
         $expiredSessions = $user->sessions()->expired()->latest('expire_at')->get();
 
@@ -53,8 +54,8 @@ class SessionController extends Controller {
      * @return Response
      */
     public function show($userId, $sessionId) {
-        // Get user and session
-        $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
+        // Get user from middleware, get session
+        $user = \Request::get('user');
         $session = $user->sessions()->findOrFail($sessionId);
 
         return view('account.session.show')
@@ -71,8 +72,8 @@ class SessionController extends Controller {
      * @return Response
      */
     public function doExpire($userId, $sessionId) {
-        // Get user and session
-        $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
+        // Get user from middleware, get session
+        $user = \Request::get('user');
         $session = $user->sessions()->findOrFail($sessionId);
 
         // Invalidate session
@@ -105,8 +106,8 @@ class SessionController extends Controller {
      * @return Response
      */
     public function doExpireAll(Request $request, $userId) {
-        // Get user and active sessions
-        $user = $userId != null ? User::findOrFail($userId) : barauth()->getSessionUser();
+        // Get user from middleware, get sessions
+        $user = \Request::get('user');
         $sessions = $user->sessions()->active()->get();
 
         // Get settings
@@ -126,7 +127,7 @@ class SessionController extends Controller {
         }
 
         // Build redirect, redirect to sessions or index if invalidating current session for our user
-        if($expireCurrent && barauth()->getSessionUser()->id == $userId)
+        if($expireCurrent && barauth()->getSessionUser()->id == $user->id)
             $redirect = redirect()
                 ->route('index');
         else
