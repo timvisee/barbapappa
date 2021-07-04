@@ -42,6 +42,12 @@
                     'economyId' => $bar->economy_id
                 ]) }}</code></td>
             </tr>
+            <tr>
+                <td>@lang('pages.bar.links.linkVerifyEmail')</td>
+                <td><code class="literal copy">{{ route('account.user.emails.unverified', [
+                    'userId' => '-',
+                ]) }}</code></td>
+            </tr>
         </tbody>
     </table>
 

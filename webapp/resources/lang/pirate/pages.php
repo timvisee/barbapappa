@@ -882,6 +882,7 @@ return [
             'linkJoinBarCode' => 'Invite fresh pirates to join bar (with code)',
             'linkQuickWallet' => 'Show main personal wallet',
             'linkQuickTopUp' => 'Top-up main personal wallet',
+            'linkVerifyEmail' => 'Verify e-bottle coordinates',
         ],
         'checklist' => 'Bar checklist',
     ],

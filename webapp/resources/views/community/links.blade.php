@@ -29,6 +29,12 @@
                     <td><code class="literal copy">{{ route('community.join', ['communityId' => $community->human_id, 'code' => $community->password]) }}</code></td>
                 </tr>
             @endif
+            <tr>
+                <td>@lang('pages.bar.links.linkVerifyEmail')</td>
+                <td><code class="literal copy">{{ route('account.user.emails.unverified', [
+                    'userId' => '-',
+                ]) }}</code></td>
+            </tr>
         </tbody>
     </table>
 

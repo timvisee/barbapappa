@@ -884,6 +884,7 @@ return [
             'linkJoinBarCode' => 'Nodig nieuwe gebruiker uit (met code)',
             'linkQuickWallet' => 'Toon primaire persoonlijke portemonnee',
             'linkQuickTopUp' => 'Primaire persoonlijke portemonnee opwaarderen',
+            'linkVerifyEmail' => 'Verifieer e-mailadressen',
         ],
         'checklist' => 'Bar checklist',
     ],
