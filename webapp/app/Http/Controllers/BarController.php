@@ -619,8 +619,10 @@ class BarController extends Controller {
 
         // Return a default user list, or search based on a given query
         if(empty($search)) {
-            // Add the current member
-            $members = collect([$economy_member]);
+            // Build list of members, add current if visible
+            $members = collect();
+            if($economy_member->show_in_buy)
+                $members[] = $economy_member;
 
             // Build a list of members most likely to buy new products
             // Specifically for selected products first, then fill gor any
@@ -640,19 +642,22 @@ class BarController extends Controller {
         } else
             $members = $economy->members()->search($search)->showInBuy()->get();
 
-        // Always appent current user to list if not included
-        $hasCurrent = $members->contains(function($m) use($economy_member) {
-            return $m->id == $economy_member->id;
-        });
-        if(!$hasCurrent)
-            $members[] = $economy_member;
+        // Always appent current user to list if visible and not yet included
+        if($economy_member->show_in_buy) {
+            $hasCurrent = $members->contains(function($m) use($economy_member) {
+                return $m->id == $economy_member->id;
+            });
+            if(!$hasCurrent)
+                $members[] = $economy_member;
+        }
 
         // Set and limit fields to repsond with
-        $members = $members->map(function($m) use($economy_member) {
-            $m->name = $m->name;
-            $m->me = $m->id == $economy_member->id;
-            return $m->only(['id', 'name', 'me']);
-        });
+        $members = $members
+            ->map(function($m) use($economy_member) {
+                $m->name = $m->name;
+                $m->me = $m->id == $economy_member->id;
+                return $m->only(['id', 'name', 'me']);
+            });
 
         return $members;
     }
