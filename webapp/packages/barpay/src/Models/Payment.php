@@ -290,11 +290,15 @@ class Payment extends Model {
      * @return string Formatted amount.
      */
     public function formatCost($format = BALANCE_FORMAT_PLAIN, $options = ['neutral' => true]) {
-        // Blue in progress, green/red succeeded, gray failed
+        // Orange/blue in progress, green/red succeeded, gray failed
         if($this->isFailed())
             $options['color'] = false;
-        else if(!$this->isInProgress())
+        else if($this->isInProgress()) {
+            $options['neutral'] = true;
+            $options['label-color'] = 'orange';
+        } else
             $options['neutral'] = false;
+
         return $this->currency->format($this->money, $format, $options);
     }
 
