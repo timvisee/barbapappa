@@ -162,11 +162,24 @@ class EconomyMember extends Pivot {
      * Scope to visibility in buy screens.
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param bool [$allow_self=false] Whether to always return the current
+     *      authenticated user, ignoring the show_in_buy state.
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeShowInBuy($query) {
-        return $query->where('show_in_buy', true);
+    public function scopeShowInBuy($query, bool $allow_self = false) {
+        // Get authenticated user
+        $user = barauth()->getUser();
+
+        // Simply show_in_buy state
+        if(!$allow_self || $user == null)
+            return $query->where('show_in_buy', true);
+
+        // Show_in_buy state, but always allow current user
+        return $query->where(function($query) use($user) {
+            return $query->where('show_in_buy', true)
+                ->orWhere('user_id', $user->id);
+        });
     }
 
     /**
