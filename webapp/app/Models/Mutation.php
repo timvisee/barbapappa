@@ -299,15 +299,15 @@ class Mutation extends Model {
      * @return string Formatted balance
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN, $options = []) {
-        // Orange in progress, green/red succeeded, gray failed
+        // Yellow pending, blue in progress, green/red succeeded, gray failed
         switch($this->state) {
             case Self::STATE_FAILED:
             default:
                 $options['color'] = false;
                 break;
             case Self::STATE_PENDING:
+                $options['label-color'] = 'yellow';
             case Self::STATE_PROCESSING:
-                $options['label-color'] = 'orange';
                 $options['neutral'] = true;
                 break;
             case Self::STATE_SUCCESS:

@@ -252,7 +252,7 @@ class Transaction extends Model {
         if($invert)
             $cost *= -1;
 
-        // Orange in progress, green/red succeeded, gray failed
+        // Yellow pending, blue in progress, green/red succeeded, gray failed
         $options = [];
         switch($this->state) {
             case Self::STATE_FAILED:
@@ -260,8 +260,8 @@ class Transaction extends Model {
                 $options['color'] = false;
                 break;
             case Self::STATE_PENDING:
+                $options['label-color'] = 'yellow';
             case Self::STATE_PROCESSING:
-                $options['label-color'] = 'orange';
                 $options['neutral'] = true;
                 break;
             case Self::STATE_SUCCESS:
