@@ -299,9 +299,20 @@ class Mutation extends Model {
      * @return string Formatted balance
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN, $options = []) {
-        // Gray if failed
-        if($this->state == Self::STATE_FAILED)
-            $options['color'] = false;
+        // Yellow pending, blue in progress, green/red succeeded, gray failed
+        switch($this->state) {
+            case Self::STATE_FAILED:
+            default:
+                $options['color'] = false;
+                break;
+            case Self::STATE_PENDING:
+                $options['label-color'] = 'yellow';
+            case Self::STATE_PROCESSING:
+                $options['neutral'] = true;
+                break;
+            case Self::STATE_SUCCESS:
+                break;
+        }
         return $this->currency->format($this->amount, $format, $options);
     }
 

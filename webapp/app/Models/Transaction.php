@@ -252,12 +252,21 @@ class Transaction extends Model {
         if($invert)
             $cost *= -1;
 
-        // Blue in progress, green/red succeeded, gray failed
+        // Yellow pending, blue in progress, green/red succeeded, gray failed
         $options = [];
-        if($this->state == Self::STATE_FAILED)
-            $options['color'] = false;
-        else if($this->state != Self::STATE_SUCCESS)
-            $options['neutral'] = true;
+        switch($this->state) {
+            case Self::STATE_FAILED:
+            default:
+                $options['color'] = false;
+                break;
+            case Self::STATE_PENDING:
+                $options['label-color'] = 'yellow';
+            case Self::STATE_PROCESSING:
+                $options['neutral'] = true;
+                break;
+            case Self::STATE_SUCCESS:
+                break;
+        }
 
         // TODO: choose the correct currency here based on transactions
         return $this->mutations->first()->currency->format($cost, $format, $options);

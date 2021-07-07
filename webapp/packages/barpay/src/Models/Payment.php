@@ -64,6 +64,15 @@ class Payment extends Model {
     ];
 
     /**
+     * Array containing all states that define a payment is pending.
+     */
+    const PENDING = [
+        Self::STATE_PENDING_USER,
+        Self::STATE_PENDING_COMMUNITY,
+        Self::STATE_PENDING_AUTO,
+    ];
+
+    /**
      * Array containing all states that define a payment is settled (not in
      * progress).
      */
@@ -290,11 +299,17 @@ class Payment extends Model {
      * @return string Formatted amount.
      */
     public function formatCost($format = BALANCE_FORMAT_PLAIN, $options = ['neutral' => true]) {
-        // Blue in progress, green/red succeeded, gray failed
+        // Yellow/blue in progress, green/red succeeded, gray failed
         if($this->isFailed())
             $options['color'] = false;
-        else if(!$this->isInProgress())
+        else if($this->isPending()) {
+            $options['neutral'] = true;
+            $options['label-color'] = 'yellow';
+        } else if($this->isInProgress())
+            $options['neutral'] = true;
+        else
             $options['neutral'] = false;
+
         return $this->currency->format($this->money, $format, $options);
     }
 
@@ -404,6 +419,16 @@ class Payment extends Model {
      */
     public function isInProgress() {
         return !in_array($this->state, Self::SETTLED);
+    }
+
+    /**
+     * Check whehter this payment is pending on a user, administrator of
+     * automatic..
+     *
+     * @return bool True if pending, false if not.
+     */
+    public function isPending() {
+        return in_array($this->state, Self::PENDING);
     }
 
     /**

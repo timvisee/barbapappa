@@ -139,6 +139,8 @@ class Currency extends Model {
                 // TODO: may want to add horizontal class to labels
                 if(!$color)
                     $out = '<div class="ui label">' . $out . '</div>';
+                else if(isset($options['label-color']) && !empty($options['label-color']))
+                    $out = '<div class="ui ' . $options['label-color'] . ' label">' . $out . '</div>';
                 else if($neutral)
                     $out = '<div class="ui blue label">' . $out . '</div>';
                 else if($value < 0)
