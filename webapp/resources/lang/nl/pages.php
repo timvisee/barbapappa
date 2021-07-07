@@ -1086,7 +1086,6 @@ return [
         'noteSemanticUi' => 'frontend theming framework',
         'noteGlyphicons' => 'iconen & symbolen',
         'noteFlags' => 'vlaggetjes',
-        'noteJQuery' => 'versimpelt JavaScript',
         'noteGetTerms' => 'voorwaarden & privacy policy template',
         'noteEDegen' => 'suggestie \'Barbapappa\'',
         'otherResources' => 'Andere awesome bronnen zijn',

@@ -85,15 +85,10 @@
                 <i class="halflings halflings-heart" style="color: #b80000;"></i>
             </div>
             <div class="item">
-                <a href="http://flag-icon-css.lip.is/" target="_blank">flag-icon-css</a>
+                <a href="https://flagicons.lipis.dev/" target="_blank">flag-icon-css</a>
                 —
                 <i>@lang('pages.about.noteFlags')</i>&nbsp;
                 <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span><br />
-            </div>
-            <div class="item">
-                <a href="https://jquery.com/" target="_blank">jQuery</a>
-                —
-                <i>@lang('pages.about.noteJQuery')</i>
             </div>
         </div>
 
