@@ -1084,7 +1084,6 @@ return [
         'noteSemanticUi' => 'frontend theming framework',
         'noteGlyphicons' => 'icons & symbols',
         'noteFlags' => 'pirateflags',
-        'noteJQuery' => 'simplifies JavaScript',
         'noteGetTerms' => 'terms & piracy policy template',
         'noteEDegen' => 'suggested \'Arrbapappa\'',
         'otherResources' => 'Other awesome resources include',
