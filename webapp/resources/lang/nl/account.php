@@ -36,7 +36,7 @@ return [
     'sessions' => 'Sessies',
     'sessionDetails' => 'Sessie details',
     'activeSessions' => 'Actieve sessies',
-    'expiredSessions' => 'Verlopen sessies',
+    'expiredSessions' => 'Beëindigde sessies',
     'manageSessions' => 'Beheer sessies',
     'noSessions' => 'Geen sessies',
     'sessionsDescription' => 'Deze pagina toont je actieve en beëindigde accountsessies. Klik op een actieve sessies om details te zien of om de sessie te beëindigen. Beëindigde sessies worden na enige tijd automatisch vergeten.',
