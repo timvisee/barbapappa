@@ -619,10 +619,8 @@ class BarController extends Controller {
 
         // Return a default user list, or search based on a given query
         if(empty($search)) {
-            // Build list of members, add current if visible
-            $members = collect();
-            if($economy_member->show_in_buy)
-                $members[] = $economy_member;
+            // Build list of members, add self
+            $members = collect([$economy_member]);
 
             // Build a list of members most likely to buy new products
             // Specifically for selected products first, then fill gor any
@@ -643,13 +641,11 @@ class BarController extends Controller {
             $members = $economy->members()->search($search)->showInBuy()->get();
 
         // Always appent current user to list if visible and not yet included
-        if($economy_member->show_in_buy) {
-            $hasCurrent = $members->contains(function($m) use($economy_member) {
-                return $m->id == $economy_member->id;
-            });
-            if(!$hasCurrent)
-                $members[] = $economy_member;
-        }
+        $hasCurrent = $members->contains(function($m) use($economy_member) {
+            return $m->id == $economy_member->id;
+        });
+        if(!$hasCurrent)
+            $members[] = $economy_member;
 
         // Set and limit fields to repsond with
         $members = $members
@@ -751,7 +747,7 @@ class BarController extends Controller {
                 $products = collect($userItem['products']);
 
                 // Retrieve user and product models from database
-                $member = $economy->members()->showInBuy()->findOrFail($user['id']);
+                $member = $economy->members()->showInBuy(true)->findOrFail($user['id']);
                 $products = $products->map(function($product) use($economy) {
                     $product['product'] = $economy->products()->findOrFail($product['product']['id']);
                     return $product;
