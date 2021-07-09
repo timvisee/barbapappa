@@ -18,18 +18,39 @@
         <tbody>
             <tr>
                 <td>@lang('pages.community.links.linkCommunity'):</td>
-                <td><code class="literal copy">{{ route('community.show', ['communityId' => $community->human_id]) }}</code></td>
+                <td>
+                    <button class="ui basic icon button mini compact share-button"
+                            data-title="@lang('pages.community.links.linkCommunityAction', ['community' => $community->name])"
+                            data-url="{{ route('community.show', ['communityId' => $community->human_id]) }}">
+                        <i class="glyphicons glyphicons-share"></i>
+                    </button>
+                    <code class="literal copy">{{ route('community.show', ['communityId' => $community->human_id]) }}</code>
+                </td>
             </tr>
             @if($community->self_enroll)
                 <tr>
                     <td>@lang('pages.community.links.linkJoinCommunity'):</td>
-                    <td><code class="literal copy">{{ route('community.join', ['communityId' => $community->human_id]) }}</code></td>
+                    <td>
+                        <button class="ui basic icon button mini compact share-button"
+                                data-title="@lang('pages.community.links.linkJoinCommunityAction', ['community' => $community->name])"
+                                data-url="{{ route('community.join', ['communityId' => $community->human_id]) }}">
+                            <i class="glyphicons glyphicons-share"></i>
+                        </button>
+                        <code class="literal copy">{{ route('community.join', ['communityId' => $community->human_id]) }}</code>
+                    </td>
                 </tr>
             @endif
             @if($community->self_enroll && $community->password)
                 <tr>
                     <td>@lang('pages.community.links.linkJoinCommunityCode'):</td>
-                    <td><code class="literal copy">{{ route('community.join', ['communityId' => $community->human_id, 'code' => $community->password]) }}</code></td>
+                    <td>
+                        <button class="ui basic icon button mini compact share-button"
+                                data-title="@lang('pages.community.links.linkJoinCommunityCodeAction', ['community' => $community->name])"
+                                data-url="{{ route('community.join', ['communityId' => $community->human_id, 'code' => $community->password]) }}">
+                            <i class="glyphicons glyphicons-share"></i>
+                        </button>
+                        <code class="literal copy">{{ route('community.join', ['communityId' => $community->human_id, 'code' => $community->password]) }}</code>
+                    </td>
                 </tr>
             @endif
         </tbody>
@@ -42,9 +63,16 @@
         <tbody>
             <tr>
                 <td>@lang('pages.bar.links.linkVerifyEmail'):</td>
-                <td><code class="literal copy">{{ route('account.user.emails.unverified', [
-                    'userId' => '-',
-                ]) }}</code></td>
+                <td>
+                    <button class="ui basic icon button mini compact share-button"
+                            data-title="@lang('pages.bar.links.linkVerifyEmailAction')"
+                            data-url="{{ route('account.user.emails.unverified', ['userId' => '-']) }}">
+                        <i class="glyphicons glyphicons-share"></i>
+                    </button>
+                    <code class="literal copy">
+                        {{ route('account.user.emails.unverified', ['userId' => '-']) }}
+                    </code>
+                </td>
             </tr>
         </tbody>
     </table>

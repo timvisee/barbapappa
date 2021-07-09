@@ -54,6 +54,7 @@ $(document).ready(function() {
     // Build the copy fields and messages sidebar
     managePwaInstallButton();
     buildCopyFields();
+    buildShareButtons();
     buildMessagesSidebar();
 });
 
@@ -93,7 +94,7 @@ function managePwaInstallButton() {
  * Build and set up the copy-on-click fields.
  */
 function buildCopyFields() {
-    // Copy on clock for copy elements
+    // Copy on click for copy elements
     // TODO: translate
     $('.copy').click(function() {
         // Get the node, select the text
@@ -127,7 +128,35 @@ function buildCopyFields() {
 }
 
 /**
- * Build the messages sidebar.
+ * Build and set up the share buttons.
+ */
+function buildShareButtons() {
+    let buttons = $('.share-button');
+
+    // Hide buttons if not supported
+    if(!navigator.share) {
+        buttons.remove();
+        return;
+    }
+
+    // Invoke share dialog on click
+    buttons.click(function() {
+        // Get data to share
+        let title = $(this).data('title');
+        let url = $(this).data('url');
+        if(title == undefined && url == undefined)
+            return;
+
+        // Share
+        navigator.share({
+            title,
+            url,
+        }).catch((error) => console.log('Error sharing', error));
+    });
+}
+
+/**
+ * Build the share buttons.
  */
 function buildMessagesSidebar() {
     // Load messages sidebar content through AJAX when it's opened
