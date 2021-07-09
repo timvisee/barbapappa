@@ -131,22 +131,27 @@ function buildCopyFields() {
  * Build and set up the share buttons.
  */
 function buildShareButtons() {
-    // Copy on clock for copy elements
-    $('.share-button').click(function() {
-        // Get URL to share
+    let buttons = $('.share-button');
+
+    // Hide buttons if not supported
+    if(!navigator.share) {
+        buttons.remove();
+        return;
+    }
+
+    // Invoke share dialog on click
+    buttons.click(function() {
+        // Get data to share
         let title = $(this).data('title');
         let url = $(this).data('url');
         if(title == undefined && url == undefined)
             return;
 
-        if (navigator.share) {
-            navigator.share({
-                title,
-                url,
-            }).catch((error) => console.log('Error sharing', error));
-        } else {
-            alert('Sharing is not supported on this platform');
-        }
+        // Share
+        navigator.share({
+            title,
+            url,
+        }).catch((error) => console.log('Error sharing', error));
     });
 }
 
