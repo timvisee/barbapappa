@@ -27,12 +27,12 @@
         @lang('pages.payments.title')
     </h3>
     <div class="ui one small statistics">
-        <div class="statistic">
+        <a href="{{ route('community.economy.payment.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="statistic">
             <div class="value">
                 {!! $paymentProgressingSum->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => $paymentProgressingSum->amount != 0]) !!}
             </div>
             <div class="label">@lang('pages.finance.paymentsInProgress')</div>
-        </div>
+        </a>
     </div>
 
     <h3 class="ui horizontal divider header">
