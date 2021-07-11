@@ -24,6 +24,20 @@
     {{ $payments->links() }}
 
     <p>
+        <div class="ui floating right labeled icon dropdown button">
+            <i class="dropdown icon"></i>
+            @lang('misc.manage')
+            <div class="menu">
+                <a href="{{ route('community.economy.payment.export', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                        ]) }}"
+                        class="item">
+                    @lang('misc.export')
+                </a>
+            </div>
+        </div>
+
         <a href="{{ route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                 class="ui button basic">
             @lang('pages.economies.backToEconomy')
