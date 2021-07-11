@@ -238,6 +238,7 @@ return [
         'backToEconomy' => 'Terug naar economie',
         'backToEconomies' => 'Terug naar economieën',
         'inEconomy' => 'in economie',
+        'paymentsDescription' => 'Deze pagina toont alle betalingen die geïnitieerd zijn door groepsleden binnen deze economie.',
     ],
 
     /**
@@ -851,8 +852,8 @@ return [
         'lowBalanceText' => 'Negatief saldo tekst',
         'lowBalanceTextPlaceholder' => 'Je hebt op dit moment een negatief saldo. Waardeer je saldo alsjeblieft op voordat je nieuwe producten koopt.',
         'allPurchases' => 'Alle aankopen',
-        'purchaseHistory' => 'Aankoopgeschiedenis',
-        'purchaseHistoryDescription' => 'Deze pagina toont een geschiedenis van alle productaankopen in deze bar.',
+        'purchases' => 'Aankoopen',
+        'purchasesDescription' => 'Deze pagina toont een geschiedenis van alle productaankopen in deze bar.',
         'noPurchases' => 'Geen aankopen',
         'poster' => [
             'thisBarUses' => 'Deze bar gebruikt',

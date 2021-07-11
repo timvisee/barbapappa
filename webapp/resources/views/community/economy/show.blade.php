@@ -30,28 +30,35 @@
         <h5 class="ui item header">@lang('misc.assets')</h5>
         <a href="{{ route('community.economy.product.index', [
                     'communityId' => $community->human_id,
-                    'economyId' => $economy->id
+                    'economyId' => $economy->id,
                 ]) }}"
                 class="item">
             @lang('pages.products.title')
         </a>
-        <a href="{{ route('community.economy.balanceimport.index', [
+        <a href="{{ route('community.economy.payment.index', [
                     'communityId' => $community->human_id,
-                    'economyId' => $economy->id
+                    'economyId' => $economy->id,
                 ]) }}"
                 class="item">
-            @lang('pages.balanceImport.title')
+            @lang('pages.payments.title')
         </a>
         <a href="{{ route('community.economy.payservice.index', [
                     'communityId' => $community->human_id,
-                    'economyId' => $economy->id
+                    'economyId' => $economy->id,
                 ]) }}"
                 class="item">
             @lang('pages.paymentService.title')
         </a>
+        <a href="{{ route('community.economy.balanceimport.index', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                ]) }}"
+                class="item">
+            @lang('pages.balanceImport.title')
+        </a>
         <a href="{{ route('community.economy.finance.overview', [
                     'communityId' => $community->human_id,
-                    'economyId' => $economy->id
+                    'economyId' => $economy->id,
                 ]) }}"
                 class="item">
             @lang('pages.finance.title')
@@ -66,7 +73,7 @@
                 'label' => __('pages.currencies.manage'),
                 'link' => route('community.economy.currency.index', [
                     'communityId' => $community->human_id,
-                    'economyId' => $economy->id
+                    'economyId' => $economy->id,
                 ]),
             ],
         ])

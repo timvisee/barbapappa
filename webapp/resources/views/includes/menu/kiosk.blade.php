@@ -22,7 +22,7 @@
 <a href="{{ route('kiosk.history') }}"
         class="item {{ $r == 'kiosk.history' ? ' active' : '' }}">
     <i class="glyphicons glyphicons-history"></i>
-    @lang('pages.bar.purchaseHistory')
+    @lang('pages.bar.purchases')
 </a>
 <a href="{{ route('kiosk.join') }}"
         class="item {{ $r == 'kiosk.join' ? ' active' : '' }}">

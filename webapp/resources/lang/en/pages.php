@@ -237,6 +237,7 @@ return [
         'backToEconomy' => 'Back to economy',
         'backToEconomies' => 'Back to economies',
         'inEconomy' => 'in economy',
+        'paymentsDescription' => 'This page shows all payments initiated by community members in this economy.',
     ],
 
     /**
@@ -849,8 +850,8 @@ return [
         'lowBalanceText' => 'Negative balance text',
         'lowBalanceTextPlaceholder' => 'You currently have a negative balance. Please top-up your wallet now before buying new products.',
         'allPurchases' => 'All purchases',
-        'purchaseHistory' => 'Purchase history',
-        'purchaseHistoryDescription' => 'This page shows a history of all purchased products in this bar.',
+        'purchases' => 'Purchases',
+        'purchasesDescription' => 'This page shows a history of all purchased products in this bar.',
         'noPurchases' => 'No purchases',
         'poster' => [
             'thisBarUses' => 'This bar uses',

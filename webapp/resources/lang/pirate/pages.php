@@ -237,6 +237,7 @@ return [
         'backToEconomy' => 'Back to booty',
         'backToEconomies' => 'Back to booties',
         'inEconomy' => 'in booty',
+        'paymentsDescription' => 'Dis page shows all payments initiated by crew members in dis booty.',
     ],
 
     /**
@@ -849,8 +850,8 @@ return [
         'lowBalanceText' => 'Negative balance text',
         'lowBalanceTextPlaceholder' => 'Ye currently have a negative balance. Please top-up yer wallet now before getting fresh loot.',
         'allPurchases' => 'All purchases',
-        'purchaseHistory' => 'Purchase history',
-        'purchaseHistoryDescription' => 'Dis page shows a history of all purchased loot in dis bar.',
+        'purchases' => 'Purchases',
+        'purchasesDescription' => 'Dis page shows a history of all purchased loot in dis bar.',
         'noPurchases' => 'No purchases',
         'poster' => [
             'thisBarUses' => 'Dis bar uses',

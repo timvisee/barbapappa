@@ -99,6 +99,11 @@ Breadcrumbs::for('community.economy.product.show', function(BreadcrumbTrail $tra
     ]));
 });
 
+Breadcrumbs::for('community.economy.payment.index', function(BreadcrumbTrail $trail, $economy) {
+    $trail->parent('community.economy.show', $economy);
+    $trail->push(__('pages.payments.title'), route('community.economy.payment.index', ['communityId' => $economy->community_id, 'economyId' => $economy->id]));
+});
+
 Breadcrumbs::for('community.economy.balanceimport.index', function(BreadcrumbTrail $trail, $economy) {
     $trail->parent('community.economy.show', $economy);
     $trail->push(__('pages.balanceImport.title'), route('community.economy.balanceimport.index', ['communityId' => $economy->community_id, 'economyId' => $economy->id]));
@@ -278,7 +283,7 @@ Breadcrumbs::for('bar.manage', function(BreadcrumbTrail $trail, $bar) {
 
 Breadcrumbs::for('bar.history', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
-    $trail->push(__('pages.bar.purchaseHistory'), route('bar.history', ['barId' => $bar->human_id]));
+    $trail->push(__('pages.bar.purchases'), route('bar.history', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('bar.links', function(BreadcrumbTrail $trail, $bar) {
