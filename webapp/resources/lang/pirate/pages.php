@@ -237,7 +237,16 @@ return [
         'backToEconomy' => 'Back to booty',
         'backToEconomies' => 'Back to booties',
         'inEconomy' => 'in booty',
-        'paymentsDescription' => 'Dis page shows all payments initiated by crew members in dis booty.',
+    ],
+
+    /**
+     * Community economy payment pages.
+     */
+    'economyPayments' => [
+        'title' => 'Payments',
+        'description' => 'Dis page shows all payments initiated by crew members in dis booty.',
+        'exportTitle' => 'Export payments',
+        'exportDescription' => 'Dis page allows ye to export all payments initiated by crew members in dis booty to a file to view or import in an external program.',
     ],
 
     /**

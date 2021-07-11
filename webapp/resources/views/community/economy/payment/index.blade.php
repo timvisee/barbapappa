@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.payments.title'))
+@section('title', __('pages.economyPayments.title'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.payment.index', $economy);
     $menusection = 'community_manage';
@@ -11,7 +11,7 @@
         @yield('title')
     </h2>
 
-    <p>@lang('pages.economies.paymentsDescription')</p>
+    <p>@lang('pages.economyPayments.description')</p>
 
     <div class="ui hidden divider"></div>
 

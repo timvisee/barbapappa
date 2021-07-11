@@ -281,4 +281,17 @@ class ValidationDefaults {
     public static function barRoles() {
         return Rule::in(BarRoles::ids());
     }
+
+    /**
+     * Spreadsheet file export types.
+     *
+     * @return Rule File export type rules.
+     */
+    public static function exportTypes() {
+        $types = collect(config('bar.spreadsheet_export_types'))
+            ->map(function($format) {
+                return $format['type'];
+            });
+        return Rule::in($types);
+    }
 }

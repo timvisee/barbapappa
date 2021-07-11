@@ -299,6 +299,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 Route::prefix('/payments')->middleware(ProductController::permsView()->middleware())->group(function() {
                     // Index
                     Route::get('/', 'EconomyPaymentController@index')->name('community.economy.payment.index');
+
+                    // Export
+                    Route::get('/export', 'EconomyPaymentController@export')->name('community.economy.payment.export');
+                    Route::post('/export', 'EconomyPaymentController@doExport')->name('community.economy.payment.doExport');
                 });
 
                 // Economy payment services, require view perms

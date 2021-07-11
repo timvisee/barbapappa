@@ -237,7 +237,16 @@ return [
         'backToEconomy' => 'Back to economy',
         'backToEconomies' => 'Back to economies',
         'inEconomy' => 'in economy',
-        'paymentsDescription' => 'This page shows all payments initiated by community members in this economy.',
+    ],
+
+    /**
+     * Community economy payment pages.
+     */
+    'economyPayments' => [
+        'title' => 'Payments',
+        'description' => 'This page shows all payments initiated by community members in this economy.',
+        'exportTitle' => 'Export payments',
+        'exportDescription' => 'This page allows you to export all payments initiated by community members in this economy to a file to view or import in an external program.',
     ],
 
     /**

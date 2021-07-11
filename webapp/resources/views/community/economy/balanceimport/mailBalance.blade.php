@@ -135,7 +135,7 @@
 
         <div class="field {{ ErrorRenderer::hasError('reply_to') ? 'error' : '' }}">
             {{ Form::label('reply_to', __('pages.balanceImportMailBalance.replyToAddress') . ':') }}
-            {{ Form::text('reply_to', $email ?? '', ['type' => 'reply_to', 'placeholder' => __('account.emailPlaceholder')]) }}
+            {{ Form::text('reply_to', $email ?? '', ['type' => 'email', 'placeholder' => __('account.emailPlaceholder')]) }}
             {{ ErrorRenderer::inline('reply_to') }}
         </div>
 

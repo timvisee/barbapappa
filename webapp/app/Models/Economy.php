@@ -163,16 +163,17 @@ class Economy extends Model {
     }
 
     /**
-     * Get a relation to all payments made with services in this economy.
+     * Get a relation to all payments made with currencies in this economy.
      *
      * @return Relation to payments.
      */
     public function payments() {
+        // TODO: also select through payment service if service link is broken?
         return $this->hasManyThrough(
             PayPayment::class,
-            PayService::class,
+            Currency::class,
             'economy_id',
-            'service_id',
+            'currency_id',
             'id',
             'id'
         );
