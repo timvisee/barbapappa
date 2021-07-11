@@ -57,9 +57,12 @@ class PaymentController extends Controller {
      */
     public function show($paymentId) {
         // Get the user, find the payment and transaction
-        $user = barauth()->getUser();
-        $payment = $user->payments()->findOrFail($paymentId);
+        $payment = Payment::findOrFail($paymentId);
         $transaction = $payment->findTransaction();
+
+        // User must have permission
+        if(!$payment->hasViewPermission())
+            return response(view('noPermission'));
 
         // Force update the payment state
         $payment->updateState();
@@ -183,9 +186,6 @@ class PaymentController extends Controller {
      * @return Response
      */
     public function approveList() {
-        // Get the user, community, find the products
-        $user = barauth()->getUser();
-
         // Get all payments to approve, show earliest first
         $payments = Payment::canManage()
             ->requireCommunityAction()
@@ -206,6 +206,10 @@ class PaymentController extends Controller {
             ->requireCommunityAction()
             ->findOrFail($paymentId);
         $paymentable = $payment->paymentable;
+
+        // User must have permission (redundant?)
+        if(!$payment->hasManagePermission())
+            return response(view('noPermission'));
 
         // If the payment is not in progress anymore, redirect to show page
         if(!$payment->isInProgress())
@@ -231,6 +235,10 @@ class PaymentController extends Controller {
             ->requireCommunityAction()
             ->findOrFail($paymentId);
         $paymentable = $payment->paymentable;
+
+        // User must have permission (redundant?)
+        if(!$payment->hasManagePermission())
+            return response(view('noPermission'));
 
         // If the payment is not in progress anymore, redirect to show page
         if(!$payment->isInProgress())
