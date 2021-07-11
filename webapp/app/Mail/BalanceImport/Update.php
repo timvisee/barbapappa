@@ -106,6 +106,7 @@ class Update extends PersonalizedEmail {
      */
     public function __construct(
         $recipients,
+        ?string $reply_to_address,
         BalanceImportAlias $alias,
         ?BalanceImportEvent $event,
         ?BalanceImportChange $last_change,
@@ -120,6 +121,7 @@ class Update extends PersonalizedEmail {
         // Construct the parent
         parent::__construct($recipients, self::SUBJECT);
 
+        $this->reply_to_address = $reply_to_address;
         $this->alias = $alias;
         $this->event = $event;
         $this->last_change = $last_change;

@@ -501,6 +501,7 @@ return [
         'mustSelectBarToInvite' => 'Je moet een bar selecteren om uit te nodigen',
         'inviteToJoinBar' => 'Nodig ongeregistreerde gebruikers uit deel te nemen aan de bar',
         'limitToLastEvent' => 'Limiteer tot gebruikers en leden in de laatste event',
+        'replyToAddress' => '\'Reply-To\' e-mailadres',
         'confirmSendMessage' => 'Bevestig om e-mailberichten te versturen.',
         'sentBalanceUpdateEmail' => 'Een saldo update e-mail zal nu verzonden worden naar de geselecteerde gebruikers. Het kan enkele minuten duren voordat het bericht aankomt.',
     ],

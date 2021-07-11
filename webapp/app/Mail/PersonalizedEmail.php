@@ -25,6 +25,12 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
     public $recipients;
 
     /**
+     * Reply-To address.
+     * @var string|null
+     */
+    public $reply_to_address = null;
+
+    /**
      * The language key for the subject of the message.
      * @var string
      */
@@ -86,6 +92,8 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
     public function build() {
         // Set recipient
         $this->to($this->recipients);
+        if(!empty($this->reply_to_address))
+            $this->replyTo($this->reply_to_address);
 
         // Gather recipient user, force set application locale for email
         $user = $this->recipients->first()->getUser();

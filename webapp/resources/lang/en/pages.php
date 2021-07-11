@@ -500,6 +500,7 @@ return [
         'mustSelectBarToInvite' => 'You must select a bar to invite users',
         'inviteToJoinBar' => 'Invite unregistered users to join the bar',
         'limitToLastEvent' => 'Limit to users and members in the last event',
+        'replyToAddress' => '\'Reply-To\' email address',
         'confirmSendMessage' => 'Confirm to send an email message',
         'sentBalanceUpdateEmail' => 'A balance update mail will now be sent to the selected balance import users. It may take a few minutes for it to arrive.',
     ],
