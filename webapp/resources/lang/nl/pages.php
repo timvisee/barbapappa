@@ -863,6 +863,8 @@ return [
         'allPurchases' => 'Alle aankopen',
         'purchases' => 'Aankoopen',
         'purchasesDescription' => 'Deze pagina toont een geschiedenis van alle productaankopen in deze bar.',
+        'exportPurchasesTitle' => 'Exporteer aankopen',
+        'exportPurchasesDescription' => 'Op deze pagina kun je alle aankopen die gemaakt zijn in deze bar naar een bestand exporteren.',
         'noPurchases' => 'Geen aankopen',
         'poster' => [
             'thisBarUses' => 'Deze bar gebruikt',

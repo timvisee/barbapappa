@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.economyPayments.exportTitle'))
+@section('title', __('pages.bar.exportPurchasesTitle'))
 @php
     $menusection = 'community_manage';
 @endphp
@@ -8,15 +8,14 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <p>@lang('pages.economyPayments.exportDescription')</p>
+    <p>@lang('pages.bar.exportPurchasesDescription')</p>
 
     <div class="ui hidden divider"></div>
 
     {!! Form::open([
         'action' => [
-            'EconomyPaymentController@doExport',
-            $community->human_id,
-            $economy->id,
+            'BarController@doExportHistory',
+            $bar->human_id,
         ],
         'method' => 'POST',
         'class' => 'ui form'
@@ -67,10 +66,7 @@
         <button class="ui button primary" type="submit" name="submit" value="">
             @lang('misc.export')
         </button>
-        <a href="{{ route('community.economy.payment.index', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                ]) }}"
+        <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('general.cancel')
         </a>

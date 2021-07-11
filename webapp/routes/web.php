@@ -541,6 +541,8 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             // History
             // TODO: rename to bar.manage.history?
             Route::get('/history', 'BarController@history')->name('bar.history');
+            Route::get('/history/export', 'BarController@exportHistory')->name('bar.history.export');
+            Route::post('/history/export', 'BarController@doExportHistory')->name('bar.history.doExport');
 
             // Useful links
             Route::get('/links', 'BarController@links')->name('bar.links');

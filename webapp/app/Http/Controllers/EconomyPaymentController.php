@@ -70,7 +70,7 @@ class EconomyPaymentController extends Controller {
         $fromDate = $request->input('date_from');
         $toDate = $request->input('date_to');
         $format = $request->input('format');
-        $fileName = 'payments.' . collect(config('bar.spreadsheet_export_types'))->firstWhere('type', $format)['extension'];
+        $fileName = 'barapp-payments.' . collect(config('bar.spreadsheet_export_types'))->firstWhere('type', $format)['extension'];
 
         return Excel::download(
             new EconomyPaymentExport($headers, $economy->id, $fromDate, $toDate),

@@ -54,6 +54,17 @@
     {{ $productMutations->links() }}
 
     <p>
+        <div class="ui floating right labeled icon dropdown button">
+            <i class="dropdown icon"></i>
+            @lang('misc.manage')
+            <div class="menu">
+                <a href="{{ route('bar.history.export', ['barId' => $bar->human_id]) }}"
+                        class="item">
+                    @lang('misc.export')
+                </a>
+            </div>
+        </div>
+
         <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')

@@ -861,6 +861,8 @@ return [
         'allPurchases' => 'All purchases',
         'purchases' => 'Purchases',
         'purchasesDescription' => 'This page shows a history of all purchased products in this bar.',
+        'exportPurchasesTitle' => 'Export purchases',
+        'exportPurchasesDescription' => 'This page allows you to export all purchases made in this bar to a file.',
         'noPurchases' => 'No purchases',
         'poster' => [
             'thisBarUses' => 'This bar uses',

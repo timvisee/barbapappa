@@ -861,6 +861,8 @@ return [
         'allPurchases' => 'All purchases',
         'purchases' => 'Purchases',
         'purchasesDescription' => 'Dis page shows a history of all purchased loot in dis bar.',
+        'exportPurchasesTitle' => 'Export purchases',
+        'exportPurchasesDescription' => 'Dis page allows ye to export all purchases made in dis bar to a file.',
         'noPurchases' => 'No purchases',
         'poster' => [
             'thisBarUses' => 'Dis bar uses',

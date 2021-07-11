@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\BarPurchaseHistoryExport;
 use App\Helpers\ValidationDefaults;
 use App\Models\Bar;
 use App\Models\EconomyMember;
@@ -18,6 +19,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Validator;
+use \Excel;
 
 class BarController extends Controller {
 
@@ -314,6 +316,53 @@ class BarController extends Controller {
         // Show the bar page
         return view('bar.history')
             ->with('productMutations', $productMutations);
+    }
+
+    /**
+     * Bar export history page.
+     *
+     * @return Response
+     */
+    public function exportHistory($barId) {
+        // Get the bar
+        $bar = \Request::get('bar');
+
+        $firstDate = (new Carbon($bar->productMutations()->min('mutation_product.created_at')))
+            ->toDateString();
+        $lastDate = today()->toDateString();
+
+        return view('bar.historyExport')
+            ->with('firstDate', $firstDate)
+            ->with('lastDate', $lastDate);
+    }
+
+    /**
+     * Bar export history page.
+     *
+     * @return Response
+     */
+    public function doExportHistory(Request $request, $barId) {
+        // Validate
+        $this->validate($request, [
+            'date_from' => 'nullable|date',
+            'date_to' => 'nullable|date',
+            'format' => 'required|' . ValidationDefaults::exportTypes(),
+        ]);
+
+        // Get the bar
+        $bar = \Request::get('bar');
+
+        $headers = is_checked($request->input('headers'));
+        $fromDate = $request->input('date_from');
+        $toDate = $request->input('date_to');
+        $format = $request->input('format');
+        $fileName = 'barapp-purchases.' . collect(config('bar.spreadsheet_export_types'))->firstWhere('type', $format)['extension'];
+
+        return Excel::download(
+            new BarPurchaseHistoryExport($headers, $bar->id, $fromDate, $toDate),
+            $fileName,
+            $format,
+        );
     }
 
     /**
