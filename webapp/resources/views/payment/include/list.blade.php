@@ -18,6 +18,12 @@
                 {{ $payment->displayName() }}
                 {!! $payment->formatCost(BALANCE_FORMAT_LABEL); !!}
 
+                @if(isset($group['showUser']) && $group['showUser'] && $payment->user != null)
+                    <span class="subtle">
+                        @lang('misc.by') {{ $payment->user->first_name }}
+                    </span>
+                @endif
+
                 {{-- TODO: show some other stat here --}}
                 <span class="sub-label">
                     @include('includes.humanTimeDiff', ['time' => $payment->updated_at ?? $payment->created_at, 'short' => true])

@@ -238,6 +238,7 @@ return [
         'backToEconomy' => 'Terug naar economie',
         'backToEconomies' => 'Terug naar economieën',
         'inEconomy' => 'in economie',
+        'paymentsDescription' => 'Deze pagina toont alle betalingen die geïnitieerd zijn door groepsleden binnen deze economie.',
     ],
 
     /**

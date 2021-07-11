@@ -241,6 +241,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::delete('/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
                 });
 
+                // Payments
+                Route::get('/payments', 'EconomyController@payments')->name('community.economy.payment.index');
+
                 // Supported currencies
                 Route::prefix('/currencies')->middleware(CurrencyController::permsView()->middleware())->group(function() {
                     // Index

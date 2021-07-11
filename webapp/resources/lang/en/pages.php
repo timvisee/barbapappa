@@ -237,6 +237,7 @@ return [
         'backToEconomy' => 'Back to economy',
         'backToEconomies' => 'Back to economies',
         'inEconomy' => 'in economy',
+        'paymentsDescription' => 'This page shows all payments initiated by community members in this economy.',
     ],
 
     /**

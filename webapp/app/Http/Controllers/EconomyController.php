@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Models\Wallet;
 use App\Perms\Builder\Config as PermsConfig;
+use BarPay\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class EconomyController extends Controller {
+
+    const PAGINATE_ITEMS = 50;
 
     /**
      * Community economy index.
@@ -154,6 +157,21 @@ class EconomyController extends Controller {
         return redirect()
             ->route('community.economy.index', ['communityId' => $communityId])
             ->with('success', __('pages.economies.economyDeleted'));
+    }
+
+    /**
+     * Show a list of payments in this community.
+     *
+     * @return Response
+     */
+    public function payments($communityId, $economyId) {
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $payments = Payment::with('user')->paginate(self::PAGINATE_ITEMS);
+
+        return view('community.economy.payments')
+            ->with('economy', $economy)
+            ->with('payments', $payments);
     }
 
     /**

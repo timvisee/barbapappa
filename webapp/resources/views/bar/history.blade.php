@@ -4,8 +4,6 @@
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.history', $bar);
     $menusection = 'bar_manage';
-
-    use \App\Http\Controllers\BarController;
 @endphp
 
 @section('content')

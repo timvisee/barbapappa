@@ -237,6 +237,7 @@ return [
         'backToEconomy' => 'Back to booty',
         'backToEconomies' => 'Back to booties',
         'inEconomy' => 'in booty',
+        'paymentsDescription' => 'Dis page shows all payments initiated by crew members in dis booty.',
     ],
 
     /**
