@@ -40,7 +40,7 @@
                     'economyId' => $economy->id,
                 ]) }}"
                 class="item">
-            @lang('pages.payments.title')
+            @lang('pages.economyPayments.title')
         </a>
         <a href="{{ route('community.economy.payservice.index', [
                     'communityId' => $community->human_id,

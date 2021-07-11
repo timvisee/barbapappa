@@ -1,5 +1,7 @@
 <?php
 
+use \Maatwebsite\Excel\Excel as ExcelType;
+
 return [
 
     /*
@@ -22,4 +24,16 @@ return [
      * of time what is bought.
      */
     'bar_recent_product_transaction_period' => 60 * 60,
+
+    /**
+     * Spreadsheet export types.
+     */
+    'spreadsheet_export_types' => [
+        ['type' => ExcelType::XLSX, 'name' => 'Excel spreadsheet (.xlsx)', 'extension' => 'xlsx'],
+        ['type' => ExcelType::XLS, 'name' => 'Excel spreadsheet (1997-2003) (.xls)', 'extension' => 'xls'],
+        ['type' => ExcelType::CSV, 'name' => 'Comma Separated Values (.csv)', 'extension' => 'csv'],
+        ['type' => ExcelType::ODS, 'name' => 'OpenDocument Spreadsheet (.ods)', 'extension' => 'ods'],
+        ['type' => ExcelType::HTML, 'name' => 'HTML (.html)', 'extension' => 'html'],
+        ['type' => ExcelType::DOMPDF, 'name' => 'PDF (.pdf)', 'extension' => 'pdf'],
+    ],
 ];

@@ -432,6 +432,16 @@ class Payment extends Model {
     }
 
     /**
+     * Check whether this payment is completed.
+     * This means that the payment is finished and that the money is received.
+     *
+     * @return bool True if completed, false if not.
+     */
+    public function isCompleted() {
+        return $this->state == Self::STATE_COMPLETED;
+    }
+
+    /**
      * Check whether this payment failed.
      * This would mean the payment is not in progress anymore, and was not
      * completed.

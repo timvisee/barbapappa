@@ -160,21 +160,6 @@ class EconomyController extends Controller {
     }
 
     /**
-     * Show a list of payments in this community.
-     *
-     * @return Response
-     */
-    public function payments($communityId, $economyId) {
-        $community = \Request::get('community');
-        $economy = $community->economies()->findOrFail($economyId);
-        $payments = Payment::with('user')->paginate(self::PAGINATE_ITEMS);
-
-        return view('community.economy.payments')
-            ->with('economy', $economy)
-            ->with('payments', $payments);
-    }
-
-    /**
      * The permission required for viewing.
      * @return PermsConfig The permission configuration.
      */

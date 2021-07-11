@@ -238,7 +238,16 @@ return [
         'backToEconomy' => 'Terug naar economie',
         'backToEconomies' => 'Terug naar economieën',
         'inEconomy' => 'in economie',
-        'paymentsDescription' => 'Deze pagina toont alle betalingen die geïnitieerd zijn door groepsleden binnen deze economie.',
+    ],
+
+    /**
+     * Community economy payment pages.
+     */
+    'economyPayments' => [
+        'title' => 'Betalingen',
+        'description' => 'Deze pagina toont alle betalingen die geïnitieerd zijn door groepsleden binnen deze economie.',
+        'exportTitle' => 'Exporteer betalingen',
+        'exportDescription' => 'Op deze pagina kun je alle betalingen die geïnitieerd zijn door groepsleden binnen deze economie exporteren naar een bestand om in een extern programma te bekijken of te importeren.',
     ],
 
     /**
@@ -854,6 +863,8 @@ return [
         'allPurchases' => 'Alle aankopen',
         'purchases' => 'Aankoopen',
         'purchasesDescription' => 'Deze pagina toont een geschiedenis van alle productaankopen in deze bar.',
+        'exportPurchasesTitle' => 'Exporteer aankopen',
+        'exportPurchasesDescription' => 'Op deze pagina kun je alle aankopen die gemaakt zijn in deze bar naar een bestand exporteren.',
         'noPurchases' => 'Geen aankopen',
         'poster' => [
             'thisBarUses' => 'Deze bar gebruikt',

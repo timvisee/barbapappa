@@ -237,7 +237,16 @@ return [
         'backToEconomy' => 'Back to economy',
         'backToEconomies' => 'Back to economies',
         'inEconomy' => 'in economy',
-        'paymentsDescription' => 'This page shows all payments initiated by community members in this economy.',
+    ],
+
+    /**
+     * Community economy payment pages.
+     */
+    'economyPayments' => [
+        'title' => 'Payments',
+        'description' => 'This page shows all payments initiated by community members in this economy.',
+        'exportTitle' => 'Export payments',
+        'exportDescription' => 'This page allows you to export all payments initiated by community members in this economy to a file to view or import in an external program.',
     ],
 
     /**
@@ -852,6 +861,8 @@ return [
         'allPurchases' => 'All purchases',
         'purchases' => 'Purchases',
         'purchasesDescription' => 'This page shows a history of all purchased products in this bar.',
+        'exportPurchasesTitle' => 'Export purchases',
+        'exportPurchasesDescription' => 'This page allows you to export all purchases made in this bar to a file.',
         'noPurchases' => 'No purchases',
         'poster' => [
             'thisBarUses' => 'This bar uses',

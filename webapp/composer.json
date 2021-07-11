@@ -65,6 +65,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.0",
+        "maatwebsite/excel": "^3.1",
         "mariuzzo/laravel-js-localization": "^1.4",
         "sentry/sentry-laravel": "^2.7.0",
         "simplesoftwareio/simple-qrcode": "^2.0",

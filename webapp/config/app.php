@@ -263,6 +263,11 @@ return [
         Alfa6661\EloquentHasManySync\ServiceProvider::class,
 
         /**
+         * Laravel Excel.
+         */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
+        /**
          * Laravel to JavaScript localization.
          */
         Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,

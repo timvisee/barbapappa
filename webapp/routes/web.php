@@ -241,9 +241,6 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::delete('/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
                 });
 
-                // Payments
-                Route::get('/payments', 'EconomyController@payments')->name('community.economy.payment.index');
-
                 // Supported currencies
                 Route::prefix('/currencies')->middleware(CurrencyController::permsView()->middleware())->group(function() {
                     // Index
@@ -296,6 +293,16 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::delete('/delete', 'ProductController@doDelete')->name('community.economy.product.doDelete');
                         });
                     });
+                });
+
+                // Payments, require view perms
+                Route::prefix('/payments')->middleware(ProductController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'EconomyPaymentController@index')->name('community.economy.payment.index');
+
+                    // Export
+                    Route::get('/export', 'EconomyPaymentController@export')->name('community.economy.payment.export');
+                    Route::post('/export', 'EconomyPaymentController@doExport')->name('community.economy.payment.doExport');
                 });
 
                 // Economy payment services, require view perms
@@ -534,6 +541,8 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             // History
             // TODO: rename to bar.manage.history?
             Route::get('/history', 'BarController@history')->name('bar.history');
+            Route::get('/history/export', 'BarController@exportHistory')->name('bar.history.export');
+            Route::post('/history/export', 'BarController@doExportHistory')->name('bar.history.doExport');
 
             // Useful links
             Route::get('/links', 'BarController@links')->name('bar.links');
