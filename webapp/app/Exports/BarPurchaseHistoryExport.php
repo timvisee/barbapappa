@@ -55,8 +55,8 @@ class BarPurchaseHistoryExport extends BarAppExport implements FromCollection, W
             'Quantity',
             'Product',
             'User',
-            'Started at',
-            'Last change at',
+            'First seen (UTC)',
+            'Last change (UTC)',
         ];
     }
 

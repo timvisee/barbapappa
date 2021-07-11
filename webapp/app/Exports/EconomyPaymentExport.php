@@ -54,8 +54,8 @@ class EconomyPaymentExport extends BarAppExport implements FromCollection, WithC
             'Amount',
             'User',
             'Service',
-            'Started at',
-            'Last change at',
+            'Started (UTC)',
+            'Last change (UTC)',
         ];
     }
 
