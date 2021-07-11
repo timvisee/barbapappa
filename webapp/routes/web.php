@@ -241,9 +241,6 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::delete('/delete', 'EconomyController@doDelete')->name('community.economy.doDelete');
                 });
 
-                // Payments
-                Route::get('/payments', 'EconomyController@payments')->name('community.economy.payment.index');
-
                 // Supported currencies
                 Route::prefix('/currencies')->middleware(CurrencyController::permsView()->middleware())->group(function() {
                     // Index
@@ -296,6 +293,12 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::delete('/delete', 'ProductController@doDelete')->name('community.economy.product.doDelete');
                         });
                     });
+                });
+
+                // Payments, require view perms
+                Route::prefix('/payments')->middleware(ProductController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'EconomyPaymentController@index')->name('community.economy.payment.index');
                 });
 
                 // Economy payment services, require view perms
