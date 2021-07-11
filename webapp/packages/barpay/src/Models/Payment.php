@@ -676,4 +676,50 @@ class Payment extends Model {
         else
             event(new PaymentFailed($this));
     }
+
+    /**
+     * Check whether the currently authenticated user has permission to view this
+     * payment.
+     *
+     * @return boolean True if the user can view this payment, false if not.
+     */
+    public function hasViewPermission() {
+        return $this->hasPermission(false);
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to manage
+     * this payment.
+     *
+     * @return boolean True if the user can manage this payment, false if not.
+     */
+    public function hasManagePermission() {
+        return $this->hasPermission(true);
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to view this
+     * payment.
+     *
+     * Note: this is expensive.
+     *
+     * @param bool [$manage=true] True to check for management permissions,
+     *      false for just viewing permission.
+     * @return boolean True if the user can view this payment, false if not.
+     */
+    private function hasPermission($manage = true) {
+        // The user must be authenticated
+        $barauth = barauth();
+        if(!$barauth->isAuth())
+            return false;
+        $user = $barauth->getUser();
+
+        // User is fine if he owns the payment
+        if($this->user_id == $user->id)
+            return true;
+
+        // Get community this payment is part of
+        $community = $this->currency->economy->community;
+        return app('perms')->evaluate(CommunityRoles::presetManager(), $community, null);
+    }
 }
