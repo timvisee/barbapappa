@@ -23,6 +23,7 @@ class EconomyPaymentController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $payments = $economy
             ->payments()
+            ->latest()
             ->with('user')
             ->paginate(self::PAGINATE_ITEMS);
 
