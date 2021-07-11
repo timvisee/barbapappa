@@ -278,7 +278,7 @@ Breadcrumbs::for('bar.manage', function(BreadcrumbTrail $trail, $bar) {
 
 Breadcrumbs::for('bar.history', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
-    $trail->push(__('pages.bar.purchaseHistory'), route('bar.history', ['barId' => $bar->human_id]));
+    $trail->push(__('pages.bar.purchases'), route('bar.history', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('bar.links', function(BreadcrumbTrail $trail, $bar) {

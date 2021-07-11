@@ -41,7 +41,7 @@
     <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
             class="item {{ $r == 'bar.history' ? ' active' : '' }}">
         <i class="glyphicons glyphicons-history"></i>
-        @lang('pages.bar.purchaseHistory')
+        @lang('pages.bar.purchases')
     </a>
     <a href="{{ route('bar.links', ['barId' => $bar->human_id]) }}"
             class="item {{ $r == 'bar.links' ? ' active' : '' }}">

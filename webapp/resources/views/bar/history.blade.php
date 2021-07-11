@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.bar.purchaseHistory'))
+@section('title', __('pages.bar.purchases'))
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.history', $bar);
     $menusection = 'bar_manage';
@@ -13,7 +13,7 @@
         @yield('title')
     </h2>
 
-    <p>@lang('pages.bar.purchaseHistoryDescription')</p>
+    <p>@lang('pages.bar.purchasesDescription')</p>
 
     <div class="ui hidden divider"></div>
 

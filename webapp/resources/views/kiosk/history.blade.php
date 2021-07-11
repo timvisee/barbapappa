@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.bar.purchaseHistory'))
+@section('title', __('pages.bar.purchases'))
 
 @push('styles')
     <style>
