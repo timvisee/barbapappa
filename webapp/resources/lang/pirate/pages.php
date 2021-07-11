@@ -500,6 +500,7 @@ return [
         'mustSelectBarToInvite' => 'Ye must select a bar to invite pirates',
         'inviteToJoinBar' => 'Invite unregistered pirates to enter the bar',
         'limitToLastEvent' => 'Limit to pirates in th\' last event',
+        'replyToAddress' => '\'Reply-To\' email address',
         'confirmSendMessage' => 'Confirm to send an e-bottle message',
         'sentBalanceUpdateEmail' => 'A balance update message will now be sent to the selected balance import pirates. It may take a few minutes for it to arrive.',
     ],

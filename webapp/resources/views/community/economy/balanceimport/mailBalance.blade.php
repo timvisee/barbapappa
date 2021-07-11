@@ -133,6 +133,12 @@
             {{ ErrorRenderer::inline('language') }}
         </div>
 
+        <div class="field {{ ErrorRenderer::hasError('reply_to') ? 'error' : '' }}">
+            {{ Form::label('reply_to', __('pages.balanceImportMailBalance.replyToAddress') . ':') }}
+            {{ Form::text('reply_to', $email ?? '', ['type' => 'reply_to', 'placeholder' => __('account.emailPlaceholder')]) }}
+            {{ ErrorRenderer::inline('reply_to') }}
+        </div>
+
         <div class="ui hidden divider"></div>
 
         <div class="ui divider"></div>

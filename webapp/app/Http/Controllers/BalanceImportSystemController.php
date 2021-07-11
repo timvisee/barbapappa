@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationDefaults;
 use App\Jobs\BalanceImportSystemMailUpdates;
 use App\Models\BalanceImportAlias;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use App\Helpers\ValidationDefaults;
 
 class BalanceImportSystemController extends Controller {
 
@@ -261,6 +260,7 @@ class BalanceImportSystemController extends Controller {
         $this->validate($request, [
             'message' => 'nullable|string',
             'invite_to_bar' => 'integer|prohibited_if:related_bar,0',
+            'reply_to' => 'nullable|' . ValidationDefaults::EMAIL,
             'confirm_send_mail' => 'accepted',
         ], [
             'invite_to_bar.prohibited_if' => __('pages.balanceImportMailBalance.mustSelectBarToInvite'),
@@ -274,6 +274,7 @@ class BalanceImportSystemController extends Controller {
         $message = $request->input('message');
         $related_bar_id = (int) $request->input('related_bar');
         $invite_to_bar = is_checked($request->input('invite_to_bar'));
+        $reply_to_address = $request->input('reply_to');
 
         // Get selected locale, reset if invalid
         $default_locale = $request->input('language');
@@ -294,6 +295,7 @@ class BalanceImportSystemController extends Controller {
             $related_bar_id,
             $invite_to_bar,
             $default_locale,
+            $reply_to_address,
         );
 
         // Redirect to the index page after deleting

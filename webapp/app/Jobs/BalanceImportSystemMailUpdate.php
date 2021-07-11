@@ -38,6 +38,7 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
     private $bar_id;
     private $invite_to_bar;
     private $default_locale;
+    private $reply_to_address;
 
     /**
      * Create a new job instance.
@@ -53,6 +54,7 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
      * @param bool $invite_to_bar Whether to invite user to the bar.
      * @param string|null $default_locale The default locale to use if user
      *      locale is unknown.
+     * @param string|null $reply_to_address Email Reply-To address.
      */
     public function __construct(
         int $system_id,
@@ -64,7 +66,8 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
         ?string $message,
         ?int $bar_id,
         bool $invite_to_bar,
-        ?string $default_locale
+        ?string $default_locale,
+        ?string $reply_to_address
     ) {
         // Set queue
         $this->onQueue(Self::QUEUE);
@@ -79,6 +82,7 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
         $this->bar_id = $bar_id;
         $this->invite_to_bar = $invite_to_bar;
         $this->default_locale = $default_locale;
+        $this->reply_to_address = $reply_to_address;
     }
 
     /**
@@ -150,6 +154,7 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
         // Create the mailable for the change, send the mailable
         Mail::send(new Update(
             $recipients,
+            $this->reply_to_address,
             $alias,
             $event,
             $last_change,
