@@ -12,14 +12,17 @@ class EconomyPaymentController extends Controller {
     const PAGINATE_ITEMS = 50;
 
     /**
-     * Community economy index.
+     * Community economy payments index.
      *
      * @return Response
      */
     public function index($communityId, $economyId) {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $payments = Payment::with('user')->paginate(self::PAGINATE_ITEMS);
+        $payments = $economy
+            ->payments()
+            ->with('user')
+            ->paginate(self::PAGINATE_ITEMS);
 
         return view('community.economy.payment.index')
             ->with('economy', $economy)
