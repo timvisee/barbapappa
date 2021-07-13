@@ -18,7 +18,7 @@ return [
     'yesDelete' => 'Yes, delete',
     'yesUndo' => 'Yes, undo',
     'yesCancel' => 'Yes, cancel',
-    'yesExpire' => 'Yes, expire',
+    'yesTerminate' => 'Yes, terminate',
     'no' => 'No',
     'noGoBack' => 'No, go back',
     'goBack' => 'Go back',

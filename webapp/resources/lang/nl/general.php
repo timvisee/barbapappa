@@ -18,7 +18,7 @@ return [
     'yesDelete' => 'Ja, verwijder',
     'yesUndo' => 'Ja, ongedaan maken',
     'yesCancel' => 'Ja, annuleren',
-    'yesExpire' => 'Ja, verlopen',
+    'yesTerminate' => 'Ja, beëindigen',
     'no' => 'Nee',
     'noGoBack' => 'Nee, ga terug',
     'goBack' => 'Ga terug',

@@ -18,7 +18,7 @@ return [
     'yesDelete' => 'Yay, sink!',
     'yesUndo' => 'Yay, sail back!',
     'yesCancel' => 'Yay, sink!',
-    'yesExpire' => 'Yay, sink!',
+    'yesTerminate' => 'Yay, sink!',
     'no' => 'Nay',
     'noGoBack' => 'Nay, paddl\' back',
     'goBack' => 'Paddl\' back',
