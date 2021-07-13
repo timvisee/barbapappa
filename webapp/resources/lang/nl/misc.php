@@ -177,6 +177,8 @@ return [
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',
     'viewingAccountOf' => 'Je bekijkt het account van',
     'confirmCancel' => 'Ik bevestig dat ik wil annuleren',
+    'cancelled' => 'Geannuleerd',
+    'bought' => 'Gekocht',
 
     'days' => [
         '0' => 'maandag',

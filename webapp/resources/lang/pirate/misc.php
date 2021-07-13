@@ -176,6 +176,8 @@ return [
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',
     'viewingAccountOf' => 'Yer viewing th\' account o\'',
     'confirmCancel' => 'I confirm I want to cancel',
+    'cancelled' => 'Cancelled',
+    'bought' => 'Looted',
 
     'days' => [
         '0' => 'Monday',

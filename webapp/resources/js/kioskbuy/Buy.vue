@@ -6,7 +6,14 @@
             {{ __('misc.refreshing') }}...
         </div>
 
-        <div v-if="confirming || buying" class="ui active dimmer"></div>
+        <!-- Confirming/buying, bought, cancelled overlay -->
+        <div v-if="confirming || buying" class="ui active dimmer on-top"></div>
+        <div v-if="showBoughtOverlay" class="ui active dimmer positive on-top">
+            <div class="ui text huge">{{ __('misc.bought') }}!</div>
+        </div>
+        <div v-if="showCancelledOverlay" class="ui active dimmer negative on-top">
+            <div class="ui text huge">{{ __('misc.cancelled') }}!</div>
+        </div>
 
         <div v-if="!refreshing">
             <div v-if="successMessage" class="ui success floating message notification">
@@ -80,6 +87,8 @@
                 confirming: false,
                 buying: false,
                 refreshing: false,
+                showBoughtOverlay: false,
+                showCancelledOverlay: false,
                 successMessage: undefined,
                 // Timer handle after which to clear the success message
                 decayTimer: null,
@@ -134,7 +143,11 @@
                             : this.langChoice('pages.bar.advancedBuy.boughtProductsUsers#', products, {users});
 
                         // Cancel all current selections
-                        this.cancel();
+                        this.cancel(false);
+
+                        // Show bought overlay for 1 second
+                        this.showBoughtOverlay = true;
+                        setTimeout(() => this.showBoughtOverlay = false, 1000);
 
                         window.scrollTo(0, 0);
                     })
@@ -146,9 +159,15 @@
             },
 
             // Cancel everything
-            cancel() {
+            cancel(showOverlay = true) {
                 this.selectedUsers.splice(0);
                 this.cart.splice(0);
+
+                // Show cancelled overlay for 1 second
+                if(showOverlay) {
+                    this.showCancelledOverlay = true;
+                    setTimeout(() => this.showCancelledOverlay = false, 1000);
+                }
 
                 // TODO: optionally reload list of users/products
             },
@@ -252,5 +271,26 @@
 
         /* TODO: do not use this hack! */
         width: calc(100% - 28px) !important;
+    }
+
+    .ui.dimmer.on-top {
+        z-index: 1001;
+    }
+
+    .ui.dimmer.positive {
+        background-color: rgba(33, 186, 69, .85);
+        color: white;
+    }
+
+    .ui.dimmer.negative {
+        background-color: rgba(219, 40, 40, .85);
+        color: white;
+    }
+
+    .ui.dimmer .text.huge {
+        font-weight: bold;
+        font-size: 2em;
+        padding: 1em;
+        line-height: 2;
     }
 </style>
