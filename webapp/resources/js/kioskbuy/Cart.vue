@@ -1,6 +1,7 @@
 <template>
     <div>
         <!-- TODO: we should not need this when position sticky works -->
+
         <br>
         <br>
 
@@ -24,7 +25,7 @@
                     v-bind:class="{ disabled: buying, loading: buying }"
                     href="#">
                 {{
-                    confirming
+                    confirmingBuy
                         ? __('pages.bar.advancedBuy.pressToConfirm')
                         : (cart.length <= 1
                             ? langChoice('pages.kiosk.buyProducts#', quantity())
@@ -44,15 +45,15 @@
         ],
         data: function() {
             return {
-                confirming: false,
+                confirmingBuy: false,
                 confirmingCancel: false,
-                confirmingTimer: null,
+                confirmingBuyTimer: null,
                 confirmingCancelTimer: null,
             };
         },
         watch: {
             cart: function() {
-                this.setConfirming(false);
+                this.setConfirmingBuy(false);
                 this.setConfirmingCancel(false);
             },
         },
@@ -67,13 +68,13 @@
             },
 
             buy() {
-                if(this.confirming !== true) {
-                    this.setConfirming(true);
+                if(this.confirmingBuy !== true) {
+                    this.setConfirmingBuy(true);
                     return;
                 }
 
                 this.$emit('buy');
-                this.setConfirming(false);
+                this.setConfirmingBuy(false);
             },
 
             cancel() {
@@ -86,22 +87,25 @@
                 this.setConfirmingCancel(false);
             },
 
-            setConfirming(confirming = true) {
+            setConfirmingBuy(confirming = true) {
                 // Cancel any pending confirming timers
-                if(this.confirmingTimer != null)
-                    clearTimeout(this.confirmingTimer);
+                if(this.confirmingBuyTimer != null)
+                    clearTimeout(this.confirmingBuyTimer);
 
                 // Set confirming state, add reset timer
-                this.confirming = !!confirming;
-                if(this.confirming)
-                    this.confirmingTimer = setTimeout(() => {
-                        this.confirming = false;
-                        this.confirmingTimer = null;
+                this.confirmingBuy = !!confirming;
+                if(this.confirmingBuy)
+                    this.confirmingBuyTimer = setTimeout(() => {
+                        this.confirmingBuy = false;
+                        this.confirmingBuyTimer = null;
                     }, 4000);
 
                 // Unset confirming cancel
                 if(!!confirming)
                     this.setConfirmingCancel(false);
+
+                // Update global confirming
+                this.$emit('confirming', this.confirmingBuy || this.confirmingCancel);
             },
 
             setConfirmingCancel(confirming = true) {
@@ -119,7 +123,10 @@
 
                 // Unset confirming buy
                 if(!!confirming)
-                    this.setConfirming(false);
+                    this.setConfirmingBuy(false);
+
+                // Update global confirming
+                this.$emit('confirming', this.confirmingBuy || this.confirmingCancel);
             },
         }
     }

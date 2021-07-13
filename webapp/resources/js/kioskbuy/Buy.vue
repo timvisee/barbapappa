@@ -6,6 +6,8 @@
             {{ __('misc.refreshing') }}...
         </div>
 
+        <div v-if="confirming || buying" class="ui active dimmer"></div>
+
         <div v-if="!refreshing">
             <div v-if="successMessage" class="ui success floating message notification">
                 <span class="halflings halflings-ok-sign icon"></span>
@@ -37,6 +39,7 @@
             <Cart v-if="cart.length > 0"
                     v-on:buy="buy"
                     v-on:cancel="cancel"
+                    v-on:confirming="setConfirming"
                     :selectedUsers="selectedUsers"
                     :cart="cart"
                     :buying="buying" />
@@ -74,6 +77,7 @@
             return {
                 selectedUsers: [],
                 cart: [],
+                confirming: false,
                 buying: false,
                 refreshing: false,
                 successMessage: undefined,
@@ -147,6 +151,11 @@
                 this.cart.splice(0);
 
                 // TODO: optionally reload list of users/products
+            },
+
+            // Confirming state.
+            setConfirming(confirming) {
+                this.confirming = !!confirming;
             },
 
             // Invoked on any user activity. Manages inactivity timers.
