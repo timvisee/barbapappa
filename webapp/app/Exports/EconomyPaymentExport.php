@@ -3,14 +3,17 @@
 namespace App\Exports;
 
 use App\Models\Economy;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class EconomyPaymentExport extends BarAppExport implements FromCollection, WithColumnFormatting, WithMapping {
+class EconomyPaymentExport extends BarAppExport implements FromQuery, WithColumnFormatting, WithMapping {
+
+    use Exportable;
 
     private $economy_id;
     private $from_date;
@@ -29,7 +32,7 @@ class EconomyPaymentExport extends BarAppExport implements FromCollection, WithC
         $this->to_date = $to_date;
     }
 
-    public function collection() {
+    public function query() {
         $economy = Economy::findOrFail($this->economy_id);
 
         // Build payments query
@@ -41,8 +44,7 @@ class EconomyPaymentExport extends BarAppExport implements FromCollection, WithC
         if(!empty($this->to_date))
             $query = $query->where('payment.created_at', '<=', $this->to_date);
 
-        // Get collection
-        return $query->get();
+        return $query;
     }
 
     public function headerNames(): array {

@@ -3,14 +3,17 @@
 namespace App\Exports;
 
 use App\Models\Bar;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class BarPurchaseHistoryExport extends BarAppExport implements FromCollection, WithColumnFormatting, WithMapping {
+class BarPurchaseHistoryExport extends BarAppExport implements FromQuery, WithColumnFormatting, WithMapping {
+
+    use Exportable;
 
     private $bar_id;
     private $from_date;
@@ -29,7 +32,7 @@ class BarPurchaseHistoryExport extends BarAppExport implements FromCollection, W
         $this->to_date = $to_date;
     }
 
-    public function collection() {
+    public function query() {
         $bar = Bar::findOrFail($this->bar_id);
 
         // Build payments query
@@ -41,8 +44,7 @@ class BarPurchaseHistoryExport extends BarAppExport implements FromCollection, W
         if(!empty($this->to_date))
             $query = $query->where('mutation_product.created_at', '<=', $this->to_date);
 
-        // Get collection
-        return $query->get();
+        return $query;
     }
 
     public function headerNames(): array {
