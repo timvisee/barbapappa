@@ -96,9 +96,9 @@
                 this.confirmingBuy = !!confirming;
                 if(this.confirmingBuy)
                     this.confirmingBuyTimer = setTimeout(() => {
-                        this.confirmingBuy = false;
+                        this.setConfirmingBuy(false);
                         this.confirmingBuyTimer = null;
-                    }, 4000);
+                    }, 5000);
 
                 // Unset confirming cancel
                 if(!!confirming)
@@ -117,9 +117,9 @@
                 this.confirmingCancel = !!confirming;
                 if(this.confirmingCancel)
                     this.confirmingCancelTimer = setTimeout(() => {
-                        this.confirmingCancel = false;
+                        this.setConfirmingCancel(false);
                         this.confirmingCancelTimer = null;
-                    }, 4000);
+                    }, 5000);
 
                 // Unset confirming buy
                 if(!!confirming)
