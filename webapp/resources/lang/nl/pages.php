@@ -192,7 +192,7 @@ return [
      * Community membership page.
      */
     'communityMember' => [
-        'title' => 'Lidmaadschap',
+        'title' => 'Lidmaatschap',
     ],
 
     /**
@@ -915,8 +915,8 @@ return [
      * Bar membership page.
      */
     'barMember' => [
-        'title' => 'Lidmaadschap',
-        'memberSettings' => 'Lidmaadschap instellingen',
+        'title' => 'Lidmaatschap',
+        'memberSettings' => 'Lidmaatschap instellingen',
         'showInBuy' => 'Zichtbaar in koopscherm',
         'showInKiosk' => 'Zichtbaar in kiosk',
         'updated' => 'Je instellingen zijn opgeslagen.',
