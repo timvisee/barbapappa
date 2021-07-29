@@ -1290,16 +1290,19 @@ class BarController extends Controller {
         if(!($member instanceof EconomyMember))
             $member = $economy->members()->user($member)->first();
 
-        // Get the user wallets, sort by preferred
-        $wallets = $member->wallets;
-        $currencies = $wallets
-            ->map(function($w) use($economy) {
-                return $economy->currencies()->find($w->currency_id);
-            })
-            ->filter(function($c) {
-                return $c != null && $c->enabled;
-            })
-            ->unique('id');
+        // Get the user wallets if user is member, sort by preferred
+        if($member != null) {
+            $wallets = $member->wallets;
+            $currencies = $wallets
+                ->map(function($w) use($economy) {
+                    return $economy->currencies()->find($w->currency_id);
+                })
+                ->filter(function($c) {
+                    return $c != null && $c->enabled;
+                })
+                ->unique('id');
+        } else
+            $currencies = collect();
 
         // Add other available currencies to list user has no wallet for yet
         // TODO: somehow sort this by relevance, or let bar owners sort
