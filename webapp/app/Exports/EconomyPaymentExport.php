@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Economy;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
@@ -28,8 +29,8 @@ class EconomyPaymentExport extends BarAppExport implements FromQuery, WithColumn
         parent::__construct($headers);
 
         $this->economy_id = $economy_id;
-        $this->from_date = $from_date;
-        $this->to_date = $to_date;
+        $this->from_date = new Carbon($from_date);
+        $this->to_date = new Carbon($to_date);
     }
 
     public function query() {
@@ -40,9 +41,9 @@ class EconomyPaymentExport extends BarAppExport implements FromQuery, WithColumn
 
         // Filter to date range
         if(!empty($this->from_date))
-            $query = $query->where('payment.created_at', '>=', $this->from_date);
+            $query = $query->where('payment.created_at', '>=', $this->from_date->copy()->startOfDay());
         if(!empty($this->to_date))
-            $query = $query->where('payment.created_at', '<=', $this->to_date);
+            $query = $query->where('payment.created_at', '<', $this->to_date->copy()->startOfDay()->addDay());
 
         return $query;
     }

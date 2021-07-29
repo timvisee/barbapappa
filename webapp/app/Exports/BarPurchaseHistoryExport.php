@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Bar;
+use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
@@ -28,8 +29,8 @@ class BarPurchaseHistoryExport extends BarAppExport implements FromQuery, WithCo
         parent::__construct($headers);
 
         $this->bar_id = $bar_id;
-        $this->from_date = $from_date;
-        $this->to_date = $to_date;
+        $this->from_date = new Carbon($from_date);
+        $this->to_date = new Carbon($to_date);
     }
 
     public function query() {
@@ -40,9 +41,9 @@ class BarPurchaseHistoryExport extends BarAppExport implements FromQuery, WithCo
 
         // Filter to date range
         if(!empty($this->from_date))
-            $query = $query->where('mutation_product.created_at', '>=', $this->from_date);
+            $query = $query->where('mutation_product.created_at', '>=', $this->from_date->copy()->startOfDay());
         if(!empty($this->to_date))
-            $query = $query->where('mutation_product.created_at', '<=', $this->to_date);
+            $query = $query->where('mutation_product.created_at', '<', $this->to_date->copy()->startOfDay()->addDay());
 
         return $query;
     }
