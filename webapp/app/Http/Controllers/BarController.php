@@ -608,6 +608,10 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
 
+        // Show info page if user does not have user role
+        if(!perms(Self::permsUser()) || !$bar->isJoined($user))
+            return $this->info($barId);
+
         // Show the bar page
         return view('bar.buy')
             ->with('economy', $bar->economy)
