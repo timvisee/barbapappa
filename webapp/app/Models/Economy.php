@@ -605,7 +605,7 @@ class Economy extends Model {
      *
      * @return object A list of products matching the query.
      */
-    public function searchProducts($search = null, $currency_ids) {
+    public function searchProducts($search = null, $currency_ids = null) {
         // Get a relation to the products we should search
         $products = $this
             ->products()
