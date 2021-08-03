@@ -582,7 +582,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         });
 
         // Bar products
-        Route::prefix('/products')->group(function() {
+        Route::prefix('/products')->middleware(BarController::permsUser()->middleware())->group(function() {
             Route::get('/', 'BarProductController@index')->name('bar.product.index');
             Route::get('/{productId}', 'BarProductController@show')->name('bar.product.show');
         });
