@@ -14,11 +14,13 @@
     <i class="glyphicons glyphicons-beer"></i>
     @lang('misc.bar')
 </a>
-<a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
-        class="item {{ str_starts_with($r, 'bar.product.') ? ' active' : '' }}">
-    <i class="glyphicons glyphicons-shopping-bag"></i>
-    @lang('pages.products.title')
-</a>
+@if(perms(BarController::permsUser()))
+    <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
+            class="item {{ str_starts_with($r, 'bar.product.') ? ' active' : '' }}">
+        <i class="glyphicons glyphicons-shopping-bag"></i>
+        @lang('pages.products.title')
+    </a>
+@endif
 @if($barJoined)
     <a href="{{ route('community.wallet.list', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id]) }}"
             class="item {{ $r == 'community.wallet.list' ? ' active' : '' }}">
