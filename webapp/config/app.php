@@ -56,6 +56,42 @@ return [
 
     'debug' => env('APP_DEBUG', false),
 
+    // Do not leak sensitive details through debug output
+    'debug_blacklist' => [
+        '_ENV' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'AWS_APP_SECRET',
+            'OPENEXCHANGERATES_API_KEY',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+            'S3_BUCKET_SECRET',
+            'SENTRY_LARAVEL_DSN',
+            'SOCKET_APP_SECRET',
+            'TWILIO_APP_SECRET',
+        ],
+        '_SERVER' => [
+            'APP_KEY',
+            'DB_PASSWORD',
+            'REDIS_PASSWORD',
+            'MAIL_PASSWORD',
+            'AWS_APP_SECRET',
+            'OPENEXCHANGERATES_API_KEY',
+            'PUSHER_APP_KEY',
+            'PUSHER_APP_SECRET',
+            'S3_BUCKET_SECRET',
+            'SENTRY_LARAVEL_DSN',
+            'SOCKET_APP_SECRET',
+            'TWILIO_APP_SECRET',
+        ],
+        '_POST' => [
+            'password',
+            'password_confirmation',
+        ],
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
