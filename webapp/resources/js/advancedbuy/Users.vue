@@ -108,7 +108,12 @@
                 // Fetch the list of users, set searching state
                 this.searching = true;
                 axios.get(this.apiUrl + `/members?q=${encodeURIComponent(query)}&product_ids=${encodeURIComponent(products)}`)
-                    .then(res => this.users = res.data)
+                    .then(res => {
+                        this.users = res.data;
+
+                        // Emit queryResults event when results are received
+                        this.$emit('queryResults', res.data);
+                    })
                     .catch(err => {
                         alert('An error occurred while listing users');
                         console.error(err);

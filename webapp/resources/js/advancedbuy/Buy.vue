@@ -1,7 +1,7 @@
 <!-- Advanced buy page component -->
 
 <template>
-    <div>
+    <div id="advancedbuy">
         <div v-if="successMessage" class="ui success message">
             <span class="halflings halflings-ok-sign icon"></span>
             {{ successMessage }}
@@ -21,6 +21,7 @@
 
         <Products :apiUrl="apiUrl" :selected="selected" />
         <Users v-if="selected.length > 0" 
+                v-on:queryResults="deferredDontShrink"
                 :apiUrl="apiUrl"
                 :selected="selected"
                 :cart="cart"
@@ -52,6 +53,11 @@
                 buying: false,
                 successMessage: undefined,
             };
+        },
+        watch: {
+            selected: function() {
+                this.dontShrink();
+            },
         },
         props: [
             'apiUrl',
@@ -103,6 +109,21 @@
                 event.returnValue = msg;
                 return msg;
             },
+
+            // Defer call to prevent widget shrinking to next event cycle.
+            // Deferred to the page layout has time to adjust, after which the
+            // don't shrink logic is called.
+            deferredDontShrink() {
+                setTimeout(this.dontShrink);
+            },
+
+            // Prevent buy widget from shrinking at the current state.
+            dontShrink() {
+                let widget = $('#advancedbuy');
+                let height = widget.height();
+                if(height != undefined)
+                    widget.css('minHeight', height + 'px');
+            }
         },
     }
 </script>
