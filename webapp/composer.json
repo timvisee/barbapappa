@@ -53,7 +53,7 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=7.4",
         "barryvdh/laravel-debugbar": "^3.2.3",
         "barryvdh/laravel-dompdf": "^0.8.4",
         "bunq/sdk_php": "^1.14.18",
