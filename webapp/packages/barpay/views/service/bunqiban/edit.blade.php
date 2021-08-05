@@ -1,5 +1,5 @@
 @php
-    $bunqAccount = $serviceable->bunqAccount;
+    $bunqAccount = $serviceable->bunqAccount()->withoutGlobalScopes()->first();
 @endphp
 <div class="field disabled {{ ErrorRenderer::hasError('bunq_account') ? 'error' : '' }}">
     {{ Form::label('bunq_account', __('pages.bunqAccounts.bunqAccount') . ':') }}

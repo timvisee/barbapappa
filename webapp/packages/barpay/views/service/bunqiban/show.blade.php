@@ -4,8 +4,11 @@
         <tr>
             <td>@lang('pages.bunqAccounts.bunqAccount')</td>
             <td>
-                @if($serviceable->bunqAccount != null)
-                    {{ $serviceable->bunqAccount->name }}
+                @php
+                    $bunqAccount = $serviceable->bunqAccount()->withoutGlobalScopes()->first();
+                @endphp
+                @if($bunqAccount != null)
+                    {{ $bunqAccount->name }}
                 @else
                     <i>@lang('misc.unknown')</i>
                 @endif
