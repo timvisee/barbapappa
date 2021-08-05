@@ -365,7 +365,7 @@ return [
         'supportDeposit' => 'Support deposits',
         'supportDepositDescription' => 'Enable deposits. Allow mateies to deposit money to their wallets in this booty.',
         'supportWithdraw' => 'Support withdrawals',
-        'supportWithdrawDescription' => 'Enable withdrawals. Allow mateies to withdraw money from their wallets in this booty.',
+        'supportWithdrawDescription' => 'Enable withdrawals. Allow mateies to withdraw money from their wallets in this booty. (Currently nay supported)',
         'backToServices' => 'Back to payment services',
         'viewService' => 'View service',
         'unknownService' => 'Unknown payment service',

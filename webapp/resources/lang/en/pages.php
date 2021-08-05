@@ -365,7 +365,7 @@ return [
         'supportDeposit' => 'Support deposits',
         'supportDepositDescription' => 'Enable deposits. Allow users to deposit money to their wallets in this economy.',
         'supportWithdraw' => 'Support withdrawals',
-        'supportWithdrawDescription' => 'Enabled withdrawals. Allow users to withdraw money from their wallets in this economy.',
+        'supportWithdrawDescription' => 'Enabled withdrawals. Allow users to withdraw money from their wallets in this economy. (Currenty not supported)',
         'backToServices' => 'Back to payment services',
         'viewService' => 'View service',
         'unknownService' => 'Unknown payment service',

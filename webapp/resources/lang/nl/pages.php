@@ -366,7 +366,7 @@ return [
         'supportDeposit' => 'Ondersteun storingen',
         'supportWithdraw' => 'Ondersteun opnames',
         'supportDepositDescription' => 'Ondersteun stortingen. Laat gebruikers geld storten in portemonnees binnen deze economie.',
-        'supportWithdrawDescription' => 'Ondersteun opnames. Laat gebruikers geld opnemen van portemonnees binnen deze economie.',
+        'supportWithdrawDescription' => 'Ondersteun opnames. Laat gebruikers geld opnemen van portemonnees binnen deze economie. (Op dit moment niet ondersteund)',
         'backToServices' => 'Terug naar betaalservices',
         'viewService' => 'Service bekijken',
         'unknownService' => 'Onbekende betaalservice',
