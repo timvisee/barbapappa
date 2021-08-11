@@ -612,6 +612,7 @@ return [
         'successfullyTransferredAmount' => 'Successfully transfered :amount to :wallet',
         'backToWallet' => 'Back to wallet',
         'walletTransactions' => 'Wallet transactions',
+        'noServiceConfiguredCannotTopUp' => 'You cannot top-up your wallet through :app. The bar or community administrator has not configured any payment method. Please ask at the bar for further information.',
     ],
 
     /**
