@@ -613,6 +613,7 @@ return [
         'successfullyTransferredAmount' => ':amount succesvol overgeboekt naar :wallet',
         'backToWallet' => 'Terug naar portemonnee',
         'walletTransactions' => 'Portemonnee transacties',
+        'noServiceConfiguredCannotTopUp' => 'Je kunt je portemonnee niet via :app opwaarderen. De bar of groepsadministrator heeft geen betaalmethode geconfigureerd. Vraag er naar bij de bar voor meer informatie.',
     ],
 
     /**

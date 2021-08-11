@@ -579,7 +579,15 @@ class WalletController extends Controller {
             ->supportsDeposit()
             ->get();
 
-        // TODO: return error if there are no usable services, user can't top-up
+        // There must be a usable service
+        if($services->isEmpty())
+            return redirect()
+                ->route('community.wallet.show', [
+                    'communityId' => $communityId,
+                    'economyId' => $economyId,
+                    'walletId' => $walletId,
+                ])
+                ->with('error', __('pages.wallets.noServiceConfiguredCannotTopUp', ['app' => config('app.name')]));
 
         return view('community.wallet.topUp')
             ->with('economy', $economy)
