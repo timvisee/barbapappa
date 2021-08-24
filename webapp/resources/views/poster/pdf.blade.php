@@ -48,6 +48,9 @@
         table .right {
             text-align: left;
             font-family: Courier, Helvetica, sans-serif;
+
+            /* hack to align footer text, we should find a better method */
+            padding-top: 7px;
         }
     </style>
 </head>
