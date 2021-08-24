@@ -15,7 +15,15 @@
 - [{{ $wallet['name'] }}]({{ $wallet['url'] }})  
   @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
   @lang('misc.previously'): {!! $wallet['previousBalanceHtml'] !!} ({{ $wallet['previousPeriod'] }})  
-  [@lang('misc.topUp')]({{ $wallet['topUpUrl'] }})
+@component('mail::mini_button', ['url' => $wallet['topUpUrl'], 'color' => $wallet['isNegative'] ? 'blue' : 'grey'])
+@lang('misc.topUp')
+@endcomponent
+@component('mail::mini_button', ['url' => $wallet['url'], 'color' => 'grey'])
+@lang('misc.view')
+@endcomponent
+@component('mail::mini_button', ['url' => $wallet['statsUrl'], 'color' => 'grey'])
+@lang('misc.stats')
+@endcomponent
 
 @endforeach
 @endcomponent
