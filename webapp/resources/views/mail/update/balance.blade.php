@@ -15,7 +15,7 @@
 - [{{ $wallet['name'] }}]({{ $wallet['url'] }})  
   @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
   @lang('misc.previously'): {!! $wallet['previousBalanceHtml'] !!} ({{ $wallet['previousPeriod'] }})  
-  [@lang('misc.topUp')]({{ $wallet['topUpUrl'] }})
+  [@lang('misc.topUp')]({{ $wallet['topUpUrl'] }})  
 @endforeach
 @endforeach
 @endcomponent
