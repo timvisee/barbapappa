@@ -601,6 +601,7 @@ return [
         'toUser' => 'To user',
         'topUp' => 'Top up wallet',
         'topUpNow' => 'Top up yarr!',
+        'noWalletToTopUp' => 'Ye nay have booty here to top up.',
         'modifyBalance' => 'Modify balance',
         'modifyMethod' => 'Modify method',
         'modifyMethodDeposit' => 'Deposit (add)',

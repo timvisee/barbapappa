@@ -869,7 +869,11 @@ class WalletController extends Controller {
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
-        $economy_member = $economy->members()->user($user)->firstOrFail();
+        $economy_member = $economy->members()->user($user)->first();
+        if($economy_member == null)
+            return redirect()
+                ->route('community.show', ['communityId' => $communityId])
+                ->with('info', __('pages.wallets.noWalletToTopUp'));
 
         // Get a list of preferred user currencies
         $currencies = BarController::userCurrencies($economy, $economy_member);
@@ -887,7 +891,8 @@ class WalletController extends Controller {
                 ->route('community.wallet.list', [
                     'communityId' => $communityId,
                     'economyId' => $economyId,
-                ]);
+                ])
+                ->with('info', __('pages.wallets.noWalletToTopUp'));
 
         return redirect()
             ->route('community.wallet.topUp', [
