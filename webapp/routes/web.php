@@ -529,6 +529,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         Route::get('/member', 'BarController@member')->name('bar.member');
         Route::get('/member/edit', 'BarController@editMember')->name('bar.editMember');
         Route::put('/member/edit', 'BarController@doEditMember')->name('bar.doEditMember');
+        Route::post('/member/reset', 'BarController@doResetMember')->name('bar.doResetMember');
 
         // Stats
         Route::get('/stats', 'BarController@stats')->name('bar.stats');

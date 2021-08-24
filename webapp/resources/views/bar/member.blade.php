@@ -46,15 +46,24 @@
         </tbody>
     </table>
 
-    <p>
+    <div>
         <a href="{{ route('bar.editMember', ['barId' => $bar->human_id]) }}"
                 class="ui primary button basic">
             @lang('misc.change')
         </a>
 
+        {!! Form::open(['action' => [
+            'BarController@doResetMember',
+            $bar->human_id,
+        ], 'method' => 'POST', 'class' => 'ui inline form']) !!}
+            <button type="submit" class="ui negative button basic">
+                @lang('misc.reset')
+            </button>
+        {!! Form::close() !!}
+
         <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')
         </a>
-    </p>
+    </div>
 @endsection
