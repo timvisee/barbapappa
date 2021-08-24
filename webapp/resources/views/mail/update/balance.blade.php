@@ -7,10 +7,10 @@
 <br>
 
 @foreach($data as $community)
-@component('mail::block')
-<b>{{ $community['name'] }}</b>  
 @foreach($community['economies'] as $economy)
-{{ $economy['name'] }}:
+@component('mail::block')
+<b>{{ $community['name'] }}</b> ({{ $economy['name'] }}):
+
 @foreach($economy['wallets'] as $wallet)
 - [{{ $wallet['name'] }}]({{ $wallet['url'] }})  
   @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
@@ -18,8 +18,8 @@
   [@lang('misc.topUp')]({{ $wallet['topUpUrl'] }})
 
 @endforeach
-@endforeach
 @endcomponent
+@endforeach
 @endforeach
 
 @component('mail::text')
