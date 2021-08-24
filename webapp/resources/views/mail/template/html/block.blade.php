@@ -13,7 +13,8 @@
                         collapse !important; vertical-align: top; text-align:
                         left; color: #222; font-family: 'Helvetica', 'Arial',
                         sans-serif; font-weight: normal; line-height: 19px;
-                        font-size: 14px; background: #E9E9E9; margin: 0; padding: 10px 10px 0 10px;"
+                        font-size: 14px; background: #E9E9E9; border-radius: 3px;
+                        margin: 0; padding: 10px 10px 0 10px;"
                         align="left" bgcolor="#E9E9E9" valign="top">
                             {!! Illuminate\Mail\Markdown::parse(trim($slot)) !!}
                     </td>

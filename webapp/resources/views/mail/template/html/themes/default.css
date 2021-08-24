@@ -46,6 +46,22 @@ td.container-text p {
     border-left: 18px solid #3097D1;
 }
 
+.button-grey {
+    background-color: #A0A0A0;
+    border-top: 10px solid #A0A0A0;
+    border-right: 18px solid #A0A0A0;
+    border-bottom: 10px solid #A0A0A0;
+    border-left: 18px solid #A0A0A0;
+}
+
+.button-darkgrey {
+    background-color: #767676;
+    border-top: 10px solid #767676;
+    border-right: 18px solid #767676;
+    border-bottom: 10px solid #767676;
+    border-left: 18px solid #767676;
+}
+
 .button-green {
     background-color: #2ab27b;
     border-top: 10px solid #2ab27b;
@@ -62,6 +78,19 @@ td.container-text p {
     border-left: 18px solid #bf5329;
 }
 
+.button.mini {
+    margin: 0.3em 0.3em 0 0;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.16);
+    border-top-width: 6px;
+    border-right-width: 8px;
+    border-bottom-width: 4px;
+    border-left-width: 8px;
+}
+
 table.details td {
     padding-right: 10px;
+}
+
+ul {
+    padding-left: 1.25em;
 }

@@ -7,18 +7,27 @@
 <br>
 
 @foreach($data as $community)
-@component('mail::block')
-<b>{{ $community['name'] }}</b>  
 @foreach($community['economies'] as $economy)
-{{ $economy['name'] }}:
+@component('mail::block')
+<b>{{ $community['name'] }}</b> ({{ $economy['name'] }}):
+
 @foreach($economy['wallets'] as $wallet)
 - [{{ $wallet['name'] }}]({{ $wallet['url'] }})  
   @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
   @lang('misc.previously'): {!! $wallet['previousBalanceHtml'] !!} ({{ $wallet['previousPeriod'] }})  
-  [@lang('misc.topUp')]({{ $wallet['topUpUrl'] }})  
-@endforeach
+@component('mail::mini_button', ['url' => $wallet['topUpUrl'], 'color' => $wallet['isNegative'] ? 'blue' : 'grey'])
+@lang('misc.topUp')
+@endcomponent
+@component('mail::mini_button', ['url' => $wallet['url'], 'color' => 'grey'])
+@lang('misc.view')
+@endcomponent
+@component('mail::mini_button', ['url' => $wallet['statsUrl'], 'color' => 'grey'])
+@lang('misc.stats')
+@endcomponent
+
 @endforeach
 @endcomponent
+@endforeach
 @endforeach
 
 @component('mail::text')
