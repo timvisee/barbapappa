@@ -602,6 +602,7 @@ return [
         'toUser' => 'Naar gebruiker',
         'topUp' => 'Portemonnee opwaarderen',
         'topUpNow' => 'Nu betalen',
+        'noWalletToTopUp' => 'Je hebt hier geen portemonnee om op te waarderen.',
         'modifyBalance' => 'Saldo aanpassen',
         'modifyMethod' => 'Aanpassing methode',
         'modifyMethodDeposit' => 'Storten (optellen)',
