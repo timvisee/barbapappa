@@ -237,6 +237,31 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar membership reset page.
+     *
+     * @return Response
+     */
+    public function doResetMember(Request $request, $barId) {
+        // Get the bar
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+        $bar_member = $bar->members()->user($user)->first();
+        $economy = $bar->economy;
+        $economy_member = $economy->members()->user($user)->first();
+
+        // Reset properties to default
+        $economy_member->nickname = null;
+        $economy_member->show_in_buy = true;
+        $economy_member->show_in_kiosk = true;
+        $economy_member->save();
+
+        // Redirect the user to member page
+        return redirect()
+            ->route('bar.member', ['barId' => $bar->human_id])
+            ->with('success', __('pages.barMember.updated'));
+    }
+
+    /**
      * Bar stats page.
      *
      * @return Response
