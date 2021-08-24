@@ -91,7 +91,7 @@ class SendBalanceUpdate implements ShouldQueue {
                             ->where('economy_member_id', $member->id)
                             ->map(function($wallet) use($community, $economy) {
                                 // Select a previous time, find it's balance
-                                $previous = now()->subMonth();
+                                $previous = now()->subMonth()->max($wallet->created_at);
                                 $previousBalance = $wallet->traceBalance($previous);
 
                                 // Build the wallet data table
