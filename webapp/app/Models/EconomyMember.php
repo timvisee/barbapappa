@@ -437,4 +437,16 @@ class EconomyMember extends Pivot {
 
         return $members[0];
     }
+
+    /**
+     * Reset properties a user might configure, such as their display name.
+     *
+     * Note: this resets the properties in this model, saving it to the database
+     * is still required.
+     */
+    public function resetUserProperties() {
+        $this->nickname = null;
+        $this->show_in_buy = true;
+        $this->show_in_kiosk = true;
+    }
 }

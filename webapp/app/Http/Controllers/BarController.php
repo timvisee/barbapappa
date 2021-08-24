@@ -250,9 +250,7 @@ class BarController extends Controller {
         $economy_member = $economy->members()->user($user)->first();
 
         // Reset properties to default
-        $economy_member->nickname = null;
-        $economy_member->show_in_buy = true;
-        $economy_member->show_in_kiosk = true;
+        $economy_member->resetUserProperties();
         $economy_member->save();
 
         // Redirect the user to member page
