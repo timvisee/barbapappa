@@ -3,11 +3,6 @@
         $r = Route::currentRouteName() ?? 'error';
 @endphp
 
-<a href="{{ route('dashboard') }}"
-        class="item {{ $r == 'dashboard' ? ' active' : '' }}">
-    <i class="glyphicons glyphicons-home"></i>
-    @lang('pages.dashboard.title')
-</a>
 <a href="{{ route('explore.community') }}" class="item {{ str_starts_with($r, 'explore.') ? ' active' : '' }}">
     <i class="glyphicons glyphicons-search"></i>
     @lang('pages.explore.title')

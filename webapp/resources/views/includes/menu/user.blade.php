@@ -1,3 +1,8 @@
+@php
+    if(!isset($r))
+        $r = Route::currentRouteName() ?? 'error';
+@endphp
+
 {{-- Authenticated header --}}
 <div class="item header has-alt-button">
     {{ trans_random('general.hellos') }}
@@ -9,6 +14,13 @@
         <i class="glyphicons glyphicons-exit"></i>
     </a>
 </div>
+
+{{-- Dashboard link --}}
+<a href="{{ route('dashboard') }}"
+        class="item {{ $r == 'dashboard' ? ' active' : '' }}">
+    <i class="glyphicons glyphicons-home"></i>
+    @lang('pages.dashboard.title')
+</a>
 
 @if(isset($menusection))
     @include('includes.menu.section.' . $menusection)
