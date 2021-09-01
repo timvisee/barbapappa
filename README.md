@@ -56,6 +56,17 @@ Or run the command directly: `php ./artisan queue:restart`
 This destroy the worker process.
 It should automatically restart again if the _Supervisor_ is configured correctly.
 
+### Administrator user
+To manage the Barbapappa instance, you must create an administrator user. Invoke
+the following console command with your credentials to create a new user:
+
+```bash
+php ./artisan user:add example@example.com John Doe --password --administrator
+```
+
+After creation you may login at `/login`. The management pages can be reached at
+`/manage`.
+
 ## Development
 First make sure the project is successfully installed and configured.
 See the section above.
