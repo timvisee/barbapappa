@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.111 (2021-09-01)
+
+- Add app management button to sidebar for app administrators
+- Add `user:add` console command to add new (admin) users from the console
+- Add changelog
+- Move dashboard link to top of sidebar
+
 ## 0.1.110 (2021-08-24)
 
 - Add reset button to bar user membership page
