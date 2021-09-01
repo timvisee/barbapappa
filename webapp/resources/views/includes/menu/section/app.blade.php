@@ -1,4 +1,6 @@
 @php
+    use \App\Http\Controllers\AppController;
+
     if(!isset($r))
         $r = Route::currentRouteName() ?? 'error';
 @endphp
@@ -15,3 +17,10 @@
     <i class="glyphicons glyphicons-small-payments"></i>
     @lang('pages.payments.title')
 </a>
+@if(perms(AppController::permsAdminister()))
+    <a href="{{ route('app.manage') }}"
+            class="item">
+        <i class="glyphicons glyphicons-new-window"></i>
+        @lang('misc.manage')
+    </a>
+@endif
