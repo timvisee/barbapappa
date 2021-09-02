@@ -848,6 +848,7 @@ return [
         'deleteQuestion' => 'Yer \'bout to permanently sink dis bar. All mateies including yerself will lose access to it, and it nay be possible to link loot transactions to it anymore. Th\' loot and matey wallets will remain as part of th\' booty that be used in dis bar. Ye be sure ye want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to sink (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+        'kioskManagement' => 'Kiosk management',
         'startKiosk' => 'Start kiosk',
         'startKioskDescription' => 'Here you can start kiosk mode. When you start kiosk mode, ye will be logged out here from your personal account, and a central terminal interface will be started for this bar which everybody can use to purchase loot. This mode will be active until you manually turn it off by logging out once more on this device.',
         'startKioskConfirm' => 'Confirm to enter kiosk mode',

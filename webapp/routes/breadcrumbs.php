@@ -306,8 +306,13 @@ Breadcrumbs::for('bar.member.show', function(BreadcrumbTrail $trail, $member) {
     $trail->push($member->name, route('bar.member.show', ['barId' => $member->bar_id, 'memberId' => $member->id]));
 });
 
-Breadcrumbs::for('bar.kiosk.sessions.index', function(BreadcrumbTrail $trail, $bar) {
+Breadcrumbs::for('bar.manage.kiosk', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
+    $trail->push(__('pages.bar.kioskManagement'), route('bar.manageKiosk', ['barId' => $bar->human_id]));
+});
+
+Breadcrumbs::for('bar.kiosk.sessions.index', function(BreadcrumbTrail $trail, $bar) {
+    $trail->parent('bar.manage.kiosk', $bar);
     $trail->push(__('pages.bar.kioskSessions'), route('bar.kiosk.sessions.index', ['barId' => $bar->human_id]));
 });
 

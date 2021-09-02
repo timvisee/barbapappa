@@ -550,6 +550,8 @@ Route::prefix('/b')->middleware('auth')->group(function() {
 
             // Kiosk pages
             Route::prefix("/kiosk")->group(function() {
+                Route::get('/', 'BarController@manageKiosk')->middleware(BarController::permsManage()->middleware())->name('bar.manageKiosk');
+
                 // Start kiosk
                 Route::get('/start', 'BarController@startKiosk')->name('bar.kiosk.start');
                 Route::post('/start', 'BarController@doStartKiosk')->name('bar.kiosk.doStart');

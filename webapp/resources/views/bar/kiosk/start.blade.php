@@ -33,7 +33,7 @@
         <div class="ui divider hidden"></div>
 
         <button class="ui button primary" type="submit">@lang('misc.start')</button>
-        <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
+        <a href="{{ route('bar.manageKiosk', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')
         </a>

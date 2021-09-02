@@ -124,18 +124,11 @@
             <div class="item disabled">@lang('pages.bar.links.title')</div>
         @endif
         @if(perms(BarController::permsManage()))
-            <a href="{{ route('bar.kiosk.start', ['barId' => $bar->human_id]) }}" class="item">
-                @lang('pages.bar.startKiosk')
+            <a href="{{ route('bar.manageKiosk', ['barId' => $bar->human_id]) }}" class="item">
+                @lang('misc.kiosk')
             </a>
         @else
-            <div class="item disabled">@lang('pages.bar.startKiosk')</div>
-        @endif
-        @if(perms(BarController::permsManage()))
-            <a href="{{ route('bar.kiosk.sessions.index', ['barId' => $bar->human_id]) }}" class="item">
-                @lang('pages.bar.kioskSessions')
-            </a>
-        @else
-            <div class="item disabled">@lang('pages.bar.kioskSessions')</div>
+            <div class="item disabled">@lang('misc.kiosk')</div>
         @endif
         @if(perms(BarController::permsManage()))
             <a href="{{ route('bar.poster.generate', ['barId' => $bar->human_id]) }}" class="item">

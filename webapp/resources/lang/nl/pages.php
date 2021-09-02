@@ -850,6 +850,7 @@ return [
         'deleteQuestion' => 'Je staat op het punt deze bar permanent te verwijderen. Alle leden waaronder jezelf zullen toegang tot de bar verliezen, en product transacties zullen niet meer gelinkt kunnen worden aan deze bar. De producten en portemonnees van leden blijven bestaan als onderdeel van de economie die gebruikt werd binnen deze bar. Weet je zeker dat je door wilt gaan?',
         'exactBarNameVerify' => 'Exacte naam van bar om te verwijderen (Verificatie)',
         'incorrectNameShouldBe' => 'Incorrecte naam, zou moeten zijn: \':name\'',
+        'kioskManagement' => 'Kiosk management',
         'startKiosk' => 'Start kiosk',
         'startKioskDescription' => 'Hier kun je kiosk-modus starten. Als je kiosk-modus start, wordt je hier uitgelog van je persoonlijke account, en wordt een centrale terminal interface gestart waarmee iedereen producten kan kopen. Deze modus blijft actief totdat je het handmatig uitzet door normaals uit te loggen op dit apparaat.',
         'startKioskConfirm' => 'Bevestig om kiosk-modus te starten',

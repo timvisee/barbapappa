@@ -848,6 +848,7 @@ return [
         'deleteQuestion' => 'You\'re about to permanently delete this bar. All members including yourself will lose access to it, and won\'t be possible to link product transactions to it anymore. The products and user wallets will remain as part of the economy that was used in this bar. Are you sure you want to continue?',
         'exactBarNameVerify' => 'Exact name of bar to delete (Verification)',
         'incorrectNameShouldBe' => 'Incorrect name, should be: \':name\'',
+        'kioskManagement' => 'Kiosk management',
         'startKiosk' => 'Start kiosk',
         'startKioskDescription' => 'Here you can start kiosk mode. When you start kiosk mode, you will be logged out here from your personal account, and a central terminal interface will be started for this bar which everybody can use to purchase products. This mode will be active until you manually turn it off by logging out once more on this device.',
         'startKioskConfirm' => 'Confirm to enter kiosk mode',

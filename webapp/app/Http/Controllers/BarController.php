@@ -406,6 +406,19 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar kiosk management page.
+     *
+     * @return Response
+     */
+    public function manageKiosk($barId) {
+        // Get the bar
+        $bar = \Request::get('bar');
+
+        // Show the bar kiosk management page
+        return view('bar.manageKiosk');
+    }
+
+    /**
      * Bar edit page.
      *
      * @return Response
