@@ -13,17 +13,6 @@
     <h2 class="ui header">@yield('title')</h2>
 
     <div class="ui vertical menu fluid">
-        <h5 class="ui item header">@lang('misc.assets')</h5>
-        @if(perms(AppBunqAccountController::permsView()))
-            <a href="{{ route('app.bunqAccount.index') }}" class="item">
-                @lang('pages.bunqAccounts.title')
-            </a>
-        @else
-            <div class="item disabled">@lang('pages.economies.title')</div>
-        @endif
-    </div>
-
-    <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('pages.communities') ({{ $communities->count() }})</h5>
         @foreach($communities as $community)
             <a href="{{ route('community.manage', ['communityId' => $community->human_id]) }}" class="item">
@@ -36,6 +25,17 @@
             </a>
         @else
             <div class="ui bottom attached button disabled">@lang('pages.community.createCommunity')</div>
+        @endif
+    </div>
+
+    <div class="ui vertical menu fluid">
+        <h5 class="ui item header">@lang('misc.assets')</h5>
+        @if(perms(AppBunqAccountController::permsView()))
+            <a href="{{ route('app.bunqAccount.index') }}" class="item">
+                @lang('pages.bunqAccounts.title')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.economies.title')</div>
         @endif
     </div>
 
