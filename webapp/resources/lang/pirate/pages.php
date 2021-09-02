@@ -1076,10 +1076,10 @@ return [
         'title' => 'Contact',
         'contactUs' => 'Contact us',
         'description' => 'Use th\' following coordinates to contact Arrbapappa:',
-        'issuesDescription' => 'Dis ship is open-source, and its schematics are therefore openly available.<br>Before reporting bugs, please check the \'Issue list\' to see if it has been registered already.<br>If it isn\'t yet, ye may create a fresh issue on the issues overview page. Alternatively, ye can send an e-bottle message describing the issue to the \'Report issue e-bottle\' coordinate below, which will immediately add th\' issue to th\' list as well without having to create an account.',
+        'issuesDescription' => 'Dis ship is open-source, and its schematics be openly available. Ye may view the schematics and issue list at th\' links below.',
         'issueList' => 'Issue list',
-        'newIssueMail' => 'Report issue e-bottle',
-        'thisAppIsOpenSource' => 'Dis ship be free to loot',
+        'newIssueMail' => 'Report issue',
+        'thisAppIsOpenSource' => 'Dis ship has open schematics',
     ],
 
     /**

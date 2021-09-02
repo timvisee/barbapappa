@@ -1076,9 +1076,9 @@ return [
         'title' => 'Contact',
         'contactUs' => 'Contact us',
         'description' => 'Use the following details to contact Barbapappa:',
-        'issuesDescription' => 'This application is open-source, and its development process is therefore open. Before reporting bugs, please check the \'Issue list\' to see if it has been registered already.<br><br>If it isn\'t yet, you can create a new issue on the issues overview page. Alternatively, you can send an email describing the issue to the \'Report issue email\' address below, which will immediately add the issue to the list as well without having to create an account.',
+        'issuesDescription' => 'This application is open-source, and its development process is open. You can view the source code and issue list at the links below.',
         'issueList' => 'Issue list',
-        'newIssueMail' => 'Report issue email',
+        'newIssueMail' => 'Report issue',
         'thisAppIsOpenSource' => 'This application is Open Source',
     ],
 

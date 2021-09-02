@@ -23,28 +23,20 @@
 
     <div class="ui divider hidden"></div>
 
-    <div class="ui fluid accordion">
-        <div class="title">
-            <i class="dropdown icon"></i>
-            @lang('pages.contact.thisAppIsOpenSource')
-        </div>
-        <div class="content">
-            <p>@lang('pages.contact.issuesDescription')</p>
+    <p>@lang('pages.contact.issuesDescription')</p>
 
-            <div class="ui bulleted list">
-                <span class="item">
-                    @lang('misc.sourceCode'):
-                    <a href="https://gitlab.com/timvisee/barbapappa/">https://gitlab.com/timvisee/barbapappa/</a>
-                </span>
-                <span class="item">
-                    @lang('pages.contact.issueList'):
-                    <a href="https://gitlab.com/timvisee/barbapappa/issues/">https://gitlab.com/timvisee/barbapappa/issues/</a>
-                </span>
-                <span class="item">
-                    @lang('pages.contact.newIssueMail'):
-                    <a href="mailto:incoming+timvisee-barbapappa-4423731-issue-@incoming.gitlab.com">incoming+timvisee-barbapappa-4423731-issue-@incoming.gitlab.com</a>
-                </span>
-            </div>
-        </div>
+    <div class="ui bulleted list">
+        <span class="item">
+            @lang('misc.sourceCode'):
+            <a href="https://gitlab.com/timvisee/barbapappa/">https://gitlab.com/timvisee/barbapappa/</a>
+        </span>
+        <span class="item">
+            @lang('pages.contact.issueList'):
+            <a href="https://gitlab.com/timvisee/barbapappa/issues/">https://gitlab.com/timvisee/barbapappa/issues/</a>
+        </span>
+        <span class="item">
+            @lang('pages.contact.newIssueMail'):
+            <a href="mailto:incoming+timvisee-barbapappa-4423731-issue-@incoming.gitlab.com">incoming+timvisee-barbapappa-4423731-issue-@incoming.gitlab.com</a>
+        </span>
     </div>
 @endsection
