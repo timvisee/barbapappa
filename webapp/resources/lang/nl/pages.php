@@ -857,7 +857,7 @@ return [
         'kioskSessions' => 'Kiosk sessies',
         'kioskSessionsDescription' => 'Deze pagina toont de actieve en beëindigde kiosksessies voor deze bar. Klik op een actieve sessies om details te zien of om de sessie te beëindigen. Beëindigde sessies worden na enige tijd automatisch vergeten.',
         'expireAllKioskSessionsQuestion' => 'Weet je zeker dat je alle sessies voor deze kiosk wilt beëindigen? Dit zal alle kiosks voor deze bar uitloggen.',
-        'generatePoster' => 'Creëer bar poster',
+        'generatePoster' => 'Bar poster',
         'generatePosterDescription' => 'Creëer een poster voor deze bar om aan de muur te hangen. Bezoekers kunnen dan gemakklijk gebruik kunnen maken van :app en kunnen lid worden van deze bar door een QR code te scannen met hun mobiele telefoon.',
         'showCodeOnPoster' => 'Toon code om lid te worden op de poster',
         'lowBalanceText' => 'Negatief saldo tekst',

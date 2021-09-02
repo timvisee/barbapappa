@@ -855,7 +855,7 @@ return [
         'kioskSessions' => 'Kiosk sessions',
         'kioskSessionsDescription' => 'Dis page shows th\' active and sunk kiosk sessions for this bar. Click on an active session to see details or to sink it. Sunk sessions are automatically forgotten after a while.',
         'expireAllKioskSessionsQuestion' => 'Ye be sure ye want to sink all kiosk sessions? Dis will log out all kiosks for dis bar.',
-        'generatePoster' => 'Create bar placard',
+        'generatePoster' => 'Bar placard',
         'generatePosterDescription' => 'Create a placard for dis bar to hang on a wall. Fellow mateies will then be able to easily use :app and join dis bar by scanning a Q-ARRRR code with their handheld phoning device.',
         'showCodeOnPoster' => 'Show code to join dis bar on th\' placard',
         'lowBalanceText' => 'Negative balance text',
