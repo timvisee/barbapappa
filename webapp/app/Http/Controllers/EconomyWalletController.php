@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
 use App\Models\Transaction;
 use App\Models\Mutation;
 use App\Models\MutationMagic;
@@ -19,7 +19,7 @@ class EconomyWalletController extends Controller {
      */
     public function overview($communityId, $economyId) {
         // Get the user, community, find the products
-        $community = Request::get('community');
+        $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
         // TODO: show user wallet count
@@ -35,7 +35,7 @@ class EconomyWalletController extends Controller {
      */
     public function zeroWallets($communityId, $economyId) {
         // Get the user, community, find the products
-        $community = Request::get('community');
+        $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
         // Redirect back and show warning if there are no wallets to zero
@@ -54,16 +54,21 @@ class EconomyWalletController extends Controller {
      *
      * @return Response
      */
-    public function doZeroWallets($communityId, $economyId) {
+    public function doZeroWallets(Request $request, $communityId, $economyId) {
         // Get the user, community, find the products
         $user = barauth()->getUser();
-        $community = Request::get('community');
+        $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
-        // TODO: add message here
+        // Validate
+        $this->validate($request, [
+            'description' => 'nullable|string',
+            'confirm' => 'accepted',
+        ]);
+        $description = $request->input('description');
 
         // Zero all user wallets in transaction
-        DB::transaction(function() use($user, $economy) {
+        DB::transaction(function() use($user, $economy, $description) {
             foreach($economy->wallets as $wallet) {
                 // Skip if wallet is zero already
                 if($wallet->getMoneyAmount()->isZero())
@@ -82,7 +87,7 @@ class EconomyWalletController extends Controller {
                 // Create the transaction
                 $transaction = Transaction::create([
                     'state' => Transaction::STATE_SUCCESS,
-                    'description' => null,
+                    'description' => $description,
                     'owner_id' => $wallet_user_id,
                     'initiated_by_id' => $user->id,
                     'initiated_by_other' => true,
@@ -102,7 +107,7 @@ class EconomyWalletController extends Controller {
                     ]);
                 $mut_magic->setMutationable(
                     MutationMagic::create([
-                        'description' => null,
+                        'description' => $description,
                     ])
                 );
 
@@ -146,7 +151,7 @@ class EconomyWalletController extends Controller {
      */
     public function deleteWallets($communityId, $economyId) {
         // Get the user, community, find the products
-        $community = Request::get('community');
+        $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
         // Redirect back and show warning if there are no wallets to delete
@@ -176,11 +181,16 @@ class EconomyWalletController extends Controller {
      *
      * @return Response
      */
-    public function doDeleteWallets($communityId, $economyId) {
+    public function doDeleteWallets(Request $request, $communityId, $economyId) {
         // Get the user, community, find the products
         $user = barauth()->getUser();
-        $community = Request::get('community');
+        $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+
+        // Validate
+        $this->validate($request, [
+            'confirm' => 'accepted',
+        ]);
 
         // There cannot be a wallet with non-zero balance
         $nonZeroWallet = $economy

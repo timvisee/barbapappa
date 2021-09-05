@@ -241,10 +241,12 @@ return [
         'walletOperations' => 'Booty operations',
         'zeroAllWallets' => 'Zero all booty',
         'zeroAllWalletsQuestion' => 'Ye about to set the balance of all booties in dis economy back to zero. Make sure to export all desired wallet data before doing dis. Ye be sure to continue?',
+        'zeroAllWalletsDescription' => 'Balance reset by administrator',
         'walletsZeroed' => 'All booty be zeroed.',
         'deleteAllWallets' => 'Delete all booty',
         'deleteAllWalletsQuestion' => 'Ye about to permanently destroy all booties in dis economy. Make sure to export all desired wallet data before doing dis. Ye be sure to continue?',
         'cannotDeleteWalletsNonZero' => 'Nay delete all booty because some have a non-zero balance. Ye must zero all wallet balances first.',
+        'confirmDeleteAllWallets' => 'Confirm to permanently delete all member wallets',
         'walletsDeleted' => 'All wallets have been deleted.',
     ],
 
