@@ -238,6 +238,17 @@ return [
         'backToEconomy' => 'Terug naar economie',
         'backToEconomies' => 'Terug naar economieën',
         'inEconomy' => 'in economie',
+        'noWalletsInEconomy' => 'Er zijn geen portemonnees in deze economie.',
+        'walletOperations' => 'Portemonnee operaties',
+        'zeroAllWallets' => 'Alle portemonnees naar nul',
+        'zeroAllWalletsQuestion' => 'Je staat op het punt om het saldo in de portemonnees van alle gebruikers in deze economie naar nul te resetten. Zorg ervoor dat je alle gewenste data exporteert voordat je deze actie doorvoert. Weet je zeker dat je door wilt gaan?',
+        'zeroAllWalletsDescription' => 'Saldo reset door administrator',
+        'walletsZeroed' => 'Alle portemonnees zijn naar nul gereset',
+        'deleteAllWallets' => 'Verwijder alle portemonnees',
+        'deleteAllWalletsQuestion' => 'Je staat op het punt om de portemonnees van alle leden in deze economie permament te verwijderen. Zorg ervoor dat je alle gewenste data exporteert voordat je deze actie doorvoert. Weet je zeker dat je door wilt gaan?',
+        'cannotDeleteWalletsNonZero' => 'Kan alle portemonnees niet verwijderen omdat sommige leden een saldo hebben dat niet nul is. Je moet alle portemonnees eerst naar nul resetten.',
+        'confirmDeleteAllWallets' => 'Bevestig om alle portemonnees van leden permanent te verwijderen',
+        'walletsDeleted' => 'Alle portemonnees zijn verwijderd.',
     ],
 
     /**

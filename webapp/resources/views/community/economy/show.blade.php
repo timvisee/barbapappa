@@ -63,6 +63,13 @@
                 class="item">
             @lang('pages.finance.title')
         </a>
+        <a href="{{ route('community.economy.wallets.overview', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                ]) }}"
+                class="item">
+            @lang('pages.economies.walletOperations')
+        </a>
     </div>
 
     @if(perms(CurrencyController::permsView()))

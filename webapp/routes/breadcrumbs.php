@@ -182,6 +182,11 @@ Breadcrumbs::for('community.economy.currency.show', function(BreadcrumbTrail $tr
     ]));
 });
 
+Breadcrumbs::for('community.economy.wallets.overview', function(BreadcrumbTrail $trail, $economy) {
+    $trail->parent('community.economy.show', $economy);
+    $trail->push(__('pages.economies.walletOperations'), route('community.economy.wallets.overview', ['communityId' => $economy->community_id, 'economyId' => $economy->id]));
+});
+
 Breadcrumbs::for('community.economy.finance.overview', function(BreadcrumbTrail $trail, $economy) {
     $trail->parent('community.economy.show', $economy);
     $trail->push(__('pages.finance.title'), route('community.economy.finance.overview', ['communityId' => $economy->community_id, 'economyId' => $economy->id]));
