@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.112 (2021-09-05)
+
+- Add economy wallet operations page to zero/delete all member wallets
+- Put bar kiosk buttons onto separate page
+- Change order of buttons on app management page
+- Simplify contact page
+- Various locale improvements
+
 ## 0.1.111 (2021-09-01)
 
 - Add app management button to sidebar for app administrators
