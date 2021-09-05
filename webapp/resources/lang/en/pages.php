@@ -237,6 +237,15 @@ return [
         'backToEconomy' => 'Back to economy',
         'backToEconomies' => 'Back to economies',
         'inEconomy' => 'in economy',
+        'noWalletsInEconomy' => 'There are no wallets in this economy.',
+        'walletOperations' => 'Wallet operations',
+        'zeroAllWallets' => 'Zero all wallets',
+        'zeroAllWalletsQuestion' => 'You are about to set the balance of all member wallets in this economy back to zero. Make sure to export all desired wallet data before doing this. Are you sure you want to continue?',
+        'walletsZeroed' => 'All member wallets have been zeroed.',
+        'deleteAllWallets' => 'Delete all wallets',
+        'deleteAllWalletsQuestion' => 'You are about to permanently delete all member wallets in this economy. Make sure to export all desired wallet data before doing this. Are you sure you want to continue?',
+        'cannotDeleteWalletsNonZero' => 'Cannot delete all wallets because some memer wallets have a non-zero balance. You must zero all wallet balances first.',
+        'walletsDeleted' => 'All member wallets have been deleted.',
     ],
 
     /**

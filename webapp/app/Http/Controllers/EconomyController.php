@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Models\Wallet;
 use App\Perms\Builder\Config as PermsConfig;
-use BarPay\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 

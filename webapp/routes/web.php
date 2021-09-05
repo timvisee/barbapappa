@@ -422,6 +422,18 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     });
                 });
 
+                // Wallet management pages
+                Route::prefix('/wallets')->middleware(FinanceController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'EconomyWalletController@overview')->name('community.economy.wallets.overview');
+
+                    // Wallet operations
+                    Route::get('/zero-wallets', 'EconomyWalletController@zeroWallets')->name('community.economy.wallets.zeroWallets');
+                    Route::post('/zero-wallets', 'EconomyWalletController@doZeroWallets')->name('community.economy.wallets.doZeroWallets');
+                    Route::get('/delete-wallets', 'EconomyWalletController@deleteWallets')->name('community.economy.wallets.deleteWallets');
+                    Route::post('/delete-wallets', 'EconomyWalletController@doDeleteWallets')->name('community.economy.wallets.doDeleteWallets');
+                });
+
                 // Financial reports
                 Route::prefix('/finance')->middleware(FinanceController::permsView()->middleware())->group(function() {
                     // Index
