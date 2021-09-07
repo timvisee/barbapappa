@@ -5,8 +5,9 @@
     $breadcrumbs = Breadcrumbs::generate('community.economy.show', $economy);
     $menusection = 'community_manage';
 
-    use App\Http\Controllers\EconomyController;
     use App\Http\Controllers\CurrencyController;
+    use App\Http\Controllers\EconomyController;
+    use App\Http\Controllers\EconomyWalletController;
 @endphp
 
 @section('content')
@@ -63,13 +64,17 @@
                 class="item">
             @lang('pages.finance.title')
         </a>
-        <a href="{{ route('community.economy.wallets.overview', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                ]) }}"
-                class="item">
-            @lang('pages.economies.walletOperations')
-        </a>
+        @if(perms(EconomyWalletController::permsManage()))
+            <a href="{{ route('community.economy.wallets.overview', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $economy->id,
+                    ]) }}"
+                    class="item">
+                @lang('pages.economies.walletOperations')
+            </a>
+        @else
+            <div class="item disabled">@lang('pages.economies.walletOperations')</div>
+        @endif
     </div>
 
     @if(perms(CurrencyController::permsView()))

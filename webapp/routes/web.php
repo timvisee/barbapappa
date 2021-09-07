@@ -9,8 +9,9 @@ use App\Http\Controllers\BarController;
 use App\Http\Controllers\BarMemberController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\CommunityMemberController;
-use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\CurrencyController;
+use App\Http\Controllers\EconomyController;
+use App\Http\Controllers\EconomyWalletController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
@@ -423,7 +424,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 });
 
                 // Wallet management pages
-                Route::prefix('/wallets')->middleware(FinanceController::permsView()->middleware())->group(function() {
+                Route::prefix('/wallets')->middleware(EconomyWalletController::permsManage()->middleware())->group(function() {
                     // Index
                     Route::get('/', 'EconomyWalletController@overview')->name('community.economy.wallets.overview');
 

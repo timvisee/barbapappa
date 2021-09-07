@@ -215,10 +215,10 @@ class EconomyWalletController extends Controller {
     }
 
     /**
-     * The permission required for viewing.
+     * The permission required for managing.
      * @return PermsConfig The permission configuration.
      */
-    public static function permsView() {
-        return EconomyController::permsView();
+    public static function permsManage() {
+        return EconomyController::permsManage();
     }
 }
