@@ -558,6 +558,69 @@ class WalletController extends Controller {
     }
 
     /**
+     * Build set of top-up amounts to show to the user.
+     *
+     * @return collection A collection of amounts.
+     */
+    private function walletTopUpAmounts(Wallet $wallet, MoneyAmount $monthly_costs) {
+        $default_amounts = collect([5, 10, 20, 50, 100]);
+        $amounts = collect();
+
+        // Amount to zero balance
+        if($wallet->balance < 0)
+            $amounts->push([
+                    'amount' => -$wallet->balance,
+                    'sum' => 0,
+                ]);
+
+        // Add advance amounts based on monthly estimate
+        if(!$monthly_costs->isZero()) {
+            if($wallet->balance < $monthly_costs->amount)
+                $amounts->push([
+                        'amount' => $monthly_costs->amount - $wallet->balance,
+                        'sum' => $monthly_costs->amount,
+                        'note' => __('pages.paymentService.noteTimeAdvance', ['time' => '1m']),
+                        'selected' => true,
+                    ]);
+            if($wallet->balance < $monthly_costs->amount * 3)
+                $amounts->push([
+                        'amount' => $monthly_costs->amount * 3 - $wallet->balance,
+                        'sum' => $monthly_costs->amount * 3,
+                        'note' => __('pages.paymentService.noteTimeAdvance', ['time' => '3m']),
+                    ]);
+        }
+
+        // Add default amounts (sum >= 0), limit to 6 amounts max
+        $amounts = $amounts->concat($default_amounts
+            ->filter(function($amount) use($wallet) {
+                return $amount + $wallet->balance >= 0;
+            })
+            ->take(6 - $amounts->count())
+            ->map(function($amount) use($wallet) {
+                return [
+                    'amount' => $amount,
+                    'sum' => $amount + $wallet->balance,
+                ];
+            }));
+
+        // Sort amounts
+        $amounts = $amounts->unique('amount')->sortBy('amount');
+
+        // Select first item, if none was selected
+        $has_selected = $amounts->contains(function($amount) {
+                return isset($amount['selected']) && $amount['selected'];
+            });
+        if(!$has_selected)
+            $amounts->transform(function($item, $key) {
+                if($key == 0)
+                    $item['selected'] = true;
+                return $item;
+            });
+
+        return $amounts;
+    }
+
+    /**
      * Show the wallet top-up page.
      *
      * @return Response
@@ -579,6 +642,10 @@ class WalletController extends Controller {
             ->supportsDeposit()
             ->get();
 
+        // Predict monthly costs, build set of top-up amounts
+        $monthly_costs = $wallet->predictMonthlyCosts();
+        $amounts = $this->walletTopUpAmounts($wallet, $monthly_costs);
+
         // There must be a usable service
         if($services->isEmpty())
             return redirect()
@@ -593,7 +660,9 @@ class WalletController extends Controller {
             ->with('economy', $economy)
             ->with('wallet', $wallet)
             ->with('currency', $wallet->currency)
-            ->with('services', $services);
+            ->with('amounts', $amounts)
+            ->with('services', $services)
+            ->with('montly_costs', $monthly_costs);
     }
 
     /**

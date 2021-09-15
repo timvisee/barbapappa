@@ -387,6 +387,8 @@ return [
         'startedWillComplete' => 'Er zullen geen nieuwe betalingen geaccepteerd worden met deze service. Betaling die al geïnitieerd zijn zullen echter wel nog worden afgemaakt.',
         'amountInCurrency' => 'Bedrag in :currency',
         'amountToTopUpInCurrency' => 'Bedrag om mee op te waarderen in :currency',
+        'youSpendAboutEachMonth' => 'Je besteedt :amount per maand.',
+        'noteTimeAdvance' => ':time voorschot',
         'pay' => 'Betaal',
         'otherPay' => 'Ander bedrag, betaal',
         'selectPaymentServiceToUse' => 'Betaalmethode',

@@ -39,23 +39,14 @@
             </div>
         </div>
 
-        <div class="ui hidden divider"></div>
-
-        @php
-            // Build list of amounts to top-up with
-            $cur = $wallet->balance;
-            $default_amounts = [5, 10, 20, 50, 100];
-            $amounts = [];
-
-            foreach($default_amounts as $add)
-                if($cur + $add >= 0)
-                    $amounts[] = $add;
-
-            if(($to_zero = -$wallet->balance) > 0)
-                array_unshift($amounts, $to_zero);
-
-            array_unique($amounts);
-        @endphp
+        {{-- Show spending estimate --}}
+        @if(!$montly_costs->isZero())
+            <p class="align-center">
+                <em>@lang('pages.paymentService.youSpendAboutEachMonth', ['amount' => $montly_costs->formatAmount()])</em>
+            </p>
+        @else
+            <div class="ui hidden divider"></div>
+        @endif
 
         {{-- Amount selection --}}
         <div class="ui vertical menu fluid field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
@@ -66,18 +57,24 @@
             @foreach($amounts as $amount)
                 <div class="item inline {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
                     <div class="ui radio checkbox">
-                        {{ Form::radio('amount', $amount, ($wallet->balance + $amount) == 0, ['class' => 'hidden', 'tabindex' => 0]) }}
+                        {{ Form::radio('amount', $amount['amount'], $amount['selected'] ?? false, ['class' => 'hidden', 'tabindex' => 0]) }}
                         <label for="amount">
                             @lang('pages.paymentService.pay')
-                            {!! $currency->format($amount, BALANCE_FORMAT_COLOR) !!}
+                            {!! $currency->format($amount['amount'], BALANCE_FORMAT_COLOR) !!}
                         </label>
 
                     </div>
 
                     <span class="ui label">
                         @lang('misc.to')
-                        {!! $currency->format($wallet->balance + $amount) !!}
+                        {!! $currency->format($amount['sum']) !!}
                     </span>
+
+                    @if(isset($amount['note']))
+                        <span class="ui teal label">
+                            {{ $amount['note'] }}
+                        </span>
+                    @endif
                 </div>
             @endforeach
 
