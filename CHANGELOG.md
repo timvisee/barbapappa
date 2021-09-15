@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.113 (2021-09-15)
+
+- Predict monthly user wallet cost, suggest 1 and 3 month advance deposits
+- Do not color previous balance in balance update mail
+- Add additional confirmation fields to dangerous economy wallet operations
+- Enforce community administrator role for dangerous economy wallet operations
+
 ## 0.1.112 (2021-09-05)
 
 - Add economy wallet operations page to zero/delete all member wallets
