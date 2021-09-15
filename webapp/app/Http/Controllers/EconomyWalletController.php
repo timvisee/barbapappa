@@ -190,6 +190,7 @@ class EconomyWalletController extends Controller {
 
         // Validate
         $this->validate($request, [
+            'confirm_text' => 'required|string|in:' . __('pages.economies.deleteAllWalletsConfirmText'),
             'confirm' => 'accepted',
         ]);
 

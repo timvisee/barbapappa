@@ -246,6 +246,7 @@ return [
         'walletsZeroed' => 'All member wallets have been zeroed.',
         'deleteAllWallets' => 'Delete all wallets',
         'deleteAllWalletsQuestion' => 'You are about to permanently delete all member wallets in this economy. Make sure to export all desired wallet data before doing this. Are you sure you want to continue?',
+        'deleteAllWalletsConfirmText' => 'delete all user wallets',
         'cannotDeleteWalletsNonZero' => 'Cannot delete all wallets because some memer wallets have a non-zero balance. You must zero all wallet balances first.',
         'confirmDeleteAllWallets' => 'Confirm to permanently delete all member wallets',
         'walletsDeleted' => 'All member wallets have been deleted.',

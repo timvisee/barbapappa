@@ -19,11 +19,23 @@
             @lang('misc.cannotBeUndone')
         </div>
 
+        {{-- Confirmation field --}}
+        <div class="ui attached segment">
+            <div class="required field {{ ErrorRenderer::hasError('confirm_text') ? 'error' : '' }}">
+                {{ Form::label('confirm_text', __('misc.typeToVerify', ['text' => __('pages.economies.deleteAllWalletsConfirmText')]) . ':') }}
+                {{ Form::text('confirm_text', '', ['placeholder' => __('pages.economies.deleteAllWalletsConfirmText')]) }}
+                {{ ErrorRenderer::inline('confirm_text') }}
+                <br />
+                {{ ErrorRenderer::inline('confirm_text') }}
+            </div>
+        </div>
+
+        {{-- Confirmation checkbox --}}
         <div class="ui bottom attached segment">
             <div class="required field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
                 <div class="ui checkbox">
                     {{ Form::checkbox('confirm', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
-                    {{ Form::label('confirm', __('pages.economies.confirmDeleteAllWallets')) }}
+                    {{ Form::label('confirm', __('misc.iUnderstandContinue')) }}
                 </div>
                 <br />
                 {{ ErrorRenderer::inline('confirm') }}
