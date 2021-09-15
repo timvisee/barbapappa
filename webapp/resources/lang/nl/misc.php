@@ -37,6 +37,7 @@ return [
     'waitingFor' => 'Aan het wachten voor',
     'permanentlyDelete' => 'Permanent verwijderen',
     'iUnderstandDelete' => 'Ik begrijp de consequenties, doorgaan met verwijderen',
+    'iUnderstandContinue' => 'Ik begrijp de consequenties, doorgaan',
     'trash' => 'Weggooien',
     'trashed' => 'Weggegooid',
     'remove' => 'Verwijderen',
@@ -172,6 +173,7 @@ return [
     'toDate' => 'Tot datum',
     'inclusive' => 'Inclusief',
     'format' => 'Formaat',
+    'typeToVerify' => 'Vul \':text\' in ter verificatie',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',
