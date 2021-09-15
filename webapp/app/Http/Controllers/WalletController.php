@@ -579,6 +579,9 @@ class WalletController extends Controller {
             ->supportsDeposit()
             ->get();
 
+        // Predict monthly costs
+        $monthly_costs = $wallet->predictMonthlyCosts();
+
         // There must be a usable service
         if($services->isEmpty())
             return redirect()
@@ -593,7 +596,8 @@ class WalletController extends Controller {
             ->with('economy', $economy)
             ->with('wallet', $wallet)
             ->with('currency', $wallet->currency)
-            ->with('services', $services);
+            ->with('services', $services)
+            ->with('montly_costs', $monthly_costs);
     }
 
     /**

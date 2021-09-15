@@ -39,7 +39,15 @@
             </div>
         </div>
 
-        <div class="ui hidden divider"></div>
+
+        {{-- Show spending estimate --}}
+        @if(!$montly_costs->isZero())
+            <p class="align-center">
+                <em>@lang('pages.paymentService.youSpendAboutEachMonth', ['amount' => $montly_costs->formatAmount()])</em>
+            </p>
+        @else
+            <div class="ui hidden divider"></div>
+        @endif
 
         @php
             // Build list of amounts to top-up with

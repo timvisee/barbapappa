@@ -386,6 +386,7 @@ return [
         'startedWillComplete' => 'Nay fresh payments be accepted using dis service. However, payments that have already been initiated still be completed.',
         'amountInCurrency' => 'Amount in :currency',
         'amountToTopUpInCurrency' => 'Amount to top up wit\' in :currency',
+        'youSpendAboutEachMonth' => 'Ye spend about :amount each month.',
         'pay' => 'Pay',
         'otherPay' => 'Other amount, pay',
         'selectPaymentServiceToUse' => 'Payment method',

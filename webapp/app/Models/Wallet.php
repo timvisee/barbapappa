@@ -349,6 +349,37 @@ class Wallet extends Model {
     }
 
     /**
+     * Make a prediction of average monthly costs for the user.
+     *
+     * This internally goes through all product mutations in the past three months.
+     *
+     * This is a costly operation, especially when crossing longer periods. Use
+     * this with care.
+     *
+     * The cost is returned as positive value.
+     *
+     * @return number The balance at the given time.
+     */
+    public function predictMonthlyCosts() {
+        // Get sum of product mutation costs in the past three motn
+        $amount = $this
+            ->mutations()
+            ->type(MutationProduct::class, false)
+            ->where('mutation.created_at', '>=', now()->subMonths(3))
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
+            ->where('mutation.amount', '<', 0)
+            ->sum('mutation.amount');
+        $amount = -floatval($amount);
+
+        // Construct money amount with approximate monthly costs
+        $money_amount = $this->getMoneyAmount();
+        $money_amount->amount = round($amount / 3.0, 2);
+        $money_amount->approximate = true;
+
+        return $money_amount;
+    }
+
+    /**
      * Check whether the currently authenticated user has permission to view this
      * wallet.
      *
