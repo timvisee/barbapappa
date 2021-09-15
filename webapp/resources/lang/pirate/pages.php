@@ -242,6 +242,7 @@ return [
         'zeroAllWallets' => 'Zero all booty',
         'zeroAllWalletsQuestion' => 'Ye about to set the balance of all booties in dis economy back to zero. Make sure to export all desired wallet data before doing dis. Ye be sure to continue?',
         'zeroAllWalletsDescription' => 'Balance reset by administrator',
+        'zeroAllWalletsConfirmText' => 'zero all user wallets',
         'walletsZeroed' => 'All booty be zeroed.',
         'deleteAllWallets' => 'Delete all booty',
         'deleteAllWalletsQuestion' => 'Ye about to permanently destroy all booties in dis economy. Make sure to export all desired wallet data before doing dis. Ye be sure to continue?',

@@ -37,6 +37,7 @@ return [
     'waitingFor' => 'Waiting for',
     'permanentlyDelete' => 'Permanently abandon',
     'iUnderstandDelete' => 'I understand th\' consequences, continue to sink',
+    'iUnderstandContinue' => 'I understand th\' consequences, continue',
     'trash' => 'Trash',
     'trashed' => 'Trashed',
     'remove' => 'Abandon',
@@ -171,6 +172,7 @@ return [
     'toDate' => 'To date',
     'inclusive' => 'Inclusive',
     'format' => 'Format',
+    'typeToVerify' => 'Enter \':text\' to verify',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

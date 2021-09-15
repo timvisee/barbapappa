@@ -63,6 +63,7 @@ class EconomyWalletController extends Controller {
         // Validate
         $this->validate($request, [
             'description' => 'nullable|string',
+            'confirm_text' => 'required|string|in:' . __('pages.economies.zeroAllWalletsConfirmText'),
             'confirm' => 'accepted',
         ]);
         $description = $request->input('description');

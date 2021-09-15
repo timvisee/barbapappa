@@ -243,6 +243,7 @@ return [
         'zeroAllWallets' => 'Alle portemonnees naar nul',
         'zeroAllWalletsQuestion' => 'Je staat op het punt om het saldo in de portemonnees van alle gebruikers in deze economie naar nul te resetten. Zorg ervoor dat je alle gewenste data exporteert voordat je deze actie doorvoert. Weet je zeker dat je door wilt gaan?',
         'zeroAllWalletsDescription' => 'Saldo reset door administrator',
+        'zeroAllWalletsConfirmText' => 'reset saldo van alle gebruikers',
         'walletsZeroed' => 'Alle portemonnees zijn naar nul gereset',
         'deleteAllWallets' => 'Verwijder alle portemonnees',
         'deleteAllWalletsQuestion' => 'Je staat op het punt om de portemonnees van alle leden in deze economie permament te verwijderen. Zorg ervoor dat je alle gewenste data exporteert voordat je deze actie doorvoert. Weet je zeker dat je door wilt gaan?',
