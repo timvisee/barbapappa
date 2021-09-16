@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.114 (2021-09-16)
+
+- Track users creating/modifying products, show in product details
+- Add 'no connection' banner to kiosk mode
+- Tweak top-up advance amount label text
+
 ## 0.1.113 (2021-09-15)
 
 - Predict monthly user wallet cost, suggest 1 and 3 month advance deposits
