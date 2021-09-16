@@ -78,6 +78,7 @@ return [
     'firstSeen' => 'Eerst gezien',
     'lastChanged' => 'Laatst aangepast',
     'lastUpdated' => 'Laatst bijgewerkt',
+    'lastUpdatedBy' => 'Laatst bijgewerkt door',
     'active' => 'Actief',
     'available' => 'Beschikbaar',
     'slug' => 'URL-pad',

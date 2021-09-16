@@ -88,6 +88,22 @@
                 </tr>
             @endif
             <tr>
+                <td>@lang('misc.createdBy')</td>
+                @if($product->created_user)
+                    <td>{{ $product->created_user->name }}</td>
+                @else
+                    <td><i>@lang('misc.unknownUser')</i></td>
+                @endif
+            </tr>
+            <tr>
+                <td>@lang('misc.lastUpdatedBy')</td>
+                @if($product->updated_user)
+                    <td>{{ $product->updated_user->name }}</td>
+                @else
+                    <td><i>@lang('misc.unknownUser')</i></td>
+                @endif
+            </tr>
+            <tr>
                 <td>@lang('misc.createdAt')</td>
                 <td>@include('includes.humanTimeDiff', ['time' => $product->created_at])</td>
             </tr>
