@@ -606,13 +606,13 @@ class WalletController extends Controller {
         // Sort amounts
         $amounts = $amounts->unique('amount')->sortBy('amount');
 
-        // Select first item, if none was selected
-        $has_selected = $amounts->contains(function($amount) {
+        // If none selected, select first if it brings balance back to 0
+        $any_selected = $amounts->contains(function($amount) {
                 return isset($amount['selected']) && $amount['selected'];
             });
-        if(!$has_selected)
+        if(!$any_selected)
             $amounts->transform(function($item, $key) {
-                if($key == 0)
+                if($key == 0 && $item['sum'] == 0)
                     $item['selected'] = true;
                 return $item;
             });
