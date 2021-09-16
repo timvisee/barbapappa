@@ -2,6 +2,11 @@
 
 <template>
     <div>
+        <div v-if="!stateOnline" class="banner">
+            <span class="halflings halflings-exclamation-sign icon"></span>
+            {{ __('pages.kiosk.noConnectionBanner') }}
+        </div>
+
         <div v-if="refreshing" class="ui active centered indeterminate large text loader">
             {{ __('misc.refreshing') }}...
         </div>
@@ -15,6 +20,7 @@
             <div class="ui text huge">{{ __('misc.cancelled') }}!</div>
         </div>
 
+        <!-- Main UI -->
         <div v-if="!refreshing">
             <div v-if="successMessage" class="ui success floating message notification">
                 <span class="halflings halflings-ok-sign icon"></span>
@@ -96,6 +102,7 @@
                 orderCancelTimer: null,
                 // Timer handle after which to force reload the interface
                 inactiveRefreshTimer: null,
+                stateOnline: true,
             };
         },
         props: [
@@ -120,6 +127,10 @@
         created() {
             // Initial heartbeat
             this.heartbeat();
+
+            // Listen to network events
+            window.addEventListener("online", (e) => this.stateOnline = true);
+            window.addEventListener("offline", (e) => this.stateOnline = false);
 
             // Prevent accidental closing
             window.addEventListener('beforeunload', this.onClose);
@@ -247,6 +258,13 @@
             margin-top: 14px;
         }
 
+        .banner {
+            margin-top: -1rem;
+            margin-left: -1rem;
+            margin-right: -1rem;
+            border-radius: 0 !important;
+        }
+
         .column.inline {
             padding: 0 !important;
             padding-left: 0 !important;
@@ -260,6 +278,18 @@
             border-radius: 0;
             box-shadow: none !important;
         }
+    }
+
+    .banner {
+        background: #db2828;
+        color: #fff;
+        margin-bottom: 1rem;
+        padding: 1em;
+        border-radius: .28571429rem;
+    }
+
+    .banner .icon {
+        margin-right: .35em;
     }
 
     .notification {

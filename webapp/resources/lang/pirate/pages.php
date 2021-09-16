@@ -955,7 +955,20 @@ return [
         'buyProductsUsers#' => '{0} Get no loot for :users pirates|[1,*] Get :count× for :users pirates',
         'deselect' => 'Deselect',
         'backToKiosk' => 'Back to kiosk',
+        'noConnectionBanner' => 'Connection errrror. Please ensure dis device be connected before looting. Pull the page down to refresh.',
     ],
+
+    /**
+     * Kiosk join pages.
+     */
+    'kioskJoin' => [
+        'title' => 'Add pirate / join',
+        'joinBar' => 'Join :bar',
+        'description' => 'Fresh pirates can add themselves to dis bar by registering an account.',
+        'scanQr' => 'Scan th\' Q-ARRRR code below with yer phone to start:',
+        'orUrl' => 'Or visit th\' following link in yer browser:',
+    ],
+
 
     /**
      * Community/bar statistics pages.
@@ -1040,17 +1053,6 @@ return [
         'expired' => 'Th\' token be sunken. Request a shiny password reset token.',
         'used' => 'Yer passcode be already changed using dis token.',
         'changed' => 'Y\'all fresh! Yer password be changed.',
-    ],
-
-    /**
-     * Kiosk join pages.
-     */
-    'kioskJoin' => [
-        'title' => 'Add pirate / join',
-        'joinBar' => 'Join :bar',
-        'description' => 'Fresh pirates can add themselves to dis bar by registering an account.',
-        'scanQr' => 'Scan th\' Q-ARRRR code below with yer phone to start:',
-        'orUrl' => 'Or visit th\' following link in yer browser:',
     ],
 
     /**
