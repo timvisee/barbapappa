@@ -17,7 +17,7 @@ return [
     'manualiban' => [
         'name' => 'Bankoverschrijving (IBAN)',
         'nameAdmin' => 'Bankoverschrijving (IBAN) (handmatige check)',
-        'duration' => 'duurt tot 1 maand',
+        'duration' => 'tot 1 maand',
     ],
 
     /**

@@ -17,7 +17,7 @@ return [
     'manualiban' => [
         'name' => 'Bank transfer (IBAN)',
         'nameAdmin' => 'Bank transfer (IBAN) (manual check)',
-        'duration' => 'takes up to 1 month',
+        'duration' => 'up to 1 month',
     ],
 
     /**
