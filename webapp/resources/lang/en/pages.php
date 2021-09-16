@@ -955,7 +955,7 @@ return [
         'buyProductsUsers#' => '{0} Buy no products for :users users|[1,*] Buy :count× for :users users',
         'deselect' => 'Deselect',
         'backToKiosk' => 'Back to kiosk',
-        'noConnectionBanner' => 'Connection error. Please ensure this device has an active internet connection before making any purchases. Then pull down to refresh.',
+        'noConnectionBanner' => 'No connection. Please ensure this device has an active internet connection before making any purchases. Pull the page down to refresh.',
     ],
 
     /**

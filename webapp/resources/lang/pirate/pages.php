@@ -955,7 +955,7 @@ return [
         'buyProductsUsers#' => '{0} Get no loot for :users pirates|[1,*] Get :count× for :users pirates',
         'deselect' => 'Deselect',
         'backToKiosk' => 'Back to kiosk',
-        'noConnectionBanner' => 'Connection errrror. Please ensure dis device be connected before looting. Then pull down to refresh.',
+        'noConnectionBanner' => 'Connection errrror. Please ensure dis device be connected before looting. Pull the page down to refresh.',
     ],
 
     /**

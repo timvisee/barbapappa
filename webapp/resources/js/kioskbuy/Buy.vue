@@ -2,7 +2,7 @@
 
 <template>
     <div>
-        <div v-if="stateConnectionError" class="banner">
+        <div v-if="!stateOnline" class="banner">
             <span class="halflings halflings-exclamation-sign icon"></span>
             {{ __('pages.kiosk.noConnectionBanner') }}
         </div>
@@ -102,7 +102,7 @@
                 orderCancelTimer: null,
                 // Timer handle after which to force reload the interface
                 inactiveRefreshTimer: null,
-                stateConnectionError: false,
+                stateOnline: true,
             };
         },
         props: [
@@ -127,6 +127,10 @@
         created() {
             // Initial heartbeat
             this.heartbeat();
+
+            // Listen to network events
+            window.addEventListener("online", (e) => this.stateOnline = true);
+            window.addEventListener("offline", (e) => this.stateOnline = false);
 
             // Prevent accidental closing
             window.addEventListener('beforeunload', this.onClose);
@@ -279,7 +283,6 @@
     .banner {
         background: #db2828;
         color: #fff;
-        font-weight: bold;
         margin-bottom: 1rem;
         padding: 1em;
         border-radius: .28571429rem;
