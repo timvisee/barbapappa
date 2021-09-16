@@ -62,6 +62,7 @@ class ProductController extends Controller {
      */
     public function doCreate(Request $request, $communityId, $economyId) {
         // Get the community, find the products
+        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $locales = collect(langManager()->getLocales(true, true));
@@ -83,7 +84,7 @@ class ProductController extends Controller {
 
         // Create product and set prices in transaction
         $product = null;
-        DB::transaction(function() use($request, $economy, $locales, &$product) {
+        DB::transaction(function() use($request, $user, $economy, $locales, &$product) {
             // Create the product
             $product = $economy->products()->create([
                 'economy_id' => $economy->id,
@@ -91,6 +92,8 @@ class ProductController extends Controller {
                 'name' => $request->input('name'),
                 'tags' => $request->input('tags'),
                 'enabled' => is_checked($request->input('enabled')),
+                'created_user_id' => $user->id,
+                'updated_user_id' => $user->id,
             ]);
 
             // Create the localized product names
@@ -196,6 +199,7 @@ class ProductController extends Controller {
         // TODO: with trashed?
 
         // Get the community, find the product
+        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->findOrFail($productId);
@@ -216,11 +220,12 @@ class ProductController extends Controller {
         $this->validate($request, $rules, $messages);
 
         // Change product properties and sync prices in transaction
-        DB::transaction(function() use($request, $product, $economy, $locales) {
+        DB::transaction(function() use($request, $user, $product, $economy, $locales) {
             // Change properties
             $product->name = $request->input('name');
             $product->tags = $request->input('tags');
             $product->enabled = is_checked($request->input('enabled'));
+            $product->updated_user_id = $user->id;
             $product->save();
 
             // Sync localized product names
@@ -312,12 +317,15 @@ class ProductController extends Controller {
         // TODO: delete trashed, and allow trashing?
 
         // Get the community, find the product
+        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
 
         // Restore the product
         $product->restore();
+        $product->updated_user_id = $user->id;
+        $product->save();
 
         // Redirect to the product index
         return redirect()
@@ -355,6 +363,7 @@ class ProductController extends Controller {
      */
     public function doDelete(Request $request, $communityId, $economyId, $productId) {
         // Get the community, find the product
+        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
@@ -362,6 +371,10 @@ class ProductController extends Controller {
 
         // TODO: ensure there are no other constraints that prevent deleting the
         // product
+
+        // Set last updating user
+        $product->updated_user_id = $user->id;
+        $product->save();
 
         // Delete, or soft delete
         if(!$permanent)

@@ -78,6 +78,7 @@ return [
     'firstSeen' => 'First appearance',
     'lastChanged' => 'Last changed',
     'lastUpdated' => 'Last updated',
+    'lastUpdatedBy' => 'Last updated by',
     'active' => 'Active',
     'available' => 'Available',
     'slug' => 'Slug',
