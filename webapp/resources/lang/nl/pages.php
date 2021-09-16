@@ -957,6 +957,18 @@ return [
         'buyProductsUsers#' => '{0} Koop geen producten voor :users leden|[1,*] Koop :count× voor :users leden',
         'deselect' => 'Deselect',
         'backToKiosk' => 'Terug naar kiosk',
+        'noConnectionBanner' => 'Verbindingsfout. Zorg ervoor dat dit apparaat een actieve internetverbinding heeft voordat je aankopen doet. Sleep deze pagina daarna naar beneden om te verversen.',
+    ],
+
+    /**
+     * Kiosk join pages.
+     */
+    'kioskJoin' => [
+        'title' => 'Nieuwe gebruiker / lid worden',
+        'joinBar' => 'Lid worden van :bar',
+        'description' => 'Nieuwe gebruikers kunnen zichzelf toevoegen aan deze bar door een account te registreren.',
+        'scanQr' => 'Scan de QR-code hieronder met je telefoon om te starten:',
+        'orUrl' => 'Of ga naar de volgende link in je browser:',
     ],
 
     /**
@@ -1042,17 +1054,6 @@ return [
         'expired' => 'De token is verlopen. Vraag alsjeblieft een nieuwe wachtwoord reset aan.',
         'used' => 'Je wachtwoord is al aangepast met deze token.',
         'changed' => 'Weer zo goed als nieuw! Je wachtwoord is aangepast.',
-    ],
-
-    /**
-     * Kiosk join pages.
-     */
-    'kioskJoin' => [
-        'title' => 'Nieuwe gebruiker / lid worden',
-        'joinBar' => 'Lid worden van :bar',
-        'description' => 'Nieuwe gebruikers kunnen zichzelf toevoegen aan deze bar door een account te registreren.',
-        'scanQr' => 'Scan de QR-code hieronder met je telefoon om te starten:',
-        'orUrl' => 'Of ga naar de volgende link in je browser:',
     ],
 
     /**
