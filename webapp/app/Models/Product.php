@@ -16,8 +16,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int id
  * @property int economy_id
  * @property-read Economy economy
- * @property int|null user_id
- * @property-read User|null user
+ * @property int|null created_user_id
+ * @property int|null updated_user_id
+ * @property-read User|null created_user
+ * @property-read User|null updated_user
  * @property int type
  * @property string name
  * @property string|null tags
@@ -56,12 +58,21 @@ class Product extends Model {
     }
 
     /**
-     * Get a relation to the user that added this product.
+     * Get relation to user that created this product.
      *
-     * @return Relation to the user that added this product.
+     * @return Relation to the user that created this product.
      */
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function created_user() {
+        return $this->belongsTo(User::class, 'created_user_id');
+    }
+
+    /**
+     * Get relation to user that last updated this product.
+     *
+     * @return Relation to the user that created this product.
+     */
+    public function updated_user() {
+        return $this->belongsTo(User::class, 'updated_user_id');
     }
 
     /**
