@@ -135,6 +135,15 @@ return [
             'pleaseTopUp' => 'Please top up yer wallets with negative balance now, and always make sure ye have enough available for th\' upcoming period.',
             'noUpdateZeroBalance' => 'As soon as th\' balance of all wallets be zero, ye nay receive any further periodic updates.',
         ],
+
+        /**
+         * Balance below zero email.
+         */
+        'belowZero' => [
+            'subject' => 'Balance dropped below zero',
+            'subtitle' => 'Yer balance in one of yer wallets just dropped below zero. We\'re just notifying ye \'bout dis.',
+            'pleaseTopUp' => 'Please top up yer wallet after yer visit. Always ensure ye have a positive balance.',
+        ],
     ],
 
     /**

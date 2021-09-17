@@ -182,6 +182,7 @@ return [
     'confirmCancel' => 'Ik bevestig dat ik wil annuleren',
     'cancelled' => 'Geannuleerd',
     'bought' => 'Gekocht',
+    'transactions' => 'Transactions',
 
     'days' => [
         '0' => 'maandag',
