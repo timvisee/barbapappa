@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Events\WalletBalanceChange;
 use App\Perms\CommunityRoles;
 use App\Utils\MoneyAmount;
 use Carbon\Carbon;
@@ -214,8 +215,13 @@ class Wallet extends Model {
         // We must be in a database transaction
         assert_transaction();
 
+        $before = $this->getMoneyAmount();
+
         // Decrement the balance
         $this->decrement('balance', $amount);
+
+        // Dispatch balance change event
+        WalletBalanceChange::dispatch($this, $before, $this->getMoneyAmount());
     }
 
     /**
@@ -238,8 +244,13 @@ class Wallet extends Model {
         // We must be in a database transaction
         assert_transaction();
 
+        $before = $this->getMoneyAmount();
+
         // Increment the balance
         $this->increment('balance', $amount);
+
+        // Dispatch balance change event
+        WalletBalanceChange::dispatch($this, $before, $this->getMoneyAmount());
     }
 
     /**

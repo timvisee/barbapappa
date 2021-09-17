@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 /**
  * Send a balance below zero mail to a specific user.
  */
-class SendBlanaceBelowZeroMail implements ShouldQueue {
+class SendBalanceBelowZeroMail implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 

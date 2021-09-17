@@ -141,7 +141,7 @@ return [
          */
         'belowZero' => [
             'subject' => 'Balance dropped below zero',
-            'subtitle' => 'Yer balance in one of yer wallets just dropped below zero. We\'re just notifying ye \'bout dis.',
+            'subtitle' => 'Yer wallet balance just dropped below zero. We\'re just notifying ye \'bout dis.',
             'pleaseTopUp' => 'Please top up yer wallet after yer visit. Always ensure ye have a positive balance.',
         ],
     ],

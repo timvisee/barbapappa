@@ -139,9 +139,9 @@ return [
         /**
          * Balance below zero email.
          */
-        'balance' => [
+        'belowZero' => [
             'subject' => 'Saldo is nu negatief',
-            'subtitle' => 'Je saldo in een van je portemonnees is zojuist negatief geworden. Daarom sturen we je even een berichtje.',
+            'subtitle' => 'Je portemonnee saldo is zojuist negatief geworden. Daarom sturen we je deze notificatie.',
             'pleaseTopUp' => 'Vul je portemonnee aan na je bezoek. Zorg er altijd voor dat je een positief saldo hebt.',
         ],
     ],

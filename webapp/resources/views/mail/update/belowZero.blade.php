@@ -12,7 +12,7 @@
 - [{{ $wallet->name }}]({{ $walletUrl }})  
 @lang('misc.balance'): {!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}  
 
-@component('mail::mini_button', ['url' => $topUpUrl, 'color' => $wallet['isNegative'] ? 'blue' : 'grey'])
+@component('mail::mini_button', ['url' => $topUpUrl, 'color' => 'blue'])
 @lang('misc.topUp')
 @endcomponent
 @component('mail::mini_button', ['url' => $walletUrl, 'color' => 'grey'])
@@ -24,7 +24,7 @@
 @endcomponent
 
 @component('mail::text')
-@lang('mail.update.balance.pleaseTopUp')
+@lang('mail.update.belowZero.pleaseTopUp')
 @endcomponent
 
 @endcomponent

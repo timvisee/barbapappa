@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Events\PaymentCompleted;
 use App\Events\PaymentFailed;
+use App\Events\WalletBalanceChange;
+use App\Listeners\SendBalanceBelowZeroNotification;
 use App\Listeners\SendPaymentCompleteNotification;
 use App\Listeners\SendPaymentFailNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -21,6 +23,9 @@ class EventServiceProvider extends ServiceProvider {
         ],
         PaymentFailed::class => [
             SendPaymentFailNotification::class,
+        ],
+        WalletBalanceChange::class => [
+            SendBalanceBelowZeroNotification::class,
         ],
     ];
 
