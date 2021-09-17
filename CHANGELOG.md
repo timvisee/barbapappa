@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.115 (2021-09-17)
+
+- Send users an email notification when their wallet balance drops below zero
+- Be smarter about the default selected top-up amount
+- Fix balance update mail translations being broken in English
+- Fix payment service processing duration text inconsistency
+
 ## 0.1.114 (2021-09-16)
 
 - Track users creating/modifying products, show in product details
