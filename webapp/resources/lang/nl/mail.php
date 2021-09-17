@@ -135,6 +135,15 @@ return [
             'pleaseTopUp' => 'Vul portemonnees met een negatief saldo nu aan, en zorg er altijd voor dat je genoeg beschikbaar hebt voor de komende periode.',
             'noUpdateZeroBalance' => 'Zodra het saldo van al je portemonnees nul is, zul je geen periodieke updates ontvangen.',
         ],
+
+        /**
+         * Balance below zero email.
+         */
+        'belowZero' => [
+            'subject' => 'Saldo is nu negatief',
+            'subtitle' => 'Je portemonnee saldo is zojuist negatief geworden. Daarom sturen we je deze notificatie.',
+            'pleaseTopUp' => 'Vul je portemonnee aan na je bezoek. Zorg er altijd voor dat je een positief saldo hebt.',
+        ],
     ],
 
     /**

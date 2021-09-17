@@ -181,6 +181,7 @@ return [
     'confirmCancel' => 'I confirm I want to cancel',
     'cancelled' => 'Cancelled',
     'bought' => 'Looted',
+    'transactions' => 'Transactions',
 
     'days' => [
         '0' => 'Monday',

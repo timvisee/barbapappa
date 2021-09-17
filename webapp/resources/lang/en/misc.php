@@ -182,6 +182,7 @@ return [
     'confirmCancel' => 'I confirm I want to cancel',
     'cancelled' => 'Cancelled',
     'bought' => 'Bought',
+    'transactions' => 'Transactions',
 
     'days' => [
         '0' => 'Monday',
