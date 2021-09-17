@@ -129,7 +129,7 @@ return [
         /**
          * Balance update email.
          */
-        'update' => [
+        'balance' => [
             'subject' => 'Balance update for Barbapappa',
             'subtitle' => 'Here is an update for your Barbapappa wallet balances.',
             'pleaseTopUp' => 'Please top up any wallets with a negative balance now, and always make sure you\'ve enough available for the upcoming period.',
