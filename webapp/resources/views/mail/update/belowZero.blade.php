@@ -6,11 +6,33 @@
 
 <br>
 
+@php
+    $details = [];
+    $details[] = [
+        'key' => __('misc.wallet'),
+        'valueHtml' => '<a href="' . route('community.wallet.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'walletId' => $wallet->id,
+            ]) . '">' . $wallet->name . '</a>',
+    ];
+    $details[] = [
+        'key' => __('misc.balance'),
+        'valueHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
+    ];
+    if($community != null)
+        $details[] = [
+            'key' => __('misc.community'),
+            'valueHtml' => '<a href="' . route('community.show', [
+                    'communityId' => $community->human_id
+                ]) . '">'
+                . $community->name . '</a>',
+        ];
+@endphp
 @component('mail::block')
-<b>{{ $community->name }}</b> ({{ $economy->name }}):
-
-- [{{ $wallet->name }}]({{ $walletUrl }})  
-@lang('misc.balance'): {!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}  
+@component('mail::details', ['table' => $details])
+@endcomponent
+<br>
 
 @component('mail::mini_button', ['url' => $topUpUrl, 'color' => 'blue'])
 @lang('misc.topUp')
@@ -21,7 +43,9 @@
 @component('mail::mini_button', ['url' => $transactionsUrl, 'color' => 'grey'])
 @lang('misc.transactions')
 @endcomponent
+<br>
 @endcomponent
+<br>
 
 @component('mail::text')
 @lang('mail.update.belowZero.pleaseTopUp')
