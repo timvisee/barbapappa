@@ -142,7 +142,7 @@ return [
         'belowZero' => [
             'subject' => 'Saldo is nu negatief',
             'subtitle' => 'Je portemonnee saldo is zojuist negatief geworden. Daarom sturen we je deze notificatie.',
-            'pleaseTopUp' => 'Vul je portemonnee aan na je bezoek. Zorg er altijd voor dat je een positief saldo hebt.',
+            'pleaseTopUp' => 'Vul je portemonnee na je bezoek aan. Zorg er altijd voor dat je een positief saldo hebt.',
         ],
     ],
 
