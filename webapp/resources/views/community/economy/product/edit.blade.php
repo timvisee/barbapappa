@@ -104,17 +104,6 @@
 
         <div class="ui divider"></div>
 
-        <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
-            <div class="ui checkbox">
-                {{ Form::checkbox('enabled', true, $product->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
-                {{ Form::label('enabled', __('pages.products.enabledDescription')) }}
-            </div>
-            <br />
-            {{ ErrorRenderer::inline('enabled') }}
-        </div>
-
-        <br />
-
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
         <a href="{{ route('community.economy.product.show', [
             'communityId' => $community->human_id,

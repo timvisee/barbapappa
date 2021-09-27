@@ -6,8 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-// TODO: enable EnabledScope by default
-
 /**
  * Product model.
  *
@@ -23,7 +21,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int type
  * @property string name
  * @property string|null tags
- * @property bool enabled
  * @property Carbon|null deleted_at
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -34,7 +31,7 @@ class Product extends Model {
 
     protected $table = 'product';
 
-    protected $fillable = ['economy_id', 'type', 'name', 'tags', 'enabled'];
+    protected $fillable = ['economy_id', 'type', 'name', 'tags'];
 
     protected $with = ['names'];
 

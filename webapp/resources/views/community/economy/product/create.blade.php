@@ -110,17 +110,6 @@
 
         <div class="ui divider"></div>
 
-        <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
-            <div class="ui checkbox">
-                {{ Form::checkbox('enabled', true, !$clone || $cloneProduct->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
-                {{ Form::label('enabled', __('pages.products.enabledDescription')) }}
-            </div>
-            <br />
-            {{ ErrorRenderer::inline('enabled') }}
-        </div>
-
-        <br />
-
         <div class="ui buttons">
             <button class="ui button primary" type="submit" name="submit" value="">
                 @lang('misc.add')

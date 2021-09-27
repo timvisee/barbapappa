@@ -91,7 +91,6 @@ class ProductController extends Controller {
                 'type' => Product::TYPE_NORMAL,
                 'name' => $request->input('name'),
                 'tags' => $request->input('tags'),
-                'enabled' => is_checked($request->input('enabled')),
                 'created_user_id' => $user->id,
                 'updated_user_id' => $user->id,
             ]);
@@ -224,7 +223,6 @@ class ProductController extends Controller {
             // Change properties
             $product->name = $request->input('name');
             $product->tags = $request->input('tags');
-            $product->enabled = is_checked($request->input('enabled'));
             $product->updated_user_id = $user->id;
             $product->save();
 
