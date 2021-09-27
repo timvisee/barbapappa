@@ -26,7 +26,8 @@ class TransactionController extends Controller {
         });
 
         // Fetch related objects
-        $related = $transaction->getRelatedObjects()
+        $related = $transaction
+            ->getRelatedObjects()
             ->groupBy(function($item) {
                 return get_class($item);
             });
