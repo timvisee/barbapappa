@@ -25,7 +25,7 @@
                             <div class="ui bulleted list">
                                 @foreach($products as $id => $item)
                                     <div class="item">
-                                        {{ $item['quantity'] }}× {{ $item['product']->displayName() }}
+                                        {{ $item['quantity'] }}× {{ ($product = $item['product']) ? $product->displayName() : __('pages.products.unknownProduct') }}
                                     </div>
                                 @endforeach
                             </ul>
