@@ -325,13 +325,14 @@ class KioskController extends Controller {
 
         // Take limit of recent products, skip null or ignored products
         return $product_mutations
-            ->unique(function($p) use($ignore_product_ids) {
+            ->unique(function($p) {
                 return $p->mutationable->product_id;
             })
             ->take($limit)
             ->map(function($p) {
                 return $p->mutationable->product;
-            });
+            })
+            ->whereNotNull();
     }
 
     /**

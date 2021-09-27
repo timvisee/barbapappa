@@ -67,6 +67,9 @@ class BarPurchaseHistoryExport extends BarAppExport implements FromQuery, WithCo
      * @var Payment $payment
      */
     public function map($mutation): array {
+        // Fetch product, include trashed
+        $product = $mutation->product()->withTrashed()->first();
+
         return [
             $mutation->mutation->transaction_id,
             $mutation->mutation->id,
@@ -74,7 +77,7 @@ class BarPurchaseHistoryExport extends BarAppExport implements FromQuery, WithCo
             $mutation->mutation->isSettled(),
             -$mutation->mutation->amount,
             $mutation->quantity,
-            $mutation->product != null ? $mutation->product->name : null,
+            $product != null ? $product->name : null,
             $mutation->mutation->owner != null ? $mutation->mutation->owner->name : null,
             Date::dateTimeToExcel($mutation->mutation->created_at),
             Date::dateTimeToExcel($mutation->mutation->updated_at),
