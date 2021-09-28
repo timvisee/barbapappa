@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.116 (2021-09-28)
+
+- Fix transaction details error when product is trashed
+- Fix kiosk mode error when product is trashed
+- Fix trashed products not showing up in purchase history export
+- Fix user creating a product not being registered
+- Remove redundant 'enabled' state for products, use trashing instead
+- Update dependencies
+
 ## 0.1.115 (2021-09-17)
 
 - Send users an email notification when their wallet balance drops below zero
