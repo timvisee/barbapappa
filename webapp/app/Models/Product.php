@@ -31,7 +31,7 @@ class Product extends Model {
 
     protected $table = 'product';
 
-    protected $fillable = ['economy_id', 'type', 'name', 'tags'];
+    protected $fillable = ['economy_id', 'type', 'name', 'tags', 'created_user_id', 'updated_user_id'];
 
     protected $with = ['names'];
 
