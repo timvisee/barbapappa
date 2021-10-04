@@ -15,6 +15,7 @@ class BarProductController extends Controller {
         // Get the bar and session user
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
+        $economy = $bar->economy;
 
         // Build a list of preferred currencies for the user
         // TODO: if there's only one currency, that is usable, use null to
@@ -33,6 +34,7 @@ class BarProductController extends Controller {
         // Show the products page
         return view('bar.product.index')
             ->with('products', $products)
+            ->with('economy', $economy)
             ->with('currencies', $currencies);
     }
 
