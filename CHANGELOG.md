@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.117 (2021-10-04)
+
+- Fix error when searching bar product catalog with no results
+- Fix user creating or editing a product not being properly registered
+
 ## 0.1.116 (2021-09-28)
 
 - Fix transaction details error when product is trashed
