@@ -92,7 +92,6 @@ class ProductController extends Controller {
                 'name' => $request->input('name'),
                 'tags' => $request->input('tags'),
                 'created_user_id' => $user->id,
-                'updated_user_id' => $user->id,
             ]);
 
             // Create the localized product names
@@ -281,61 +280,6 @@ class ProductController extends Controller {
     }
 
     /**
-     * Page for confirming restoring a product.
-     *
-     * @return Response
-     */
-    public function restore($communityId, $economyId, $productId) {
-        // Get the community, find the product
-        $community = \Request::get('community');
-        $economy = $community->economies()->findOrFail($economyId);
-        $product = $economy->products()->withTrashed()->findOrFail($productId);
-
-        // If already restored, redirect to the product
-        if(!$product->trashed())
-            return redirect()
-                ->route('community.economy.product.show', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                    'productId' => $product->id,
-                ])
-                ->with('success', __('pages.products.restored'));
-
-        return view('community.economy.product.restore')
-            ->with('economy', $economy)
-            ->with('product', $product);
-    }
-
-    /**
-     * Restore a product.
-     *
-     * @return Response
-     */
-    public function doRestore($communityId, $economyId, $productId) {
-        // TODO: delete trashed, and allow trashing?
-
-        // Get the community, find the product
-        $user = barauth()->getUser();
-        $community = \Request::get('community');
-        $economy = $community->economies()->findOrFail($economyId);
-        $product = $economy->products()->withTrashed()->findOrFail($productId);
-
-        // Restore the product
-        $product->restore();
-        $product->updated_user_id = $user->id;
-        $product->save();
-
-        // Redirect to the product index
-        return redirect()
-            ->route('community.economy.product.show', [
-                'communityId' => $community->human_id,
-                'economyId' => $economy->id,
-                'productId' => $product->id,
-            ])
-            ->with('success', __('pages.products.restored'));
-    }
-
-    /**
      * Page for confirming the deletion of the product.
      *
      * @return Response
@@ -387,6 +331,66 @@ class ProductController extends Controller {
                 'economyId' => $economy->id
             ])
             ->with('success', __('pages.products.' . ($permanent ? 'permanentlyDeleted' : 'deleted')));
+    }
+
+    /**
+     * Page for confirming restoring a product.
+     *
+     * @return Response
+     */
+    public function restore($communityId, $economyId, $productId) {
+        // Get the community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
+
+        // If already restored, redirect to the product
+        if(!$product->trashed())
+            return redirect()
+                ->route('community.economy.product.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'productId' => $product->id,
+                ])
+                ->with('success', __('pages.products.restored'));
+
+        // Set last updating user
+        $product->updated_user_id = $user->id;
+        $product->save();
+
+        return view('community.economy.product.restore')
+            ->with('economy', $economy)
+            ->with('product', $product);
+    }
+
+    /**
+     * Restore a product.
+     *
+     * @return Response
+     */
+    public function doRestore($communityId, $economyId, $productId) {
+        // TODO: delete trashed, and allow trashing?
+
+        // Get the community, find the product
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->withTrashed()->findOrFail($productId);
+
+        // Restore the product
+        $product->restore();
+        $product->updated_user_id = $user->id;
+        $product->save();
+
+        // Redirect to the product index
+        return redirect()
+            ->route('community.economy.product.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'productId' => $product->id,
+            ])
+            ->with('success', __('pages.products.restored'));
     }
 
     /**
