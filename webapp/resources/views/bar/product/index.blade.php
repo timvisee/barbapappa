@@ -50,7 +50,7 @@
                 <i class="dropdown icon"></i>
                 @lang('misc.admin')
                 <div class="menu">
-                    <a href="{{ route('community.economy.product.index', ['communityId' => $community->human_id, 'economyId' => $product->economy->id]) }}" class="item">
+                    <a href="{{ route('community.economy.product.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">
                         @lang('pages.products.manageProducts')
                     </a>
                 </div>
