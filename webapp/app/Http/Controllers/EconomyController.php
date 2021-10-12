@@ -138,10 +138,15 @@ class EconomyController extends Controller {
      *
      * @return Response
      */
-    public function doDelete($communityId, $economyId) {
+    public function doDelete(Request $request, $communityId, $economyId) {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+
+        // Validate
+        $this->validate($request, [
+            'confirm_delete' => 'accepted',
+        ]);
 
         // The economy must be deletable
         if(!$economy->canDelete())

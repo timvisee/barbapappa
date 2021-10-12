@@ -228,7 +228,7 @@ return [
         'editEconomy' => 'Edit economy',
         'deleteEconomy' => 'Delete economy',
         'economyCreated' => 'The economy has been created. Please add and configure a currency now.',
-        'deleteQuestion' => 'You\'re about to delete this economy from this community. Are you sure you want to continue?',
+        'deleteQuestion' => 'You\'re about to delete this economy from this community. This will permanently delete things inside it, such as balance imports, along with it. Are you sure you want to continue?',
         'deleteBlocked' => 'You\'re about to permanently delete this economy. You must delete the entities listed below first before you can continue with deleting this economy.',
         'cannotDeleteDependents' => 'This economy cannot be deleted, as entities are depending on it which cannot just be deleted.',
         'economyDeleted' => 'The economy has been removed.',

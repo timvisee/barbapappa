@@ -34,14 +34,26 @@
     @else
         <p>@lang('pages.economies.deleteQuestion')</p>
 
-        <div class="ui warning message visible">
-            <span class="halflings halflings-warning-sign"></span>
-            @lang('misc.cannotBeUndone')
-        </div>
-
-        <br />
-
         {!! Form::open(['action' => ['EconomyController@doDelete', 'communityId' => $community->human_id, 'economyId' => $economy->id], 'method' => 'DELETE', 'class' => 'ui form']) !!}
+            <div class="ui top attached warning message visible">
+                <span class="halflings halflings-warning-sign"></span>
+                @lang('misc.cannotBeUndone')
+            </div>
+
+            {{-- Delete confirmation checkbox --}}
+            <div class="ui bottom attached segment">
+                <div class="required field {{ ErrorRenderer::hasError('confirm_delete') ? 'error' : '' }}">
+                    <div class="ui checkbox">
+                        {{ Form::checkbox('confirm_delete', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
+                        {{ Form::label('confirm_delete', __('misc.iUnderstandDelete')) }}
+                    </div>
+                    <br />
+                    {{ ErrorRenderer::inline('confirm_delete') }}
+                </div>
+            </div>
+
+            <br />
+
             <div class="ui buttons">
                 <a href="{{ route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                         class="ui button negative">

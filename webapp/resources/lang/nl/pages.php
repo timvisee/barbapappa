@@ -229,7 +229,7 @@ return [
         'editEconomy' => 'Economie aanpassen',
         'deleteEconomy' => 'Economie verwijderen',
         'economyCreated' => 'De economie is aangemaakt. Voeg nu een valuta toe.',
-        'deleteQuestion' => 'Je staat op het punt deze economie te verwijderen van deze groep. Weet je zeker dat je door wilt gaan?',
+        'deleteQuestion' => 'Je staat op het punt deze economie te verwijderen van deze groep. Dit verwijdert dingen binnen de economie, zoals saldoimports, ook permanent. Weet je zeker dat je door wilt gaan?',
         'deleteBlocked' => 'Je staat op het punt deze economie permanent te verwijderen. Verwijder eerst de entiteiten in de lijst hieronder voordat je verder kunt gaan met het verwijderen van deze economie.',
         'cannotDeleteDependents' => 'Deze economie kan niet verwijderd worden, omdat er nog entiteiten zijn die afhankelijk zijn en niet zomaar verwijderd kunnen worden.',
         'economyDeleted' => 'De economie is verwijderd.',

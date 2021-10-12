@@ -228,7 +228,7 @@ return [
         'editEconomy' => 'Edit booty',
         'deleteEconomy' => 'Delete booty',
         'economyCreated' => 'Th\' booty be created. Please add \'n configure a currency now.',
-        'deleteQuestion' => 'Yer \'bout to sink dis booty from our crew. Ye be sure ye want to continue?',
+        'deleteQuestion' => 'Yer \'bout to sink dis booty from our crew. This will permanently delete things inside it, such as balance imports, along with it. Ye be sure ye want to continue?',
         'deleteBlocked' => 'Yer \'bout to permanently sink this booty. ye must delete th\' entities listed below first before ye be continue with deleting dis booty.',
         'cannotDeleteDependents' => 'Dis booty cannot be sunk, as entities be depending on it which nay just be deleted.',
         'economyDeleted' => 'Th\' booty be sunk.',
