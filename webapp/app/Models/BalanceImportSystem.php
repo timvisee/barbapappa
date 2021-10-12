@@ -59,4 +59,17 @@ class BalanceImportSystem extends Model {
             'id'
         );
     }
+
+    /**
+     * Force delete this balance import system.
+     * This will delete all events and changes along with it, without doing any
+     * checks.
+     *
+     * Balance import changes that have already been committed to user wallets
+     * won't be reverted.
+     */
+    public function forceDelete() {
+        $this->changes()->delete();
+        $this->delete();
+    }
 }

@@ -169,9 +169,8 @@ class BalanceImportSystemController extends Controller {
             'confirm_delete' => 'accepted',
         ]);
 
-        // Delete all changes within this system, then delete the system
-        $system->changes()->delete();
-        $system->delete();
+        // Force delete the system including all dependencies
+        $system->forceDelete();
 
         // Redirect to the index page after deleting
         return redirect()
