@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.118 (2021-10-12)
+
+- Fix economy delete errors, cascade delete to balance imports, mutations and members
+- Add support to delete non-empty balance import systems
+- Add delete confirmation to economies and balance import systems
+
 ## 0.1.117 (2021-10-04)
 
 - Fix error when searching bar product catalog with no results
