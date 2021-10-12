@@ -19,9 +19,21 @@
         'method' => 'DELETE',
         'class' => 'ui form'
     ]) !!}
-        <div class="ui warning message visible">
+        <div class="ui top attached warning message visible">
             <span class="halflings halflings-warning-sign"></span>
             @lang('misc.cannotBeUndone')
+        </div>
+
+        {{-- Delete confirmation checkbox --}}
+        <div class="ui bottom attached segment">
+            <div class="required field {{ ErrorRenderer::hasError('confirm_delete') ? 'error' : '' }}">
+                <div class="ui checkbox">
+                    {{ Form::checkbox('confirm_delete', true, false, ['tabindex' => 0, 'class' => 'hidden']) }}
+                    {{ Form::label('confirm_delete', __('misc.iUnderstandDelete')) }}
+                </div>
+                <br />
+                {{ ErrorRenderer::inline('confirm_delete') }}
+            </div>
         </div>
 
         <br />

@@ -148,16 +148,6 @@ class BalanceImportSystemController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
 
-        // Do not allow deleting if there's any event
-        if($system->events()->limit(1)->count() > 0)
-            return redirect()
-                ->route('community.economy.balanceimport.show', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                    'systemId' => $system->id,
-                ])
-                ->with('error', __('pages.balanceImport.cannotDeleteHasEvents'));
-
         return view('community.economy.balanceimport.delete')
             ->with('economy', $economy)
             ->with('system', $system);
@@ -174,18 +164,13 @@ class BalanceImportSystemController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $system = $economy->balanceImportSystems()->findOrFail($systemId);
 
-        // Do not allow deleting if there's any event
-        if($system->events()->limit(1)->count() > 0)
-            return redirect()
-                ->route('community.economy.balanceimport.show', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                    'systemId' => $system->id,
-                ])
-                ->with('error', __('pages.balanceImport.cannotDeleteHasEvents'));
+        // Validate
+        $this->validate($request, [
+            'confirm_delete' => 'accepted',
+        ]);
 
-        // Delete the system
-        $system->delete();
+        // Force delete the system including all dependencies
+        $system->forceDelete();
 
         // Redirect to the index page after deleting
         return redirect()

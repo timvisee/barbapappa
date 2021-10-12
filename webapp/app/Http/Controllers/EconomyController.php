@@ -7,6 +7,7 @@ use App\Models\Wallet;
 use App\Perms\Builder\Config as PermsConfig;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class EconomyController extends Controller {
 
@@ -138,10 +139,15 @@ class EconomyController extends Controller {
      *
      * @return Response
      */
-    public function doDelete($communityId, $economyId) {
+    public function doDelete(Request $request, $communityId, $economyId) {
         // Get the community, find the economy
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
+
+        // Validate
+        $this->validate($request, [
+            'confirm_delete' => 'accepted',
+        ]);
 
         // The economy must be deletable
         if(!$economy->canDelete())
@@ -149,8 +155,22 @@ class EconomyController extends Controller {
                 ->route('community.economy.show', ['communityId' => $community->human_id, 'economyId' => $economy->id])
                 ->with('error', __('pages.economies.cannotDeleteDependents'));
 
-        // Delete the economy
-        $economy->delete();
+        DB::transaction(function() use($economy) {
+            // Explicitly delete attached balance import systems
+            foreach($economy->balanceImportSystems as $system)
+                if($system != null)
+                    $system->forceDelete();
+
+            // Explicitly delete mutations in this economy
+            foreach($economy->mutations as $mutation)
+                $mutation->delete();
+
+            // Explicitly delete economy members
+            $economy->members()->delete();
+
+            // Delete the economy
+            $economy->delete();
+        });
 
         // Redirect to the index page after deleting
         return redirect()
