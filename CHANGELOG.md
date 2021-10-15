@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.119 (2021-10-15)
+
+- Add search field to admin product list
+- Sort products alphabetically and show price in admin product list
+
 ## 0.1.118 (2021-10-12)
 
 - Fix economy delete errors, cascade delete to balance imports, mutations and members
