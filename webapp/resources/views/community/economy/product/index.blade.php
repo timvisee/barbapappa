@@ -23,6 +23,26 @@
         </div>
     </div>
 
+    {{-- Search field --}}
+    <div class="ui vertical menu fluid attached">
+        {!! Form::open(['action' => [
+            'ProductController@index',
+            'communityId' => $economy->community_id,
+            'economyId' => $economy->id,
+        ], 'method' => 'GET', 'class' => 'ui form']) !!}
+            <div class="item">
+                <div class="ui transparent icon input">
+                    {{ Form::search('q', Request::input('q'), [
+                        'placeholder' => __('pages.products.search') . '...',
+                    ]) }}
+                    <i class="icon link">
+                        <span class="glyphicons glyphicons-search"></span>
+                    </i>
+                </div>
+            </div>
+        {!! Form::close() !!}
+    </div>
+
     {{-- Product list --}}
     @include('community.economy.product.include.list', [
         'class' => ['bottom' , 'attached'],

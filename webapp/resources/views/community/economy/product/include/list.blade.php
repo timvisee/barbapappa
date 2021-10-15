@@ -19,7 +19,7 @@
                         'productId' => $product->id,
                     ]) }}">
                 {{ $product->displayName() }}
-                {{-- {!! $product->formatCost(BALANCE_FORMAT_LABEL); !!} --}}
+                {!! $product->formatPrice(null, BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
 
                 {{-- TODO: show some other stat here --}}
                 <span class="sub-label">
