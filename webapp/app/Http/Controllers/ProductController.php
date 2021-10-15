@@ -22,7 +22,9 @@ class ProductController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $trashed = is_checked($request->query('trashed'));
-        $products = $trashed ? $economy->products()->onlyTrashed()->get() : $economy->products;
+        $products = $trashed
+            ? $economy->products()->onlyTrashed()->orderBy('name')->get()
+            : $economy->products()->orderBy('name')->get();
 
         return view('community.economy.product.index')
             ->with('economy', $economy)
