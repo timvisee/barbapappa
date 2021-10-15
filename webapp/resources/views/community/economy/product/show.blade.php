@@ -29,7 +29,7 @@
             </tr>
             @if($product->tags)
                 <tr>
-                    <td>@lang('misc.tags')</td>
+                    <td>@lang('misc.tags') (@lang('misc.search'))</td>
                     <td>
                         <div class="ui list">
                             <div class="item">{{ $product->tags }}</div>

@@ -58,7 +58,7 @@
         <div class="ui divider"></div>
 
         <div class="field {{ ErrorRenderer::hasError('tags') ? 'error' : '' }}">
-            {{ Form::label('tags', __('misc.tags') . ':') }}
+            {{ Form::label('tags', __('misc.tags') . ' (' . __('misc.search') . '):') }}
             {{ Form::text('tags', $product->tags, ['placeholder' => __('pages.products.tagsPlaceholder')]) }}
             {{ ErrorRenderer::inline('tags') }}
         </div>

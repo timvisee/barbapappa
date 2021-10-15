@@ -183,6 +183,7 @@ return [
     'cancelled' => 'Cancelled',
     'bought' => 'Bought',
     'transactions' => 'Transactions',
+    'search' => 'Search',
 
     'days' => [
         '0' => 'Monday',

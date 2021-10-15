@@ -183,6 +183,7 @@ return [
     'cancelled' => 'Geannuleerd',
     'bought' => 'Gekocht',
     'transactions' => 'Transacties',
+    'search' => 'Zoeken',
 
     'days' => [
         '0' => 'maandag',
