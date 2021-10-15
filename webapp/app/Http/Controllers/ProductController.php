@@ -19,12 +19,20 @@ class ProductController extends Controller {
      */
     public function index(Request $request, $communityId, $economyId) {
         // Get the community, find the products
+        $search = \Request::get('q');
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $trashed = is_checked($request->query('trashed'));
-        $products = $trashed
-            ? $economy->products()->onlyTrashed()->orderBy('name')->get()
-            : $economy->products()->orderBy('name')->get();
+
+        // Fetch products
+        if(!empty($search))
+            $products = $trashed
+                ? $economy->searchProducts($search)->onlyTrashed()->sortBy('name')
+                : $economy->searchProducts($search)->sortBy('name');
+        else
+            $products = $trashed
+                ? $economy->products()->onlyTrashed()->orderBy('name')->get()
+                : $economy->products()->orderBy('name')->get();
 
         return view('community.economy.product.index')
             ->with('economy', $economy)
