@@ -180,13 +180,17 @@ class Product extends Model {
      * returned.
      *
      * TODO: should we use currency IDs instead
-     * @param [Currency] $currencies An ordered list of preferred currencies.
+     * @param [Currency]|null $currencies An ordered list of preferred currencies.
      *
      * @return ProductPrice|null The product price or null if none is found.
      */
     public function getPrice($currencies) {
         // Get the available currencies
         $prices = $this->prices;
+
+        // If currencies is null, return first price
+        if($currencies == null)
+            return $prices->first();
 
         // Try to find a matching price currency
         foreach($currencies as $currency) {
