@@ -91,6 +91,7 @@ return [
             'cannotDeleteMustHaveVerified' => 'Je kunt dit e-mailadres niet verwijderen, je moet ten minste één geverifiëerd adres hebben.',
             'deleted' => 'Het e-mailadres is verwijderd.',
             'deleteQuestion' => 'Weet je zeker dat je dit e-mailadres wilt verwijderen?',
+            'notifyOnLowBalance' => 'Ontvang notificatie wanneer je saldo negatief wordt',
             'backToEmails' => 'Terug naar e-mails',
         ],
         'addEmail' => [

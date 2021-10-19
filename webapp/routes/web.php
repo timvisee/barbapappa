@@ -76,6 +76,7 @@ Route::prefix('/account/{userId?}')->middleware(['auth', 'selectUser'])->group(f
     Route::get('/', 'AccountController@show')->name('account');
     Route::prefix("/emails")->group(function() {
         Route::get('/', 'EmailController@show')->name('account.emails');
+        Route::put('/', 'EmailController@update')->name('account.emails.update');
         Route::get('/new', 'EmailController@create')->name('account.emails.create');
         Route::post('/new', 'EmailController@doCreate');
         Route::get('/unverified', 'EmailController@unverified')->name('account.user.emails.unverified');

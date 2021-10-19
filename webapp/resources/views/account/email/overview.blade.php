@@ -55,6 +55,24 @@
         </tfoot>
     </table>
 
+    <div class="ui divider hidden"></div>
+
+    <h2 class="ui header">@lang('misc.otherSettings')</h2>
+    {!! Form::open(['action' => ['EmailController@update', $user->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
+        <div class="inline field {{ ErrorRenderer::hasError('notify_low_balance') ?  'error' : '' }}">
+            <div class="ui toggle checkbox">
+                {{ Form::checkbox('notify_low_balance', true, $user->notify_low_balance, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('notify_low_balance', __('pages.accountPage.email.notifyOnLowBalance')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('notify_low_balance') }}
+        </div>
+
+        <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
+    {!! Form::close() !!}
+
+    <div class="ui divider hidden"></div>
+
     <a href="{{ route('account', ['userId' => $user->id]) }}"
             class="ui button basic">
         @lang('pages.accountPage.backToAccount')
