@@ -28,6 +28,10 @@ class ProductName extends Model {
         'name',
     ];
 
+    protected $touches = [
+        'product'
+    ];
+
     /**
      * Get the relation to the product this localized name belongs to.
      *
