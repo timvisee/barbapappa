@@ -184,6 +184,7 @@ return [
     'cancelled' => 'Cancelled',
     'bought' => 'Looted',
     'transactions' => 'Transactions',
+    'search' => 'Search',
 
     'days' => [
         '0' => 'Monday',
