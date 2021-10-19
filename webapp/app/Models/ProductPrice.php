@@ -29,6 +29,10 @@ class ProductPrice extends Model {
         'price',
     ];
 
+    protected $touches = [
+        'product'
+    ];
+
     /**
      * Get the relation to the product this price belongs to.
      *
