@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.120 (2021-10-19)
+
+- Add toggle to user email settings for receiving balance below zero notification
+- Fix product change time not being updated when just its name or price is changed
+- Shorten iDeal payment expiration from 2 weeks to 36 hours
+
 ## 0.1.119 (2021-10-15)
 
 - Add search field to admin product list
