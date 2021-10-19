@@ -42,6 +42,27 @@ class EmailController extends Controller {
     }
 
     /**
+     * Update email settings.
+     *
+     * @param Request $request The request.
+     * @param string $userId The user ID.
+     *
+     * @return Response
+     */
+    public function update(Request $request) {
+        $user = \Request::get('user');
+
+        // Update low balance notify settings
+        $user->notify_low_balance = is_checked($request->input('notify_low_balance'));
+        $user->save();
+
+        // Redirect back to overview
+        return redirect()
+            ->back()
+            ->with('success', __('misc.changesSaved'));
+    }
+
+    /**
      * Email add page.
      *
      * @param Request $request The request.

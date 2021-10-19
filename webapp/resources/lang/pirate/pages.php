@@ -91,6 +91,7 @@ return [
             'cannotDeleteMustHaveVerified' => 'Ye no delete \'his e-bottle coordinate, ye must be one verified coordinate.',
             'deleted' => 'Th\' e-bottle coordinate be deleted.',
             'deleteQuestion' => 'Ye be sure ye want to sunk dis e-bottle address?',
+            'notifyOnLowBalance' => 'Receive notification when yer booty drops below zero',
             'backToEmails' => 'Back to e-bottles',
         ],
         'addEmail' => [

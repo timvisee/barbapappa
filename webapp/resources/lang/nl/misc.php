@@ -175,6 +175,8 @@ return [
     'inclusive' => 'Inclusief',
     'format' => 'Formaat',
     'typeToVerify' => 'Vul \':text\' in ter verificatie',
+    'otherSettings' => 'Andere instellingen',
+    'changesSaved' => 'Aanpassingen opgeslagen',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',

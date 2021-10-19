@@ -91,6 +91,7 @@ return [
             'cannotDeleteMustHaveVerified' => 'You cannot delete this email address, you must have at least one verified address.',
             'deleted' => 'The email address has been deleted.',
             'deleteQuestion' => 'Are you sure you want to delete this email address?',
+            'notifyOnLowBalance' => 'Receive notification when your balance drops below zero',
             'backToEmails' => 'Back to e-mails',
         ],
         'addEmail' => [

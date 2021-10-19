@@ -25,6 +25,11 @@ class SendBalanceBelowZeroNotification {
         if($event->before->amount < 0 || $event->after->amount >= 0)
             return;
 
+        // User must have these notifications enabled
+        $user = $event->wallet->economy_member->user;
+        if($user == null || !$user->notify_low_balance)
+            return;
+
         // Dispatch job to send balance below zero mail
         SendBalanceBelowZeroMail::dispatch($event->wallet->id);
     }
