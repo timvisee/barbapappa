@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.121 (2021-10-20)
+
+- Hotfix for error when user balance drops below zero
+
 ## 0.1.120 (2021-10-19)
 
 - Add toggle to user email settings for receiving balance below zero notification
