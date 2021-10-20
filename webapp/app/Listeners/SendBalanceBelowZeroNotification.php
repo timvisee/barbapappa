@@ -26,7 +26,7 @@ class SendBalanceBelowZeroNotification {
             return;
 
         // User must have these notifications enabled
-        $user = $event->wallet->economy_member->user;
+        $user = $event->wallet->economyMember->user;
         if($user == null || !$user->notify_low_balance)
             return;
 
