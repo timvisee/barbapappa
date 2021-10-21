@@ -39,7 +39,7 @@
         @if(perms(InventoryController::permsManage()))
             <a href="{{ route('community.economy.inventory.create', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                     class="ui button basic positive">
-                @lang('misc.add')
+                @lang('misc.create')
             </a>
         @endif
 

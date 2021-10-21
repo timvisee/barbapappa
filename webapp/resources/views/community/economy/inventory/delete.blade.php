@@ -36,7 +36,7 @@
                 @lang('general.noGoBack')
             </a>
             <div class="or" data-text="@lang('general.or')"></div>
-            <button class="ui button positive basic" type="submit">@lang('general.yesRemove')</button>
+            <button class="ui button positive basic" type="submit">@lang('general.yesDelete')</button>
         </div>
     {!! Form::close() !!}
 @endsection
