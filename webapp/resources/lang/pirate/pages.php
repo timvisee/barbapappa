@@ -360,8 +360,10 @@ return [
         'createInventory' => 'Create inventory',
         'created' => 'Th\' inventory be created.',
         'namePlaceholder' => 'My inventory',
+        'editInventory' => 'Edit inventory',
+        'changed' => 'Th\' inventory be updated.',
         'deleteQuestion' => 'Yer about to sink dis inventory along with all its history. Ye be sure ye want to continue?',
-        'deleted' => 'The inventory be sunk.',
+        'deleted' => 'Th\' inventory be sunk.',
     ],
 
     /**

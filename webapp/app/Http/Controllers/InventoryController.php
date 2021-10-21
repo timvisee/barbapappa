@@ -88,6 +88,55 @@ class InventoryController extends Controller {
     }
 
     /**
+     * Edit an inventory.
+     *
+     * @return Response
+     */
+    public function edit($communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+
+        return view('community.economy.inventory.edit')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory);
+    }
+
+    /**
+     * Inventory update endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doEdit(Request $request, $communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
+
+        // Update inventory
+        $inventory->name = $request->input('name');
+        $inventory->save();
+
+        // Redirect to inventory
+        return redirect()
+            ->route('community.economy.inventory.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'inventoryId' => $inventory->id,
+            ])
+            ->with('success', __('pages.inventories.changed'));
+    }
+
+    /**
      * Page for confirming the deletion of the inventory.
      *
      * @return Response

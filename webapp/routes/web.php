@@ -316,6 +316,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
                         // Edit/delete, require manager perms
                         Route::middleware(InventoryController::permsManage()->middleware())->group(function() {
+                            Route::get('/edit', 'InventoryController@edit')->name('community.economy.inventory.edit');
+                            Route::put('/edit', 'InventoryController@doEdit')->name('community.economy.inventory.doEdit');
                             Route::get('/delete', 'InventoryController@delete')->name('community.economy.inventory.delete');
                             Route::delete('/delete', 'InventoryController@doDelete')->name('community.economy.inventory.doDelete');
                         });

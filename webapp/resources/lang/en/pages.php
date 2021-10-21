@@ -360,6 +360,8 @@ return [
         'createInventory' => 'Create inventory',
         'created' => 'The inventory has been created.',
         'namePlaceholder' => 'My inventory',
+        'editInventory' => 'Edit inventory',
+        'changed' => 'The inventory has been updated.',
         'deleteQuestion' => 'You\'re about to delete this inventory along with all its history. Are you sure you want to continue?',
         'deleted' => 'The inventory has been deleted.',
     ],

@@ -279,7 +279,7 @@ class ProductController extends Controller {
             );
         });
 
-        // Redirect the user to the account overview page
+        // Redirect to product
         return redirect()
             ->route('community.economy.product.show', [
                 'communityId' => $community->human_id,
