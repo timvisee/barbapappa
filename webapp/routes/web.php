@@ -313,6 +313,12 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::prefix('/{inventoryId}')->group(function() {
                         // Show
                         Route::get('/', 'InventoryController@show')->name('community.economy.inventory.show');
+
+                        // Edit/delete, require manager perms
+                        Route::middleware(InventoryController::permsManage()->middleware())->group(function() {
+                            Route::get('/delete', 'InventoryController@delete')->name('community.economy.inventory.delete');
+                            Route::delete('/delete', 'InventoryController@doDelete')->name('community.economy.inventory.doDelete');
+                        });
                     });
                 });
 

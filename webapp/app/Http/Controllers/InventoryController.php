@@ -73,6 +73,46 @@ class InventoryController extends Controller {
     }
 
     /**
+     * Page for confirming the deletion of the inventory.
+     *
+     * @return Response
+     */
+    public function delete($communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+
+        return view('community.economy.inventory.delete')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory);
+    }
+
+    /**
+     * Delete a inventory.
+     *
+     * @return Response
+     */
+    public function doDelete(Request $request, $communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $user = barauth()->getUser();
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+
+        // Delete inventory
+        $inventory->delete();
+
+        // Redirect to the inventory index
+        return redirect()
+            ->route('community.economy.inventory.index', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+            ])
+            ->with('success', __('pages.inventories.deleted'));
+    }
+
+    /**
      * The permission required for viewing.
      * @return PermsConfig The permission configuration.
      */

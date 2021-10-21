@@ -338,7 +338,7 @@ class ProductController extends Controller {
         return redirect()
             ->route('community.economy.product.index', [
                 'communityId' => $community->human_id,
-                'economyId' => $economy->id
+                'economyId' => $economy->id,
             ])
             ->with('success', __('pages.products.' . ($permanent ? 'permanentlyDeleted' : 'deleted')));
     }

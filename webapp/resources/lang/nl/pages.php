@@ -361,6 +361,8 @@ return [
         'createInventory' => 'Inventaris aanmaken',
         'created' => 'Het inventaris is aangemaakt.',
         'namePlaceholder' => 'Mijn inventaris',
+        'deleteQuestion' => 'Je staat op het punt om dit inventaris met alle historie te verwijderen. Weet je zeker dat je door wilt gaan?',
+        'deleted' => 'Het inventaris is verwijderd.',
     ],
 
     /**
