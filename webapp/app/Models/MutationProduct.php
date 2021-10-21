@@ -52,6 +52,15 @@ class MutationProduct extends Model {
     }
 
     /**
+     * Get the inventory changes related to this mutation.
+     *
+     * @return Inventory changes.
+     */
+    public function inventoryChanges() {
+        return $this->hasMany(InventoryItemChange::class);
+    }
+
+    /**
      * Undo the product mutation.
      * This does not delete the mutation model.
      *

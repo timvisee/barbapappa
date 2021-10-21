@@ -270,6 +270,15 @@ class User extends Model implements HasLocalePreference {
     }
 
     /**
+     * Get the inventory changes.
+     *
+     * @return Inventory changes.
+     */
+    public function inventoryChanges() {
+        return $this->hasMany(InventoryItemChange::class);
+    }
+
+    /**
      * Check whether this user has a password configured or not.
      *
      * @return boolean True if a password is configured, false if not.

@@ -189,6 +189,15 @@ class Economy extends Model {
     }
 
     /**
+     * Get the inventories in this economy.
+     *
+     * @return List of inventories.
+     */
+    public function inventories() {
+        return $this->hasMany(Inventory::class);
+    }
+
+    /**
      * A list of users that joined this economy.
      *
      * @param array [$pivotColumns] An array of pivot columns to include.
