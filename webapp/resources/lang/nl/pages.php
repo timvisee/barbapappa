@@ -358,6 +358,9 @@ return [
         'inventory' => 'Inventaris',
         'manage' => 'Manage inventarissen',
         'noInventories' => 'Geen inventarissen...',
+        'createInventory' => 'Inventaris aanmaken',
+        'created' => 'Het inventaris is aangemaakt.',
+        'namePlaceholder' => 'Mijn inventaris',
     ],
 
     /**

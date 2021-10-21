@@ -357,6 +357,9 @@ return [
         'inventory' => 'Inventory',
         'manage' => 'Manage inventories',
         'noInventories' => 'No inventories...',
+        'createInventory' => 'Create inventory',
+        'created' => 'The inventory has been created.',
+        'namePlaceholder' => 'My inventory',
     ],
 
     /**

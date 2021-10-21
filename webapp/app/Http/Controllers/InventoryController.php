@@ -17,7 +17,6 @@ class InventoryController extends Controller {
      * @return Response
      */
     public function index(Request $request, $communityId, $economyId) {
-        // Get the community, find the products
         $search = \Request::get('q');
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
@@ -26,6 +25,51 @@ class InventoryController extends Controller {
         return view('community.economy.inventory.index')
             ->with('economy', $economy)
             ->with('inventories', $inventories);
+    }
+
+    /**
+     * Inventory creation page.
+     *
+     * @return Response
+     */
+    public function create(Request $request, $communityId, $economyId) {
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        return view('community.economy.inventory.create')
+            ->with('economy', $economy);
+    }
+
+    /**
+     * Inventory create endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doCreate(Request $request, $communityId, $economyId) {
+        // Get the community, find the products
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+        ]);
+
+        // Create inventory
+        $inventory = $economy->inventories()->create([
+            'name' => $request->input('name'),
+        ]);
+
+        // Show inventory
+        return redirect()
+            ->route('community.economy.inventory.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'inventoryId' => $inventory->id,
+            ])
+            ->with('success', __('pages.inventories.created'));
     }
 
     /**
