@@ -351,6 +351,15 @@ return [
     ],
 
     /**
+     * Inventory pages.
+     */
+    'inventories' => [
+        'title' => 'Inventarissen',
+        'inventory' => 'Inventaris',
+        'manage' => 'Manage inventarissen',
+    ],
+
+    /**
      * Payment service pages.
      */
     'paymentService' => [
@@ -847,6 +856,8 @@ return [
         'slugFieldRegexError' => 'Dit trefword moet met een alfabetisch karakter beginnen.',
         'codeDescription' => 'Met een barcode voorkom je dat willekeurige gebruikers zich inschrijven bij deze bar. Om in te schrijven moeten gebruikers de gespecificeerde code invullen.',
         'economyDescription' => 'De economie bepaalt welke producten, valutas en portemonnees gebruikt worden in deze bar. Wees voorzichtig met het achteraf aanpassen hiervan omdat dit direct effect heeft op de lijst met producten, valutas en portemonnees gebruikt binnen deze bar. Gebruikers verwachten dit waarschijnlijk niet, en vinden dit mogelijk moeilijk te begrijpen.',
+        'inventoryDescription' => 'Selecteer een inventaris om inventarisatie automatisch bij te houden wanneer producten verkocht worden.',
+        'selectInventoryAfterCreate' => 'Je kunt een inventaris selecteren nadat de bar is aangemaakt.',
         'showExploreDescription' => 'Toon on publieke \'Ontdek bars\' pagina',
         'showCommunityDescription' => 'Toon op groepspagina voor groepsleden',
         'selfEnrollDescription' => 'Sta zelf inschrijven toe (met code als gespecificeerd)',

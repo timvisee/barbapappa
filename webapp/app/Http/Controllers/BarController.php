@@ -446,6 +446,7 @@ class BarController extends Controller {
             'slug' => 'nullable|' . ValidationDefaults::barSlug($bar),
             'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+            'inventory' => ['nullable', ValidationDefaults::economyInventory($bar->economy)],
             'low_balance_text' => 'nullable|' . ValidationDefaults::DESCRIPTION,
         ], [
             'slug.regex' => __('pages.bar.slugFieldRegexError'),
@@ -460,6 +461,7 @@ class BarController extends Controller {
         $bar->show_explore = is_checked($request->input('show_explore'));
         $bar->show_community = is_checked($request->input('show_community'));
         $bar->self_enroll = is_checked($request->input('self_enroll'));
+        $bar->inventory_id = $request->input('inventory');
         $bar->low_balance_text = $request->input('low_balance_text');
 
         // Save the bar

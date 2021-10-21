@@ -350,6 +350,15 @@ return [
     ],
 
     /**
+     * Inventory pages.
+     */
+    'inventories' => [
+        'title' => 'Inventories',
+        'inventory' => 'Inventory',
+        'manage' => 'Manage inventories',
+    ],
+
+    /**
      * Payment service pages.
      */
     'paymentService' => [
@@ -845,6 +854,8 @@ return [
         'slugFieldRegexError' => 'Dis slug must start with n alphabetical character.',
         'codeDescription' => 'With a bar secret, ye prevent random pirates from joining. To join the bar, users be required to enter th\' secret.',
         'economyDescription' => 'Th\' booty defines what loot, currencies and wallets be used in dis bar. Be very careful wit\' changing it after th\' bar be created, as this immediately affects th\' list of loot, currencies and wallets used in dis bar. Mateies probably don\'t expect dis, and might find it hard to understand.',
+        'inventoryDescription' => 'Select an inventory to automatically keep track of inventory when products are sold.',
+        'selectInventoryAfterCreate' => 'Ye may select th\' inventory after th\' bar be created.',
         'showExploreDescription' => 'List on public \'Explore bars\' page',
         'showCommunityDescription' => 'List on crew page for crew maties',
         'selfEnrollDescription' => 'Allow self enrollment (wit\' code if specified)',

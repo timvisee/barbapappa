@@ -89,6 +89,32 @@
 
         <div class="ui divider"></div>
 
+        <div class="ui message">
+            <div class="header">@lang('pages.inventories.inventory')</div>
+            <p>@lang('pages.bar.inventoryDescription')</p>
+        </div>
+
+        <div class="required field {{ ErrorRenderer::hasError('inventory') ? 'error' : '' }}">
+            {{ Form::label('inventory', __('pages.inventories.inventory')) }}
+
+            <div class="ui fluid selection dropdown">
+                {{ Form::hidden('inventory', $bar->inventory_id) }}
+                <i class="dropdown icon"></i>
+
+                <div class="default text">@lang('misc.pleaseSpecify')</div>
+                <div class="menu">
+                    <div class="item" data-value=""><i>@lang('misc.none')</i></div>
+                    @foreach($bar->economy->inventories as $inventory)
+                        <div class="item" data-value="{{ $inventory->id }}">{{ $inventory->name }}</div>
+                    @endforeach
+                </div>
+            </div>
+
+            {{ ErrorRenderer::inline('inventory') }}
+        </div>
+
+        <div class="ui divider"></div>
+
         <div class="field {{ ErrorRenderer::hasError('low_balance_text') ? 'error' : '' }}">
             {{ Form::label('low_balance_text', __('pages.bar.lowBalanceText') . ':') }}
             {{ Form::textarea('low_balance_text', $bar->low_balance_text, ['placeholder' => __('pages.bar.lowBalanceTextPlaceholder'), 'rows' => 3]) }}
