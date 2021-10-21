@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 use App\Helpers\ValidationDefaults;
-use App\Models\Inventory;
 
 class InventoryController extends Controller {
 
@@ -70,6 +69,22 @@ class InventoryController extends Controller {
                 'inventoryId' => $inventory->id,
             ])
             ->with('success', __('pages.inventories.created'));
+    }
+
+    /**
+     * Show an inventory.
+     *
+     * @return Response
+     */
+    public function show($communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+
+        return view('community.economy.inventory.show')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory);
     }
 
     /**

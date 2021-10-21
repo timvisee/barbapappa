@@ -72,18 +72,18 @@
                     <td>{{ $product->user->name }}</td>
                 </tr>
             @endif
-                <tr>
-                    <td>@lang('misc.trashed')</td>
-                    @if(!$product->trashed())
-                        <td>{{ yesno(false) }}</td>
-                    @else
-                        <td>
-                            <span class="ui text red">
-                                @include('includes.humanTimeDiff', ['time' => $product->deleted_at])
-                            </span>
-                        </td>
-                    @endif
-                </tr>
+            <tr>
+                <td>@lang('misc.trashed')</td>
+                @if(!$product->trashed())
+                    <td>{{ yesno(false) }}</td>
+                @else
+                    <td>
+                        <span class="ui text red">
+                            @include('includes.humanTimeDiff', ['time' => $product->deleted_at])
+                        </span>
+                    </td>
+                @endif
+            </tr>
             <tr>
                 <td>@lang('misc.createdBy')</td>
                 @if($product->created_user)
