@@ -356,6 +356,7 @@ return [
         'title' => 'Inventories',
         'inventory' => 'Inventory',
         'manage' => 'Manage inventories',
+        'noInventories' => 'No inventories...',
     ],
 
     /**

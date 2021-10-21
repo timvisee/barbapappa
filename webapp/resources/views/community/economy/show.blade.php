@@ -36,6 +36,13 @@
                 class="item">
             @lang('pages.products.title')
         </a>
+        <a href="{{ route('community.economy.inventory.index', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                ]) }}"
+                class="item">
+            @lang('pages.inventories.title')
+        </a>
         <a href="{{ route('community.economy.payment.index', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id,

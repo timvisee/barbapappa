@@ -99,6 +99,21 @@ Breadcrumbs::for('community.economy.product.show', function(BreadcrumbTrail $tra
     ]));
 });
 
+Breadcrumbs::for('community.economy.inventory.index', function(BreadcrumbTrail $trail, $economy) {
+    $trail->parent('community.economy.show', $economy);
+    $trail->push(__('pages.inventories.title'), route('community.economy.inventory.index', ['communityId' => $economy->community_id, 'economyId' => $economy->id]));
+});
+
+Breadcrumbs::for('community.economy.inventory.show', function(BreadcrumbTrail $trail, $inventory) {
+    $economy = $inventory->economy;
+    $trail->parent('community.economy.inventory.index', $economy);
+    $trail->push($inventory->name, route('community.economy.inventory.show', [
+        'communityId' => $economy->community_id,
+        'economyId' => $economy->id,
+        'inventoryId' => $inventory->id,
+    ]));
+});
+
 Breadcrumbs::for('community.economy.payment.index', function(BreadcrumbTrail $trail, $economy) {
     $trail->parent('community.economy.show', $economy);
     $trail->push(__('pages.payments.title'), route('community.economy.payment.index', ['communityId' => $economy->community_id, 'economyId' => $economy->id]));

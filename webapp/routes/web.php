@@ -13,6 +13,7 @@ use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyWalletController;
 use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
 
@@ -294,6 +295,24 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::get('/delete', 'ProductController@delete')->name('community.economy.product.delete');
                             Route::delete('/delete', 'ProductController@doDelete')->name('community.economy.product.doDelete');
                         });
+                    });
+                });
+
+                // Economy inventories, require view perms
+                Route::prefix('/inventories')->middleware(InventoryController::permsView()->middleware())->group(function() {
+                    // Index
+                    Route::get('/', 'InventoryController@index')->name('community.economy.inventory.index');
+
+                    // Create, require manage perms
+                    Route::middleware(InventoryController::permsManage()->middleware())->group(function() {
+                        Route::get('/create', 'InventoryController@create')->name('community.economy.inventory.create');
+                        Route::post('/create', 'InventoryController@doCreate')->name('community.economy.inventory.doCreate');
+                    });
+
+                    // Specific
+                    Route::prefix('/{inventoryId}')->group(function() {
+                        // Show
+                        Route::get('/', 'InventoryController@show')->name('community.economy.inventory.show');
                     });
                 });
 

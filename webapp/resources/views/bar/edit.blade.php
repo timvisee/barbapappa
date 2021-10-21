@@ -113,6 +113,10 @@
             {{ ErrorRenderer::inline('inventory') }}
         </div>
 
+        <a href="{{ route('community.economy.inventory.index', ['communityId' => $community->human_id, $bar->economy_id]) }}">
+            @lang('pages.inventories.manage')
+        </a>
+
         <div class="ui divider"></div>
 
         <div class="field {{ ErrorRenderer::hasError('low_balance_text') ? 'error' : '' }}">

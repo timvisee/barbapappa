@@ -357,6 +357,7 @@ return [
         'title' => 'Inventarissen',
         'inventory' => 'Inventaris',
         'manage' => 'Manage inventarissen',
+        'noInventories' => 'Geen inventarissen...',
     ],
 
     /**
