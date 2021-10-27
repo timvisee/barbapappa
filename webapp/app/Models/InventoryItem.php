@@ -26,6 +26,13 @@ class InventoryItem extends Model {
     protected $fillable = ['inventory_id', 'product_id', 'quantity'];
 
     /**
+     * A scope to a specific product.
+     */
+    public function scopeProduct($query, Product $product) {
+        return $query->where('product_id', $product->id);
+    }
+
+    /**
      * Get the inventory.
      *
      * @return Inventory The inventory.

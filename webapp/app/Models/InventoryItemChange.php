@@ -112,4 +112,32 @@ class InventoryItemChange extends Model {
     public function mutation_product() {
         return $this->belongsTo(MutationProduct::class);
     }
+
+    /**
+     * Check if a given type is valid.
+     *
+     * @param int $type The type to check.
+     * @return bool True if valid, false if not.
+     */
+    public static function isValidType(int $type): bool {
+        switch($type) {
+        case Self::TYPE_UPDATE:
+        case Self::TYPE_MOVE:
+        case Self::TYPE_PURCHASE:
+            return true;
+
+        default:
+            return false;
+        }
+    }
+
+    /**
+     * Assert the given type is valid.
+     *
+     * @param int $type The type to assert.
+     */
+    public static function assertValidType(int $type) {
+        if(!Self::isValidType($type))
+            throw new \Exception("Invalid inventory change type: " . $type);
+    }
 }
