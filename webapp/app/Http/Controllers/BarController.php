@@ -1173,6 +1173,19 @@ class BarController extends Controller {
                         'quantity' => $quantity,
                     ])
                 );
+
+                // Update bar inventory
+                $inventory = $bar->inventory;
+                if($inventory != null)
+                    $inventory->changeProduct(
+                        $product['product'],
+                        InventoryItemChange::TYPE_PURCHASE,
+                        -$quantity,
+                        null,
+                        null,
+                        null,
+                        $mut_product->mutationable,
+                    );
             });
 
             // Update the wallet balance
