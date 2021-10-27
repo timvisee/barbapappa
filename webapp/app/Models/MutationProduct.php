@@ -66,7 +66,17 @@ class MutationProduct extends Model {
      *
      * @throws \Exception Throws if we cannot undo right now.
      */
-    public function undo() {}
+    public function undo() {
+        // We must be in a database transaction
+        assert_transaction();
+
+        // Undo inventory changes for this product mutation
+        InventoryItemChange::mutationProduct($this)
+            ->get()
+            ->each(function($change) {
+                $change->undo();
+            });
+    }
 
     /**
      * Handle changes as effect of a state change.
