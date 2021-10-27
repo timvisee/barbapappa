@@ -15,7 +15,9 @@ class CreateInventoryItemChangeTable extends Migration {
         Schema::create('inventory_item_change', function(Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('item_id')->unsigned();
+            $table->integer('type')->unsigned()->nullable(false);
             $table->integer('quantity')->nullable(false);
+            $table->integer('related_id')->unsigned()->nullable(true);
             $table->integer('user_id')->unsigned()->nullable(true);
             $table->string('comment')->nullable(true);
             $table->integer('mutation_product_id')->unsigned()->nullable(true);
@@ -25,6 +27,10 @@ class CreateInventoryItemChangeTable extends Migration {
                 ->references('id')
                 ->on('inventory_item')
                 ->onDelete('cascade');
+            $table->foreign('related_id')
+                ->references('id')
+                ->on('inventory_item_change')
+                ->onDelete('set null');
             $table->foreign('user_id')
                 ->references('id')
                 ->on('user')
