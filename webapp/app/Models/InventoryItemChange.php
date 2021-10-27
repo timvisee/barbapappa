@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Inventory item change model.
@@ -139,5 +140,21 @@ class InventoryItemChange extends Model {
     public static function assertValidType(int $type) {
         if(!Self::isValidType($type))
             throw new \Exception("Invalid inventory change type: " . $type);
+    }
+
+    /**
+     * Undo and delete this change.
+     *
+     * This will revert the inventory quantity change.
+     */
+    public function undo() {
+        $self = $this;
+        DB::transaction(function() use($self) {
+            // Revert item quantity
+            $self->item->decrement('quantity', $self->quantity);
+
+            // Delete this change
+            $self->delete();
+        });
     }
 }

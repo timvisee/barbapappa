@@ -165,8 +165,7 @@ class Inventory extends Model {
             $change->save();
 
             // Update item quantity
-            $item->quantity += $quantity;
-            $item->save();
+            $item->increment('quantity', $quantity);
         });
 
         return $change;
