@@ -52,12 +52,31 @@ class MutationProduct extends Model {
     }
 
     /**
+     * Get the inventory changes related to this mutation.
+     *
+     * @return Inventory changes.
+     */
+    public function inventoryChanges() {
+        return $this->hasMany(InventoryItemChange::class);
+    }
+
+    /**
      * Undo the product mutation.
      * This does not delete the mutation model.
      *
      * @throws \Exception Throws if we cannot undo right now.
      */
-    public function undo() {}
+    public function undo() {
+        // We must be in a database transaction
+        assert_transaction();
+
+        // Undo inventory changes for this product mutation
+        InventoryItemChange::mutationProduct($this)
+            ->get()
+            ->each(function($change) {
+                $change->undo();
+            });
+    }
 
     /**
      * Handle changes as effect of a state change.

@@ -184,13 +184,30 @@ class ValidationDefaults {
      *
      * This checks whether the submitted economy is part of the given community.
      *
-     * @param int $community The community this configuration is built for.  @return Rule The validation rule.
+     * @param Community $community The community this configuration is built for.
+     * @return Rule The validation rule.
      */
     public static function communityEconomy(Community $community) {
         return Rule::exists('economy', 'id')
             ->where(function($query) use($community) {
                 // Scope to the current community
                 return $query->where('community_id', $community->id);
+            });
+    }
+
+    /**
+     * Build the economy inventory validation configuration.
+     *
+     * This checks whether the submitted inventory is part of the given economy.
+     *
+     * @param Economy $economy The economy this configuration is built for.
+     * @return Rule The validation rule.
+     */
+    public static function economyInventory(Economy $economy) {
+        return Rule::exists('inventory', 'id')
+            ->where(function($query) use($economy) {
+                // Scope to the current economy
+                return $query->where('economy_id', $economy->id);
             });
     }
 

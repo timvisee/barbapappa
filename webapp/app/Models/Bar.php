@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\DB;
  * @property bool show_community
  * @property bool self_enroll
  * @property string|null password
+ * @property int|null inventory_id
+ * @property-read Inventory|null inventory
  * @property string|null low_balance_text
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -118,6 +120,15 @@ class Bar extends Model {
      */
     public function members() {
         return $this->hasMany(BarMember::class);
+    }
+
+    /**
+     * Get the inventory assigned to this bar.
+     *
+     * @return Inventory|null The inventory.
+     */
+    public function inventory() {
+        return $this->belongsTo(Inventory::class);
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bar;
 use App\Models\Currency;
 use App\Models\EconomyMember;
+use App\Models\InventoryItemChange;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
@@ -687,6 +688,19 @@ class KioskController extends Controller {
                         'quantity' => $quantity,
                     ])
                 );
+
+                // Update bar inventory
+                $inventory = $bar->inventory;
+                if($inventory != null)
+                    $inventory->changeProduct(
+                        $product['product'],
+                        InventoryItemChange::TYPE_PURCHASE,
+                        -$quantity,
+                        null,
+                        null,
+                        null,
+                        $mut_product->mutationable,
+                    );
             });
 
             // Update the wallet balance

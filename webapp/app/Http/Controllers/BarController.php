@@ -6,6 +6,7 @@ use App\Exports\BarPurchaseHistoryExport;
 use App\Helpers\ValidationDefaults;
 use App\Models\Bar;
 use App\Models\EconomyMember;
+use App\Models\InventoryItemChange;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
@@ -446,6 +447,7 @@ class BarController extends Controller {
             'slug' => 'nullable|' . ValidationDefaults::barSlug($bar),
             'description' => 'nullable|' . ValidationDefaults::DESCRIPTION,
             'password' => 'nullable|' . ValidationDefaults::SIMPLE_PASSWORD,
+            'inventory' => ['nullable', ValidationDefaults::economyInventory($bar->economy)],
             'low_balance_text' => 'nullable|' . ValidationDefaults::DESCRIPTION,
         ], [
             'slug.regex' => __('pages.bar.slugFieldRegexError'),
@@ -460,6 +462,7 @@ class BarController extends Controller {
         $bar->show_explore = is_checked($request->input('show_explore'));
         $bar->show_community = is_checked($request->input('show_community'));
         $bar->self_enroll = is_checked($request->input('self_enroll'));
+        $bar->inventory_id = $request->input('inventory');
         $bar->low_balance_text = $request->input('low_balance_text');
 
         // Save the bar
@@ -1010,6 +1013,28 @@ class BarController extends Controller {
             if(!$free)
                 $wallet->withdraw($price);
 
+            // Undo inventory changes for this product mutation
+            InventoryItemChange::mutationProduct($mut_product->mutationable)
+                ->get()
+                ->each(function($change) {
+                    $change->undo();
+                });
+
+            // Update bar inventory
+            $inventory = $bar->inventory;
+            if($inventory != null) {
+                $quantity = $mut_product->mutationable->quantity;
+                $inventory->changeProduct(
+                    $product,
+                    InventoryItemChange::TYPE_PURCHASE,
+                    -$quantity,
+                    null,
+                    null,
+                    null,
+                    $mut_product->mutationable,
+                );
+            }
+
             // Return the transaction
             $out = $transaction;
         });
@@ -1148,6 +1173,19 @@ class BarController extends Controller {
                         'quantity' => $quantity,
                     ])
                 );
+
+                // Update bar inventory
+                $inventory = $bar->inventory;
+                if($inventory != null)
+                    $inventory->changeProduct(
+                        $product['product'],
+                        InventoryItemChange::TYPE_PURCHASE,
+                        -$quantity,
+                        null,
+                        null,
+                        null,
+                        $mut_product->mutationable,
+                    );
             });
 
             // Update the wallet balance

@@ -59,6 +59,7 @@ class Product extends Model {
      *
      * @return Relation to the user that created this product.
      */
+    // TODO: rename to createdUser
     public function created_user() {
         return $this->belongsTo(User::class, 'created_user_id');
     }
@@ -68,6 +69,7 @@ class Product extends Model {
      *
      * @return Relation to the user that created this product.
      */
+    // TODO: rename to updatedUser
     public function updated_user() {
         return $this->belongsTo(User::class, 'updated_user_id');
     }
@@ -88,6 +90,24 @@ class Product extends Model {
      */
     public function prices() {
         return $this->hasMany(ProductPrice::class);
+    }
+
+    /**
+     * Get the inventory items for this product.
+     *
+     * @return InventoryItem Inventory item.
+     */
+    public function inventoryItems() {
+        return $this->hasMany(InventoryItem::class);
+    }
+
+    /**
+     * Get the products to affect in the inventory when this product is bought.
+     *
+     * @return Product inventory items.
+     */
+    public function inventoryProducts() {
+        return $this->hasMany(ProductInventoryItem::class);
     }
 
     /**
