@@ -57,7 +57,7 @@ return [
         'waitOnReceipt' => 'Aan het wachten tot de betaling ontvangen is. Dit kan tot een aantal dagen duren.',
         'waitOnCreate' => 'De betaling wordt aangemaakt in de achtergrond. Even geduld alsjeblieft.',
         'pleasePay' => 'Klik op de \'Betaal\' knop en voltooi de betaling via bunq.',
-        'handledByBunq' => 'Je betaling zal behandeld worden door bunq, een bank die hiervoor een service verleent. Je kunt met iDeal of SOFORT betalen op de bunq-betaalpagina.',
+        'handledByBunq' => 'Je betaling zal behandeld worden door bunq, een bank die hiervoor een service verleent. Je kunt met iDeal betalen op de bunq-betaalpagina.',
         'paymentForWalletTopUp' => 'Betaling voor portemonnee storting',
         'processingDontPayTwice' => 'Verwerken. Betaal niet dubbel!',
         'processingDescription' => 'Je betaling wordt verwerkt op de achtergrond. Het kan tot een minuut duren voordat de betaling doorkomt.',

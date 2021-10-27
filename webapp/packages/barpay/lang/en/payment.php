@@ -57,7 +57,7 @@ return [
         'waitOnReceipt' => 'Waiting for the payment to be received. This may take up to a few days.',
         'waitOnCreate' => 'The payment is being created in the background. Please wait.',
         'pleasePay' => 'Please click the \'Pay\' button and finish the payment through bunq.',
-        'handledByBunq' => 'Your payment will be handled through bunq, a bank which provides a service for this. You\'ll be able to pay with iDeal or SOFORT on the bunq payment page.',
+        'handledByBunq' => 'Your payment will be handled through bunq, a bank which provides a service for this. You\'ll be able to pay with iDeal on the bunq payment page.',
         'paymentForWalletTopUp' => 'Payment for wallet top-up',
         'processingDontPayTwice' => 'Processing. Do not pay twice!',
         'processingDescription' => 'Your payment is being processed in the backgroud. Please allow up to a minute for it to come through.',
