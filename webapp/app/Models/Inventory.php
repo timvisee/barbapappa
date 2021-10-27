@@ -53,6 +53,31 @@ class Inventory extends Model {
     }
 
     /**
+     * Get or create the inventory item for a given product.
+     *
+     * @param Product $product The product to get the inventory item for.
+     * @return InventoryItem The inventory item.
+     */
+    public function getOrCreateItem(Product $product): InventoryItem {
+        // TODO: assert the product and inventory are in the same economy
+
+        $self = $this;
+        /** @var InventoryItem */
+        $item = null;
+
+        DB::transaction(function() use($self, $product, &$item) {
+            $item = $self->items()->product($product)->first();
+            if($item == null)
+                $item = $self->items()->create([
+                    'product_id' => $product->id,
+                    'quantity' => 0,
+                ]);
+        });
+
+        return $item;
+    }
+
+    /**
      * Add a change for a given product.
      *
      * A positive quantity means the amount is added to the inventory.
@@ -75,19 +100,13 @@ class Inventory extends Model {
         ?User $user,
         ?InventoryItemChange $related,
         ?MutationProduct $mutationProduct
-    ) {
+    ): InventoryItemChange {
         $self = $this;
+        /** @var InventoryItemChange */
         $change = null;
-        DB::transaction(function() use($self, $product, $type, $quantity, $comment, $user, $related, $mutationProduct, &$change) {
-            // Get or create inventory item
-            $item = $self->items()->product($product)->first();
-            if($item == null)
-                $item = $self->items()->create([
-                    'product_id' => $product->id,
-                    'quantity' => 0,
-                ]);
 
-            // Change the item
+        DB::transaction(function() use($self, $product, $type, $quantity, $comment, $user, $related, $mutationProduct, &$change) {
+            $item = $self->getOrCreateItem($product);
             $change = $self->changeItem($item, $type, $quantity, $comment, $user, $related, $mutationProduct);
         });
 
@@ -117,10 +136,12 @@ class Inventory extends Model {
         ?User $user,
         ?InventoryItemChange $related,
         ?MutationProduct $mutationProduct
-    ) {
+    ): InventoryItemChange {
         InventoryItemChange::assertValidType($type);
 
+        /** @var InventoryItemChange */
         $change = null;
+
         DB::transaction(function() use($item, $type, $quantity, $comment, $user, $related, $mutationProduct, &$change) {
             // Create change
             $change = new InventoryItemChange();
