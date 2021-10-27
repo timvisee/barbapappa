@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.122 (2021-10-27)
+
+- Add inventory management stubs, management pages are not yet implemented
+- Add inventory tracking for purchased products
+- Remove SOFORT mention on iDeal payments
+
 ## 0.1.121 (2021-10-20)
 
 - Hotfix for error when user balance drops below zero
