@@ -69,6 +69,19 @@ class InventoryItemChange extends Model {
     }
 
     /**
+     * A scope to changes for a given product mutation.
+     *
+     * @param MutationProduct|int $mutation_product_id The product mutation.
+     */
+    public function scopeMutationProduct($query, $mutation_product_id) {
+        if($mutation_product_id instanceof MutationProduct)
+            $mutation_product_id = $mutation_product_id->id;
+        if($mutation_product_id == null)
+            throw new \Exception("MutationProduct cannot be null");
+        return $query->where('mutation_product_id', $mutation_product_id);
+    }
+
+    /**
      * A scope to a specific change type.
      */
     public function scopeType($query, int $type) {

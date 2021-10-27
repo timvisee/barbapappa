@@ -6,6 +6,7 @@ use App\Exports\BarPurchaseHistoryExport;
 use App\Helpers\ValidationDefaults;
 use App\Models\Bar;
 use App\Models\EconomyMember;
+use App\Models\InventoryItemChange;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
@@ -1011,6 +1012,28 @@ class BarController extends Controller {
             // TODO: do this by setting the mutation states instead
             if(!$free)
                 $wallet->withdraw($price);
+
+            // Undo inventory changes for this product mutation
+            InventoryItemChange::mutationProduct($mut_product->mutationable)
+                ->get()
+                ->each(function($change) {
+                    $change->undo();
+                });
+
+            // Update bar inventory
+            $inventory = $bar->inventory;
+            if($inventory != null) {
+                $quantity = $mut_product->mutationable->quantity;
+                $inventory->changeProduct(
+                    $product,
+                    InventoryItemChange::TYPE_PURCHASE,
+                    -$quantity,
+                    null,
+                    null,
+                    null,
+                    $mut_product->mutationable,
+                );
+            }
 
             // Return the transaction
             $out = $transaction;
