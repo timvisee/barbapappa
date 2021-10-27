@@ -53,6 +53,16 @@ class Inventory extends Model {
     }
 
     /**
+     * Get an inventory item for a given product if it exists.
+     *
+     * @param Product $product The product to get the inventory item for.
+     * @return InventoryItem|null The inventory item if it exists.
+     */
+    public function getItem(Product $product): ?InventoryItem {
+        return $this->items()->product($product)->first();
+    }
+
+    /**
      * Get or create the inventory item for a given product.
      *
      * @param Product $product The product to get the inventory item for.
@@ -66,7 +76,7 @@ class Inventory extends Model {
         $item = null;
 
         DB::transaction(function() use($self, $product, &$item) {
-            $item = $self->items()->product($product)->first();
+            $item = $self->getItem($product);
             if($item == null)
                 $item = $self->items()->create([
                     'product_id' => $product->id,

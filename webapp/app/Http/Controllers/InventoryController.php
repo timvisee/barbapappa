@@ -81,10 +81,12 @@ class InventoryController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $products = $economy->products;
 
         return view('community.economy.inventory.show')
             ->with('economy', $economy)
-            ->with('inventory', $inventory);
+            ->with('inventory', $inventory)
+            ->with('products', $products);
     }
 
     /**
