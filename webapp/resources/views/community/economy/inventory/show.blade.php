@@ -12,42 +12,71 @@
     <h2 class="ui header">@yield('title')</h2>
 
     {{-- Product list --}}
-    <div class="ui top vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
-        {{-- Header --}}
-        <h5 class="ui item header">
-            @lang('pages.inventories.inventory') ({{ count($products) }})
-        </h5>
+    <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
+        <h5 class="ui item header">@lang('pages.products.title')</h5>
 
-        {{-- Products --}}
         @forelse($products as $product)
-            <a class="item"
-                    href="{{ route('community.economy.product.show', [
-                        // TODO: this is not efficient
-                        'communityId' => $product->economy->community->human_id,
-                        'economyId' => $product->economy_id,
-                        'productId' => $product->id,
-                    ]) }}">
-                {{ $product->displayName() }}
+            @php
+                // This is inefficient, improve this
+                $item = $inventory->getItem($product);
+                $quantity = $item != null ? $item->quantity : 0;
+            @endphp
 
-                @php
-                    // This is inefficient, improve this
-                    $item = $inventory->getItem($product);
-                    $quantity = $item != null ? $item->quantity : 0;
-                @endphp
+            @if($quantity != 0)
+                <a class="item"
+                        href="{{ route('community.economy.product.show', [
+                            // TODO: this is not efficient
+                            'communityId' => $product->economy->community->human_id,
+                            'economyId' => $product->economy_id,
+                            'productId' => $product->id,
+                        ]) }}">
+                    {{ $product->displayName() }}
 
-                <div class="ui {{ $quantity < 0 ? 'red' : ($quantity > 0 ? 'green' : '') }} label">
-                    {{ $quantity }}
-                </div>
+                    <div class="ui {{ $quantity < 0 ? 'red' : ($quantity > 0 ? 'green' : '') }} label">
+                        {{ $quantity }}
+                    </div>
 
-                @if($item != null)
-                    <span class="sub-label">
-                        @include('includes.humanTimeDiff', ['time' => $item->updated_at ?? $item->created_at])
-                    </span>
-                @endif
-            </a>
+                    @if($item != null)
+                        <span class="sub-label">
+                            @include('includes.humanTimeDiff', ['time' => $item->updated_at ?? $item->created_at])
+                        </span>
+                    @endif
+                </a>
+            @endif
         @empty
             <i class="item">@lang('pages.products.noProducts')</i>
         @endforelse
+    </div>
+
+    {{-- Product list for 0 quantities --}}
+    <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
+        <h5 class="ui item header">@lang('pages.inventories.exhaustedProducts')</h5>
+
+        @foreach($products as $product)
+            @php
+                // This is inefficient, improve this
+                $item = $inventory->getItem($product);
+                $quantity = $item != null ? $item->quantity : 0;
+            @endphp
+
+            @if($quantity == 0)
+                <a class="item"
+                        href="{{ route('community.economy.product.show', [
+                            // TODO: this is not efficient
+                            'communityId' => $product->economy->community->human_id,
+                            'economyId' => $product->economy_id,
+                            'productId' => $product->id,
+                        ]) }}">
+                    {{ $product->displayName() }}
+
+                    @if($item != null)
+                        <span class="sub-label">
+                            @include('includes.humanTimeDiff', ['time' => $item->updated_at ?? $item->created_at])
+                        </span>
+                    @endif
+                </a>
+            @endif
+        @endforeach
     </div>
 
     <div class="ui divider hidden"></div>

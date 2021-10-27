@@ -364,6 +364,7 @@ return [
         'changed' => 'Th\' inventory be updated.',
         'deleteQuestion' => 'Yer about to sink dis inventory along with all its history. Ye be sure ye want to continue?',
         'deleted' => 'Th\' inventory be sunk.',
+        'exhaustedProducts' => 'Exhausted products',
     ],
 
     /**
