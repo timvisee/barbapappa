@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\InventoryItemChange;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -83,10 +84,27 @@ class InventoryController extends Controller {
         $inventory = $economy->inventories()->findOrFail($inventoryId);
         $products = $economy->products;
 
+        // Build list of (exhausted) products
+        [$products, $exhaustedProducts] = $products
+            ->map(function($product) use($inventory) {
+                // TODO: this is inefficient, improve this
+                $item = $inventory->getItem($product);
+                return [
+                    'product' => $product,
+                    'item' => $item,
+                    'quantity' => $item != null ? $item->quantity : 0,
+                ];
+            })
+            ->sortBy('product.name')
+            ->partition(function($p) {
+                return $p['quantity'] != 0;
+            });
+
         return view('community.economy.inventory.show')
             ->with('economy', $economy)
             ->with('inventory', $inventory)
-            ->with('products', $products);
+            ->with('products', $products)
+            ->with('exhaustedProducts', $exhaustedProducts);
     }
 
     /**
@@ -176,6 +194,125 @@ class InventoryController extends Controller {
                 'economyId' => $economy->id,
             ])
             ->with('success', __('pages.inventories.deleted'));
+    }
+
+    /**
+     * Balance an inventory.
+     *
+     * @return Response
+     */
+    public function balance($communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $products = $economy->products;
+
+        // Build list of (exhausted) products
+        [$products, $exhaustedProducts] = $products
+            ->map(function($product) use($inventory) {
+                // TODO: this is inefficient, improve this
+                $item = $inventory->getItem($product);
+                return [
+                    'product' => $product,
+                    'item' => $item,
+                    'quantity' => $item != null ? $item->quantity : 0,
+                    'field' => 'product_' . $product->id,
+                ];
+            })
+            ->sortBy('product.name')
+            ->partition(function($p) {
+                return $p['quantity'] != 0;
+            });
+
+        return view('community.economy.inventory.balance')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory)
+            ->with('products', $products)
+            ->with('exhaustedProducts', $exhaustedProducts);
+    }
+
+    /**
+     * Do balance an inventory.
+     *
+     * @return Response
+     */
+    public function doBalance(Request $request, $communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $products = $economy->products;
+
+        // Build list of (exhausted) products
+        $products = $products
+            ->map(function($product) use($inventory) {
+                // TODO: this is inefficient, improve this
+                $item = $inventory->getItem($product);
+                return [
+                    'product' => $product,
+                    'item' => $item,
+                    'quantity' => $item != null ? $item->quantity : 0,
+                    'field' => 'product_' . $product->id,
+                ];
+            });
+
+        // Validate
+        $rules = [
+            'comment' => 'required|' . ValidationDefaults::DESCRIPTION,
+            'confirm' => 'accepted',
+            'product_9_quantity' => 'nullable|integer|empty_with:product_9_delta',
+            'product_9_delta' => 'nullable|integer|empty_with:product_9_quantity',
+        ];
+        $messages = [];
+        foreach($products as $p) {
+            $rules[$p['field'] . '_quantity'] = 'nullable|integer|empty_with:' . $p['field'] . '_delta';
+            $rules[$p['field'] . '_delta'] = 'nullable|integer|empty_with:' . $p['field'] . '_quantity';
+            $messages[$p['field'] . '_quantity.integer'] = __('pages.inventories.mustBeInteger');
+            $messages[$p['field'] . '_delta.integer'] = __('pages.inventories.mustBeInteger');
+        }
+        $this->validate($request, $rules, $messages);
+
+        // Update quantities
+        $count = 0;
+        foreach($products as $p) {
+            $quantity = $request->input($p['field'] . '_quantity');
+            $delta = $request->input($p['field'] . '_delta');
+
+            // Update quantity or delta
+            if($quantity != null) {
+                $inventory->setProductQuantity(
+                    $p['product'],
+                    InventoryItemChange::TYPE_UPDATE,
+                    (int) $quantity,
+                    $request->input('comment'),
+                    barauth()->getSessionUser(),
+                    null,
+                    null
+                );
+                $count += 1;
+            } else if($delta != null) {
+                $inventory->changeProduct(
+                    $p['product'],
+                    InventoryItemChange::TYPE_UPDATE,
+                    (int) $delta,
+                    $request->input('comment'),
+                    barauth()->getSessionUser(),
+                    null,
+                    null
+                );
+                $count += 1;
+            }
+        }
+
+        // Redirect to inventory
+        return redirect()
+            ->route('community.economy.inventory.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'inventoryId' => $inventory->id,
+            ])
+            ->with('success', trans_choice('pages.inventories.#productsRebalanced', $count) . '.');
     }
 
     /**

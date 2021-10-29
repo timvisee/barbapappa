@@ -365,6 +365,13 @@ return [
         'deleteQuestion' => 'You\'re about to delete this inventory along with all its history. Are you sure you want to continue?',
         'deleted' => 'The inventory has been deleted.',
         'exhaustedProducts' => 'Exhausted products',
+        'rebalance' => 'Rebalance',
+        'rebalanceProducts' => 'Rebalance products',
+        'rebalanceDescription' => 'Count all products in your inventory and enter the quantities in the list below. Enter either the quantity or the change (delta). Enter the same quantity for products as currently known to confirm the inventory is still in balance. Leave fields empty to skip balancing a product.',
+        'defaultRebalanceComment' => 'Periodic rebalance by user',
+        '#productsRebalanced' => '{0} No products rebalanced|{1} One product rebalanced|[2,*] :count products rebalanced',
+        'confirmBalanceComplete' => 'I confirm I want to rebalance these products with the entered quantities',
+        'mustBeInteger' => 'Must be an integer.',
     ],
 
     /**

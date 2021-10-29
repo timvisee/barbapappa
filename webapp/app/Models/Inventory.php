@@ -88,6 +88,74 @@ class Inventory extends Model {
     }
 
     /**
+     * Add a change for a given product, setting its quantity.
+     *
+     * @param Product $product The product to update the quantity for.
+     * @param int $type Inventory item change type.
+     * @param int $quantity The quantity.
+     * @param string|null $comment A user comment for this change.
+     * @param User|null $user The user responsible for this change.
+     * @param InventoryItemChange|null $related A related inventory item change.
+     * @param MutationProduct|null $mutationProduct A related product mutation
+     *      for purchase changes.
+     * @return InventoryItemChange The added change.
+     */
+    public function setProductQuantity(
+        Product $product,
+        int $type,
+        int $quantity,
+        ?string $comment,
+        ?User $user,
+        ?InventoryItemChange $related,
+        ?MutationProduct $mutationProduct
+    ): InventoryItemChange {
+        $self = $this;
+        /** @var InventoryItemChange */
+        $change = null;
+
+        DB::transaction(function() use($self, $product, $type, $quantity, $comment, $user, $related, $mutationProduct, &$change) {
+            $item = $self->getOrCreateItem($product);
+            $change = $self->setItemQuantity($item, $type, $quantity, $comment, $user, $related, $mutationProduct);
+        });
+
+        return $change;
+    }
+
+    /**
+     * Add a change for a given product, setting its quantity.
+     *
+     * @param InventoryItem $item The inventory item to update the quantity for.
+     * @param int $type Inventory item change type.
+     * @param int $quantity The quantity.
+     * @param string|null $comment A user comment for this change.
+     * @param User|null $user The user responsible for this change.
+     * @param InventoryItemChange|null $related A related inventory item change.
+     * @param MutationProduct|null $mutationProduct A related product mutation
+     *      for purchase changes.
+     * @return InventoryItemChange The added change.
+     */
+    public function setItemQuantity(
+        InventoryItem $item,
+        int $type,
+        int $quantity,
+        ?string $comment,
+        ?User $user,
+        ?InventoryItemChange $related,
+        ?MutationProduct $mutationProduct
+    ): InventoryItemChange {
+        /** @var InventoryItemChange */
+        $change = null;
+        $self = $this;
+
+        DB::transaction(function() use($self, $item, $type, $quantity, $comment, $user, $related, $mutationProduct, &$change) {
+            $quantity = $quantity - $item->quantity;
+            $change = $self->changeItem($item, $type, $quantity, $comment, $user, $related, $mutationProduct);
+        });
+
+        return $change;
+    }
+
+    /**
      * Add a change for a given product.
      *
      * A positive quantity means the amount is added to the inventory.

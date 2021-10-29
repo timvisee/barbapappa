@@ -178,6 +178,9 @@ return [
     'otherSettings' => 'Andere instellingen',
     'changesSaved' => 'Aanpassingen opgeslagen',
     'migrate' => 'Migreren',
+    'quantity' => 'Hoeveelheid',
+    'delta' => 'Delta',
+    'comment' => 'Commentaar',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',

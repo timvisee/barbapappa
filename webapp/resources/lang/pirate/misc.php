@@ -177,6 +177,9 @@ return [
     'otherSettings' => 'Other settings',
     'changesSaved' => 'Changes saved',
     'migrate' => 'Migrate',
+    'quantity' => 'Quantity',
+    'delta' => 'Delta',
+    'comment' => 'Comment',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

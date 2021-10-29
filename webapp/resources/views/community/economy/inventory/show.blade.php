@@ -11,73 +11,78 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
+    @if(perms(InventoryController::permsManage()))
+        <p>
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.inventory.balance', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                        ]) }}"
+                        class="ui button orange">
+                    @lang('pages.inventories.rebalance')
+                </a>
+            </div>
+        </p>
+    @endif
+
     {{-- Product list --}}
     <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
-        <h5 class="ui item header">@lang('pages.products.title')</h5>
+        <h5 class="ui item header">
+            @lang('pages.products.title') ({{ count($products) }})
+        </h5>
 
-        @forelse($products as $product)
-            @php
-                // This is inefficient, improve this
-                $item = $inventory->getItem($product);
-                $quantity = $item != null ? $item->quantity : 0;
-            @endphp
+        @forelse($products as $p)
+            <a class="item"
+                    href="{{ route('community.economy.product.show', [
+                        // TODO: this is not efficient
+                        'communityId' => $p['product']->economy->community->human_id,
+                        'economyId' => $p['product']->economy_id,
+                        'productId' => $p['product']->id,
+                    ]) }}">
+                {{ $p['product']->displayName() }}
 
-            @if($quantity != 0)
-                <a class="item"
-                        href="{{ route('community.economy.product.show', [
-                            // TODO: this is not efficient
-                            'communityId' => $product->economy->community->human_id,
-                            'economyId' => $product->economy_id,
-                            'productId' => $product->id,
-                        ]) }}">
-                    {{ $product->displayName() }}
+                <div class="ui {{ $p['quantity'] < 0 ? 'red' : ($p['quantity'] > 0 ? 'green' : '') }} label">
+                    {{ $p['quantity'] }}
+                </div>
 
-                    <div class="ui {{ $quantity < 0 ? 'red' : ($quantity > 0 ? 'green' : '') }} label">
-                        {{ $quantity }}
-                    </div>
-
-                    @if($item != null)
-                        <span class="sub-label">
-                            @include('includes.humanTimeDiff', ['time' => $item->updated_at ?? $item->created_at])
-                        </span>
-                    @endif
-                </a>
-            @endif
+                @if($p['item'] != null)
+                    <span class="sub-label">
+                        @include('includes.humanTimeDiff', ['time' => $p['item']->updated_at ?? $p['item']->created_at])
+                    </span>
+                @endif
+            </a>
         @empty
             <i class="item">@lang('pages.products.noProducts')</i>
         @endforelse
     </div>
 
-    {{-- Product list for 0 quantities --}}
-    <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
-        <h5 class="ui item header">@lang('pages.inventories.exhaustedProducts')</h5>
+    {{-- Exhausted product list --}}
+    @if(!empty($exhaustedProducts))
+        <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
+            <h5 class="ui item header">
+                @lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})
+            </h5>
 
-        @foreach($products as $product)
-            @php
-                // This is inefficient, improve this
-                $item = $inventory->getItem($product);
-                $quantity = $item != null ? $item->quantity : 0;
-            @endphp
-
-            @if($quantity == 0)
+            @foreach($exhaustedProducts as $p)
                 <a class="item"
                         href="{{ route('community.economy.product.show', [
                             // TODO: this is not efficient
-                            'communityId' => $product->economy->community->human_id,
-                            'economyId' => $product->economy_id,
-                            'productId' => $product->id,
+                            'communityId' => $p['product']->economy->community->human_id,
+                            'economyId' => $p['product']->economy_id,
+                            'productId' => $p['product']->id,
                         ]) }}">
-                    {{ $product->displayName() }}
+                    {{ $p['product']->displayName() }}
 
-                    @if($item != null)
+                    @if($p['item'] != null)
                         <span class="sub-label">
-                            @include('includes.humanTimeDiff', ['time' => $item->updated_at ?? $item->created_at])
+                            @include('includes.humanTimeDiff', ['time' => $p['item']->updated_at ?? $p['item']->created_at])
                         </span>
                     @endif
                 </a>
-            @endif
-        @endforeach
-    </div>
+            @endforeach
+        </div>
+    @endif
 
     <div class="ui divider hidden"></div>
 
