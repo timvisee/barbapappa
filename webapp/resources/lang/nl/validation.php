@@ -108,6 +108,8 @@ return [
         ],
     ],
 
+    'empty_with' => 'Meerdere waardes niet toegestaan.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

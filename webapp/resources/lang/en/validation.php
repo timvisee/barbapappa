@@ -108,6 +108,8 @@ return [
         ],
     ],
 
+    'empty_with' => 'Cannot enter multiple values.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Attributes

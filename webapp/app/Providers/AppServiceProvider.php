@@ -7,6 +7,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Validator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -30,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
             // TODO: limit per environment/host
             // TODO: rough limit, limit to 3 per 3 seconds instead
             return Limit::perMinute(15);
+        });
+
+        // Custom validation
+        Validator::extend('empty_with', function($attribute, $value, $parameters, $validator) {
+            return ($value != '' && $validator->getValue($parameters[0]) != '') ? false : true;
         });
     }
 
