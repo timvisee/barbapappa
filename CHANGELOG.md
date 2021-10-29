@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.123 (2021-10-29)
+
+- Add page to migrate balance import alias to different name/email
+
 ## 0.1.122 (2021-10-27)
 
 - Add inventory management stubs, management pages are not yet implemented
