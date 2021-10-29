@@ -255,6 +255,21 @@ class BalanceImportChange extends Model {
     }
 
     /**
+     * Try to commit this change.
+     *
+     * @return bool True if committed, false if not.
+     */
+    public function tryCommit() {
+        // Skip if we shouldn't commit
+        if(!$this->shouldCommit())
+            return false;
+
+        // Try to commit
+        $this->commit();
+        return true;
+    }
+
+    /**
      * Commit this change.
      *
      * @throws \Exception Throws if already committed, or if not approved.

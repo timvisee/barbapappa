@@ -437,6 +437,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                                             Route::put('/approve', 'BalanceImportChangeController@doApprove')->name('community.economy.balanceimport.change.doApprove');
                                             Route::get('/undo', 'BalanceImportChangeController@undo')->name('community.economy.balanceimport.change.undo');
                                             Route::put('/undo', 'BalanceImportChangeController@doUndo')->name('community.economy.balanceimport.change.doUndo');
+                                            Route::get('/migrate', 'BalanceImportChangeController@migrate')->name('community.economy.balanceimport.change.migrate');
+                                            Route::put('/migrate', 'BalanceImportChangeController@doMigrate')->name('community.economy.balanceimport.change.doMigrate');
                                             Route::get('/delete', 'BalanceImportChangeController@delete')->name('community.economy.balanceimport.change.delete');
                                             Route::delete('/delete', 'BalanceImportChangeController@doDelete')->name('community.economy.balanceimport.change.doDelete');
                                         });

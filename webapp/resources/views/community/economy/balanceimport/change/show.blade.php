@@ -126,6 +126,17 @@
                     </a>
                 @endif
             </div>
+
+            <a href="{{ route('community.economy.balanceimport.change.migrate', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $economy->id,
+                        'systemId' => $system->id,
+                        'eventId' => $event->id,
+                        'changeId' => $change->id,
+                    ]) }}"
+                    class="ui button basic orange">
+                @lang('misc.migrate')
+            </a>
         @endif
 
         @if($change->mutation_id != null)

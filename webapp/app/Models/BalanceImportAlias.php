@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\CommitBalanceUpdatesForUser;
 use App\Models\Email;
 use App\Utils\EmailRecipient;
 use Carbon\Carbon;
@@ -134,6 +135,26 @@ class BalanceImportAlias extends Model {
     }
 
     /**
+     * Get a specific user alias in the given economy for the given email
+     * address.
+     *
+     * If an alias for the email doesn't exist, null is returned.
+     *
+     * @param Economy $economy The economy the alias is in.
+     * @param string $email The email address of the alias.
+     * @return BalanceImportAlias|null The balance import alias.
+     */
+    public static function get(Economy $economy, $email): ?BalanceImportAlias {
+        $email = normalize_email($email);
+
+        // Find the alias by this email address, update it and return
+        return $economy
+            ->balanceImportAliases()
+            ->where('email', $email)
+            ->first();
+    }
+
+    /**
      * Get or create a specific user alias in the given economy for the given
      * name and email address.
      *
@@ -152,10 +173,7 @@ class BalanceImportAlias extends Model {
         $email = normalize_email($email);
 
         // Find the alias by this email address, update it and return
-        $alias = $economy
-            ->balanceImportAliases()
-            ->where('email', $email)
-            ->first();
+        $alias = Self::get($economy, $email);
         if($alias != null) {
             // Update the name if it has changed
             if(!empty($name) && $alias->name != $name) {
@@ -338,8 +356,7 @@ class BalanceImportAlias extends Model {
             ->whereNull('mutation_id')
             ->get();
         foreach($changes as $change)
-            if($change->shouldCommit())
-                $change->commit();
+            $change->tryCommit();
     }
 
     /**
@@ -390,5 +407,39 @@ class BalanceImportAlias extends Model {
      */
     public function hasUnverifiedEmail() {
         return $this->userEmails()->unverified()->limit(1)->count() > 0;
+    }
+
+    /**
+     * Try to assign a user to this alias if that's not done yet.
+     *
+     * @param bool [$commit=true] Whether to try to commit changes when a
+     *      user gets assigned.
+     */
+    public function tryAssignUser($commit = true) {
+        // Skip if already set
+        if($this->user_id != null) {
+            if($commit)
+                CommitBalanceUpdatesForUser::dispatch($this->user_id);
+            return;
+        }
+
+        // Find user for current email
+        $email = Email::verified()->email($this->email)->first();
+        if($email == null)
+            return;
+        $user = $email->user;
+        if($user == null)
+            return;
+
+        // Assign user
+        $this->user_id = $user->id;
+        $this->save();
+
+        // Refresh the economy members for this user
+        BalanceImportAlias::refreshEconomyMembersForUser($user);
+
+        // Commit updates
+        if($commit)
+            CommitBalanceUpdatesForUser::dispatch($user->id);
     }
 }
