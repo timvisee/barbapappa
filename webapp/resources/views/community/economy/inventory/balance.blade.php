@@ -140,7 +140,7 @@
 
         <div class="ui divider hidden"></div>
 
-        <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
+        <button class="ui button primary" type="submit">@lang('pages.inventories.rebalance')</button>
         <a href="{{ route('community.economy.inventory.show', [
             'communityId' => $community->human_id,
             'economyId' => $economy->id,

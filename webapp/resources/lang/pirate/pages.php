@@ -365,6 +365,13 @@ return [
         'deleteQuestion' => 'Yer about to sink dis inventory along with all its history. Ye be sure ye want to continue?',
         'deleted' => 'Th\' inventory be sunk.',
         'exhaustedProducts' => 'Exhausted products',
+        'rebalance' => 'Rebalance',
+        'rebalanceProducts' => 'Rebalance products',
+        'rebalanceDescription' => 'Count all products in yer inventory and enter th\' quantities in th\' list below. Enter either th\' quantity or change (delta). Enter th\' same quantity for products as currently known to confirm th\' inventory be in balance. Leave fields empty to skip balancing a product.',
+        'defaultRebalanceComment' => 'Periodic rebalance by pirate',
+        '#productsRebalanced' => '{0} Nay products rebalanced|{1} One product rebalanced|[2,*] :count products rebalanced',
+        'confirmBalanceComplete' => 'I confirm I want to rebalance these products with the entered quantities',
+        'mustBeInteger' => 'Must be an integer.',
     ],
 
     /**

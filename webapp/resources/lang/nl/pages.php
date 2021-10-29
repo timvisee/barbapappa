@@ -366,6 +366,13 @@ return [
         'deleteQuestion' => 'Je staat op het punt om dit inventaris met alle historie te verwijderen. Weet je zeker dat je door wilt gaan?',
         'deleted' => 'Het inventaris is verwijderd.',
         'exhaustedProducts' => 'Uitgeputte producten',
+        'rebalance' => 'Balansen',
+        'rebalanceProducts' => 'Producten balansen',
+        'rebalanceDescription' => 'Tel alle producten in je inventaris en vul de hoeveelheden in in de onderstaande lijst. Vul de hoeveelheid of verandering (delta) in. Vul dezelfde hoeveelheid als bekend in om te bevestigen dat een product nog steeds in balans is. Laat velden leeg om balansen over te slaan.',
+        'defaultRebalanceComment' => 'Periodieke herbalans door gebruiker',
+        '#productsRebalanced' => '{0} Geen producten gebalanceerd|{1} Één product gebalanceerd|[2,*] :count producten gebalanceerd',
+        'confirmBalanceComplete' => 'Ik bevestig dat ik de producten wil balansen met de ingevulde hoeveelheiden',
+        'mustBeInteger' => 'Moet een nummer zijn.',
     ],
 
     /**

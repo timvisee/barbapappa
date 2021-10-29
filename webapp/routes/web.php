@@ -321,6 +321,12 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::get('/delete', 'InventoryController@delete')->name('community.economy.inventory.delete');
                             Route::delete('/delete', 'InventoryController@doDelete')->name('community.economy.inventory.doDelete');
                         });
+
+                        // Balance
+                        Route::middleware(InventoryController::permsManage()->middleware())->group(function() {
+                            Route::get('/balance', 'InventoryController@balance')->name('community.economy.inventory.balance');
+                            Route::put('/balance', 'InventoryController@doBalance')->name('community.economy.inventory.doBalance');
+                        });
                     });
                 });
 

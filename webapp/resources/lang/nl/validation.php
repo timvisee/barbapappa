@@ -76,6 +76,10 @@ return [
     'required_with_all'    => 'Het :attribute veld is vereist als :values beschikbaar is',
     'required_without'     => 'Het :attribute veld is vereist als :values niet beschikbaar is.',
     'required_without_all' => 'Het :attribute veld is vereist als geen van de :values beschikbaar is.',
+    'prohibited'           => 'Het :attribute veld is verboden.',
+    'prohibited_if'        => 'Het :attribute veld is verboden wanneer :other :value is.',
+    'prohibited_unless'    => 'Het :attribute veld is verboden behalve als :other :values is.',
+    'prohibits'            => 'Het :attribute veld verbiedt :other.',
     'same'                 => 'De waarde in de :attribute en :other velden moet overeen komen.',
     'size'                 => [
         'numeric' => 'Het :attribute veld moet :size groot zijn.',

@@ -76,6 +76,10 @@ return [
     'required_with_all'    => 'Th\' :attribute field be required when :values be sailing.',
     'required_without'     => 'Th\' :attribute field be required when :values be sunken.',
     'required_without_all' => 'Th\' :attribute field be required when none of :values are sailing.',
+    'prohibited'           => 'Th\' :attribute field be prohibited.',
+    'prohibited_if'        => 'Th\' :attribute field be prohibited when :other be :value.',
+    'prohibited_unless'    => 'Th\' :attribute field be prohibited unless :other be in :values.',
+    'prohibits'            => 'Th\' :attribute field prohibits :other from being present.',
     'same'                 => 'Th\' :attribute and :other \'d match.',
     'size'                 => [
         'numeric' => 'Th\' :attribute \'d be :size.',

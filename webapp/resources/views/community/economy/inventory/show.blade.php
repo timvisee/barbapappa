@@ -11,6 +11,21 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
+    @if(perms(InventoryController::permsManage()))
+        <p>
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.inventory.balance', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                        ]) }}"
+                        class="ui button orange">
+                    @lang('pages.inventories.rebalance')
+                </a>
+            </div>
+        </p>
+    @endif
+
     {{-- Product list --}}
     <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
         <h5 class="ui item header">
