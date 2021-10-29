@@ -1,11 +1,11 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/css/vendor/flag-icon.css": "/css/vendor/flag-icon.css",
-    "/js/widget/advancedbuy.js": "/js/widget/advancedbuy.js",
-    "/js/widget/kioskbuy.js": "/js/widget/kioskbuy.js",
-    "/js/widget/quickbuy.js": "/js/widget/quickbuy.js",
-    "/js/vendor.js": "/js/vendor.js",
-    "/css/vendor.css": "/css/vendor.css",
-    "/js/vendor/chart.js": "/js/vendor/chart.js"
+    "/js/app.js": "/js/app.js?id=c8f9f3f6651c4cedb2ae",
+    "/css/app.css": "/css/app.css?id=bb984e1a834d43246236",
+    "/css/vendor/flag-icon.css": "/css/vendor/flag-icon.css?id=51d8c27d803605d80865",
+    "/js/widget/advancedbuy.js": "/js/widget/advancedbuy.js?id=5429549565e4de19bcef",
+    "/js/widget/kioskbuy.js": "/js/widget/kioskbuy.js?id=43ebeadac21856fb2192",
+    "/js/widget/quickbuy.js": "/js/widget/quickbuy.js?id=5c3724138870d119263f",
+    "/js/vendor.js": "/js/vendor.js?id=4f261bc7f4989c510d48",
+    "/css/vendor.css": "/css/vendor.css?id=170d7118d8fab13af295",
+    "/js/vendor/chart.js": "/js/vendor/chart.js?id=28832eda26a02509be82"
 }
