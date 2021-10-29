@@ -58,7 +58,7 @@ class RegisterController extends Controller {
         // Create the email address
         $email = new Email();
         $email->user_id = $user->id;
-        $email->email = $request->input('email');
+        $email->email = normalize_email($request->input('email'));
         $email->save();
 
         // Create a user session and store the result

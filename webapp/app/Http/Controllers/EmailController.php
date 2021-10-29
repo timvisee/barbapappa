@@ -99,6 +99,7 @@ class EmailController extends Controller {
 
         // Get user from middleware
         $user = \Request::get('user');
+        $input_email = normalize_email($request->input('email'));
 
         // Do not allow user to go over email limit
         if($user->emails()->count() >= (int) config('app.email_limit'))
@@ -107,7 +108,7 @@ class EmailController extends Controller {
                 ->with('error', __('pages.accountPage.addEmail.cannotAddMore'));
 
         // Do not allow if already verified or recently added by someone else
-        $used = Email::where('email', $request->input('email'))
+        $used = Email::where('email', $input_email)
             ->where(function($query) use($user) {
                 $query
                     ->whereNotNull('verified_at')
@@ -122,13 +123,13 @@ class EmailController extends Controller {
         }
 
         // Delete any existing email entries
-        Email::where('email', $request->input('email'))
+        Email::where('email', $input_email)
             ->delete();
 
         // Create the email address
         $email = new Email();
         $email->user_id = $user->id;
-        $email->email = $request->input('email');
+        $email->email = $input_email;
         $email->save();
 
         // Make an email verification request
