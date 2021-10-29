@@ -177,6 +177,7 @@ return [
     'typeToVerify' => 'Type \':text\' to verify',
     'otherSettings' => 'Other settings',
     'changesSaved' => 'Changes saved',
+    'migrate' => 'Migrate',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'trashingCanBeUndone' => 'The item will be trashed. This operation can be reverted, by restoring the item from the trash.',

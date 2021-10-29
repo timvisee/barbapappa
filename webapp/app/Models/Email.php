@@ -26,6 +26,13 @@ class Email extends Model {
     protected $table = 'email';
 
     /**
+     * A scope for a specific email address.
+     */
+    public function scopeEmail($query, string $email) {
+        return $query->where('email', normalize_email($email));
+    }
+
+    /**
      * A scope for selecting only verified email addresses.
      */
     public function scopeVerified($query) {

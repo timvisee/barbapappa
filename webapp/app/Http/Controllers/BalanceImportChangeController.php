@@ -544,6 +544,78 @@ class BalanceImportChangeController extends Controller {
     }
 
     /**
+     * Page for migrating a balance import change alias.
+     *
+     * @return Response
+     */
+    public function migrate($communityId, $economyId, $systemId, $eventId, $changeId) {
+        // Get the community, economy, find the system, event and change
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $change = $event->changes()->findOrFail($changeId);
+        $alias = $change->alias;
+
+        return view('community.economy.balanceimport.change.migrate')
+            ->with('economy', $economy)
+            ->with('system', $system)
+            ->with('event', $event)
+            ->with('change', $change)
+            ->with('alias', $alias);
+    }
+
+    /**
+     * Do migrate a balance import change alias.
+     *
+     * @return Response
+     */
+    public function doMigrate(Request $request, $communityId, $economyId, $systemId, $eventId, $changeId) {
+        // Get the community, economy, find the system and event
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $system = $economy->balanceImportSystems()->findOrFail($systemId);
+        $event = $system->events()->findOrFail($eventId);
+        $change = $event->changes()->findOrFail($changeId);
+        $alias = $change->alias;
+
+        // Validate
+        $this->validate($request, [
+            'name' => 'required|' . ValidationDefaults::NAME,
+            'email' => 'required|' . ValidationDefaults::EMAIL,
+        ]);
+
+        // Ensure email is unique
+        $existingAlias = BalanceImportAlias::get($economy, $request->input('email'));
+        if($existingAlias != null && $alias->id != $existingAlias->id) {
+            add_session_error('email', __('pages.balanceImportAlias.aliasWithEmailAlreadyExists'));
+            return redirect()->back()->withInput();
+        }
+
+        DB::transaction(function() use(&$alias, $request) {
+            // Update this alias
+            $alias->name = $request->input('name');
+            $alias->email = normalize_email($request->input('email'));
+            $alias->save();
+
+            // Try to assign a user to this alias, and commit
+            $alias->tryAssignUser(true);
+        });
+
+        // Redirect to the index page after undoing
+        return redirect()
+            ->route('community.economy.balanceimport.change.show', [
+                'communityId' => $communityId,
+                'economyId' => $economy->id,
+                'systemId' => $system->id,
+                'eventId' => $event->id,
+                'changeId' => $change->id,
+            ])
+            ->with('success', __('pages.balanceImportChange.migrated'));
+    }
+
+
+    /**
      * Page for confirming the deletion of balance import change.
      *
      * @return Response

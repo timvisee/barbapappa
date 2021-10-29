@@ -323,18 +323,30 @@ if(!function_exists('is_url_secure')) {
     }
 }
 
+if(!function_exists('normalize_email')) {
+    /**
+     * Normalize an email address.
+     *
+     * @param string $email The email address.
+     * @return string The normalized email address.
+     */
+    function normalize_email(string $email): string {
+        return strtolower(trim($email));
+    }
+}
+
 if(!function_exists('normalize_price')) {
     /**
-    * Normalize the given price value, into a float.
-    *
-    * This makes sure the comma and period is parsed well.
-    * A string format is converted into 
-    *
-    * @param string|number|float $price The price.
-    * @return float The normalized price.
-    *
-    * @throws \Exception Throws if the given price value was invalid.
-    */
+     * Normalize the given price value, into a float.
+     *
+     * This makes sure the comma and period is parsed well.
+     * A string format is converted into 
+     *
+     * @param string|number|float $price The price.
+     * @return float The normalized price.
+     *
+     * @throws \Exception Throws if the given price value was invalid.
+     */
     function normalize_price($price): float {
         return (float) str_replace(',', '.', $price);
     }
@@ -342,15 +354,15 @@ if(!function_exists('normalize_price')) {
 
 if(!function_exists('set_env_locale')) {
     /**
-    * Set the locale for the current environment.
-    *
-    * Sets for:
-    * - Laravel
-    * - Laravel mail
-    * - Carbon
-    *
-    * @param string $locale The locale.
-    */
+     * Set the locale for the current environment.
+     *
+     * Sets for:
+     * - Laravel
+     * - Laravel mail
+     * - Carbon
+     *
+     * @param string $locale The locale.
+     */
     function set_env_locale(string $locale) {
         App::setLocale($locale);
         Carbon::setLocale($locale);
