@@ -83,10 +83,27 @@ class InventoryController extends Controller {
         $inventory = $economy->inventories()->findOrFail($inventoryId);
         $products = $economy->products;
 
+        // Build list of (exhausted) products
+        [$products, $exhaustedProducts] = $products
+            ->map(function($product) use($inventory) {
+                // TODO: this is inefficient, improve this
+                $item = $inventory->getItem($product);
+                return [
+                    'product' => $product,
+                    'item' => $item,
+                    'quantity' => $item != null ? $item->quantity : 0,
+                ];
+            })
+            ->sortBy('product.name')
+            ->partition(function($p) {
+                return $p['quantity'] != 0;
+            });
+
         return view('community.economy.inventory.show')
             ->with('economy', $economy)
             ->with('inventory', $inventory)
-            ->with('products', $products);
+            ->with('products', $products)
+            ->with('exhaustedProducts', $exhaustedProducts);
     }
 
     /**
