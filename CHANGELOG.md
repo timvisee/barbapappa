@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.124 (2021-10-29)
+
+- Add mass product rebalance page to inventory
+- Improve inventory quantity list grouping, sort by product name
+- Use PHP 8.0 on CI
+- Update dependencies
+
 ## 0.1.123 (2021-10-29)
 
 - Add page to migrate balance import alias to different name/email
