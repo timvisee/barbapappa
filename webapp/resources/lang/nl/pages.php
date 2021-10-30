@@ -356,7 +356,7 @@ return [
     'inventories' => [
         'title' => 'Inventarissen',
         'inventory' => 'Inventaris',
-        'manage' => 'Manage inventarissen',
+        'manage' => 'Beheer inventarissen',
         'noInventories' => 'Geen inventarissen...',
         'createInventory' => 'Inventaris aanmaken',
         'created' => 'Het inventaris is aangemaakt.',
