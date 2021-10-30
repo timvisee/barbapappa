@@ -52,7 +52,8 @@
                                     'placeholder' => $p['quantity'],
                                     'inputmode' => 'numeric',
                                 ]) }}
-                                {{ ErrorRenderer::inline($p['field'] . '_quantity') }}
+                                {{-- Flush error for this field, inline rendering is bad --}}
+                                {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
                             </div>
                         </td>
                         <td data-label="@lang('misc.delta')" class="right aligned collapsing">
@@ -61,7 +62,8 @@
                                     'placeholder' => 0,
                                     'inputmode' => 'numeric',
                                 ]) }}
-                                {{ ErrorRenderer::inline($p['field'] . '_delta') }}
+                                {{-- Flush error for this field, inline rendering is bad --}}
+                                {{ ErrorRenderer::consume($p['field'] . '_delta') }}
                             </div>
                         </td>
                     </tr>
@@ -102,7 +104,8 @@
                                         'placeholder' => $p['quantity'],
                                         'inputmode' => 'numeric',
                                     ]) }}
-                                    {{ ErrorRenderer::inline($p['field'] . '_quantity') }}
+                                    {{-- Flush error for this field, inline rendering is bad --}}
+                                    {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
                                 </div>
                             </td>
                             <td data-label="@lang('misc.delta')" class="right aligned collapsing">
@@ -111,7 +114,8 @@
                                         'placeholder' => 0,
                                         'inputmode' => 'numeric',
                                     ]) }}
-                                    {{ ErrorRenderer::inline($p['field'] . '_delta') }}
+                                    {{-- Flush error for this field, inline rendering is bad --}}
+                                    {{ ErrorRenderer::consume($p['field'] . '_delta') }}
                                 </div>
                             </td>
                         </tr>
