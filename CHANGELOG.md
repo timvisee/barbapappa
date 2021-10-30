@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.125 (2021-10-30)
+
+- Emergency fix for bunq payment failures
+- Don't show inventory exhausted products list if empty
+
 ## 0.1.124 (2021-10-29)
 
 - Add mass product rebalance page to inventory
