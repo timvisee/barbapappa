@@ -47,10 +47,10 @@
                             </a>
                         </td>
                         <td data-label="@lang('misc.quantity')" class="right aligned collapsing">
-                            <div class="field
-                                inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
+                            <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
                                 {{ Form::text($p['field'] . '_quantity', '', [
                                     'placeholder' => $p['quantity'],
+                                    'inputmode' => 'numeric',
                                 ]) }}
                                 {{ ErrorRenderer::inline($p['field'] . '_quantity') }}
                             </div>
@@ -59,6 +59,7 @@
                             <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_delta') ? 'error' : '' }}">
                                 {{ Form::text($p['field'] . '_delta', '', [
                                     'placeholder' => 0,
+                                    'inputmode' => 'numeric',
                                 ]) }}
                                 {{ ErrorRenderer::inline($p['field'] . '_delta') }}
                             </div>
@@ -96,10 +97,10 @@
                                 </a>
                             </td>
                             <td data-label="@lang('misc.quantity')" class="right aligned collapsing">
-                                <div class="field
-                                    inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
+                                <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
                                     {{ Form::text($p['field'] . '_quantity', '', [
                                         'placeholder' => $p['quantity'],
+                                        'inputmode' => 'numeric',
                                     ]) }}
                                     {{ ErrorRenderer::inline($p['field'] . '_quantity') }}
                                 </div>
@@ -108,6 +109,7 @@
                                 <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_delta') ? 'error' : '' }}">
                                     {{ Form::text($p['field'] . '_delta', '', [
                                         'placeholder' => 0,
+                                        'inputmode' => 'numeric',
                                     ]) }}
                                     {{ ErrorRenderer::inline($p['field'] . '_delta') }}
                                 </div>
