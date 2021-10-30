@@ -73,7 +73,7 @@
         </table>
 
         {{-- Exhausted product list --}}
-        @if(!empty($exhaustedProducts))
+        @if($exhaustedProducts->isNotEmpty())
             <table class="ui celled table unstackable">
                 <thead>
                     <tr>

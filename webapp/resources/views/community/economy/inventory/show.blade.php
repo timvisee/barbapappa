@@ -58,7 +58,7 @@
     </div>
 
     {{-- Exhausted product list --}}
-    @if(!empty($exhaustedProducts))
+    @if($exhaustedProducts->isNotEmpty())
         <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
             <h5 class="ui item header">
                 @lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})
