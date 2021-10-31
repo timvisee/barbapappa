@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ValidationDefaults;
 use App\Models\InventoryItemChange;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-
-use App\Helpers\ValidationDefaults;
+use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller {
 
@@ -278,36 +278,38 @@ class InventoryController extends Controller {
 
         // Update quantities
         $count = 0;
-        foreach($products as $p) {
-            $add = $request->input($p['field'] . '_add');
-            $remove = $request->input($p['field'] . '_remove');
+        DB::transaction(function() use($products, $type, $request, $inventory, &$count) {
+            foreach($products as $p) {
+                $add = $request->input($p['field'] . '_add');
+                $remove = $request->input($p['field'] . '_remove');
 
-            // Update add/remove
-            if($add != null) {
-                $inventory->changeProduct(
-                    $p['product'],
-                    $type,
-                    (int) $add,
-                    $request->input('comment'),
-                    barauth()->getSessionUser(),
-                    null,
-                    null
-                );
-                $count += (int) $add;
+                // Update add/remove
+                if($add != null) {
+                    $inventory->changeProduct(
+                        $p['product'],
+                        $type,
+                        (int) $add,
+                        $request->input('comment'),
+                        barauth()->getSessionUser(),
+                        null,
+                        null
+                    );
+                    $count += (int) $add;
+                }
+                if($remove != null) {
+                    $inventory->changeProduct(
+                        $p['product'],
+                        $type,
+                        -((int) $remove),
+                        $request->input('comment'),
+                        barauth()->getSessionUser(),
+                        null,
+                        null
+                    );
+                    $count += (int) $remove;
+                }
             }
-            if($remove != null) {
-                $inventory->changeProduct(
-                    $p['product'],
-                    $type,
-                    -((int) $remove),
-                    $request->input('comment'),
-                    barauth()->getSessionUser(),
-                    null,
-                    null
-                );
-                $count += (int) $remove;
-            }
-        }
+        });
 
         // Redirect to inventory
         return redirect()
@@ -403,35 +405,37 @@ class InventoryController extends Controller {
 
         // Update quantities
         $count = 0;
-        foreach($products as $p) {
-            $quantity = $request->input($p['field'] . '_quantity');
-            $delta = $request->input($p['field'] . '_delta');
+        DB::transaction(function() use($products, $request, $inventory, $type, &$count) {
+            foreach($products as $p) {
+                $quantity = $request->input($p['field'] . '_quantity');
+                $delta = $request->input($p['field'] . '_delta');
 
-            // Update quantity or delta
-            if($quantity != null) {
-                $inventory->setProductQuantity(
-                    $p['product'],
-                    $type,
-                    (int) $quantity,
-                    $request->input('comment'),
-                    barauth()->getSessionUser(),
-                    null,
-                    null
-                );
-                $count += 1;
-            } else if($delta != null) {
-                $inventory->changeProduct(
-                    $p['product'],
-                    $type,
-                    (int) $delta,
-                    $request->input('comment'),
-                    barauth()->getSessionUser(),
-                    null,
-                    null
-                );
-                $count += 1;
+                // Update quantity or delta
+                if($quantity != null) {
+                    $inventory->setProductQuantity(
+                        $p['product'],
+                        $type,
+                        (int) $quantity,
+                        $request->input('comment'),
+                        barauth()->getSessionUser(),
+                        null,
+                        null
+                    );
+                    $count += 1;
+                } else if($delta != null) {
+                    $inventory->changeProduct(
+                        $p['product'],
+                        $type,
+                        (int) $delta,
+                        $request->input('comment'),
+                        barauth()->getSessionUser(),
+                        null,
+                        null
+                    );
+                    $count += 1;
+                }
             }
-        }
+        });
 
         // Redirect to inventory
         return redirect()
@@ -523,35 +527,37 @@ class InventoryController extends Controller {
 
         // Move products
         $count = 0;
-        foreach($products as $p) {
-            $quantity = $request->input($p['field'] . '_quantity');
-            if($quantity == null)
-                continue;
-            $quantity = (int) $quantity;
+        DB::transaction(function() use($products, $request, $from, $to, &$count) {
+            foreach($products as $p) {
+                $quantity = $request->input($p['field'] . '_quantity');
+                if($quantity == null)
+                    continue;
+                $quantity = (int) $quantity;
 
-            // Update quantities, link changes
-            $fromChange = $from->changeProduct(
-                $p['product'],
-                InventoryItemChange::TYPE_MOVE,
-                -$quantity,
-                $request->input('comment'),
-                barauth()->getSessionUser(),
-                null,
-                null
-            );
-            $toChange = $to->changeProduct(
-                $p['product'],
-                InventoryItemChange::TYPE_MOVE,
-                $quantity,
-                $request->input('comment'),
-                barauth()->getSessionUser(),
-                $fromChange,
-                null
-            );
-            $fromChange->update(['related_id' => $toChange->id]);
+                // Update quantities, link changes
+                $fromChange = $from->changeProduct(
+                    $p['product'],
+                    InventoryItemChange::TYPE_MOVE,
+                    -$quantity,
+                    $request->input('comment'),
+                    barauth()->getSessionUser(),
+                    null,
+                    null
+                );
+                $toChange = $to->changeProduct(
+                    $p['product'],
+                    InventoryItemChange::TYPE_MOVE,
+                    $quantity,
+                    $request->input('comment'),
+                    barauth()->getSessionUser(),
+                    $fromChange,
+                    null
+                );
+                $fromChange->update(['related_id' => $toChange->id]);
 
-            $count += abs($quantity);
-        }
+                $count += abs($quantity);
+            }
+        });
 
         // Redirect to inventory
         return redirect()
