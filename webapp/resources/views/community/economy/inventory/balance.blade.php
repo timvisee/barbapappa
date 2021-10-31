@@ -4,6 +4,8 @@
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.inventory.show', $inventory);
     $menusection = 'community_manage';
+
+    use App\Models\InventoryItemChange;
 @endphp
 
 @section('content')
@@ -130,6 +132,31 @@
             {{ Form::label('comment', __('misc.comment') . ':') }}
             {{ Form::text('comment', __('pages.inventories.defaultRebalanceComment')) }}
             {{ ErrorRenderer::inline('comment') }}
+        </div>
+
+        <div class="required field {{ ErrorRenderer::hasError('type') ? 'error' : '' }}">
+            {{ Form::label('type', __('pages.inventories.changeType')) }}
+
+            <div class="ui fluid selection dropdown">
+                {{ Form::hidden('type', InventoryItemChange::TYPE_BALANCE) }}
+                <i class="dropdown icon"></i>
+
+                <div class="default text">@lang('misc.pleaseSpecify')</div>
+                <div class="menu">
+                    <div class="item" data-value="{{ InventoryItemChange::TYPE_BALANCE }}">
+                        @lang('pages.inventories.type.' . InventoryItemChange::TYPE_BALANCE)
+                        (@lang('general.recommended'))
+                    </div>
+                    <div class="item" data-value="{{ InventoryItemChange::TYPE_ADD_REMOVE }}">
+                        @lang('pages.inventories.type.' . InventoryItemChange::TYPE_ADD_REMOVE)
+                    </div>
+                    <div class="item" data-value="{{ InventoryItemChange::TYPE_SET }}">
+                        @lang('pages.inventories.type.' . InventoryItemChange::TYPE_SET)
+                    </div>
+                </div>
+            </div>
+
+            {{ ErrorRenderer::inline('type') }}
         </div>
 
         <div class="required field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">

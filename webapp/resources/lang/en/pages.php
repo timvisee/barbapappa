@@ -372,6 +372,14 @@ return [
         '#productsRebalanced' => '{0} No products rebalanced|{1} One product rebalanced|[2,*] :count products rebalanced',
         'confirmBalanceComplete' => 'I confirm I want to rebalance these products with the entered quantities',
         'mustBeInteger' => 'Must be an integer.',
+        'changeType' => 'Change type',
+        'type' => [
+            1 => 'Balance',
+            2 => 'Move',
+            3 => 'Purchase',
+            4 => 'Add/remove',
+            5 => 'Set',
+        ],
     ],
 
     /**

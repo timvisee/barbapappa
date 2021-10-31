@@ -373,6 +373,14 @@ return [
         '#productsRebalanced' => '{0} Geen producten gebalanceerd|{1} Één product gebalanceerd|[2,*] :count producten gebalanceerd',
         'confirmBalanceComplete' => 'Ik bevestig dat ik de producten wil balansen met de ingevulde hoeveelheiden',
         'mustBeInteger' => 'Moet een nummer zijn.',
+        'changeType' => 'Aanpassingstype',
+        'type' => [
+            1 => 'Balansen',
+            2 => 'Verplaatsing',
+            3 => 'Aankoop',
+            4 => 'Toevoegen/verwijderen',
+            5 => 'Reset',
+        ],
     ],
 
     /**

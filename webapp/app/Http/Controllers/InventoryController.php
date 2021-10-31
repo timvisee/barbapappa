@@ -261,8 +261,11 @@ class InventoryController extends Controller {
         $rules = [
             'comment' => 'required|' . ValidationDefaults::DESCRIPTION,
             'confirm' => 'accepted',
-            'product_9_quantity' => 'nullable|integer|empty_with:product_9_delta',
-            'product_9_delta' => 'nullable|integer|empty_with:product_9_quantity',
+            'type' => 'required|in:' . collect([
+                InventoryItemChange::TYPE_BALANCE,
+                InventoryItemChange::TYPE_ADD_REMOVE,
+                InventoryItemChange::TYPE_SET,
+            ])->join(','),
         ];
         $messages = [];
         foreach($products as $p) {
@@ -272,6 +275,8 @@ class InventoryController extends Controller {
             $messages[$p['field'] . '_delta.integer'] = __('pages.inventories.mustBeInteger');
         }
         $this->validate($request, $rules, $messages);
+
+        $type = (int) $request->input('type');
 
         // Update quantities
         $count = 0;
@@ -283,7 +288,7 @@ class InventoryController extends Controller {
             if($quantity != null) {
                 $inventory->setProductQuantity(
                     $p['product'],
-                    InventoryItemChange::TYPE_UPDATE,
+                    $type,
                     (int) $quantity,
                     $request->input('comment'),
                     barauth()->getSessionUser(),
@@ -294,7 +299,7 @@ class InventoryController extends Controller {
             } else if($delta != null) {
                 $inventory->changeProduct(
                     $p['product'],
-                    InventoryItemChange::TYPE_UPDATE,
+                    $type,
                     (int) $delta,
                     $request->input('comment'),
                     barauth()->getSessionUser(),

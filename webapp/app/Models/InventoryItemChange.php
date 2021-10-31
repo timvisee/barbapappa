@@ -41,9 +41,20 @@ class InventoryItemChange extends Model {
     ];
 
     /**
-     * Change type: update by user, to balance inventory.
+     * Available change types.
      */
-    const TYPE_UPDATE = 1;
+    const TYPES = [
+        Self::TYPE_BALANCE,
+        Self::TYPE_MOVE,
+        Self::TYPE_PURCHASE,
+        Self::TYPE_ADD_REMOVE,
+        Self::TYPE_SET,
+    ];
+
+    /**
+     * Change type: balance by user, to rebalance inventory.
+     */
+    const TYPE_BALANCE = 1;
 
     /**
      * Change type: move to/from other inventory by user.
@@ -54,6 +65,16 @@ class InventoryItemChange extends Model {
      * Change type: product purchase.
      */
     const TYPE_PURCHASE = 3;
+
+    /**
+     * Change type: add/remove products to/from inventory.
+     */
+    const TYPE_ADD_REMOVE = 4;
+
+    /**
+     * Change type: set quantity.
+     */
+    const TYPE_SET = 5;
 
     /**
      * A scope to changes by a specific user.
@@ -134,15 +155,7 @@ class InventoryItemChange extends Model {
      * @return bool True if valid, false if not.
      */
     public static function isValidType(int $type): bool {
-        switch($type) {
-        case Self::TYPE_UPDATE:
-        case Self::TYPE_MOVE:
-        case Self::TYPE_PURCHASE:
-            return true;
-
-        default:
-            return false;
-        }
+        return collect(Self::TYPES)->contains($type);
     }
 
     /**
