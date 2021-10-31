@@ -30,6 +30,14 @@
                         class="ui button orange">
                     @lang('pages.inventories.rebalance')
                 </a>
+                <a href="{{ route('community.economy.inventory.move', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                        ]) }}"
+                        class="ui button blue">
+                    @lang('pages.inventories.move')
+                </a>
             </div>
         </p>
     @endif

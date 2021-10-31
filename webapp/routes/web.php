@@ -328,6 +328,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::put('/add-remove', 'InventoryController@doAddRemove')->name('community.economy.inventory.doAddRemove');
                             Route::get('/balance', 'InventoryController@balance')->name('community.economy.inventory.balance');
                             Route::put('/balance', 'InventoryController@doBalance')->name('community.economy.inventory.doBalance');
+                            Route::get('/move', 'InventoryController@move')->name('community.economy.inventory.move');
+                            Route::put('/move', 'InventoryController@doMove')->name('community.economy.inventory.doMove');
                         });
                     });
                 });
