@@ -324,6 +324,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
                         // Balance
                         Route::middleware(InventoryController::permsManage()->middleware())->group(function() {
+                            Route::get('/add-remove', 'InventoryController@addRemove')->name('community.economy.inventory.addRemove');
+                            Route::put('/add-remove', 'InventoryController@doAddRemove')->name('community.economy.inventory.doAddRemove');
                             Route::get('/balance', 'InventoryController@balance')->name('community.economy.inventory.balance');
                             Route::put('/balance', 'InventoryController@doBalance')->name('community.economy.inventory.doBalance');
                         });

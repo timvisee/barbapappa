@@ -197,6 +197,129 @@ class InventoryController extends Controller {
     }
 
     /**
+     * Add/remove from/to an inventory.
+     *
+     * @return Response
+     */
+    public function addRemove($communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $products = $economy->products;
+
+        // Build list of (exhausted) products
+        [$products, $exhaustedProducts] = $products
+            ->map(function($product) use($inventory) {
+                // TODO: this is inefficient, improve this
+                $item = $inventory->getItem($product);
+                return [
+                    'product' => $product,
+                    'item' => $item,
+                    'quantity' => $item != null ? $item->quantity : 0,
+                    'field' => 'product_' . $product->id,
+                ];
+            })
+            ->sortBy('product.name')
+            ->partition(function($p) {
+                return $p['quantity'] != 0;
+            });
+
+        return view('community.economy.inventory.addRemove')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory)
+            ->with('products', $products)
+            ->with('exhaustedProducts', $exhaustedProducts);
+    }
+
+    /**
+     * Do add/remove from/to an inventory.
+     *
+     * @return Response
+     */
+    public function doAddRemove(Request $request, $communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $products = $economy->products;
+
+        // Build list of (exhausted) products
+        $products = $products
+            ->map(function($product) use($inventory) {
+                // TODO: this is inefficient, improve this
+                $item = $inventory->getItem($product);
+                return [
+                    'product' => $product,
+                    'item' => $item,
+                    'quantity' => $item != null ? $item->quantity : 0,
+                    'field' => 'product_' . $product->id,
+                ];
+            });
+
+        // Validate
+        $rules = [
+            'comment' => 'required|' . ValidationDefaults::DESCRIPTION,
+            'confirm' => 'accepted',
+            'type' => 'required|in:' . collect([
+                InventoryItemChange::TYPE_BALANCE,
+                InventoryItemChange::TYPE_ADD_REMOVE,
+                InventoryItemChange::TYPE_SET,
+            ])->join(','),
+        ];
+        $messages = [];
+        foreach($products as $p) {
+            $rules[$p['field'] . '_add'] = 'nullable|integer|min:0';
+            $rules[$p['field'] . '_remove'] = 'nullable|integer|min:0';
+        }
+        $this->validate($request, $rules, $messages);
+
+        $type = (int) $request->input('type');
+
+        // Update quantities
+        $count = 0;
+        foreach($products as $p) {
+            $add = $request->input($p['field'] . '_add');
+            $remove = $request->input($p['field'] . '_remove');
+
+            // Update add/remove
+            if($add != null) {
+                $inventory->changeProduct(
+                    $p['product'],
+                    $type,
+                    (int) $add,
+                    $request->input('comment'),
+                    barauth()->getSessionUser(),
+                    null,
+                    null
+                );
+                $count += (int) $add;
+            }
+            if($remove != null) {
+                $inventory->changeProduct(
+                    $p['product'],
+                    $type,
+                    -((int) $remove),
+                    $request->input('comment'),
+                    barauth()->getSessionUser(),
+                    null,
+                    null
+                );
+                $count += (int) $remove;
+            }
+        }
+
+        // Redirect to inventory
+        return redirect()
+            ->route('community.economy.inventory.show', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'inventoryId' => $inventory->id,
+            ])
+            ->with('success', trans_choice('pages.inventories.#productsAddedRemoved', $count) . '.');
+    }
+
+    /**
      * Balance an inventory.
      *
      * @return Response

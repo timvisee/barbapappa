@@ -14,6 +14,14 @@
     @if(perms(InventoryController::permsManage()))
         <p>
             <div class="ui buttons">
+                <a href="{{ route('community.economy.inventory.addRemove', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                        ]) }}"
+                        class="ui button green">
+                    @lang('pages.inventories.addRemove')
+                </a>
                 <a href="{{ route('community.economy.inventory.balance', [
                             'communityId' => $community->human_id,
                             'economyId' => $economy->id,
