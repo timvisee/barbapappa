@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.126 (2021-11-01)
+
+- Add mass product add/remove page to inventory
+- Add mass move page to inventory
+- Add inventory product details page
+- Add inventory product changes index and details page
+- Add inventory period report page, listing unbalanced products and other statistics
+- Add inventory quantity time travel option
+- Improve inventory rebalance reliability
+- Improve error handling on inventory rebalance pages
+- Suggest numeric inputmode keyboard for inventory rebalance fields
+- Show bar/community member last visit time in member list
+- Do not show property for user that created product if unknown
+
 ## 0.1.125 (2021-10-30)
 
 - Emergency fix for bunq payment failures
