@@ -63,9 +63,9 @@
                     {{ $p['quantity'] }}
                 </div>
 
-                @if($p['item'] != null)
+                @if($p['changed'] != null)
                     <span class="sub-label">
-                        @include('includes.humanTimeDiff', ['time' => $p['item']->updated_at ?? $p['item']->created_at])
+                        @include('includes.humanTimeDiff', ['time' => $p['changed']])
                     </span>
                 @endif
             </a>
@@ -92,9 +92,9 @@
                         ]) }}">
                     {{ $p['product']->displayName() }}
 
-                    @if($p['item'] != null)
+                    @if($p['changed'] != null)
                         <span class="sub-label">
-                            @include('includes.humanTimeDiff', ['time' => $p['item']->updated_at ?? $p['item']->created_at])
+                            @include('includes.humanTimeDiff', ['time' => $p['changed']])
                         </span>
                     @endif
                 </a>

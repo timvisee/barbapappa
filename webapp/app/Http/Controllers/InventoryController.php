@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Models\Inventory;
 use App\Models\InventoryItemChange;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -522,8 +523,9 @@ class InventoryController extends Controller {
     /**
      * Get a product/item for an inventory.
      */
-    private static function getProductList(Inventory $inventory) {
-        return $inventory
+    private static function getProductList(Inventory $inventory, ?Carbon $time = null) {
+        // Build list of products
+        $products = $inventory
             ->economy
             ->products
             ->map(function($product) use($inventory) {
@@ -535,9 +537,36 @@ class InventoryController extends Controller {
                     'item' => $item,
                     'quantity' => $quantity,
                     'exhausted' => $quantity == 0,
+                    'changed' => $item != null ? ($item->updated_at ?? $item->created_at) : null,
                 ];
             })
             ->sortBy('product.name');
+
+        // Travel back in history
+        if($time != null && $time->isPast()) {
+            // TODO: this is inefficient, use single query
+            $products = $products
+                ->map(function($p) use($time) {
+                    // We must have an item with changes
+                    if($p['item'] == null)
+                        return $p;
+
+                    // Calcualte difference over time, update quantity
+                    $p['quantity'] -= $p['item']
+                        ->changes()
+                        ->where('created_at', '>=', $time)
+                        ->orderBy('created_at', 'DESC')
+                        ->sum('quantity');
+                    $p['exhausted'] = $p['quantity'] == 0;
+
+                    // TODO: use time from last known change
+                    $p['changed'] = $time;
+
+                    return $p;
+                });
+        }
+
+        return $products;
     }
 
     /**
