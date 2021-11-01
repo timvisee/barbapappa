@@ -55,6 +55,10 @@
                     @lang('pages.inventories.type.' . $c->type)
                 @endif
 
+                @if($c->user != null)
+                    <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
+                @endif
+
                 {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
 
                 <span class="sub-label">
