@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\InventoryItemChange;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class InventoryProductController extends Controller {
@@ -56,7 +57,7 @@ class InventoryProductController extends Controller {
      *
      * @return Response
      */
-    public function changes($communityId, $economyId, $inventoryId, $productId) {
+    public function changes(Request $request, $communityId, $economyId, $inventoryId, $productId) {
         // Get the community, find the inventory
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
@@ -64,12 +65,19 @@ class InventoryProductController extends Controller {
         $product = $economy->products()->findOrFail($productId);
         $item = $inventory->getItem($product);
 
+        // Create filter list
+        $types = collect(InventoryItemChange::TYPES)
+            ->filter(function($t) use($request) {
+                $query = $request->query('filter_' . $t);
+                return $query == null || is_checked($query);
+            });
+
         return view('community.economy.inventory.product.changes')
             ->with('economy', $economy)
             ->with('inventory', $inventory)
             ->with('product', $product)
             ->with('item', $item)
-            ->with('changes', $item != null ? $item->changes()->paginate(self::PAGINATE_ITEMS) : collect());
+            ->with('changes', $item != null ? $item->changes()->whereIn('type', $types)->paginate(self::PAGINATE_ITEMS) : collect());
     }
 
     /**

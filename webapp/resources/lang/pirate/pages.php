@@ -396,6 +396,7 @@ return [
         'noChanges' => 'No changes',
         'allChanges' => 'All changes',
         'viewRelated' => 'View related',
+        'hideType' => 'Hide type',
     ],
 
     /**

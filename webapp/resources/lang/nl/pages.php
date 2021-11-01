@@ -397,6 +397,7 @@ return [
         'noChanges' => 'Geen aanpassingen',
         'allChanges' => 'Alle aanpassingen',
         'viewRelated' => 'Bekijk gerelateerde',
+        'hideType' => 'Verberg type',
     ],
 
     /**

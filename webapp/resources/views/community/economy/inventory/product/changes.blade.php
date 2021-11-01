@@ -12,6 +12,32 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
+    <div class="ui fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            @lang('misc.filters')
+        </div>
+        <div class="content">
+            {!! Form::open([
+                'method' => 'GET',
+                'class' => 'ui form'
+            ]) !!}
+                @foreach(InventoryItemChange::TYPES as $type)
+                    <div class="inline field">
+                        <div class="ui toggle checkbox">
+                            {{ Form::checkbox('filter_' . $type, 0, !is_checked(request()->query('filter_' . $type) ?? true), ['tabindex' => 0, 'class' => 'hidden']) }}
+                            {{ Form::label('filter_' . $type, __('pages.inventories.hideType') . ': ' . __('pages.inventories.type.' . $type)) }}
+                        </div>
+                    </div>
+                @endforeach
+
+                <button class="ui button primary" type="submit">@lang('misc.update')</button>
+
+                <div class="ui divider hidden"></div>
+            {!! Form::close() !!}
+        </div>
+    </div>
+
     <div class="ui vertical menu fluid">
         @forelse($changes as $c)
             <a class="item"
