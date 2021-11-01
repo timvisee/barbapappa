@@ -27,7 +27,7 @@
                             'economyId' => $economy->id,
                             'inventoryId' => $inventory->id,
                         ]) }}"
-                        class="ui button orange">
+                        class="ui button teal">
                     @lang('pages.inventories.rebalance')
                 </a>
                 <a href="{{ route('community.economy.inventory.move', [

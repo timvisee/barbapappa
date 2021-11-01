@@ -26,22 +26,11 @@
             <div class="label">@lang('misc.quantity')</div>
         </div>
     </div>
-    <br>
+
+    <div class="ui divider hidden"></div>
 
     <table class="ui compact celled definition table">
         <tbody>
-            <tr>
-                <td>@lang('pages.inventories.inventory')</td>
-                <td>
-                    <a href="{{ route('community.economy.inventory.show', [
-                            'communityId' => $product->economy->community->human_id,
-                            'economyId' => $product->economy_id,
-                            'inventoryId' => $inventory->id,
-                        ]) }}">
-                        {{ $inventory->name }}
-                    </a>
-                </td>
-            </tr>
             <tr>
                 <td>@lang('misc.product')</td>
                 <td>
@@ -51,6 +40,18 @@
                             'productId' => $product->id,
                         ]) }}">
                         {{ $product->displayName() }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>@lang('pages.inventories.inventory')</td>
+                <td>
+                    <a href="{{ route('community.economy.inventory.show', [
+                            'communityId' => $product->economy->community->human_id,
+                            'economyId' => $product->economy_id,
+                            'inventoryId' => $inventory->id,
+                        ]) }}">
+                        {{ $inventory->name }}
                     </a>
                 </td>
             </tr>
