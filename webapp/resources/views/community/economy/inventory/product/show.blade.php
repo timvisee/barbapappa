@@ -55,7 +55,11 @@
             </tr>
             <tr>
                 <td>@lang('misc.lastChanged')</td>
-                <td>@include('includes.humanTimeDiff', ['time' => $inventory->updated_at])</td>
+                @if($item != null)
+                    <td>@include('includes.humanTimeDiff', ['time' => $item->updated_at])</td>
+                @else
+                    <td><span class="ui text negative">@lang('misc.never')</span></td>
+                @endif
             </tr>
             <tr>
                 <td>@lang('pages.inventories.lastBalanced')</td>
