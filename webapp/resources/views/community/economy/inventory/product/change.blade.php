@@ -26,6 +26,11 @@
     @if(!empty($change->comment))
         <p class="align-center" title="@lang('misc.comment')">
             <i>{{ $change->comment }}</i>
+            @if($change->user != null)
+                <br>
+                @lang('misc.by')
+                <i>{{ $change->user->name }}</i>
+            @endif
         </p>
         <div class="ui divider hidden"></div>
     @endif
