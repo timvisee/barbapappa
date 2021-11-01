@@ -336,6 +336,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                         Route::prefix('/product/{productId}')->group(function() {
                             // Show
                             Route::get('/', 'InventoryProductController@show')->name('community.economy.inventory.product.show');
+
+                            // Changes
+                            Route::get('/changes', 'InventoryProductController@changes')->name('community.economy.inventory.product.changes');
                         });
                     });
                 });

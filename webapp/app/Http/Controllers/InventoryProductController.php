@@ -7,6 +7,8 @@ use Illuminate\Http\Response;
 
 class InventoryProductController extends Controller {
 
+    const PAGINATE_ITEMS = 50;
+
     /**
      * Show an inventory product.
      *
@@ -48,6 +50,27 @@ class InventoryProductController extends Controller {
             ->with('lastBalanced', $lastBalanced)
             ->with('quantities', $quantities)
             ->with('changes', $item != null ? $item->changes()->limit(10)->get() : collect());
+    }
+
+    /**
+     * List product changes.
+     *
+     * @return Response
+     */
+    public function changes($communityId, $economyId, $inventoryId, $productId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $product = $economy->products()->findOrFail($productId);
+        $item = $inventory->getItem($product);
+
+        return view('community.economy.inventory.product.changes')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory)
+            ->with('product', $product)
+            ->with('item', $item)
+            ->with('changes', $item != null ? $item->changes()->paginate(self::PAGINATE_ITEMS) : collect());
     }
 
     /**

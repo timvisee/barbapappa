@@ -129,7 +129,7 @@
         @empty
             <i class="item">@lang('pages.inventories.noChanges')...</i>
         @endforelse
-        <a href="{{ route('community.economy.inventory.product.show', [
+        <a href="{{ route('community.economy.inventory.product.changes', [
                     // TODO: this is not efficient
                     'communityId' => $product->economy->community->human_id,
                     'economyId' => $product->economy_id,
