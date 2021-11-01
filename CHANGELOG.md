@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.127 (2021-11-01)
+
+- Fix various errors on inventory pages
+
 ## 0.1.126 (2021-11-01)
 
 - Add mass product add/remove page to inventory
