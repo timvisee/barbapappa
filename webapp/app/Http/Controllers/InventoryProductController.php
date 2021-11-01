@@ -22,13 +22,11 @@ class InventoryProductController extends Controller {
         $product = $economy->products()->findOrFail($productId);
         $item = $inventory->getItem($product);
 
-        // Find last balance date
-        $lastBalanced = $item != null ? $item
+        // Find last balance event
+        $lastBalance = $item != null ? $item
             ->changes()
             ->type(InventoryItemChange::TYPE_BALANCE)
             ->first() : null;
-        if($lastBalanced != null)
-            $lastBalanced = $lastBalanced->created_at;
 
         // Build list of quantities by inventory
         $quantities = $economy
@@ -47,7 +45,7 @@ class InventoryProductController extends Controller {
             ->with('inventory', $inventory)
             ->with('product', $product)
             ->with('item', $item)
-            ->with('lastBalanced', $lastBalanced)
+            ->with('lastBalance', $lastBalance)
             ->with('quantities', $quantities)
             ->with('changes', $item != null ? $item->changes()->limit(10)->get() : collect());
     }

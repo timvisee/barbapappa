@@ -63,8 +63,19 @@
             </tr>
             <tr>
                 <td>@lang('pages.inventories.lastBalanced')</td>
-                @if($lastBalanced != null)
-                    <td>@include('includes.humanTimeDiff', ['time' => $lastBalanced])</td>
+                @if($lastBalance != null)
+                    <td>
+                        <a href="{{ route('community.economy.inventory.product.change', [
+                                    // TODO: this is not efficient
+                                    'communityId' => $product->economy->community->human_id,
+                                    'economyId' => $product->economy_id,
+                                    'inventoryId' => $inventory->id,
+                                    'productId' => $product->id,
+                                    'changeId' => $lastBalance->id,
+                                ]) }}">
+                            @include('includes.humanTimeDiff', ['time' => $lastBalance->created_at])
+                        </a>
+                    </td>
                 @else
                     <td><span class="ui text negative">@lang('misc.never')</span></td>
                 @endif
