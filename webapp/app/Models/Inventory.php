@@ -44,6 +44,22 @@ class Inventory extends Model {
     }
 
     /**
+     * Get all item changes within this inventory.
+     *
+     * @return List of item changes.
+     */
+    public function changes() {
+        return $this->hasManyThrough(
+            InventoryItemChange::class,
+            InventoryItem::class,
+            'inventory_id',
+            'item_id',
+            'id',
+            'id',
+        );
+    }
+
+    /**
      * Get the bars that use this inventory.
      *
      * @return List of bars.

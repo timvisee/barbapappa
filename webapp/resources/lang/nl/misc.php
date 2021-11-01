@@ -173,6 +173,8 @@ return [
     'includeHeaders' => 'Kopteksten toevoegen',
     'fromDate' => 'Vanaf datum',
     'toDate' => 'Tot datum',
+    'fromTime' => 'Vanaf tijd',
+    'toTime' => 'Tot tijd',
     'inclusive' => 'Inclusief',
     'format' => 'Formaat',
     'typeToVerify' => 'Vul \':text\' in ter verificatie',
@@ -186,6 +188,7 @@ return [
     'filters' => 'Filters',
     'update' => 'Updaten',
     'go' => 'Gaan',
+    'report' => 'Rapporteer',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',

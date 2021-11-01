@@ -40,10 +40,22 @@
                 </a>
             </div>
         @endif
+    </p>
 
+    <p>
         @if(perms(InventoryController::permsView()))
-            @if(request()->query('time') == null)
-                <div class="ui buttons">
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.inventory.report', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                            'time_to' => $time != null ? $time->toDateTimeLocalString('minute') : null,
+                        ]) }}"
+                        class="ui button violet">
+                    @lang('pages.inventories.periodReport')
+                </a>
+
+                @if(request()->query('time') == null)
                     <a href="{{ route('community.economy.inventory.show', [
                                 'communityId' => $community->human_id,
                                 'economyId' => $economy->id,
@@ -53,8 +65,8 @@
                             class="ui button purple">
                         @lang('pages.inventories.timeTravel')
                     </a>
-                </div>
-            @endif
+                @endif
+            </div>
         @endif
     </p>
 

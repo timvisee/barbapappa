@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Models\Inventory;
 use App\Models\InventoryItemChange;
+use App\Utils\MoneyAmountBag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -528,6 +529,183 @@ class InventoryController extends Controller {
                 'inventoryId' => $inventory->id,
             ])
             ->with('success', trans_choice('pages.inventories.#productsRebalanced', $count) . '.');
+    }
+
+    /**
+     * Show inventory period report.
+     *
+     * @return Response
+     */
+    public function report(Request $request, $communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+
+        // Validate
+        $this->validate($request, [
+            'time_from' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|before:time_to|before_or_equal:' . now()->toDateTimeString(),
+            'time_to' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|after:time_from|before_or_equal:' . now()->toDateTimeString(),
+        ]);
+
+        // Parse times if set, default to past month
+        $timeFrom = $request->query('time_from');
+        $timeFrom = $timeFrom != null ? Carbon::parse($timeFrom) : null;
+        $timeTo = $request->query('time_to');
+        $timeTo = $timeTo != null ? Carbon::parse($timeTo) : null;
+        if($timeFrom == null)
+            $timeFrom = ($timeTo ?? now())->clone()->subMonth()->max($inventory->created_at);
+        if($timeTo == null)
+            $timeTo = now();
+
+        // Build response
+        $response = view('community.economy.inventory.report')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory)
+            ->with('timeFrom', $timeFrom)
+            ->with('timeTo', $timeTo);
+
+        // When times are known, generate report
+        if($timeFrom != null && $timeTo != null) {
+            // Build list of unbalanced products
+            $unbalanced = Self::getProductList($inventory)
+                ->map(function($p) use($timeFrom, $timeTo) {
+                    // We must have the item
+                    if($p['item'] == null)
+                        return $p;
+
+                    // Get all rebalance quantities
+                    $rebalances = $p['item']
+                        ->changes()
+                        ->type(InventoryItemChange::TYPE_BALANCE)
+                        ->period($timeFrom, $timeTo)
+                        ->pluck('quantity');
+
+                    // Calcualte (absolute) unbalance
+                    $p['unbalance'] = (int) $rebalances->sum();
+                    $p['unbalanceAbs'] = (int) $rebalances->map(function($q) { return abs($q); })->sum();
+                    $p['balanceCount'] = $rebalances->count();
+
+                    // Determine unbalance price
+                    $p['price'] = $p['product']->getPrice([]);
+                    if(isset($p['price'])) {
+                        $amount = $p['price']->getMoneyAmount();
+                        $amount->approximate = true;
+                        $p['unbalanceMoney'] = $amount->mul($p['unbalance']);
+                    }
+
+                    return $p;
+                })
+                ->filter(function($p) {
+                    return ($p['unbalanceAbs'] ?? 0) != 0;
+                })
+                ->sortBy('unbalance');
+            $response = $response
+                ->with('unbalanced', $unbalanced);
+
+            $changeCount = $inventory
+                ->changes()
+                ->period($timeFrom, $timeTo)
+                ->count();
+            $stats = [
+                'period' => [$timeFrom->longAbsoluteDiffForHumans($timeTo), null],
+                'changeCount' => [$changeCount, null],
+            ];
+
+            if($changeCount > 0) {
+                $manualChangeCount = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->whereNotNull('user_id')
+                    ->count();
+                $changeAbsSum = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->addSelect(DB::raw('ABS(inventory_item_change.quantity) AS abs_quantity'))
+                    ->pluck('abs_quantity')
+                    ->sum();
+                $changeSum = sprintf("%+d", $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->sum('inventory_item_change.quantity'));
+                $balanceCount = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_BALANCE)
+                    ->count();
+                $balanceAbsSum = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_BALANCE)
+                    ->addSelect(DB::raw('ABS(inventory_item_change.quantity) AS abs_quantity'))
+                    ->pluck('abs_quantity')
+                    ->sum();
+                $balanceSum = sprintf("%+d", $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_BALANCE)
+                    ->sum('inventory_item_change.quantity'));
+                $balanceMoneySum = new MoneyAmountBag();
+                $unbalanced->each(function($p) use(&$balanceMoneySum) {
+                    if($p['unbalanceMoney'] != null)
+                        $balanceMoneySum->add($p['unbalanceMoney']);
+                });
+                $addSum = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_ADD_REMOVE)
+                    ->where('inventory_item_change.quantity', '>=', 0)
+                    ->sum('inventory_item_change.quantity');
+                $removeSum = -$inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_ADD_REMOVE)
+                    ->where('inventory_item_change.quantity', '<=', 0)
+                    ->sum('inventory_item_change.quantity');
+                $moveInSum = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_MOVE)
+                    ->where('inventory_item_change.quantity', '>=', 0)
+                    ->sum('inventory_item_change.quantity');
+                $moveOutSum = -$inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_MOVE)
+                    ->where('inventory_item_change.quantity', '<=', 0)
+                    ->sum('inventory_item_change.quantity');
+                $purchaseCount = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_PURCHASE)
+                    ->count();
+                $purchaseSum = -$inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_PURCHASE)
+                    ->sum('inventory_item_change.quantity');
+                $stats += [
+                    'manualChangeCount' => [$manualChangeCount, round($manualChangeCount / $changeCount * 100) . '%'],
+                    'changeAbsSum' => [$changeAbsSum, null],
+                    'changeSum' => [$changeSum, null],
+                    'balanceCount' => [$balanceCount, round($balanceCount / $changeCount * 100) . '%'],
+                    'balanceAbsSum' => [$balanceAbsSum, round($balanceAbsSum / $changeAbsSum * 100) . '%'],
+                    'balanceSum' => [color_number($balanceSum), round($balanceSum / $changeAbsSum * 100) . '%'],
+                    'balanceMoneySum' => [$balanceMoneySum->formatAmount(BALANCE_FORMAT_COLOR), null],
+                    'addSum' => [$addSum, round($addSum / $changeAbsSum * 100) . '%'],
+                    'removeSum' => [$removeSum, round($removeSum / $changeAbsSum * 100) . '%'],
+                    'moveInSum' => [$moveInSum, round($moveInSum / $changeAbsSum * 100) . '%'],
+                    'moveOutSum' => [$moveOutSum, round($moveOutSum / $changeAbsSum * 100) . '%'],
+                    'purchaseCount' => [$purchaseCount, round($purchaseCount / $changeCount * 100) . '%'],
+                    'purchaseSum' => [$purchaseSum, round($purchaseSum / $changeAbsSum * 100) . '%'],
+                ];
+            }
+
+            $response = $response
+                ->with('stats', $stats);
+        }
+
+        return $response;
     }
 
     /**

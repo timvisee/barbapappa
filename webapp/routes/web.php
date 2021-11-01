@@ -14,6 +14,7 @@ use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyWalletController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\InventoryProductController;
 use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
 
@@ -332,8 +333,13 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::put('/move', 'InventoryController@doMove')->name('community.economy.inventory.doMove');
                         });
 
+                        // Period report
+                        Route::prefix('/report')->middleware(InventoryProductController::permsView()->middleware())->group(function() {
+                            Route::get('/', 'InventoryController@report')->name('community.economy.inventory.report');
+                        });
+
                         // Product details
-                        Route::prefix('/product/{productId}')->group(function() {
+                        Route::prefix('/product/{productId}')->middleware(InventoryProductController::permsView()->middleware())->group(function() {
                             // Show
                             Route::get('/', 'InventoryProductController@show')->name('community.economy.inventory.product.show');
 

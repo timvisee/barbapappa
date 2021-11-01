@@ -217,6 +217,23 @@ if(!function_exists('ref_format')) {
     }
 }
 
+if(!function_exists('color_number')) {
+    /**
+     * Color positive and negative numbers.
+     *
+     * @param $value The numeric value.
+     *
+     * @return The colored value.
+     */
+    function color_number($value) {
+        if($value < 0)
+            return '<span class="ui text negative">' . $value . '</span>';
+        if($value > 0)
+            return '<span class="ui text positive">' . $value . '</span>';
+        return $value;
+    }
+}
+
 if(!function_exists('format_iban')) {
     /**
      * Format the given IBAN in a more readable format.

@@ -173,6 +173,8 @@ return [
     'includeHeaders' => 'Include headers',
     'fromDate' => 'From date',
     'toDate' => 'To date',
+    'fromTime' => 'From time',
+    'toTime' => 'To time',
     'inclusive' => 'Inclusive',
     'format' => 'Format',
     'typeToVerify' => 'Type \':text\' to verify',
@@ -186,6 +188,7 @@ return [
     'filters' => 'Filters',
     'update' => 'Update',
     'go' => 'Go',
+    'report' => 'Report',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'trashingCanBeUndone' => 'The item will be trashed. This operation can be reverted, by restoring the item from the trash.',

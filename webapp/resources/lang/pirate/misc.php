@@ -172,6 +172,8 @@ return [
     'includeHeaders' => 'Include headers',
     'fromDate' => 'From date',
     'toDate' => 'To date',
+    'fromTime' => 'From time',
+    'toTime' => 'To time',
     'inclusive' => 'Inclusive',
     'format' => 'Format',
     'typeToVerify' => 'Enter \':text\' to verify',
@@ -185,6 +187,7 @@ return [
     'filters' => 'Filters',
     'update' => 'Update',
     'go' => 'Go',
+    'report' => 'Report',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\MoneyAmount;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -49,6 +50,15 @@ class ProductPrice extends Model {
      */
     public function currency() {
         return $this->belongsTo(Currency::class);
+    }
+
+    /**
+     * Get the price as money amount.
+     *
+     * @return MoneyAmount The price as money amount.
+     */
+    public function getMoneyAmount() {
+        return new MoneyAmount($this->currency, $this->price);
     }
 
     /**

@@ -1,0 +1,153 @@
+@extends('layouts.app')
+
+@section('title', $inventory->name . ': ' . __('pages.inventories.periodReport'))
+@php
+    $breadcrumbs = Breadcrumbs::generate('community.economy.inventory.show', $inventory);
+    $menusection = 'community_manage';
+
+    use App\Http\Controllers\InventoryController;
+@endphp
+
+@section('content')
+    <h2 class="ui header">@yield('title')</h2>
+
+    {{-- Period input --}}
+    {!! Form::open([
+        'method' => 'GET',
+        'class' => 'ui form'
+    ]) !!}
+        <div class="two fields">
+            <div class="required field {{ ErrorRenderer::hasError('time_from') ? 'error' : '' }}">
+                {{ Form::label('time_from', __('misc.fromTime') . ':') }}
+                {{ Form::datetimeLocal('time_from', $timeFrom != null ? $timeFrom->toDateTimeLocalString('minute') : null, [
+                    'min' => $inventory->created_at->floorDay()->toDateTimeLocalString('minute'),
+                    'max' => now()->toDateTimeLocalString('minute'),
+                ]) }}
+                {{ ErrorRenderer::inline('time_from') }}
+            </div>
+
+            <div class="required field {{ ErrorRenderer::hasError('time_to') ? 'error' : '' }}">
+                {{ Form::label('time_to', __('misc.toTime') . ':') }}
+                {{ Form::datetimeLocal('time_to', ($timeTo ?? now())->toDateTimeLocalString('minute'), [
+                    'min' => $inventory->created_at->floorDay()->toDateTimeLocalString('minute'),
+                    'max' => now()->toDateTimeLocalString('minute'),
+                ]) }}
+                {{ ErrorRenderer::inline('time_to') }}
+            </div>
+        </div>
+
+        <button class="ui button blue" type="submit">@lang('misc.report')</button>
+
+        <div class="ui buttons">
+            <a href="{{ route('community.economy.inventory.report', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $economy->id,
+                        'inventoryId' => $inventory->id,
+                        'time_from' => now()->subWeek()->max($inventory->created_at)->toDateTimeLocalString('minute'),
+                        'time_to' => now()->toDateTimeLocalString('minute'),
+                    ]) }}"
+                    class="ui button">
+                @lang('pages.inventories.period.week')
+            </a>
+            @if(!$inventory->created_at->addWeek()->isFuture())
+                <a href="{{ route('community.economy.inventory.report', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                            'time_from' => now()->subMonth()->max($inventory->created_at)->toDateTimeLocalString('minute'),
+                            'time_to' => now()->toDateTimeLocalString('minute'),
+                        ]) }}"
+                        class="ui button">
+                    @lang('pages.inventories.period.month')
+                </a>
+            @endif
+            @if(!$inventory->created_at->addMonth()->isFuture())
+                <a href="{{ route('community.economy.inventory.report', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                            'time_from' => now()->subYear()->max($inventory->created_at)->toDateTimeLocalString('minute'),
+                            'time_to' => now()->toDateTimeLocalString('minute'),
+                        ]) }}"
+                        class="ui button">
+                    @lang('pages.inventories.period.year')
+                </a>
+            @endif
+        </div>
+    {!! Form::close() !!}
+
+    <div class="ui divider hidden"></div>
+
+    @if($timeFrom != null && $timeTo != null)
+        <h3 class="ui horizontal divider header">
+            @lang('pages.inventories.periodOf', ['period' => $timeFrom->longAbsoluteDiffForHumans($timeTo)])
+        </h3>
+
+        {{-- Unbalanced products --}}
+        <div class="ui vertical menu fluid">
+            <h5 class="ui item header">
+                @lang('pages.inventories.unbalancedProducts') ({{ count($unbalanced) }})
+            </h5>
+
+            @forelse($unbalanced as $p)
+                <a class="item"
+                        href="{{ route('community.economy.inventory.product.show', [
+                            // TODO: this is not efficient
+                            'communityId' => $p['product']->economy->community->human_id,
+                            'economyId' => $p['product']->economy_id,
+                            'inventoryId' => $inventory->id,
+                            'productId' => $p['product']->id,
+                        ]) }}">
+                    {{ $p['product']->displayName() }}
+
+                    <div class="ui {{ $p['unbalance'] < 0 ? 'red' : ($p['unbalance'] > 0 ? 'green' : '') }} label">
+                        @if($p['unbalance'] > 0)
+                            +{{ $p['unbalance'] }}
+                        @else
+                            {{ $p['unbalance'] }}
+                        @endif
+                    </div>
+
+                    @if(isset($p['unbalanceMoney']))
+                        {!! $p['unbalanceMoney']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                    @endif
+
+                    <span class="sub-label">
+                        {{ $p['balanceCount'] }}×,
+                        {{ $p['unbalanceAbs'] }} abs
+                    </span>
+                </a>
+            @empty
+                <i class="item">@lang('pages.products.noProducts')</i>
+            @endforelse
+        </div>
+
+        <div class="ui divider hidden"></div>
+
+        {{-- Stats list --}}
+        <table class="ui compact celled definition table">
+            <tbody>
+                @foreach($stats as $name => [$a, $b])
+                    <tr>
+                        <td>@lang('pages.inventories.stats.' . $name)</td>
+                        <td>{!! $a !!}</td>
+                        <td class="subtle">{{ $b }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+
+    <div class="ui divider hidden"></div>
+
+    <p>
+        <a href="{{ route('community.economy.inventory.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'inventoryId' => $inventory->id,
+                ]) }}"
+                class="ui button basic">
+            @lang('general.goBack')
+        </a>
+    </p>
+@endsection

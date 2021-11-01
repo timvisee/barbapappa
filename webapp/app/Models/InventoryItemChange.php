@@ -97,7 +97,7 @@ class InventoryItemChange extends Model {
 
         // Order creation date descending
         static::addGlobalScope('order', function (Builder $builder) {
-            $builder->orderBy('created_at', 'DESC');
+            $builder->orderBy('inventory_item_change.created_at', 'DESC');
         });
     }
 
@@ -132,6 +132,15 @@ class InventoryItemChange extends Model {
      */
     public function scopeType($query, int $type) {
         return $query->where('type', $type);
+    }
+
+    /**
+     * A scope to a specific period.
+     */
+    public function scopePeriod($query, Carbon $from, Carbon $to) {
+        return $query
+            ->where($this->table . '.created_at', '>=', $from)
+            ->where($this->table . '.created_at', '<=', $to);
     }
 
     /**
