@@ -99,7 +99,7 @@
     {{-- Recent changes --}}
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">
-            @lang('pages.inventories.lastChanges')
+            {{ trans_choice('pages.inventories.last#Changes', $changes->count()) }}
         </h5>
 
         @forelse($changes as $c)

@@ -393,7 +393,7 @@ return [
         ],
         'lastBalanced' => 'Laatst gebalanceerd',
         'inventoryQuantities' => 'Inventaris aantallen',
-        'lastChanges' => 'Laatste aanpassingen',
+        'last#Changes' => '{0} Laatste aanpassingen|{1} Laatste aanpassing|[2,*] Laatste :count aanpassingen',
         'noChanges' => 'Geen aanpassingen',
         'allChanges' => 'Alle aanpassingen',
     ],
