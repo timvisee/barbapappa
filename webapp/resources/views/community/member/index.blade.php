@@ -22,6 +22,12 @@
                 @if($member->role != 0)
                     ({{ CommunityRoles::roleName($member->role) }})
                 @endif
+
+                @if($member->visited_at != null)
+                    <span class="sub-label">
+                        @include('includes.humanTimeDiff', ['time' => $member->visited_at])
+                    </span>
+                @endif
             </a>
         @empty
             <div class="item">

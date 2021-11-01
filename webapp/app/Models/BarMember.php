@@ -23,6 +23,10 @@ class BarMember extends Pivot {
 
     protected $with = ['user'];
 
+    protected $casts = [
+        'visited_at' => 'datetime',
+    ];
+
     /**
      * Get dynamic properties.
      *
