@@ -84,14 +84,12 @@
                     </td>
                 @endif
             </tr>
-            <tr>
-                <td>@lang('misc.createdBy')</td>
-                @if($product->created_user)
+            @if($product->created_user)
+                <tr>
+                    <td>@lang('misc.createdBy')</td>
                     <td>{{ $product->created_user->name }}</td>
-                @else
-                    <td><i>@lang('misc.unknownUser')</i></td>
-                @endif
-            </tr>
+                </tr>
+            @endif
             @if($product->updated_user)
                 <tr>
                     <td>@lang('misc.lastUpdatedBy')</td>
