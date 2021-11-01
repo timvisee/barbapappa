@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
+use App\Models\Inventory;
 use App\Models\InventoryItemChange;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -82,22 +83,11 @@ class InventoryController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
-        $products = $economy->products;
 
         // Build list of (exhausted) products
-        [$products, $exhaustedProducts] = $products
-            ->map(function($product) use($inventory) {
-                // TODO: this is inefficient, improve this
-                $item = $inventory->getItem($product);
-                return [
-                    'product' => $product,
-                    'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
-                ];
-            })
-            ->sortBy('product.name')
+        [$products, $exhaustedProducts] = Self::getProductList($inventory)
             ->partition(function($p) {
-                return $p['quantity'] != 0;
+                return !$p['exhausted'];
             });
 
         return view('community.economy.inventory.show')
@@ -209,20 +199,13 @@ class InventoryController extends Controller {
         $products = $economy->products;
 
         // Build list of (exhausted) products
-        [$products, $exhaustedProducts] = $products
-            ->map(function($product) use($inventory) {
-                // TODO: this is inefficient, improve this
-                $item = $inventory->getItem($product);
-                return [
-                    'product' => $product,
-                    'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
-                    'field' => 'product_' . $product->id,
-                ];
+        [$products, $exhaustedProducts] = Self::getProductList($inventory)
+            ->map(function($p) {
+                $p['field'] = 'product_' . $p['product']->id;
+                return $p;
             })
-            ->sortBy('product.name')
             ->partition(function($p) {
-                return $p['quantity'] != 0;
+                return !$p['exhausted'];
             });
 
         return view('community.economy.inventory.addRemove')
@@ -242,19 +225,12 @@ class InventoryController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
-        $products = $economy->products;
 
-        // Build list of (exhausted) products
-        $products = $products
-            ->map(function($product) use($inventory) {
-                // TODO: this is inefficient, improve this
-                $item = $inventory->getItem($product);
-                return [
-                    'product' => $product,
-                    'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
-                    'field' => 'product_' . $product->id,
-                ];
+        // Build list of products
+        $products = Self::getProductList($inventory)
+            ->map(function($p) {
+                $p['field'] = 'product_' . $p['product']->id;
+                return $p;
             });
 
         // Validate
@@ -334,20 +310,13 @@ class InventoryController extends Controller {
         $products = $economy->products;
 
         // Build list of (exhausted) products
-        [$products, $exhaustedProducts] = $products
-            ->map(function($product) use($inventory) {
-                // TODO: this is inefficient, improve this
-                $item = $inventory->getItem($product);
-                return [
-                    'product' => $product,
-                    'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
-                    'field' => 'product_' . $product->id,
-                ];
+        [$products, $exhaustedProducts] = Self::getProductList($inventory)
+            ->map(function($p) {
+                $p['field'] = 'product_' . $p['product']->id;
+                return $p;
             })
-            ->sortBy('product.name')
             ->partition(function($p) {
-                return $p['quantity'] != 0;
+                return !$p['exhausted'];
             });
 
         return view('community.economy.inventory.balance')
@@ -369,17 +338,11 @@ class InventoryController extends Controller {
         $inventory = $economy->inventories()->findOrFail($inventoryId);
         $products = $economy->products;
 
-        // Build list of (exhausted) products
-        $products = $products
-            ->map(function($product) use($inventory) {
-                // TODO: this is inefficient, improve this
-                $item = $inventory->getItem($product);
-                return [
-                    'product' => $product,
-                    'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
-                    'field' => 'product_' . $product->id,
-                ];
+        // Build list of products
+        $products = Self::getProductList($inventory)
+            ->map(function($p) {
+                $p['field'] = 'product_' . $p['product']->id;
+                return $p;
             });
 
         // Validate
@@ -460,20 +423,13 @@ class InventoryController extends Controller {
         $products = $economy->products;
 
         // Build list of (exhausted) products
-        [$products, $exhaustedProducts] = $products
-            ->map(function($product) use($inventory) {
-                // TODO: this is inefficient, improve this
-                $item = $inventory->getItem($product);
-                return [
-                    'product' => $product,
-                    'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
-                    'field' => 'product_' . $product->id,
-                ];
+        [$products, $exhaustedProducts] = Self::getProductList($inventory)
+            ->map(function($p) {
+                $p['field'] = 'product_' . $p['product']->id;
+                return $p;
             })
-            ->sortBy('product.name')
             ->partition(function($p) {
-                return $p['quantity'] != 0;
+                return !$p['exhausted'];
             });
 
         return view('community.economy.inventory.move')
@@ -495,17 +451,11 @@ class InventoryController extends Controller {
         $inventory = $economy->inventories()->findOrFail($inventoryId);
         $products = $economy->products;
 
-        // Build list of (exhausted) products
-        $products = $products
-            ->map(function($product) use($inventory) {
-                // TODO: this is inefficient, improve this
-                $item = $inventory->getItem($product);
-                return [
-                    'product' => $product,
-                    'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
-                    'field' => 'product_' . $product->id,
-                ];
+        // Build list of products
+        $products = Self::getProductList($inventory)
+            ->map(function($p) {
+                $p['field'] = 'product_' . $p['product']->id;
+                return $p;
             });
 
         // Validate
@@ -567,6 +517,27 @@ class InventoryController extends Controller {
                 'inventoryId' => $inventory->id,
             ])
             ->with('success', trans_choice('pages.inventories.#productsRebalanced', $count) . '.');
+    }
+
+    /**
+     * Get a product/item for an inventory.
+     */
+    private static function getProductList(Inventory $inventory) {
+        return $inventory
+            ->economy
+            ->products
+            ->map(function($product) use($inventory) {
+                // TODO: this is inefficient, improve this
+                $item = $inventory->getItem($product);
+                $quantity = $item != null ? $item->quantity : 0;
+                return [
+                    'product' => $product,
+                    'item' => $item,
+                    'quantity' => $quantity,
+                    'exhausted' => $quantity == 0,
+                ];
+            })
+            ->sortBy('product.name');
     }
 
     /**
