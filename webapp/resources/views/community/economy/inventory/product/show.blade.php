@@ -6,6 +6,7 @@
     $menusection = 'community_manage';
 
     use App\Http\Controllers\InventoryController;
+    use App\Models\InventoryItemChange;
 @endphp
 
 @section('content')
@@ -134,9 +135,7 @@
                     @lang('pages.inventories.type.' . $c->type)
                 @endif
 
-                <div class="ui {{ $c->quantity < 0 ? 'red' : ($c->quantity > 0 ? 'green' : '') }} label">
-                    {{ $c->quantity }}
-                </div>
+                {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
 
                 <span class="sub-label">
                     @include('includes.humanTimeDiff', ['time' => $c->created_at])

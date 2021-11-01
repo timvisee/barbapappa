@@ -77,6 +77,21 @@ class InventoryItemChange extends Model {
      */
     const TYPE_SET = 5;
 
+    /**
+     * Format the quantity as plain text.
+     */
+    const FORMAT_PLAIN = 0;
+
+    /**
+     * Format the quantity as colored text, depending on the value.
+     */
+    const FORMAT_COLOR = 1;
+
+    /**
+     * Format the quantity as colored label, depending on the value.
+     */
+    const FORMAT_LABEL = 2;
+
     protected static function boot() {
         parent::boot();
 
@@ -192,5 +207,38 @@ class InventoryItemChange extends Model {
             // Delete this change
             $self->delete();
         });
+    }
+
+    /**
+     * Format the quantity amount for this change.
+     *
+     * @param boolean [$format=FORMAT_PLAIN] The quantity formatting type.
+     *
+     * @return string Formatted amount.
+     */
+    public function formatQuantity(int $format = Self::FORMAT_PLAIN): string {
+        switch($format) {
+            case Self::FORMAT_PLAIN:
+                if($this->quantity > 0)
+                    return '+' . $this->quantity;
+                return (string) $this->quantity;
+
+            case Self::FORMAT_COLOR:
+                if($this->quantity < 0)
+                    return '<span class="ui text negative">' . $this->quantity . '</span>';
+                else if($this->quantity > 0)
+                    return '<span class="ui text positive">+' . $this->quantity . '</span>';
+                return (string) $this->quantity;
+
+            case BALANCE_FORMAT_LABEL:
+                if($this->quantity < 0)
+                    return '<div class="ui red label">' . $this->quantity . '</div>';
+                else if($this->quantity > 0)
+                    return '<div class="ui green label">+' . $this->quantity . '</div>';
+                return '<div class="ui label">' . $this->quantity . '</div>';
+
+            default:
+                throw new \Exception("Invalid format type given");
+        }
     }
 }

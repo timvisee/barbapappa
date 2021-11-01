@@ -15,13 +15,7 @@
     <div class="ui one small statistics">
         <div class="statistic">
             <div class="value">
-                @if($change != null && $change->quantity > 0)
-                    <span class="ui text positive">{{ $change->quantity }}</span>
-                @elseif($change != null && $change->quantity < 0)
-                    <span class="ui text negative">{{ $change->quantity }}</span>
-                @else
-                    0
-                @endif
+                {!! $change->formatQuantity(InventoryItemChange::FORMAT_COLOR) !!}
             </div>
             <div class="label">@lang('misc.amount')</div>
         </div>
