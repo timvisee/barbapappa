@@ -11,8 +11,8 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    @if(perms(InventoryController::permsManage()))
-        <p>
+    <p>
+        @if(perms(InventoryController::permsManage()))
             <div class="ui buttons">
                 <a href="{{ route('community.economy.inventory.addRemove', [
                             'communityId' => $community->human_id,
@@ -39,7 +39,49 @@
                     @lang('pages.inventories.move')
                 </a>
             </div>
-        </p>
+        @endif
+
+        @if(perms(InventoryController::permsView()))
+            @if(request()->query('date') == null)
+                <div class="ui buttons">
+                    <a href="{{ route('community.economy.inventory.show', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'inventoryId' => $inventory->id,
+                                'date' => now()->ceilDay()->toDateString(),
+                            ]) }}"
+                            class="ui button purple">
+                        @lang('pages.inventories.timeTravel')
+                    </a>
+                </div>
+            @endif
+        @endif
+    </p>
+
+    {{-- Time travel field --}}
+    @if(request()->query('date') != null)
+        {!! Form::open([
+            'method' => 'GET',
+            'class' => 'ui form'
+        ]) !!}
+            <div class="field {{ ErrorRenderer::hasError('date') ? 'error' : '' }}">
+                {{ Form::label('date', __('pages.inventories.travelToTime') . ':') }}
+
+                <div class="ui action input">
+                    {{ Form::date('date', $time->toDateString(), [
+                        'min' => $inventory->created_at->floorDay()->toDateString(),
+                        'max' => now()->ceilDay()->toDateString(),
+                    ]) }}
+                    <button class="ui button purple" type="submit">@lang('misc.go')!</button>
+                </div>
+
+                {{ ErrorRenderer::inline('date') }}
+            </div>
+
+            <h5 class="ui header">
+                @include('includes.humanTimeDiff', ['time' => $time]):
+            </h5>
+        {!! Form::close() !!}
     @endif
 
     {{-- Product list --}}

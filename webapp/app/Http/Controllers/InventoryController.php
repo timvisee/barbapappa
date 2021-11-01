@@ -79,14 +79,24 @@ class InventoryController extends Controller {
      *
      * @return Response
      */
-    public function show($communityId, $economyId, $inventoryId) {
+    public function show(Request $request, $communityId, $economyId, $inventoryId) {
         // Get the community, find the inventory
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
 
+        // Validate
+        $this->validate($request, [
+            // TODO: limit date range?
+            'date' => 'nullable|date',
+        ]);
+
+        // Parse time if set
+        $time = $request->input('date');
+        $time = $time != null ? new Carbon($time) : null;
+
         // Build list of (exhausted) products
-        [$products, $exhaustedProducts] = Self::getProductList($inventory)
+        [$products, $exhaustedProducts] = Self::getProductList($inventory, $time)
             ->partition(function($p) {
                 return !$p['exhausted'];
             });
@@ -95,7 +105,8 @@ class InventoryController extends Controller {
             ->with('economy', $economy)
             ->with('inventory', $inventory)
             ->with('products', $products)
-            ->with('exhaustedProducts', $exhaustedProducts);
+            ->with('exhaustedProducts', $exhaustedProducts)
+            ->with('time', $time);
     }
 
     /**
@@ -524,6 +535,10 @@ class InventoryController extends Controller {
      * Get a product/item for an inventory.
      */
     private static function getProductList(Inventory $inventory, ?Carbon $time = null) {
+        // Round time down to day
+        if($time != null)
+            $time = $time->floorDay();
+
         // Build list of products
         $products = $inventory
             ->economy

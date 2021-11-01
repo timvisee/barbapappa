@@ -398,6 +398,8 @@ return [
         'allChanges' => 'Alle aanpassingen',
         'viewRelated' => 'Bekijk gerelateerde',
         'hideType' => 'Verberg type',
+        'timeTravel' => 'Tijdreizen',
+        'travelToTime' => 'Reis naar tijd',
     ],
 
     /**

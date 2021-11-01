@@ -397,6 +397,8 @@ return [
         'allChanges' => 'All changes',
         'viewRelated' => 'View related',
         'hideType' => 'Hide type',
+        'timeTravel' => 'Time travel',
+        'travelToTime' => 'Travel to time',
     ],
 
     /**
