@@ -58,6 +58,7 @@ class MoneyAmount {
         if($this->currency != $amount->currency)
             throw new \Exception("Cannot sum amounts, incompatible currencies");
         $this->amount += $amount->amount;
+        $this->approximate = $this->approximate || $amount->approximate;
         return $this;
     }
 
@@ -75,6 +76,20 @@ class MoneyAmount {
         if($this->currency != $amount->currency)
             throw new \Exception("Cannot sum amounts, incompatible currencies");
         $this->amount -= $amount->amount;
+        $this->approximate = $this->approximate || $amount->approximate;
+        return $this;
+    }
+
+    /**
+     * Multiply by an integer.
+     *
+     * @param int $factor Amount to multiply by.
+     * @return MoneyAmount This money amount.
+     * @throws \Exception Throws if the currencies differ.
+     */
+    // TODO: do not mutate self here
+    public function mul(int $factor) {
+        $this->amount *= $factor;
         return $this;
     }
 
