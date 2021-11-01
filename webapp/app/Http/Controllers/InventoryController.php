@@ -647,7 +647,7 @@ class InventoryController extends Controller {
                     ->sum('inventory_item_change.quantity'));
                 $balanceMoneySum = new MoneyAmountBag();
                 $unbalanced->each(function($p) use(&$balanceMoneySum) {
-                    if($p['unbalanceMoney'] != null)
+                    if(isset($p['unbalanceMoney']))
                         $balanceMoneySum->add($p['unbalanceMoney']);
                 });
                 $addSum = $inventory

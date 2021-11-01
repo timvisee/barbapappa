@@ -110,7 +110,7 @@
                     {{ $q['quantity'] }}
                 </div>
 
-                @if($q['item'] != null)
+                @if(isset($q['item']) && $q['item'] != null)
                     <span class="sub-label">
                         @include('includes.humanTimeDiff', ['time' => $q['item']->updated_at])
                     </span>
