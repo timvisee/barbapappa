@@ -39,7 +39,7 @@
                             @endforeach
                         </div>
                     @else
-                        <i class="ui text red">@lang('misc.none')</i>
+                        <i class="ui text negative">@lang('misc.none')</i>
                     @endif
                 </td>
             </tr>

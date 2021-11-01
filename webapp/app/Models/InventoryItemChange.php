@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -41,9 +42,20 @@ class InventoryItemChange extends Model {
     ];
 
     /**
-     * Change type: update by user, to balance inventory.
+     * Available change types.
      */
-    const TYPE_UPDATE = 1;
+    const TYPES = [
+        Self::TYPE_BALANCE,
+        Self::TYPE_MOVE,
+        Self::TYPE_PURCHASE,
+        Self::TYPE_ADD_REMOVE,
+        Self::TYPE_SET,
+    ];
+
+    /**
+     * Change type: balance by user, to rebalance inventory.
+     */
+    const TYPE_BALANCE = 1;
 
     /**
      * Change type: move to/from other inventory by user.
@@ -54,6 +66,40 @@ class InventoryItemChange extends Model {
      * Change type: product purchase.
      */
     const TYPE_PURCHASE = 3;
+
+    /**
+     * Change type: add/remove products to/from inventory.
+     */
+    const TYPE_ADD_REMOVE = 4;
+
+    /**
+     * Change type: set quantity.
+     */
+    const TYPE_SET = 5;
+
+    /**
+     * Format the quantity as plain text.
+     */
+    const FORMAT_PLAIN = 0;
+
+    /**
+     * Format the quantity as colored text, depending on the value.
+     */
+    const FORMAT_COLOR = 1;
+
+    /**
+     * Format the quantity as colored label, depending on the value.
+     */
+    const FORMAT_LABEL = 2;
+
+    protected static function boot() {
+        parent::boot();
+
+        // Order creation date descending
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('inventory_item_change.created_at', 'DESC');
+        });
+    }
 
     /**
      * A scope to changes by a specific user.
@@ -86,6 +132,15 @@ class InventoryItemChange extends Model {
      */
     public function scopeType($query, int $type) {
         return $query->where('type', $type);
+    }
+
+    /**
+     * A scope to a specific period.
+     */
+    public function scopePeriod($query, Carbon $from, Carbon $to) {
+        return $query
+            ->where($this->table . '.created_at', '>=', $from)
+            ->where($this->table . '.created_at', '<=', $to);
     }
 
     /**
@@ -134,15 +189,7 @@ class InventoryItemChange extends Model {
      * @return bool True if valid, false if not.
      */
     public static function isValidType(int $type): bool {
-        switch($type) {
-        case Self::TYPE_UPDATE:
-        case Self::TYPE_MOVE:
-        case Self::TYPE_PURCHASE:
-            return true;
-
-        default:
-            return false;
-        }
+        return collect(Self::TYPES)->contains($type);
     }
 
     /**
@@ -169,5 +216,38 @@ class InventoryItemChange extends Model {
             // Delete this change
             $self->delete();
         });
+    }
+
+    /**
+     * Format the quantity amount for this change.
+     *
+     * @param boolean [$format=FORMAT_PLAIN] The quantity formatting type.
+     *
+     * @return string Formatted amount.
+     */
+    public function formatQuantity(int $format = Self::FORMAT_PLAIN): string {
+        switch($format) {
+            case Self::FORMAT_PLAIN:
+                if($this->quantity > 0)
+                    return '+' . $this->quantity;
+                return (string) $this->quantity;
+
+            case Self::FORMAT_COLOR:
+                if($this->quantity < 0)
+                    return '<span class="ui text negative">' . $this->quantity . '</span>';
+                else if($this->quantity > 0)
+                    return '<span class="ui text positive">+' . $this->quantity . '</span>';
+                return (string) $this->quantity;
+
+            case BALANCE_FORMAT_LABEL:
+                if($this->quantity < 0)
+                    return '<div class="ui red label">' . $this->quantity . '</div>';
+                else if($this->quantity > 0)
+                    return '<div class="ui green label">+' . $this->quantity . '</div>';
+                return '<div class="ui label">' . $this->quantity . '</div>';
+
+            default:
+                throw new \Exception("Invalid format type given");
+        }
     }
 }

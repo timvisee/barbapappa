@@ -94,7 +94,7 @@
             <p>@lang('pages.bar.inventoryDescription')</p>
         </div>
 
-        <div class="required field {{ ErrorRenderer::hasError('inventory') ? 'error' : '' }}">
+        <div class="field {{ ErrorRenderer::hasError('inventory') ? 'error' : '' }}">
             {{ Form::label('inventory', __('pages.inventories.inventory')) }}
 
             <div class="ui fluid selection dropdown">
@@ -104,8 +104,8 @@
                 <div class="default text">@lang('misc.pleaseSpecify')</div>
                 <div class="menu">
                     <div class="item" data-value=""><i>@lang('misc.none')</i></div>
-                    @foreach($bar->economy->inventories as $inventory)
-                        <div class="item" data-value="{{ $inventory->id }}">{{ $inventory->name }}</div>
+                    @foreach($bar->economy->inventories as $i)
+                        <div class="item" data-value="{{ $i->id }}">{{ $i->name }}</div>
                     @endforeach
                 </div>
             </div>

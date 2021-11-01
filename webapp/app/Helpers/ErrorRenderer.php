@@ -180,4 +180,13 @@ class ErrorRenderer {
             'messages' => self::getErrors($name, $limit, $consume)
         ]);
     }
+
+    /**
+     * Consume errors with a given name.
+     *
+     * @param string|null $name The error name to render, if available. If null is given, all errors with any name are rendered.
+     */
+    public static function consume($name) {
+        self::getErrors($name, null, true);
+    }
 }

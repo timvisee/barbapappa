@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.inventories.rebalanceProducts'))
+@section('title', __('pages.inventories.addRemoveProducts'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.inventory.show', $inventory);
     $menusection = 'community_manage';
@@ -11,13 +11,13 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <p>@lang('pages.inventories.rebalanceDescription')</p>
+    <p>@lang('pages.inventories.addRemoveDescription')</p>
 
     <div class="ui divider hidden"></div>
 
     {!! Form::open([
         'action' => [
-            'InventoryController@doBalance',
+            'InventoryController@doAddRemove',
             $community->human_id,
             $economy->id,
             $inventory->id,
@@ -31,8 +31,8 @@
             <thead>
                 <tr>
                     <th>@lang('pages.products.title') ({{ count($products) }})</th>
-                    <th>@lang('misc.quantity')</th>
-                    <th>@lang('misc.delta')</th>
+                    <th>@lang('misc.add')</th>
+                    <th>@lang('misc.remove')</th>
                 </tr>
             </thead>
             <tbody>
@@ -48,24 +48,24 @@
                                 {{ $p['product']->displayName() }}
                             </a>
                         </td>
-                        <td data-label="@lang('misc.quantity')" class="right aligned collapsing">
-                            <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
-                                {{ Form::text($p['field'] . '_quantity', '', [
-                                    'placeholder' => $p['quantity'],
-                                    'inputmode' => 'numeric',
-                                ]) }}
-                                {{-- Flush error for this field, inline rendering is bad --}}
-                                {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
-                            </div>
-                        </td>
-                        <td data-label="@lang('misc.delta')" class="right aligned collapsing">
-                            <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_delta') ? 'error' : '' }}">
-                                {{ Form::text($p['field'] . '_delta', '', [
+                        <td data-label="@lang('misc.add')" class="right aligned collapsing">
+                            <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_add') ? 'error' : '' }}">
+                                {{ Form::text($p['field'] . '_add', '', [
                                     'placeholder' => 0,
                                     'inputmode' => 'numeric',
                                 ]) }}
                                 {{-- Flush error for this field, inline rendering is bad --}}
-                                {{ ErrorRenderer::consume($p['field'] . '_delta') }}
+                                {{ ErrorRenderer::consume($p['field'] . '_add') }}
+                            </div>
+                        </td>
+                        <td data-label="@lang('misc.remove')" class="right aligned collapsing">
+                            <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_remove') ? 'error' : '' }}">
+                                {{ Form::text($p['field'] . '_remove', '', [
+                                    'placeholder' => 0,
+                                    'inputmode' => 'numeric',
+                                ]) }}
+                                {{-- Flush error for this field, inline rendering is bad --}}
+                                {{ ErrorRenderer::consume($p['field'] . '_remove') }}
                             </div>
                         </td>
                     </tr>
@@ -83,8 +83,8 @@
                 <thead>
                     <tr>
                         <th>@lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})</th>
-                        <th>@lang('misc.quantity')</th>
-                        <th>@lang('misc.delta')</th>
+                        <th>@lang('misc.add')</th>
+                        <th>@lang('misc.remove')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,24 +100,27 @@
                                     {{ $p['product']->displayName() }}
                                 </a>
                             </td>
-                            <td data-label="@lang('misc.quantity')" class="right aligned collapsing">
-                                <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
-                                    {{ Form::text($p['field'] . '_quantity', '', [
-                                        'placeholder' => $p['quantity'],
-                                        'inputmode' => 'numeric',
-                                    ]) }}
-                                    {{-- Flush error for this field, inline rendering is bad --}}
-                                    {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
-                                </div>
-                            </td>
-                            <td data-label="@lang('misc.delta')" class="right aligned collapsing">
-                                <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_delta') ? 'error' : '' }}">
-                                    {{ Form::text($p['field'] . '_delta', '', [
+                            <td data-label="@lang('misc.add')" class="right aligned collapsing">
+                                <div class="field
+                                    inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_add') ? 'error' : '' }}">
+                                    {{ Form::text($p['field'] . '_add', '', [
                                         'placeholder' => 0,
                                         'inputmode' => 'numeric',
                                     ]) }}
                                     {{-- Flush error for this field, inline rendering is bad --}}
-                                    {{ ErrorRenderer::consume($p['field'] . '_delta') }}
+                                    {{ ErrorRenderer::consume($p['field'] .
+                                    '_add') }}
+                                </div>
+                            </td>
+                            <td data-label="@lang('misc.remove')" class="right aligned collapsing">
+                                <div class="field
+                                    inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_remove') ? 'error' : '' }}">
+                                    {{ Form::text($p['field'] . '_remove', '', [
+                                        'placeholder' => 0,
+                                        'inputmode' => 'numeric',
+                                    ]) }}
+                                    {{-- Flush error for this field, inline rendering is bad --}}
+                                    {{ ErrorRenderer::consume($p['field'] . '_remove') }}
                                 </div>
                             </td>
                         </tr>
@@ -130,7 +133,7 @@
 
         <div class="required field {{ ErrorRenderer::hasError('comment') ? 'error' : '' }}">
             {{ Form::label('comment', __('misc.comment') . ':') }}
-            {{ Form::text('comment', __('pages.inventories.defaultRebalanceComment')) }}
+            {{ Form::text('comment', __('pages.inventories.defaultAddRemoveComment')) }}
             {{ ErrorRenderer::inline('comment') }}
         </div>
 
@@ -138,17 +141,17 @@
             {{ Form::label('type', __('pages.inventories.changeType')) }}
 
             <div class="ui fluid selection dropdown">
-                {{ Form::hidden('type', InventoryItemChange::TYPE_BALANCE) }}
+                {{ Form::hidden('type', InventoryItemChange::TYPE_ADD_REMOVE) }}
                 <i class="dropdown icon"></i>
 
                 <div class="default text">@lang('misc.pleaseSpecify')</div>
                 <div class="menu">
-                    <div class="item" data-value="{{ InventoryItemChange::TYPE_BALANCE }}">
-                        @lang('pages.inventories.type.' . InventoryItemChange::TYPE_BALANCE)
-                        (@lang('general.recommended'))
-                    </div>
                     <div class="item" data-value="{{ InventoryItemChange::TYPE_ADD_REMOVE }}">
                         @lang('pages.inventories.type.' . InventoryItemChange::TYPE_ADD_REMOVE)
+                        (@lang('general.recommended'))
+                    </div>
+                    <div class="item" data-value="{{ InventoryItemChange::TYPE_BALANCE }}">
+                        @lang('pages.inventories.type.' . InventoryItemChange::TYPE_BALANCE)
                     </div>
                     <div class="item" data-value="{{ InventoryItemChange::TYPE_SET }}">
                         @lang('pages.inventories.type.' . InventoryItemChange::TYPE_SET)
@@ -173,7 +176,7 @@
 
         <div class="ui divider hidden"></div>
 
-        <button class="ui button primary" type="submit">@lang('pages.inventories.rebalance')</button>
+        <button class="ui button primary" type="submit">@lang('pages.inventories.addRemove')</button>
         <a href="{{ route('community.economy.inventory.show', [
             'communityId' => $community->human_id,
             'economyId' => $economy->id,

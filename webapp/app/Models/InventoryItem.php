@@ -56,6 +56,6 @@ class InventoryItem extends Model {
      * @return The inventory item change.
      */
     public function changes() {
-        return $this->hasMany(InventoryItemChange::class);
+        return $this->hasMany(InventoryItemChange::class, 'item_id');
     }
 }

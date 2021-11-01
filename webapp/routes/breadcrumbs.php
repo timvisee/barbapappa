@@ -114,6 +114,17 @@ Breadcrumbs::for('community.economy.inventory.show', function(BreadcrumbTrail $t
     ]));
 });
 
+Breadcrumbs::for('community.economy.inventory.product.show', function(BreadcrumbTrail $trail, $inventory, $product) {
+    $economy = $inventory->economy;
+    $trail->parent('community.economy.inventory.show', $inventory);
+    $trail->push($product->displayName(), route('community.economy.inventory.product.show', [
+        'communityId' => $economy->community_id,
+        'economyId' => $economy->id,
+        'inventoryId' => $inventory->id,
+        'productId' => $product->id,
+    ]));
+});
+
 Breadcrumbs::for('community.economy.payment.index', function(BreadcrumbTrail $trail, $economy) {
     $trail->parent('community.economy.show', $economy);
     $trail->push(__('pages.payments.title'), route('community.economy.payment.index', ['communityId' => $economy->community_id, 'economyId' => $economy->id]));

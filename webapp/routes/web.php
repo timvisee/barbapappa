@@ -14,6 +14,7 @@ use App\Http\Controllers\EconomyController;
 use App\Http\Controllers\EconomyWalletController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\InventoryProductController;
 use App\Http\Controllers\PaymentServiceController;
 use App\Http\Controllers\ProductController;
 
@@ -322,10 +323,29 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::delete('/delete', 'InventoryController@doDelete')->name('community.economy.inventory.doDelete');
                         });
 
-                        // Balance
+                        // Add, remove, balance, move
                         Route::middleware(InventoryController::permsManage()->middleware())->group(function() {
+                            Route::get('/add-remove', 'InventoryController@addRemove')->name('community.economy.inventory.addRemove');
+                            Route::put('/add-remove', 'InventoryController@doAddRemove')->name('community.economy.inventory.doAddRemove');
                             Route::get('/balance', 'InventoryController@balance')->name('community.economy.inventory.balance');
                             Route::put('/balance', 'InventoryController@doBalance')->name('community.economy.inventory.doBalance');
+                            Route::get('/move', 'InventoryController@move')->name('community.economy.inventory.move');
+                            Route::put('/move', 'InventoryController@doMove')->name('community.economy.inventory.doMove');
+                        });
+
+                        // Period report
+                        Route::prefix('/report')->middleware(InventoryProductController::permsView()->middleware())->group(function() {
+                            Route::get('/', 'InventoryController@report')->name('community.economy.inventory.report');
+                        });
+
+                        // Product details
+                        Route::prefix('/product/{productId}')->middleware(InventoryProductController::permsView()->middleware())->group(function() {
+                            // Show
+                            Route::get('/', 'InventoryProductController@show')->name('community.economy.inventory.product.show');
+
+                            // Changes
+                            Route::get('/changes', 'InventoryProductController@changes')->name('community.economy.inventory.product.changes');
+                            Route::get('/changes/{changeId}', 'InventoryProductController@change')->name('community.economy.inventory.product.change');
                         });
                     });
                 });

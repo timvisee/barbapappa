@@ -246,7 +246,11 @@ ul.ui-listview.center > li > a.ui-btn {
 }
 
 // Other UI colors
-.ui.text.red {
+.ui.text.positive {
+    color: green;
+}
+
+.ui.text.negative {
     color: red;
 }
 

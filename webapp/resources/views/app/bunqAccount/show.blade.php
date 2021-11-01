@@ -24,7 +24,7 @@
                 @if($account->enable_checks)
                     <td>{{ yesno($account->enable_checks) }}</td>
                 @else
-                    <td><span class="ui text red">{{ yesno($account->enable_checks) }}</span></td>
+                    <td><span class="ui text negative">{{ yesno($account->enable_checks) }}</span></td>
                 @endif
             </tr>
             <tr>

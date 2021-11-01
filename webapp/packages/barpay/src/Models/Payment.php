@@ -293,7 +293,6 @@ class Payment extends Model {
      * receives/deposits money, the returned value is negative.
      *
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.
-     * @param boolean [$invert=false] True to invert the cost value.
      * @param array [$options=[]] List of formatting options.
      *
      * @return string Formatted amount.

@@ -252,7 +252,7 @@ class Mutation extends Model {
                 $mut_product = $this->mutationable;
                 $product = $mut_product->product()->withTrashed()->first();
                 $name = $product != null ? $product->displayName() : __('pages.products.unknownProduct');
-                $products[] = ($mut_product->quantity != 1 ? $mut_product->quantity . 'x ' : '') . $name;
+                $products[] = ($mut_product->quantity != 1 ? $mut_product->quantity . '× ' : '') . $name;
 
                 // Return the description string including the product names
                 return __('pages.mutations.types.product' . $dir . 'Detail', ['products' => implode(', ', $products)]);

@@ -1,23 +1,19 @@
 @extends('layouts.app')
 
-@section('title', __('pages.inventories.rebalanceProducts'))
+@section('title', __('pages.inventories.moveProducts'))
 @php
     $breadcrumbs = Breadcrumbs::generate('community.economy.inventory.show', $inventory);
     $menusection = 'community_manage';
-
-    use App\Models\InventoryItemChange;
 @endphp
 
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <p>@lang('pages.inventories.rebalanceDescription')</p>
-
-    <div class="ui divider hidden"></div>
+    <p>@lang('pages.inventories.moveDescription')</p>
 
     {!! Form::open([
         'action' => [
-            'InventoryController@doBalance',
+            'InventoryController@doMove',
             $community->human_id,
             $economy->id,
             $inventory->id,
@@ -25,6 +21,52 @@
         'method' => 'PUT',
         'class' => 'ui form'
     ]) !!}
+        <div class="two fields">
+            <div class="required field {{ ErrorRenderer::hasError('inventory_from') ? 'error' : '' }}">
+                {{ Form::label('inventory_from', __('pages.inventories.fromInventory')) }}
+
+                <div class="ui fluid selection dropdown">
+                    {{ Form::hidden('inventory_from', $inventory->id) }}
+                    <i class="dropdown icon"></i>
+
+                    <div class="default text">@lang('misc.pleaseSpecify')</div>
+                    <div class="menu">
+                        @foreach($economy->inventories as $i)
+                            <div class="item" data-value="{{ $i->id }}">{{ $i->name }}</div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{ ErrorRenderer::inline('inventory_from') }}
+            </div>
+
+            <div class="required field {{ ErrorRenderer::hasError('inventory_to') ? 'error' : '' }}">
+                {{ Form::label('inventory_to', __('pages.inventories.toInventory')) }}
+
+                @php
+                    // Select another inventory to move to
+                    $toInventory = $economy
+                        ->inventories
+                        ->firstWhere('id', '!=', $inventory->id);
+                @endphp
+
+                <div class="ui fluid selection dropdown">
+                    {{ Form::hidden('inventory_to', $toInventory != null ? $toInventory->id : null) }}
+                    <i class="dropdown icon"></i>
+
+                    <div class="default text">@lang('misc.pleaseSpecify')</div>
+                    <div class="menu">
+                        @foreach($economy->inventories as $i)
+                            <div class="item" data-value="{{ $i->id }}">{{ $i->name }}</div>
+                        @endforeach
+                    </div>
+                </div>
+
+                {{ ErrorRenderer::inline('inventory_to') }}
+            </div>
+        </div>
+
+        <div class="ui divider hidden"></div>
 
         {{-- Product list --}}
         <table class="ui celled table unstackable">
@@ -32,7 +74,6 @@
                 <tr>
                     <th>@lang('pages.products.title') ({{ count($products) }})</th>
                     <th>@lang('misc.quantity')</th>
-                    <th>@lang('misc.delta')</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,16 +99,6 @@
                                 {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
                             </div>
                         </td>
-                        <td data-label="@lang('misc.delta')" class="right aligned collapsing">
-                            <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_delta') ? 'error' : '' }}">
-                                {{ Form::text($p['field'] . '_delta', '', [
-                                    'placeholder' => 0,
-                                    'inputmode' => 'numeric',
-                                ]) }}
-                                {{-- Flush error for this field, inline rendering is bad --}}
-                                {{ ErrorRenderer::consume($p['field'] . '_delta') }}
-                            </div>
-                        </td>
                     </tr>
                 @empty
                     <tr>
@@ -84,7 +115,6 @@
                     <tr>
                         <th>@lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})</th>
                         <th>@lang('misc.quantity')</th>
-                        <th>@lang('misc.delta')</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,16 +140,6 @@
                                     {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
                                 </div>
                             </td>
-                            <td data-label="@lang('misc.delta')" class="right aligned collapsing">
-                                <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_delta') ? 'error' : '' }}">
-                                    {{ Form::text($p['field'] . '_delta', '', [
-                                        'placeholder' => 0,
-                                        'inputmode' => 'numeric',
-                                    ]) }}
-                                    {{-- Flush error for this field, inline rendering is bad --}}
-                                    {{ ErrorRenderer::consume($p['field'] . '_delta') }}
-                                </div>
-                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -130,33 +150,8 @@
 
         <div class="required field {{ ErrorRenderer::hasError('comment') ? 'error' : '' }}">
             {{ Form::label('comment', __('misc.comment') . ':') }}
-            {{ Form::text('comment', __('pages.inventories.defaultRebalanceComment')) }}
+            {{ Form::text('comment', __('pages.inventories.defaultMoveComment')) }}
             {{ ErrorRenderer::inline('comment') }}
-        </div>
-
-        <div class="required field {{ ErrorRenderer::hasError('type') ? 'error' : '' }}">
-            {{ Form::label('type', __('pages.inventories.changeType')) }}
-
-            <div class="ui fluid selection dropdown">
-                {{ Form::hidden('type', InventoryItemChange::TYPE_BALANCE) }}
-                <i class="dropdown icon"></i>
-
-                <div class="default text">@lang('misc.pleaseSpecify')</div>
-                <div class="menu">
-                    <div class="item" data-value="{{ InventoryItemChange::TYPE_BALANCE }}">
-                        @lang('pages.inventories.type.' . InventoryItemChange::TYPE_BALANCE)
-                        (@lang('general.recommended'))
-                    </div>
-                    <div class="item" data-value="{{ InventoryItemChange::TYPE_ADD_REMOVE }}">
-                        @lang('pages.inventories.type.' . InventoryItemChange::TYPE_ADD_REMOVE)
-                    </div>
-                    <div class="item" data-value="{{ InventoryItemChange::TYPE_SET }}">
-                        @lang('pages.inventories.type.' . InventoryItemChange::TYPE_SET)
-                    </div>
-                </div>
-            </div>
-
-            {{ ErrorRenderer::inline('type') }}
         </div>
 
         <div class="required field {{ ErrorRenderer::hasError('confirm') ? 'error' : '' }}">
@@ -173,7 +168,7 @@
 
         <div class="ui divider hidden"></div>
 
-        <button class="ui button primary" type="submit">@lang('pages.inventories.rebalance')</button>
+        <button class="ui button primary" type="submit">@lang('pages.inventories.move')</button>
         <a href="{{ route('community.economy.inventory.show', [
             'communityId' => $community->human_id,
             'economyId' => $economy->id,
