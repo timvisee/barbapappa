@@ -398,7 +398,7 @@ return [
         'viewRelated' => 'View related',
         'hideType' => 'Hide type',
         'timeTravel' => 'Time travel',
-        'travelToTime' => 'Travel to time',
+        'travelToTime' => 'Travel to time (UTC)',
     ],
 
     /**

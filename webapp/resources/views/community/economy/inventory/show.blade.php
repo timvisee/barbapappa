@@ -42,13 +42,13 @@
         @endif
 
         @if(perms(InventoryController::permsView()))
-            @if(request()->query('date') == null)
+            @if(request()->query('time') == null)
                 <div class="ui buttons">
                     <a href="{{ route('community.economy.inventory.show', [
                                 'communityId' => $community->human_id,
                                 'economyId' => $economy->id,
                                 'inventoryId' => $inventory->id,
-                                'date' => now()->ceilDay()->toDateString(),
+                                'time' => now()->toDateTimeLocalString('minute'),
                             ]) }}"
                             class="ui button purple">
                         @lang('pages.inventories.timeTravel')
@@ -59,23 +59,23 @@
     </p>
 
     {{-- Time travel field --}}
-    @if(request()->query('date') != null)
+    @if(request()->query('time') != null)
         {!! Form::open([
             'method' => 'GET',
             'class' => 'ui form'
         ]) !!}
-            <div class="field {{ ErrorRenderer::hasError('date') ? 'error' : '' }}">
-                {{ Form::label('date', __('pages.inventories.travelToTime') . ':') }}
+            <div class="field {{ ErrorRenderer::hasError('time') ? 'error' : '' }}">
+                {{ Form::label('time', __('pages.inventories.travelToTime') . ':') }}
 
                 <div class="ui action input">
-                    {{ Form::date('date', $time->toDateString(), [
-                        'min' => $inventory->created_at->floorDay()->toDateString(),
-                        'max' => now()->ceilDay()->toDateString(),
+                    {{ Form::datetimeLocal('time', $time->toDateTimeLocalString('minute'), [
+                        'min' => $inventory->created_at->toDateTimeLocalString('minute'),
+                        'max' => now()->toDateTimeLocalString('minute'),
                     ]) }}
                     <button class="ui button purple" type="submit">@lang('misc.go')!</button>
                 </div>
 
-                {{ ErrorRenderer::inline('date') }}
+                {{ ErrorRenderer::inline('time') }}
             </div>
 
             <h5 class="ui header">

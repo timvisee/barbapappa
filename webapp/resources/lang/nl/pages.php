@@ -399,7 +399,7 @@ return [
         'viewRelated' => 'Bekijk gerelateerde',
         'hideType' => 'Verberg type',
         'timeTravel' => 'Tijdreizen',
-        'travelToTime' => 'Reis naar tijd',
+        'travelToTime' => 'Reis naar tijd (UTC)',
     ],
 
     /**

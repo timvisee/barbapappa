@@ -87,12 +87,11 @@ class InventoryController extends Controller {
 
         // Validate
         $this->validate($request, [
-            // TODO: limit date range?
-            'date' => 'nullable|date',
+            'time' => 'nullable|date|after_or_equal:' . $inventory->created_at->toDateTimeString() . '|before_or_equal:' . now()->toDateTimeString(),
         ]);
 
         // Parse time if set
-        $time = $request->input('date');
+        $time = $request->input('time');
         $time = $time != null ? new Carbon($time) : null;
 
         // Build list of (exhausted) products
@@ -535,10 +534,6 @@ class InventoryController extends Controller {
      * Get a product/item for an inventory.
      */
     private static function getProductList(Inventory $inventory, ?Carbon $time = null) {
-        // Round time down to day
-        if($time != null)
-            $time = $time->floorDay();
-
         // Build list of products
         $products = $inventory
             ->economy
