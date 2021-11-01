@@ -43,17 +43,18 @@
     @endif
 
     {{-- Product list --}}
-    <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
+    <div class="ui vertical menu fluid">
         <h5 class="ui item header">
             @lang('pages.products.title') ({{ count($products) }})
         </h5>
 
         @forelse($products as $p)
             <a class="item"
-                    href="{{ route('community.economy.product.show', [
+                    href="{{ route('community.economy.inventory.product.show', [
                         // TODO: this is not efficient
                         'communityId' => $p['product']->economy->community->human_id,
                         'economyId' => $p['product']->economy_id,
+                        'inventoryId' => $inventory->id,
                         'productId' => $p['product']->id,
                     ]) }}">
                 {{ $p['product']->displayName() }}
@@ -75,17 +76,18 @@
 
     {{-- Exhausted product list --}}
     @if($exhaustedProducts->isNotEmpty())
-        <div class="ui vertical menu fluid{{ !empty($class) ? ' ' . implode(' ', $class) : '' }}">
+        <div class="ui vertical menu fluid">
             <h5 class="ui item header">
                 @lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})
             </h5>
 
             @foreach($exhaustedProducts as $p)
                 <a class="item"
-                        href="{{ route('community.economy.product.show', [
+                        href="{{ route('community.economy.inventory.product.show', [
                             // TODO: this is not efficient
                             'communityId' => $p['product']->economy->community->human_id,
                             'economyId' => $p['product']->economy_id,
+                            'inventoryId' => $inventory->id,
                             'productId' => $p['product']->id,
                         ]) }}">
                     {{ $p['product']->displayName() }}

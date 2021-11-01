@@ -79,6 +79,7 @@ return [
     'lastChanged' => 'Last changed',
     'lastUpdated' => 'Last updated',
     'lastUpdatedBy' => 'Last updated by',
+    'trackedSince' => 'Tracked since',
     'active' => 'Active',
     'available' => 'Available',
     'slug' => 'Slug',
@@ -181,6 +182,7 @@ return [
     'quantity' => 'Quantity',
     'delta' => 'Delta',
     'comment' => 'Comment',
+    'never' => 'Never',
 
     'cannotBeUndone' => 'This operation cannot be reverted.',
     'trashingCanBeUndone' => 'The item will be trashed. This operation can be reverted, by restoring the item from the trash.',

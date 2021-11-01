@@ -340,7 +340,6 @@ return [
         'localizedNamesDescription' => 'Configure localized names for dis loot in th\' fields below if be different from th\' main name.',
         'search' => 'Scavenge loot',
         'backToProducts' => 'Back to loot',
-        'viewProduct' => 'View loot',
         'unknownProduct' => 'Unknown loot',
         'recentlyBoughtProducts#' => '{0} Recent loot|{1} Recently looted|[2,*] :count recently looted',
         'type' => [
@@ -391,6 +390,11 @@ return [
             4 => 'Add/remove',
             5 => 'Set',
         ],
+        'lastBalanced' => 'Last rebalanced',
+        'inventoryQuantities' => 'Inventory quantities',
+        'lastChanges' => 'Last changes',
+        'noChanges' => 'No changes',
+        'allChanges' => 'All changes',
     ],
 
     /**

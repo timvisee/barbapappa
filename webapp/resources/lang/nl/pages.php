@@ -341,7 +341,6 @@ return [
         'localizedNamesDescription' => 'Configureer de gelokaliseerde namen voor dit product in de velden hieronder als het verschilt met de hoofdnaam.',
         'search' => 'Zoek producten',
         'backToProducts' => 'Terug naar producten',
-        'viewProduct' => 'Product bekijken',
         'unknownProduct' => 'Onbekend product',
         'recentlyBoughtProducts#' => '{0} Recent gekochte producten|{1} Recent gekocht product|[2,*] :count recent gekochte producten',
         'type' => [
@@ -392,6 +391,11 @@ return [
             4 => 'Toevoegen/verwijderen',
             5 => 'Reset',
         ],
+        'lastBalanced' => 'Laatst gebalanceerd',
+        'inventoryQuantities' => 'Inventaris aantallen',
+        'lastChanges' => 'Laatste aanpassingen',
+        'noChanges' => 'Geen aanpassingen',
+        'allChanges' => 'Alle aanpassingen',
     ],
 
     /**

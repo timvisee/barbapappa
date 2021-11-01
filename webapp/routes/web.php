@@ -322,7 +322,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::delete('/delete', 'InventoryController@doDelete')->name('community.economy.inventory.doDelete');
                         });
 
-                        // Balance
+                        // Add, remove, balance, move
                         Route::middleware(InventoryController::permsManage()->middleware())->group(function() {
                             Route::get('/add-remove', 'InventoryController@addRemove')->name('community.economy.inventory.addRemove');
                             Route::put('/add-remove', 'InventoryController@doAddRemove')->name('community.economy.inventory.doAddRemove');
@@ -330,6 +330,12 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::put('/balance', 'InventoryController@doBalance')->name('community.economy.inventory.doBalance');
                             Route::get('/move', 'InventoryController@move')->name('community.economy.inventory.move');
                             Route::put('/move', 'InventoryController@doMove')->name('community.economy.inventory.doMove');
+                        });
+
+                        // Product details
+                        Route::prefix('/product/{productId}')->group(function() {
+                            // Show
+                            Route::get('/', 'InventoryProductController@show')->name('community.economy.inventory.product.show');
                         });
                     });
                 });

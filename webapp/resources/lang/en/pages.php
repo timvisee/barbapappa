@@ -340,7 +340,6 @@ return [
         'localizedNamesDescription' => 'Configure localized names for this product in the fields below if it differs from the main name.',
         'search' => 'Search products',
         'backToProducts' => 'Back to products',
-        'viewProduct' => 'View product',
         'unknownProduct' => 'Unknown product',
         'recentlyBoughtProducts#' => '{0} Recently bought products|{1} Product bought recently|[2,*] :count products bought recently',
         'type' => [
@@ -391,6 +390,11 @@ return [
             4 => 'Add/remove',
             5 => 'Set',
         ],
+        'lastBalanced' => 'Last rebalanced',
+        'inventoryQuantities' => 'Inventory quantities',
+        'lastChanges' => 'Last changes',
+        'noChanges' => 'No changes',
+        'allChanges' => 'All changes',
     ],
 
     /**

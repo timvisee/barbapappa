@@ -79,6 +79,7 @@ return [
     'lastChanged' => 'Laatst aangepast',
     'lastUpdated' => 'Laatst bijgewerkt',
     'lastUpdatedBy' => 'Laatst bijgewerkt door',
+    'trackedSince' => 'Gevolgd sinds',
     'active' => 'Actief',
     'available' => 'Beschikbaar',
     'slug' => 'URL-pad',
@@ -181,6 +182,7 @@ return [
     'quantity' => 'Hoeveelheid',
     'delta' => 'Delta',
     'comment' => 'Commentaar',
+    'never' => 'Nooit',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',
