@@ -87,7 +87,7 @@ class InventoryController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'time' => 'nullable|date|after_or_equal:' . $inventory->created_at->toDateTimeString() . '|before_or_equal:' . now()->toDateTimeString(),
+            'time' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|before_or_equal:' . now()->toDateTimeString(),
         ]);
 
         // Parse time if set
