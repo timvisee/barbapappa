@@ -47,7 +47,7 @@
                             @endforeach
                         </div>
                     @else
-                        <i class="ui text red">@lang('misc.none')</i>
+                        <i class="ui text negative">@lang('misc.none')</i>
                     @endif
                 </td>
             </tr>
@@ -78,7 +78,7 @@
                     <td>{{ yesno(false) }}</td>
                 @else
                     <td>
-                        <span class="ui text red">
+                        <span class="ui text negative">
                             @include('includes.humanTimeDiff', ['time' => $product->deleted_at])
                         </span>
                     </td>

@@ -45,7 +45,7 @@
                 <tr>
                     <td>@lang('misc.trashed')</td>
                     <td>
-                        <span class="ui text red">
+                        <span class="ui text negative">
                             @include('includes.humanTimeDiff', ['time' => $service->deleted_at])
                         </span>
                     </td>
