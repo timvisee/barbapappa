@@ -74,6 +74,28 @@ class InventoryProductController extends Controller {
     }
 
     /**
+     * Show a product change.
+     *
+     * @return Response
+     */
+    public function change($communityId, $economyId, $inventoryId, $productId, $changeId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $product = $economy->products()->findOrFail($productId);
+        $item = $inventory->getItem($product);
+        $change = $item->changes()->findOrFail($changeId);
+
+        return view('community.economy.inventory.product.change')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory)
+            ->with('product', $product)
+            ->with('item', $item)
+            ->with('change', $change);
+    }
+
+    /**
      * The permission required for viewing.
      * @return PermsConfig The permission configuration.
      */

@@ -395,6 +395,7 @@ return [
         'last#Changes' => '{0} Last changes|{1} Last change|[2,*] Last :count changes',
         'noChanges' => 'No changes',
         'allChanges' => 'All changes',
+        'viewRelated' => 'View related',
     ],
 
     /**

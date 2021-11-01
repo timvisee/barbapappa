@@ -339,6 +339,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
 
                             // Changes
                             Route::get('/changes', 'InventoryProductController@changes')->name('community.economy.inventory.product.changes');
+                            Route::get('/changes/{changeId}', 'InventoryProductController@change')->name('community.economy.inventory.product.change');
                         });
                     });
                 });

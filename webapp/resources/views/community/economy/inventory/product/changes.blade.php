@@ -14,12 +14,13 @@
     <div class="ui vertical menu fluid">
         @forelse($changes as $c)
             <a class="item"
-                    href="{{ route('community.economy.inventory.product.show', [
+                    href="{{ route('community.economy.inventory.product.change', [
                         // TODO: this is not efficient
                         'communityId' => $product->economy->community->human_id,
                         'economyId' => $product->economy_id,
                         'inventoryId' => $inventory->id,
                         'productId' => $product->id,
+                        'changeId' => $c->id,
                     ]) }}">
                 @if(!empty($c->comment))
                     <i>{{ $c->comment }}</i>

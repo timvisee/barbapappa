@@ -396,6 +396,7 @@ return [
         'last#Changes' => '{0} Laatste aanpassingen|{1} Laatste aanpassing|[2,*] Laatste :count aanpassingen',
         'noChanges' => 'Geen aanpassingen',
         'allChanges' => 'Alle aanpassingen',
+        'viewRelated' => 'Bekijk gerelateerde',
     ],
 
     /**
