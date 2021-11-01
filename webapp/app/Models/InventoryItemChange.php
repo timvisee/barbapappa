@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
@@ -75,6 +76,15 @@ class InventoryItemChange extends Model {
      * Change type: set quantity.
      */
     const TYPE_SET = 5;
+
+    protected static function boot() {
+        parent::boot();
+
+        // Order creation date descending
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('created_at', 'DESC');
+        });
+    }
 
     /**
      * A scope to changes by a specific user.
