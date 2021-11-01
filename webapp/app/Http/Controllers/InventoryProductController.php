@@ -35,6 +35,7 @@ class InventoryProductController extends Controller {
                 $item = $i->getItem($product);
                 return [
                     'inventory' => $i,
+                    'item' => $item,
                     'quantity' => $item != null ? $item->quantity : 0,
                 ];
             })

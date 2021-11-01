@@ -109,6 +109,12 @@
                 <div class="ui {{ $q['quantity'] < 0 ? 'red' : ($q['quantity'] > 0 ? 'green' : '') }} label">
                     {{ $q['quantity'] }}
                 </div>
+
+                @if($q['item'] != null)
+                    <span class="sub-label">
+                        @include('includes.humanTimeDiff', ['time' => $q['item']->updated_at])
+                    </span>
+                @endif
             </a>
         @endforeach
     </div>
