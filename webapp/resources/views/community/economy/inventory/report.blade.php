@@ -125,7 +125,7 @@
             <div class="statistic">
                 <div class="value">
                     @if(isset($stats['unbalanceMoney']))
-                        {!! $stats['unbalanceMoney'][0] !!}
+                        {!! $stats['unbalanceMoney'][0] ?? '-' !!}
                     @else
                         -
                     @endif
@@ -162,7 +162,7 @@
                     </div>
 
                     @if(isset($p['unbalanceMoney']))
-                        {!! $p['unbalanceMoney']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                        {!! $p['unbalanceMoney']->formatAmount(BALANCE_FORMAT_LABEL) ?? '-' !!}
                     @endif
 
                     <span class="sub-label">
