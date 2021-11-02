@@ -343,6 +343,11 @@ return [
         'backToProducts' => 'Terug naar producten',
         'unknownProduct' => 'Onbekend product',
         'recentlyBoughtProducts#' => '{0} Recent gekochte producten|{1} Recent gekocht product|[2,*] :count recent gekochte producten',
+        'inventoryProductsDescription' => 'Normaal gesproken, wanneer dit product gekocht wordt, zal het afgetrokken worden van het bar inventaris. Hier kun je een alternatieve lijst producten instellen om van het inventaris af te trekken.<br><br>Bijvoorbeeld: voor het product BaCo wil je waarschijnlijk het product Bacardi en Cola van het inventaris aftrekken, in plaats van het BaCo product zelf. Dat kun je instellen door Bacardi en Cola toe te voegen aan de onderstaande lijst.<br><br>Als de onderstaande lijst producten bevat zal het huidige product niet afgetrokken worden van het inventaris. Voeg dit product expliciet toe aan de lijst om het ook van het inventaris af te trekken. Verwijder alle producten uit de lijst om deze functie uit te schakelen.',
+        'editInventoryProducts' => 'Bewerk inventarisproducten',
+        'addProduct' => 'Product toevoegen',
+        'quantitiesUpdated' => 'Hoeveelheden aangepast.',
+        'productRemoved' => 'Product verwijderd',
         'type' => [
             'normal' => 'Normaal',
             'custom' => 'Aangepast',

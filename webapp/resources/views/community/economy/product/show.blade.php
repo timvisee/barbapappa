@@ -66,6 +66,23 @@
                     </a>
                 </td>
             </tr>
+            @if($product->inventoryProducts->isNotEmpty())
+                <tr>
+                    <td>@lang('pages.products.inventoryProducts')</td>
+                    <td>
+                        <div class="ui bulleted list">
+                            @foreach($product->inventoryProducts as $p)
+                                <div class="item">
+                                    @if($p->quantity != 1)
+                                        {{ $p->quantity }}×
+                                    @endif
+                                    {{ $p->inventoryProduct->displayName() }}
+                                </div>
+                            @endforeach
+                        </div>
+                    </td>
+                </tr>
+            @endif
             @if($product->user_id != null)
                 <tr>
                     <td>@lang('misc.createdBy')</td>

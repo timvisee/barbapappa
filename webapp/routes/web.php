@@ -295,6 +295,12 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                             Route::put('/restore', 'ProductController@doRestore')->name('community.economy.product.doRestore');
                             Route::get('/delete', 'ProductController@delete')->name('community.economy.product.delete');
                             Route::delete('/delete', 'ProductController@doDelete')->name('community.economy.product.doDelete');
+
+                            // Edit assigned inventory products
+                            Route::get('/edit/inventory-products', 'ProductController@editInventoryProducts')->name('community.economy.product.editInventoryProducts');
+                            Route::post('/edit/inventory-products', 'ProductController@doAddInventoryProduct')->name('community.economy.product.doAddInventoryProduct');
+                            Route::put('/edit/inventory-products', 'ProductController@doEditInventoryProducts')->name('community.economy.product.doEditInventoryProducts');
+                            Route::delete('/edit/inventory-products', 'ProductController@doDeleteInventoryProduct')->name('community.economy.product.doDeleteInventoryProduct');
                         });
                     });
                 });

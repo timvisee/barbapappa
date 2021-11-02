@@ -690,17 +690,13 @@ class KioskController extends Controller {
                 );
 
                 // Update bar inventory
-                $inventory = $bar->inventory;
-                if($inventory != null)
-                    $inventory->changeProduct(
-                        $product['product'],
-                        InventoryItemChange::TYPE_PURCHASE,
-                        -$quantity,
-                        null,
-                        null,
-                        null,
+                if($bar->inventory != null) {
+                    $product['product']->subtractFromInventory(
+                        $bar->inventory,
+                        $mut_product->mutationable->quantity,
                         $mut_product->mutationable,
                     );
+                }
             });
 
             // Update the wallet balance
