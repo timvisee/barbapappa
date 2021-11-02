@@ -26,6 +26,12 @@ class InventoryItem extends Model {
     protected $fillable = ['inventory_id', 'product_id', 'quantity'];
 
     /**
+     * Number of seconds after which an inventory item is considered exausted
+     * while its quantity remains zero.
+     */
+    const EXHAUSTED_AFTER = 5259600;
+
+    /**
      * A scope to a specific product.
      */
     public function scopeProduct($query, Product $product) {
@@ -57,5 +63,15 @@ class InventoryItem extends Model {
      */
     public function changes() {
         return $this->hasMany(InventoryItemChange::class, 'item_id');
+    }
+
+    /**
+     * Whether this inventory item is considered exhausted.
+     *
+     * @return bool True if exhausted, false if not.
+     */
+    public function isExhausted() {
+        return $this->quantity == 0
+            && $this->updated_at->clone()->addSeconds(Self::EXHAUSTED_AFTER)->isPast();
     }
 }

@@ -211,7 +211,8 @@ class InventoryItemChange extends Model {
         $self = $this;
         DB::transaction(function() use($self) {
             // Revert item quantity
-            $self->item->decrement('quantity', $self->quantity);
+            if($self->quantity != 0)
+                $self->item->decrement('quantity', $self->quantity);
 
             // Delete this change
             $self->delete();

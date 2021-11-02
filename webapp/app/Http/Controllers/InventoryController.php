@@ -730,7 +730,7 @@ class InventoryController extends Controller {
                     'product' => $product,
                     'item' => $item,
                     'quantity' => $quantity,
-                    'exhausted' => $quantity == 0,
+                    'exhausted' => $item == null || $item->isExhausted(),
                     'changed' => $item != null ? ($item->updated_at ?? $item->created_at) : null,
                 ];
             })
@@ -751,7 +751,7 @@ class InventoryController extends Controller {
                         ->where('created_at', '>=', $time)
                         ->orderBy('created_at', 'DESC')
                         ->sum('quantity');
-                    $p['exhausted'] = $p['quantity'] == 0;
+                    $p['exhausted'] = $p['exhausted'] && $p['quantity'] != 0;
 
                     // TODO: use time from last known change
                     $p['changed'] = $time;

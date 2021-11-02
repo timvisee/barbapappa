@@ -249,7 +249,8 @@ class Inventory extends Model {
             $change->save();
 
             // Update item quantity
-            $item->increment('quantity', $quantity);
+            if($quantity != 0)
+                $item->increment('quantity', $quantity);
         });
 
         return $change;
