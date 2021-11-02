@@ -203,8 +203,9 @@ class MoneyAmountBag {
      * @return string Formatted balance
      */
     public function formatAmount($format = BALANCE_FORMAT_PLAIN, $options = []) {
-        return $this
-            ->sumAmounts()
-            ->formatAmount($format, $options);
+        $amount = $this->sumAmounts();
+        if($amount == null)
+            return null;
+        return $amount->formatAmount($format, $options);
     }
 }
