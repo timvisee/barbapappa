@@ -169,9 +169,17 @@ class InventoryController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
 
+        // Check whether this inventory contains any quantity
+        $hasQuantity = $inventory
+            ->items()
+            ->where('quantity', '!=', 0)
+            ->limit(1)
+            ->count() > 0;
+
         return view('community.economy.inventory.delete')
             ->with('economy', $economy)
-            ->with('inventory', $inventory);
+            ->with('inventory', $inventory)
+            ->with('hasQuantity', $hasQuantity);
     }
 
     /**

@@ -362,6 +362,7 @@ return [
         'editInventory' => 'Edit inventory',
         'changed' => 'Th\' inventory be updated.',
         'deleteQuestion' => 'Yer about to sink dis inventory along with all its history. Ye be sure ye want to continue?',
+        'moveBeforeDelete' => 'Before ye sink dis inventory, consider to move all yer products to another inventory.',
         'deleted' => 'Th\' inventory be sunk.',
         'exhaustedProducts' => 'Exhausted products',
         'addRemove' => 'Add/remove',

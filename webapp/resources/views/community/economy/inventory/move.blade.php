@@ -91,10 +91,12 @@
                         </td>
                         <td data-label="@lang('misc.quantity')" class="right aligned collapsing">
                             <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
-                                {{ Form::text($p['field'] . '_quantity', '', [
-                                    'placeholder' => $p['quantity'],
-                                    'inputmode' => 'numeric',
-                                ]) }}
+                                {{ Form::text($p['field'] . '_quantity',
+                                    is_checked(request()->query('all') ?? false) ? ($p['quantity'] ?? '') : '',
+                                    [
+                                        'placeholder' => $p['quantity'],
+                                        'inputmode' => 'numeric',
+                                    ]) }}
                                 {{-- Flush error for this field, inline rendering is bad --}}
                                 {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
                             </div>

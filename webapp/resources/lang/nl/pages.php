@@ -363,6 +363,7 @@ return [
         'editInventory' => 'Inventaris aanpassen',
         'changed' => 'Het inventaris is aangepast.',
         'deleteQuestion' => 'Je staat op het punt om dit inventaris met alle historie te verwijderen. Weet je zeker dat je door wilt gaan?',
+        'moveBeforeDelete' => 'Overweeg voordat je dit inventaris verwijderd om alle procuten naar een ander inventaris te verplaatsen.',
         'deleted' => 'Het inventaris is verwijderd.',
         'exhaustedProducts' => 'Uitgeputte producten',
         'addRemove' => '+ / -',

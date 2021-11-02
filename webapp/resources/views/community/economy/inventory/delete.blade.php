@@ -19,6 +19,25 @@
         'method' => 'DELETE',
         'class' => 'ui form'
     ]) !!}
+        @if($hasQuantity)
+            <div class="ui info message visible">
+                <span class="halflings halflings-info-sign icon"></span>
+                @lang('pages.inventories.moveBeforeDelete')
+
+                <p>
+                    <a href="{{ route('community.economy.inventory.move', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id,
+                                'inventoryId' => $inventory->id,
+                                'all' => true,
+                            ]) }}"
+                            class="ui basic button">
+                        @lang('pages.inventories.moveProducts')
+                    </a>
+                </p>
+            </div>
+        @endif
+
         <div class="ui warning message visible">
             <span class="halflings halflings-warning-sign"></span>
             @lang('misc.cannotBeUndone')

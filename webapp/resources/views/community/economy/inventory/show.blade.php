@@ -200,32 +200,33 @@
                     @endif
                 </tbody>
             </table>
-            <br />
+
+            @if(perms(InventoryController::permsManage()))
+                <p>
+                    <div class="ui buttons">
+                        <a href="{{ route('community.economy.inventory.edit', [
+                                    'communityId' => $community->human_id,
+                                    'economyId' => $economy->id,
+                                    'inventoryId' => $inventory->id,
+                                ]) }}"
+                                class="ui button secondary">
+                            @lang('misc.edit')
+                        </a>
+                        <a href="{{ route('community.economy.inventory.delete', [
+                                    'communityId' => $community->human_id,
+                                    'economyId' => $economy->id,
+                                    'inventoryId' => $inventory->id,
+                                ]) }}"
+                                class="ui button negative">
+                            @lang('misc.delete')
+                        </a>
+                    </div>
+                </p>
+            @endif
         </div>
     </div>
 
-    @if(perms(InventoryController::permsManage()))
-        <p>
-            <div class="ui buttons">
-                <a href="{{ route('community.economy.inventory.edit', [
-                            'communityId' => $community->human_id,
-                            'economyId' => $economy->id,
-                            'inventoryId' => $inventory->id,
-                        ]) }}"
-                        class="ui button secondary">
-                    @lang('misc.edit')
-                </a>
-                <a href="{{ route('community.economy.inventory.delete', [
-                            'communityId' => $community->human_id,
-                            'economyId' => $economy->id,
-                            'inventoryId' => $inventory->id,
-                        ]) }}"
-                        class="ui button negative">
-                    @lang('misc.delete')
-                </a>
-            </div>
-        </p>
-    @endif
+    <br />
 
     <p>
         <a href="{{ route('community.economy.inventory.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
