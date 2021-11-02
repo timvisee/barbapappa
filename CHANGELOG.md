@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.129 (2021-11-02)
+
+- Fix error on inventory period report page when unbalance money amount is zero
+
 ## 0.1.128 (2021-11-02)
 
 - Add page to set alternative inventory products for a product
