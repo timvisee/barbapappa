@@ -303,6 +303,160 @@ class ProductController extends Controller {
             ])
             ->with('success', __('pages.products.changed'));
     }
+    /**
+     * Edit inventory products.
+     *
+     * @return Response
+     */
+    public function editInventoryProducts($communityId, $economyId, $productId) {
+        // Get the community, find the product
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->findOrFail($productId);
+        $products = $product
+            ->inventoryProducts
+            ->sortByDesc('quantity');
+
+        // List of products that may be added
+        $addProducts = $economy
+            ->products
+            ->filter(function($p) use($products) {
+                return !$products->contains('inventory_product_id', $p->id);
+            })
+            ->sortBy('name');
+
+        return view('community.economy.product.inventoryProducts')
+            ->with('economy', $economy)
+            ->with('product', $product)
+            ->with('products', $products)
+            ->with('addProducts', $addProducts);
+    }
+
+    /**
+     * Add inventory product to product endpoint.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doAddInventoryProduct(Request $request, $communityId, $economyId, $productId) {
+        // Get the community, find the product
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->findOrFail($productId);
+        $products = $product->inventoryProducts;
+
+        // List of products that may be added
+        $addProducts = $economy
+            ->products
+            ->filter(function($p) use($products) {
+                return !$products->contains('inventory_product_id', $p->id);
+            });
+
+        // Validate
+        $this->validate($request, [
+            'product' => 'required|in:' . $addProducts->pluck('id')->join(','),
+        ]);
+
+        // Get product to add
+        $addProduct = $economy->products()->findOrFail($request->input('product'));
+
+        // Attach inventory product
+        $product->inventoryProducts()->create([
+            'inventory_product_id' => $addProduct->id,
+            'quantity' => 1,
+        ]);
+
+        // Redirect to product inventory products edit page
+        return redirect()
+            ->route('community.economy.product.editInventoryProducts', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'productId' => $product->id,
+            ]);
+    }
+
+    /**
+     * Edit product inventory product quantities.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doEditInventoryProducts(Request $request, $communityId, $economyId, $productId) {
+        // Redirect to remove action if submitted with form
+        if(!empty($request->input('remove')))
+            return $this->doRemoveInventoryProduct($request, $communityId, $economyId, $productId);
+
+        // Get the community, find the product
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->findOrFail($productId);
+        $products = $product->inventoryProducts;
+
+        // Validate
+        $rules = $products
+            ->mapWithKeys(function($p) {
+                return ['product_' . $p->inventory_product_id . '_quantity' => 'required|integer|min:1'];
+            })
+            ->toArray();
+        $this->validate($request, $rules);
+
+        // Update quantities
+        $product->inventoryProducts()->sync(
+            $products
+                ->map(function($p) use($request) {
+                    return [
+                        'id' => $p->id,
+                        'quantity' => (int) $request->input('product_' . $p->inventory_product_id . '_quantity'),
+                    ];
+                })
+                ->toArray()
+        );
+
+        // Redirect to product inventory products edit page
+        return redirect()
+            ->route('community.economy.product.editInventoryProducts', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'productId' => $product->id,
+            ])
+            ->with('success', __('pages.products.quantitiesUpdated'));
+    }
+
+    /**
+     * Remove product inventory product quantities.
+     *
+     * @param Request $request Request.
+     *
+     * @return Response
+     */
+    public function doRemoveInventoryProduct(Request $request, $communityId, $economyId, $productId) {
+        // Get the community, find the product
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $product = $economy->products()->findOrFail($productId);
+        $products = $product->inventoryProducts;
+
+        // Validate
+        $this->validate($request, [
+            'remove' => 'required|integer|in:' . $products->pluck('inventory_product_id')->join(','),
+        ]);
+
+        // Get and delete the product
+        $products
+            ->where('inventory_product_id', $request->input('remove'))
+            ->firstOrFail()
+            ->delete();
+
+        // Redirect to product inventory products edit page
+        return redirect()
+            ->route('community.economy.product.editInventoryProducts', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'productId' => $product->id,
+            ]);
+    }
 
     /**
      * Page for confirming the deletion of the product.

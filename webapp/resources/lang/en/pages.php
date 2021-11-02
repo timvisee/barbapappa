@@ -342,6 +342,12 @@ return [
         'backToProducts' => 'Back to products',
         'unknownProduct' => 'Unknown product',
         'recentlyBoughtProducts#' => '{0} Recently bought products|{1} Product bought recently|[2,*] :count products bought recently',
+        'inventoryProductsDescription' => 'Normally, when this product is bought, it will be subtracted from the bar inventory. Here you can specify an alternate list of products to subtract from the inventory when bought instead.<br><br>For example: for the product BaCo you may want to subtract Bacardi and Cola from the inventory rather than the BaCo product itself. You can set this up by adding Bacardi and Cola to the list below.<br><br>If the list below contains any product, the current product won\'t be subtracted from the inventory. Explicitly add the current product to the list as well to subtract it from the inventory when bought. Remove all products from this list to disable this feature and revert back to normal.',
+        'inventoryProducts' => 'Alternate inventory products',
+        'editInventoryProducts' => 'Edit alternate inventory products',
+        'addProduct' => 'Add product',
+        'quantitiesUpdated' => 'Quantites updated.',
+        'productRemoved' => 'Product removed',
         'type' => [
             'normal' => 'Normal',
             'custom' => 'Custom',

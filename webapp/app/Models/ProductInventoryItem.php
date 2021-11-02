@@ -31,7 +31,7 @@ class ProductInventoryItem extends Model {
     ];
 
     protected $touches = [
-        'product'
+        'product',
     ];
 
     /**
