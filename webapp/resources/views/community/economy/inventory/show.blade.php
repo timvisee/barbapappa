@@ -130,63 +130,79 @@
 
     {{-- Exhausted product list --}}
     @if($exhaustedProducts->isNotEmpty())
-        <div class="ui vertical menu fluid">
-            <h5 class="ui item header">
+        <div class="ui fluid accordion">
+            <div class="title">
+                <i class="dropdown icon"></i>
                 @lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})
-            </h5>
+            </div>
+            <div class="content">
+                <div class="ui vertical menu fluid">
+                    <h5 class="ui item header">
+                        @lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})
+                    </h5>
 
-            @foreach($exhaustedProducts as $p)
-                <a class="item"
-                        href="{{ route('community.economy.inventory.product.show', [
-                            // TODO: this is not efficient
-                            'communityId' => $p['product']->economy->community->human_id,
-                            'economyId' => $p['product']->economy_id,
-                            'inventoryId' => $inventory->id,
-                            'productId' => $p['product']->id,
-                        ]) }}">
-                    {{ $p['product']->displayName() }}
+                    @foreach($exhaustedProducts as $p)
+                        <a class="item"
+                                href="{{ route('community.economy.inventory.product.show', [
+                                    // TODO: this is not efficient
+                                    'communityId' => $p['product']->economy->community->human_id,
+                                    'economyId' => $p['product']->economy_id,
+                                    'inventoryId' => $inventory->id,
+                                    'productId' => $p['product']->id,
+                                ]) }}">
+                            {{ $p['product']->displayName() }}
 
-                    @if(isset($p['changed']))
-                        <span class="sub-label">
-                            @include('includes.humanTimeDiff', ['time' => $p['changed']])
-                        </span>
-                    @endif
-                </a>
-            @endforeach
+                            @if(isset($p['changed']))
+                                <span class="sub-label">
+                                    @include('includes.humanTimeDiff', ['time' => $p['changed']])
+                                </span>
+                            @endif
+                        </a>
+                    @endforeach
+                </div>
+                <br />
+            </div>
         </div>
     @endif
 
-    <div class="ui divider hidden"></div>
-
-    <table class="ui compact celled definition table">
-        <tbody>
-            <tr>
-                <td>@lang('misc.name')</td>
-                <td>{{ $inventory->name }}</td>
-            </tr>
-            <tr>
-                <td>@lang('pages.community.economy')</td>
-                <td>
-                    <a href="{{ route('community.economy.show', [
-                                'communityId'=> $community->human_id,
-                                'economyId' => $economy->id
-                            ]) }}">
-                        {{ $economy->name }}
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>@lang('misc.createdAt')</td>
-                <td>@include('includes.humanTimeDiff', ['time' => $inventory->created_at])</td>
-            </tr>
-            @if($inventory->created_at != $inventory->updated_at)
-                <tr>
-                    <td>@lang('misc.lastChanged')</td>
-                    <td>@include('includes.humanTimeDiff', ['time' => $inventory->updated_at])</td>
-                </tr>
-            @endif
-        </tbody>
-    </table>
+    <div class="ui fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            @lang('misc.details')
+        </div>
+        <div class="content">
+            <table class="ui compact celled definition table">
+                <tbody>
+                    <tr>
+                        <td>@lang('misc.name')</td>
+                        <td>{{ $inventory->name }}</td>
+                    </tr>
+                    <tr>
+                        <td>@lang('pages.community.economy')</td>
+                        <td>
+                            <a href="{{ route('community.economy.show', [
+                                        'communityId'=> $community->human_id,
+                                        'economyId' => $economy->id
+                                    ]) }}">
+                                {{ $economy->name }}
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>@lang('misc.createdAt')</td>
+                        <td>@include('includes.humanTimeDiff', ['time' => $inventory->created_at])</td>
+                    </tr>
+                    @if($inventory->created_at != $inventory->updated_at)
+                        <tr>
+                            <td>@lang('misc.lastChanged')</td>
+                            <td>@include('includes.humanTimeDiff', ['time' => $inventory->updated_at])</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+            <br />
+        </div>
+    </div>
 
     @if(perms(InventoryController::permsManage()))
         <p>
