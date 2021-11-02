@@ -24,6 +24,7 @@ return [
     'goBack' => 'Go back',
     'accept' => 'Accept',
     'or' => 'or',
+    'of' => 'of',
     'cancel' => 'Cancel',
     'recommended' => 'Recommended',
 

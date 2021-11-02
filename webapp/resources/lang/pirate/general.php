@@ -24,6 +24,7 @@ return [
     'goBack' => 'Paddl\' back',
     'accept' => 'Sail ho!',
     'or' => 'o\'',
+    'of' => 'o\'',
     'cancel' => 'Cancel',
     'recommended' => 'Recommended',
 

@@ -583,7 +583,7 @@ class InventoryController extends Controller {
 
                     // Calcualte (absolute) unbalance
                     $p['unbalance'] = (int) $rebalances->sum();
-                    $p['unbalanceAbs'] = (int) $rebalances->map(function($q) { return abs($q); })->sum();
+                    $p['unbalanceVolume'] = (int) $rebalances->map(function($q) { return abs($q); })->sum();
                     $p['balanceCount'] = $rebalances->count();
 
                     // Determine unbalance price
@@ -597,7 +597,7 @@ class InventoryController extends Controller {
                     return $p;
                 })
                 ->filter(function($p) {
-                    return ($p['unbalanceAbs'] ?? 0) != 0;
+                    return ($p['unbalanceVolume'] ?? 0) != 0;
                 })
                 ->sortBy('unbalance');
             $response = $response
@@ -618,38 +618,48 @@ class InventoryController extends Controller {
                     ->period($timeFrom, $timeTo)
                     ->whereNotNull('user_id')
                     ->count();
-                $changeAbsSum = $inventory
-                    ->changes()
-                    ->period($timeFrom, $timeTo)
-                    ->addSelect(DB::raw('ABS(inventory_item_change.quantity) AS abs_quantity'))
-                    ->pluck('abs_quantity')
-                    ->sum();
-                $changeSum = sprintf("%+d", $inventory
-                    ->changes()
-                    ->period($timeFrom, $timeTo)
-                    ->sum('inventory_item_change.quantity'));
                 $balanceCount = $inventory
                     ->changes()
                     ->period($timeFrom, $timeTo)
                     ->type(InventoryItemChange::TYPE_BALANCE)
                     ->count();
-                $balanceAbsSum = $inventory
+                $purchaseCount = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_PURCHASE)
+                    ->count();
+                $quantityVolume = $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->addSelect(DB::raw('ABS(inventory_item_change.quantity) AS volume'))
+                    ->pluck('volume')
+                    ->sum();
+                $quantitySum = sprintf("%+d", $inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->sum('inventory_item_change.quantity'));
+                $unbalanceVolume = $inventory
                     ->changes()
                     ->period($timeFrom, $timeTo)
                     ->type(InventoryItemChange::TYPE_BALANCE)
-                    ->addSelect(DB::raw('ABS(inventory_item_change.quantity) AS abs_quantity'))
-                    ->pluck('abs_quantity')
+                    ->addSelect(DB::raw('ABS(inventory_item_change.quantity) AS volume'))
+                    ->pluck('volume')
                     ->sum();
-                $balanceSum = sprintf("%+d", $inventory
+                $unbalanceSum = sprintf("%+d", $inventory
                     ->changes()
                     ->period($timeFrom, $timeTo)
                     ->type(InventoryItemChange::TYPE_BALANCE)
                     ->sum('inventory_item_change.quantity'));
-                $balanceMoneySum = new MoneyAmountBag();
-                $unbalanced->each(function($p) use(&$balanceMoneySum) {
+                $unbalanceMoney = new MoneyAmountBag();
+                $unbalanced->each(function($p) use(&$unbalanceMoney) {
                     if(isset($p['unbalanceMoney']))
-                        $balanceMoneySum->add($p['unbalanceMoney']);
+                        $unbalanceMoney->add($p['unbalanceMoney']);
                 });
+                $purchaseVolume = -$inventory
+                    ->changes()
+                    ->period($timeFrom, $timeTo)
+                    ->type(InventoryItemChange::TYPE_PURCHASE)
+                    ->sum('inventory_item_change.quantity');
                 $addSum = $inventory
                     ->changes()
                     ->period($timeFrom, $timeTo)
@@ -674,30 +684,26 @@ class InventoryController extends Controller {
                     ->type(InventoryItemChange::TYPE_MOVE)
                     ->where('inventory_item_change.quantity', '<=', 0)
                     ->sum('inventory_item_change.quantity');
-                $purchaseCount = $inventory
-                    ->changes()
-                    ->period($timeFrom, $timeTo)
-                    ->type(InventoryItemChange::TYPE_PURCHASE)
-                    ->count();
-                $purchaseSum = -$inventory
-                    ->changes()
-                    ->period($timeFrom, $timeTo)
-                    ->type(InventoryItemChange::TYPE_PURCHASE)
-                    ->sum('inventory_item_change.quantity');
+
                 $stats += [
-                    'manualChangeCount' => [$manualChangeCount, round($manualChangeCount / $changeCount * 100) . '%'],
-                    'changeAbsSum' => [$changeAbsSum, null],
-                    'changeSum' => [$changeSum, null],
-                    'balanceCount' => [$balanceCount, round($balanceCount / $changeCount * 100) . '%'],
-                    'balanceAbsSum' => [$balanceAbsSum, round($balanceAbsSum / $changeAbsSum * 100) . '%'],
-                    'balanceSum' => [color_number($balanceSum), round($balanceSum / $changeAbsSum * 100) . '%'],
-                    'balanceMoneySum' => [$balanceMoneySum->formatAmount(BALANCE_FORMAT_COLOR), null],
-                    'addSum' => [$addSum, round($addSum / $changeAbsSum * 100) . '%'],
-                    'removeSum' => [$removeSum, round($removeSum / $changeAbsSum * 100) . '%'],
-                    'moveInSum' => [$moveInSum, round($moveInSum / $changeAbsSum * 100) . '%'],
-                    'moveOutSum' => [$moveOutSum, round($moveOutSum / $changeAbsSum * 100) . '%'],
-                    'purchaseCount' => [$purchaseCount, round($purchaseCount / $changeCount * 100) . '%'],
-                    'purchaseSum' => [$purchaseSum, round($purchaseSum / $changeAbsSum * 100) . '%'],
+                    'manualChangeCount' => [$manualChangeCount, round($manualChangeCount / $changeCount * 100) . '% ' . __('general.of') . ' ' . $changeCount],
+                    'balanceCount' => [
+                        $balanceCount > 0
+                            ? $balanceCount
+                            : '<span class="ui text negative">' . $balanceCount . '</span>',
+                        round($balanceCount / $changeCount * 100) . '% ' . __('general.of') . ' ' . $changeCount,
+                    ],
+                    'purchaseCount' => [$purchaseCount, round($purchaseCount / $changeCount * 100) . '% ' . __('general.of') . ' ' . $changeCount],
+                    'quantityVolume' => [$quantityVolume, null],
+                    'quantitySum' => [$quantitySum, null],
+                    'unbalanceVolume' => [$unbalanceVolume, round($unbalanceVolume / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
+                    'unbalanceSum' => [color_number($unbalanceSum), round($unbalanceSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
+                    'unbalanceMoney' => [$unbalanceMoney->formatAmount(BALANCE_FORMAT_COLOR), null],
+                    'purchaseVolume' => [$purchaseVolume, round($purchaseVolume / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
+                    'addSum' => [$addSum, round($addSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
+                    'removeSum' => [$removeSum, round($removeSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
+                    'moveInSum' => [$moveInSum, round($moveInSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
+                    'moveOutSum' => [$moveOutSum, round($moveOutSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
                 ];
             }
 

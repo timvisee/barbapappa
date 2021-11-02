@@ -24,6 +24,7 @@ return [
     'goBack' => 'Ga terug',
     'accept' => 'Accepteren',
     'or' => 'of',
+    'of' => 'van',
     'cancel' => 'Annuleren',
     'recommended' => 'Aanbevolen',
 

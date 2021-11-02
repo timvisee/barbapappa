@@ -79,9 +79,62 @@
     <div class="ui divider hidden"></div>
 
     @if($timeFrom != null && $timeTo != null)
-        <h3 class="ui horizontal divider header">
-            @lang('pages.inventories.periodOf', ['period' => $timeFrom->longAbsoluteDiffForHumans($timeTo)])
-        </h3>
+        <h5 class="ui header">
+            @lang('pages.inventories.periodOfFromTo', [
+                'period' => $timeFrom->longAbsoluteDiffForHumans($timeTo),
+                'from' => $timeFrom->longRelativeDiffForHumans(),
+                'to' => $timeTo->longRelativeDiffForHumans(),
+            ]):
+        </h5>
+
+        @if(!isset($stats['balanceCount']) || $stats['balanceCount'] <= 0)
+            <div class="ui warning message">
+                <span class="halflings halflings-warning-sign icon"></span>
+                @lang('pages.inventories.warningNoBalanceChangesThisPeriod')
+            </div>
+        @endif
+
+        <div class="ui divider hidden"></div>
+
+        <div class="ui two small statistics">
+            <div class="statistic">
+                <div class="value">{{ $timeFrom->shortAbsoluteDiffForHumans($timeTo) }}</div>
+                <div class="label">@lang('pages.inventories.stats.period')</div>
+            </div>
+            <div class="statistic">
+                <div class="value">
+                    {!! $stats['changeCount'][0] !!}
+                </div>
+                <div class="label">@lang('pages.inventories.stats.changeCount')</div>
+            </div>
+        </div>
+
+        <div class="ui hidden divider"></div>
+
+        <div class="ui two small statistics">
+            <div class="statistic">
+                <div class="value">
+                    @if(isset($stats['unbalanceSum']))
+                        {!! $stats['unbalanceSum'][0] !!}
+                    @else
+                        -
+                    @endif
+                </div>
+                <div class="label">@lang('pages.inventories.stats.unbalanceSum')</div>
+            </div>
+            <div class="statistic">
+                <div class="value">
+                    @if(isset($stats['unbalanceMoney']))
+                        {!! $stats['unbalanceMoney'][0] !!}
+                    @else
+                        -
+                    @endif
+                </div>
+                <div class="label">@lang('pages.inventories.stats.unbalanceMoney')</div>
+            </div>
+        </div>
+
+        <div class="ui divider hidden"></div>
 
         {{-- Unbalanced products --}}
         <div class="ui vertical menu fluid">
@@ -114,7 +167,7 @@
 
                     <span class="sub-label">
                         {{ $p['balanceCount'] }}×,
-                        {{ $p['unbalanceAbs'] }} abs
+                        {{ $p['unbalanceVolume'] }} @lang('pages.inventories.volumeShort')
                     </span>
                 </a>
             @empty
@@ -127,11 +180,15 @@
         {{-- Stats list --}}
         <table class="ui compact celled definition table">
             <tbody>
-                @foreach($stats as $name => [$a, $b])
+                @foreach($stats as $name => [$value, $note])
                     <tr>
                         <td>@lang('pages.inventories.stats.' . $name)</td>
-                        <td>{!! $a !!}</td>
-                        <td class="subtle">{{ $b }}</td>
+                        <td>
+                            {!! $value !!}
+                            @if(!empty($note))
+                                <span class="subtle">({!! $note !!})</span>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
