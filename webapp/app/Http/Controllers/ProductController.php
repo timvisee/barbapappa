@@ -171,9 +171,24 @@ class ProductController extends Controller {
         $economy = $community->economies()->findOrFail($economyId);
         $product = $economy->products()->withTrashed()->findOrFail($productId);
 
+        // Build list of quantities by inventory
+        // TODO: shared with InventoryProductController::show
+        $quantities = $economy
+            ->inventories
+            ->map(function($i) use($product) {
+                $item = $i->getItem($product);
+                return [
+                    'inventory' => $i,
+                    'item' => $item,
+                    'quantity' => $item != null ? $item->quantity : 0,
+                ];
+            })
+            ->sortByDesc('quantity');
+
         return view('community.economy.product.show')
             ->with('economy', $economy)
-            ->with('product', $product);
+            ->with('product', $product)
+            ->with('quantities', $quantities);
     }
 
     /**

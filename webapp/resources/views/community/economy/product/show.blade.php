@@ -151,6 +151,40 @@
         </p>
     @endif
 
+    {{-- Inventory quantities --}}
+    @if($quantities->isNotEmpty())
+        <div class="ui divider hidden"></div>
+
+        <div class="ui vertical menu fluid">
+            <h5 class="ui item header">
+                @lang('pages.inventories.inventoryQuantities')
+            </h5>
+
+            @foreach($quantities as $q)
+                <a class="item"
+                        href="{{ route('community.economy.inventory.product.show', [
+                            // TODO: this is not efficient
+                            'communityId' => $product->economy->community->human_id,
+                            'economyId' => $product->economy_id,
+                            'inventoryId' => $q['inventory']->id,
+                            'productId' => $product->id,
+                        ]) }}">
+                    {{ $q['inventory']->name }}
+
+                    <div class="ui {{ $q['quantity'] < 0 ? 'red' : ($q['quantity'] > 0 ? 'green' : '') }} label">
+                        {{ $q['quantity'] }}
+                    </div>
+
+                    @if(isset($q['item']) && $q['item'] != null)
+                        <span class="sub-label">
+                            @include('includes.humanTimeDiff', ['time' => $q['item']->updated_at])
+                        </span>
+                    @endif
+                </a>
+            @endforeach
+        </div>
+    @endif
+
     <p>
         <a href="{{ route('community.economy.product.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}"
                 class="ui button basic">

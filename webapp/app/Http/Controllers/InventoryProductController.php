@@ -30,6 +30,7 @@ class InventoryProductController extends Controller {
             ->first() : null;
 
         // Build list of quantities by inventory
+        // TODO: shared with ProductController::show
         $quantities = $economy
             ->inventories
             ->map(function($i) use($product) {
