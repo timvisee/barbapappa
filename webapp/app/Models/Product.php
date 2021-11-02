@@ -252,4 +252,69 @@ class Product extends Model {
         // Render the price and return
         return $price->currency->format($price->price, $format, $options);
     }
+
+    /**
+     * Get a list of products with quantities to subtract from the bar inventory
+     * when this is bought.
+     *
+     * If no alternative inventory product is selected, this simply returns the
+     * current product with a quantity of 1.
+     *
+     * Returns the following structure:
+     * [
+     *     [
+     *         'product' => Product,
+     *         'quantity' => 1,
+     *     ],
+     *     [
+     *         'product' => Product,
+     *         'quantity' => 2,
+     *     ],
+     * ]
+     *
+     * @return array
+     */
+    private function inventoryProductsList() {
+        // Return current if no custom is configured
+        if($this->inventoryProducts->isEmpty())
+            return collect([[
+                'product' => $this,
+                'quantity' => 1,
+            ]]);
+
+        // Build list of products
+        return $this
+            ->inventoryProducts
+            ->map(function($p) {
+                return [
+                    'product' => $p->inventoryProduct,
+                    'quantity' => $p->quantity,
+                ];
+            });
+    }
+
+    /**
+     * Subtract this product from the given inventry as configured.
+     *
+     * This will subtract the given quantity from the inventory. If an
+     * alternative list of inventroy products is configured for this product, it
+     * is subtracted instead.
+     *
+     * @param Inventory $inventory Inventory to subtract from.
+     * @param int $quantity Quantity to subtract.
+     * @param MutationProduct $mutation_product Related product mutation.
+     */
+    public function subtractFromInventory(Inventory $inventory, int $quantity, MutationProduct $mutation_product) {
+        foreach($this->inventoryProductsList() as $p) {
+            $inventory->changeProduct(
+                $p['product'],
+                InventoryItemChange::TYPE_PURCHASE,
+                -($p['quantity'] * $quantity),
+                null,
+                null,
+                null,
+                $mutation_product,
+            );
+        }
+    }
 }
