@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.128 (2021-11-02)
+
+- Add page to set alternative inventory products for a product
+- Show inventory quantities on product administration pages
+- Further polish inventory period report page
+- When deleting an inventory, suggest to move all contents to another inventory
+- Inventory products are now exhausted when their quantity remained zero for at least 2 months
+- Collapse exhausted inventory products by default, clearing up the inventory page
+
 ## 0.1.127 (2021-11-01)
 
 - Fix various errors on inventory pages
