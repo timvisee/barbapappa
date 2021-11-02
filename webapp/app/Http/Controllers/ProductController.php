@@ -416,7 +416,7 @@ class ProductController extends Controller {
 
         // Redirect to product inventory products edit page
         return redirect()
-            ->route('community.economy.product.editInventoryProducts', [
+            ->route('community.economy.product.edit', [
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id,
                 'productId' => $product->id,

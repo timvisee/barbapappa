@@ -104,6 +104,37 @@
 
         <div class="ui divider"></div>
 
+        <b>@lang('pages.products.inventoryProducts'):</b>
+
+        @if($product->inventoryProducts->isNotEmpty())
+            <div class="ui bulleted list">
+                @foreach($product->inventoryProducts as $p)
+                    <div class="item">
+                        @if($p->quantity != 1)
+                            {{ $p->quantity }}×
+                        @endif
+                        {{ $p->inventoryProduct->displayName() }}
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="ui bulleted list">
+                <div class="item">
+                    <i>@lang('misc.none')</i>
+                </div>
+            </div>
+        @endif
+
+        <a href="{{ route('community.economy.product.editInventoryProducts', [
+            'communityId' => $community->human_id,
+            'economyId' => $economy->id,
+            'productId' => $product->id,
+        ]) }}">
+            @lang('pages.products.editInventoryProducts')
+        </a>
+
+        <div class="ui divider"></div>
+
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>
         <a href="{{ route('community.economy.product.show', [
             'communityId' => $community->human_id,
