@@ -26,6 +26,10 @@
                     ]) }}">
                 {{ $inventory->name }}
 
+                <div class="ui blue label">
+                    {{ $inventory->items()->sum('quantity') }}
+                </div>
+
                 <span class="sub-label">
                     @include('includes.humanTimeDiff', ['time' => $inventory->updated_at ?? $inventory->created_at])
                 </span>
