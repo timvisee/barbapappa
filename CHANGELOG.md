@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.131 (2021-11-04)
+
+- Fix inventory product monthly purchase estimate, properly extrapolate for short periods
+- Fix wallet top-up monthly expense prediction, properly extrapolate for short periods
+
 ## 0.1.130 (2021-11-03)
 
 - Add monthly purchase estimate and drain estimate to inventory products
