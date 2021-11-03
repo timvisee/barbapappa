@@ -184,7 +184,7 @@
                     <tr>
                         <td>@lang('pages.inventories.stats.' . $name)</td>
                         <td>
-                            {!! $value !!}
+                            {!! $value ?? '-' !!}
                             @if(!empty($note))
                                 <span class="subtle">({!! $note !!})</span>
                             @endif
