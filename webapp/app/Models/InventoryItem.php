@@ -26,10 +26,15 @@ class InventoryItem extends Model {
     protected $fillable = ['inventory_id', 'product_id', 'quantity'];
 
     /**
+     * Number of seconds in a month.
+     */
+    const MONTH_SECONDS = 2629800;
+
+    /**
      * Number of seconds after which an inventory item is considered exausted
      * while its quantity remains zero.
      */
-    const EXHAUSTED_AFTER = 5259600;
+    const EXHAUSTED_AFTER = Self::MONTH_SECONDS * 2;
 
     /**
      * A scope to a specific product.
@@ -73,5 +78,32 @@ class InventoryItem extends Model {
     public function isExhausted() {
         return $this->quantity == 0
             && $this->updated_at->clone()->addSeconds(Self::EXHAUSTED_AFTER)->isPast();
+    }
+
+    /**
+     * Estimate the monthly purchase volume for this product from its inventroy.
+     *
+     * @return int Estimated monthly purchases.
+     */
+    public function estimateMonthlyPurchaseVolume(): int {
+        // Get oldest change in wider period to determine usable period in seconds
+        $oldest = $this
+            ->changes()
+            ->period(now()->subMonths(2), null)
+            ->oldest()
+            ->first();
+        if($oldest == null)
+            return 0;
+        $secs = min($oldest->created_at->diffInSeconds(), Self::MONTH_SECONDS);
+
+        // Get volume within a period
+        $volume = abs($this
+            ->changes()
+            ->period(now()->subMonth(), null)
+            ->type(InventoryItemChange::TYPE_PURCHASE)
+            ->sum('quantity'));
+
+        // Extrapolate to a month
+        return ceil($volume / $secs * Self::MONTH_SECONDS);
     }
 }

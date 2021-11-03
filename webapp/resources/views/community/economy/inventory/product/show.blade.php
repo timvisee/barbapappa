@@ -87,7 +87,7 @@
                     <td>
                         {{ ucfirst(__('misc.in')) }}
                         @include('includes.humanTimeDiff', ['absolute' => true, 'short' => false, 'time' => $drainEstimateOthers])
-                        <span class="subtle">({{ sign_number($quantityInOthers) }})</span>
+                        <span class="subtle">({{ sign_number($quantityInOthers) }} @lang('misc.extra'))</span>
                     </td>
                 </tr>
             @endif

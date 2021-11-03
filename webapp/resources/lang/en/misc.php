@@ -123,6 +123,7 @@ return [
     'product' => 'Product',
     'payment' => 'Payment',
     'assets' => 'Assets',
+    'extra' => 'extra',
     'extras' => 'Extras',
     'pay' => 'Pay',
     'topUp' => 'Top-up',
