@@ -169,7 +169,7 @@
     @endif
 
     {{-- Inventory quantities --}}
-    @if($quantities->isNotEmpty())
+    @if(!$product->trashed() && $quantities->isNotEmpty())
         <div class="ui divider hidden"></div>
 
         <div class="ui vertical menu fluid">
