@@ -56,6 +56,35 @@
                 </td>
             </tr>
             <tr>
+                <td>@lang('pages.inventories.monthlyPurchases')</td>
+                <td>
+                    @if($purchaseVolumeMonth == 0)
+                        <i>@lang('misc.none')</i>
+                    @else
+                        ~ {{ $purchaseVolumeMonth }}
+                    @endif
+                </td>
+            </tr>
+            @if($drainEstimate != null)
+                <tr>
+                    <td>@lang('pages.inventories.drainEstimate')</td>
+                    <td>
+                        {{ ucfirst(__('misc.in')) }}
+                        @include('includes.humanTimeDiff', ['absolute' => true, 'short' => false, 'time' => $drainEstimate])
+                    </td>
+                </tr>
+            @endif
+            @if($drainEstimateOthers != null)
+                <tr>
+                    <td>@lang('pages.inventories.drainEstimateOthers')</td>
+                    <td>
+                        {{ ucfirst(__('misc.in')) }}
+                        @include('includes.humanTimeDiff', ['absolute' => true, 'short' => false, 'time' => $drainEstimateOthers])
+                        <span class="subtle">({{ sign_number($quantityInOthers) }})</span>
+                    </td>
+                </tr>
+            @endif
+            <tr>
                 <td>@lang('misc.lastChanged')</td>
                 @if($item != null)
                     <td>@include('includes.humanTimeDiff', ['time' => $item->updated_at])</td>

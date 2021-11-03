@@ -29,6 +29,44 @@ class InventoryProductController extends Controller {
             ->type(InventoryItemChange::TYPE_BALANCE)
             ->first() : null;
 
+        // Get monthly purchase volume
+        // TODO: use proper period here, in case period is shorter!
+        $purchaseVolumeMonth = $item == null
+            ? 0
+            : -$item
+                ->changes()
+                ->period(now()->subMonth(), null)
+                ->type(InventoryItemChange::TYPE_PURCHASE)
+                ->sum('quantity');
+
+        // Count quantity in other inventories
+        $quantityInOthers = $economy
+            ->inventories()
+            ->where('id', '!=', $inventory->id)
+            ->get()
+            ->map(function($i) use($product) {
+                $item = $i->getItem($product);
+                return $item != null ? max($item->quantity, 0) : 0;
+            })
+            ->sum();
+
+        // Drain estimate
+        $drainEstimate = null;
+        if($item != null && $item->quantity <= 0)
+            $drainEstimate = now();
+        else if($item != null && $item->quantity >= 0 && $purchaseVolumeMonth > 0) {
+            $seconds = max(round($item->quantity / $purchaseVolumeMonth * 2629800), 0);
+            $drainEstimate = now()->addSeconds($seconds);
+        }
+
+        // Drain estimate with other inventories
+        $drainEstimateOthers = null;
+        $quantityWithOthers = ($item != null ? $item->quantity : 0) + $quantityInOthers;
+        if($item != null && $quantityWithOthers >= 0 && $purchaseVolumeMonth > 0) {
+            $seconds = max(round($quantityWithOthers / $purchaseVolumeMonth * 2629800), 0);
+            $drainEstimateOthers = now()->addSeconds($seconds);
+        }
+
         // Build list of quantities by inventory
         // TODO: shared with ProductController::show
         $quantities = $economy
@@ -49,6 +87,10 @@ class InventoryProductController extends Controller {
             ->with('product', $product)
             ->with('item', $item)
             ->with('lastBalance', $lastBalance)
+            ->with('purchaseVolumeMonth', $purchaseVolumeMonth)
+            ->with('quantityInOthers', $quantityInOthers)
+            ->with('drainEstimate', $drainEstimate)
+            ->with('drainEstimateOthers', $drainEstimateOthers)
             ->with('quantities', $quantities)
             ->with('changes', $item != null ? $item->changes()->limit(10)->get() : collect());
     }

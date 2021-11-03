@@ -136,11 +136,14 @@ class InventoryItemChange extends Model {
 
     /**
      * A scope to a specific period.
+     *
+     * @param Carbon $from Period start time (inclusive).
+     * @param Carbon|null [$to=null] Period end time, defaults to now (inclusive).
      */
-    public function scopePeriod($query, Carbon $from, Carbon $to) {
+    public function scopePeriod($query, Carbon $from, ?Carbon $to = null) {
         return $query
             ->where($this->table . '.created_at', '>=', $from)
-            ->where($this->table . '.created_at', '<=', $to);
+            ->where($this->table . '.created_at', '<=', $to ?? now());
     }
 
     /**

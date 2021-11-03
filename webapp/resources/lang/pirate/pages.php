@@ -413,6 +413,9 @@ return [
         'warningNoBalanceChangesThisPeriod' => 'Products nay be rebalanced during th\' selected period. Please consider to rebalance products now to get an accurate report.',
         'volumeShort' => 'vol.',
         'purchaseVolumeByProduct' => 'Purchase volume by product',
+        'monthlyPurchases' => 'Monthly purchases',
+        'drainEstimate' => 'Drain estimate',
+        'drainEstimateOthers' => 'Drain all inventories',
         'stats' => [
             'period' => 'Period',
             'changeCount' => '# o\' changes',
