@@ -15,12 +15,12 @@
     <div class="ui one small statistics">
         <div class="statistic">
             <div class="value">
-                @if($item != null && $item->quantity > 0)
-                    <span class="ui text positive">{{ $item->quantity }}</span>
-                @elseif($item != null && $item->quantity < 0)
-                    <span class="ui text negative">{{ $item->quantity }}</span>
+                @if($quantity > 0)
+                    <span class="ui text positive">{{ $quantity }}</span>
+                @elseif($quantity < 0)
+                    <span class="ui text negative">{{ $quantity }}</span>
                 @else
-                    0
+                    {{ $quantity }}
                 @endif
             </div>
             <div class="label">@lang('misc.quantity')</div>
@@ -65,7 +65,14 @@
                     @endif
                 </td>
             </tr>
-            @if($drainEstimate != null)
+            @if($quantity <= 0)
+                <tr>
+                    <td>@lang('pages.inventories.drainEstimate')</td>
+                    <td>
+                        <span class="ui text negative">@lang('misc.drained')</div>
+                    </td>
+                </tr>
+            @elseif($drainEstimate != null)
                 <tr>
                     <td>@lang('pages.inventories.drainEstimate')</td>
                     <td>

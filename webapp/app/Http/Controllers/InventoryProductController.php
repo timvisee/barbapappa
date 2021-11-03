@@ -22,6 +22,7 @@ class InventoryProductController extends Controller {
         $inventory = $economy->inventories()->findOrFail($inventoryId);
         $product = $economy->products()->findOrFail($productId);
         $item = $inventory->getItem($product);
+        $quantity = $item != null ? $item->quantity : 0;
 
         // Find last balance event
         $lastBalance = $item != null ? $item
@@ -52,16 +53,16 @@ class InventoryProductController extends Controller {
 
         // Drain estimate
         $drainEstimate = null;
-        if($item != null && $item->quantity <= 0)
+        if($quantity <= 0)
             $drainEstimate = now();
-        else if($item != null && $item->quantity >= 0 && $purchaseVolumeMonth > 0) {
-            $seconds = max(round($item->quantity / $purchaseVolumeMonth * 2629800), 0);
+        else if($quantity >= 0 && $purchaseVolumeMonth > 0) {
+            $seconds = max(round($quantity / $purchaseVolumeMonth * 2629800), 0);
             $drainEstimate = now()->addSeconds($seconds);
         }
 
         // Drain estimate with other inventories
         $drainEstimateOthers = null;
-        $quantityWithOthers = ($item != null ? $item->quantity : 0) + $quantityInOthers;
+        $quantityWithOthers = $quantity + $quantityInOthers;
         if($item != null && $quantityWithOthers >= 0 && $purchaseVolumeMonth > 0) {
             $seconds = max(round($quantityWithOthers / $purchaseVolumeMonth * 2629800), 0);
             $drainEstimateOthers = now()->addSeconds($seconds);
@@ -87,6 +88,7 @@ class InventoryProductController extends Controller {
             ->with('product', $product)
             ->with('item', $item)
             ->with('lastBalance', $lastBalance)
+            ->with('quantity', $quantity)
             ->with('purchaseVolumeMonth', $purchaseVolumeMonth)
             ->with('quantityInOthers', $quantityInOthers)
             ->with('drainEstimate', $drainEstimate)
