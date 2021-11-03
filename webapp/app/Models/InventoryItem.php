@@ -87,6 +87,7 @@ class InventoryItem extends Model {
      */
     public function estimateMonthlyPurchaseVolume(): int {
         // Get oldest change in wider period to determine usable period in seconds
+        // Choose period between [1 hour, 1 month]
         $oldest = $this
             ->changes()
             ->period(now()->subMonths(2), null)
@@ -95,7 +96,7 @@ class InventoryItem extends Model {
             ->first();
         if($oldest == null)
             return 0;
-        $secs = min($oldest->created_at->diffInSeconds(), Self::MONTH_SECONDS);
+        $secs = min(max($oldest->created_at->diffInSeconds(), 60 * 60), Self::MONTH_SECONDS);
 
         // Get volume within a period
         $volume = abs($this

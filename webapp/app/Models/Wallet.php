@@ -378,6 +378,7 @@ class Wallet extends Model {
      */
     public function predictMonthlyCosts() {
         // Get oldest mutation in wider period to determine usable period in seconds
+        // Choose period between [1 day, 3 months]
         $oldest = $this
             ->mutations()
             ->type(MutationProduct::class, false)
@@ -389,7 +390,7 @@ class Wallet extends Model {
             ->first();
         if($oldest == null)
             return 0;
-        $secs = min($oldest->created_at->diffInSeconds(), Self::MONTH_SECONDS * 3);
+        $secs = min(max($oldest->created_at->diffInSeconds(), 24 * 60 * 60), Self::MONTH_SECONDS * 3);
 
         // Get sum of product mutation costs in the past three motn
         $amount = $this
