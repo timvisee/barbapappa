@@ -123,6 +123,7 @@ return [
     'product' => 'Product',
     'payment' => 'Betaling',
     'assets' => 'Middelen',
+    'extra' => 'extra',
     'extras' => 'Extras',
     'pay' => 'Betalen',
     'topUp' => 'Opwaarderen',

@@ -31,14 +31,9 @@ class InventoryProductController extends Controller {
             ->first() : null;
 
         // Get monthly purchase volume
-        // TODO: use proper period here, in case period is shorter!
-        $purchaseVolumeMonth = $item == null
-            ? 0
-            : -$item
-                ->changes()
-                ->period(now()->subMonth(), null)
-                ->type(InventoryItemChange::TYPE_PURCHASE)
-                ->sum('quantity');
+        $purchaseVolumeMonth = $item != null
+            ? $item->estimateMonthlyPurchaseVolume()
+            : 0;
 
         // Count quantity in other inventories
         $quantityInOthers = $economy
