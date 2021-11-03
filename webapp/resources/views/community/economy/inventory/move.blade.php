@@ -104,7 +104,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="3">@lang('pages.products.noProducts')</td>
+                        <td colspan="2">@lang('pages.products.noProducts')</td>
                     </tr>
                 @endforelse
             </tbody>

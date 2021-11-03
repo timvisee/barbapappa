@@ -26,8 +26,11 @@
                     ]) }}">
                 {{ $inventory->name }}
 
-                <div class="ui blue label">
-                    {{ $inventory->items()->sum('quantity') }}
+                @php
+                    $quantity = $inventory->items()->sum('quantity');
+                @endphp
+                <div class="ui {{ $quantity < 0 ? 'red' : ($quantity > 0 ? 'blue' : '') }} label">
+                    {{ $quantity }}
                 </div>
 
                 <span class="sub-label">
