@@ -87,7 +87,7 @@
             ]):
         </h5>
 
-        @if(!isset($stats['balanceCount']) || $stats['balanceCount'] <= 0)
+        @if(!isset($notBalanced) || $notBalanced)
             <div class="ui warning message">
                 <span class="halflings halflings-warning-sign icon"></span>
                 @lang('pages.inventories.warningNoBalanceChangesThisPeriod')
@@ -125,7 +125,7 @@
             <div class="statistic">
                 <div class="value">
                     @if(isset($stats['unbalanceMoney']))
-                        {!! $stats['unbalanceMoney'][0] ?? '-' !!}
+                        {!! $stats['unbalanceMoney'][0] !!}
                     @else
                         -
                     @endif
@@ -162,7 +162,7 @@
                     </div>
 
                     @if(isset($p['unbalanceMoney']))
-                        {!! $p['unbalanceMoney']->formatAmount(BALANCE_FORMAT_LABEL) ?? '-' !!}
+                        {!! $p['unbalanceMoney']->formatAmount(BALANCE_FORMAT_LABEL) !!}
                     @endif
 
                     <span class="sub-label">
@@ -184,7 +184,7 @@
                     <tr>
                         <td>@lang('pages.inventories.stats.' . $name)</td>
                         <td>
-                            {!! $value ?? '-' !!}
+                            {!! $value !!}
                             @if(!empty($note))
                                 <span class="subtle">({!! $note !!})</span>
                             @endif

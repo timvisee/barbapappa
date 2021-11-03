@@ -626,7 +626,7 @@ class InventoryController extends Controller {
                     ->period($timeFrom, $timeTo)
                     ->whereNotNull('user_id')
                     ->count();
-                $balanceCount = $inventory
+                $balanceCount = (int) $inventory
                     ->changes()
                     ->period($timeFrom, $timeTo)
                     ->type(InventoryItemChange::TYPE_BALANCE)
@@ -706,13 +706,16 @@ class InventoryController extends Controller {
                     'quantitySum' => [$quantitySum, null],
                     'unbalanceVolume' => [$unbalanceVolume, round($unbalanceVolume / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
                     'unbalanceSum' => [color_number($unbalanceSum), round($unbalanceSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
-                    'unbalanceMoney' => [$unbalanceMoney->formatAmount(BALANCE_FORMAT_COLOR), null],
+                    'unbalanceMoney' => [$unbalanceMoney->formatAmount(BALANCE_FORMAT_COLOR) ?? '-', null],
                     'purchaseVolume' => [$purchaseVolume, round($purchaseVolume / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
                     'addSum' => [$addSum, round($addSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
                     'removeSum' => [$removeSum, round($removeSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
                     'moveInSum' => [$moveInSum, round($moveInSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
                     'moveOutSum' => [$moveOutSum, round($moveOutSum / $quantityVolume * 100) . '% ' . __('general.of') . ' ' . $quantityVolume],
                 ];
+
+                $response = $response
+                    ->with('notBalanced', $balanceCount <= 0);
             }
 
             $response = $response
