@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.130 (2021-11-03)
+
+- Add monthly purchase estimate and drain estimate to inventory products
+- List purchase volume for all products in inventory period report
+- Show product quantity sum on inventory index
+- Fix inventory report not balanced warning not showing up in some cases
+- Fix inventory period report showing empty stats in some cases
+- Hide inventory quantities for trashed products
+
 ## 0.1.129 (2021-11-02)
 
 - Fix error on inventory period report page when unbalance money amount is zero
