@@ -413,6 +413,7 @@ return [
         ],
         'warningNoBalanceChangesThisPeriod' => 'Products have not been rebalanced during the selected period. Please consider to rebalance products now to get an accurate report.',
         'volumeShort' => 'vol.',
+        'purchaseVolumeByProduct' => 'Purchase volume by product',
         'stats' => [
             'period' => 'Period',
             'changeCount' => '# of changes',

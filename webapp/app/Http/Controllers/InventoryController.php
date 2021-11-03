@@ -549,6 +549,7 @@ class InventoryController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $products = $economy->products;
 
         // Validate
         $this->validate($request, [
@@ -611,6 +612,23 @@ class InventoryController extends Controller {
             $response = $response
                 ->with('unbalanced', $unbalanced);
 
+            // Build list of purchase volumes by product
+            $purchaseVolumes = $inventory
+                ->changes()
+                ->period($timeFrom, $timeTo)
+                ->type(InventoryItemChange::TYPE_PURCHASE)
+                ->addSelect('product_id', DB::raw('SUM(inventory_item_change.quantity) AS volume'))
+                ->groupBy('inventory_item.product_id')
+                ->pluck('volume', 'product_id')
+                ->sort()
+                ->map(function($vol, $id) use($products) {
+                    return [
+                        'product' => $products->firstWhere('id', $id),
+                        'volume' => -$vol,
+                    ];
+                });
+
+            // Build list of general stats
             $changeCount = $inventory
                 ->changes()
                 ->period($timeFrom, $timeTo)
@@ -619,7 +637,6 @@ class InventoryController extends Controller {
                 'period' => [$timeFrom->longAbsoluteDiffForHumans($timeTo), null],
                 'changeCount' => [$changeCount, null],
             ];
-
             if($changeCount > 0) {
                 $manualChangeCount = $inventory
                     ->changes()
@@ -717,8 +734,8 @@ class InventoryController extends Controller {
                 $response = $response
                     ->with('notBalanced', $balanceCount <= 0);
             }
-
             $response = $response
+                ->with('purchaseVolumes', $purchaseVolumes)
                 ->with('stats', $stats);
         }
 
