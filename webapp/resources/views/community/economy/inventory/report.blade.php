@@ -175,6 +175,32 @@
             @endforelse
         </div>
 
+        {{-- Purchase volumes --}}
+        @if(isset($purchaseVolumes) && $purchaseVolumes->isNotEmpty())
+            <div class="ui vertical menu fluid">
+                <h5 class="ui item header">
+                    @lang('pages.inventories.purchaseVolumeByProduct') ({{ count($purchaseVolumes) }})
+                </h5>
+
+                @foreach($purchaseVolumes as $p)
+                    <a class="item"
+                            href="{{ route('community.economy.inventory.product.show', [
+                                // TODO: this is not efficient
+                                'communityId' => $p['product']->economy->community->human_id,
+                                'economyId' => $p['product']->economy_id,
+                                'inventoryId' => $inventory->id,
+                                'productId' => $p['product']->id,
+                            ]) }}">
+                        {{ $p['product']->displayName() }}
+
+                        <div class="ui blue label">
+                            {{ $p['volume'] }}×
+                        </div>
+                    </a>
+                @endforeach
+            </div>
+        @endif
+
         <div class="ui divider hidden"></div>
 
         {{-- Stats list --}}

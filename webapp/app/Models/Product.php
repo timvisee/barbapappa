@@ -282,6 +282,9 @@ class Product extends Model {
                 'quantity' => 1,
             ]]);
 
+        // TODO: make this recursive! take alternative products from products configured
+        // here as well
+
         // Build list of products
         return $this
             ->inventoryProducts

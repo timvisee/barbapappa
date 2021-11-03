@@ -413,6 +413,7 @@ return [
         ],
         'warningNoBalanceChangesThisPeriod' => 'Producten zijn niet gebalanceerd tijdens de geselecteerde periode. Overweeg om producten nu te balanceren om een accuraat rapport te maken.',
         'volumeShort' => 'vol.',
+        'purchaseVolumeByProduct' => 'Aankoopvolume per product',
         'stats' => [
             'period' => 'Periode',
             'changeCount' => '# aanpassingen',
