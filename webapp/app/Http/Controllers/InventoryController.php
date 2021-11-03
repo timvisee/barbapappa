@@ -659,7 +659,7 @@ class InventoryController extends Controller {
                     ->addSelect(DB::raw('ABS(inventory_item_change.quantity) AS volume'))
                     ->pluck('volume')
                     ->sum();
-                $quantitySum = sprintf("%+d", $inventory
+                $quantitySum = sign_number($inventory
                     ->changes()
                     ->period($timeFrom, $timeTo)
                     ->sum('inventory_item_change.quantity'));
@@ -670,7 +670,7 @@ class InventoryController extends Controller {
                     ->addSelect(DB::raw('ABS(inventory_item_change.quantity) AS volume'))
                     ->pluck('volume')
                     ->sum();
-                $unbalanceSum = sprintf("%+d", $inventory
+                $unbalanceSum = sign_number($inventory
                     ->changes()
                     ->period($timeFrom, $timeTo)
                     ->type(InventoryItemChange::TYPE_BALANCE)

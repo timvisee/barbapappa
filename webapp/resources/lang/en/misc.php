@@ -198,6 +198,7 @@ return [
     'bought' => 'Bought',
     'transactions' => 'Transactions',
     'search' => 'Search',
+    'now' => 'now',
 
     'days' => [
         '0' => 'Monday',

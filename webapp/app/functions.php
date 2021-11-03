@@ -217,6 +217,21 @@ if(!function_exists('ref_format')) {
     }
 }
 
+if(!function_exists('sign_number')) {
+    /**
+     * Sign a number, prefixing a + if positive.
+     *
+     * @param $value The numeric value.
+     *
+     * @return The signed number.
+     */
+    function sign_number($value) {
+        if($value > 0)
+            return '+' . $value;
+        return (string) $value;
+    }
+}
+
 if(!function_exists('color_number')) {
     /**
      * Color positive and negative numbers.
