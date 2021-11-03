@@ -90,6 +90,7 @@ class InventoryItem extends Model {
         $oldest = $this
             ->changes()
             ->period(now()->subMonths(2), null)
+            ->reorder()
             ->oldest()
             ->first();
         if($oldest == null)
