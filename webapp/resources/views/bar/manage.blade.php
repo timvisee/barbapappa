@@ -111,12 +111,12 @@
                         'communityId' => $community->human_id,
                         'economyId' => $bar->economy_id,
                     ]) }}" class="item">
-                @lang('pages.inventories.title')
+                @lang('pages.inventories.allInventories')
                 <span class="subtle">@lang('pages.economies.inEconomy')</span>
             </a>
         @else
             <div class="item disabled">
-                @lang('pages.inventories.title')
+                @lang('pages.inventories.allInventories')
                 <span class="subtle">@lang('pages.economies.inEconomy')</span>
             </div>
         @endif

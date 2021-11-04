@@ -360,7 +360,8 @@ return [
     'inventories' => [
         'title' => 'Inventarissen',
         'inventory' => 'Inventaris',
-        'barInventory' => 'Bar inventory',
+        'barInventory' => 'Bar inventaris',
+        'allInventories' => 'Alle inventarissen',
         'manage' => 'Beheer inventarissen',
         'noInventories' => 'Geen inventarissen...',
         'createInventory' => 'Inventaris aanmaken',
