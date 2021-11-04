@@ -89,11 +89,61 @@
 
                 {{ ErrorRenderer::inline('time') }}
             </div>
-
-            <h5 class="ui header">
-                @include('includes.humanTimeDiff', ['time' => $time]):
-            </h5>
         {!! Form::close() !!}
+
+        <p>
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.inventory.show', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                            'time' => $time->clone()->subWeek()->max($inventory->created_at->floorDay())->toDateTimeLocalString('minute'),
+                        ]) }}"
+                        class="ui labeled icon button">
+                    <i class="icon glyphicons glyphicons-rewind"></i>
+                    @lang('pages.inventories.period.week')
+                </a>
+                <a href="{{ route('community.economy.inventory.show', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                            'time' => $time->clone()->addWeek()->min(now())->toDateTimeLocalString('minute'),
+                        ]) }}"
+                        class="ui right labeled icon button">
+                    <i class="right icon glyphicons glyphicons-forward"></i>
+                    @lang('pages.inventories.period.week')
+                </a>
+            </div>
+        </p>
+
+        <p>
+            <div class="ui buttons">
+                <a href="{{ route('community.economy.inventory.show', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                            'time' => $time->clone()->subMonth()->max($inventory->created_at->floorDay())->toDateTimeLocalString('minute'),
+                        ]) }}"
+                        class="ui labeled icon button">
+                    <i class="icon glyphicons glyphicons-rewind"></i>
+                    @lang('pages.inventories.period.month')
+                </a>
+                <a href="{{ route('community.economy.inventory.show', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                            'time' => $time->clone()->addMonth()->min(now())->toDateTimeLocalString('minute'),
+                        ]) }}"
+                        class="ui right labeled icon button">
+                    <i class="right icon glyphicons glyphicons-forward"></i>
+                    @lang('pages.inventories.period.month')
+                </a>
+            </div>
+        </p>
+
+        <h5 class="ui header">
+            @include('includes.humanTimeDiff', ['time' => $time]):
+        </h5>
     @endif
 
     {{-- Product list --}}
