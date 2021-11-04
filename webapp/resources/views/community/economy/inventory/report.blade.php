@@ -167,7 +167,8 @@
 
                     <span class="sub-label">
                         {{ $p['balanceCount'] }}×,
-                        {{ $p['unbalanceVolume'] }} @lang('pages.inventories.volumeShort')
+                        {{ $p['unbalanceVolume'] }} @lang('pages.inventories.volumeShort'),
+                        {{ $p['unbalancePercent'] }}%
                     </span>
                 </a>
             @empty

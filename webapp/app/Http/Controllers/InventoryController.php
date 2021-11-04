@@ -576,9 +576,25 @@ class InventoryController extends Controller {
 
         // When times are known, generate report
         if($timeFrom != null && $timeTo != null) {
+            // Build list of purchase volumes by product
+            $purchaseVolumes = $inventory
+                ->changes()
+                ->period($timeFrom, $timeTo)
+                ->type(InventoryItemChange::TYPE_PURCHASE)
+                ->addSelect('product_id', DB::raw('SUM(inventory_item_change.quantity) AS volume'))
+                ->groupBy('inventory_item.product_id')
+                ->pluck('volume', 'product_id')
+                ->sort()
+                ->map(function($vol, $id) use($products) {
+                    return [
+                        'product' => $products->firstWhere('id', $id),
+                        'volume' => -$vol,
+                    ];
+                });
+
             // Build list of unbalanced products
             $unbalanced = Self::getProductList($inventory)
-                ->map(function($p) use($timeFrom, $timeTo) {
+                ->map(function($p) use($timeFrom, $timeTo, $purchaseVolumes) {
                     // We must have the item
                     if($p['item'] == null)
                         return $p;
@@ -590,10 +606,13 @@ class InventoryController extends Controller {
                         ->period($timeFrom, $timeTo)
                         ->pluck('quantity');
 
-                    // Calcualte (absolute) unbalance
+                    // Calcualte (absolute) unbalance, and unbalance percentage
                     $p['unbalance'] = (int) $rebalances->sum();
                     $p['unbalanceVolume'] = (int) $rebalances->map(function($q) { return abs($q); })->sum();
                     $p['balanceCount'] = $rebalances->count();
+                    $p['unbalancePercent'] = isset($purchaseVolumes[$p['product']->id])
+                        ? round($purchaseVolumes[$p['product']->id]['volume'] / abs($p['unbalance']) * 100)
+                        : 100;
 
                     // Determine unbalance price
                     $p['price'] = $p['product']->getPrice([]);
@@ -611,22 +630,6 @@ class InventoryController extends Controller {
                 ->sortBy('unbalance');
             $response = $response
                 ->with('unbalanced', $unbalanced);
-
-            // Build list of purchase volumes by product
-            $purchaseVolumes = $inventory
-                ->changes()
-                ->period($timeFrom, $timeTo)
-                ->type(InventoryItemChange::TYPE_PURCHASE)
-                ->addSelect('product_id', DB::raw('SUM(inventory_item_change.quantity) AS volume'))
-                ->groupBy('inventory_item.product_id')
-                ->pluck('volume', 'product_id')
-                ->sort()
-                ->map(function($vol, $id) use($products) {
-                    return [
-                        'product' => $products->firstWhere('id', $id),
-                        'volume' => -$vol,
-                    ];
-                });
 
             // Build list of general stats
             $changeCount = $inventory
