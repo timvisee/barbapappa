@@ -360,6 +360,7 @@ return [
     'inventories' => [
         'title' => 'Inventories',
         'inventory' => 'Inventory',
+        'barInventory' => 'Bar inventory',
         'manage' => 'Manage inventories',
         'noInventories' => 'No inventories...',
         'createInventory' => 'Create inventory',

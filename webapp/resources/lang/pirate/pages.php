@@ -359,6 +359,7 @@ return [
     'inventories' => [
         'title' => 'Inventories',
         'inventory' => 'Inventory',
+        'barInventory' => 'Bar inventory',
         'manage' => 'Manage inventories',
         'noInventories' => 'Nay inventories...',
         'createInventory' => 'Create inventory',

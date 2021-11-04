@@ -106,6 +106,20 @@
                 <span class="subtle">@lang('pages.economies.inEconomy')</span>
             </div>
         @endif
+        @if(perms(InventoryController::permsView()))
+            <a href="{{ route('community.economy.inventory.index', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $bar->economy_id,
+                    ]) }}" class="item">
+                @lang('pages.inventories.title')
+                <span class="subtle">@lang('pages.economies.inEconomy')</span>
+            </a>
+        @else
+            <div class="item disabled">
+                @lang('pages.inventories.title')
+                <span class="subtle">@lang('pages.economies.inEconomy')</span>
+            </div>
+        @endif
         @if($bar->inventory_id != null)
             @if(perms(InventoryController::permsView()))
                 <a href="{{ route('community.economy.inventory.show', [
@@ -113,12 +127,12 @@
                             'economyId' => $bar->economy_id,
                             'inventoryId' => $bar->inventory_id,
                         ]) }}" class="item">
-                    @lang('pages.inventories.inventory')
+                    @lang('pages.inventories.barInventory')
                     <span class="subtle">@lang('pages.economies.inEconomy')</span>
                 </a>
             @else
                 <div class="item disabled">
-                    @lang('pages.inventories.inventory')
+                    @lang('pages.inventories.barInventory')
                     <span class="subtle">@lang('pages.economies.inEconomy')</span>
                 </div>
             @endif
