@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.133 (2021-11-06)
+
+- Hotfix for error on inventory period report with in-balance products
+
 ## 0.1.132 (2021-11-05)
 
 - Add separate inventories and bar inventory button to bar management page
