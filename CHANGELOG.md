@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.132 (2021-11-05)
+
+- Add separate inventories and bar inventory button to bar management page
+- Add unbalance percentage of product volume in inventory period report
+- Add week/month jump buttons to inventory time travel
+- Collapse exhausted inventory products on add/remove/balance/move pages as well
+- Fix incorrect success message when moving inventory products
+- Fix accidental selections in kiosk mode
+- Fix alternate inventory items not being cloned with a product
+- Fix inventory quantity estimations and cost predictions suggesting huge numbers in very short periods
+
 ## 0.1.131 (2021-11-04)
 
 - Fix inventory product monthly purchase estimate, properly extrapolate for short periods
