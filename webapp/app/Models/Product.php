@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Product model.
@@ -319,5 +320,30 @@ class Product extends Model {
                 $mutation_product,
             );
         }
+    }
+
+    /**
+     * Clone the assigned inventory products from another product, into this
+     * one.
+     *
+     * @param Product $other The other product.
+     * @param bool [$clear=true] Whether to clear/overwrite the current list of
+     *      inventory products.
+     *
+     * @throws \Exception Throws if the other product is in a different economy.
+     */
+    public function cloneInventoryProductsFrom(Product $other, bool $clear = true) {
+        $self = $this;
+        DB::transaction(function() use(&$self, $other, $clear) {
+            // Delete current
+            if($clear)
+                $self->inventoryProducts()->delete();
+
+            // Clone inventory products
+            $other->inventoryProducts
+                ->each(function($i) use($self) {
+                    $i->cloneToProduct($self);
+                });
+        });
     }
 }

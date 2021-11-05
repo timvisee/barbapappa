@@ -17,6 +17,11 @@
         'method' => 'POST',
         'class' => 'ui form'
     ]) !!}
+        {{-- Remember product we're cloning --}}
+        @if($cloneProduct != null)
+            {{ Form::hidden('clone_product_id', $cloneProduct->id) }}
+        @endif
+
         <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
             {{ Form::text('name', $clone ? $cloneProduct->name : '', ['placeholder' => __('pages.products.namePlaceholder')]) }}
