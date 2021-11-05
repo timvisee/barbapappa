@@ -610,9 +610,11 @@ class InventoryController extends Controller {
                     $p['unbalance'] = (int) $rebalances->sum();
                     $p['unbalanceVolume'] = (int) $rebalances->map(function($q) { return abs($q); })->sum();
                     $p['balanceCount'] = $rebalances->count();
-                    $p['unbalancePercent'] = isset($purchaseVolumes[$p['product']->id])
-                        ? round($purchaseVolumes[$p['product']->id]['volume'] / abs($p['unbalance']) * 100)
-                        : 100;
+                    $p['unbalancePercent'] = $p['unbalance'] == 0
+                        ? '0%'
+                        : (isset($purchaseVolumes[$p['product']->id])
+                            ? round($purchaseVolumes[$p['product']->id]['volume'] / abs($p['unbalance']) * 100)
+                            : 100);
 
                     // Determine unbalance price
                     $p['price'] = $p['product']->getPrice([]);
