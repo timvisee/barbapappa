@@ -79,51 +79,59 @@
 
         {{-- Exhausted product list --}}
         @if($exhaustedProducts->isNotEmpty())
-            <table class="ui celled table unstackable">
-                <thead>
-                    <tr>
-                        <th>@lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})</th>
-                        <th>@lang('misc.quantity')</th>
-                        <th>@lang('misc.delta')</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($exhaustedProducts as $p)
-                        <tr>
-                            <td data-label="@lang('misc.product')">
-                                <a href="{{ route('community.economy.product.show', [
-                                            // TODO: this is not efficient
-                                            'communityId' => $p['product']->economy->community->human_id,
-                                            'economyId' => $p['product']->economy_id,
-                                            'productId' => $p['product']->id,
-                                        ]) }}" target="_blank">
-                                    {{ $p['product']->displayName() }}
-                                </a>
-                            </td>
-                            <td data-label="@lang('misc.quantity')" class="right aligned collapsing">
-                                <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
-                                    {{ Form::text($p['field'] . '_quantity', '', [
-                                        'placeholder' => $p['quantity'],
-                                        'inputmode' => 'numeric',
-                                    ]) }}
-                                    {{-- Flush error for this field, inline rendering is bad --}}
-                                    {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
-                                </div>
-                            </td>
-                            <td data-label="@lang('misc.delta')" class="right aligned collapsing">
-                                <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_delta') ? 'error' : '' }}">
-                                    {{ Form::text($p['field'] . '_delta', '', [
-                                        'placeholder' => 0,
-                                        'inputmode' => 'numeric',
-                                    ]) }}
-                                    {{-- Flush error for this field, inline rendering is bad --}}
-                                    {{ ErrorRenderer::consume($p['field'] . '_delta') }}
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="ui fluid accordion">
+                <div class="title">
+                    <i class="dropdown icon"></i>
+                    @lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})
+                </div>
+                <div class="content">
+                    <table class="ui celled table unstackable">
+                        <thead>
+                            <tr>
+                                <th>@lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})</th>
+                                <th>@lang('misc.quantity')</th>
+                                <th>@lang('misc.delta')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($exhaustedProducts as $p)
+                                <tr>
+                                    <td data-label="@lang('misc.product')">
+                                        <a href="{{ route('community.economy.product.show', [
+                                                    // TODO: this is not efficient
+                                                    'communityId' => $p['product']->economy->community->human_id,
+                                                    'economyId' => $p['product']->economy_id,
+                                                    'productId' => $p['product']->id,
+                                                ]) }}" target="_blank">
+                                            {{ $p['product']->displayName() }}
+                                        </a>
+                                    </td>
+                                    <td data-label="@lang('misc.quantity')" class="right aligned collapsing">
+                                        <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
+                                            {{ Form::text($p['field'] . '_quantity', '', [
+                                                'placeholder' => $p['quantity'],
+                                                'inputmode' => 'numeric',
+                                            ]) }}
+                                            {{-- Flush error for this field, inline rendering is bad --}}
+                                            {{ ErrorRenderer::consume($p['field'] . '_quantity') }}
+                                        </div>
+                                    </td>
+                                    <td data-label="@lang('misc.delta')" class="right aligned collapsing">
+                                        <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_delta') ? 'error' : '' }}">
+                                            {{ Form::text($p['field'] . '_delta', '', [
+                                                'placeholder' => 0,
+                                                'inputmode' => 'numeric',
+                                            ]) }}
+                                            {{-- Flush error for this field, inline rendering is bad --}}
+                                            {{ ErrorRenderer::consume($p['field'] . '_delta') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         @endif
 
         <div class="ui divider hidden"></div>

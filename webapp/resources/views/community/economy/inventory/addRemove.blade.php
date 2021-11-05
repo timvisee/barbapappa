@@ -79,54 +79,62 @@
 
         {{-- Exhausted product list --}}
         @if($exhaustedProducts->isNotEmpty())
-            <table class="ui celled table unstackable">
-                <thead>
-                    <tr>
-                        <th>@lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})</th>
-                        <th>@lang('misc.add')</th>
-                        <th>@lang('misc.remove')</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($exhaustedProducts as $p)
-                        <tr>
-                            <td data-label="@lang('misc.product')">
-                                <a href="{{ route('community.economy.product.show', [
-                                            // TODO: this is not efficient
-                                            'communityId' => $p['product']->economy->community->human_id,
-                                            'economyId' => $p['product']->economy_id,
-                                            'productId' => $p['product']->id,
-                                        ]) }}" target="_blank">
-                                    {{ $p['product']->displayName() }}
-                                </a>
-                            </td>
-                            <td data-label="@lang('misc.add')" class="right aligned collapsing">
-                                <div class="field
-                                    inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_add') ? 'error' : '' }}">
-                                    {{ Form::text($p['field'] . '_add', '', [
-                                        'placeholder' => 0,
-                                        'inputmode' => 'numeric',
-                                    ]) }}
-                                    {{-- Flush error for this field, inline rendering is bad --}}
-                                    {{ ErrorRenderer::consume($p['field'] .
-                                    '_add') }}
-                                </div>
-                            </td>
-                            <td data-label="@lang('misc.remove')" class="right aligned collapsing">
-                                <div class="field
-                                    inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_remove') ? 'error' : '' }}">
-                                    {{ Form::text($p['field'] . '_remove', '', [
-                                        'placeholder' => 0,
-                                        'inputmode' => 'numeric',
-                                    ]) }}
-                                    {{-- Flush error for this field, inline rendering is bad --}}
-                                    {{ ErrorRenderer::consume($p['field'] . '_remove') }}
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="ui fluid accordion">
+                <div class="title">
+                    <i class="dropdown icon"></i>
+                    @lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})
+                </div>
+                <div class="content">
+                    <table class="ui celled table unstackable">
+                        <thead>
+                            <tr>
+                                <th>@lang('pages.inventories.exhaustedProducts') ({{ count($exhaustedProducts) }})</th>
+                                <th>@lang('misc.add')</th>
+                                <th>@lang('misc.remove')</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($exhaustedProducts as $p)
+                                <tr>
+                                    <td data-label="@lang('misc.product')">
+                                        <a href="{{ route('community.economy.product.show', [
+                                                    // TODO: this is not efficient
+                                                    'communityId' => $p['product']->economy->community->human_id,
+                                                    'economyId' => $p['product']->economy_id,
+                                                    'productId' => $p['product']->id,
+                                                ]) }}" target="_blank">
+                                            {{ $p['product']->displayName() }}
+                                        </a>
+                                    </td>
+                                    <td data-label="@lang('misc.add')" class="right aligned collapsing">
+                                        <div class="field
+                                            inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_add') ? 'error' : '' }}">
+                                            {{ Form::text($p['field'] . '_add', '', [
+                                                'placeholder' => 0,
+                                                'inputmode' => 'numeric',
+                                            ]) }}
+                                            {{-- Flush error for this field, inline rendering is bad --}}
+                                            {{ ErrorRenderer::consume($p['field'] .
+                                            '_add') }}
+                                        </div>
+                                    </td>
+                                    <td data-label="@lang('misc.remove')" class="right aligned collapsing">
+                                        <div class="field
+                                            inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_remove') ? 'error' : '' }}">
+                                            {{ Form::text($p['field'] . '_remove', '', [
+                                                'placeholder' => 0,
+                                                'inputmode' => 'numeric',
+                                            ]) }}
+                                            {{-- Flush error for this field, inline rendering is bad --}}
+                                            {{ ErrorRenderer::consume($p['field'] . '_remove') }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         @endif
 
         <div class="ui divider hidden"></div>
