@@ -80,6 +80,7 @@ class ProductController extends Controller {
 
         // Build validation rules, and validate
         $rules = [
+            'clone_product_id' => 'nullable|integer|min:0',
             'name' => 'required|' . ValidationDefaults::NAME,
             'tags' => 'nullable|' . ValidationDefaults::PRODUCT_TAGS,
         ];
@@ -92,9 +93,14 @@ class ProductController extends Controller {
             $rules['name_' . $locale] = 'nullable|' . ValidationDefaults::NAME;
         $this->validate($request, $rules, $messages);
 
+        // Grab product we're cloning
+        $cloneProduct = $request->input('clone_product_id') != null
+            ? $economy->products()->withTrashed()->findOrFail($request->input('clone_product_id'))
+            : null;
+
         // Create product and set prices in transaction
         $product = null;
-        DB::transaction(function() use($request, $user, $economy, $locales, &$product) {
+        DB::transaction(function() use($request, $user, $economy, $locales, &$product, $cloneProduct) {
             // Create the product
             $product = $economy->products()->create([
                 'economy_id' => $economy->id,
@@ -136,6 +142,10 @@ class ProductController extends Controller {
                     })
                     ->toArray()
             );
+
+            // Clone alternative inventory products
+            if($cloneProduct != null)
+                $product->cloneInventoryProductsFrom($cloneProduct);
         });
 
         // Build the response, redirect
