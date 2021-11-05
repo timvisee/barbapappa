@@ -250,6 +250,11 @@
 </script>
 
 <style>
+    body {
+        /* Prevent any accidental selections in kiosk mode */
+        user-select: none;
+    }
+
     /**
      * Remove all padding on small screens.
      */
