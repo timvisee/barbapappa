@@ -536,7 +536,7 @@ class InventoryController extends Controller {
                 'economyId' => $economy->id,
                 'inventoryId' => $inventory->id,
             ])
-            ->with('success', trans_choice('pages.inventories.#productsRebalanced', $count) . '.');
+            ->with('success', trans_choice('pages.inventories.#productsMoved', $count) . '.');
     }
 
     /**
