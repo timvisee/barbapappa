@@ -388,6 +388,7 @@ return [
         'toInventory' => 'To inventory',
         '#productsRebalanced' => '{0} Nay products rebalanced|{1} One product rebalanced|[2,*] :count products rebalanced',
         '#productsAddedRemoved' => '{0} Nay products added/removed|{1} One product added/removed|[2,*] :count products added/removed',
+        '#productsMoved' => '{0} Nay products moved|{1} One product moved|[2,*] :count products moved',
         'confirmChangeQuantities' => 'I confirm I want to update product quantities for these products with the entered amounts',
         'mustBeInteger' => 'Must be an integer.',
         'changeType' => 'Change type',

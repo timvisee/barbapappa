@@ -389,6 +389,7 @@ return [
         'toInventory' => 'Naar inventaris',
         '#productsRebalanced' => '{0} Geen producten gebalanceerd|{1} Één product gebalanceerd|[2,*] :count producten gebalanceerd',
         '#productsAddedRemoved' => '{0} Geen producten toegevoegd/verwijderd|{1} Één product toegevoegd/verwijderd|[2,*] :count producten toegevoegd/verwijderd',
+        '#productsMoved' => '{0} Geen producten verplaatst|{1} Één product verplaatst|[2,*] :count producten verplaatst',
         'confirmChangeQuantities' => 'Ik bevestig dat ik de productaantallen wil aanpassen op basis van de ingevulde hoeveelheiden',
         'mustBeInteger' => 'Moet een nummer zijn.',
         'changeType' => 'Aanpassingstype',
