@@ -377,22 +377,7 @@ class Wallet extends Model {
      * @return number The balance at the given time.
      */
     public function predictMonthlyCosts() {
-        // Get oldest mutation in wider period to determine usable period in seconds
-        // Choose period between [1 day, 3 months]
-        $oldest = $this
-            ->mutations()
-            ->type(MutationProduct::class, false)
-            ->where('mutation.created_at', '>=', now()->subMonths(4))
-            ->where('mutation.state', Mutation::STATE_SUCCESS)
-            ->where('mutation.amount', '<', 0)
-            ->reorder()
-            ->oldest('mutation.created_at')
-            ->first();
-        if($oldest == null)
-            return 0;
-        $secs = min(max($oldest->created_at->diffInSeconds(), 24 * 60 * 60), Self::MONTH_SECONDS * 3);
-
-        // Get sum of product mutation costs in the past three motn
+        // Get sum of product mutation costs in the past three months
         $amount = $this
             ->mutations()
             ->type(MutationProduct::class, false)
@@ -404,7 +389,7 @@ class Wallet extends Model {
 
         // Construct money amount with approximate monthly costs
         $money_amount = $this->getMoneyAmount();
-        $money_amount->amount = round($amount / $secs * Self::MONTH_SECONDS, 2);
+        $money_amount->amount = round($amount / 3.0, 2);
         $money_amount->approximate = true;
 
         return $money_amount;
