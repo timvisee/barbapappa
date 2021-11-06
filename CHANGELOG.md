@@ -1,6 +1,13 @@
 # Changelog
 
-## 0.1.133 (2021-11-06)
+## 0.1.134 (2021-11-06)
+
+- Do not extrapolate wallet cost predictions because it shows unrealistic numbers
+- Fix error when viewing product having trashed alternate inventory products
+- Fix inventory error when buying some product combinations
+- Fix incorrect inventory period report product unbalance volume percentage
+
+## 0.1.133 (2021-11-05)
 
 - Hotfix for error on inventory period report with in-balance products
 
