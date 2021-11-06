@@ -310,6 +310,11 @@ class Product extends Model {
      */
     public function subtractFromInventory(Inventory $inventory, int $quantity, MutationProduct $mutation_product) {
         foreach($this->inventoryProductsList() as $p) {
+            // Fix for a very uncommon case where the product is null
+            if($p['product'] == null)
+                continue;
+
+            // Update inventory for product
             $inventory->changeProduct(
                 $p['product'],
                 InventoryItemChange::TYPE_PURCHASE,
