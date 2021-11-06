@@ -49,7 +49,9 @@ class ProductInventoryItem extends Model {
      * @return Product The product.
      */
     public function inventoryProduct() {
-        return $this->belongsTo(Product::class, 'inventory_product_id');
+        return $this
+            ->belongsTo(Product::class, 'inventory_product_id')
+            ->withTrashed();
     }
 
     /**
