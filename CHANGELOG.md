@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.135 (2021-11-16)
+
+- Critical security patch, update doctrine/dbal to fix security issue
+  (https://github.com/advisories/GHSA-r7cj-8hjg-x622)
+
 ## 0.1.134 (2021-11-06)
 
 - Do not extrapolate wallet cost predictions because it shows unrealistic numbers
