@@ -34,7 +34,7 @@ class InventoryItem extends Model {
      * Number of seconds after which an inventory item is considered exausted
      * while its quantity remains zero.
      */
-    const EXHAUSTED_AFTER = Self::MONTH_SECONDS * 2;
+    const EXHAUSTED_AFTER = Self::MONTH_SECONDS;
 
     /**
      * A scope to a specific product.
