@@ -341,7 +341,7 @@ class Economy extends Model {
         $economy_member = $this->members()->user($user)->first();
 
         // Obtain the wallets, return zero with default currency if none
-        $wallets = $economy_member != null ? $economy_member->wallets()->with('currency')->get() : collect();
+        $wallets = $economy_member?->wallets()->with('currency')->get() ?? collect();
         return Self::sumAmounts($wallets, 'balance');
     }
 
@@ -406,7 +406,7 @@ class Economy extends Model {
      */
     public function formatUserBalance($format = BALANCE_FORMAT_PLAIN) {
         $balance = $this->calcUserBalance();
-        return $balance != null ? $balance->formatAmount($format) : $balance;
+        return $balance?->formatAmount($format) ?? $balance;
     }
 
     /**
@@ -498,11 +498,11 @@ class Economy extends Model {
         $mutations = Mutation::with('mutationable')->findMany($mutation_ids);
         $product_ids = $mutation_ids
             ->map(function($id) use($mutations) {
-                $mutation = $mutations->firstWhere('id', $id);
                 // TODO: ensure mutationable isn't causing extra queries
-                return $mutation != null && $mutation->mutationable != null
-                    ? $mutation->mutationable->product_id
-                    : null;
+                return $mutations
+                    ->firstWhere('id', $id)
+                    ?->mutationable
+                    ?->product_id;
             })
             ->filter(function($product_id) use($exclude_product_ids) {
                 return $product_id != null

@@ -26,7 +26,7 @@
     @if(!empty($change->comment))
         <p class="align-center" title="@lang('misc.comment')">
             <i>{{ $change->comment }}</i>
-            @if($change->user != null)
+            @if($change->user)
                 <br>
                 @lang('misc.by')
                 <i>{{ $change->user->name }}</i>
@@ -41,7 +41,7 @@
                 <td>@lang('misc.type')</td>
                 <td>@lang('pages.inventories.type.' . $change->type)</td>
             </tr>
-            @if($change->type == InventoryItemChange::TYPE_MOVE && $change->related != null)
+            @if($change->type == InventoryItemChange::TYPE_MOVE && $change->related)
                 <tr>
                     <td>@lang('pages.inventories.title')</td>
                     <td>
@@ -83,7 +83,7 @@
                     </td>
                 </tr>
             @endif
-            @if($change->user != null)
+            @if($change->user)
                 <tr>
                     <td>@lang('misc.fromUser')</td>
                     <td>{{ $change->user->name }}</td>
@@ -121,7 +121,7 @@
     </table>
 
     <p>
-        @if($change->related != null)
+        @if($change->related)
             <a class="ui basic button"
                href="{{ route('community.economy.inventory.product.change', [
                     'communityId' => $community->human_id,
@@ -134,7 +134,7 @@
             </a>
         @endif
 
-        @if($change->mutation_product != null)
+        @if($change->mutation_product)
             <a class="ui basic button"
                href="{{ route('transaction.mutation.show', [
                    'transactionId' => $change->mutation_product->mutation->transaction_id,

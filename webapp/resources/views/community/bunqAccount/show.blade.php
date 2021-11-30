@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <td>@lang('pages.bunqAccounts.lastCheckedAt')</td>
-                @if($account->checked_at != null)
+                @if($account->checked_at)
                     <td>@include('includes.humanTimeDiff', ['time' => $account->checked_at])</td>
                 @else
                     <td><i>@lang('misc.unknown')</i></td>
@@ -51,7 +51,7 @@
             </tr>
             <tr>
                 <td>@lang('pages.bunqAccounts.lastRenewedAt')</td>
-                @if($account->renewed_at != null)
+                @if($account->renewed_at)
                     <td>@include('includes.humanTimeDiff', ['time' => $account->renewed_at])</td>
                 @else
                     <td><i>@lang('pages.bunqAccounts.notRenewedYet')</i></td>

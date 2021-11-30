@@ -120,7 +120,7 @@
                 <span class="subtle">@lang('pages.economies.inEconomy')</span>
             </div>
         @endif
-        @if($bar->inventory_id != null)
+        @if($bar->inventory_id)
             @if(perms(InventoryController::permsView()))
                 <a href="{{ route('community.economy.inventory.show', [
                             'communityId' => $community->human_id,

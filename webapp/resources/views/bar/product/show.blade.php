@@ -57,7 +57,7 @@
     </table>
 
     <p>
-        @if(($format_price = $product->formatPrice($currencies, BALANCE_FORMAT_PLAIN)) != null)
+        @if($format_price = $product->formatPrice($currencies, BALANCE_FORMAT_PLAIN))
             {!! Form::open(['action' => [
                 'BarController@quickBuy',
                 $bar->human_id,

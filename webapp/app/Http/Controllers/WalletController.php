@@ -47,7 +47,7 @@ class WalletController extends Controller {
         // Add user wallet count to economy objects
         $economies = $economies->map(function($economy) use($user) {
             $member = $economy->members()->user($user)->first();
-            $economy->user_wallet_count = $member != null ? $member->wallets()->count() : 0;
+            $economy->user_wallet_count = $member?->wallets()->count() ?? 0;
             return $economy;
         });
 
@@ -66,9 +66,7 @@ class WalletController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $economy_member = $economy->members()->user($user)->first();
-        $wallets = $economy_member != null
-            ? $economy_member->wallets()->paginate(10)
-            : [];
+        $wallets = $economy_member?->wallets()->paginate(10) ?? [];
 
         return view('community.wallet.list')
             ->with('economy', $economy)
@@ -1104,17 +1102,17 @@ class WalletController extends Controller {
                 'pages.walletStats.smartText.mainDays',
                 $daysActive,
             ),
-            'best-day' => $bestDay == null
-                ? ''
-                : __('pages.walletStats.smartText.mainBestDay', [
+            'best-day' => $bestDay != null
+                ? __('pages.walletStats.smartText.mainBestDay', [
                         'day' => __('misc.days.' . $bestDay),
-                    ]),
+                    ])
+                : '',
             'products' => trans_choice('pages.walletStats.smartText.productCount', $productCount),
-            'products-unique' => $uniqueProductCount == 0
-                ? ''
-                : __('pages.walletStats.smartText.mainUniqueProducts', [
+            'products-unique' => $uniqueProductCount != 0
+                ? __('pages.walletStats.smartText.mainUniqueProducts', [
                     'unique' => trans_choice('pages.walletStats.smartText.productUniqueCount', $uniqueProductCount),
                 ])
+                : ''
         ]);
 
         // Add best day if available
@@ -1123,12 +1121,12 @@ class WalletController extends Controller {
             $bestProductTwo = collect($productDistData["labels"])->skip(1)->first();
             $smartText .= ' ' . __('pages.walletStats.smartText.partBestProduct', [
                 'product' => $bestProduct,
-                'extra' => $bestProductTwo == null
-                    ? ''
-                    : __('pages.walletStats.smartText.partBestProductExtra', [
+                'extra' => $bestProductTwo != null
+                    ? __('pages.walletStats.smartText.partBestProductExtra', [
                         'product' => $bestProductTwo,
                         'extra' => '',
                     ])
+                    : ''
                 ]);
         }
 

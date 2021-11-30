@@ -61,10 +61,7 @@ class AuthResult {
         $this->result = $result;
 
         // Set the authentication state
-        if($authState != null)
-            $this->authState = $authState;
-        else
-            $this->authState = new AuthState();
+        $this->authState = $authState ?? new AuthState();
     }
 
     /**

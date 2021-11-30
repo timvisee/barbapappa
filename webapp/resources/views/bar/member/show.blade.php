@@ -23,7 +23,7 @@
                 <td>@lang('misc.role')</td>
                 <td>{{ BarRoles::roleName($member->role) }}</td>
             </tr>
-            @if($economy_member != null)
+            @if($economy_member)
                 <tr>
                     <td>@lang('pages.barMembers.nickname')</td>
                     @if(!empty($economy_member->nickname))
@@ -41,7 +41,7 @@
                     <td>{{ yesno($economy_member->show_in_kiosk) }}</td>
                 </tr>
             @endif
-            @if($member->visited_at != null)
+            @if($member->visited_at)
                 <tr>
                     <td>@lang('pages.barMembers.lastVisit')</td>
                     <td>@include('includes.humanTimeDiff', ['time' => new Carbon($member->visited_at)])</td>

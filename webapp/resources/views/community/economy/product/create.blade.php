@@ -18,7 +18,7 @@
         'class' => 'ui form'
     ]) !!}
         {{-- Remember product we're cloning --}}
-        @if($cloneProduct != null)
+        @if($cloneProduct)
             {{ Form::hidden('clone_product_id', $cloneProduct->id) }}
         @endif
 

@@ -289,7 +289,7 @@ class BalanceImportChange extends Model {
             $previous = $this->previous()->first();
             if($previous != null && !$previous->isCommitted())
                 throw new \Exception("Attempting to commit balance import change, while previous change is not committed");
-            $amount = $this->balance - ($previous != null ? $previous->balance : 0);
+            $amount = $this->balance - ($previous?->balance ?? 0);
         }
 
         // Do not mutate for a zero amount

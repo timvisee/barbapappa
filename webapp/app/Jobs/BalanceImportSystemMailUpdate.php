@@ -206,7 +206,7 @@ class BalanceImportSystemMailUpdate implements ShouldQueue {
         // For each system, add uncommitted balance update/costs to balance
         foreach($systemChanges as $system_id => $changes) {
             // If a system is given, limit to it
-            if($system != null && $system->id != $system_id)
+            if($system?->id != $system_id)
                 continue;
 
             // Can only count latest balance change for each currency, keep track of this

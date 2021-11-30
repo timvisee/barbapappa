@@ -18,7 +18,7 @@
                 {{ $payment->displayName() }}
                 {!! $payment->formatCost(BALANCE_FORMAT_LABEL); !!}
 
-                @if(isset($group['showUser']) && $group['showUser'] && $payment->user != null)
+                @if(isset($group['showUser']) && $group['showUser'] && $payment->user)
                     <span class="subtle">
                         @lang('misc.by') {{ $payment->user->first_name }}
                     </span>

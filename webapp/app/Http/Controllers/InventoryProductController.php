@@ -22,18 +22,16 @@ class InventoryProductController extends Controller {
         $inventory = $economy->inventories()->findOrFail($inventoryId);
         $product = $economy->products()->findOrFail($productId);
         $item = $inventory->getItem($product);
-        $quantity = $item != null ? $item->quantity : 0;
+        $quantity = $item?->quantity ?? 0;
 
         // Find last balance event
-        $lastBalance = $item != null ? $item
-            ->changes()
+        $lastBalance = $item
+            ?->changes()
             ->type(InventoryItemChange::TYPE_BALANCE)
-            ->first() : null;
+            ->first();
 
         // Get monthly purchase volume
-        $purchaseVolumeMonth = $item != null
-            ? $item->estimateMonthlyPurchaseVolume()
-            : 0;
+        $purchaseVolumeMonth = $item?->estimateMonthlyPurchaseVolume() ?? 0;
 
         // Count quantity in other inventories
         $quantityInOthers = $economy
@@ -72,7 +70,7 @@ class InventoryProductController extends Controller {
                 return [
                     'inventory' => $i,
                     'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
+                    'quantity' => $item?->quantity ?? 0,
                 ];
             })
             ->sortByDesc('quantity');
@@ -89,7 +87,7 @@ class InventoryProductController extends Controller {
             ->with('drainEstimate', $drainEstimate)
             ->with('drainEstimateOthers', $drainEstimateOthers)
             ->with('quantities', $quantities)
-            ->with('changes', $item != null ? $item->changes()->limit(10)->get() : collect());
+            ->with('changes', $item?->changes()->limit(10)->get() ?? collect());
     }
 
     /**
@@ -117,7 +115,7 @@ class InventoryProductController extends Controller {
             ->with('inventory', $inventory)
             ->with('product', $product)
             ->with('item', $item)
-            ->with('changes', $item != null ? $item->changes()->whereIn('type', $types)->paginate(self::PAGINATE_ITEMS) : collect());
+            ->with('changes', $item?->changes()->whereIn('type', $types)->paginate(self::PAGINATE_ITEMS) ?? collect());
     }
 
     /**

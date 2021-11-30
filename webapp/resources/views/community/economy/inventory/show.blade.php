@@ -49,13 +49,13 @@
                             'communityId' => $community->human_id,
                             'economyId' => $economy->id,
                             'inventoryId' => $inventory->id,
-                            'time_to' => $time != null ? $time->toDateTimeLocalString('minute') : null,
+                            'time_to' => $time?->toDateTimeLocalString('minute'),
                         ]) }}"
                         class="ui button violet">
                     @lang('pages.inventories.periodReport')
                 </a>
 
-                @if(request()->query('time') == null)
+                @unless(request()->query('time'))
                     <a href="{{ route('community.economy.inventory.show', [
                                 'communityId' => $community->human_id,
                                 'economyId' => $economy->id,
@@ -65,13 +65,13 @@
                             class="ui button purple">
                         @lang('pages.inventories.timeTravel')
                     </a>
-                @endif
+                @endunless
             </div>
         @endif
     </p>
 
     {{-- Time travel field --}}
-    @if(request()->query('time') != null)
+    @if(request()->query('time'))
         {!! Form::open([
             'method' => 'GET',
             'class' => 'ui form'

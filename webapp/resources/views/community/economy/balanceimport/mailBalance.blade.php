@@ -54,7 +54,8 @@
         <div class="inline field {{ ErrorRenderer::hasError('mail_joined_users') ?  'error' : '' }}">
             <div class="ui toggle checkbox">
                 {{ Form::checkbox('limit_last_event', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
-                {{ Form::label('limit_last_event', __('pages.balanceImportMailBalance.limitToLastEvent') . ': ' . ($last_event != null ? $last_event->name : '?')) }}
+                {{ Form::label('limit_last_event',
+                __('pages.balanceImportMailBalance.limitToLastEvent') . ': ' . ($last_event?->name ?? '?')) }}
             </div>
             <br />
             {{ ErrorRenderer::inline('limit_last_event') }}

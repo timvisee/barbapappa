@@ -172,7 +172,7 @@
                         <td>@lang('misc.reference')</td>
                         <td><code class="literal copy">{{ $payment->getReference() }}</code></td>
                     </tr>
-                    @if($payment->service_id != null)
+                    @if($payment->service_id)
                         <tr>
                             <td>@lang('pages.paymentService.serviceType')</td>
                             <td>{{ $payment->displayName() }}</td>

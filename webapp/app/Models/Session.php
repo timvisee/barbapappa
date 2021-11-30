@@ -84,7 +84,7 @@ class Session extends Model {
 
         // Check whehter this is the current session
         $session = barauth()->getAuthState()->getSession();
-        return $session != null && $session->id == $this->id;
+        return $session?->id == $this->id;
     }
 
     /**

@@ -90,8 +90,8 @@ class BalanceImportChangeController extends Controller {
         }
 
         // Normalize the cost and balance
-        $cost = $cost != null ? normalize_price($cost) : null;
-        $balance = $balance != null ? normalize_price($balance) : null;
+        $cost = normalize_price($cost);
+        $balance = normalize_price($balance);
 
         // Obtain the user alias
         $alias = BalanceImportAlias::getOrCreate(

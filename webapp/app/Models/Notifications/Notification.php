@@ -66,7 +66,7 @@ class Notification extends Model {
      * @param User|null $user The user to scope for.
      */
     public function scopeForUser($query, $user) {
-        return $query->where('user_id', $user != null ? $user->id : null);
+        return $query->where('user_id', $user?->id);
     }
 
     /**

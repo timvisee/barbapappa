@@ -59,7 +59,7 @@
         </div>
 
         {{-- Visibility toggles --}}
-        @if($economy_member != null)
+        @if($economy_member)
             <div class="ui divider"></div>
 
             <div class="ui message">

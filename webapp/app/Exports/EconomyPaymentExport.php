@@ -72,8 +72,8 @@ class EconomyPaymentExport extends BarAppExport implements FromQuery, WithColumn
             $payment->stateName(),
             $payment->isCompleted(),
             $payment->money,
-            $payment->user != null ? $payment->user->name : null,
-            $payment->service != null ? $payment->service->displayName(true) : null,
+            $payment->user?->name,
+            $payment->service?->displayName(true),
             Date::dateTimeToExcel($payment->created_at),
             Date::dateTimeToExcel($payment->updated_at),
         ];

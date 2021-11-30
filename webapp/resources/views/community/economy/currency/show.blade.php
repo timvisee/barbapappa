@@ -21,7 +21,7 @@
                 <td>@lang('misc.currency')</td>
                 <td>{{ $currency->displayName }}</td>
             </tr>
-            @if($currency->code != null)
+            @if($currency->code)
                 <tr>
                     <td>@lang('pages.currencies.code')</td>
                     <td>{{ $currency->code }}</td>

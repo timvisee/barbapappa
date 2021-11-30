@@ -24,7 +24,7 @@
             <br />
             @if($transaction->initiated_by_kiosk)
                 @lang('misc.via') @lang('misc.kiosk')
-            @elseif($transaction->initiatedBy != null)
+            @elseif($transaction->initiatedBy)
                 @lang('misc.by') {{ $transaction->initiatedBy->name }}
             @else
                 @lang('misc.by') <i>@lang('misc.unknownUser')</i>
@@ -250,7 +250,7 @@
                         <td>@lang('misc.state')</td>
                         <td>{{ $transaction->stateName() }}</td>
                     </tr>
-                    @if($transaction->created_by != null && $transaction->created_by != barauth()->getUser()->id)
+                    @if($transaction->created_by != barauth()->getUser()->id)
                         <tr>
                             <td>@lang('misc.initiatedBy')</td>
                             <td>{{ $transaction->owner->name }}</td>
@@ -259,7 +259,7 @@
                     <tr>
                         <td>@lang('misc.owner')</td>
                         <td>
-                            @if($transaction->owner != null)
+                            @if($transaction->owner)
                                 {{ $transaction->owner->name }}
                             @else
                                 <i>@lang('misc.unknownUser')</i>
@@ -277,7 +277,7 @@
                             <tr>
                                 <td>@lang('misc.madeBy')</td>
                                 <td>
-                                    @if($transaction->initiatedBy != null)
+                                    @if($transaction->initiatedBy)
                                         {{ $transaction->initiatedBy->name }}
                                     @else
                                         <i>@lang('misc.unknownUser')</i>

@@ -19,7 +19,7 @@
         <div class="two fields">
             <div class="required field {{ ErrorRenderer::hasError('time_from') ? 'error' : '' }}">
                 {{ Form::label('time_from', __('misc.fromTime') . ':') }}
-                {{ Form::datetimeLocal('time_from', $timeFrom != null ? $timeFrom->toDateTimeLocalString('minute') : null, [
+                {{ Form::datetimeLocal('time_from', $timeFrom?->toDateTimeLocalString('minute'), [
                     'min' => $inventory->created_at->floorDay()->toDateTimeLocalString('minute'),
                     'max' => now()->toDateTimeLocalString('minute'),
                 ]) }}
@@ -78,7 +78,7 @@
 
     <div class="ui divider hidden"></div>
 
-    @if($timeFrom != null && $timeTo != null)
+    @if($timeFrom && $timeTo)
         <h5 class="ui header">
             @lang('pages.inventories.periodOfFromTo', [
                 'period' => $timeFrom->longAbsoluteDiffForHumans($timeTo),

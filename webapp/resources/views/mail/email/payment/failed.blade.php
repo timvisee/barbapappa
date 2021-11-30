@@ -6,7 +6,7 @@
     'subtitle' => __('mail.payment.failed.subtitle'),
 ])
 
-@if($payment != null)
+@if($payment)
 @component('mail::text')
 @lang('mail.payment.failed.state' . ucfirst($payment->stateIdentifier()))
 @endcomponent
@@ -63,7 +63,7 @@
 @endif
 <br>
 
-@if($community != null)
+@if($community)
 @component('mail::button', ['url' => route('payment.show', [
     'paymentId' => $payment->id
 ])])

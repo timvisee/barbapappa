@@ -83,7 +83,7 @@
                     </td>
                 </tr>
             @endif
-            @if($product->user_id != null)
+            @if($product->user_id)
                 <tr>
                     <td>@lang('misc.createdBy')</td>
                     <td>{{ $product->user->name }}</td>
@@ -192,7 +192,7 @@
                         {{ $q['quantity'] }}
                     </div>
 
-                    @if(isset($q['item']) && $q['item'] != null)
+                    @if(isset($q['item']) && $q['item'])
                         <span class="sub-label">
                             @include('includes.humanTimeDiff', ['time' => $q['item']->updated_at])
                         </span>

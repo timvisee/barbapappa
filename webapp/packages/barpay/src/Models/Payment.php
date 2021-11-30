@@ -113,10 +113,9 @@ class Payment extends Model {
      */
     public function scopeCanManage($query, $user = null) {
         // Select the user
-        if($user == null)
-            $user = barauth()->getUser();
-        if($user == null)
-            throw new Exception("Failed to filter managable payments, current user is unknown");
+        $user = $user
+            ?? barauth()->getUser()
+            ?? throw new \Exception("Failed to filter managable payments, current user is unknown");
 
         // Allow if user is application admin
         if(perms(AppRoles::presetAdmin()))
@@ -475,10 +474,7 @@ class Payment extends Model {
      * @return Transaction|null The transaction, or null if there is none.
      */
     public function findTransaction() {
-        $mut_payment = $this->mutationPayment;
-        if($mut_payment != null)
-            return $mut_payment->mutation->transaction;
-        return null;
+        return $this->mutationPayment?->mutation->transaction;
     }
 
     /**
@@ -487,10 +483,7 @@ class Payment extends Model {
      * @return Economy|null The community, or null if there is none.
      */
     public function findEconomy() {
-        $mut_payment = $this->mutationPayment;
-        if($mut_payment != null)
-            return $mut_payment->mutation->economy;
-        return null;
+        return $this->mutationPayment?->mutation->economy;
     }
 
     /**

@@ -72,7 +72,7 @@
                         <span class="ui text negative">@lang('misc.drained')</div>
                     </td>
                 </tr>
-            @elseif($drainEstimate != null)
+            @elseif($drainEstimate)
                 <tr>
                     <td>@lang('pages.inventories.drainEstimate')</td>
                     <td>
@@ -81,7 +81,7 @@
                     </td>
                 </tr>
             @endif
-            @if($drainEstimateOthers != null)
+            @if($drainEstimateOthers)
                 <tr>
                     <td>@lang('pages.inventories.drainEstimateOthers')</td>
                     <td>
@@ -93,7 +93,7 @@
             @endif
             <tr>
                 <td>@lang('misc.lastChanged')</td>
-                @if($item != null)
+                @if($item)
                     <td>@include('includes.humanTimeDiff', ['time' => $item->updated_at])</td>
                 @else
                     <td><span class="ui text negative">@lang('misc.never')</span></td>
@@ -101,7 +101,7 @@
             </tr>
             <tr>
                 <td>@lang('pages.inventories.lastBalanced')</td>
-                @if($lastBalance != null)
+                @if($lastBalance)
                     <td>
                         <a href="{{ route('community.economy.inventory.product.change', [
                                     // TODO: this is not efficient
@@ -146,7 +146,7 @@
                     {{ $q['quantity'] }}
                 </div>
 
-                @if(isset($q['item']) && $q['item'] != null)
+                @if(isset($q['item']) && $q['item'])
                     <span class="sub-label">
                         @include('includes.humanTimeDiff', ['time' => $q['item']->updated_at])
                     </span>
@@ -178,7 +178,7 @@
                     @lang('pages.inventories.type.' . $c->type)
                 @endif
 
-                @if($c->user != null)
+                @if($c->user)
                     <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
                 @endif
 

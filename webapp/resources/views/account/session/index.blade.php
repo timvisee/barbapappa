@@ -22,7 +22,7 @@
                         'sessionId' => $session->id,
                     ]) }}">
 
-                @if(($label = $session->describe(true, true)) != null)
+                @if($label = $session->describe(true, true))
                     {{ $label }}
                 @else
                     <i>@lang('misc.unknown')</i>
@@ -66,7 +66,7 @@
                         'sessionId' => $session->id,
                     ]) }}">
 
-                @if(($label = $session->describe(true, true)) != null)
+                @if($label = $session->describe(true, true))
                     {{ $label }}
                 @else
                     <i>@lang('misc.unknown')</i>

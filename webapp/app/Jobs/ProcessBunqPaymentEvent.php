@@ -136,10 +136,8 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
             Self::forwardPayment($account, $apiPayment, $barPayment, $serviceable);
 
             // Set from IBAN and transfer time if not set, set settled time
-            if($barPaymentable->from_iban == null)
-                $barPaymentable->from_iban = $paymentIban;
-            if($barPaymentable->transferred_at == null)
-                $barPaymentable->transferred_at = now();
+            $barPaymentable->from_iban ??= $paymentIban;
+            $barPaymentable->transferred_at ??= now();
             $barPaymentable->settled_at = now();
             $barPaymentable->save();
 

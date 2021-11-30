@@ -21,13 +21,13 @@
                     </div>
                 </td>
             </tr>
-            @if($change->balance != null)
+            @if($change->balance)
                 <tr>
                     <td>@lang('pages.balanceImportChange.finalBalance')</td>
                     <td>{!! $change->formatBalance(BALANCE_FORMAT_COLOR) !!}</td>
                 </tr>
             @endif
-            @if($change->cost != null)
+            @if($change->cost)
                 <tr>
                     <td>@lang('pages.balanceImportChange.cost')</td>
                     <td>{!! $change->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
@@ -46,7 +46,7 @@
                 <tr>
                     <td>@lang('misc.approvedBy')</td>
                     <td>
-                        @if($change->approver != null)
+                        @if($change->approver)
                             {{ $change->approver->name }}
                         @else
                             <i>@lang('misc.unknownUser')</i>
@@ -58,7 +58,7 @@
                     <td>@include('includes.humanTimeDiff', ['time' => $change->approved_at])</td>
                 </tr>
             @endif
-            @if($change->committed_at == null)
+            @unless($change->committed_at)
                 <tr>
                     <td>@lang('misc.committed')</td>
                     <td>@lang('general.no')</td>
@@ -68,8 +68,8 @@
                     <td>@lang('misc.committedAt')</td>
                     <td>@include('includes.humanTimeDiff', ['time' => $change->committed_at])</td>
                 </tr>
-            @endif
-            @if($change->mutation_id != null)
+            @endunless
+            @if($change->mutation_id)
                 <tr>
                     <td>@lang('misc.deposited')</td>
                     <td>{!!  $change->mutation->formatAmount(BALANCE_FORMAT_COLOR) !!}</td>
@@ -139,7 +139,7 @@
             </a>
         @endif
 
-        @if($change->mutation_id != null)
+        @if($change->mutation_id)
             <a href="{{ route('transaction.mutation.show', [
                         'transactionId' => $change->mutation->transaction_id,
                         'mutationId' => $change->mutation_id,

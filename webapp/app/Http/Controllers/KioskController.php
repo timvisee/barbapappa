@@ -679,7 +679,7 @@ class KioskController extends Controller {
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
                         'owner_id' => $user_id,
-                        'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
+                        'depend_on' => $mut_wallet?->id,
                     ]);
                 $mut_product->setMutationable(
                     MutationProduct::create([

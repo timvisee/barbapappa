@@ -23,7 +23,7 @@
                     ({{ BarRoles::roleName($member->role) }})
                 @endif
 
-                @if($member->visited_at != null)
+                @if($member->visited_at)
                     <span class="sub-label">
                         @include('includes.humanTimeDiff', ['time' => $member->visited_at])
                     </span>

@@ -190,7 +190,7 @@ class ProductController extends Controller {
                 return [
                     'inventory' => $i,
                     'item' => $item,
-                    'quantity' => $item != null ? $item->quantity : 0,
+                    'quantity' => $item?->quantity ?? 0,
                 ];
             })
             ->sortByDesc('quantity');

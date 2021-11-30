@@ -936,16 +936,18 @@ class BarController extends Controller {
             $mut_wallet = null;
             if(!$free) {
                 // Find an mutation for the wallet in this transaction
-                $mut_wallet = $last_transaction == null ? null : $transaction
-                    ->mutations()
-                    ->where('mutationable_type', MutationWallet::class)
-                    ->whereExists(function($query) use($wallet) {
-                        $query->selectRaw('1')
-                            ->from('mutation_wallet')
-                            ->whereRaw('mutation.mutationable_id = mutation_wallet.id')
-                            ->where('wallet_id', $wallet->id);
-                    })
-                    ->first();
+                $mut_wallet = $last_transaction != null
+                    ? $transaction
+                        ->mutations()
+                        ->where('mutationable_type', MutationWallet::class)
+                        ->whereExists(function($query) use($wallet) {
+                            $query->selectRaw('1')
+                                ->from('mutation_wallet')
+                                ->whereRaw('mutation.mutationable_id = mutation_wallet.id')
+                                ->where('wallet_id', $wallet->id);
+                        })
+                        ->first()
+                    : null;
 
                 // Create a new wallet mutation or update the existing
                 if($mut_wallet == null) {
@@ -970,16 +972,18 @@ class BarController extends Controller {
             }
 
             // Find an mutation for the product in this transaction
-            $mut_product = $last_transaction == null ? null : $transaction
-                ->mutations()
-                ->where('mutationable_type', Mutationproduct::class)
-                ->whereExists(function($query) use($product) {
-                    $query->selectRaw('1')
-                        ->from('mutation_product')
-                        ->whereRaw('mutation.mutationable_id = mutation_product.id')
-                        ->where('product_id', $product->id);
-                })
-                ->first();
+            $mut_product = $last_transaction != null
+                ? $transaction
+                    ->mutations()
+                    ->where('mutationable_type', Mutationproduct::class)
+                    ->whereExists(function($query) use($product) {
+                        $query->selectRaw('1')
+                            ->from('mutation_product')
+                            ->whereRaw('mutation.mutationable_id = mutation_product.id')
+                            ->where('product_id', $product->id);
+                    })
+                    ->first()
+                : null;
 
             // Create a new product mutation or update the existing one
             if($mut_product == null) {
@@ -994,7 +998,7 @@ class BarController extends Controller {
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
                         'owner_id' => $user->id,
-                        'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
+                        'depend_on' => $mut_wallet?->id,
                     ]);
                 $mut_product->setMutationable(
                     MutationProduct::create([
@@ -1158,7 +1162,7 @@ class BarController extends Controller {
                         'currency_id' => $currency->id,
                         'state' => Mutation::STATE_SUCCESS,
                         'owner_id' => $user_id,
-                        'depend_on' => $mut_wallet != null ? $mut_wallet->id : null,
+                        'depend_on' => $mut_wallet?->id,
                     ]);
                 $mut_product->setMutationable(
                     MutationProduct::create([
@@ -1353,8 +1357,7 @@ class BarController extends Controller {
             $economy = $economy->economy;
 
         // Select the user, get the economy and economy member
-        if($member === null)
-            $member = barauth()->getUser();
+        $member ??= barauth()->getUser();
         if(!($member instanceof EconomyMember))
             $member = $economy->members()->user($member)->first();
 

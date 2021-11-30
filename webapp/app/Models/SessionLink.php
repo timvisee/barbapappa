@@ -147,8 +147,8 @@ class SessionLink extends Model {
     public static function create(User $user, $intended_url = null) {
         // Grab the intended URL if there is any
         if($intended_url == null)
-            $intended_url = \Session::get('url.intended');
-        \Session::forget('url.intended');
+            $intended_url = Session::get('url.intended');
+        Session::forget('url.intended');
 
         // Create a session link for this user
         $link = new SessionLink();

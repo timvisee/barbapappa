@@ -23,7 +23,7 @@
                 <td>@lang('misc.role')</td>
                 <td>{{ CommunityRoles::roleName($member->role) }}</td>
             </tr>
-            @if($member->visited_at != null)
+            @if($member->visited_at)
                 <tr>
                     <td>@lang('pages.communityMembers.lastVisit')</td>
                     <td>@include('includes.humanTimeDiff', ['time' => new Carbon($member->visited_at)])</td>

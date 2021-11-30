@@ -74,7 +74,7 @@
                         <code class="literal">{{ route('bar.join', ['barId' => $bar->human_id]) }}</code>
                     </td>
                 </tr>
-                @if($bar->password != null)
+                @if($bar->password)
                     <tr>
                         <td>@lang('misc.code'):</td>
                         <td>

@@ -592,10 +592,8 @@ class InventoryController extends Controller {
         $timeFrom = $timeFrom != null ? Carbon::parse($timeFrom) : null;
         $timeTo = $request->query('time_to');
         $timeTo = $timeTo != null ? Carbon::parse($timeTo) : null;
-        if($timeFrom == null)
-            $timeFrom = ($timeTo ?? now())->clone()->subMonth()->max($inventory->created_at);
-        if($timeTo == null)
-            $timeTo = now();
+        $timeFrom ??= ($timeTo ?? now())->clone()->subMonth()->max($inventory->created_at);
+        $timeTo ??= now();
 
         // Build response
         $response = view('community.economy.inventory.report')
@@ -788,13 +786,13 @@ class InventoryController extends Controller {
             ->map(function($product) use($inventory) {
                 // TODO: this is inefficient, improve this
                 $item = $inventory->getItem($product);
-                $quantity = $item != null ? $item->quantity : 0;
+                $quantity = $item?->quantity ?? 0;
                 return [
                     'product' => $product,
                     'item' => $item,
                     'quantity' => $quantity,
                     'exhausted' => $item == null || $item->isExhausted(),
-                    'changed' => $item != null ? ($item->updated_at ?? $item->created_at) : null,
+                    'changed' => $item?->updated_at ?? $item?->created_at,
                 ];
             })
             ->sortBy('product.name');

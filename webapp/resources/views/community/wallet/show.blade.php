@@ -43,7 +43,7 @@
 
     <div class="ui divider hidden"></div>
 
-    @if($balance_graph_data != null)
+    @if($balance_graph_data)
         <canvas id="chartBalanceGraph"
             height="50"
             aria-label="@lang('misc.balance')"

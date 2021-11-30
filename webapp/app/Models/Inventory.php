@@ -243,9 +243,9 @@ class Inventory extends Model {
             $change->type = $type;
             $change->quantity = $quantity;
             $change->comment = $comment;
-            $change->user_id = $user != null ? $user->id : null;
-            $change->related_id = $related != null ? $related->id : null;
-            $change->mutation_product_id = $mutationProduct != null ? $mutationProduct->id : null;
+            $change->user_id = $user?->id;
+            $change->related_id = $related?->id;
+            $change->mutation_product_id = $mutationProductu?->id;
             $change->save();
 
             // Update item quantity

@@ -82,7 +82,7 @@ class EconomyWalletController extends Controller {
 
                 // Get wallet user to set in mutations
                 $wallet_user_id = null;
-                if($wallet->economy_member != null && $wallet->economy_member->user != null)
+                if($wallet->economy_member?->user != null)
                     $wallet_user_id = $wallet->economy_member->user->id;
 
                 // Create the transaction

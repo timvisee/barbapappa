@@ -76,7 +76,7 @@ if(!function_exists('perms')) {
      */
     function perms($config = null, $request = null) {
         if($config !== null)
-            return app('perms')->evaluateRequest($config, $request !== null ? $request : request());
+            return app('perms')->evaluateRequest($config, $request ?? request());
         else
             return app('perms');
     }
@@ -152,7 +152,7 @@ if(!function_exists('is_checked')) {
      * @return boolean True if checked, false if not.
      */
     function is_checked($value) {
-        return $value != null && ($value == 'true' || $value == 'on' || $value == '1');
+        return $value == 'true' || $value == 'on' || $value == '1';
     }
 }
 
@@ -379,8 +379,8 @@ if(!function_exists('normalize_price')) {
      *
      * @throws \Exception Throws if the given price value was invalid.
      */
-    function normalize_price($price): float {
-        return (float) str_replace(',', '.', $price);
+    function normalize_price(?float $price): float {
+        return $price != null ? (float) str_replace(',', '.', $price) : null;
     }
 }
 

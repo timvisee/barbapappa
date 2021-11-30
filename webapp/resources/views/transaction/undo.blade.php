@@ -32,7 +32,7 @@
                         </td>
                     </tr>
                 @endif
-                @if($transaction->created_by != null && $transaction->created_by != barauth()->getUser()->id)
+                @if($transaction->created_by != barauth()->getUser()->id)
                     <tr>
                         <td>@lang('misc.initiatedBy')</td>
                         <td>{{ $transaction->owner->name }}</td>

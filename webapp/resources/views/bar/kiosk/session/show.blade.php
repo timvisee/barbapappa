@@ -36,7 +36,7 @@
                 <td>@lang('misc.expired')</td>
                 <td>{{ yesno($session->isExpired()) }}</td>
             </tr>
-            @if(($description = $session->describe(false, false)) != null)
+            @if($description = $session->describe(false, false))
                 <tr>
                     <td>@lang('misc.description')</td>
                     <td>
@@ -64,7 +64,7 @@
                 <td>@lang('misc.firstSeen')</td>
                 <td>@include('includes.humanTimeDiff', ['time' => $session->created_at])</td>
             </tr>
-            @if($session->expire_at != null)
+            @if($session->expire_at)
                 <tr>
                     <td>@lang('misc.expiry')</td>
                     <td>@include('includes.humanTimeDiff', ['time' => $session->expire_at])</td>

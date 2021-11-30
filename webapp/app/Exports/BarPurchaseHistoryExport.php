@@ -77,8 +77,8 @@ class BarPurchaseHistoryExport extends BarAppExport implements FromQuery, WithCo
             $mutation->mutation->isSettled(),
             -$mutation->mutation->amount,
             $mutation->quantity,
-            $product != null ? $product->name : null,
-            $mutation->mutation->owner != null ? $mutation->mutation->owner->name : null,
+            $product?->name,
+            $mutation->mutation->owner?->name,
             Date::dateTimeToExcel($mutation->mutation->created_at),
             Date::dateTimeToExcel($mutation->mutation->updated_at),
         ];

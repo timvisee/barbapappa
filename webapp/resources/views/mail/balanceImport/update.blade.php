@@ -78,7 +78,7 @@
 @component('mail::button', ['url' => route('bar.join', ['barId' => $bar->human_id, 'code' => $bar->password])])
 @lang('mail.balanceImport.update.joinBarButton', ['name' => $bar->name])
 @endcomponent  
-@if($topUpUrl != null)
+@if($topUpUrl)
 
 
 @lang('mail.balanceImport.update.afterJoinTopUp', [
@@ -100,7 +100,7 @@
 @endif
 
 {{-- Top-up button, if user has joined --}}
-@if($joined && $topUpUrl != null)
+@if($joined && $topUpUrl)
 @component('mail::notice')
 @lang('mail.balanceImport.update.payInAppDescription')<br>
 

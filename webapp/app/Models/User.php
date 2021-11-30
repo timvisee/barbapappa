@@ -349,7 +349,7 @@ class User extends Model implements HasLocalePreference {
         // Invalidate other user sessions
         $this->sessions()->get()->each(function($session) use($current, $other, $currentSession) {
             // Invalidate the current session
-            if($current && $currentSession != null && $currentSession->id == $session->id) {
+            if($current && $currentSession?->id == $session->id) {
                 $session->invalidate();
                 return;
             }

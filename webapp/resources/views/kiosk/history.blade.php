@@ -44,7 +44,7 @@
                 {{ ($product = $productMutation->product) ?  $product->displayName() : __('pages.products.unknownProduct') }}
                 {!! $productMutation->mutation->formatAmount(BALANCE_FORMAT_LABEL) !!}
 
-                @if($productMutation->mutation->owner_id != null)
+                @if($productMutation->mutation->owner_id)
                     <span class="subtle">
                         @lang('misc.by') {{ $productMutation->mutation->owner->first_name }}
                     </span>

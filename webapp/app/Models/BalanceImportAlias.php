@@ -186,7 +186,7 @@ class BalanceImportAlias extends Model {
 
         // The name must be set, attempt to get through verified user email
         $user_email = Email::verified()->where('email', $email)->first();
-        $user = $user_email != null ? $user_email->user : null;
+        $user = $user_email?->user;
         if(empty($name)) {
             if($user_email == null)
                 return null;
@@ -195,7 +195,7 @@ class BalanceImportAlias extends Model {
 
         // Create a new alias for this email address
         return $economy->balanceImportAliases()->create([
-            'user_id' => $user != null ? $user->id : null,
+            'user_id' => $user?->id,
             'name' => $name,
             'email' => $email,
         ]);
@@ -392,8 +392,8 @@ class BalanceImportAlias extends Model {
      * @return int User state.
      */
     public function getUserState($bar = null) {
-        if($user = $this->user != null) {
-            return ($bar != null && $bar->isJoined($user))
+        if(($user = $this->user) != null) {
+            return ($bar?->isJoined($user) ?? false)
                 ? Self::USER_STATE_NOT_JOINED
                 : Self::USER_STATE_JOINED;
         }

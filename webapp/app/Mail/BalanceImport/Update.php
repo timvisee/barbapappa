@@ -143,10 +143,10 @@ class Update extends PersonalizedEmail {
         // Get change/balance update details
         $alias = $this->alias;
         $economy = $alias->economy;
-        $event = $this->event ?? ($this->last_change != null ? $this->last_change->event : null);
-        $system = $event != null ? $event->system : null;
+        $event = $this->event ?? $this->last_change?->event;
+        $system = $event?->system;
         $user = $alias->user()->first();
-        $user_name = $user != null ? $user->first_name : $alias->name;
+        $user_name = $user?->first_name ?? $alias->name;
 
         // Build the mail
         $mail = parent::build();

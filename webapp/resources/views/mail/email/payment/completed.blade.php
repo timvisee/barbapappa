@@ -57,7 +57,7 @@
 @endif
 <br>
 
-@if($community != null)
+@if($community)
 @component('mail::button', ['url' => route('community.show', [
     'communityId' => $community->human_id
 ])])

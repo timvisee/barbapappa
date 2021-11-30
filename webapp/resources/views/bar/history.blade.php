@@ -35,7 +35,7 @@
                     'color' => $self,
                 ]) !!}
 
-                @if($productMutation->mutation->owner_id != null)
+                @if($productMutation->mutation->owner_id)
                     <span class="subtle">
                         @lang('misc.by') {{ $productMutation->mutation->owner->first_name }}
                     </span>

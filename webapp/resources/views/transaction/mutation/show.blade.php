@@ -103,7 +103,7 @@
                 // TODO: eager load data.wallet.economy here to improve performance!
                 $data = $mutation->mutationable;
             @endphp
-            @if($data != null)
+            @if($data)
                 @if($data instanceof MutationMagic)
                     <table class="ui compact celled definition table">
                         <tbody>
@@ -119,7 +119,7 @@
                             </tr>
                         </tbody>
                     </table>
-                @elseif($data instanceof MutationWallet && $data->wallet_id != null)
+                @elseif($data instanceof MutationWallet && $data->wallet_id)
                     <p>
                         {{-- TODO: inefficient querying here, improve this! --}}
                         <a href="{{ $data->wallet->getUrlShow() }}"
@@ -145,7 +145,7 @@
                             @if($data->quantity != 1)
                                 <span class="subtle">{{ $data->quantity }}×</span>
                             @endif
-                            {{ $product != null ? $product->displayName() : __('pages.products.unknownProduct') }}
+                            {{ $product = $product?->displayName() ?? __('pages.products.unknownProduct') }}
                             <span class="subtle">
                                 @ {{ $data->bar->name }}
                             </span>
@@ -166,7 +166,7 @@
                                 href="{{ $payment != null ? route('payment.show', [
                                     'paymentId' => $payment->id,
                                 ]) : '#'}}">
-                            {{ $payment != null ? $payment->displayName() : __('pages.payments.unknownPayment') }}
+                            {{ $payment?->displayName() ?? __('pages.payments.unknownPayment') }}
                             <span class="subtle">
                                 ({{ $payment->stateName() }})
                             </span>
@@ -181,8 +181,8 @@
                 @elseif($data instanceof MutationBalanceImport)
                     @php
                         $change = $data->balanceImportChange;
-                        $submitter = $change != null ? $change->submitter : null;
-                        $system = $change != null ? $change->event->system : null;
+                        $submitter = $change?->submitter;
+                        $system = $change?->event->system;
                     @endphp
 
                     <table class="ui compact celled definition table">
@@ -190,7 +190,7 @@
                             <tr>
                                 <td>@lang('misc.initiatedAt')</td>
                                 <td>
-                                    @if($change != null)
+                                    @if($change)
                                         {{ $change->created_at->toDateString() }}
                                         ({{ $change->created_at->diffForHumans() }})
                                     @else
@@ -201,7 +201,7 @@
                             <tr>
                                 <td>@lang('misc.initiatedBy')</td>
                                 <td>
-                                    @if($submitter != null)
+                                    @if($submitter)
                                         {{ $submitter->name }}
                                     @else
                                         <i>@lang('misc.unknownUser')</i>
@@ -211,7 +211,7 @@
                             <tr>
                                 <td>@lang('misc.source')</td>
                                 <td>
-                                    @if($system != null)
+                                    @if($system)
                                         {{ $system->name }}
                                     @else
                                         <i>@lang('misc.unknown')</i>
@@ -270,7 +270,7 @@
                     <tr>
                         <td>@lang('misc.owner')</td>
                         <td>
-                            @if($mutation->owner != null)
+                            @if($mutation->owner)
                                 {{ $mutation->owner->name }}
                             @else
                                 <i>@lang('misc.unknownUser')</i>

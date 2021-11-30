@@ -7,7 +7,7 @@
                 @php
                     $bunqAccount = $serviceable->bunqAccount()->withoutGlobalScopes()->first();
                 @endphp
-                @if($bunqAccount != null)
+                @if($bunqAccount)
                     {{ $bunqAccount->name }}
                 @else
                     <i>@lang('misc.unknown')</i>

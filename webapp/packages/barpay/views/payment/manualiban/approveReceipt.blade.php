@@ -20,7 +20,7 @@
                 <td>@lang('misc.amount')</td>
                 <td>{!! $payment->formatCost(BALANCE_FORMAT_COLOR) !!}</td>
             </tr>
-            @if($payment->user_id != null)
+            @if($payment->user_id)
                 <tr>
                     <td>@lang('misc.fromUser')</td>
                     <td>{{ $payment->user->name }}</td>
