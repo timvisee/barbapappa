@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.137 (2021-11-30)
+
+- Hotfix for error when buying products
+
 ## 0.1.136 (2021-11-30)
 
 - Improve default from/to inventory selection when moving inventory products
