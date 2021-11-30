@@ -26,7 +26,7 @@
                 {{ Form::label('inventory_from', __('pages.inventories.fromInventory')) }}
 
                 <div class="ui fluid selection dropdown">
-                    {{ Form::hidden('inventory_from', $inventory->id) }}
+                    {{ Form::hidden('inventory_from', $from_id) }}
                     <i class="dropdown icon"></i>
 
                     <div class="default text">@lang('misc.pleaseSpecify')</div>
@@ -43,15 +43,8 @@
             <div class="required field {{ ErrorRenderer::hasError('inventory_to') ? 'error' : '' }}">
                 {{ Form::label('inventory_to', __('pages.inventories.toInventory')) }}
 
-                @php
-                    // Select another inventory to move to
-                    $toInventory = $economy
-                        ->inventories
-                        ->firstWhere('id', '!=', $inventory->id);
-                @endphp
-
                 <div class="ui fluid selection dropdown">
-                    {{ Form::hidden('inventory_to', $toInventory != null ? $toInventory->id : null) }}
+                    {{ Form::hidden('inventory_to', $to_id) }}
                     <i class="dropdown icon"></i>
 
                     <div class="default text">@lang('misc.pleaseSpecify')</div>
