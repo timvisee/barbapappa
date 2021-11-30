@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\DB;
 class InventoryController extends Controller {
 
     /**
+     * Number of inventory item changes to consider when summing recent moves
+     * for an inventory.
+     *
+     * @type int
+     */
+    const CHANGE_MOVE_SUM_RANGE = 100;
+
+    /**
      * Inventory index page.
      * This shows the list of inventories in the current economy.
      *
@@ -452,9 +460,31 @@ class InventoryController extends Controller {
                 return !$p['exhausted'];
             });
 
+        // Count number of products
+        $moved_into = $inventory
+            ->changes()
+            ->type(InventoryItemChange::TYPE_MOVE)
+            ->limit(Self::CHANGE_MOVE_SUM_RANGE)
+            ->sum('inventory_item_change.quantity');
+
+        // Set default from/to inventories, only select to if there's exactly one other option
+        $from_id = $inventory->id;
+        $other_inventories = $economy
+            ->inventories()
+            ->where('id', '!=', $inventory->id)
+            ->limit(2)
+            ->get();
+        $to_id = $other_inventories->count() == 1 ? $other_inventories[0]->id : null;
+
+        // Swap from/to inventories if products are mostly moved into this
+        if($moved_into >= 0)
+            [$from_id, $to_id] = [$to_id, $from_id];
+
         return view('community.economy.inventory.move')
             ->with('economy', $economy)
             ->with('inventory', $inventory)
+            ->with('from_id', $from_id)
+            ->with('to_id', $to_id)
             ->with('products', $products)
             ->with('exhaustedProducts', $exhaustedProducts);
     }
