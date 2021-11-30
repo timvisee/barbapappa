@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.136 (2021-11-30)
+
+- Improve default from/to inventory selection when moving inventory products
+- Inventory products now exhaust after 1 month
+- Fix URL in password disabled email not being a hyperlink
+
 ## 0.1.135 (2021-11-16)
 
 - Critical security patch, update doctrine/dbal to fix security issue
