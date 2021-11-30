@@ -12,7 +12,7 @@
 @if(isset($token))
 @lang('mail.password.disabled.noDisabledThenReset')<br>
 
-{{ route('password.reset', ['token' => $token, 'compromised' => true]) }}<br>
+<{{ route('password.reset', ['token' => $token, 'compromised' => true]) }}><br>
 
 @lang('mail.password.disabled.orContact', ['contact' => route('contact'), 'app' => config('app.name')])
 @else
