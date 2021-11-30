@@ -86,7 +86,7 @@ This project is currently automatically tested for each commit using CI services
 
 |Service|Platforms|PHP|Branch|Build Status| |
 |---:|:---|:---|:---|:---:|:---|
-|GitLab CI|Linux|7.4|master|[![Pipeline status on GitLab CI on master][pipeline-badge]][pipeline-link]|[View Status][pipeline-link]|
+|GitLab CI|Linux|8.0|master|[![Pipeline status on GitLab CI on master][pipeline-badge]][pipeline-link]|[View Status][pipeline-link]|
 
 Note: Tests are currently fairly basic, and should be improved at a later time.
 
