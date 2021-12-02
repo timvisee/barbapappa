@@ -72,7 +72,7 @@ class SendBalanceUpdate implements ShouldQueue {
         $economyIds = $economyMembers->pluck('economy_id')->unique();
         $economies = Economy::whereIn('id', $economyIds)->get();
 
-        // Get all communities for the user wallet
+        // Get all communities for the user wallets
         $communityIds = $economies->pluck('community_id')->unique();
         $communities = Community::whereIn('id', $communityIds)->get();
 
