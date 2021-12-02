@@ -94,6 +94,18 @@ class MoneyAmount {
     }
 
     /**
+     * Negate amount.
+     *
+     * @return MoneyAmount This money amount.
+     * @throws \Exception Throws if the currencies differ.
+     */
+    // TODO: do not mutate self here
+    public function neg() {
+        $this->amount *= -1;
+        return $this;
+    }
+
+    /**
      * Create a money amount instance being zero with the default currency.
      *
      * @param Currency $currency The currency.

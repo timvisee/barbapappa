@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\MoneyAmount;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -314,6 +315,15 @@ class Mutation extends Model {
                 break;
         }
         return $this->currency->format($this->amount, $format, $options);
+    }
+
+    /**
+     * Get the wallet balance as money amount.
+     *
+     * @return MoneyAmount The balance as money amount.
+     */
+    public function getMoneyAmount() {
+        return new MoneyAmount($this->currency, $this->amount);
     }
 
     /**

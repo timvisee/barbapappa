@@ -165,4 +165,15 @@ return [
             'noUpdateZeroBalance' => 'As soon as yer balance be zero, ye nay receive any further updates.',
         ],
     ],
+
+    /**
+     * Receipts.
+     */
+    'receipts' => [
+        'receipt' => 'Receipt',
+        'topUps' => 'Top-ups',
+        'balanceImports' => 'Balance imports',
+        'magic' => '\'ther',
+        'total' => 'Tot \'ol',
+    ],
 ];

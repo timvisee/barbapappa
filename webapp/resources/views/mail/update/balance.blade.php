@@ -27,6 +27,11 @@
 @lang('misc.stats')
 @endcomponent
 
+@if($wallet['receipt'])
+<br>
+@component('mail::receipt', ['receipt' => $wallet['receipt']])@endcomponent
+@endif
+
 @component("mail::markdownOnly")---@endcomponent
 
 @endcomponent
