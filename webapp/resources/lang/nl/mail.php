@@ -165,4 +165,15 @@ return [
             'noUpdateZeroBalance' => 'Zodra je saldo nul is, zul je geen updates ontvangen.',
         ],
     ],
+
+    /**
+     * Receipts.
+     */
+    'receipts' => [
+        'receipt' => 'Bonnetje',
+        'topUps' => 'Opwaarderingen',
+        'balanceImports' => 'Balansimports',
+        'magic' => 'Overig',
+        'total' => 'Totaal',
+    ],
 ];

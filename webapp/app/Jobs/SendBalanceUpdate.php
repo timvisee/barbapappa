@@ -118,6 +118,7 @@ class SendBalanceUpdate implements ShouldQueue {
                                         'economyId' => $economy->id,
                                         'walletId' => $wallet->id,
                                     ]),
+                                    'receipt' => $wallet->getReceiptData(),
                                 ];
                             });
 

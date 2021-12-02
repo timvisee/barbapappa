@@ -6,15 +6,17 @@
 
 <br>
 
+@component("mail::markdownOnly")---@endcomponent
+
 @foreach($data as $community)
 @foreach($community['economies'] as $economy)
-@component('mail::block')
-<b>{{ $community['name'] }}</b> ({{ $economy['name'] }}):
-
 @foreach($economy['wallets'] as $wallet)
-- [{{ $wallet['name'] }}]({{ $wallet['url'] }})  
-  @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
-  @lang('misc.previously'): {!! $wallet['previousBalanceHtml'] !!} ({{ $wallet['previousPeriod'] }})  
+@component('mail::block')
+<strong>@component('mail::link', ['url' => $wallet['url']]){{ $wallet['name'] }}@endcomponent</strong><br><em>@lang('misc.in') {{ $community['name'] }} ({{ $economy['name'] }})</em>
+
+@lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
+@lang('misc.previously'): {!! $wallet['previousBalanceHtml'] !!} ({{ $wallet['previousPeriod'] }})  
+
 @component('mail::mini_button', ['url' => $wallet['topUpUrl'], 'color' => $wallet['isNegative'] ? 'blue' : 'grey'])
 @lang('misc.topUp')
 @endcomponent
@@ -25,8 +27,15 @@
 @lang('misc.stats')
 @endcomponent
 
-@endforeach
+@if($wallet['receipt'])
+<br>
+@component('mail::receipt', ['receipt' => $wallet['receipt']])@endcomponent
+@endif
+
+@component("mail::markdownOnly")---@endcomponent
+
 @endcomponent
+@endforeach
 @endforeach
 @endforeach
 

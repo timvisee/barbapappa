@@ -21,6 +21,7 @@ return [
     'import' => 'Importeren',
     'imported' => 'Geïmporteerd',
     'importAll' => 'Importeer alles',
+    'last' => 'Laatste',
     'lastImport' => 'Laatste import',
     'export' => 'Exporteren',
     'download' => 'Downloaden',

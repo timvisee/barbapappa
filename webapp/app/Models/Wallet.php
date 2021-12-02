@@ -365,6 +365,113 @@ class Wallet extends Model {
     }
 
     /**
+     * Get receipt data, used to render a receipt for this wallet for a given
+     * period.
+     *
+     * This is a costly operation, especially when crossing longer periods. Use
+     * this with care.
+     *
+     * @param bool $nullIfEmpty Return null if the receipt is empty.
+     * @param \Carbon $from Start period for the receipt.
+     *
+     * @return array The receipt data.
+     */
+    public function getReceiptData(bool $nullIfEmpty = true, ?Carbon $from = null) {
+        $from ??= now()->subMonth();
+
+        $products = [];
+        $paymentAmount = MoneyAmount::zero($this->currency);
+        $balanceImportAmount = MoneyAmount::zero($this->currency);
+        $magicAmount = MoneyAmount::zero($this->currency);
+        $totalAmount = MoneyAmount::zero($this->currency);
+
+        // Get all mutation changes in this period, and sum the amounts
+        $mutations = $this
+            ->mutations()
+            ->where('mutation.mutationable_type', '!=', MutationWallet::class)
+            ->where('mutation.created_at', '>=', $from)
+            ->where('mutation.state', Mutation::STATE_SUCCESS)
+            ->get();
+
+        // Handle each mutation
+        foreach($mutations as $mutation) {
+            // Collect products
+            if($mutation->mutationable_type == MutationProduct::class) {
+                $mutation_product = $mutation->mutationable;
+                if(!isset($products[$mutation_product->product_id])) {
+                    $products[$mutation_product->product_id] = [
+                        'product' => $mutation_product->product,
+                        'cost' => $mutation->getMoneyAmount()->neg(),
+                        'quantity' => $mutation_product->quantity,
+                    ];
+                } else {
+                    $products[$mutation_product->product_id]['cost']->add($mutation->getMoneyAmount()->neg());
+                    $products[$mutation_product->product_id]['quantity'] += $mutation_product->quantity;
+                }
+            }
+
+            // Collect top-ups
+            if($mutation->mutationable_type == MutationPayment::class)
+                $paymentAmount->add($mutation->getMoneyAmount()->neg());
+
+            // Collect balance imports
+            if($mutation->mutationable_type == MutationBalanceImport::class)
+                $balanceImportAmount->add($mutation->getMoneyAmount()->neg());
+
+            // Collect magic
+            if($mutation->mutationable_type == MutationMagic::class)
+                $magicAmount->add($mutation->getMoneyAmount()->neg());
+        }
+
+        // Build product list
+        $products = collect($products)
+            ->map(function($p) use(&$totalAmount) {
+                $totalAmount->add($p['cost']);
+                return [
+                    'name' => $p['product']->displayName(),
+                    'cost' => $p['cost'],
+                    'quantity' => $p['quantity'],
+                ];
+            })
+            ->sortByDesc('quantity');
+
+        // Build list of other items
+        $others = collect();
+        if(!$paymentAmount->isZero()) {
+            $totalAmount->add($paymentAmount);
+            $others->push([
+                'name' => __('mail.receipts.topUps'),
+                'cost' => $paymentAmount,
+            ]);
+        }
+        if(!$balanceImportAmount->isZero()) {
+            $totalAmount->add($balanceImportAmount);
+            $others->push([
+                'name' => __('mail.receipts.balanceImports'),
+                'cost' => $balanceImportAmount,
+            ]);
+        }
+        if(!$magicAmount->isZero()) {
+            $totalAmount->add($magicAmount);
+            $others->push([
+                'name' => __('mail.receipts.magic'),
+                'cost' => $magicAmount,
+            ]);
+        }
+
+        // Return null if empty
+        if($nullIfEmpty && $products->isEmpty() && $others->isEmpty())
+            return null;
+
+        return [
+            'from' => $from,
+            'products' => $products,
+            'others' => $others,
+            'total' => $totalAmount,
+        ];
+    }
+
+    /**
      * Make a prediction of average monthly costs for the user.
      *
      * This internally goes through all product mutations in the past three months.

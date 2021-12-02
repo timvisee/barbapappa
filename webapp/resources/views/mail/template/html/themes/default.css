@@ -94,3 +94,30 @@ table.details td {
 ul {
     padding-left: 1.25em;
 }
+
+div.receipt-box {
+    background: white;
+    border-top: 5px dotted #e9e9e9;
+    border-bottom: 5px dotted #e9e9e9;
+
+    display: inline-block;
+    padding: 10px;
+    margin: 10px;
+}
+
+table.receipt {
+    white-space: nowrap;
+}
+
+table.receipt td {
+    padding-right: 10px;
+}
+
+table.receipt td:last-of-type {
+    padding-right: 0;
+}
+
+table.receipt tr.divider hr {
+    border: none;
+    border-bottom: 1px dashed #a0a0a0;
+}
