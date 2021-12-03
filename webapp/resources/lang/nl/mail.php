@@ -185,5 +185,6 @@ return [
         'magic' => 'Overig',
         'total' => 'Totaal',
         'notSupportedInTextEmail' => 'Note: bonnetjes worden niet ondersteund in de tekst versie van e-mails.',
+        'receiveReceiptAfterEachVisit' => 'Een bonnetje van aankopen ontvangen na elk bezoek? Zet het aan in',
     ],
 ];
