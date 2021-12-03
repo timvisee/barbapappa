@@ -20,7 +20,7 @@
     ]) !!}
         <div class="required field {{ ErrorRenderer::hasError('name') ? 'error' : '' }}">
             {{ Form::label('name', __('misc.name') . ':') }}
-            {{ Form::text('name', '', ['placeholder' => __('pages.balanceImportEvent.namePlaceholder')]) }}
+            {{ Form::text('name', now()->toDateString(), ['placeholder' => __('pages.balanceImportEvent.namePlaceholder')]) }}
             {{ ErrorRenderer::inline('name') }}
         </div>
 
