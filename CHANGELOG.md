@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.138 (2021-12-03)
+
+- Add receipt mail feature, user may opt-in in their email preferences
+- Add receipt to balance update mail
+- Add receipt hint to balance update and zero balance mail
+- Improve internal money amount bag compatibility, support easy conversion
+- In balance update email, separate each wallet in a block, improve plain text version
+- Fix balance update mail history not limiting to its specific type
+- Fix error when normalizing null price
+
 ## 0.1.137 (2021-11-30)
 
 - Hotfix for error when buying products
