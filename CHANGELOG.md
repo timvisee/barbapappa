@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.140 (2021-12-03)
+
+- Add user customizable member search tags to improve searchability
+- Add current date as default balance import event label
+- Shorten kiosk connection error banner
+
 ## 0.1.139 (2021-12-03)
 
 - Hotfix for authentication error
