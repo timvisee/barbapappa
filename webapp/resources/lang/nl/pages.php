@@ -1056,7 +1056,7 @@ return [
         'buyProductsUsers#' => '{0} Koop geen producten voor :users leden|[1,*] Koop :count× voor :users leden',
         'deselect' => 'Deselect',
         'backToKiosk' => 'Terug naar kiosk',
-        'noConnectionBanner' => 'Geen verbinding. Zorg dat dit apparaat een actieve internetverbinding heeft voordat je aankopen doet. Sleep de pagina naar beneden om te verversen.',
+        'noConnectionBanner' => 'Geen verbinding! Sleep naar beneden om te verversen.',
     ],
 
     /**
