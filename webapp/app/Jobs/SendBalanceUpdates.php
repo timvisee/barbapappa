@@ -91,6 +91,7 @@ class SendBalanceUpdates implements ShouldQueue {
                 $query->selectRaw('1')
                     ->from('email_history')
                     ->whereRaw('email_history.user_id = user.id')
+                    ->where('email_history.type', EmailHistory::TYPE_BALANCE_UPDATE)
                     ->whereNotNull('last_at')
                     ->where('last_at', '>=', now()
                             ->subSeconds(Self::UPDATE_INTERVAL)

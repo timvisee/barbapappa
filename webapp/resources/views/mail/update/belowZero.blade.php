@@ -51,4 +51,14 @@
 @lang('mail.update.belowZero.pleaseTopUp')
 @endcomponent
 
+@unless($user->mail_receipt)
+@component('mail::notice')
+@lang('mail.receipts.receiveReceiptAfterEachVisit')
+
+@component('mail::link', ['url' => route('email.preferences')]) 
+{{ strtolower(__('pages.emailPreferences')) }}
+@endcomponent
+@endcomponent
+@endunless
+
 @endcomponent

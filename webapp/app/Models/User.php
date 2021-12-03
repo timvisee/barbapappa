@@ -27,6 +27,7 @@ use Illuminate\Support\Facades\Mail;
  * @property int role
  * @property string|null locale
  * $property bool notify_low_balance
+ * $property bool mail_receipt
  * @property Carbon created_at
  * @property Carbon updated_at
  * @property-read string email
@@ -57,6 +58,7 @@ class User extends Model implements HasLocalePreference {
 
     protected $casts = [
         'notify_low_balance' => 'boolean',
+        'mail_receipt' => 'boolean',
     ];
 
     /**

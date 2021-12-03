@@ -125,6 +125,15 @@ class MoneyAmount {
     }
 
     /**
+     * Transform this into a MoneyAmountBag.
+     *
+     * @return MoneyAmountBag
+     */
+    public function toBag(): MoneyAmountBag {
+        return new MoneyAmountBag([$this]);
+    }
+
+    /**
      * Format the amount.
      *
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.

@@ -44,6 +44,16 @@ class MoneyAmountBag {
     }
 
     /**
+     * Add the given money amount bag.
+     *
+     * @param MoneyAmountBag $amount
+     */
+    public function addBag(MoneyAmountBag $amount) {
+        foreach($amount->amounts as $amount)
+            $this->add($amount);
+    }
+
+    /**
      * Subtract the given amount.
      *
      * @param MoneyAmount $amount

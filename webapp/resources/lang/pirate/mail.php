@@ -144,6 +144,15 @@ return [
             'subtitle' => 'Yer wallet balance just dropped below zero. We\'re just notifying ye \'bout dis.',
             'pleaseTopUp' => 'Please top up yer wallet after yer visit. Always ensure ye have a positive balance.',
         ],
+
+        /**
+         * Receipt update mail.
+         */
+        'receipt' => [
+            'subject' => 'Receipt from Barbapappa',
+            'subtitle' => 'Here is th\' receipt for yer recent loot.',
+            'pleaseTopUp' => 'Please top up yer wallet if it be negative, always make sure ye\'ve enough available for yer next visit.',
+        ],
     ],
 
     /**
@@ -175,5 +184,6 @@ return [
         'balanceImports' => 'Balance imports',
         'magic' => '\'ther',
         'total' => 'Tot \'ol',
+        'receiveReceiptAfterEachVisit' => 'Receive a receipt of yer loot after each bar visit? Enable it in',
     ],
 ];

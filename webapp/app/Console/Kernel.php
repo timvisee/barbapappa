@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Jobs\ExpireHourly;
 use App\Jobs\ProcessAllBunqAccountEvents;
 use App\Jobs\SendBalanceUpdates;
+use App\Jobs\SendReceipts;
 use App\Jobs\UpdatePaymentStates;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -41,6 +42,11 @@ class Kernel extends ConsoleKernel {
         // Interval also defined in: SendBalanceUpdates::retryUntil
         $schedule->job(new SendBalanceUpdates)
             ->hourly();
+
+        // Sent receipts
+        // Interval also defined in: SendReceipts::retryUntil
+        $schedule->job(new SendReceipts)
+            ->everyFifteenMinutes();
 
         // Process all pending bunq events twice a day
         // Interval also defined in: ProcessAllBunqAccountEvents::retryUntil

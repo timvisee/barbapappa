@@ -92,6 +92,7 @@ return [
             'deleted' => 'Het e-mailadres is verwijderd.',
             'deleteQuestion' => 'Weet je zeker dat je dit e-mailadres wilt verwijderen?',
             'notifyOnLowBalance' => 'Ontvang notificatie wanneer je saldo negatief wordt',
+            'mailReceipt' => 'Ontvang bonnetje met aankopen na elk barbezoek',
             'backToEmails' => 'Terug naar e-mails',
         ],
         'addEmail' => [

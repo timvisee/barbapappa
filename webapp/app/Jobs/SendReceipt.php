@@ -2,11 +2,12 @@
 
 namespace App\Jobs;
 
-use App\Mail\Update\BalanceUpdateMail;
+use App\Mail\Update\ReceiptMail;
 use App\Models\Community;
 use App\Models\Economy;
 use App\Models\EconomyMember;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -15,9 +16,9 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 
 /**
- * Send a balance update to a specific user.
+ * Send a receipt to a specific user.
  */
-class SendBalanceUpdate implements ShouldQueue {
+class SendReceipt implements ShouldQueue {
 
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,14 +33,26 @@ class SendBalanceUpdate implements ShouldQueue {
     private $user_id;
 
     /**
+     * The period start.
+     */
+    private ?Carbon $from;
+
+    /**
+     * The period end.
+     */
+    private Carbon $to;
+
+    /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(int $user_id) {
+    public function __construct(int $user_id, ?Carbon $from = null, ?Carbon $to = null) {
         // Set queue
         $this->onQueue(Self::QUEUE);
         $this->user_id = $user_id;
+        $this->from = $from;
+        $this->to = $to ?? now();
     }
 
     /**
@@ -78,31 +91,26 @@ class SendBalanceUpdate implements ShouldQueue {
 
         // Build the data object with all community/economy/wallet
         // information used in the balance mail template
+        $self = $this;
         $data = $communities
-            ->map(function($community) use($economies, $economyMembers, $wallets) {
+            ->map(function($community) use($self, $economies, $economyMembers, $wallets) {
                 $economyData = $economies
                     ->where('community_id', $community->id)
-                    ->map(function($economy) use($community, $economyMembers, $wallets) {
+                    ->map(function($economy) use($self, $community, $economyMembers, $wallets) {
                         // Find the economy member
                         $member = $economyMembers->where('economy_id', $economy->id)->first();
 
                         // Build the wallet data
                         $walletData = $wallets
                             ->where('economy_member_id', $member->id)
-                            ->map(function($wallet) use($community, $economy) {
-                                // Select a previous time, find it's balance
-                                $previous = now()->subMonth()->max($wallet->created_at);
-                                $previousBalance = $wallet->traceBalance($previous);
-
+                            ->map(function($wallet) use($self, $community, $economy) {
                                 // Build the wallet data table
                                 return [
                                     'name' => $wallet->name,
+                                    'receipt' => $wallet->getReceiptData(true, $self->from, $self->to, true),
                                     'balance' => $wallet->formatBalance(),
                                     'balanceHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
                                     'isNegative' => $wallet->balance < 0.0,
-                                    'previousBalance' => $previousBalance,
-                                    'previousBalanceHtml' => $wallet->currency->format($previousBalance, BALANCE_FORMAT_PLAIN),
-                                    'previousPeriod' => $previous->diffForHumans(),
                                     'url' => route('community.wallet.show', [
                                         'communityId' => $community->human_id,
                                         'economyId' => $economy->id,
@@ -118,30 +126,51 @@ class SendBalanceUpdate implements ShouldQueue {
                                         'economyId' => $economy->id,
                                         'walletId' => $wallet->id,
                                     ]),
-                                    'receipt' => $wallet->getReceiptData(true, $previous),
                                 ];
+                            })
+                            ->filter(function($wallet) {
+                                return $wallet['receipt'] != null;
                             });
+
+                        // Drop if wallets have no receipt
+                        if($walletData->isEmpty())
+                            return null;
 
                         // Build economy object with wallets data
                         return [
                             'name' => $economy->name,
                             'wallets' => $walletData,
                         ];
+                    })
+                    ->filter(function($economy) {
+                        return $economy != null;
                     });
+
+                // Drop if economy has no data
+                if($economyData->isEmpty())
+                    return null;
 
                 // Build community object with economy data
                 return [
                     'name' => $community->name,
                     'economies' => $economyData,
                 ];
-            })->toArray();
+            })
+            ->filter(function($community) {
+                return $community != null;
+            })
+            ->toArray();
 
-        // Send the balance update mail
-        Mail::send(new BalanceUpdateMail($recipients, $data));
+        // We must have something to send
+        if(empty($data))
+            return;
+
+        // Send the receipt mail
+        Mail::send(new ReceiptMail($recipients, $data));
     }
 
     public function retryUntil() {
-        // After two months it really is to late to still send an update
-        return now()->addMonths(2);
+        // After one week it really is to late to still send an update
+        return now()->addWeek();
     }
 }

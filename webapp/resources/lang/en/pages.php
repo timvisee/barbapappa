@@ -92,6 +92,7 @@ return [
             'deleted' => 'The email address has been deleted.',
             'deleteQuestion' => 'Are you sure you want to delete this email address?',
             'notifyOnLowBalance' => 'Receive notification when your balance drops below zero',
+            'mailReceipt' => 'Receive receipt of purchases after each bar visit',
             'backToEmails' => 'Back to e-mails',
         ],
         'addEmail' => [

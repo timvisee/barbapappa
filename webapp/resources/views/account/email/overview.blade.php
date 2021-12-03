@@ -59,6 +59,15 @@
 
     <h2 class="ui header">@lang('misc.otherSettings')</h2>
     {!! Form::open(['action' => ['EmailController@update', $user->id], 'method' => 'PUT', 'class' => 'ui form']) !!}
+        <div class="inline field {{ ErrorRenderer::hasError('mail_receipt') ?  'error' : '' }}">
+            <div class="ui toggle checkbox">
+                {{ Form::checkbox('mail_receipt', true, $user->mail_receipt, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('mail_receipt', __('pages.accountPage.email.mailReceipt')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('mail_receipt') }}
+        </div>
+
         <div class="inline field {{ ErrorRenderer::hasError('notify_low_balance') ?  'error' : '' }}">
             <div class="ui toggle checkbox">
                 {{ Form::checkbox('notify_low_balance', true, $user->notify_low_balance, ['tabindex' => 0, 'class' => 'hidden']) }}

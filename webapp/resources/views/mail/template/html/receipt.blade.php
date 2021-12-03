@@ -8,7 +8,7 @@
                     <small>
                         <em>
                             {{ strtolower(__('misc.last')) }}
-                            {{ $receipt['from']->longAbsoluteDiffForHumans() }}
+                            {{ $receipt['from']->longAbsoluteDiffForHumans($receipt['to']) }}
                         </em>
                     </small>
                 @endif
@@ -27,7 +27,7 @@
                 <tr>
                     <td align="right">{{ $product['quantity'] ?? 1 }}×</td>
                     <td>{{ $product['name'] ?? __('pages.products.unknownProduct') }}</td>
-                    <td align="right">{{ $product['cost']->formatAmount() }}</td>
+                    <td align="right">{!! $product['cost']->formatAmount() !!}</td>
                 </tr>
             @endforeach
             <tr class="divider">
@@ -43,7 +43,7 @@
                         @endif
                     </td>
                     <td>{{ $other['name'] }}</td>
-                    <td align="right">{{ $other['cost']->formatAmount() }}</td>
+                    <td align="right">{!! $other['cost']->formatAmount() !!}</td>
                 </tr>
             @endforeach
             <tr class="divider">
@@ -53,7 +53,7 @@
         <tr>
             <td></td>
             <td><strong>@lang('mail.receipts.total')</strong></td>
-            <td align="right"><strong>{{ $receipt['total']->formatAmount() }}</strong></td>
+            <td align="right"><strong>{!! $receipt['total']->formatAmount() !!}</strong></td>
         </tr>
     </table>
 </div>
