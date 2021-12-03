@@ -92,6 +92,7 @@ return [
             'deleted' => 'Th\' e-bottle coordinate be deleted.',
             'deleteQuestion' => 'Ye be sure ye want to sunk dis e-bottle address?',
             'notifyOnLowBalance' => 'Receive notification when yer booty drops below zero',
+            'mailReceipt' => 'Receive receipt of purchases after each bar visit',
             'backToEmails' => 'Back to e-bottles',
         ],
         'addEmail' => [

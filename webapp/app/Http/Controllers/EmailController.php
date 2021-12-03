@@ -52,8 +52,9 @@ class EmailController extends Controller {
     public function update(Request $request) {
         $user = \Request::get('user');
 
-        // Update low balance notify settings
+        // Update mail settings
         $user->notify_low_balance = is_checked($request->input('notify_low_balance'));
+        $user->mail_receipt = is_checked($request->input('mail_receipt'));
         $user->save();
 
         // Redirect back to overview
