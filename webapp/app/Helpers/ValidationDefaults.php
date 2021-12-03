@@ -79,6 +79,11 @@ class ValidationDefaults {
     const NICKNAME = self::NAME . '|max:32|not_regex:/[:\.\n\r]/';
 
     /**
+     * User tags list.
+     */
+    const USER_TAGS = 'string|max:128';
+
+    /**
      * Product tags list.
      */
     const PRODUCT_TAGS = 'string|max:255';

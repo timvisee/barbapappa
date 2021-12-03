@@ -33,6 +33,14 @@
                     @endif
                 </tr>
                 <tr>
+                    <td>@lang('misc.tags')</td>
+                    @if(!empty($economy_member->tags))
+                        <td>{{ $economy_member->tags }}</td>
+                    @else
+                        <td><i>@lang('misc.none')</i></td>
+                    @endif
+                </tr>
+                <tr>
                     <td>@lang('pages.barMember.showInBuy')</td>
                     <td>{{ yesno($economy_member->show_in_buy) }}</td>
                 </tr>
