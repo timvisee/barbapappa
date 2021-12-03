@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.139 (2021-12-03)
+
+- Hotfix for authentication error
+
 ## 0.1.138 (2021-12-03)
 
 - Add receipt mail feature, user may opt-in in their email preferences
