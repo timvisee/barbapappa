@@ -144,6 +144,15 @@ return [
             'subtitle' => 'Je portemonnee saldo is zojuist negatief geworden. Daarom sturen we je deze notificatie.',
             'pleaseTopUp' => 'Vul je portemonnee na je bezoek aan. Zorg er altijd voor dat je een positief saldo hebt.',
         ],
+
+        /**
+         * Receipt update mail.
+         */
+        'receipt' => [
+            'subject' => 'Bonnetje van Barbapappa',
+            'subtitle' => 'Hier is het bonnetje van je recente aankopen.',
+            'pleaseTopUp' => 'Vul je portemonnee aan als het een negatief saldo heeft, en zorg er altijd voor dat je genoeg beschikbaar hebt voor je volgende bezoek.',
+        ],
     ],
 
     /**
@@ -175,5 +184,6 @@ return [
         'balanceImports' => 'Balansimports',
         'magic' => 'Overig',
         'total' => 'Totaal',
+        'notSupportedInTextEmail' => 'Note: bonnetjes worden niet ondersteund in de tekst versie van e-mails.',
     ],
 ];

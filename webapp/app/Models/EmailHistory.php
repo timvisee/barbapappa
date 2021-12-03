@@ -38,6 +38,11 @@ class EmailHistory extends Model {
     const TYPE_BALANCE_UPDATE = 1;
 
     /**
+     * Email type: receipt after visit.
+     */
+    const TYPE_RECEIPT = 2;
+
+    /**
      * A scope for selecting a specific user.
      *
      * @param User|int $user_id The user.
