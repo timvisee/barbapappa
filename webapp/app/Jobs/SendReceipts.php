@@ -41,7 +41,7 @@ class SendReceipts implements ShouldQueue {
      *
      * The receipt will never contain items older than this.
      */
-    const RECEIPT_MAX_AGE = 60 * 60 * 24 * 30;
+    const RECEIPT_MAX_AGE = 60 * 60 * 24 * 2;
 
     /**
      * Create a new job instance.
