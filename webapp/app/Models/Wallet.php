@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Events\WalletBalanceChange;
 use App\Perms\CommunityRoles;
 use App\Utils\MoneyAmount;
+use App\Utils\MoneyAmountBag;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -372,18 +373,22 @@ class Wallet extends Model {
      * this with care.
      *
      * @param bool $nullIfEmpty Return null if the receipt is empty.
-     * @param \Carbon $from Start period for the receipt.
+     * @param ?Carbon $from Start period for the receipt, defaults to 1 month.
+     * @param ?Carbon $to End period for the receipt, defaults to current time.
+     * @param bool [$trimFrom=true] Whehter to trim the period start to the
+     *      first mutation in the specified period.
      *
      * @return array The receipt data.
      */
-    public function getReceiptData(bool $nullIfEmpty = true, ?Carbon $from = null) {
+    public function getReceiptData(bool $nullIfEmpty = true, ?Carbon $from = null, ?Carbon $to = null, $trimFrom = false) {
         $from ??= now()->subMonth();
+        $to ??= now();
 
         $products = [];
-        $paymentAmount = MoneyAmount::zero($this->currency);
-        $balanceImportAmount = MoneyAmount::zero($this->currency);
-        $magicAmount = MoneyAmount::zero($this->currency);
-        $totalAmount = MoneyAmount::zero($this->currency);
+        $paymentAmount = new MoneyAmountBag();
+        $balanceImportAmount = new MoneyAmountBag();
+        $magicAmount = new MoneyAmountBag();
+        $totalAmount = new MoneyAmountBag();
 
         // Get all mutation changes in this period, and sum the amounts
         $mutations = $this
@@ -393,6 +398,14 @@ class Wallet extends Model {
             ->where('mutation.state', Mutation::STATE_SUCCESS)
             ->get();
 
+        // Return null early if we have no transactions
+        if($nullIfEmpty && $mutations->isEmpty())
+            return null;
+
+        // Trim the from date
+        if($trimFrom)
+            $from = $from->max($mutations->min('created_at'));
+
         // Handle each mutation
         foreach($mutations as $mutation) {
             // Collect products
@@ -401,7 +414,7 @@ class Wallet extends Model {
                 if(!isset($products[$mutation_product->product_id])) {
                     $products[$mutation_product->product_id] = [
                         'product' => $mutation_product->product,
-                        'cost' => $mutation->getMoneyAmount()->neg(),
+                        'cost' => $mutation->getMoneyAmount()->neg()->toBag(),
                         'quantity' => $mutation_product->quantity,
                     ];
                 } else {
@@ -426,7 +439,7 @@ class Wallet extends Model {
         // Build product list
         $products = collect($products)
             ->map(function($p) use(&$totalAmount) {
-                $totalAmount->add($p['cost']);
+                $totalAmount->addBag($p['cost']);
                 return [
                     'name' => $p['product']->displayName(),
                     'cost' => $p['cost'],
@@ -438,21 +451,21 @@ class Wallet extends Model {
         // Build list of other items
         $others = collect();
         if(!$paymentAmount->isZero()) {
-            $totalAmount->add($paymentAmount);
+            $totalAmount->addBag($paymentAmount);
             $others->push([
                 'name' => __('mail.receipts.topUps'),
                 'cost' => $paymentAmount,
             ]);
         }
         if(!$balanceImportAmount->isZero()) {
-            $totalAmount->add($balanceImportAmount);
+            $totalAmount->addBag($balanceImportAmount);
             $others->push([
                 'name' => __('mail.receipts.balanceImports'),
                 'cost' => $balanceImportAmount,
             ]);
         }
         if(!$magicAmount->isZero()) {
-            $totalAmount->add($magicAmount);
+            $totalAmount->addBag($magicAmount);
             $others->push([
                 'name' => __('mail.receipts.magic'),
                 'cost' => $magicAmount,
@@ -465,6 +478,7 @@ class Wallet extends Model {
 
         return [
             'from' => $from,
+            'to' => $to,
             'products' => $products,
             'others' => $others,
             'total' => $totalAmount,
