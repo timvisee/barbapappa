@@ -184,7 +184,6 @@ return [
         'balanceImports' => 'Balance imports',
         'magic' => '\'ther',
         'total' => 'Tot \'ol',
-        'notSupportedInTextEmail' => 'Note: receipts are not supported in the text version of emails.',
         'receiveReceiptAfterEachVisit' => 'Receive a receipt of yer loot after each bar visit? Enable it in',
     ],
 ];
