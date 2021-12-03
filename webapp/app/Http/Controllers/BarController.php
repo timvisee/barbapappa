@@ -217,16 +217,17 @@ class BarController extends Controller {
         // Get the bar
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
-        $bar_member = $bar->members()->user($user)->first();
         $economy = $bar->economy;
         $economy_member = $economy->members()->user($user)->first();
 
         // Validate
         $this->validate($request, [
             'nickname' => 'nullable|' . ValidationDefaults::NICKNAME,
+            'tags' => 'nullable|' . ValidationDefaults::USER_TAGS,
         ]);
 
         $economy_member->nickname = $request->input('nickname');
+        $economy_member->tags = $request->input('tags');
         $economy_member->show_in_buy = is_checked($request->input('show_in_buy'));
         $economy_member->show_in_kiosk = is_checked($request->input('show_in_kiosk'));
         $economy_member->save();

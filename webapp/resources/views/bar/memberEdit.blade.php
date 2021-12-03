@@ -28,6 +28,19 @@
         <div class="ui hidden divider"></div>
 
         <div class="ui message">
+            <div class="header">@lang('misc.tags')</div>
+            <p>@lang('pages.barMembers.tagsDescription')</p>
+        </div>
+
+        <div class="field {{ ErrorRenderer::hasError('tags') ? 'error' : '' }}">
+            {{ Form::label('tags', __('misc.tags') . ':') }}
+            {{ Form::text('tags', $economy_member->tags) }}
+            {{ ErrorRenderer::inline('tags') }}
+        </div>
+
+        <div class="ui hidden divider"></div>
+
+        <div class="ui message">
             <div class="header">@lang('pages.barMember.visibility')</div>
             <p>@lang('pages.barMember.visibilityDescription')</p>
         </div>

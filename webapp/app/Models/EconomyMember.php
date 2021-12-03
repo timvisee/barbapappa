@@ -153,7 +153,9 @@ class EconomyMember extends Pivot {
 
         // Search for each word separately in nickname field
         foreach(explode(' ', $search) as $word)
-            $query = $query->orWhere('nickname', 'LIKE', '%' . escape_like($word) . '%');
+            $query = $query
+                ->orWhere('nickname', 'LIKE', '%' . escape_like($word) . '%')
+                ->orWhere('tags', 'LIKE', '%' . escape_like($word) . '%');
 
         return $query;
     }
@@ -446,6 +448,7 @@ class EconomyMember extends Pivot {
      */
     public function resetUserProperties() {
         $this->nickname = null;
+        $this->tags = null;
         $this->show_in_buy = true;
         $this->show_in_kiosk = true;
     }
