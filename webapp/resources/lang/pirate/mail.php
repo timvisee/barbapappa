@@ -180,8 +180,8 @@ return [
      */
     'receipts' => [
         'receipt' => 'Receipt',
-        'topUps' => 'Top-ups',
-        'balanceImports' => 'Balance imports',
+        'topUps' => 'Paid',
+        'balanceImports' => 'Imported',
         'magic' => '\'ther',
         'total' => 'Tot \'ol',
         'receiveReceiptAfterEachVisit' => 'Receive a receipt of yer loot after each bar visit? Enable it in',

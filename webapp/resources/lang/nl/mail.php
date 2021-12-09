@@ -180,8 +180,8 @@ return [
      */
     'receipts' => [
         'receipt' => 'Bonnetje',
-        'topUps' => 'Opwaarderingen',
-        'balanceImports' => 'Balansimports',
+        'topUps' => 'Betaald',
+        'balanceImports' => 'Geïmporteerd',
         'magic' => 'Overig',
         'total' => 'Totaal',
         'receiveReceiptAfterEachVisit' => 'Een bonnetje van aankopen ontvangen na elk bezoek? Zet het aan in',
