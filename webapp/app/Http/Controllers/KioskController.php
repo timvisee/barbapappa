@@ -214,11 +214,11 @@ class KioskController extends Controller {
             return collect();
 
         // Get most common products
-        $products = self::getTopProductList($bar, self::PRODUCTS_TOP_LIMIT, $currency_ids);
+        $products = self::getTopProductList($bar, self::PRODUCTS_TOP_LIMIT, $currency_ids, true);
 
         // Add recent products
         $products = $products->concat(
-            self::getRecentProductList($bar, self::PRODUCT_RECENT_LIMIT, $currency_ids, $products->pluck('id'))
+            self::getRecentProductList($bar, self::PRODUCT_RECENT_LIMIT, $currency_ids, $products->pluck('id'), true)
         );
 
         // Add random products
@@ -237,10 +237,11 @@ class KioskController extends Controller {
      * @param int $limit Product limit.
      * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
+     * @param bool $noExhausted Whether to exclude exhausted products.
      *
      * @return object A list of products.
      */
-    private static function getTopProductList(Bar $bar, $limit, $currency_ids) {
+    private static function getTopProductList(Bar $bar, $limit, $currency_ids, $noExhausted) {
         // Get facts
         $economy = $bar->economy;
 
@@ -254,6 +255,14 @@ class KioskController extends Controller {
             ->limit(100)
             ->with('mutationable')
             ->get();
+
+        // Exclude exhausted
+        // TODO: this is inefficient, do this on query level
+        if($noExhausted)
+            $product_mutations = $product_mutations
+                ->filter(function($p) {
+                    return !($p->mutationable->product?->exhausted ?? false);
+                });
 
         // List product IDs sorted by most bought
         $product_ids = $product_mutations
@@ -296,10 +305,11 @@ class KioskController extends Controller {
      * @param [int]|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
      * @param [int]|null $ignore_product_ids A list of product IDs to ignore.
+     * @param bool $noExhausted Whether to exclude exhausted products.
      *
      * @return object A list of products.
      */
-    private static function getRecentProductList(Bar $bar, $limit, $currency_ids, $ignore_product_ids = []) {
+    private static function getRecentProductList(Bar $bar, $limit, $currency_ids, $ignore_product_ids = [], $noExhausted) {
         // Get facts
         $economy = $bar->economy;
         $ignore_product_ids = collect($ignore_product_ids);
@@ -323,6 +333,14 @@ class KioskController extends Controller {
             ->limit(100)
             ->with('mutationable')
             ->get();
+
+        // Exclude exhausted
+        // TODO: this is inefficient, do this on query level
+        if($noExhausted)
+            $product_mutations = $product_mutations
+                ->filter(function($p) {
+                    return !($p->mutationable->product?->exhausted ?? false);
+                });
 
         // Take limit of recent products, skip null or ignored products
         return $product_mutations
