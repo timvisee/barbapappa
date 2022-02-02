@@ -180,9 +180,10 @@ class KioskController extends Controller {
             });
 
         // Separate top products from list
-        if($isSearch)
+        if($isSearch) {
+            $top = collect();
             $list = $products;
-        else {
+        } else {
             $top = $products->take(5);
             $list = $products->skip(5);
         }
