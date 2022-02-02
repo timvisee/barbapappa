@@ -636,6 +636,9 @@ class Economy extends Model {
         if(!empty($search))
             $products = $products->search($search);
 
+        // Put exhausted products last
+        $products = $products->orderBy('exhausted');
+
         // Fetch the products and return
         return $products->get();
     }
