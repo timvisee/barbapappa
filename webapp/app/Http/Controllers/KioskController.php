@@ -269,10 +269,11 @@ class KioskController extends Controller {
         $product_ids = $product_mutations
             ->reduce(function($list, $item) {
                 $key = strval($item->mutationable->product_id);
+                $quantity = sqrt($item->mutationable->quantity);
                 if(isset($list[$key]))
-                    $list[$key] += $item->mutationable->quantity;
+                    $list[$key] += $quantity;
                 else
-                    $list[$key] = $item->mutationable->quantity;
+                    $list[$key] = $quantity;
                 return $list;
             }, collect())
             ->sort()
