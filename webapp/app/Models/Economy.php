@@ -450,7 +450,7 @@ class Economy extends Model {
         // Build a query for counting how often products were bought
         $productCounts = DB::table(DB::raw("({$lastProducts->toSql()}) AS m"))
             ->mergeBindings($lastProducts->getQuery())
-            ->select(DB::raw('SUM(quantity)'))
+            ->select(DB::raw('SUM(SQRT(quantity))'))
             ->whereRaw('m.product_id = product.id');
 
         // Select the top bought products
