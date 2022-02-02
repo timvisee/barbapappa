@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
+use App\Jobs\UpdateProductExhaustedEconomy;
 use App\Models\Inventory;
 use App\Models\InventoryItemChange;
 use App\Utils\MoneyAmountBag;
@@ -315,6 +316,9 @@ class InventoryController extends Controller {
             }
         });
 
+        // Dispatch job to update product exhausted state
+        UpdateProductExhaustedEconomy::dispatch($economy->id);
+
         // Redirect to inventory
         return redirect()
             ->route('community.economy.inventory.show', [
@@ -427,6 +431,9 @@ class InventoryController extends Controller {
                 }
             }
         });
+
+        // Dispatch job to update product exhausted state
+        UpdateProductExhaustedEconomy::dispatch($economy->id);
 
         // Redirect to inventory
         return redirect()
@@ -558,6 +565,9 @@ class InventoryController extends Controller {
                 $count += abs($quantity);
             }
         });
+
+        // Dispatch job to update product exhausted state
+        UpdateProductExhaustedEconomy::dispatch($economy->id);
 
         // Redirect to inventory
         return redirect()
