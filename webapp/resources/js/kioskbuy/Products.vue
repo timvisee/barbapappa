@@ -41,7 +41,7 @@
                 v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
                 class="item kiosk-select-item prominent"
-                v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
+                v-bind:class="{ disabled: buying || product.exhausted, active: getQuantity(product) > 0 }">
             <div class="item-text">
                 <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
 
@@ -76,7 +76,7 @@
                 v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
                 class="green inverted item kiosk-select-item"
-                v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
+                v-bind:class="{ disabled: buying || product.exhausted, active: getQuantity(product) > 0 }">
             <div class="item-text">
                 <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
 
