@@ -783,6 +783,9 @@ class InventoryController extends Controller {
         $products = $inventory
             ->economy
             ->products
+            ->filter(function($product) {
+                return $product != null;
+            })
             ->map(function($product) use($inventory) {
                 // TODO: this is inefficient, improve this
                 $item = $inventory->getItem($product);
