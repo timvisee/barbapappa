@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.141 (2022-02-02)
+
+- Don't suggest exhausted products in kiosk or user buy views
+- Mark exhausted products in the kiosk view
+- Give exhausted products a much lower sorting priority, anchor them to the bottom of lists
+- Improve product suggestion algorithm, use more parameters, weigh-in transaction count
+- Fix potential security vulnerability introduced in dependency
+- Fix potential error when viewing inventory report while having unbalanced trashed products
+- Change product exhaustion delay from 1 month to 1 week
+- Improve language used in purchase receipts
+- Fix various errors that may occur in configuration edge cases
+- Update dependencies
+
 ## 0.1.140 (2021-12-03)
 
 - Add user customizable member search tags to improve searchability
