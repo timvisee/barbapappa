@@ -7,6 +7,7 @@ use App\Jobs\ProcessAllBunqAccountEvents;
 use App\Jobs\SendBalanceUpdates;
 use App\Jobs\SendReceipts;
 use App\Jobs\UpdatePaymentStates;
+use App\Jobs\UpdateProductExhaustedAll;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -41,6 +42,11 @@ class Kernel extends ConsoleKernel {
         // Send balance updates
         // Interval also defined in: SendBalanceUpdates::retryUntil
         $schedule->job(new SendBalanceUpdates)
+            ->hourly();
+
+        // Update product exhausted states.
+        // Interval also defined in: UpdateProductExhaustedAll::retryUntil
+        $schedule->job(new UpdateProductExhaustedAll)
             ->hourly();
 
         // Sent receipts

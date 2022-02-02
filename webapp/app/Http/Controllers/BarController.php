@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\BarPurchaseHistoryExport;
 use App\Helpers\ValidationDefaults;
+use App\Jobs\UpdateProductExhaustedEconomy;
 use App\Models\Bar;
 use App\Models\EconomyMember;
 use App\Models\InventoryItemChange;
@@ -247,7 +248,6 @@ class BarController extends Controller {
         // Get the bar
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
-        $bar_member = $bar->members()->user($user)->first();
         $economy = $bar->economy;
         $economy_member = $economy->members()->user($user)->first();
 
@@ -413,9 +413,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function manageKiosk($barId) {
-        // Get the bar
-        $bar = \Request::get('bar');
-
         // Show the bar kiosk management page
         return view('bar.manageKiosk');
     }
@@ -437,8 +434,7 @@ class BarController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request) {
-        // Get the community and bar
-        $community = \Request::get('community');
+        // Get the bar
         $bar = \Request::get('bar');
 
         // Validate
@@ -454,6 +450,8 @@ class BarController extends Controller {
             'slug.regex' => __('pages.bar.slugFieldRegexError'),
         ]);
 
+        $inventory_changed = $bar->inventory_id != $request->input('inventory');
+
         // Change the name properties
         // $bar->economy_id = $request->input('economy');
         $bar->name = $request->input('name');
@@ -468,6 +466,11 @@ class BarController extends Controller {
 
         // Save the bar
         $bar->save();
+
+        // Dispatch job to update product exhausted state if different inventory
+        // is assigned
+        if($inventory_changed)
+            UpdateProductExhaustedEconomy::dispatch($bar->economy_id);
 
         // Redirect the user to the account overview page
         return redirect()

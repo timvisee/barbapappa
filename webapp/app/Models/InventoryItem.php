@@ -26,6 +26,11 @@ class InventoryItem extends Model {
     protected $fillable = ['inventory_id', 'product_id', 'quantity'];
 
     /**
+     * Number of seconds in a week.
+     */
+    const WEEK_SECONDS = 7 * 24 * 60 * 60;
+
+    /**
      * Number of seconds in a month.
      */
     const MONTH_SECONDS = 2629800;
@@ -34,7 +39,7 @@ class InventoryItem extends Model {
      * Number of seconds after which an inventory item is considered exausted
      * while its quantity remains zero.
      */
-    const EXHAUSTED_AFTER = Self::MONTH_SECONDS;
+    const EXHAUSTED_AFTER = Self::WEEK_SECONDS;
 
     /**
      * A scope to a specific product.

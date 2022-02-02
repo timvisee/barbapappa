@@ -422,10 +422,11 @@ class Economy extends Model {
      * @param [int]|null [$currency_ids=null] A list of Currency IDs
      *      returned products must have a price configured in in at least one of
      *      them.
+     * @param bool [$noExhausted=true] Whether to exclude exhausted products.
      *
      * @return object An array of product models that were found.
      */
-    static function selectTopProducts($mutation_ids = null, $exclude_product_ids = null, $limit = 0, $currency_ids = null) {
+    static function selectTopProducts($mutation_ids = null, $exclude_product_ids = null, $limit = 0, $currency_ids = null, $noExhausted = true) {
         // Return nothing if limit is zero
         if($limit <= 0)
             return collect();
@@ -460,6 +461,10 @@ class Economy extends Model {
             // TODO: ->havingRaw('count > 0'), replace collection filter below
             ->limit($limit);
 
+        // Hide exhausted products
+        if($noExhausted)
+            $products = $products->where('exhausted', false);
+
         // Filter products not being bought ever
         return $products
             ->get()
@@ -482,10 +487,11 @@ class Economy extends Model {
      * @param int $limit The maximum number of products to return.
      * @param array(int)|null $currency_ids A list of Currency IDs returned
      *      products must have a price configured in in at least one of them.
+     * @param bool $noExhausted Whether to exclude exhausted products.
      *
      * @return object An array of product models that were found.
      */
-    static function selectLastProducts($mutation_ids, $exclude_product_ids, $limit, $currency_ids) {
+    static function selectLastProducts($mutation_ids, $exclude_product_ids, $limit, $currency_ids, $noExhausted) {
         // Return nothing if limit is zero
         if($limit <= 0)
             return collect();
@@ -511,7 +517,10 @@ class Economy extends Model {
             ->unique();
 
         // Build list of products, take limit
-        $products = Product::havingCurrency($currency_ids)->findMany($product_ids);
+        $query = Product::havingCurrency($currency_ids);
+        if($noExhausted)
+            $query = $query->where('exhausted', false);
+        $products = $query->findMany($product_ids);
         return $product_ids
             ->map(function($id) use($products) {
                 return $products->firstWhere('id', $id);
@@ -553,6 +562,7 @@ class Economy extends Model {
             null,
             Self::QUICK_BUY_TOP_LIMIT,
             $currency_ids,
+            true,
         );
 
         // Add products last bought by user not in list already to total of 8
@@ -562,6 +572,7 @@ class Economy extends Model {
                 $products->pluck('id'),
                 $limit - $products->count(),
                 $currency_ids,
+                true,
             )
         );
 
@@ -584,6 +595,7 @@ class Economy extends Model {
                     $products->pluck('id'),
                     $limit - $products->count(),
                     $currency_ids,
+                    true,
                 )
             );
         }
@@ -623,6 +635,9 @@ class Economy extends Model {
         // Define the query
         if(!empty($search))
             $products = $products->search($search);
+
+        // Put exhausted products last
+        $products = $products->orderBy('exhausted');
 
         // Fetch the products and return
         return $products->get();

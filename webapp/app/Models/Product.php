@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
  * @property-read User|null updated_user
  * @property int type
  * @property string name
+ * @property boolean exhausted
  * @property string|null tags
  * @property Carbon|null deleted_at
  * @property Carbon created_at
@@ -32,9 +33,13 @@ class Product extends Model {
 
     protected $table = 'product';
 
-    protected $fillable = ['economy_id', 'type', 'name', 'tags', 'created_user_id', 'updated_user_id'];
+    protected $fillable = ['economy_id', 'type', 'name', 'tags', 'exhausted', 'created_user_id', 'updated_user_id'];
 
     protected $with = ['names'];
+
+    protected $casts = [
+        'exhausted' => 'boolean',
+    ];
 
     /**
      * Normal persistent product type.
