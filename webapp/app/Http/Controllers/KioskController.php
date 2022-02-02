@@ -188,8 +188,8 @@ class KioskController extends Controller {
         }
 
         return [
-            'top' => $top ?? [],
-            'list' => $list->sortBy('name')->values(),
+            'top' => $top->values() ?? [],
+            'list' => $list->sortBy(['exhausted', 'name'])->values(),
         ];
     }
 
