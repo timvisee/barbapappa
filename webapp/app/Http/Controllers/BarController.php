@@ -248,7 +248,6 @@ class BarController extends Controller {
         // Get the bar
         $bar = \Request::get('bar');
         $user = barauth()->getSessionUser();
-        $bar_member = $bar->members()->user($user)->first();
         $economy = $bar->economy;
         $economy_member = $economy->members()->user($user)->first();
 
@@ -414,9 +413,6 @@ class BarController extends Controller {
      * @return Response
      */
     public function manageKiosk($barId) {
-        // Get the bar
-        $bar = \Request::get('bar');
-
         // Show the bar kiosk management page
         return view('bar.manageKiosk');
     }
@@ -438,8 +434,7 @@ class BarController extends Controller {
      * @return Response
      */
     public function doEdit(Request $request) {
-        // Get the community and bar
-        $community = \Request::get('community');
+        // Get the bar
         $bar = \Request::get('bar');
 
         // Validate
