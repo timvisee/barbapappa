@@ -80,7 +80,7 @@ class BarController extends Controller {
             'economy_id' => $request->input('economy'),
             'name' => $request->input('name'),
             'slug' => $request->has('slug') ? $request->input('slug') : null,
-            'description' => $request->input('slug'),
+            'description' => $request->input('description'),
             'password' => $request->has('password') ? $request->input('password') : null,
             'show_explore' => is_checked($request->input('show_explore')),
             'show_community' => is_checked($request->input('show_community')),
