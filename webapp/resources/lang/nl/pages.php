@@ -483,6 +483,8 @@ return [
         'amountToTopUpInCurrency' => 'Bedrag om mee op te waarderen in :currency',
         'youSpendAboutEachMonth' => 'Je besteedt :amount per maand.',
         'noteTimeAdvance' => '+:time voorschot',
+        'redemption' => 'Aflossing',
+        'topUpWithLargerAmount' => 'met groter bedrag opwaarderen',
         'pay' => 'Betaal',
         'otherPay' => 'Ander bedrag, betaal',
         'selectPaymentServiceToUse' => 'Betaalmethode',

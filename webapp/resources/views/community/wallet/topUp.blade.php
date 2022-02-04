@@ -40,7 +40,7 @@
         </div>
 
         {{-- Show spending estimate --}}
-        @if(!$montly_costs->isZero())
+        @if($montly_costs != null && !$montly_costs->isZero())
             <p class="align-center">
                 <em>@lang('pages.paymentService.youSpendAboutEachMonth', ['amount' => $montly_costs->formatAmount()])</em>
             </p>
@@ -65,10 +65,12 @@
 
                     </div>
 
-                    <span class="ui label">
-                        @lang('misc.to')
-                        {!! $currency->format($amount['sum']) !!}
-                    </span>
+                    @if(isset($amount['sum']))
+                        <span class="ui label">
+                            @lang('misc.to')
+                            {!! $currency->format($amount['sum']) !!}
+                        </span>
+                    @endif
 
                     @if(isset($amount['note']))
                         <span class="ui teal label">
@@ -78,19 +80,32 @@
                 </div>
             @endforeach
 
-            <div class="item inline {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
-                <div class="ui radio checkbox">
-                    {{ Form::radio('amount', '', false, ['class' => 'hidden', 'tabindex' => 0]) }}
-                    <label for="amount">@lang('pages.paymentService.pay')</label>
-                </div>
+            {{-- Custom top-up amount if not top-upping for redemption --}}
+            @if(!$redemption)
+                <div class="item inline {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
+                    <div class="ui radio checkbox">
+                        {{ Form::radio('amount', '', false, ['class' => 'hidden', 'tabindex' => 0]) }}
+                        <label for="amount">@lang('pages.paymentService.pay')</label>
+                    </div>
 
-                <div class="field checkbox-list-inline-field {{ ErrorRenderer::hasError('amount_custom') ? 'error' : '' }}">
-                    <div class="ui inline labeled input">
-                        {{ Form::label('amount_custom', $currency->symbol, ['class' => 'ui label']) }}
-                        {{ Form::text('amount_custom', '', ['id' => 'amount_custom', 'inputmode' => 'decimal', 'placeholder' => '1.23']) }}
+                    <div class="field checkbox-list-inline-field {{ ErrorRenderer::hasError('amount_custom') ? 'error' : '' }}">
+                        <div class="ui inline labeled input">
+                            {{ Form::label('amount_custom', $currency->symbol, ['class' => 'ui label']) }}
+                            {{ Form::text('amount_custom', '', ['id' => 'amount_custom', 'inputmode' => 'decimal', 'placeholder' => '1.23']) }}
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
+            @if($redemption)
+                <div class="item">
+                    @lang('general.or') <a href="{{ route('community.wallet.topUp', [
+                        'communityId' => $economy->community_id,
+                        'economyId' => $economy->id,
+                        'walletId' => $wallet->id,
+                    ]) }}">@lang('pages.paymentService.topUpWithLargerAmount')</a>
+                </div>
+            @endif
         </div>
         {{ ErrorRenderer::alert('amount') }}
         {{ ErrorRenderer::alert('amount_custom') }}

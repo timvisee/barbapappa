@@ -482,6 +482,8 @@ return [
         'amountToTopUpInCurrency' => 'Amount to top up wit\' in :currency',
         'youSpendAboutEachMonth' => 'Ye spend :amount each month.',
         'noteTimeAdvance' => '+:time advance',
+        'redemption' => 'Fine',
+        'topUpWithLargerAmount' => 'Top-up with larger amount',
         'pay' => 'Pay',
         'otherPay' => 'Other amount, pay',
         'selectPaymentServiceToUse' => 'Payment method',

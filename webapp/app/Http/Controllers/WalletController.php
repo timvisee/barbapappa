@@ -623,10 +623,11 @@ class WalletController extends Controller {
      *
      * @return Response
      */
-    public function topUp($communityId, $economyId, $walletId) {
+    public function topUp(Request $request, $communityId, $economyId, $walletId) {
         // TODO: do some permission checking?
 
         // Get the user, community, find the economy and wallet
+        $is_redemption = is_checked($request->query('redemption'));
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
@@ -640,9 +641,28 @@ class WalletController extends Controller {
             ->supportsDeposit()
             ->get();
 
-        // Predict monthly costs, build set of top-up amounts
-        $monthly_costs = $wallet->predictMonthlyCosts();
-        $amounts = $this->walletTopUpAmounts($wallet, $monthly_costs);
+        // Redirect to normal top-up page if user cannot redempt because balance
+        // isn't below zero
+        if($is_redemption && $wallet->balance >= 0.0)
+            return redirect()->route('community.wallet.topUp', [
+                'communityId' => $economy->community_id,
+                'economyId' => $economy->id,
+                'walletId' => $wallet->id,
+            ]);
+
+        if(!$is_redemption) {
+            // Predict monthly costs, build set of top-up amounts
+            $monthly_costs = $wallet->predictMonthlyCosts();
+            $amounts = $this->walletTopUpAmounts($wallet, $monthly_costs);
+        } else {
+            // On redemption, only show option to top-up to zero
+            $monthly_costs = null;
+            $amounts = [[
+                'amount' => -$wallet->balance,
+                'note' => strtolower(__('pages.paymentService.redemption')),
+                'selected' => true,
+            ]];
+        }
 
         // There must be a usable service
         if($services->isEmpty())
@@ -660,7 +680,8 @@ class WalletController extends Controller {
             ->with('currency', $wallet->currency)
             ->with('amounts', $amounts)
             ->with('services', $services)
-            ->with('montly_costs', $monthly_costs);
+            ->with('montly_costs', $monthly_costs)
+            ->with('redemption', $is_redemption);
     }
 
     /**
