@@ -160,7 +160,9 @@ class KioskController extends Controller {
             ->limit(100)
             ->pluck('currency_id')
             ->countBy()
-            ->keys()[0];
+            ->sortDesc()
+            ->keys()
+            ->first();
         $currency = Currency::findOrFail($currency_id);
         $currencies = [$currency];
 
