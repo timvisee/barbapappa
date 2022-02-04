@@ -441,7 +441,7 @@ class Wallet extends Model {
             ->map(function($p) use(&$totalAmount) {
                 $totalAmount->addBag($p['cost']);
                 return [
-                    'name' => $p['product']->displayName(),
+                    'name' => $p['product']?->displayName() ?? __('pages.products.deletedProduct'),
                     'cost' => $p['cost'],
                     'quantity' => $p['quantity'],
                 ];
