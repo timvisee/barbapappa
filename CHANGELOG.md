@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.143 (2022-02-04)
+
+- Add wallet top-up page tailored to redemption, letting users top-up to zero
+- List top-up redemption page on useful bar links page
+
 ## 0.1.142 (2022-02-04)
 
 - Hotfix for error when sending balance update mail having deleted products on receipt
