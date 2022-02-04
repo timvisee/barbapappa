@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.142 (2022-02-04)
+
+- Hotfix for error when sending balance update mail having deleted products on receipt
+
 ## 0.1.141 (2022-02-02)
 
 - Don't suggest exhausted products in kiosk or user buy views
