@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.144 (2022-02-04)
+
+- Fix kiosk error when economy has no transactions yet
+
 ## 0.1.143 (2022-02-04)
 
 - Add wallet top-up page tailored to redemption, letting users top-up to zero
