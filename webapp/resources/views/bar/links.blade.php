@@ -87,6 +87,19 @@
                 </td>
             </tr>
             <tr>
+                <td>@lang('pages.bar.links.linkQuickTopUpRedemption')</td>
+                <td>
+                    <button class="ui basic icon button mini compact share-button"
+                            data-title="@lang('pages.bar.links.linkQuickTopUpRedemptionAction')"
+                            data-url="{{ route('community.wallet.quickTopUp', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id, 'redemption' => 1]) }}">
+                        <i class="glyphicons glyphicons-share"></i>
+                    </button>
+                    <code class="literal copy">
+                        {{ route('community.wallet.quickTopUp', ['communityId' => $community->human_id, 'economyId' => $bar->economy_id, 'redemption' => 1]) }}
+                    </code>
+                </td>
+            </tr>
+            <tr>
                 <td>@lang('pages.bar.links.linkVerifyEmail')</td>
                 <td>
                     <button class="ui basic icon button mini compact share-button"

@@ -1024,6 +1024,8 @@ return [
             'linkQuickWalletAction' => 'Bekijk je persoonlijke portemonnee',
             'linkQuickTopUp' => 'Primaire persoonlijke portemonnee opwaarderen',
             'linkQuickTopUpAction' => 'Portemonnee opwaarderen',
+            'linkQuickTopUpRedemption' => 'Primaire persoonlijke portemonnee aflossen',
+            'linkQuickTopUpRedemptionAction' => 'Portemonnee opwaarderen aflossen',
             'linkVerifyEmail' => 'Verifieer e-mailadressen',
             'linkVerifyEmailAction' => 'Verifieer je e-mailadres',
         ],

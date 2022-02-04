@@ -952,8 +952,9 @@ class WalletController extends Controller {
      *
      * @return Response
      */
-    public function quickTopUp($communityId, $economyId) {
+    public function quickTopUp(Request $request, $communityId, $economyId) {
         // Get the user, community, find the economy and wallet
+        $is_redemption = is_checked($request->query('redemption'));
         $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
@@ -987,6 +988,7 @@ class WalletController extends Controller {
                 'communityId' => $communityId,
                 'economyId' => $economyId,
                 'walletId' => $wallet->id,
+                'redemption' => $is_redemption ? 1 : 0,
             ]);
     }
 

@@ -1023,6 +1023,8 @@ return [
             'linkQuickWalletAction' => 'View your personal wallet',
             'linkQuickTopUp' => 'Top-up main personal wallet',
             'linkQuickTopUpAction' => 'Top-up your wallet',
+            'linkQuickTopUpRedemption' => 'Top-up main personal wallet (redemption)',
+            'linkQuickTopUpRedemptionAction' => 'Top-up your wallet (redemption)',
             'linkVerifyEmail' => 'Verify email addresses',
             'linkVerifyEmailAction' => 'Verify your email address',
         ],

@@ -1022,6 +1022,8 @@ return [
             'linkQuickWalletAction' => 'View yer personal wallet',
             'linkQuickTopUp' => 'Top-up main personal wallet',
             'linkQuickTopUpAction' => 'Top-up yer wallet',
+            'linkQuickTopUpRedemption' => 'Top-up main personal wallet (redemption)',
+            'linkQuickTopUpRedemptionAction' => 'Top-up yer wallet (redemption)',
             'linkVerifyEmail' => 'Verify e-bottle coordinates',
             'linkVerifyEmailAction' => 'Verify yer e-bottle coordinate',
         ],
