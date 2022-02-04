@@ -9,15 +9,17 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <div class="ui two item menu">
-        <a href="{{ route('community.wallet.topUp', [
-            'communityId' => $community->human_id,
-            'economyId' => $economy->id,
-            'walletId' => $wallet->id
-        ]) }}"
-            class="item active">@lang('misc.deposit')</a>
-        <a href="#" class="item disabled">@lang('misc.withdraw')</a>
-    </div>
+    @if(!$redemption)
+        <div class="ui two item menu">
+            <a href="{{ route('community.wallet.topUp', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'walletId' => $wallet->id
+            ]) }}"
+                class="item active">@lang('misc.deposit')</a>
+            <a href="#" class="item disabled">@lang('misc.withdraw')</a>
+        </div>
+    @endif
 
     {!! Form::open(['action' => [
         'WalletController@doTopUp',
