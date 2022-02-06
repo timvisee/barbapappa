@@ -105,7 +105,7 @@
                         'communityId' => $economy->community_id,
                         'economyId' => $economy->id,
                         'walletId' => $wallet->id,
-                    ]) }}">@lang('pages.paymentService.topUpWithLargerAmount')</a>
+                    ]) }}">{{ strtolower(__('pages.paymentService.topUpWithLargerAmount')) }}</a>
                 </div>
             @endif
         </div>

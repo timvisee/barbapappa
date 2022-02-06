@@ -484,7 +484,7 @@ return [
         'youSpendAboutEachMonth' => 'Je besteedt :amount per maand.',
         'noteTimeAdvance' => '+:time voorschot',
         'redemption' => 'Aflossing',
-        'topUpWithLargerAmount' => 'met groter bedrag opwaarderen',
+        'topUpWithLargerAmount' => 'Met groter bedrag opwaarderen',
         'pay' => 'Betaal',
         'otherPay' => 'Ander bedrag, betaal',
         'selectPaymentServiceToUse' => 'Betaalmethode',
