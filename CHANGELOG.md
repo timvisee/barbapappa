@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.145 (2022-02-06)
+
+- Fix error one some transaction detail pages, when initiated by another user
+- Fix transaction details trying to show non-existent initiating user property
+
 ## 0.1.144 (2022-02-04)
 
 - Fix kiosk error when economy has no transactions yet
