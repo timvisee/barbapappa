@@ -32,10 +32,16 @@
                         </td>
                     </tr>
                 @endif
-                @if($transaction->created_by != barauth()->getUser()->id)
+                @if($transaction->initiated_by_id != null && $transaction->initiated_by_id != barauth()->getUser()->id)
                     <tr>
-                        <td>@lang('misc.initiatedBy')</td>
-                        <td>{{ $transaction->owner->name }}</td>
+                        <td>@lang('misc.madeBy')</td>
+                        <td>
+                            @if($transaction->initiatedBy)
+                                {{ $transaction->initiatedBy->name }}
+                            @else
+                                <i>@lang('misc.unknownUser')</i>
+                            @endif
+                        </td>
                     </tr>
                 @endif
             </tbody>
