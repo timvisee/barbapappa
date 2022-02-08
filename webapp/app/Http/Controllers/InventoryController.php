@@ -117,7 +117,8 @@ class InventoryController extends Controller {
             ->with('inventory', $inventory)
             ->with('products', $products)
             ->with('exhaustedProducts', $exhaustedProducts)
-            ->with('time', $time);
+            ->with('time', $time)
+            ->with('changes', $inventory->changes()->limit(10)->get() ?? collect());
     }
 
     /**
