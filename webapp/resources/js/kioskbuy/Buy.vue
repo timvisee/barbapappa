@@ -38,7 +38,9 @@
                             :selectedUsers="selectedUsers"
                             :selectedProducts="selectedProducts"
                             :cart="cart"
-                            :buying="buying" />
+                            :buying="buying"
+                            :_getUserCart="getUserCart"
+                            :_mergeCart="mergeCart" />
                 </div>
                 <div class="nine wide column inline">
                     <Products
@@ -49,7 +51,14 @@
                             :selectedUsers="selectedUsers"
                             :selectedProducts="selectedProducts"
                             :cart="cart"
-                            :buying="buying" />
+                            :buying="buying"
+                            :_getUserCart="getUserCart"
+                            :_getSelectCart="getSelectCart"
+                            :_getCartQuantity="getCartQuantity"
+                            :_setCartQuantity="setCartQuantity"
+                            :_changeCartQuantity="changeCartQuantity"
+                            :_getCartSize="getCartSize"
+                            :_removeCart="removeCart" />
                 </div>
                 <div v-if="swapped" class="seven wide column inline">
                     <Users
@@ -60,7 +69,9 @@
                             :selectedUsers="selectedUsers"
                             :selectedProducts="selectedProducts"
                             :cart="cart"
-                            :buying="buying" />
+                            :buying="buying"
+                            :_getUserCart="getUserCart"
+                            :_mergeCart="mergeCart" />
                 </div>
             </div>
 
@@ -288,6 +299,124 @@
                     .transition('stop')
                     .transition('glow');
             },
+
+            // Get cart for given user.
+            getUserCart(user, create = false) {
+                if(user == null)
+                    return null;
+
+                let cart = this.cart.filter(c => c.user.id == user.id)[0] || null;
+                if(cart != null || !create)
+                    return cart;
+
+                // Create cart
+                this.cart.push({
+                    user,
+                    products: [],
+                });
+                return this.getUserCart(user, false);
+            },
+
+            // Get selection cart.
+            getSelectCart(create = false) {
+                // Create cart if it doesn't exist
+                if(create && this.selectedProducts.length == 0)
+                    this.selectedProducts.push({
+                        user: null,
+                        products: [],
+                    });
+
+                // Return cart or null
+                return this.selectedProducts[0] || null;
+            },
+
+            // Get the selection quantity for a given product
+            getCartQuantity(cart, product) {
+                if(cart == null)
+                    return 0;
+
+                let item = cart.products.filter(p => p.id == product.id);
+                return item.length > 0 ? item[0].quantity : 0;
+            },
+
+            // Set product quantity in user cart.
+            setCartQuantity(cart, product, quantity) {
+                if(cart == null)
+                    return;
+
+                if(quantity > 0) {
+                    // Add/get product, set quantity
+                    let item = cart.products.filter(p => p.id == product.id);
+                    if(item.length > 0)
+                        item[0].quantity = quantity;
+                    else
+                        cart.products.push({
+                            id: product.id,
+                            quantity: quantity,
+                            product,
+                        });
+                } else {
+                    // Remove product from cart
+                    let i = cart.products.findIndex(p => p.id == product.id);
+                    if(i >= 0)
+                        cart.products.splice(i, 1);
+
+                    // If user does not have products anymore, remove cart
+                    if(this.getCartSize(cart) <= 0)
+                        this.removeCart(cart);
+                }
+            },
+
+            // Change quantity by given amount
+            changeCartQuantity(cart, product, diff = 1) {
+                this.setCartQuantity(cart, product, this.getCartQuantity(cart, product) + diff);
+            },
+
+            // Merge products from cart into other cart.
+            mergeCart(from, target) {
+                if(from == null || target == null || from.products == undefined || target.products == undefined)
+                    return;
+
+                // Change quantities in target to merge.
+                from.products.forEach((item) => {
+                    this.changeCartQuantity(target, item.product, item.quantity);
+                });
+            },
+
+            // Get the number of products in the given cart.
+            getCartSize(cart) {
+                if(cart == null || cart.products == undefined)
+                    return 0;
+                return cart.products.reduce((sum, product) => product.quantity + sum, 0);
+            },
+
+            // Remove the given cart.
+            //
+            // If cart has no user specified, it is considered to be the
+            // selection cart which is then removed.
+            removeCart(cart) {
+                if(cart == null)
+                    return;
+
+                // If no user, remove selection cart
+                if(cart.user == null) {
+                    this.selectedProducts.splice(0);
+                    return;
+                }
+
+                this.removeUserCart(cart.user);
+            },
+
+            // Remove the cart for a given user.
+            removeUserCart(user) {
+                if(user == null || user.id === undefined)
+                    return;
+
+                // Find user cart, then remove it
+                let i = this.cart.findIndex(c => c.user.id == cart.user.id);
+                if(i >= 0)
+                    this.cart.splice(i, 1);
+            }
         },
     }
 </script>

@@ -55,7 +55,7 @@
         <!-- Always show selected user on top if not part of query results -->
         <a v-for="user in selectedUsers"
                 v-if="!users.some(u => u.id == user.id)"
-                v-on:click.prevent.stop="toggleSelectUser(user)"
+                v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
                 class="green item kiosk-select-item">
@@ -74,7 +74,7 @@
         </a>
 
         <a v-for="user in users"
-                v-on:click.prevent.stop="toggleSelectUser(user)"
+                v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
                 class="green item kiosk-select-item">
@@ -95,7 +95,7 @@
         <!-- Always show users having a cart on bottom if not part of query results -->
         <a v-for="user in cart.map(c => c.user)"
                 v-if="!users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
-                v-on:click.prevent.stop="toggleSelectUser(user)"
+                v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
                 class="green item kiosk-select-item">
@@ -143,6 +143,8 @@
             'selectedProducts',
             'cart',
             'buying',
+            '_getUserCart',
+            '_mergeCart',
         ],
         watch: {
             query: function() {
@@ -155,6 +157,20 @@
             },
         },
         methods: {
+            // If we're currently in user selection mode.
+            isSelectMode() {
+                return !this.swapped;
+            },
+
+            // Invoked when an user item is clicked.
+            onItemClick(user) {
+                if(this.isSelectMode())
+                    this.toggleSelectUser(user);
+                else
+                    this.addProductsForUser(user);
+            },
+
+            // Toggle user selection.
             toggleSelectUser(user) {
                 // Assert we have maximum of one user in the list
                 if(this.selectedUsers.length > 1)
@@ -174,9 +190,27 @@
                 this.selectedUsers.push(user);
             },
 
+            // Add selected products to the user cart
+            addProductsForUser(user) {
+                if(this.selectedProducts.length == 0)
+                    return;
+
+                // Get selection and user cart
+                // TODO: use function to obtain this cart
+                let selectCart = this.selectedProducts[0];
+                if(selectCart == null || selectCart.products == undefined)
+                    return;
+                let userCart = this._getUserCart(user, true);
+
+                // Merge
+                this._mergeCart(selectCart, userCart);
+
+                // TODO: temporary select clicked item
+            },
+
             // Check whether given user is in given list.
             isUserSelected(user) {
-                return this.selectedUsers.some(u => u.id == user.id);
+                return this.isSelectMode() && this.selectedUsers.some(u => u.id == user.id);
             },
 
             // Search users with the given query
@@ -192,15 +226,10 @@
                     .finally(() => this.searching = false);
             },
 
-            // Get cart instance for user
-            getUserCart(user) {
-                return this.cart.filter(c => c.user.id == user.id)[0] || null;
-            },
-
             // Get product quantity for user
             getQuantity(user) {
                 // Get user cart
-                let userCart = this.getUserCart(user);
+                let userCart = this._getUserCart(user);
                 if(userCart == null)
                     return 0;
 

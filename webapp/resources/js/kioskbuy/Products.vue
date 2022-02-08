@@ -197,9 +197,10 @@
                         ? this.products.top.length + this.products.list.length
                         : 0;
             },
+
             // Products that are selected but not in current results
             productsBacklog: function() {
-                let cart = this.getUserCart();
+                let cart = this.getCart();
                 if(cart == null)
                     return [];
 
@@ -227,103 +228,63 @@
             'selectedProducts',
             'cart',
             'buying',
+            '_getUserCart',
+            '_getSelectCart',
+            '_getCartQuantity',
+            '_setCartQuantity',
+            '_changeCartQuantity',
+            '_getCartSize',
+            '_removeCart',
         ],
         methods: {
-            // Get cart instance for user
+            // If we're currently in user selection mode.
+            isSelectMode() {
+                return this.swapped;
+            },
+
+            // TODO: rename this to bag?
+            // Get the current cart.
+            // In normal mode, returns cart of selected user, or null.
+            // In swapped mode, returns selection cart.
+            getCart(create = false) {
+                if(!this.isSelectMode())
+                    return this.getUserCart(null, create);
+                else
+                    return this._getSelectCart(create);
+            },
+
+            // Get user cart.
             getUserCart(user, create = false) {
-                // Get current user if not given
-                if(user == null || user == undefined) {
-                    // Get user and cart, user must be selected
+                // Use selected user if not provided
+                if(user == null || user == undefined)
                     user = this.selectedUsers[0];
-                    if(user == null)
-                        return;
-                }
 
-                let cart = this.cart.filter(c => c.user.id == user.id)[0] || null;
-                if(cart != null || !create)
-                    return cart;
-
-                // Create cart
-                this.cart.push({
-                    user,
-                    products: [],
-                });
-                return this.getUserCart(user, false);
+                return this._getUserCart(user, create);
             },
 
             // Get the selection quantity for a given product
             getQuantity(product) {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return 0;
-                let userCart = this.getUserCart(user);
-                if(userCart == null)
-                    return 0;
-
-                let item = userCart.products.filter(p => p.id == product.id);
-                return item.length > 0 ? item[0].quantity : 0;
+                return this._getCartQuantity(this.getCart(), product);
             },
 
             // Set product quantity in user cart.
             setQuantity(product, quantity) {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return;
-                let userCart = this.getUserCart(user, true);
-
-                if(quantity > 0) {
-                    // Add/get product, set quantity
-                    let item = userCart.products.filter(p => p.id == product.id);
-                    if(item.length > 0)
-                        item[0].quantity = quantity;
-                    else
-                        userCart.products.push({
-                            id: product.id,
-                            quantity: quantity,
-                            product,
-                        });
-                } else {
-                    // Remove product from cart
-                    let i = userCart.products.findIndex(p => p.id == product.id);
-                    if(i >= 0)
-                        userCart.products.splice(i, 1);
-
-                    // If user does not have products anymore, remove cart
-                    if(this.getCartSize() <= 0)
-                        this.removeCart();
-                }
+                return this._setCartQuantity(this.getCart(true), product, quantity);
             },
 
             // Change quantity by given amount
             changeQuantity(product, diff = 1) {
-                this.setQuantity(product, this.getQuantity(product) + diff);
+                return this._changeCartQuantity(this.getCart(true), product, diff);
             },
 
             // Get the number of products in the current user cart
             getCartSize() {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return 0;
-                let userCart = this.getUserCart(user);
-                if(userCart == null)
-                    return 0;
-
-                return userCart.products.reduce((sum, product) => product.quantity + sum, 0);
+                return this._getCartSize(this.getCart());
             },
 
-            // Remove cart for the current user
+            // Remove current cart.
             removeCart() {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return 0;
-
-                let i = this.cart.findIndex(c => c.user.id == user.id);
-                if(i >= 0)
-                    this.cart.splice(i, 1);
+                this._removeCart(this.getCart());
             },
 
             // Search products with the given query
