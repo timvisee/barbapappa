@@ -1053,6 +1053,7 @@ return [
     'kiosk' => [
         'loading' => 'Loading ship',
         'selectUser' => 'Select pirate',
+        'addToUser' => 'Add to pirate',
         'searchUsers' => 'Scavenge pirates',
         'searchingFor' => 'Scavenging :term...',
         'noUsersFoundFor' => 'Nay for :term',

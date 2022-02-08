@@ -1054,6 +1054,7 @@ return [
     'kiosk' => [
         'loading' => 'Loading Kiosk',
         'selectUser' => 'Select member',
+        'addToUser' => 'Add to member',
         'searchUsers' => 'Search users',
         'searchingFor' => 'Searching :term...',
         'noUsersFoundFor' => 'Nobody for :term',

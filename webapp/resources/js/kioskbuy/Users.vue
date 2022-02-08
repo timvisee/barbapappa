@@ -16,7 +16,8 @@
         </div>
 
         <h5 class="ui item header">
-            {{ __('pages.kiosk.selectUser') }}
+            <span v-if="isSelectMode()">{{ __('pages.kiosk.selectUser') }}</span>
+            <span v-else>{{ __('pages.kiosk.addToUser') }}</span>
 
             <a v-if="!swapped"
                     v-on:click.stop.prevent="swap()"
@@ -83,8 +84,8 @@
                 <div class="ui buttons">
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>
@@ -113,8 +114,8 @@
                 <div class="ui buttons">
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>
@@ -145,8 +146,8 @@
                 <div class="ui buttons">
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>

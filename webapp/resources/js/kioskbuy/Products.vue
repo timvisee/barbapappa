@@ -86,8 +86,8 @@
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>
@@ -121,8 +121,8 @@
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>
@@ -164,8 +164,8 @@
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>

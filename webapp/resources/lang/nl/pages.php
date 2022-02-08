@@ -1055,6 +1055,7 @@ return [
     'kiosk' => [
         'loading' => 'Kiosk laden',
         'selectUser' => 'Selecteer lid',
+        'addToUser' => 'Toevoegen aan lid',
         'searchUsers' => 'Zoek leden',
         'searchingFor' => 'Zoeken :term...',
         'noUsersFoundFor' => 'Niemand voor :term',
