@@ -66,7 +66,10 @@
                 class="item kiosk-select-item prominent"
                 v-bind:class="{ disabled: buying || product.exhausted, active: getQuantity(product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">
+                    <span v-if="isSelectMode()">+{{ getQuantity(product) }}</span>
+                    <span v-else>{{ getQuantity(product) }}×</span>
+                </span>
 
                 {{ product.name }}
             </div>
@@ -101,7 +104,10 @@
                 class="green inverted item kiosk-select-item"
                 v-bind:class="{ disabled: buying || product.exhausted, active: getQuantity(product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">
+                    <span v-if="isSelectMode()">+{{ getQuantity(product) }}</span>
+                    <span v-else>{{ getQuantity(product) }}×</span>
+                </span>
 
                 {{ product.name }}
             </div>
@@ -147,8 +153,10 @@
                 class="green inverted item kiosk-select-item"
                 v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{
-                    getQuantity(product) }}×</span>
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">
+                    <span v-if="isSelectMode()">+{{ getQuantity(product) }}</span>
+                    <span v-else>{{ getQuantity(product) }}×</span>
+                </span>
 
                 {{ product.name }}
             </div>
