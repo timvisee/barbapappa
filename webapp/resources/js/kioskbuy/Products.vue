@@ -26,7 +26,14 @@
                 <i class="halflings halflings-reflect-y"></i>
             </a>
 
-            <a v-if="getCartSize() > 0 && !buying"
+            <a v-if="isSelectMode() && selectedProducts.length && !buying"
+                    v-on:click.stop.prevent="reset(); query = ''"
+                    href="#"
+                    class="action negative">
+                {{ __('pages.kiosk.deselect') }}
+            </a>
+
+            <a v-if="!isSelectMode() && getCartSize() > 0 && !buying"
                     v-on:click.stop.prevent="removeCart(); query = ''"
                     href="#"
                     class="action negative">
@@ -304,6 +311,11 @@
             isProductInResult(product) {
                 return this.products.top.filter(p => p.id == product.id).length > 0
                     || this.products.list.filter(p => p.id == product.id).length > 0;
+            },
+
+            // Reset selection
+            reset() {
+                this.selectedProducts.splice(0);
             },
 
             // Hint to select a user first

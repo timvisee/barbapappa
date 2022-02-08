@@ -26,11 +26,18 @@
                 <i class="halflings halflings-reflect-y"></i>
             </a>
 
-            <a v-if="selectedUsers.length"
+            <a v-if="isSelectMode() && selectedUsers.length && !buying"
                     v-on:click.stop.prevent="reset(); query = ''"
                     href="#"
                     class="action negative">
                 {{ __('pages.kiosk.deselect') }}
+            </a>
+
+            <a v-if="!isSelectMode() && _getTotalCartQuantity() > 0 && !buying"
+                    v-on:click.stop.prevent="_removeAllUserCarts(); query = ''"
+                    href="#"
+                    class="action negative">
+                {{ __('misc.reset') }}
             </a>
         </h5>
 
@@ -145,6 +152,8 @@
             'buying',
             '_getUserCart',
             '_mergeCart',
+            '_removeAllUserCarts',
+            '_getTotalCartQuantity',
         ],
         watch: {
             query: function() {

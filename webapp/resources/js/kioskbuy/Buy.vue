@@ -40,7 +40,9 @@
                             :cart="cart"
                             :buying="buying"
                             :_getUserCart="getUserCart"
-                            :_mergeCart="mergeCart" />
+                            :_mergeCart="mergeCart"
+                            :_removeAllUserCarts="removeAllUserCarts"
+                            :_getTotalCartQuantity="getTotalCartQuantity" />
                 </div>
                 <div class="nine wide column inline">
                     <Products
@@ -71,7 +73,9 @@
                             :cart="cart"
                             :buying="buying"
                             :_getUserCart="getUserCart"
-                            :_mergeCart="mergeCart" />
+                            :_mergeCart="mergeCart"
+                            :_removeAllUserCarts="removeAllUserCarts"
+                            :_getTotalCartQuantity="getTotalCartQuantity" />
                 </div>
             </div>
 
@@ -84,7 +88,8 @@
                     v-on:confirming="setConfirming"
                     :selectedUsers="selectedUsers"
                     :cart="cart"
-                    :buying="buying" />
+                    :buying="buying"
+                    :_getTotalCartQuantity="getTotalCartQuantity" />
 
         </div>
     </div>
@@ -210,7 +215,7 @@
 
                 this.selectedUsers.splice(0);
                 this.selectedProducts.splice(0);
-                this.cart.splice(0);
+                this.removeAllUserCarts();
                 this.resetSwap();
 
                 // TODO: optionally reload list of users/products
@@ -330,6 +335,19 @@
                 return this.selectedProducts[0] || null;
             },
 
+            // Get quantity of all user carts.
+            getTotalCartQuantity() {
+                if(this.cart == null || this.cart.length == 0)
+                    return 0;
+
+                return this.cart
+                    .map(i => i.products
+                        .map(p => p.quantity)
+                        .reduce((a, b) => a + b)
+                    )
+                    .reduce((a, b) => a + b);
+            },
+
             // Get the selection quantity for a given product
             getCartQuantity(cart, product) {
                 if(cart == null)
@@ -407,13 +425,18 @@
                 this.removeUserCart(cart.user);
             },
 
+            // Remove all user carts.
+            removeAllUserCarts() {
+                this.cart.splice(0);
+            },
+
             // Remove the cart for a given user.
             removeUserCart(user) {
                 if(user == null || user.id === undefined)
                     return;
 
                 // Find user cart, then remove it
-                let i = this.cart.findIndex(c => c.user.id == cart.user.id);
+                let i = this.cart.findIndex(c => c.user.id == user.id);
                 if(i >= 0)
                     this.cart.splice(i, 1);
             }
