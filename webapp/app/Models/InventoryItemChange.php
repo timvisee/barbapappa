@@ -223,6 +223,27 @@ class InventoryItemChange extends Model {
     }
 
     /**
+     * Check whether this can be undone.
+     */
+    public function canUndo() {
+        // Do not allow purchase changes to be undone, undo through
+        // transaction/mutation instead
+        switch($this->type) {
+        case Self::TYPE_BALANCE:
+        case Self::TYPE_MOVE:
+        case Self::TYPE_ADD_REMOVE:
+        case Self::TYPE_SET:
+            return true;
+
+        case Self::TYPE_PURCHASE:
+            return false;
+
+        default:
+            throw new \Exception("Unknown inventory item change type, cannot determine if user can undo");
+        }
+    }
+
+    /**
      * Format the quantity amount for this change.
      *
      * @param boolean [$format=FORMAT_PLAIN] The quantity formatting type.

@@ -141,6 +141,68 @@ class InventoryProductController extends Controller {
     }
 
     /**
+     * Undo a change.
+     *
+     * @return Response
+     */
+    public function undo(Request $request, $communityId, $economyId, $inventoryId, $productId, $changeId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $product = $economy->products()->findOrFail($productId);
+        $item = $inventory->getItem($product);
+        $change = $item->changes()->findOrFail($changeId);
+
+        // Make sure we can undo, redirect back with error otherwise
+        if(!$change->canUndo())
+            return redirect()
+                ->back()
+                ->with('error', __('pages.inventories.cannotUndoChange'));
+
+        return view('community.economy.inventory.product.undo')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory)
+            ->with('product', $product)
+            ->with('item', $item)
+            ->with('change', $change);
+    }
+
+    /**
+     * Do undo the given transaction.
+     *
+     * @return Response
+     */
+    public function doUndo(Request $request, $communityId, $economyId, $inventoryId, $productId, $changeId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $product = $economy->products()->findOrFail($productId);
+        $item = $inventory->getItem($product);
+        $change = $item->changes()->findOrFail($changeId);
+
+        // Make sure we can undo, redirect back with error otherwise
+        if(!$change->canUndo())
+            return redirect()
+                ->back()
+                ->with('error', __('pages.inventories.cannotUndoChange'));
+
+        // Undo the change
+        $change->undo();
+
+        // Redirect back to the bar
+        return redirect()
+            ->route('community.economy.inventory.product.changes', [
+                'communityId' => $community->human_id,
+                'economyId' => $economy->id,
+                'inventoryId' => $change->item->inventory_id,
+                'productId' => $product->id,
+            ])
+            ->with('success', __('pages.inventories.undoneChange'));
+    }
+
+    /**
      * The permission required for viewing.
      * @return PermsConfig The permission configuration.
      */
