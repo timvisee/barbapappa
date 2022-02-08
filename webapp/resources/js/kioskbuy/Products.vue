@@ -1,7 +1,7 @@
 <template>
     <div class="ui vertical huge menu fluid panel-products">
 
-        <div v-if="selectedUsers.length == 0"
+        <div v-if="!swapped && selectedUsers.length == 0"
                 v-on:click="hintUsers()"
                 class="ui inverted active dimmer">
             <div class="ui text">{{ __('pages.kiosk.firstSelectUser') }}</div>
@@ -216,6 +216,7 @@
             'apiUrl',
             'swapped',
             'selectedUsers',
+            'selectedProducts',
             'cart',
             'buying',
         ],
@@ -511,7 +512,7 @@
 
     .action {
         color: rgba(0,0,0,.87);
-        margin-left: 0.5em;
+        margin-left: 1em;
         float: right;
         line-height: 1 !important;
     }

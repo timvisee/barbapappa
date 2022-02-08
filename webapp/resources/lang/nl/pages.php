@@ -1059,6 +1059,7 @@ return [
         'searchingFor' => 'Zoeken :term...',
         'noUsersFoundFor' => 'Niemand voor :term',
         'firstSelectUser' => 'Selecteer links een lid om een aankoop voor te doen',
+        'firstSelectProduct' => 'Selecteer links producten om voor een lid te kopen',
         'selectProducts' => 'Selecteer producten',
         'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',
         'buyProductsUsers#' => '{0} Koop geen producten voor :users leden|[1,*] Koop :count× voor :users leden',

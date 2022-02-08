@@ -1,5 +1,12 @@
 <template>
     <div class="ui vertical huge menu fluid panel-users">
+
+        <div v-if="swapped && selectedProducts.length == 0"
+                v-on:click="hintProducts()"
+                class="ui inverted active dimmer">
+            <div class="ui text">{{ __('pages.kiosk.firstSelectProduct') }}</div>
+        </div>
+
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectUser') }}
 
@@ -125,6 +132,7 @@
             'apiUrl',
             'swapped',
             'selectedUsers',
+            'selectedProducts',
             'cart',
             'buying',
         ],
@@ -197,6 +205,13 @@
                 this.selectedUsers.splice(0);
             },
 
+            // Hint to select a product first
+            hintProducts() {
+                if(this.selectedProducts > 0)
+                    return;
+                this.$emit('highlightProducts');
+            },
+
             // Swap view
             swap() {
                 this.$emit('swap');
@@ -226,7 +241,7 @@
 
     .action {
         color: rgba(0,0,0,.87);
-        margin-left: 0.5em;
+        margin-left: 1em;
         float: right;
         line-height: 1 !important;
     }

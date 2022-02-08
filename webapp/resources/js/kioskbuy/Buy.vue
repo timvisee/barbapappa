@@ -36,6 +36,7 @@
                             :apiUrl="apiUrl"
                             :swapped="swapped"
                             :selectedUsers="selectedUsers"
+                            :selectedProducts="selectedProducts"
                             :cart="cart"
                             :buying="buying" />
                 </div>
@@ -46,6 +47,7 @@
                             :apiUrl="apiUrl"
                             :swapped="swapped"
                             :selectedUsers="selectedUsers"
+                            :selectedProducts="selectedProducts"
                             :cart="cart"
                             :buying="buying" />
                 </div>
@@ -56,6 +58,7 @@
                             :apiUrl="apiUrl"
                             :swapped="swapped"
                             :selectedUsers="selectedUsers"
+                            :selectedProducts="selectedProducts"
                             :cart="cart"
                             :buying="buying" />
                 </div>
@@ -105,6 +108,7 @@
             return {
                 swapped: false,
                 selectedUsers: [],
+                selectedProducts: [],
                 cart: [],
                 confirming: false,
                 buying: false,
@@ -194,6 +198,7 @@
                 }
 
                 this.selectedUsers.splice(0);
+                this.selectedProducts.splice(0);
                 this.cart.splice(0);
                 this.resetSwap();
 
@@ -214,6 +219,7 @@
                 // Set up order inactivity cancel timeout
                 this.orderCancelTimer = setTimeout(() => {
                     // Skip if no users selected or nothing in cart
+                    // TODO: also check selected users!
                     if(this.selectedUsers.length == 0 && this.cart.length == 0)
                         return;
 
@@ -257,6 +263,7 @@
 
                 // Reset selected users
                 this.selectedUsers.splice(0);
+                this.selectedProducts.splice(0);
             },
 
             // Reset swap state.

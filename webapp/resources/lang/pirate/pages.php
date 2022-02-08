@@ -1057,6 +1057,7 @@ return [
         'searchingFor' => 'Scavenging :term...',
         'noUsersFoundFor' => 'Nay for :term',
         'firstSelectUser' => 'Select a pirate on the left to make a purchase for',
+        'firstSelectProduct' => 'Select loot on the left to purchase for a pirate',
         'selectProducts' => 'Select loot',
         'buyProducts#' => '{0} Get no loot|{1} Get loot|[2,*] Get :count loot',
         'buyProductsUsers#' => '{0} Get no loot for :users pirates|[1,*] Get :count× for :users pirates',
