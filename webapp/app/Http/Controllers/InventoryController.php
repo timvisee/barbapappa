@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class InventoryController extends Controller {
 
+    const PAGINATE_ITEMS = 50;
+
     /**
      * Number of inventory item changes to consider when summing recent moves
      * for an inventory.
@@ -115,7 +117,8 @@ class InventoryController extends Controller {
             ->with('inventory', $inventory)
             ->with('products', $products)
             ->with('exhaustedProducts', $exhaustedProducts)
-            ->with('time', $time);
+            ->with('time', $time)
+            ->with('changes', $inventory->changes()->limit(10)->get() ?? collect());
     }
 
     /**
@@ -213,6 +216,36 @@ class InventoryController extends Controller {
                 'economyId' => $economy->id,
             ])
             ->with('success', __('pages.inventories.deleted'));
+    }
+
+    /**
+     * List inventory changes.
+     *
+     * @return Response
+     */
+    public function changes(Request $request, $communityId, $economyId, $inventoryId) {
+        // Get the community, find the inventory
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+        $inventory = $economy->inventories()->findOrFail($inventoryId);
+
+        // Create filter list
+        $types = collect(InventoryItemChange::TYPES)
+            ->filter(function($t) use($request) {
+                $query = $request->query('filter_' . $t);
+                return $query == null || is_checked($query);
+            });
+
+        $changes = $inventory
+            ->changes()
+            ->whereIn('type', $types)
+            ->paginate(self::PAGINATE_ITEMS)
+            ?? collect();
+
+        return view('community.economy.inventory.changes')
+            ->with('economy', $economy)
+            ->with('inventory', $inventory)
+            ->with('changes', $changes);
     }
 
     /**
