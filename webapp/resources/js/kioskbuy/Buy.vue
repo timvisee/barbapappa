@@ -150,6 +150,9 @@
             selectedUsers: function() {
                 this.heartbeat();
             },
+            selectedProducts: function() {
+                this.heartbeat();
+            },
             cart: function() {
                 this.heartbeat();
             },
