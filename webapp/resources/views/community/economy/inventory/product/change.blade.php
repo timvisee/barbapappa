@@ -143,6 +143,19 @@
                @lang('pages.mutations.viewMutation')
             </a>
         @endif
+
+        @if($change->canUndo())
+            <a href="{{ route('community.economy.inventory.product.change.undo', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'inventoryId' => $change->item->inventory_id,
+                    'productId' => $product->id,
+                    'changeId' => $change->id,
+                    ]) }}"
+                    class="ui button basic">
+                @lang('misc.undo')
+            </a>
+        @endif
     </p>
 
     <p>
