@@ -1,13 +1,44 @@
 <template>
     <div class="ui vertical huge menu fluid panel-users">
-        <h5 class="ui item header">
-            {{ __('pages.kiosk.selectUser') }}
 
-            <a v-if="selectedUsers.length"
+        <div v-if="swapped && selectedProducts.length == 0"
+                v-on:click="hintProducts()"
+                class="ui inverted active dimmer">
+            <div class="ui text">
+                {{ __('pages.kiosk.firstSelectProduct') }}
+
+                <div class="ui horizontal divider">{{ __('general.or') }}</div>
+                <a v-on:click.stop.prevent="swap()"
+                        href="#">
+                    {{ __('pages.kiosk.swapColumns').toLowerCase() }}
+                </a>
+            </div>
+        </div>
+
+        <h5 class="ui item header">
+            <span v-if="isSelectMode()">{{ __('pages.kiosk.selectUser') }}</span>
+            <span v-else>{{ __('pages.kiosk.addToUser') }}</span>
+
+            <a v-if="!swapped"
+                    v-on:click.stop.prevent="swap()"
+                    href="#"
+                    class="action"
+                    :title="__('pages.kiosk.swapColumns')">
+                <i class="halflings halflings-reflect-y"></i>
+            </a>
+
+            <a v-if="isSelectMode() && selectedUsers.length && !buying"
                     v-on:click.stop.prevent="reset(); query = ''"
                     href="#"
-                    class="reset">
+                    class="action negative">
                 {{ __('pages.kiosk.deselect') }}
+            </a>
+
+            <a v-if="!isSelectMode() && _getTotalCartQuantity() > 0 && !buying"
+                    v-on:click.stop.prevent="_removeAllUserCarts(); query = ''"
+                    href="#"
+                    class="action negative">
+                {{ __('misc.reset') }}
             </a>
         </h5>
 
@@ -32,7 +63,7 @@
         <!-- Always show selected user on top if not part of query results -->
         <a v-for="user in selectedUsers"
                 v-if="!users.some(u => u.id == user.id)"
-                v-on:click.prevent.stop="toggleSelectUser(user)"
+                v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
                 class="green item kiosk-select-item">
@@ -47,11 +78,22 @@
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
+            </div>
+
+            <div class="item-buttons" v-if="getQuantity(user) > 0">
+                <div class="ui buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="_removeUserCart(user)"
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
+                </div>
             </div>
         </a>
 
         <a v-for="user in users"
-                v-on:click.prevent.stop="toggleSelectUser(user)"
+                v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
                 class="green item kiosk-select-item">
@@ -66,13 +108,24 @@
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
+            </div>
+
+            <div class="item-buttons" v-if="getQuantity(user) > 0">
+                <div class="ui buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="_removeUserCart(user)"
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
+                </div>
             </div>
         </a>
 
         <!-- Always show users having a cart on bottom if not part of query results -->
         <a v-for="user in cart.map(c => c.user)"
                 v-if="!users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
-                v-on:click.prevent.stop="toggleSelectUser(user)"
+                v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
                 class="green item kiosk-select-item">
@@ -87,6 +140,17 @@
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
+            </div>
+
+            <div class="item-buttons" v-if="getQuantity(user) > 0">
+                <div class="ui buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="_removeUserCart(user)"
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
+                </div>
             </div>
         </a>
 
@@ -115,9 +179,16 @@
         },
         props: [
             'apiUrl',
+            'swapped',
             'selectedUsers',
+            'selectedProducts',
             'cart',
             'buying',
+            '_getUserCart',
+            '_mergeCart',
+            '_removeUserCart',
+            '_removeAllUserCarts',
+            '_getTotalCartQuantity',
         ],
         watch: {
             query: function() {
@@ -130,6 +201,20 @@
             },
         },
         methods: {
+            // If we're currently in user selection mode.
+            isSelectMode() {
+                return !this.swapped;
+            },
+
+            // Invoked when an user item is clicked.
+            onItemClick(user) {
+                if(this.isSelectMode())
+                    this.toggleSelectUser(user);
+                else
+                    this.addProductsForUser(user);
+            },
+
+            // Toggle user selection.
             toggleSelectUser(user) {
                 // Assert we have maximum of one user in the list
                 if(this.selectedUsers.length > 1)
@@ -149,9 +234,27 @@
                 this.selectedUsers.push(user);
             },
 
+            // Add selected products to the user cart
+            addProductsForUser(user) {
+                if(this.selectedProducts.length == 0)
+                    return;
+
+                // Get selection and user cart
+                // TODO: use function to obtain this cart
+                let selectCart = this.selectedProducts[0];
+                if(selectCart == null || selectCart.products == undefined)
+                    return;
+                let userCart = this._getUserCart(user, true);
+
+                // Merge
+                this._mergeCart(selectCart, userCart);
+
+                // TODO: temporary select clicked item
+            },
+
             // Check whether given user is in given list.
             isUserSelected(user) {
-                return this.selectedUsers.some(u => u.id == user.id);
+                return this.isSelectMode() && this.selectedUsers.some(u => u.id == user.id);
             },
 
             // Search users with the given query
@@ -167,15 +270,10 @@
                     .finally(() => this.searching = false);
             },
 
-            // Get cart instance for user
-            getUserCart(user) {
-                return this.cart.filter(c => c.user.id == user.id)[0] || null;
-            },
-
             // Get product quantity for user
             getQuantity(user) {
                 // Get user cart
-                let userCart = this.getUserCart(user);
+                let userCart = this._getUserCart(user);
                 if(userCart == null)
                     return 0;
 
@@ -186,6 +284,18 @@
             // Reset selection
             reset() {
                 this.selectedUsers.splice(0);
+            },
+
+            // Hint to select a product first
+            hintProducts() {
+                if(this.selectedProducts > 0)
+                    return;
+                this.$emit('highlightProducts');
+            },
+
+            // Swap view
+            swap() {
+                this.$emit('swap');
             },
         },
         mounted: function() {
@@ -210,18 +320,62 @@
         float: right;
     }
 
-    .reset {
-        color: red;
+    .action {
+        color: rgba(0,0,0,.87);
+        margin-left: 1em;
         float: right;
         line-height: 1 !important;
+    }
+
+    .action.negative {
+        color: red;
+    }
+
+    .action .halflings {
+        /* This is a hack, don't occupy space instead */
+        margin-top: -3px;
+        margin-bottom: -3px;
     }
 
     .active.green {
         color: #21ba45 !important;
     }
 
+    /* Right aligned buttons */
+    .kiosk-select-item .item-buttons {
+        overflow: hidden;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .kiosk-select-item .item-buttons .button {
+        text-align: center;
+        padding: .92857143em 1.125em;
+        line-height: 1.1;
+        border-radius: 0 !important;
+    }
+
+    .button .glyphicons {
+        vertical-align: middle;
+    }
+
+    .button .glyphicons::before {
+        padding: 0;
+    }
+
     .quantity,
     .item.active {
         font-weight: bold !important;
+    }
+
+    .ui.dimmer .text {
+        padding: 1em;
+        line-height: 2;
+    }
+
+    .ui.dimmer .ui.divider {
+        font-weight: normal;
     }
 </style>

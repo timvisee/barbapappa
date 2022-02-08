@@ -28,8 +28,8 @@
                     confirmingBuy
                         ? __('pages.bar.advancedBuy.pressToConfirm')
                         : (cart.length <= 1
-                            ? langChoice('pages.kiosk.buyProducts#', quantity())
-                            : langChoice('pages.kiosk.buyProductsUsers#', quantity(), {users: this.cart.length}))
+                            ? langChoice('pages.kiosk.buyProducts#', _getTotalCartQuantity())
+                            : langChoice('pages.kiosk.buyProductsUsers#', _getTotalCartQuantity(), {users: this.cart.length}))
                 }}
             </a>
         </div>
@@ -42,6 +42,7 @@
             'cart',
             'buying',
             'selectedUsers',
+            '_getTotalCartQuantity',
         ],
         data: function() {
             return {
@@ -58,15 +59,6 @@
             },
         },
         methods: {
-            quantity() {
-                return this.cart
-                    .map(i => i.products
-                        .map(p => p.quantity)
-                        .reduce((a, b) => a + b)
-                    )
-                    .reduce((a, b) => a + b);
-            },
-
             buy() {
                 if(this.confirmingBuy !== true) {
                     this.setConfirmingBuy(true);

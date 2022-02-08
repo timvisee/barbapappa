@@ -1,19 +1,42 @@
 <template>
     <div class="ui vertical huge menu fluid panel-products">
 
-        <div v-if="selectedUsers.length == 0"
+        <div v-if="!swapped && selectedUsers.length == 0"
                 v-on:click="hintUsers()"
                 class="ui inverted active dimmer">
-            <div class="ui text">{{ __('pages.kiosk.firstSelectUser') }}</div>
+            <div class="ui text">
+                {{ __('pages.kiosk.firstSelectUser') }}
+
+                <div class="ui horizontal divider">{{ __('general.or') }}</div>
+                <a v-on:click.stop.prevent="swap()"
+                        href="#">
+                    {{ __('pages.kiosk.swapColumns').toLowerCase() }}
+                </a>
+            </div>
         </div>
 
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectProducts') }}
 
-            <a v-if="getCartSize() > 0 && !buying"
+            <a v-if="swapped"
+                    v-on:click.stop.prevent="swap()"
+                    href="#"
+                    class="action"
+                    :title="__('pages.kiosk.swapColumns')">
+                <i class="halflings halflings-reflect-y"></i>
+            </a>
+
+            <a v-if="isSelectMode() && selectedProducts.length && !buying"
+                    v-on:click.stop.prevent="reset(); query = ''"
+                    href="#"
+                    class="action negative">
+                {{ __('pages.kiosk.deselect') }}
+            </a>
+
+            <a v-if="!isSelectMode() && getCartSize() > 0 && !buying"
                     v-on:click.stop.prevent="removeCart(); query = ''"
                     href="#"
-                    class="reset">
+                    class="action negative">
                 {{ __('misc.reset') }}
             </a>
         </h5>
@@ -43,7 +66,10 @@
                 class="item kiosk-select-item prominent"
                 v-bind:class="{ disabled: buying || product.exhausted, active: getQuantity(product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">
+                    <span v-if="isSelectMode()">+{{ getQuantity(product) }}</span>
+                    <span v-else>{{ getQuantity(product) }}×</span>
+                </span>
 
                 {{ product.name }}
             </div>
@@ -63,8 +89,8 @@
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>
@@ -78,7 +104,10 @@
                 class="green inverted item kiosk-select-item"
                 v-bind:class="{ disabled: buying || product.exhausted, active: getQuantity(product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{ getQuantity(product) }}×</span>
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">
+                    <span v-if="isSelectMode()">+{{ getQuantity(product) }}</span>
+                    <span v-else>{{ getQuantity(product) }}×</span>
+                </span>
 
                 {{ product.name }}
             </div>
@@ -98,8 +127,8 @@
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>
@@ -124,8 +153,10 @@
                 class="green inverted item kiosk-select-item"
                 v-bind:class="{ disabled: buying, active: getQuantity(product) > 0 }">
             <div class="item-text">
-                <span v-if="getQuantity(product) > 0" class="subtle quantity">{{
-                    getQuantity(product) }}×</span>
+                <span v-if="getQuantity(product) > 0" class="subtle quantity">
+                    <span v-if="isSelectMode()">+{{ getQuantity(product) }}</span>
+                    <span v-else>{{ getQuantity(product) }}×</span>
+                </span>
 
                 {{ product.name }}
             </div>
@@ -141,8 +172,8 @@
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ disabled: buying }"
-                            class="ui red large button">
+                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
                 </div>
@@ -181,9 +212,10 @@
                         ? this.products.top.length + this.products.list.length
                         : 0;
             },
+
             // Products that are selected but not in current results
             productsBacklog: function() {
-                let cart = this.getUserCart();
+                let cart = this.getCart();
                 if(cart == null)
                     return [];
 
@@ -206,106 +238,72 @@
         },
         props: [
             'apiUrl',
+            'swapped',
             'selectedUsers',
+            'selectedProducts',
             'cart',
             'buying',
+            '_getUserCart',
+            '_getSelectCart',
+            '_getCartQuantity',
+            '_setCartQuantity',
+            '_addCartQuantity',
+            '_getCartSize',
+            '_removeCart',
         ],
         methods: {
-            // Get cart instance for user
+            // If we're currently in user selection mode.
+            isSelectMode() {
+                return this.swapped;
+            },
+
+            // TODO: rename this to bag?
+            // Get the current cart.
+            // In normal mode, returns cart of selected user, or null.
+            // In swapped mode, returns selection cart.
+            getCart(create = false) {
+                if(!this.isSelectMode())
+                    return this.getUserCart(null, create);
+                else
+                    return this._getSelectCart(create);
+            },
+
+            // Get user cart.
             getUserCart(user, create = false) {
-                // Get current user if not given
-                if(user == null || user == undefined) {
-                    // Get user and cart, user must be selected
+                // Use selected user if not provided
+                if(user == null || user == undefined)
                     user = this.selectedUsers[0];
-                    if(user == null)
-                        return;
-                }
 
-                let cart = this.cart.filter(c => c.user.id == user.id)[0] || null;
-                if(cart != null || !create)
-                    return cart;
-
-                // Create cart
-                this.cart.push({
-                    user,
-                    products: [],
-                });
-                return this.getUserCart(user, false);
+                return this._getUserCart(user, create);
             },
 
             // Get the selection quantity for a given product
             getQuantity(product) {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return 0;
-                let userCart = this.getUserCart(user);
-                if(userCart == null)
-                    return 0;
-
-                let item = userCart.products.filter(p => p.id == product.id);
-                return item.length > 0 ? item[0].quantity : 0;
+                return this._getCartQuantity(this.getCart(), product);
             },
 
             // Set product quantity in user cart.
             setQuantity(product, quantity) {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return;
-                let userCart = this.getUserCart(user, true);
-
-                if(quantity > 0) {
-                    // Add/get product, set quantity
-                    let item = userCart.products.filter(p => p.id == product.id);
-                    if(item.length > 0)
-                        item[0].quantity = quantity;
-                    else
-                        userCart.products.push({
-                            id: product.id,
-                            quantity: quantity,
-                            product,
-                        });
-                } else {
-                    // Remove product from cart
-                    let i = userCart.products.findIndex(p => p.id == product.id);
-                    if(i >= 0)
-                        userCart.products.splice(i, 1);
-
-                    // If user does not have products anymore, remove cart
-                    if(this.getCartSize() <= 0)
-                        this.removeCart();
-                }
+                return this._setCartQuantity(this.getCart(true), product, quantity);
             },
 
             // Change quantity by given amount
             changeQuantity(product, diff = 1) {
-                this.setQuantity(product, this.getQuantity(product) + diff);
+                // In selection mode, highlight user column
+                if(this.isSelectMode())
+                    this.hintUsers();
+
+                return this._addCartQuantity(this.getCart(true), product, diff);
             },
 
             // Get the number of products in the current user cart
             getCartSize() {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return 0;
-                let userCart = this.getUserCart(user);
-                if(userCart == null)
-                    return 0;
-
-                return userCart.products.reduce((sum, product) => product.quantity + sum, 0);
+                return this._getCartSize(this.getCart());
             },
 
-            // Remove cart for the current user
+            // Remove current cart.
             removeCart() {
-                // Get user and cart, user must be selected
-                let user = this.selectedUsers[0];
-                if(user == null)
-                    return 0;
-
-                let i = this.cart.findIndex(c => c.user.id == user.id);
-                if(i >= 0)
-                    this.cart.splice(i, 1);
+                this._removeCart(this.getCart());
             },
 
             // Search products with the given query
@@ -327,11 +325,21 @@
                     || this.products.list.filter(p => p.id == product.id).length > 0;
             },
 
+            // Reset selection
+            reset() {
+                this.selectedProducts.splice(0);
+            },
+
             // Hint to select a user first
             hintUsers() {
-                if(this.selectedUsers > 0)
+                if(this.selectedProducts.length > 0)
                     return;
                 this.$emit('highlightUsers');
+            },
+
+            // Swap view
+            swap() {
+                this.$emit('swap');
             },
 
             // Show quantity modal for product
@@ -495,14 +503,23 @@
         line-height: 1.4 !important;;
     }
 
-    .reset {
-        color: red;
+    .action {
+        color: rgba(0,0,0,.87);
+        margin-left: 1em;
         float: right;
         line-height: 1 !important;
+    }
+
+    .action.negative {
+        color: red;
     }
 
     .ui.dimmer .text {
         padding: 1em;
         line-height: 2;
+    }
+
+    .ui.dimmer .ui.divider {
+        font-weight: normal;
     }
 </style>

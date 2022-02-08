@@ -27,22 +27,57 @@
                 {{ successMessage }}
             </div>
 
+            <!-- Users and product list, reverse if swapped -->
             <div class="ui grid">
-                <div class="seven wide column inline">
+                <div v-if="!swapped" class="seven wide column inline">
                     <Users
+                            v-on:swap="swap"
                             v-on:highlightProducts="highlightProducts"
                             :apiUrl="apiUrl"
+                            :swapped="swapped"
                             :selectedUsers="selectedUsers"
+                            :selectedProducts="selectedProducts"
                             :cart="cart"
-                            :buying="buying" />
+                            :buying="buying"
+                            :_getUserCart="getUserCart"
+                            :_mergeCart="mergeCart"
+                            :_removeUserCart="removeUserCart"
+                            :_removeAllUserCarts="removeAllUserCarts"
+                            :_getTotalCartQuantity="getTotalCartQuantity" />
                 </div>
                 <div class="nine wide column inline">
                     <Products
+                            v-on:swap="swap"
                             v-on:highlightUsers="highlightUsers"
                             :apiUrl="apiUrl"
+                            :swapped="swapped"
                             :selectedUsers="selectedUsers"
+                            :selectedProducts="selectedProducts"
                             :cart="cart"
-                            :buying="buying" />
+                            :buying="buying"
+                            :_getUserCart="getUserCart"
+                            :_getSelectCart="getSelectCart"
+                            :_getCartQuantity="getCartQuantity"
+                            :_setCartQuantity="setCartQuantity"
+                            :_addCartQuantity="addCartQuantity"
+                            :_getCartSize="getCartSize"
+                            :_removeCart="removeCart" />
+                </div>
+                <div v-if="swapped" class="seven wide column inline">
+                    <Users
+                            v-on:swap="swap"
+                            v-on:highlightProducts="highlightProducts"
+                            :apiUrl="apiUrl"
+                            :swapped="swapped"
+                            :selectedUsers="selectedUsers"
+                            :selectedProducts="selectedProducts"
+                            :cart="cart"
+                            :buying="buying"
+                            :_getUserCart="getUserCart"
+                            :_mergeCart="mergeCart"
+                            :_removeUserCart="removeUserCart"
+                            :_removeAllUserCarts="removeAllUserCarts"
+                            :_getTotalCartQuantity="getTotalCartQuantity" />
                 </div>
             </div>
 
@@ -55,7 +90,8 @@
                     v-on:confirming="setConfirming"
                     :selectedUsers="selectedUsers"
                     :cart="cart"
-                    :buying="buying" />
+                    :buying="buying"
+                    :_getTotalCartQuantity="getTotalCartQuantity" />
 
         </div>
     </div>
@@ -88,7 +124,9 @@
         },
         data() {
             return {
+                swapped: false,
                 selectedUsers: [],
+                selectedProducts: [],
                 cart: [],
                 confirming: false,
                 buying: false,
@@ -110,6 +148,9 @@
         ],
         watch: {
             selectedUsers: function() {
+                this.heartbeat();
+            },
+            selectedProducts: function() {
                 this.heartbeat();
             },
             cart: function() {
@@ -153,12 +194,12 @@
                             ? this.langChoice('pages.bar.advancedBuy.boughtProducts#', products)
                             : this.langChoice('pages.bar.advancedBuy.boughtProductsUsers#', products, {users});
 
-                        // Cancel all current selections
-                        this.cancel(false);
-
                         // Show bought overlay for 1 second
                         this.showBoughtOverlay = true;
                         setTimeout(() => this.showBoughtOverlay = false, 1000);
+
+                        // Cancel all current selections
+                        this.cancel(false);
 
                         window.scrollTo(0, 0);
                     })
@@ -171,14 +212,16 @@
 
             // Cancel everything
             cancel(showOverlay = true) {
-                this.selectedUsers.splice(0);
-                this.cart.splice(0);
-
                 // Show cancelled overlay for 1 second
                 if(showOverlay) {
                     this.showCancelledOverlay = true;
                     setTimeout(() => this.showCancelledOverlay = false, 1000);
                 }
+
+                this.selectedUsers.splice(0);
+                this.selectedProducts.splice(0);
+                this.removeAllUserCarts();
+                this.resetSwap();
 
                 // TODO: optionally reload list of users/products
             },
@@ -197,6 +240,7 @@
                 // Set up order inactivity cancel timeout
                 this.orderCancelTimer = setTimeout(() => {
                     // Skip if no users selected or nothing in cart
+                    // TODO: also check selected users!
                     if(this.selectedUsers.length == 0 && this.cart.length == 0)
                         return;
 
@@ -230,6 +274,29 @@
                 return msg;
             },
 
+            // Swap the view.
+            swap() {
+                // Toggle swap.
+                this.swapped = !this.swapped;
+
+                // Reset selections
+                this.selectedUsers.splice(0);
+                this.selectedProducts.splice(0);
+
+                // Highlight first column
+                if(!this.swapped)
+                    this.highlightUsers();
+                else
+                    this.highlightProducts();
+            },
+
+            // Reset swap state.
+            resetSwap() {
+                // If swapped, reset
+                if(this.swapped)
+                    this.swap();
+            },
+
             // Hint to select a user.
             highlightUsers() {
                 // TODO: propegate to users model
@@ -245,6 +312,142 @@
                     .transition('stop')
                     .transition('glow');
             },
+
+            // Get cart for given user.
+            getUserCart(user, create = false) {
+                if(user == null)
+                    return null;
+
+                let cart = this.cart.filter(c => c.user.id == user.id)[0] || null;
+                if(cart != null || !create)
+                    return cart;
+
+                // Create cart
+                this.cart.push({
+                    user,
+                    products: [],
+                });
+                return this.getUserCart(user, false);
+            },
+
+            // Get selection cart.
+            getSelectCart(create = false) {
+                // Create cart if it doesn't exist
+                if(create && this.selectedProducts.length == 0)
+                    this.selectedProducts.push({
+                        user: null,
+                        products: [],
+                    });
+
+                // Return cart or null
+                return this.selectedProducts[0] || null;
+            },
+
+            // Get quantity of all user carts.
+            getTotalCartQuantity() {
+                if(this.cart == null || this.cart.length == 0)
+                    return 0;
+
+                return this.cart
+                    .map(i => i.products
+                        .map(p => p.quantity)
+                        .reduce((a, b) => a + b)
+                    )
+                    .reduce((a, b) => a + b);
+            },
+
+            // Get the selection quantity for a given product
+            getCartQuantity(cart, product) {
+                if(cart == null)
+                    return 0;
+
+                let item = cart.products.filter(p => p.id == product.id);
+                return item.length > 0 ? item[0].quantity : 0;
+            },
+
+            // Set product quantity in user cart.
+            setCartQuantity(cart, product, quantity) {
+                if(cart == null)
+                    return;
+
+                if(quantity > 0) {
+                    // Add/get product, set quantity
+                    let item = cart.products.filter(p => p.id == product.id);
+                    if(item.length > 0)
+                        item[0].quantity = quantity;
+                    else
+                        cart.products.push({
+                            id: product.id,
+                            quantity: quantity,
+                            product,
+                        });
+                } else {
+                    // Remove product from cart
+                    let i = cart.products.findIndex(p => p.id == product.id);
+                    if(i >= 0)
+                        cart.products.splice(i, 1);
+
+                    // If user does not have products anymore, remove cart
+                    if(this.getCartSize(cart) <= 0)
+                        this.removeCart(cart);
+                }
+            },
+
+            // Change quantity by given amount
+            addCartQuantity(cart, product, diff = 1) {
+                this.setCartQuantity(cart, product, this.getCartQuantity(cart, product) + diff);
+            },
+
+            // Merge products from cart into other cart.
+            mergeCart(from, target) {
+                if(from == null || target == null || from.products == undefined || target.products == undefined)
+                    return;
+
+                // Change quantities in target to merge.
+                from.products.forEach((item) => {
+                    this.addCartQuantity(target, item.product, item.quantity);
+                });
+            },
+
+            // Get the number of products in the given cart.
+            getCartSize(cart) {
+                if(cart == null || cart.products == undefined)
+                    return 0;
+                return cart.products.reduce((sum, product) => product.quantity + sum, 0);
+            },
+
+            // Remove the given cart.
+            //
+            // If cart has no user specified, it is considered to be the
+            // selection cart which is then removed.
+            removeCart(cart) {
+                if(cart == null)
+                    return;
+
+                // If no user, remove selection cart
+                if(cart.user == null) {
+                    this.selectedProducts.splice(0);
+                    return;
+                }
+
+                this.removeUserCart(cart.user);
+            },
+
+            // Remove all user carts.
+            removeAllUserCarts() {
+                this.cart.splice(0);
+            },
+
+            // Remove the cart for a given user.
+            removeUserCart(user) {
+                if(user == null || user.id === undefined)
+                    return;
+
+                // Find user cart, then remove it
+                let i = this.cart.findIndex(c => c.user.id == user.id);
+                if(i >= 0)
+                    this.cart.splice(i, 1);
+            }
         },
     }
 </script>
