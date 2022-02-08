@@ -27,19 +27,34 @@
                 {{ successMessage }}
             </div>
 
+            <!-- Users and product list, reverse if swapped -->
             <div class="ui grid">
-                <div class="seven wide column inline">
+                <div v-if="!swapped" class="seven wide column inline">
                     <Users
+                            v-on:swap="swap"
                             v-on:highlightProducts="highlightProducts"
                             :apiUrl="apiUrl"
+                            :swapped="swapped"
                             :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
                 </div>
                 <div class="nine wide column inline">
                     <Products
+                            v-on:swap="swap"
                             v-on:highlightUsers="highlightUsers"
                             :apiUrl="apiUrl"
+                            :swapped="swapped"
+                            :selectedUsers="selectedUsers"
+                            :cart="cart"
+                            :buying="buying" />
+                </div>
+                <div v-if="swapped" class="seven wide column inline">
+                    <Users
+                            v-on:swap="swap"
+                            v-on:highlightProducts="highlightProducts"
+                            :apiUrl="apiUrl"
+                            :swapped="swapped"
                             :selectedUsers="selectedUsers"
                             :cart="cart"
                             :buying="buying" />
@@ -88,6 +103,7 @@
         },
         data() {
             return {
+                swapped: false,
                 selectedUsers: [],
                 cart: [],
                 confirming: false,
@@ -153,12 +169,12 @@
                             ? this.langChoice('pages.bar.advancedBuy.boughtProducts#', products)
                             : this.langChoice('pages.bar.advancedBuy.boughtProductsUsers#', products, {users});
 
-                        // Cancel all current selections
-                        this.cancel(false);
-
                         // Show bought overlay for 1 second
                         this.showBoughtOverlay = true;
                         setTimeout(() => this.showBoughtOverlay = false, 1000);
+
+                        // Cancel all current selections
+                        this.cancel(false);
 
                         window.scrollTo(0, 0);
                     })
@@ -171,14 +187,15 @@
 
             // Cancel everything
             cancel(showOverlay = true) {
-                this.selectedUsers.splice(0);
-                this.cart.splice(0);
-
                 // Show cancelled overlay for 1 second
                 if(showOverlay) {
                     this.showCancelledOverlay = true;
                     setTimeout(() => this.showCancelledOverlay = false, 1000);
                 }
+
+                this.selectedUsers.splice(0);
+                this.cart.splice(0);
+                this.resetSwap();
 
                 // TODO: optionally reload list of users/products
             },
@@ -228,6 +245,25 @@
                 event.preventDefault();
                 event.returnValue = msg;
                 return msg;
+            },
+
+            // Swap the view.
+            swap() {
+                // Toggle swap.
+                this.swapped = !this.swapped;
+
+                // TODO: reset queries
+                // TODO: reset selections
+
+                // Reset selected users
+                this.selectedUsers.splice(0);
+            },
+
+            // Reset swap state.
+            resetSwap() {
+                // If swapped, reset
+                if(this.swapped)
+                    this.swap();
             },
 
             // Hint to select a user.

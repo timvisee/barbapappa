@@ -1063,6 +1063,7 @@ return [
         'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',
         'buyProductsUsers#' => '{0} Koop geen producten voor :users leden|[1,*] Koop :count× voor :users leden',
         'deselect' => 'Deselect',
+        'swap' => 'Wissel',
         'backToKiosk' => 'Terug naar kiosk',
         'noConnectionBanner' => 'Geen verbinding! Sleep naar beneden om te verversen.',
     ],

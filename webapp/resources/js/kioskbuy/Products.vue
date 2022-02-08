@@ -13,8 +13,15 @@
             <a v-if="getCartSize() > 0 && !buying"
                     v-on:click.stop.prevent="removeCart(); query = ''"
                     href="#"
-                    class="reset">
+                    class="action negative">
                 {{ __('misc.reset') }}
+            </a>
+
+            <a v-if="swapped"
+                    v-on:click.stop.prevent="swap()"
+                    href="#"
+                    class="action">
+                {{ __('pages.kiosk.swap') }}
             </a>
         </h5>
 
@@ -206,6 +213,7 @@
         },
         props: [
             'apiUrl',
+            'swapped',
             'selectedUsers',
             'cart',
             'buying',
@@ -332,6 +340,11 @@
                 if(this.selectedUsers > 0)
                     return;
                 this.$emit('highlightUsers');
+            },
+
+            // Swap view
+            swap() {
+                this.$emit('swap');
             },
 
             // Show quantity modal for product
@@ -495,10 +508,15 @@
         line-height: 1.4 !important;;
     }
 
-    .reset {
-        color: red;
+    .action {
+        color: #f2711c;
+        margin-left: 0.5em;
         float: right;
         line-height: 1 !important;
+    }
+
+    .action.negative {
+        color: red;
     }
 
     .ui.dimmer .text {

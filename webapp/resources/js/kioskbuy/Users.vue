@@ -6,8 +6,15 @@
             <a v-if="selectedUsers.length"
                     v-on:click.stop.prevent="reset(); query = ''"
                     href="#"
-                    class="reset">
+                    class="action negative">
                 {{ __('pages.kiosk.deselect') }}
+            </a>
+
+            <a v-if="!swapped"
+                    v-on:click.stop.prevent="swap()"
+                    href="#"
+                    class="action">
+                {{ __('pages.kiosk.swap') }}
             </a>
         </h5>
 
@@ -115,6 +122,7 @@
         },
         props: [
             'apiUrl',
+            'swapped',
             'selectedUsers',
             'cart',
             'buying',
@@ -187,6 +195,11 @@
             reset() {
                 this.selectedUsers.splice(0);
             },
+
+            // Swap view
+            swap() {
+                this.$emit('swap');
+            },
         },
         mounted: function() {
             this.search();
@@ -210,10 +223,15 @@
         float: right;
     }
 
-    .reset {
-        color: red;
+    .action {
+        color: #f2711c;
+        margin-left: 0.5em;
         float: right;
         line-height: 1 !important;
+    }
+
+    .action.negative {
+        color: red;
     }
 
     .active.green {
