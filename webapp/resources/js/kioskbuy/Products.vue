@@ -239,7 +239,7 @@
             '_getSelectCart',
             '_getCartQuantity',
             '_setCartQuantity',
-            '_changeCartQuantity',
+            '_addCartQuantity',
             '_getCartSize',
             '_removeCart',
         ],
@@ -281,7 +281,7 @@
 
             // Change quantity by given amount
             changeQuantity(product, diff = 1) {
-                return this._changeCartQuantity(this.getCart(true), product, diff);
+                return this._addCartQuantity(this.getCart(true), product, diff);
             },
 
             // Get the number of products in the current user cart

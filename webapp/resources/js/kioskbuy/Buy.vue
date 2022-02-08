@@ -59,7 +59,7 @@
                             :_getSelectCart="getSelectCart"
                             :_getCartQuantity="getCartQuantity"
                             :_setCartQuantity="setCartQuantity"
-                            :_changeCartQuantity="changeCartQuantity"
+                            :_addCartQuantity="addCartQuantity"
                             :_getCartSize="getCartSize"
                             :_removeCart="removeCart" />
                 </div>
@@ -391,7 +391,7 @@
             },
 
             // Change quantity by given amount
-            changeCartQuantity(cart, product, diff = 1) {
+            addCartQuantity(cart, product, diff = 1) {
                 this.setCartQuantity(cart, product, this.getCartQuantity(cart, product) + diff);
             },
 
@@ -402,7 +402,7 @@
 
                 // Change quantities in target to merge.
                 from.products.forEach((item) => {
-                    this.changeCartQuantity(target, item.product, item.quantity);
+                    this.addCartQuantity(target, item.product, item.quantity);
                 });
             },
 
