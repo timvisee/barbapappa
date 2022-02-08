@@ -3,18 +3,19 @@
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectUser') }}
 
+            <a v-if="!swapped"
+                    v-on:click.stop.prevent="swap()"
+                    href="#"
+                    class="action"
+                    :title="__('pages.kiosk.swapColumns')">
+                <i class="halflings halflings-reflect-y"></i>
+            </a>
+
             <a v-if="selectedUsers.length"
                     v-on:click.stop.prevent="reset(); query = ''"
                     href="#"
                     class="action negative">
                 {{ __('pages.kiosk.deselect') }}
-            </a>
-
-            <a v-if="!swapped"
-                    v-on:click.stop.prevent="swap()"
-                    href="#"
-                    class="action">
-                {{ __('pages.kiosk.swap') }}
             </a>
         </h5>
 
@@ -224,7 +225,7 @@
     }
 
     .action {
-        color: #f2711c;
+        color: rgba(0,0,0,.87);
         margin-left: 0.5em;
         float: right;
         line-height: 1 !important;
@@ -232,6 +233,12 @@
 
     .action.negative {
         color: red;
+    }
+
+    .action .halflings {
+        /* This is a hack, don't occupy space instead */
+        margin-top: -3px;
+        margin-bottom: -3px;
     }
 
     .active.green {

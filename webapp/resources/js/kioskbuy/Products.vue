@@ -10,18 +10,19 @@
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectProducts') }}
 
+            <a v-if="swapped"
+                    v-on:click.stop.prevent="swap()"
+                    href="#"
+                    class="action"
+                    :title="__('pages.kiosk.swapColumns')">
+                <i class="halflings halflings-reflect-y"></i>
+            </a>
+
             <a v-if="getCartSize() > 0 && !buying"
                     v-on:click.stop.prevent="removeCart(); query = ''"
                     href="#"
                     class="action negative">
                 {{ __('misc.reset') }}
-            </a>
-
-            <a v-if="swapped"
-                    v-on:click.stop.prevent="swap()"
-                    href="#"
-                    class="action">
-                {{ __('pages.kiosk.swap') }}
             </a>
         </h5>
 
@@ -509,7 +510,7 @@
     }
 
     .action {
-        color: #f2711c;
+        color: rgba(0,0,0,.87);
         margin-left: 0.5em;
         float: right;
         line-height: 1 !important;
