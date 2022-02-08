@@ -78,6 +78,17 @@
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
             </div>
+
+            <div class="item-buttons" v-if="getQuantity(user) > 0">
+                <div class="ui buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="_removeUserCart(user)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui red large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
+                </div>
+            </div>
         </a>
 
         <a v-for="user in users"
@@ -96,6 +107,17 @@
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
+            </div>
+
+            <div class="item-buttons" v-if="getQuantity(user) > 0">
+                <div class="ui buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="_removeUserCart(user)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui red large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
+                </div>
             </div>
         </a>
 
@@ -117,6 +139,17 @@
 
                 <span v-if="isUserSelected(user)"
                         class="item-icon glyphicons glyphicons-chevron-right"></span>
+            </div>
+
+            <div class="item-buttons" v-if="getQuantity(user) > 0">
+                <div class="ui buttons">
+                    <a href="#"
+                            v-on:click.stop.prevent="_removeUserCart(user)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui red large button">
+                        <i class="glyphicons glyphicons-remove"></i>
+                    </a>
+                </div>
             </div>
         </a>
 
@@ -152,6 +185,7 @@
             'buying',
             '_getUserCart',
             '_mergeCart',
+            '_removeUserCart',
             '_removeAllUserCarts',
             '_getTotalCartQuantity',
         ],
@@ -304,6 +338,30 @@
 
     .active.green {
         color: #21ba45 !important;
+    }
+
+    /* Right aligned buttons */
+    .kiosk-select-item .item-buttons {
+        overflow: hidden;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    .kiosk-select-item .item-buttons .button {
+        text-align: center;
+        padding: .92857143em 1.125em;
+        line-height: 1.1;
+        border-radius: 0 !important;
+    }
+
+    .button .glyphicons {
+        vertical-align: middle;
+    }
+
+    .button .glyphicons::before {
+        padding: 0;
     }
 
     .quantity,

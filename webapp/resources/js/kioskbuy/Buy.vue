@@ -41,6 +41,7 @@
                             :buying="buying"
                             :_getUserCart="getUserCart"
                             :_mergeCart="mergeCart"
+                            :_removeUserCart="removeUserCart"
                             :_removeAllUserCarts="removeAllUserCarts"
                             :_getTotalCartQuantity="getTotalCartQuantity" />
                 </div>
@@ -74,6 +75,7 @@
                             :buying="buying"
                             :_getUserCart="getUserCart"
                             :_mergeCart="mergeCart"
+                            :_removeUserCart="removeUserCart"
                             :_removeAllUserCarts="removeAllUserCarts"
                             :_getTotalCartQuantity="getTotalCartQuantity" />
                 </div>
