@@ -4,7 +4,15 @@
         <div v-if="!swapped && selectedUsers.length == 0"
                 v-on:click="hintUsers()"
                 class="ui inverted active dimmer">
-            <div class="ui text">{{ __('pages.kiosk.firstSelectUser') }}</div>
+            <div class="ui text">
+                {{ __('pages.kiosk.firstSelectUser') }}
+
+                <div class="ui horizontal divider">{{ __('general.or') }}</div>
+                <a v-on:click.stop.prevent="swap()"
+                        href="#">
+                    {{ __('pages.kiosk.swapColumns').toLowerCase() }}
+                </a>
+            </div>
         </div>
 
         <h5 class="ui item header">
@@ -524,5 +532,9 @@
     .ui.dimmer .text {
         padding: 1em;
         line-height: 2;
+    }
+
+    .ui.dimmer .ui.divider {
+        font-weight: normal;
     }
 </style>
