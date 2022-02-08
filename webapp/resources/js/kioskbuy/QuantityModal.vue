@@ -98,6 +98,7 @@
                 this.showing = true;
                 this.modal.modal({
                         closable: true,
+                        duration: 0,
                         onHide: () => {
                             this.showing = false;
                             if(this.quantity !== undefined && this.quantity !== null && this.quantity !== '' && !isNaN(this.quantity))
