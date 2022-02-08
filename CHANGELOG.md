@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.146 (2022-02-08)
+
+- Add kiosk button to swap columns, enables a different buy mode to quickly purchase the same product for many users
+- Various kiosk additions and improvements, such as a button to remove products in-cart for a single user
+- Add button to undo a single inventory change
+- Add recent changes list and index link to inventory page
+- Add page for all changes in inventory
+- Disable kiosk quantity modal animations for better performance on old devices
+- Fix incorrect capitalisation on top-up redemption page
+
 ## 0.1.145 (2022-02-06)
 
 - Fix error one some transaction detail pages, when initiated by another user
