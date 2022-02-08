@@ -279,12 +279,15 @@
                 // Toggle swap.
                 this.swapped = !this.swapped;
 
-                // TODO: reset queries
-                // TODO: reset selections
-
-                // Reset selected users
+                // Reset selections
                 this.selectedUsers.splice(0);
                 this.selectedProducts.splice(0);
+
+                // Highlight first column
+                if(!this.swapped)
+                    this.highlightUsers();
+                else
+                    this.highlightProducts();
             },
 
             // Reset swap state.

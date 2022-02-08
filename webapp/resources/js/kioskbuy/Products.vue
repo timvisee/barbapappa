@@ -281,6 +281,10 @@
 
             // Change quantity by given amount
             changeQuantity(product, diff = 1) {
+                // In selection mode, highlight user column
+                if(this.isSelectMode())
+                    this.hintUsers();
+
                 return this._addCartQuantity(this.getCart(true), product, diff);
             },
 
@@ -320,7 +324,7 @@
 
             // Hint to select a user first
             hintUsers() {
-                if(this.selectedUsers > 0)
+                if(this.selectedProducts.length > 0)
                     return;
                 this.$emit('highlightUsers');
             },
