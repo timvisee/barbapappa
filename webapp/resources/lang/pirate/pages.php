@@ -1063,7 +1063,6 @@ return [
         'buyProducts#' => '{0} Get no loot|{1} Get loot|[2,*] Get :count loot',
         'buyProductsUsers#' => '{0} Get no loot for :users pirates|[1,*] Get :count× for :users pirates',
         'deselect' => 'Deselect',
-        'swap' => 'Swap',
         'swapColumns' => 'Swap columns',
         'backToKiosk' => 'Back to kiosk',
         'noConnectionBanner' => 'Connection errrror! Pull the page down to refresh.',
