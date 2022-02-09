@@ -200,8 +200,8 @@ return [
      * Community member pages.
      */
     'communityMembers' => [
-        'title' => 'Crew maties',
-        'description' => 'Dis page shows th\' overview o\' all crew maties.<br>Tapping a matey allows ye to remove the matey, or change be rank.',
+        'title' => 'Crew mateies',
+        'description' => 'Dis page shows th\' overview o\' all crew mateies.<br>Tapping a matey allows ye to remove the matey, or change be rank.',
         'search' => 'Search mateies',
         'noMembers' => 'Nay mateies...',
         'memberSince' => 'Matey since',
@@ -279,7 +279,7 @@ return [
         'deleteVoidNotice' => 'When ye remove dis booty, all configured loot prices for dis currency will be voided in bars dat use dis booty.<br>Ye may want to disable dis currency instead by changing it.',
         'currencyDeleted' => 'Th\' currency be sunk.',
         'currencyUpdated' => 'Currency changes saved.',
-        'enabledDescription' => 'Specify whether dis currency be enabled in bars dat arrr using dis booty. If disabled, bar maties won\'t be able to purchase loot with dis currency, \'n must use a different currency if available until it is enabled again.',
+        'enabledDescription' => 'Specify whether dis currency be enabled in bars dat arrr using dis booty. If disabled, bar mateies won\'t be able to purchase loot with dis currency, \'n must use a different currency if available until it is enabled again.',
         'changeCurrencyTitle' => 'Change currency?',
         'changeCurrencyDescription' => 'Ye must only make very small changes to th\' currency properties, to prevent introducing issues where dis currency be used. Consider to add a fresh currency instead.',
         'allowWallets' => 'Allow wallet creation',
@@ -952,7 +952,7 @@ return [
         'inventoryDescription' => 'Select an inventory to automatically keep track of inventory when products are sold.',
         'selectInventoryAfterCreate' => 'Ye may select th\' inventory after th\' bar be created.',
         'showExploreDescription' => 'List on public \'Explore bars\' page',
-        'showCommunityDescription' => 'List on crew page for crew maties',
+        'showCommunityDescription' => 'List on crew page for crew mateies',
         'selfEnrollDescription' => 'Allow self enrollment (wit\' code if specified)',
         'joinAfterCreate' => 'Join th\' bar after creating.',
         'created' => 'Th\' bar be created.',
