@@ -84,6 +84,29 @@
         </p>
     @endif
 
+    @if(perms(CommunityMemberController::permsView()))
+        @php
+            $bar_members = $member->fetchBarMembers();
+        @endphp
+        <div class="ui vertical menu fluid">
+            <h5 class="ui item header">@lang('pages.bars')</h5>
+            @forelse($bar_members as $bar_member)
+                <a href="{{ route('bar.member.show', [
+                    'communityId' => $bar_member->bar->community->human_id,
+                    'barId' => $bar_member->bar->human_id,
+                    'memberId' => $bar_member->id,
+                ]) }}" class="item">
+                    {{ $bar_member->name }}
+                    <span class="subtle">@lang('misc.in') {{ $bar_member->bar->name }}</span>
+                </a>
+            @empty
+                <div class="item">
+                    <i>@lang('misc.none')...</i>
+                </div>
+            @endforelse
+        </div>
+    @endif
+
     <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
             class="ui button basic">
         @lang('general.goBack')

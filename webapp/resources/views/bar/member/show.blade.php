@@ -6,6 +6,7 @@
     $menusection = 'bar_manage';
 
     use App\Http\Controllers\BarMemberController;
+    use App\Http\Controllers\CommunityMemberController;
     use App\Perms\BarRoles;
     use \Carbon\Carbon;
 @endphp
@@ -130,6 +131,28 @@
                     <i>@lang('pages.wallets.noWallets')</i>
                 </div>
             @endforelse
+        </div>
+    @endif
+
+    @if(perms(CommunityMemberController::permsView()))
+        @php
+            $community_member = $member->fetchCommunityMember();
+        @endphp
+        <div class="ui vertical menu fluid">
+            <h5 class="ui item header">@lang('misc.community')</h5>
+            @if($community_member)
+                <a href="{{ route('community.member.show', [
+                    'communityId' => $community->human_id,
+                    'memberId' => $community_member->id,
+                ]) }}" class="item">
+                    {{ $community_member->name }}
+                    <span class="subtle">@lang('misc.in') {{ $member->bar->community->name }}</span>
+                </a>
+            @else
+                <div class="item">
+                    <i>@lang('misc.none')...</i>
+                </div>
+            @endif
         </div>
     @endif
 

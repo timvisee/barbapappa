@@ -70,6 +70,6 @@ trait Joinable {
      * @throws \Exception Throws if there's no member for this user.
      */
     public function member(User $user) {
-        return $this->members()->where('user_id', $user->id)->firstOrFail();
+        return $this->members()->where('user_id', $user->id)->first();
     }
 }
