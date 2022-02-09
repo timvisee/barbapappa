@@ -22,14 +22,13 @@ class BarMemberController extends Controller {
     public function index(Request $request) {
         // Get the bar, list it's members
         $bar = \Request::get('bar');
+        $search = $request->query('q');
         $members = $bar
             ->members()
+            ->search($search)
             ->orderBy('role', 'DESC')
             ->orderBy('visited_at', 'DESC')
             ->paginate(self::PAGINATE_ITEMS);
-
-        // TODO: filter by search query here
-        $search = $request->query('q');
 
         return view('bar.member.index')
             ->with('members', $members)

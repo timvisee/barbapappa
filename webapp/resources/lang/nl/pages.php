@@ -1108,7 +1108,7 @@ return [
         'nickname' => 'Weergavenaam',
         'nicknameDescription' => 'Je kunt een aangepaste weergavenaam voor jezelf instellen. Als je een weergavenaam instelt, wordt je volledige naam verborgen en zal je aangepaste naam getoont worden in koop- en schermen. Deze functie is bedoeld voor speciale gebruikers/accounts waar het tonen van hun eigen naam niet logisch is. Stel om verwarring te voorkomen een duidelijke naam in of beter, stel geen naam in.',
         'tagsDescription' => 'Je kunt zoektags instellen zodat anderen je makkelijker kunnen vinden bij het kopen van producten. Scheid elke tag met een spatie.',
-        'noMembers' => 'Deze bar heeft geen leden...',
+        'noMembers' => 'Geen leden...',
         'memberSince' => 'Lid sinds',
         'lastVisit' => 'Laatste bezoek',
         'deleteQuestion' => 'Je staat op het punt dit lid te verwijderen van deze bar. Weet je zeker dat je door wilt gaan?',
