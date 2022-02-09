@@ -4,11 +4,9 @@ namespace App\Services;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 use App\Models\Bar;
 use App\Models\Community;
-use App\Models\User;
 use App\Perms\AppRoles;
 use App\Perms\BarRoles;
 use App\Perms\Builder\Config as PermsConfig;
