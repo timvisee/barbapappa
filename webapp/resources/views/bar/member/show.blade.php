@@ -49,6 +49,27 @@
                     <td>{{ yesno($economy_member->show_in_kiosk) }}</td>
                 </tr>
             @endif
+            @if(perms(BarMemberController::permsManage()))
+                <tr>
+                    <td>@lang('account.emails')</td>
+                    <td>
+                        <div class="ui bulleted list">
+                            @if($member->user?->emails != null)
+                                @forelse($member->user->emails as $email)
+                                    <div class="item">
+                                        <a href="mailto:{{ $email->email }}">{{ $email->email }}</a>
+                                        @if(!$email->isVerified())
+                                            <span class="subtle">(@lang('misc.unverified'))</span>
+                                        @endif
+                                    </div>
+                                @empty
+                                    <i class="item">@lang("account.noEmails")</i>
+                                @endforelse
+                            @endif
+                        </div>
+                    </td>
+                </tr>
+            @endif
             @if($member->visited_at)
                 <tr>
                     <td>@lang('pages.barMembers.lastVisit')</td>

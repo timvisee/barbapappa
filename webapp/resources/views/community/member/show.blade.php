@@ -23,6 +23,27 @@
                 <td>@lang('misc.role')</td>
                 <td>{{ CommunityRoles::roleName($member->role) }}</td>
             </tr>
+            @if(perms(CommunityMemberController::permsManage()))
+                <tr>
+                    <td>@lang('account.emails')</td>
+                    <td>
+                        <div class="ui bulleted list">
+                            @if($member->user?->emails != null)
+                                @forelse($member->user->emails as $email)
+                                    <div class="item">
+                                        <a href="mailto:{{ $email->email }}">{{ $email->email }}</a>
+                                        @if(!$email->isVerified())
+                                            <span class="subtle">(@lang('misc.unverified'))</span>
+                                        @endif
+                                    </div>
+                                @empty
+                                    <i class="item">@lang("account.noEmails")</i>
+                                @endforelse
+                            @endif
+                        </div>
+                    </td>
+                </tr>
+            @endif
             @if($member->visited_at)
                 <tr>
                     <td>@lang('pages.communityMembers.lastVisit')</td>
