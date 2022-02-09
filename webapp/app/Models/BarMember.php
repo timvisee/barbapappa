@@ -145,4 +145,22 @@ class BarMember extends Pivot {
             ->where('user_id', $this->user_id)
             ->firstOrFail();
     }
+
+    /**
+     * Get related community member.
+     *
+     * This function is expensive.
+     */
+    public function fetchCommunityMember() {
+        // Assert user isn't null
+        if($this->user_id == null)
+            throw new \Exception("Cannot get community member for bar member with no user");
+
+        return $this
+            ->bar
+            ->community
+            ->members()
+            ->where('user_id', $this->user_id)
+            ->firstOrFail();
+    }
 }

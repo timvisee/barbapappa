@@ -127,4 +127,27 @@ class CommunityMember extends Pivot {
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Fetch the bar members for this community user.
+     *
+     * Note: this is expensive.
+     *
+     * @return Bar members.
+     */
+    public function fetchBarMembers() {
+        $user = $this->user;
+        if($user == null)
+            return collect();
+
+        return $this
+            ->community
+            ->bars
+            ->map(function($bar) use($user) {
+                return $bar->member($user);
+            })
+            ->filter(function($member) {
+                return $member != null;
+            });
+    }
 }

@@ -6,6 +6,7 @@
     $menusection = 'bar_manage';
 
     use App\Http\Controllers\BarMemberController;
+    use App\Http\Controllers\CommunityMemberController;
     use App\Perms\BarRoles;
     use \Carbon\Carbon;
 @endphp
@@ -47,6 +48,27 @@
                 <tr>
                     <td>@lang('pages.barMember.showInKiosk')</td>
                     <td>{{ yesno($economy_member->show_in_kiosk) }}</td>
+                </tr>
+            @endif
+            @if(perms(BarMemberController::permsManage()))
+                <tr>
+                    <td>@lang('account.emails')</td>
+                    <td>
+                        <div class="ui bulleted list">
+                            @if($member->user?->emails != null)
+                                @forelse($member->user->emails as $email)
+                                    <div class="item">
+                                        <a href="mailto:{{ $email->email }}">{{ $email->email }}</a>
+                                        @if(!$email->isVerified())
+                                            <span class="subtle">(@lang('misc.unverified'))</span>
+                                        @endif
+                                    </div>
+                                @empty
+                                    <i class="item">@lang("account.noEmails")</i>
+                                @endforelse
+                            @endif
+                        </div>
+                    </td>
                 </tr>
             @endif
             @if($member->visited_at)
@@ -109,6 +131,28 @@
                     <i>@lang('pages.wallets.noWallets')</i>
                 </div>
             @endforelse
+        </div>
+    @endif
+
+    @if(perms(CommunityMemberController::permsView()))
+        @php
+            $community_member = $member->fetchCommunityMember();
+        @endphp
+        <div class="ui vertical menu fluid">
+            <h5 class="ui item header">@lang('misc.community')</h5>
+            @if($community_member)
+                <a href="{{ route('community.member.show', [
+                    'communityId' => $community->human_id,
+                    'memberId' => $community_member->id,
+                ]) }}" class="item">
+                    {{ $community_member->name }}
+                    <span class="subtle">@lang('misc.in') {{ $member->bar->community->name }}</span>
+                </a>
+            @else
+                <div class="item">
+                    <i>@lang('misc.none')...</i>
+                </div>
+            @endif
         </div>
     @endif
 
