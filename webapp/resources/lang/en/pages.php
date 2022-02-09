@@ -201,7 +201,7 @@ return [
      */
     'communityMembers' => [
         'title' => 'Community members',
-        'description' => 'This page shows an overview of all community members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
+        'description' => 'This page shows an overview of all community members. Clicking on a member allows you to remove the member, or change it\'s role.',
         'search' => 'Search members',
         'noMembers' => 'No members...',
         'memberSince' => 'Member since',
@@ -1103,7 +1103,7 @@ return [
      */
     'barMembers' => [
         'title' => 'Bar members',
-        'description' => 'This page shows an overview of all bar members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
+        'description' => 'This page shows an overview of all bar members. Clicking on a member allows you to remove the member, or change it\'s role.',
         'search' => 'Search members',
         'nickname' => 'Display name',
         'nicknameDescription' => 'You can set a custom display name for your account. With a display name set, your full name will be hidden and your custom name will be shown in buy and kiosk screens. This intended for special users/accounts where showing their own name doesn\'t make sense. To prevent confusion set a clear and descriptive name or better yet, don\'t set a name at all.',
