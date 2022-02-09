@@ -202,7 +202,8 @@ return [
     'communityMembers' => [
         'title' => 'Community members',
         'description' => 'This page shows an overview of all community members.<br>Clicking on a member allows you to remove the member, or change it\'s role.',
-        'noMembers' => 'This community has no members...',
+        'search' => 'Search members',
+        'noMembers' => 'No members...',
         'memberSince' => 'Member since',
         'lastVisit' => 'Last visit',
         'deleteQuestion' => 'You\'re about to remove this member from this community. Are you sure you want to continue?',

@@ -202,7 +202,8 @@ return [
     'communityMembers' => [
         'title' => 'Crew maties',
         'description' => 'Dis page shows th\' overview o\' all crew maties.<br>Tapping a matey allows ye to remove the matey, or change be rank.',
-        'noMembers' => 'Dis crew be nay maties...',
+        'search' => 'Search mateies',
+        'noMembers' => 'Nay mateies...',
         'memberSince' => 'Matey since',
         'lastVisit' => 'Last visit',
         'deleteQuestion' => 'Yer \'bout to remove dis matey from our crew. Ye be sure ye want to continue?',
@@ -1103,7 +1104,7 @@ return [
     'barMembers' => [
         'title' => 'Bar mateies',
         'description' => 'Dis page shows th\' overview o\' all bar mateies.<br>Tap a matey allows ye to remove the matey, or change be rank.',
-        'search' => 'Search pirates',
+        'search' => 'Search mateies',
         'nickname' => 'Display name',
         'nicknameDescription' => 'Ye may set a custom display name for yerself. With a display name set, yer name be hidden and yer custom name will be shown in buy and kiosk screens. Dis be intended for special pirates where showing their own name doesn\'t make sense. To prevent confusion set a clear and descriptive name or better yet, don\'t set a name at all.',
         'tagsDescription' => 'You may set search tags to help other pirates find ye when looting. Separate each tag by a space.',
