@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.147 (2022-02-09)
+
+- Add search field to community/bar member list
+- Add interlinks to community/bar member detail pages for easier navigation
+- Add list of all user wallets on community member details page
+- Add list of user email addresses for admins on community/bar member details page
+- Fix some pirate speak language item mistakes
+- Remove unused language items
+- Update bunq SDK
+- Update dependencies
+
 ## 0.1.146 (2022-02-08)
 
 - Add kiosk button to swap columns, enables a different buy mode to quickly purchase the same product for many users
