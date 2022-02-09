@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "097f10fe3c7d41aee3f283cbec67552d",
+    "content-hash": "b186ef11421343b248b172014437a5ff",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -8832,7 +8832,7 @@
         },
         {
             "name": "timvisee/barpay",
-            "version": "dev-555-upgrade-to-laravel-9",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "packages/barpay",
