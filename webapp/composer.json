@@ -13,6 +13,10 @@
             }
         },
         {
+            "type": "vcs",
+            "url": "https://github.com/rmariuzzo/laravel-js-localization"
+        },
+        {
             "type": "package",
             "package": {
                 "name": "timvisee/laravel-has-many-sync",
@@ -25,7 +29,7 @@
                 "description": "Laravel has many sync",
                 "type": "library",
                 "require": {
-                    "illuminate/support": "~8.0"
+                    "illuminate/support": "~9.0"
                 },
                 "license": "MIT",
                 "authors": [
@@ -53,24 +57,24 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "barryvdh/laravel-debugbar": "^3.2.3",
-        "barryvdh/laravel-dompdf": "^0.9.0",
+        "php": ">=8.0.8",
+        "barryvdh/laravel-debugbar": "^3.6.7",
+        "barryvdh/laravel-dompdf": "^1.0.0",
         "bunq/sdk_php": "^1.14.18",
-        "diglactic/laravel-breadcrumbs": "^7.0",
-        "doctrine/dbal": "^3.0",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "7.2.0",
+        "diglactic/laravel-breadcrumbs": "^7.1.1",
+        "doctrine/dbal": "^3.2.2",
+        "fruitcake/laravel-cors": "^2.0.5",
+        "guzzlehttp/guzzle": "7.4.1",
         "hisorange/browser-detect": "^4.4",
-        "intervention/validation": "^2.6.7",
-        "laravel/framework": "^8.0",
-        "laravel/tinker": "^2.0",
-        "laravelcollective/html": "^6.0",
+        "intervention/validation": "^3.1",
+        "laravel/framework": "^9.0.1",
+        "laravel/tinker": "^2.7",
+        "laravelcollective/html": "^6.3",
         "maatwebsite/excel": "^3.1",
-        "mariuzzo/laravel-js-localization": "^1.4",
-        "sentry/sentry-laravel": "^2.7.0",
+        "mariuzzo/laravel-js-localization": "dev-master",
+        "sentry/sentry-laravel": "^2.11",
         "simplesoftwareio/simple-qrcode": "^2.0",
-        "staudenmeir/eloquent-has-many-deep": "^1.8",
+        "staudenmeir/eloquent-has-many-deep": "^1.15",
         "timvisee/barpay": "@dev",
         "timvisee/laravel-has-many-sync": "0.2.0"
     },
