@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.communityMembers.title'))
+@section('title', empty($search) ? __('pages.communityMembers.title') : __('pages.communityMembers.search') . ': ' . $search)
 @php
     $breadcrumbs = Breadcrumbs::generate('community.member.index', $community);
     $menusection = 'community_manage';
@@ -13,6 +13,17 @@
     <p>@lang('pages.communityMembers.description')</p>
 
     <div class="ui vertical menu fluid">
+        {!! Form::open(['method' => 'GET']) !!}
+            <div class="item">
+                <div class="ui transparent icon input">
+                    {{ Form::search('q', Request::input('q'), ['placeholder' => __('pages.communityMembers.search') . '...']) }}
+                    <i class="icon link">
+                        <span class="glyphicons glyphicons-search"></span>
+                    </i>
+                </div>
+            </div>
+        {!! Form::close() !!}
+
         @forelse($members as $member)
             <a href="{{ route('community.member.show', [
                 'communityId' => $community->human_id,

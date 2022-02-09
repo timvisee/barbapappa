@@ -19,17 +19,20 @@ class CommunityMemberController extends Controller {
      *
      * @return Response
      */
-    public function index() {
+    public function index(Request $request) {
         // Get the community, list it's members
         $community = \Request::get('community');
+        $search = $request->query('q');
         $members = $community
             ->members()
+            ->search($search)
             ->orderBy('role', 'DESC')
             ->orderBy('visited_at', 'DESC')
             ->paginate(self::PAGINATE_ITEMS);
 
         return view('community.member.index')
-            ->with('members', $members);
+            ->with('members', $members)
+            ->with('search', $search);
     }
 
     /**
