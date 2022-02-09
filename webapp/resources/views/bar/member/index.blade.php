@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('pages.barMembers.title'))
+@section('title', empty($search) ? __('pages.barMembers.title') : __('pages.barMembers.search') . ': ' . $search)
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.member.index', $bar);
     $menusection = 'bar_manage';
@@ -13,6 +13,17 @@
     <p>@lang('pages.barMembers.description')</p>
 
     <div class="ui vertical menu fluid">
+        {!! Form::open(['method' => 'GET']) !!}
+            <div class="item">
+                <div class="ui transparent icon input">
+                    {{ Form::search('q', Request::input('q'), ['placeholder' => __('pages.barMembers.search') . '...']) }}
+                    <i class="icon link">
+                        <span class="glyphicons glyphicons-search"></span>
+                    </i>
+                </div>
+            </div>
+        {!! Form::close() !!}
+
         @forelse($members as $member)
             <a href="{{ route('bar.member.show', [
                 'barId' => $bar->human_id,

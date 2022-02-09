@@ -19,7 +19,7 @@ class BarMemberController extends Controller {
      *
      * @return Response
      */
-    public function index() {
+    public function index(Request $request) {
         // Get the bar, list it's members
         $bar = \Request::get('bar');
         $members = $bar
@@ -28,8 +28,12 @@ class BarMemberController extends Controller {
             ->orderBy('visited_at', 'DESC')
             ->paginate(self::PAGINATE_ITEMS);
 
+        // TODO: filter by search query here
+        $search = $request->query('q');
+
         return view('bar.member.index')
-            ->with('members', $members);
+            ->with('members', $members)
+            ->with('search', $search);
     }
 
     /**
