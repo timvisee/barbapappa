@@ -150,4 +150,27 @@ class CommunityMember extends Pivot {
                 return $member != null;
             });
     }
+
+    /**
+     * Fetch the economy members for this community user.
+     *
+     * Note: this is expensive.
+     *
+     * @return Economy members.
+     */
+    public function fetchEconomyMembers() {
+        $user = $this->user;
+        if($user == null)
+            return collect();
+
+        return $this
+            ->community
+            ->economies
+            ->map(function($bar) use($user) {
+                return $bar->member($user);
+            })
+            ->filter(function($member) {
+                return $member != null;
+            });
+    }
 }

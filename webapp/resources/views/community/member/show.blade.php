@@ -86,6 +86,37 @@
 
     @if(perms(CommunityMemberController::permsView()))
         @php
+            $econ_members = $member->fetchEconomyMembers();
+            $wallets = $econ_members
+                ->flatMap(function($member) {
+                    return $member->wallets;
+                })
+                ->filter(function($wallet) {
+                    return $wallet->economyMember?->economy != null;
+                });
+        @endphp
+        <div class="ui vertical menu fluid">
+            <h5 class="ui item header">@lang('pages.wallets.title')</h5>
+            @forelse($wallets as $wallet)
+                <a href="{{ route('community.wallet.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $wallet->economyMember->economy_id,
+                    'walletId' => $wallet->id,
+                ]) }}" class="item">
+                    {{ $wallet->name }}
+                    {!! $wallet->formatBalance(BALANCE_FORMAT_LABEL) !!}
+                    <span class="subtle">@lang('misc.in') {{ $wallet->economyMember->economy->name }}</span>
+                </a>
+            @empty
+                <div class="item">
+                    <i>@lang('pages.wallets.noWallets')</i>
+                </div>
+            @endforelse
+        </div>
+    @endif
+
+    @if(perms(CommunityMemberController::permsView()))
+        @php
             $bar_members = $member->fetchBarMembers();
         @endphp
         <div class="ui vertical menu fluid">
