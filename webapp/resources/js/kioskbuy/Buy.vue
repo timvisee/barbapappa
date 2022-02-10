@@ -287,6 +287,9 @@
                     setTimeout(() => this.highlightUsers(), 0);
                 else
                     this.highlightProducts();
+
+                // Update heartbeat
+                this.heartbeat();
             },
 
             // Reset swap state.
