@@ -478,13 +478,18 @@
             padding-left: 0 !important;
             padding-right: 0 !important;
             padding-top: 0 !important;
-            border-radius: 0;
+            border-radius: 0 !important;
         }
 
         .ui.menu,
         .ui.vertical.menu {
-            border-radius: 0;
+            border-radius: 0 !important;
             box-shadow: none !important;
+        }
+
+        .ui.menu > .item:first-child,
+        .ui.vertical.menu > .item:first-child {
+            border-radius: 0 !important;
         }
     }
 
