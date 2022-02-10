@@ -218,9 +218,12 @@
                     setTimeout(() => this.showCancelledOverlay = false, 1000);
                 }
 
+                // Reset selections
                 this.selectedUsers.splice(0);
                 this.selectedProducts.splice(0);
                 this.removeAllUserCarts();
+
+                // Reset swap
                 this.resetSwap();
 
                 // TODO: optionally reload list of users/products
@@ -279,13 +282,9 @@
                 // Toggle swap.
                 this.swapped = !this.swapped;
 
-                // Reset selections
-                this.selectedUsers.splice(0);
-                this.selectedProducts.splice(0);
-
                 // Highlight first column
                 if(!this.swapped)
-                    this.highlightUsers();
+                    setTimeout(() => this.highlightUsers(), 0);
                 else
                     this.highlightProducts();
             },
