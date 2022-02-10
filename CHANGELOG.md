@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.148 (2022-02-10)
+
+- Add kiosk inactivity dialog, asking user to continue with or reset cart if products were selected, rather than just resetting it
+- Improve terminology used for kiosk deselect/clear/reset buttons
+- Fix kiosk heartbeat not being triggered in various edge cases, making idle handling more reliable
+- Improve kiosk column swap button visuals, style it as dedicated toolbar button
+- Fix incorrect workbox cache configuration, which resulted in clients caching a lot of unused resources
+- Bump laravel-mix, webpack, vue, improving client widget compatibility
+- Bump workbox-webpack-plugin, improving client service worker compatibility and performance
+- Bump flag-icon-css to flag-icons, improving language flag visuals
+- Update browser database, improving client compatibility
+- Resolve SASS compiler warnings
+- Update dependencies
+
 ## 0.1.147 (2022-02-09)
 
 - Add search field to community/bar member list
