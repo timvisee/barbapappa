@@ -71,12 +71,12 @@ vendorScripts.push('resources/assets/vendor/jquery/jquery-2.1.4.js');
 
 // Flag icons
 mix.sass(
-    'node_modules/flag-icon-css/sass/flag-icon.scss',
-    'public/css/vendor/flag-icon.css',
+    'node_modules/flag-icons/sass/flag-icons.scss',
+    'public/css/vendor/flag-icons.css',
 );
-vendorStyles.push('public/css/vendor/flag-icon.css');
+vendorStyles.push('public/css/vendor/flag-icons.css');
 mix.copyDirectory(
-    'node_modules/flag-icon-css/flags',
+    'node_modules/flag-icons/flags',
     'public/flags',
 );
 

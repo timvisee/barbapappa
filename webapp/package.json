@@ -15,7 +15,7 @@
     "chart.js": "^3.7.0",
     "chartjs-adapter-moment": "^1.0.0",
     "cross-env": "^5.2.1",
-    "flag-icon-css": "^2.9.0",
+    "flag-icons": "^6.0",
     "jquery": "^3.5.1",
     "laravel-mix": "^5.0.7",
     "lodash": "^4.17.21",

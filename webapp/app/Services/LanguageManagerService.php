@@ -315,9 +315,9 @@ class LanguageManagerService {
      * @return string Flag class.
      */
     public function getLocaleFlagClass($locale = null, $square = false, $rounded = true) {
-        return 'flag-icon flag-icon-' . $this->getLocaleFlagIdentifier($locale)
-            . ($square ? ' flag-icon-squared' : '')
-            . ($rounded ? ' flag-icon-rounded' : '');
+        return 'fi fi-' . $this->getLocaleFlagIdentifier($locale)
+            . ($square ? ' fis' : '')
+            . ($rounded ? ' fir' : '');
     }
 
     /**

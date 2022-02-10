@@ -1,7 +1,7 @@
 {
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
-    "/css/vendor/flag-icon.css": "/css/vendor/flag-icon.css",
+    "/css/vendor/flag-icons.css": "/css/vendor/flag-icons.css",
     "/js/widget/advancedbuy.js": "/js/widget/advancedbuy.js",
     "/js/widget/kioskbuy.js": "/js/widget/kioskbuy.js",
     "/js/widget/quickbuy.js": "/js/widget/quickbuy.js",
