@@ -1,14 +1,20 @@
 // noinspection JSAnnotator
+
+const path = require('path');
+
 let mix = require('laravel-mix');
-const WebpackShellPlugin = require('webpack-shell-plugin');
+
+const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 const { GenerateSW } = require('workbox-webpack-plugin');
 
 // Add shell command plugin configured to create JavaScript language file
 mix.webpackConfig({
     plugins: [
-        new WebpackShellPlugin({
-            onBuildStart:['php artisan lang:js --compress --quiet -- public/js/app/lang.js'],
-            onBuildEnd:[],
+        new WebpackShellPluginNext({
+            onBeforeBuild: {
+                scripts: ['php artisan lang:js --compress --quiet -- public/js/app/lang.js'],
+                blocking: true,
+            },
         }),
         new GenerateSW({
             // TODO: do not exclude common files
@@ -64,7 +70,7 @@ mix.js(
 ).js(
     'resources/js/kioskbuy/kioskbuy.js',
     'public/js/widget',
-);
+).vue({ version: 2 });
 
 // jQuery
 vendorScripts.push('resources/assets/vendor/jquery/jquery-2.1.4.js');

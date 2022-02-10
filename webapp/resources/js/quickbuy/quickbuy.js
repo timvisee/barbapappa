@@ -1,8 +1,7 @@
 import axios from 'axios';
+import Vue from 'vue';
 
-window.Vue = require('vue');
-
-const Buy = require('./Buy').default;
+import Buy from './Buy.vue';
 
 /**
  * Replace the static quick buy element with a smart interactive Vue version.
