@@ -24,8 +24,8 @@ before_script:
   # Install NVM, set up node with npm
   - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
   - . /root/.nvm/nvm.sh
-  - nvm install --lts=carbon
-  - nvm use --lts=carbon
+  - nvm install --lts=gallium
+  - nvm use --lts=gallium
 
   # Install PHP extensions, install/enable Xdebug
   - docker-php-ext-install mbstring pdo_mysql curl intl gd xml zip bz2 opcache
