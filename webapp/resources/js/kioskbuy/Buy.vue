@@ -386,6 +386,9 @@
                 if(cart == null)
                     return;
 
+                // Update heartbeat
+                this.heartbeat();
+
                 if(quantity > 0) {
                     // Add/get product, set quantity
                     let item = cart.products.filter(p => p.id == product.id);
@@ -423,6 +426,9 @@
                 from.products.forEach((item) => {
                     this.addCartQuantity(target, item.product, item.quantity);
                 });
+
+                // Update heartbeat
+                this.heartbeat();
             },
 
             // Get the number of products in the given cart.
@@ -463,6 +469,9 @@
                 let i = this.cart.findIndex(c => c.user.id == user.id);
                 if(i >= 0)
                     this.cart.splice(i, 1);
+
+                // Update heartbeat
+                this.heartbeat();
             }
         },
     }
