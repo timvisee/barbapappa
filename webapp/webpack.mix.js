@@ -17,9 +17,8 @@ mix.webpackConfig({
             },
         }),
         new GenerateSW({
-            // TODO: do not exclude common files
             exclude: [
-                /.*\.(js|css)/
+                'images/vendor/flag-icons/flags/',
             ],
             swDest: 'sw.js',
         }),
