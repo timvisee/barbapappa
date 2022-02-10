@@ -1,6 +1,6 @@
-window.Vue = require('vue');
+import Vue from 'vue';
 
-const Buy = require('./Buy').default;
+import Buy from './Buy.vue';
 
 window.addEventListener('load', function() {
     // Get the API URL

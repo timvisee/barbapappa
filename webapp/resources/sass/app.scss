@@ -161,22 +161,22 @@ ul.ui-listview.center > li > a.ui-btn {
   text-align: center;
 }
 
-// Flag icon modifiers
-.flag-icon.flag-icon-rounded {
+// flag-icons modifiers
+.fi.fir {
   border-radius: 0.15em;
 }
 
 // Custom pirate flag
-.flag-icon-pirate {
+.fi-pirate {
   background-image: url(/img/flag/pirate_4x3.svg);
 }
 
-.flag-icon-pirate.flag-icon-squared {
+.fi-pirate.fis {
   background-image: url(/img/flag/pirate_1x1.svg);
 }
 
 // Flags on buttons
-.ui.button .icon .flag-icon {
+.ui.button .icon .fi {
     display: inline-block;
     height: 100%;
 }

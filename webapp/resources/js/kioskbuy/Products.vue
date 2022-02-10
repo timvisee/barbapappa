@@ -18,10 +18,11 @@
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectProducts') }}
 
+            <div v-if="swapped" class="action spacer"></div>
             <a v-if="swapped"
                     v-on:click.stop.prevent="swap()"
                     href="#"
-                    class="action"
+                    class="swap"
                     :title="__('pages.kiosk.swapColumns')">
                 <i class="halflings halflings-reflect-y"></i>
             </a>
@@ -30,14 +31,14 @@
                     v-on:click.stop.prevent="reset(); query = ''"
                     href="#"
                     class="action negative">
-                {{ __('pages.kiosk.deselect') }}
+                {{ __('misc.deselect') }}
             </a>
 
             <a v-if="!isSelectMode() && getCartSize() > 0 && !buying"
                     v-on:click.stop.prevent="removeCart(); query = ''"
                     href="#"
                     class="action negative">
-                {{ __('misc.reset') }}
+                {{ __('misc.clear') }}
             </a>
         </h5>
 
@@ -514,6 +515,12 @@
         color: red;
     }
 
+    .action.spacer {
+        width: 40px;
+        height: 1px;
+        margin-left: 0;
+    }
+
     .ui.dimmer .text {
         padding: 1em;
         line-height: 2;
@@ -521,5 +528,34 @@
 
     .ui.dimmer .ui.divider {
         font-weight: normal;
+    }
+</style>
+
+<style lang="scss">
+    .swap {
+        color: rgba(0, 0, 0, .87);
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+
+        display: block;
+        padding: 13px 5px 13px 5px;
+        border-left: 1px solid rgba(34,36,38,.15);
+        transition: background .1s ease, color .1s ease;
+
+        .glyphicons,
+        .halflings {
+            width: 30px;
+            height: 14px;
+            margin: -1px 0 0 0;
+        }
+
+        &:hover {
+            color: rgba(0, 0, 0, .87);
+            background: rgba(0, 0, 0, .08) !important;
+        }
     }
 </style>

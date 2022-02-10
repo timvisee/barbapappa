@@ -93,6 +93,9 @@
                     :buying="buying"
                     :_getTotalCartQuantity="getTotalCartQuantity" />
 
+            <!-- Cart reset modal -->
+            <ResetModal :showModal="showResetModal" @onHide="showResetModal = false; heartbeat()" @onReset="cancel" />
+
         </div>
     </div>
 </template>
@@ -103,6 +106,8 @@
     const Cart = require('./Cart.vue').default;
     const Products = require('./Products.vue').default;
     const Users = require('./Users.vue').default;
+
+    const ResetModal = require('./ResetModal.vue').default;
 
     /**
      * Order timeout in seconds. Cancel current order after number of seconds of
@@ -121,6 +126,7 @@
             Cart,
             Products,
             Users,
+            ResetModal,
         },
         data() {
             return {
@@ -141,6 +147,8 @@
                 // Timer handle after which to force reload the interface
                 inactiveRefreshTimer: null,
                 stateOnline: true,
+                // Whether to show the cart reset modal
+                showResetModal: false,
             };
         },
         props: [
@@ -218,10 +226,16 @@
                     setTimeout(() => this.showCancelledOverlay = false, 1000);
                 }
 
+                // Reset selections
                 this.selectedUsers.splice(0);
                 this.selectedProducts.splice(0);
                 this.removeAllUserCarts();
+
+                // Reset swap
                 this.resetSwap();
+
+                // Hide reset modal
+                this.showResetModal = false;
 
                 // TODO: optionally reload list of users/products
             },
@@ -240,12 +254,15 @@
                 // Set up order inactivity cancel timeout
                 this.orderCancelTimer = setTimeout(() => {
                     // Skip if no users selected or nothing in cart
-                    // TODO: also check selected users!
-                    if(this.selectedUsers.length == 0 && this.cart.length == 0)
+                    if(this.selectedUsers.length == 0 && this.selectedProducts.length == 0 && this.cart.length == 0)
                         return;
 
-                    // Cancel
-                    this.cancel();
+                    // Cancel if cart is empty, otherwise show reset dialog
+                    if(this.getTotalCartQuantity() <= 0)
+                        this.cancel();
+                    else
+                        this.showResetModal = true;
+
                 }, ORDER_CANCEL_TIMEOUT * 1000);
 
                 // Set up inactive refresh timer
@@ -279,15 +296,14 @@
                 // Toggle swap.
                 this.swapped = !this.swapped;
 
-                // Reset selections
-                this.selectedUsers.splice(0);
-                this.selectedProducts.splice(0);
-
                 // Highlight first column
                 if(!this.swapped)
-                    this.highlightUsers();
+                    setTimeout(() => this.highlightUsers(), 0);
                 else
                     this.highlightProducts();
+
+                // Update heartbeat
+                this.heartbeat();
             },
 
             // Reset swap state.
@@ -370,6 +386,9 @@
                 if(cart == null)
                     return;
 
+                // Update heartbeat
+                this.heartbeat();
+
                 if(quantity > 0) {
                     // Add/get product, set quantity
                     let item = cart.products.filter(p => p.id == product.id);
@@ -407,6 +426,9 @@
                 from.products.forEach((item) => {
                     this.addCartQuantity(target, item.product, item.quantity);
                 });
+
+                // Update heartbeat
+                this.heartbeat();
             },
 
             // Get the number of products in the given cart.
@@ -447,6 +469,9 @@
                 let i = this.cart.findIndex(c => c.user.id == user.id);
                 if(i >= 0)
                     this.cart.splice(i, 1);
+
+                // Update heartbeat
+                this.heartbeat();
             }
         },
     }
@@ -478,13 +503,18 @@
             padding-left: 0 !important;
             padding-right: 0 !important;
             padding-top: 0 !important;
-            border-radius: 0;
+            border-radius: 0 !important;
         }
 
         .ui.menu,
         .ui.vertical.menu {
-            border-radius: 0;
+            border-radius: 0 !important;
             box-shadow: none !important;
+        }
+
+        .ui.menu > .item:first-child,
+        .ui.vertical.menu > .item:first-child {
+            border-radius: 0 !important;
         }
     }
 
