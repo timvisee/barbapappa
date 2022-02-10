@@ -11,12 +11,17 @@ const { GenerateSW } = require('workbox-webpack-plugin');
 mix.webpackConfig({
     plugins: [
         new WebpackShellPluginNext({
-            onBeforeBuild: {
+            onBuildStart: {
+                scripts: ['php artisan lang:js --compress --quiet -- public/js/app/lang.js'],
+                blocking: true,
+            },
+            onWatchRun: {
                 scripts: ['php artisan lang:js --compress --quiet -- public/js/app/lang.js'],
                 blocking: true,
             },
         }),
         new GenerateSW({
+            // TODO: also cache js/vendor.js, css/vendor.css
             exclude: [
                 'images/vendor/flag-icons/flags/',
             ],
