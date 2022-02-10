@@ -1069,6 +1069,9 @@ return [
         'swapColumns' => 'Wissel kolommen',
         'backToKiosk' => 'Terug naar kiosk',
         'noConnectionBanner' => 'Geen verbinding! Sleep naar beneden om te verversen.',
+        'cartTimeoutDescription' => 'Vergeten af te rekenen?<br><br>Geselecteerde producten zijn nog niet afgerekend.',
+        'viewCart' => 'Verder winkelen',
+        'resetCart' => 'Reset winkelwagen',
     ],
 
     /**

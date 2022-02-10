@@ -1067,6 +1067,9 @@ return [
         'swapColumns' => 'Swap columns',
         'backToKiosk' => 'Back to kiosk',
         'noConnectionBanner' => 'Connection errrror! Pull the page down to refresh.',
+        'cartTimeoutDescription' => 'Forgot purchase?<br><br>Selected loot nay be purchased yet.',
+        'viewCart' => 'Continue looting',
+        'resetCart' => 'Reset loot',
     ],
 
     /**

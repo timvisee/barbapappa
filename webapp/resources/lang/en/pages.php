@@ -1068,6 +1068,9 @@ return [
         'swapColumns' => 'Swap columns',
         'backToKiosk' => 'Back to kiosk',
         'noConnectionBanner' => 'No connection! Pull the page down to refresh.',
+        'cartTimeoutDescription' => 'Forgot purchase?<br><br>Selected products have not been purchased yet.',
+        'viewCart' => 'Continue shopping',
+        'resetCart' => 'Reset cart',
     ],
 
     /**
