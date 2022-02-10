@@ -31,14 +31,14 @@
                     v-on:click.stop.prevent="reset(); query = ''"
                     href="#"
                     class="action negative">
-                {{ __('pages.kiosk.deselect') }}
+                {{ __('misc.deselect') }}
             </a>
 
             <a v-if="!isSelectMode() && getCartSize() > 0 && !buying"
                     v-on:click.stop.prevent="removeCart(); query = ''"
                     href="#"
                     class="action negative">
-                {{ __('misc.reset') }}
+                {{ __('misc.clear') }}
             </a>
         </h5>
 

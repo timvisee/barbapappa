@@ -32,7 +32,7 @@
                     v-on:click.stop.prevent="reset(); query = ''"
                     href="#"
                     class="action negative">
-                {{ __('pages.kiosk.deselect') }}
+                {{ __('misc.deselect') }}
             </a>
 
             <a v-if="!isSelectMode() && _getTotalCartQuantity() > 0 && !buying"

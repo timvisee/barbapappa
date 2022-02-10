@@ -1063,13 +1063,12 @@ return [
         'selectProducts' => 'Select loot',
         'buyProducts#' => '{0} Get no loot|{1} Get loot|[2,*] Get :count loot',
         'buyProductsUsers#' => '{0} Get no loot for :users pirates|[1,*] Get :count× for :users pirates',
-        'deselect' => 'Deselect',
-        'swapColumns' => 'Swap columns',
-        'backToKiosk' => 'Back to kiosk',
-        'noConnectionBanner' => 'Connection errrror! Pull the page down to refresh.',
         'cartTimeoutDescription' => 'Forgot purchase?<br><br>Selected loot nay be purchased yet.',
         'viewCart' => 'Continue looting',
         'resetCart' => 'Reset loot',
+        'swapColumns' => 'Swap columns',
+        'backToKiosk' => 'Back to kiosk',
+        'noConnectionBanner' => 'Connection errrror! Pull the page down to refresh.',
     ],
 
     /**
