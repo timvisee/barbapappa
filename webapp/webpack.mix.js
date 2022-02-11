@@ -47,7 +47,7 @@ mix.copyDirectory(
     'public/img',
 ).copy(
     '../LICENSE',
-    'public/LICENSE',
+    'public/',
 );
 
 // App
