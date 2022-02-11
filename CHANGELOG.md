@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.149 (2022-02-11)
+
+- Enlarge wallet and top-up buttons
+- Mark exhausted products in personal buy screen widget
+- In kiosk mode, mark exhausted products with trash icon
+- On inventory rebalance page, mark products having negative quantity, to recommend updating their quantities
+- Mark advanced buy product selection with +1 rather than 1×, to make its behaviour consistent with kiosk mode
+- Fix missing raw license file in production build
+- Update placeholder fields in license
+- Update laravel-mix manifest
+
 ## 0.1.148 (2022-02-10)
 
 - Add kiosk inactivity dialog, asking user to continue with or reset cart if products were selected, rather than just resetting it
