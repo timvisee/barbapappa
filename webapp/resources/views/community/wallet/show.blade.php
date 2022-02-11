@@ -31,11 +31,11 @@
     <center>
         <div class="ui buttons">
             <a href="{{ route('community.wallet.topUp', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button green">
+                    class="ui large button green">
                 @lang('misc.pay')
             </a>
             <a href="{{ route('community.wallet.stats', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'walletId' => $wallet->id]) }}"
-                    class="ui button primary">
+                    class="ui large button primary">
                 @lang('misc.stats')
             </a>
         </div>
