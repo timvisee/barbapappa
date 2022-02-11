@@ -24,8 +24,10 @@
                 v-on:click.stop.prevent="select(product)"
                 href="#"
                 class="green inverted item"
-                v-bind:class="{ active: getQuantity(product) > 0 }">
+                v-bind:class="{ active: getQuantity(product) > 0, disabled: product.exhausted && getQuantity(product) <= 0 }">
             <span v-if="getQuantity(product) > 0" class="subtle">+{{ getQuantity(product) }}</span>
+
+            <span v-if="product.exhausted && getQuantity(product) <= 0" class="halflings halflings-trash"></span>
 
             {{ product.name }}
 
@@ -53,7 +55,8 @@
                 v-on:click.stop.prevent="select(product.product)"
                 href="#"
                 class="green inverted item"
-                v-bind:class="{ active: getQuantity(product.product) > 0 }">
+                v-bind:class="{ active: getQuantity(product.product) > 0, disabled: product.exhausted && getQuantity(product.product) <= 0}">
+
             <span v-if="getQuantity(product.product) > 0" class="subtle">+{{ getQuantity(product.product) }}</span>
 
             {{ product.product.name }}
