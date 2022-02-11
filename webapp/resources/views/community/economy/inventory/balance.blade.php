@@ -39,6 +39,10 @@
                 @forelse($products as $p)
                     <tr>
                         <td data-label="@lang('misc.product')">
+                            @if($p['quantity'] < 0)
+                                <span class="halflings halflings-exclamation-sign"></span>
+                            @endif
+
                             <a href="{{ route('community.economy.product.show', [
                                         // TODO: this is not efficient
                                         'communityId' => $p['product']->economy->community->human_id,
@@ -49,7 +53,7 @@
                             </a>
                         </td>
                         <td data-label="@lang('misc.quantity')" class="right aligned collapsing">
-                            <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}">
+                            <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_quantity') ? 'error' : '' }}{{ $p['quantity'] < 0 ? ' error-outline' : '' }}">
                                 {{ Form::text($p['field'] . '_quantity', '', [
                                     'placeholder' => $p['quantity'],
                                     'inputmode' => 'numeric',

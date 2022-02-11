@@ -43,3 +43,8 @@ form.inline {
 .ui.breadcrumb a.active.section {
     color: rgba(0, 0, 0, 0.87) !important;
 }
+
+// Form fields with just an error outline
+.ui.form .field.error-outline input {
+    border-color: darken(#e0b4b4, 20%) !important;
+}
