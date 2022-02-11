@@ -25,7 +25,7 @@
                 href="#"
                 class="green inverted item"
                 v-bind:class="{ active: getQuantity(product) > 0 }">
-            <span v-if="getQuantity(product) > 0" class="subtle">{{ getQuantity(product) }}×</span>
+            <span v-if="getQuantity(product) > 0" class="subtle">+{{ getQuantity(product) }}</span>
 
             {{ product.name }}
 
@@ -54,7 +54,7 @@
                 href="#"
                 class="green inverted item"
                 v-bind:class="{ active: getQuantity(product.product) > 0 }">
-            <span v-if="getQuantity(product.product) > 0" class="subtle">{{ getQuantity(product.product) }}×</span>
+            <span v-if="getQuantity(product.product) > 0" class="subtle">+{{ getQuantity(product.product) }}</span>
 
             {{ product.product.name }}
 
