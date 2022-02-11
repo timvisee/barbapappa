@@ -136,14 +136,15 @@
         <div class="ui hidden divider"></div>
 
         <p>
-            <button class="ui button primary"
+            <button class="fluid ui huge button positive"
                 type="submit">@lang('pages.wallets.topUp')</button>
+            <br>
             <a href="{{ route('community.wallet.show', [
                         'communityId' => $community->human_id,
                         'economyId' => $economy->id,
                         'walletId' => $wallet->id,
                     ]) }}"
-                    class="ui button basic">
+                    class="fluid ui button basic">
                 @lang('general.cancel')
             </a>
         </p>
