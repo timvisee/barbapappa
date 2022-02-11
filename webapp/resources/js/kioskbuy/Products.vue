@@ -65,12 +65,14 @@
                 v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
                 class="item kiosk-select-item prominent"
-                v-bind:class="{ disabled: buying || product.exhausted, active: getQuantity(product) > 0 }">
+                v-bind:class="{ disabled: buying || (product.exhausted && getQuantity(product) <= 0), active: getQuantity(product) > 0 }">
             <div class="item-text">
                 <span v-if="getQuantity(product) > 0" class="subtle quantity">
                     <span v-if="isSelectMode()">+{{ getQuantity(product) }}</span>
                     <span v-else>{{ getQuantity(product) }}×</span>
                 </span>
+
+                <span v-if="product.exhausted && getQuantity(product) <= 0" class="halflings halflings-trash"></span>
 
                 {{ product.name }}
             </div>
@@ -103,12 +105,14 @@
                 v-on:click.stop.prevent="changeQuantity(product, 1)"
                 href="#"
                 class="green inverted item kiosk-select-item"
-                v-bind:class="{ disabled: buying || product.exhausted, active: getQuantity(product) > 0 }">
+                v-bind:class="{ disabled: buying || (product.exhausted && getQuantity(product) <= 0), active: getQuantity(product) > 0 }">
             <div class="item-text">
                 <span v-if="getQuantity(product) > 0" class="subtle quantity">
                     <span v-if="isSelectMode()">+{{ getQuantity(product) }}</span>
                     <span v-else>{{ getQuantity(product) }}×</span>
                 </span>
+
+                <span v-if="product.exhausted && getQuantity(product) <= 0" class="halflings halflings-trash"></span>
 
                 {{ product.name }}
             </div>
