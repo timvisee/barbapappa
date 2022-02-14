@@ -1,5 +1,41 @@
 # Changelog
 
+## 0.1.149 (2022-02-11)
+
+- Enlarge wallet and top-up buttons
+- Mark exhausted products in personal buy screen widget
+- In kiosk mode, mark exhausted products with trash icon
+- On inventory rebalance page, mark products having negative quantity, to recommend updating their quantities
+- Mark advanced buy product selection with +1 rather than 1×, to make its behaviour consistent with kiosk mode
+- Fix missing raw license file in production build
+- Update placeholder fields in license
+- Update laravel-mix manifest
+
+## 0.1.148 (2022-02-10)
+
+- Add kiosk inactivity dialog, asking user to continue with or reset cart if products were selected, rather than just resetting it
+- Improve terminology used for kiosk deselect/clear/reset buttons
+- Fix kiosk heartbeat not being triggered in various edge cases, making idle handling more reliable
+- Improve kiosk column swap button visuals, style it as dedicated toolbar button
+- Fix incorrect workbox cache configuration, which resulted in clients caching a lot of unused resources
+- Bump laravel-mix, webpack, vue, improving client widget compatibility
+- Bump workbox-webpack-plugin, improving client service worker compatibility and performance
+- Bump flag-icon-css to flag-icons, improving language flag visuals
+- Update browser database, improving client compatibility
+- Resolve SASS compiler warnings
+- Update dependencies
+
+## 0.1.147 (2022-02-09)
+
+- Add search field to community/bar member list
+- Add interlinks to community/bar member detail pages for easier navigation
+- Add list of all user wallets on community member details page
+- Add list of user email addresses for admins on community/bar member details page
+- Fix some pirate speak language item mistakes
+- Remove unused language items
+- Update bunq SDK
+- Update dependencies
+
 ## 0.1.146 (2022-02-08)
 
 - Add kiosk button to swap columns, enables a different buy mode to quickly purchase the same product for many users

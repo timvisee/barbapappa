@@ -1,19 +1,25 @@
 // noinspection JSAnnotator
+
+const path = require('path');
+
 let mix = require('laravel-mix');
-const WebpackShellPlugin = require('webpack-shell-plugin');
+
+const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 const { GenerateSW } = require('workbox-webpack-plugin');
 
 // Add shell command plugin configured to create JavaScript language file
 mix.webpackConfig({
     plugins: [
-        new WebpackShellPlugin({
-            onBuildStart:['php artisan lang:js --compress --quiet -- public/js/app/lang.js'],
-            onBuildEnd:[],
+        new WebpackShellPluginNext({
+            onBuildStart: {
+                scripts: ['php artisan lang:js --compress --quiet -- public/js/app/lang.js'],
+                blocking: true,
+            },
         }),
         new GenerateSW({
-            // TODO: do not exclude common files
+            // TODO: also cache js/vendor.js, css/vendor.css
             exclude: [
-                /.*\.(js|css)/
+                'images/vendor/flag-icons/flags/',
             ],
             swDest: 'sw.js',
         }),
@@ -41,7 +47,7 @@ mix.copyDirectory(
     'public/img',
 ).copy(
     '../LICENSE',
-    'public/LICENSE',
+    'public/',
 );
 
 // App
@@ -64,19 +70,19 @@ mix.js(
 ).js(
     'resources/js/kioskbuy/kioskbuy.js',
     'public/js/widget',
-);
+).vue({ version: 2 });
 
 // jQuery
 vendorScripts.push('resources/assets/vendor/jquery/jquery-2.1.4.js');
 
 // Flag icons
 mix.sass(
-    'node_modules/flag-icon-css/sass/flag-icon.scss',
-    'public/css/vendor/flag-icon.css',
+    'node_modules/flag-icons/sass/flag-icons.scss',
+    'public/css/vendor/flag-icons.css',
 );
-vendorStyles.push('public/css/vendor/flag-icon.css');
+vendorStyles.push('public/css/vendor/flag-icons.css');
 mix.copyDirectory(
-    'node_modules/flag-icon-css/flags',
+    'node_modules/flag-icons/flags',
     'public/flags',
 );
 

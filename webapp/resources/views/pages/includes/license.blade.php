@@ -1,8 +1,8 @@
 <h3 style="text-align: center;">GNU AFFERO GENERAL PUBLIC LICENSE</h3>
 <p style="text-align: center;">Version 3, 19 November 2007</p>
 
-<p>Copyright &copy; 2007 Free Software Foundation,
-Inc. &lt;<a href="https://fsf.org/">https://fsf.org/</a>&gt;
+<p>Copyright &copy; 2022 Tim Visée,
+&lt;<a href="https://timvisee.com/">https://timvisee.com/</a>&gt;
  <br />
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.</p>
@@ -630,5 +630,3 @@ reviewing courts shall apply local law that most closely approximates
 an absolute waiver of all civil liability in connection with the
 Program, unless a warranty or assumption of liability accompanies a
 copy of the Program in return for a fee.</p>
-
-<p>END OF TERMS AND CONDITIONS</p>

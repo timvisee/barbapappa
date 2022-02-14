@@ -72,6 +72,45 @@ class CommunityMember extends Pivot {
     }
 
     /**
+     * Scope a query to only include community members relevant to the given
+     * search query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $search The search query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $search) {
+        // Don't scope if empty
+        if(empty($search))
+            return $query;
+
+        // Search for each word separately in the first/last name fields
+        $query = $query
+            ->where(function($query) use($search) {
+                foreach(explode(' ', $search) as $word)
+                    if(!empty($word))
+                        $query->whereExists(function($query) use($word) {
+                            $query->selectRaw('1')
+                                ->from('user')
+                                ->whereRaw('user.id = community_member.user_id')
+                                ->where(function($query) use($word) {
+                                    $query->where('first_name', 'LIKE', '%' . escape_like($word) . '%')
+                                        ->orWhere('last_name', 'LIKE', '%' . escape_like($word) . '%');
+                                });
+                        });
+            });
+
+        // // Search for each word separately in nickname field
+        // foreach(explode(' ', $search) as $word)
+        //     $query = $query
+        //         ->orWhere('nickname', 'LIKE', '%' . escape_like($word) . '%')
+        //         ->orWhere('tags', 'LIKE', '%' . escape_like($word) . '%');
+
+        return $query;
+    }
+
+    /**
      * Get the member community.
      *
      * @return Community The community.
@@ -87,5 +126,51 @@ class CommunityMember extends Pivot {
      */
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Fetch the bar members for this community user.
+     *
+     * Note: this is expensive.
+     *
+     * @return Bar members.
+     */
+    public function fetchBarMembers() {
+        $user = $this->user;
+        if($user == null)
+            return collect();
+
+        return $this
+            ->community
+            ->bars
+            ->map(function($bar) use($user) {
+                return $bar->member($user);
+            })
+            ->filter(function($member) {
+                return $member != null;
+            });
+    }
+
+    /**
+     * Fetch the economy members for this community user.
+     *
+     * Note: this is expensive.
+     *
+     * @return Economy members.
+     */
+    public function fetchEconomyMembers() {
+        $user = $this->user;
+        if($user == null)
+            return collect();
+
+        return $this
+            ->community
+            ->economies
+            ->map(function($bar) use($user) {
+                return $bar->member($user);
+            })
+            ->filter(function($member) {
+                return $member != null;
+            });
     }
 }

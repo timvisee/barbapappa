@@ -2,12 +2,12 @@
   "private": true,
   "scripts": {
     "dev": "npm run development",
-    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --stats-children --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "npm run development -- --watch",
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --stats-children --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
     "axios": "^0.21.4",
@@ -15,20 +15,21 @@
     "chart.js": "^3.7.0",
     "chartjs-adapter-moment": "^1.0.0",
     "cross-env": "^5.2.1",
-    "flag-icon-css": "^2.9.0",
+    "flag-icons": "^6.0",
     "jquery": "^3.5.1",
-    "laravel-mix": "^5.0.7",
+    "laravel-mix": "^6.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "popper.js": "^1.16.1",
     "resolve-url-loader": "^2.3.2",
     "sass": "^1.49.7",
-    "sass-loader": "^7.3.1",
+    "sass-loader": "^12.4.0",
     "semantic-ui-css": "^2.4.0",
     "vue": "^2.6.14",
+    "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",
-    "webpack-shell-plugin": "^0.5.0",
-    "workbox-webpack-plugin": "^5.1.4"
+    "webpack-shell-plugin-next": "^2.2",
+    "workbox-webpack-plugin": "^6.4.2"
   },
   "dependencies": {}
 }

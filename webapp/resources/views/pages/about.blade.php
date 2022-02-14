@@ -85,7 +85,7 @@
                 <i class="halflings halflings-heart" style="color: #b80000;"></i>
             </div>
             <div class="item">
-                <a href="https://flagicons.lipis.dev/" target="_blank">flag-icon-css</a>
+                <a href="https://flagicons.lipis.dev/" target="_blank">flag-icons</a>
                 —
                 <i>@lang('pages.about.noteFlags')</i>&nbsp;
                 <span class="{{ langManager()->getLocaleFlagClass(null, false, true) }}" style="font-size: 0.75em;"></span><br />

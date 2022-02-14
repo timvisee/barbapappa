@@ -72,6 +72,45 @@ class BarMember extends Pivot {
     }
 
     /**
+     * Scope a query to only include bar members relevant to the given
+     * search query.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $search The search query.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $search) {
+        // Don't scope if empty
+        if(empty($search))
+            return $query;
+
+        // Search for each word separately in the first/last name fields
+        $query = $query
+            ->where(function($query) use($search) {
+                foreach(explode(' ', $search) as $word)
+                    if(!empty($word))
+                        $query->whereExists(function($query) use($word) {
+                            $query->selectRaw('1')
+                                ->from('user')
+                                ->whereRaw('user.id = bar_member.user_id')
+                                ->where(function($query) use($word) {
+                                    $query->where('first_name', 'LIKE', '%' . escape_like($word) . '%')
+                                        ->orWhere('last_name', 'LIKE', '%' . escape_like($word) . '%');
+                                });
+                        });
+            });
+
+        // // Search for each word separately in nickname field
+        // foreach(explode(' ', $search) as $word)
+        //     $query = $query
+        //         ->orWhere('nickname', 'LIKE', '%' . escape_like($word) . '%')
+        //         ->orWhere('tags', 'LIKE', '%' . escape_like($word) . '%');
+
+        return $query;
+    }
+
+    /**
      * Get the member bar.
      *
      * @return Bar The bar.
@@ -102,6 +141,24 @@ class BarMember extends Pivot {
         return $this
             ->bar
             ->economy
+            ->members()
+            ->where('user_id', $this->user_id)
+            ->firstOrFail();
+    }
+
+    /**
+     * Get related community member.
+     *
+     * This function is expensive.
+     */
+    public function fetchCommunityMember() {
+        // Assert user isn't null
+        if($this->user_id == null)
+            throw new \Exception("Cannot get community member for bar member with no user");
+
+        return $this
+            ->bar
+            ->community
             ->members()
             ->where('user_id', $this->user_id)
             ->firstOrFail();
