@@ -14,10 +14,22 @@
         <!-- Confirming/buying, bought, cancelled overlay -->
         <div v-if="confirming || buying" class="ui active dimmer on-top"></div>
         <div v-if="showBoughtOverlay" class="ui active dimmer positive on-top">
-            <div class="ui text huge">{{ __('misc.bought') }}!</div>
+            <div class="ui text huge">
+                <div class="ui icon header">
+                    <i class="glyphicons glyphicons-cart-tick logo"></i>
+                </div>
+                <br>
+                {{ __('misc.bought') }}!
+            </div>
         </div>
         <div v-if="showCancelledOverlay" class="ui active dimmer negative on-top">
-            <div class="ui text huge">{{ __('misc.cancelled') }}!</div>
+            <div class="ui text huge">
+                <div class="ui icon header">
+                    <i class="glyphicons glyphicons-cart-out logo"></i>
+                </div>
+                <br>
+                {{ __('misc.cancelled') }}!
+            </div>
         </div>
 
         <!-- Main UI -->
@@ -121,6 +133,11 @@
      */
     const INACTIVITY_REFRESH_TIMEOUT = 2 * 60 * 60;
 
+    /**
+     * Time to show bought/cancel overlay in seconds.
+     */
+    const OVERLAY_TIMEOUT = 1;
+
     export default {
         components: {
             Cart,
@@ -204,7 +221,7 @@
 
                         // Show bought overlay for 1 second
                         this.showBoughtOverlay = true;
-                        setTimeout(() => this.showBoughtOverlay = false, 1000);
+                        setTimeout(() => this.showBoughtOverlay = false, OVERLAY_TIMEOUT * 1000);
 
                         // Cancel all current selections
                         this.cancel(false);
@@ -223,7 +240,7 @@
                 // Show cancelled overlay for 1 second
                 if(showOverlay) {
                     this.showCancelledOverlay = true;
-                    setTimeout(() => this.showCancelledOverlay = false, 1000);
+                    setTimeout(() => this.showCancelledOverlay = false, OVERLAY_TIMEOUT * 1000);
                 }
 
                 // Reset selections
@@ -477,7 +494,7 @@
     }
 </script>
 
-<style>
+<style lang="scss">
     body {
         /* Prevent any accidental selections in kiosk mode */
         user-select: none;
@@ -548,11 +565,19 @@
     .ui.dimmer.positive {
         background-color: rgba(33, 186, 69, .85);
         color: white;
+
+        .glyphicons {
+            color: white;
+        }
     }
 
     .ui.dimmer.negative {
         background-color: rgba(219, 40, 40, .85);
         color: white;
+
+        .glyphicons {
+            color: white;
+        }
     }
 
     .ui.dimmer .text.huge {
