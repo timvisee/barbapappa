@@ -11,19 +11,7 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <h3 class="ui horizontal divider header">@lang('misc.community')</h3>
-    <div class="ui one small statistics">
-        <div class="statistic">
-            <div class="value">
-                @include('includes.humanTimeDiff', ['time' => $community->created_at, 'short' => true, 'absolute' => true])
-            </div>
-            <div class="label">@lang('misc.active')</div>
-        </div>
-    </div>
-
-    <h3 class="ui horizontal divider header">
-        @lang('misc.members')
-    </h3>
+    <h3 class="ui horizontal divider header">@lang('misc.members')</h3>
     <div class="ui one small statistics">
         @if(perms(CommunityMemberController::permsView()))
             <a href="{{ route('community.member.index', ['communityId' => $community->human_id]) }}"
@@ -50,6 +38,16 @@
         <div class="statistic">
             <div class="value">{{ $memberCountMonth }}</div>
             <div class="label">@lang('pages.stats.activePastMonth')</div>
+        </div>
+    </div>
+
+    <h3 class="ui horizontal divider header">@lang('misc.community')</h3>
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                @include('includes.humanTimeDiff', ['time' => $community->created_at, 'short' => true, 'absolute' => true])
+            </div>
+            <div class="label">@lang('misc.active')</div>
         </div>
     </div>
 
