@@ -112,6 +112,12 @@ $page-divider-color: #D5D5D5;
     margin-bottom: 2em;
 }
 
+// Use no margin on modal dimmers
+.ui.dimmer.modals.page {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 // Page dividers
 .page-divider {
   display: flex;

@@ -504,7 +504,7 @@
      * Remove all padding on small screens.
      */
     @media only screen and (max-width:767px) {
-        .page {
+        .ui.container.page {
             margin-top: 14px;
         }
 
