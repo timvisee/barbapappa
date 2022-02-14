@@ -34,7 +34,7 @@
 
         <!-- Main UI -->
         <div v-if="!refreshing">
-            <div v-if="successMessage" class="ui success floating message notification">
+            <div v-if="successMessage && cart.length == 0" class="ui success floating message notification">
                 <span class="halflings halflings-ok-sign icon"></span>
                 {{ successMessage }}
             </div>
@@ -134,6 +134,11 @@
     const INACTIVITY_REFRESH_TIMEOUT = 2 * 60 * 60;
 
     /**
+     * Success message timeout in seconds.
+     */
+    const SUCCESS_MESSAGE_TIMEOUT = 5;
+
+    /**
      * Time to show bought/cancel overlay in seconds.
      */
     const OVERLAY_TIMEOUT = 1;
@@ -186,7 +191,7 @@
                     clearTimeout(this.decayTimer);
                     this.decayTimer = setTimeout(() => {
                         this.successMessage = undefined;
-                    }, 5000);
+                    }, SUCCESS_MESSAGE_TIMEOUT * 1000);
                 }
             },
         },
@@ -549,10 +554,10 @@
 
     .notification {
         position: fixed !important;
-        top: 64px;
+        bottom: 0;
         left: 14px;
         right: 14px;
-        z-index: 1001;
+        z-index: 999;
 
         /* TODO: do not use this hack! */
         width: calc(100% - 28px) !important;
