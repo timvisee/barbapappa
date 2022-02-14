@@ -44,6 +44,17 @@
 
         <div class="ui divider hidden"></div>
 
+        @if($change->related != null)
+            <div class="inline field">
+                <div class="ui checkbox">
+                    {{ Form::checkbox('undo_related', true, true, ['tabindex' => 0, 'class' => 'hidden']) }}
+                    {{ Form::label('undo_related', __('pages.inventories.alsoUndoRelated') . ' (' . __('general.recommended') . ')') }}
+                </div>
+            </div>
+
+            <div class="ui divider hidden"></div>
+        @endif
+
         <div class="ui buttons">
             <a href="{{ route('community.economy.inventory.product.change', [
                         'communityId' => $community->human_id,
