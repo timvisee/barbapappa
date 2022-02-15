@@ -103,7 +103,7 @@ abstract class PersonalizedEmail extends Mailable implements ShouldQueue {
         $this->subject($subject);
 
         // Add unsubscribe link
-        $this->withSwiftMessage(function($message) {
+        $this->withSymfonyMessage(function(\Symfony\Component\Mime\Email $message) {
             $message->getHeaders()
                 ->addTextHeader('List-Unsubscribe', '<' . route('email.preferences') . '>');
         });
