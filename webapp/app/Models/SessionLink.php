@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Mail\Auth\SessionLinkMail;
+use App\Managers\EmailVerificationManager;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,8 @@ use Illuminate\Support\Facades\Mail;
  * @property int id
  * @property int user_id
  * @property-read User|null user
+ * @property int email_id
+ * @property-read Email|null email
  * @property string token
  * @property Carbon|null expire_at
  * @property string|null intended_url
@@ -108,6 +111,15 @@ class SessionLink extends Model {
     }
 
     /**
+     * Get the relation to the email this session link was requested on.
+     *
+     * @return Builder A relation to the email this link was requested on.
+     */
+    public function email() {
+        return $this->belongsTo(Email::class);
+    }
+
+    /**
      * Check whether the given token is valid.
      *
      * @param bool $token The token.
@@ -158,6 +170,45 @@ class SessionLink extends Model {
         $link->intended_url = $intended_url;
         $link->laravel_session_id = session()->getId();
         $link->save();
+        return $link;
+    }
+
+    /**
+     * Create a new session link for the given email, and send it to it.
+     * If there was any intended URL in the current session, it is included in
+     * the created session link to redirect the user to after authenticating.
+     *
+     * @param Email $email The email (and user) to create the session link for and
+     *      send it to.
+     * @parma string|null $intended_url A custom intended URL, null to use default.
+     * @return SessionLink The session link object that was created.
+     */
+    public static function createForMailAndSend(Email $email, $intended_url = null) {
+        // Grab the intended URL if there is any
+        if($intended_url == null)
+            $intended_url = \Session::get('url.intended');
+        \Session::forget('url.intended');
+
+        $user = $email->user;
+        if($user == null)
+            throw new \Exception("Cannot create session link for email, unknown user");
+
+        $link = null;
+        DB::transaction(function() use(&$link, $user, $email, $intended_url) {
+            // Create a session link for this user and mail
+            $link = new SessionLink();
+            $link->user_id = $user->id;
+            $link->email_id = $email->id;
+            $link->token = Self::generateToken();
+            $link->expire_at = now()->addSeconds(config('app.auth_session_link_expire'));
+            $link->intended_url = $intended_url;
+            $link->laravel_session_id = session()->getId();
+            $link->save();
+
+            // Send mail to the user
+            $link->sendMail($email->email);
+        });
+
         return $link;
     }
 
@@ -241,6 +292,14 @@ class SessionLink extends Model {
         $link = SessionLink::notExpired()
             ->where('token', trim($token))
             ->firstOrFail();
+
+        // If email is attached and unverified, verify it now
+        try {
+            if($link->email != null && !$link->email->isVerified())
+                EmailVerificationManager::setVerified($link->email);
+        } catch(\Exception $ex) {
+            app('sentry')->captureException($ex);
+        }
 
         // Create session in transaction
         $authResult = null;

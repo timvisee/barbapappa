@@ -1,7 +1,7 @@
 <template>
     <div id="reset-modal" class="ui basic modal">
         <div class="ui icon header">
-            <i class="glyphicons glyphicons-cart-tick logo"></i>
+            <i class="glyphicons glyphicons-hourglass logo"></i>
         </div>
         <div class="content">
             <p>

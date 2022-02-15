@@ -443,6 +443,7 @@ return [
         'timeTravel' => 'Time travel',
         'travelToTime' => 'Travel to time (UTC)',
         'undoChangeQuestion' => 'You\'re about to undo this change. This will revert the quantity change in the inventory. Are you sure you want to continue?',
+        'alsoUndoRelated' => 'Also undo related change',
         'cannotUndoChange' => 'This change cannot be undone.',
         'undoneChange' => 'The change has been undone.',
         'undoChange' => 'Undo change',

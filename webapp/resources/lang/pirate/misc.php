@@ -194,6 +194,7 @@ return [
     'report' => 'Report',
     'now' => 'now',
     'drained' => 'Drained',
+    'sameAs' => 'Same as',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

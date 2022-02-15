@@ -443,6 +443,7 @@ return [
         'timeTravel' => 'Tijdreizen',
         'travelToTime' => 'Reis naar tijd (UTC)',
         'undoChangeQuestion' => 'Je staat op het punt om deze aanpassing ongedaan te maken. Dit zal de hoeveelheidsaanpassing in het inventaris aanpassen. Weet je zeker dat je door wilt gaan?',
+        'alsoUndoRelated' => 'Ook gerelateerde aanpassing ongedaan maken',
         'cannotUndoChange' => 'Deze aanpassing kan niet ongedaan gemaakt worden.',
         'undoneChange' => 'Deze aanpassing is ongedaan gemaakt.',
         'undoChange' => 'Aanpassing ongedaan maken',

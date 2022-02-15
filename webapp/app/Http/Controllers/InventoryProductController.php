@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InventoryItemChange;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class InventoryProductController extends Controller {
 
@@ -181,15 +182,26 @@ class InventoryProductController extends Controller {
         $product = $economy->products()->findOrFail($productId);
         $item = $inventory->getItem($product);
         $change = $item->changes()->findOrFail($changeId);
+        $undo_related = is_checked($request->input('undo_related'));
 
         // Make sure we can undo, redirect back with error otherwise
         if(!$change->canUndo())
             return redirect()
                 ->back()
                 ->with('error', __('pages.inventories.cannotUndoChange'));
+        if($undo_related && $change->related != null && !$change->related->canUndo())
+            return redirect()
+                ->back()
+                ->with('error', __('pages.inventories.cannotUndoChange'));
 
-        // Undo the change
-        $change->undo();
+        DB::transaction(function() use($change, $undo_related) {
+            // Undo change
+            $change->undo();
+
+            // Undo related
+            if($undo_related && $change->related != null)
+                $change->related->undo();
+        });
 
         // Redirect back to the bar
         return redirect()

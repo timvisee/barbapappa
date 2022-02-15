@@ -11,52 +11,6 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <h3 class="ui horizontal divider header">@lang('misc.bar')</h3>
-    <div class="ui one small statistics">
-        <div class="statistic">
-            <div class="value">
-                @include('includes.humanTimeDiff', ['time' => $bar->created_at, 'short' => true, 'absolute' => true])
-            </div>
-            <div class="label">@lang('misc.active')</div>
-        </div>
-    </div>
-
-    <h3 class="ui horizontal divider header">
-        @lang('misc.members')
-    </h3>
-    <div class="ui one small statistics">
-        @if(perms(BarMemberController::permsView()))
-            <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
-                    class="statistic">
-                <div class="value">{{ $bar->memberCount() }}</div>
-                <div class="label">@lang('misc.enrolled')</div>
-            </a>
-        @else
-            <div class="statistic">
-                <div class="value">{{ $bar->memberCount() }}</div>
-                <div class="label">@lang('misc.members')</div>
-            </div>
-        @endif
-    </div>
-    <div class="ui horizontal small statistics">
-        <div class="statistic">
-            <div class="value">{{ $memberCountHour }}</div>
-            <div class="label">@lang('pages.stats.activePastHour')</div>
-        </div>
-        <div class="statistic">
-            <div class="value">{{ $memberCountDay }}</div>
-            <div class="label">@lang('pages.stats.activePastDay')</div>
-        </div>
-        <div class="statistic">
-            <div class="value">{{ $memberCountWeek }}</div>
-            <div class="label">@lang('pages.stats.activePastWeek')</div>
-        </div>
-        <div class="statistic">
-            <div class="value">{{ $memberCountMonth }}</div>
-            <div class="label">@lang('pages.stats.activePastMonth')</div>
-        </div>
-    </div>
-
     <h3 class="ui horizontal divider header">@lang('pages.products.title')</h3>
     <div class="ui one small statistics">
         <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
@@ -101,6 +55,50 @@
         <div class="statistic">
             <div class="value">{{ $soldProductCountMonth }}</div>
             <div class="label">@lang('pages.stats.productsPastMonth')</div>
+        </div>
+    </div>
+
+    <h3 class="ui horizontal divider header">@lang('misc.members')</h3>
+    <div class="ui one small statistics">
+        @if(perms(BarMemberController::permsView()))
+            <a href="{{ route('bar.member.index', ['barId' => $bar->human_id]) }}"
+                    class="statistic">
+                <div class="value">{{ $bar->memberCount() }}</div>
+                <div class="label">@lang('misc.enrolled')</div>
+            </a>
+        @else
+            <div class="statistic">
+                <div class="value">{{ $bar->memberCount() }}</div>
+                <div class="label">@lang('misc.members')</div>
+            </div>
+        @endif
+    </div>
+    <div class="ui horizontal small statistics">
+        <div class="statistic">
+            <div class="value">{{ $memberCountHour }}</div>
+            <div class="label">@lang('pages.stats.activePastHour')</div>
+        </div>
+        <div class="statistic">
+            <div class="value">{{ $memberCountDay }}</div>
+            <div class="label">@lang('pages.stats.activePastDay')</div>
+        </div>
+        <div class="statistic">
+            <div class="value">{{ $memberCountWeek }}</div>
+            <div class="label">@lang('pages.stats.activePastWeek')</div>
+        </div>
+        <div class="statistic">
+            <div class="value">{{ $memberCountMonth }}</div>
+            <div class="label">@lang('pages.stats.activePastMonth')</div>
+        </div>
+    </div>
+
+    <h3 class="ui horizontal divider header">@lang('misc.bar')</h3>
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                @include('includes.humanTimeDiff', ['time' => $bar->created_at, 'short' => true, 'absolute' => true])
+            </div>
+            <div class="label">@lang('misc.active')</div>
         </div>
     </div>
 

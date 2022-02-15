@@ -3,7 +3,6 @@
 namespace App\Managers;
 
 use App\Jobs\CommitBalanceUpdatesForUser;
-use App\Mail\Email\Verified;
 use App\Mail\Email\Verify;
 use App\Models\BalanceImportAlias;
 use App\Models\Email;
@@ -153,6 +152,18 @@ class EmailVerificationManager {
         if($email->isVerified())
             return new EmailVerifyResult(EmailVerifyResult::ERR_ALREADY_VERIFIED);
 
+        // Verify the email address and return
+        self::setVerified($email);
+        return new EmailVerifyResult(EmailVerifyResult::OK);
+    }
+
+    /**
+     * Set the given email to be verified, without doing any checks.
+     */
+    public static function setVerified(Email $email) {
+        if($email->isVerified())
+            return true;
+
         DB::transaction(function() use($email) {
             // Set the verification state of the email address
             $email->verified_at = Carbon::now();
@@ -167,21 +178,6 @@ class EmailVerificationManager {
             BalanceImportAlias::refreshEconomyMembersForUser($email->user);
             CommitBalanceUpdatesForUser::dispatch($email->user_id);
         });
-
-        try {
-            // If the user only has one verified email address, send a success and welcome message
-            if ($email->user()->first()->emails()->where('verified_at', '!=', null)->count() == 1) {
-                // Create a mailable
-                $recipient = new EmailRecipient($email);
-                $mailable = new Verified($recipient);
-
-                // Send the mailable
-                Mail::send($mailable);
-            }
-        } catch (\Exception $e) {}
-
-        // Return the result
-        return new EmailVerifyResult(EmailVerifyResult::OK);
     }
 
     /**

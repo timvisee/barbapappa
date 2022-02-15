@@ -14,15 +14,27 @@
         <!-- Confirming/buying, bought, cancelled overlay -->
         <div v-if="confirming || buying" class="ui active dimmer on-top"></div>
         <div v-if="showBoughtOverlay" class="ui active dimmer positive on-top">
-            <div class="ui text huge">{{ __('misc.bought') }}!</div>
+            <div class="ui text huge">
+                <div class="ui icon header">
+                    <i class="glyphicons glyphicons-cart-tick logo"></i>
+                </div>
+                <br>
+                {{ __('misc.bought') }}!
+            </div>
         </div>
         <div v-if="showCancelledOverlay" class="ui active dimmer negative on-top">
-            <div class="ui text huge">{{ __('misc.cancelled') }}!</div>
+            <div class="ui text huge">
+                <div class="ui icon header">
+                    <i class="glyphicons glyphicons-cart-out logo"></i>
+                </div>
+                <br>
+                {{ __('misc.cancelled') }}!
+            </div>
         </div>
 
         <!-- Main UI -->
         <div v-if="!refreshing">
-            <div v-if="successMessage" class="ui success floating message notification">
+            <div v-if="successMessage && cart.length == 0" class="ui success floating message notification">
                 <span class="halflings halflings-ok-sign icon"></span>
                 {{ successMessage }}
             </div>
@@ -121,6 +133,16 @@
      */
     const INACTIVITY_REFRESH_TIMEOUT = 2 * 60 * 60;
 
+    /**
+     * Success message timeout in seconds.
+     */
+    const SUCCESS_MESSAGE_TIMEOUT = 5;
+
+    /**
+     * Time to show bought/cancel overlay in seconds.
+     */
+    const OVERLAY_TIMEOUT = 1;
+
     export default {
         components: {
             Cart,
@@ -169,7 +191,7 @@
                     clearTimeout(this.decayTimer);
                     this.decayTimer = setTimeout(() => {
                         this.successMessage = undefined;
-                    }, 5000);
+                    }, SUCCESS_MESSAGE_TIMEOUT * 1000);
                 }
             },
         },
@@ -204,7 +226,7 @@
 
                         // Show bought overlay for 1 second
                         this.showBoughtOverlay = true;
-                        setTimeout(() => this.showBoughtOverlay = false, 1000);
+                        setTimeout(() => this.showBoughtOverlay = false, OVERLAY_TIMEOUT * 1000);
 
                         // Cancel all current selections
                         this.cancel(false);
@@ -223,7 +245,7 @@
                 // Show cancelled overlay for 1 second
                 if(showOverlay) {
                     this.showCancelledOverlay = true;
-                    setTimeout(() => this.showCancelledOverlay = false, 1000);
+                    setTimeout(() => this.showCancelledOverlay = false, OVERLAY_TIMEOUT * 1000);
                 }
 
                 // Reset selections
@@ -477,7 +499,7 @@
     }
 </script>
 
-<style>
+<style lang="scss">
     body {
         /* Prevent any accidental selections in kiosk mode */
         user-select: none;
@@ -487,7 +509,7 @@
      * Remove all padding on small screens.
      */
     @media only screen and (max-width:767px) {
-        .page {
+        .ui.container.page {
             margin-top: 14px;
         }
 
@@ -532,10 +554,10 @@
 
     .notification {
         position: fixed !important;
-        top: 64px;
+        bottom: 0;
         left: 14px;
         right: 14px;
-        z-index: 1001;
+        z-index: 999;
 
         /* TODO: do not use this hack! */
         width: calc(100% - 28px) !important;
@@ -548,11 +570,19 @@
     .ui.dimmer.positive {
         background-color: rgba(33, 186, 69, .85);
         color: white;
+
+        .glyphicons {
+            color: white;
+        }
     }
 
     .ui.dimmer.negative {
         background-color: rgba(219, 40, 40, .85);
         color: white;
+
+        .glyphicons {
+            color: white;
+        }
     }
 
     .ui.dimmer .text.huge {

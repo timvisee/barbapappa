@@ -71,11 +71,21 @@ td.container-text p {
 }
 
 .button-red {
-    background-color: #bf5329;
-    border-top: 10px solid #bf5329;
-    border-right: 18px solid #bf5329;
-    border-bottom: 10px solid #bf5329;
-    border-left: 18px solid #bf5329;
+    background-color: #db2828;
+    border-top: 10px solid #db2828;
+    border-right: 18px solid #db2828;
+    border-bottom: 10px solid #db2828;
+    border-left: 18px solid #db2828;
+}
+
+.button.link {
+    text-decoration: underline;
+    background: none;
+    color: #2BA6CB !important;
+    border-top: 10px solid transparent;
+    border-right: 18px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 18px solid transparent;
 }
 
 .button.mini {
@@ -85,6 +95,18 @@ td.container-text p {
     border-right-width: 8px;
     border-bottom-width: 4px;
     border-left-width: 8px;
+}
+
+.button.link {
+    margin-right: 0;
+    box-shadow: none;
+}
+
+.button.link:visited {
+    color: #2BA6CB !important;
+}
+.button.link:hover {
+    color: #2795B6 !important;
 }
 
 table.details td {
