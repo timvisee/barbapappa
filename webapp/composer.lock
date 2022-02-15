@@ -2846,20 +2846,19 @@
         },
         {
             "name": "league/flysystem",
-            "version": "3.0.5",
+            "version": "3.0.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "0c82591fd8950d499612ada7104c5eba3191e200"
+                "reference": "6f60c44080ebcd62ee8bef25edba4ba58400c052"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/0c82591fd8950d499612ada7104c5eba3191e200",
-                "reference": "0c82591fd8950d499612ada7104c5eba3191e200",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/6f60c44080ebcd62ee8bef25edba4ba58400c052",
+                "reference": "6f60c44080ebcd62ee8bef25edba4ba58400c052",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
                 "league/mime-type-detection": "^1.0.0",
                 "php": "^8.0.2"
             },
@@ -2882,7 +2881,7 @@
                 "phpseclib/phpseclib": "^2.0",
                 "phpstan/phpstan": "^0.12.26",
                 "phpunit/phpunit": "^9.5.11",
-                "sabre/dav": "^4.1"
+                "sabre/dav": "^4.3.1"
             },
             "type": "library",
             "autoload": {
@@ -2916,7 +2915,7 @@
             ],
             "support": {
                 "issues": "https://github.com/thephpleague/flysystem/issues",
-                "source": "https://github.com/thephpleague/flysystem/tree/3.0.5"
+                "source": "https://github.com/thephpleague/flysystem/tree/3.0.7"
             },
             "funding": [
                 {
@@ -2932,7 +2931,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-12T19:38:15+00:00"
+            "time": "2022-02-14T20:25:21+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -5752,16 +5751,16 @@
         },
         {
             "name": "sentry/sentry-laravel",
-            "version": "2.11.0",
+            "version": "2.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getsentry/sentry-laravel.git",
-                "reference": "87b0a1d21b85728206de43f816aa349030811627"
+                "reference": "183866ec5dc367efe4d5aa22906860e837aa6685"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/87b0a1d21b85728206de43f816aa349030811627",
-                "reference": "87b0a1d21b85728206de43f816aa349030811627",
+                "url": "https://api.github.com/repos/getsentry/sentry-laravel/zipball/183866ec5dc367efe4d5aa22906860e837aa6685",
+                "reference": "183866ec5dc367efe4d5aa22906860e837aa6685",
                 "shasum": ""
             },
             "require": {
@@ -5827,7 +5826,7 @@
             ],
             "support": {
                 "issues": "https://github.com/getsentry/sentry-laravel/issues",
-                "source": "https://github.com/getsentry/sentry-laravel/tree/2.11.0"
+                "source": "https://github.com/getsentry/sentry-laravel/tree/2.11.1"
             },
             "funding": [
                 {
@@ -5839,7 +5838,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2022-01-19T10:29:29+00:00"
+            "time": "2022-02-14T20:00:19+00:00"
         },
         {
             "name": "simplesoftwareio/simple-qrcode",
