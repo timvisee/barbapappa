@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Mail\Auth\SessionLinkMail;
+use App\Managers\EmailVerificationManager;
 use App\Utils\TokenGenerator;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -291,6 +292,14 @@ class SessionLink extends Model {
         $link = SessionLink::notExpired()
             ->where('token', trim($token))
             ->firstOrFail();
+
+        // If email is attached and unverified, verify it now
+        try {
+            if($link->email != null && !$link->email->isVerified())
+                EmailVerificationManager::setVerified($link->email);
+        } catch(\Exception $ex) {
+            app('sentry')->captureException($ex);
+        }
 
         // Create session in transaction
         $authResult = null;
