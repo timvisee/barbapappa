@@ -34,13 +34,13 @@
 @endcomponent
 <br>
 
-@component('mail::mini_button', ['url' => $topUpUrl, 'color' => 'blue'])
+@component('mail::mini_button', ['url' => $topUpUrl, 'color' => 'red'])
 @lang('misc.topUp')
 @endcomponent
-@component('mail::mini_button', ['url' => $walletUrl, 'color' => 'grey'])
+@component('mail::mini_button', ['url' => $walletUrl, 'color' => 'grey', 'link' => true])
 @lang('misc.view')
 @endcomponent
-@component('mail::mini_button', ['url' => $transactionsUrl, 'color' => 'grey'])
+@component('mail::mini_button', ['url' => $transactionsUrl, 'color' => 'grey', 'link' => true])
 @lang('misc.transactions')
 @endcomponent
 <br>
