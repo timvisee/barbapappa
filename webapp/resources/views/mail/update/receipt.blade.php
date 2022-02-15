@@ -19,7 +19,7 @@
 
 @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}
 
-@component('mail::mini_button', ['url' => $wallet['topUpUrl'], 'color' => $wallet['isNegative'] ? 'blue' : 'grey'])
+@component('mail::mini_button', ['url' => $wallet['topUpUrl'], 'color' => $wallet['isNegative'] ? 'red' : 'blue'])
 @lang('misc.topUp')
 @endcomponent
 @component('mail::mini_button', ['url' => $wallet['url'], 'color' => 'grey', 'link' => true])
