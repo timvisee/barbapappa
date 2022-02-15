@@ -99,6 +99,7 @@ class SendBalanceUpdate implements ShouldQueue {
                                     'name' => $wallet->name,
                                     'balance' => $wallet->formatBalance(),
                                     'balanceHtml' => $wallet->formatBalance(BALANCE_FORMAT_COLOR),
+                                    'balanceSame' => $wallet->balance == $previousBalance,
                                     'isNegative' => $wallet->balance < 0.0,
                                     'previousBalance' => $previousBalance,
                                     'previousBalanceHtml' => $wallet->currency->format($previousBalance, BALANCE_FORMAT_PLAIN),
