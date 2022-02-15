@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.151 (2022-02-15)
+
+- Fix missing language resources in deployment
+
 ## 0.1.150 (2022-02-15)
 
 Notable:
