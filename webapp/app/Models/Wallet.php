@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
  * @property int economy_member_id
  * @property-read EconomyMember economyMember
  * @property string name
- * @property decimal balance
+ * @property float balance
  * @property int currency_id
  * @property-read Currency currency
  * @property Carbon created_at

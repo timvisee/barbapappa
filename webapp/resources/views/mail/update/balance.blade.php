@@ -14,8 +14,12 @@
 @component('mail::block')
 <strong>@component('mail::link', ['url' => $wallet['url']]){{ $wallet['name'] }}@endcomponent</strong><br><em>@lang('misc.in') {{ $community['name'] }} ({{ $economy['name'] }})</em>
 
+@unless($wallet['balanceSame'])
 @lang('misc.balance'): {!! $wallet['balanceHtml'] !!}  
 @lang('misc.previously'): {!! $wallet['previousBalanceHtml'] !!} ({{ $wallet['previousPeriod'] }})  
+@else
+@lang('misc.balance'): {!! $wallet['balanceHtml'] !!} ({{ strtolower(__('misc.sameAs')) }} {{ $wallet['previousPeriod'] }})  
+@endif
 
 @component('mail::mini_button', ['url' => $wallet['topUpUrl'], 'color' => $wallet['isNegative'] ? 'blue' : 'grey'])
 @lang('misc.topUp')
