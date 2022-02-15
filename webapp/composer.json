@@ -72,8 +72,10 @@
         "laravelcollective/html": "^6.3",
         "maatwebsite/excel": "^3.1",
         "mariuzzo/laravel-js-localization": "dev-master",
+        "nunomaduro/collision": "^6.1",
         "sentry/sentry-laravel": "^2.11",
         "simplesoftwareio/simple-qrcode": "^2.0",
+        "spatie/laravel-ignition": "^1.0",
         "staudenmeir/eloquent-has-many-deep": "^1.15",
         "timvisee/barpay": "@dev",
         "timvisee/laravel-has-many-sync": "0.2.0"

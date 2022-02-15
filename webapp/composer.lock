@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8287a31186a0e7f6f104010d1f9833e",
+    "content-hash": "264f4b66a10bb51723ff1584acce5ffd",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1501,6 +1501,77 @@
                 "source": "https://github.com/facade/ignition-contracts/tree/1.0.2"
             },
             "time": "2020-10-16T08:27:54+00:00"
+        },
+        {
+            "name": "filp/whoops",
+            "version": "2.14.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/filp/whoops.git",
+                "reference": "a63e5e8f26ebbebf8ed3c5c691637325512eb0dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/a63e5e8f26ebbebf8ed3c5c691637325512eb0dc",
+                "reference": "a63e5e8f26ebbebf8ed3c5c691637325512eb0dc",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.5.9 || ^7.0 || ^8.0",
+                "psr/log": "^1.0.1 || ^2.0 || ^3.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9 || ^1.0",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.8 || ^9.3.3",
+                "symfony/var-dumper": "^2.6 || ^3.0 || ^4.0 || ^5.0"
+            },
+            "suggest": {
+                "symfony/var-dumper": "Pretty print complex values better with var-dumper available",
+                "whoops/soap": "Formats errors as SOAP responses"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Whoops\\": "src/Whoops/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Filipe Dobreira",
+                    "homepage": "https://github.com/filp",
+                    "role": "Developer"
+                }
+            ],
+            "description": "php error handling for cool kids",
+            "homepage": "https://filp.github.io/whoops/",
+            "keywords": [
+                "error",
+                "exception",
+                "handling",
+                "library",
+                "throwable",
+                "whoops"
+            ],
+            "support": {
+                "issues": "https://github.com/filp/whoops/issues",
+                "source": "https://github.com/filp/whoops/tree/2.14.5"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/denis-sokolov",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-01-07T12:00:00+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
@@ -4100,6 +4171,93 @@
             "time": "2021-11-30T19:35:32+00:00"
         },
         {
+            "name": "nunomaduro/collision",
+            "version": "v6.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nunomaduro/collision.git",
+                "reference": "df09e21a5e5d5a7d51a8b9ecd44d3dd150d97fec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nunomaduro/collision/zipball/df09e21a5e5d5a7d51a8b9ecd44d3dd150d97fec",
+                "reference": "df09e21a5e5d5a7d51a8b9ecd44d3dd150d97fec",
+                "shasum": ""
+            },
+            "require": {
+                "facade/ignition-contracts": "^1.0.2",
+                "filp/whoops": "^2.14.5",
+                "php": "^8.0.0",
+                "symfony/console": "^6.0.2"
+            },
+            "require-dev": {
+                "brianium/paratest": "^6.4.1",
+                "laravel/framework": "^9.0",
+                "nunomaduro/larastan": "^1.0.2",
+                "nunomaduro/mock-final-classes": "^1.1.0",
+                "orchestra/testbench": "^7.0.0",
+                "phpunit/phpunit": "^9.5.11"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "6.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "NunoMaduro\\Collision\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nuno Maduro",
+                    "email": "enunomaduro@gmail.com"
+                }
+            ],
+            "description": "Cli error handling for console/command-line PHP applications.",
+            "keywords": [
+                "artisan",
+                "cli",
+                "command-line",
+                "console",
+                "error",
+                "handling",
+                "laravel",
+                "laravel-zero",
+                "php",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/nunomaduro/collision/issues",
+                "source": "https://github.com/nunomaduro/collision"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.com/paypalme/enunomaduro",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/nunomaduro",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/nunomaduro",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2022-01-18T17:49:08+00:00"
+        },
+        {
             "name": "nyholm/psr7",
             "version": "1.5.0",
             "source": {
@@ -5909,6 +6067,290 @@
                 "source": "https://github.com/SimpleSoftwareIO/simple-qrcode/tree/2.0.0"
             },
             "time": "2017-11-26T15:27:12+00:00"
+        },
+        {
+            "name": "spatie/backtrace",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/backtrace.git",
+                "reference": "4ee7d41aa5268107906ea8a4d9ceccde136dbd5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/backtrace/zipball/4ee7d41aa5268107906ea8a4d9ceccde136dbd5b",
+                "reference": "4ee7d41aa5268107906ea8a4d9ceccde136dbd5b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "ext-json": "*",
+                "phpunit/phpunit": "^9.3",
+                "symfony/var-dumper": "^5.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Backtrace\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van de Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A better backtrace",
+            "homepage": "https://github.com/spatie/backtrace",
+            "keywords": [
+                "Backtrace",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/backtrace/issues",
+                "source": "https://github.com/spatie/backtrace/tree/1.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/spatie",
+                    "type": "github"
+                },
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "other"
+                }
+            ],
+            "time": "2021-11-09T10:57:15+00:00"
+        },
+        {
+            "name": "spatie/flare-client-php",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/flare-client-php.git",
+                "reference": "c8d9d1c639e217cb9ada5db8fea869a7f1b0c85a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/flare-client-php/zipball/c8d9d1c639e217cb9ada5db8fea869a7f1b0c85a",
+                "reference": "c8d9d1c639e217cb9ada5db8fea869a7f1b0c85a",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/pipeline": "^8.0|^9.0",
+                "php": "^8.0",
+                "spatie/backtrace": "^1.2",
+                "symfony/http-foundation": "^5.0|^6.0",
+                "symfony/mime": "^5.2|^6.0",
+                "symfony/process": "^5.2|^6.0",
+                "symfony/var-dumper": "^5.2|^6.0"
+            },
+            "require-dev": {
+                "dms/phpunit-arraysubset-asserts": "^0.3.0",
+                "pestphp/pest": "^1.20",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "spatie/phpunit-snapshot-assertions": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Spatie\\FlareClient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Send PHP errors to Flare",
+            "homepage": "https://github.com/spatie/flare-client-php",
+            "keywords": [
+                "exception",
+                "flare",
+                "reporting",
+                "spatie"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/flare-client-php/issues",
+                "source": "https://github.com/spatie/flare-client-php/tree/1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-04T15:21:00+00:00"
+        },
+        {
+            "name": "spatie/ignition",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/ignition.git",
+                "reference": "772a1ba08219afa2d7dae31901f16db414ad7d37"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/ignition/zipball/772a1ba08219afa2d7dae31901f16db414ad7d37",
+                "reference": "772a1ba08219afa2d7dae31901f16db414ad7d37",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "monolog/monolog": "^2.0",
+                "php": "^8.0",
+                "spatie/flare-client-php": "^1.0",
+                "symfony/console": "^5.4|^6.0",
+                "symfony/var-dumper": "^5.4|^6.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "pestphp/pest": "^1.20",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "spatie/ray": "^1.32",
+                "symfony/process": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Ignition\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Spatie",
+                    "email": "info@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A beautiful error page for PHP applications.",
+            "homepage": "https://flareapp.io/ignition",
+            "keywords": [
+                "error",
+                "flare",
+                "laravel",
+                "page"
+            ],
+            "support": {
+                "docs": "https://flareapp.io/docs/ignition-for-laravel/introduction",
+                "forum": "https://twitter.com/flareappio",
+                "issues": "https://github.com/spatie/ignition/issues",
+                "source": "https://github.com/spatie/ignition"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-13T14:14:39+00:00"
+        },
+        {
+            "name": "spatie/laravel-ignition",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-ignition.git",
+                "reference": "d349854331789aba9205fd755e0c1d1934ef1463"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-ignition/zipball/d349854331789aba9205fd755e0c1d1934ef1463",
+                "reference": "d349854331789aba9205fd755e0c1d1934ef1463",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "illuminate/support": "^8.77|^9.0",
+                "monolog/monolog": "^2.3",
+                "php": "^8.0",
+                "spatie/flare-client-php": "^1.0.1",
+                "spatie/ignition": "^1.0",
+                "symfony/console": "^5.0|^6.0",
+                "symfony/var-dumper": "^5.0|^6.0"
+            },
+            "require-dev": {
+                "filp/whoops": "^2.14",
+                "livewire/livewire": "^2.8|dev-develop",
+                "mockery/mockery": "^1.4",
+                "nunomaduro/larastan": "^1.0",
+                "orchestra/testbench": "^6.23|^7.0",
+                "pestphp/pest": "^1.20",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "spatie/laravel-ray": "^1.27"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\LaravelIgnition\\IgnitionServiceProvider"
+                    ],
+                    "aliases": {
+                        "Flare": "Spatie\\LaravelIgnition\\Facades\\Flare"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\LaravelIgnition\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Spatie",
+                    "email": "info@spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A beautiful error page for Laravel applications.",
+            "homepage": "https://flareapp.io/ignition",
+            "keywords": [
+                "error",
+                "flare",
+                "laravel",
+                "page"
+            ],
+            "support": {
+                "docs": "https://flareapp.io/docs/ignition-for-laravel/introduction",
+                "forum": "https://twitter.com/flareappio",
+                "issues": "https://github.com/spatie/laravel-ignition/issues",
+                "source": "https://github.com/spatie/laravel-ignition"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-02-15T11:02:15+00:00"
         },
         {
             "name": "staudenmeir/eloquent-has-many-deep",
@@ -9047,77 +9489,6 @@
                 }
             ],
             "time": "2020-11-10T18:47:58+00:00"
-        },
-        {
-            "name": "filp/whoops",
-            "version": "2.14.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/filp/whoops.git",
-                "reference": "a63e5e8f26ebbebf8ed3c5c691637325512eb0dc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/a63e5e8f26ebbebf8ed3c5c691637325512eb0dc",
-                "reference": "a63e5e8f26ebbebf8ed3c5c691637325512eb0dc",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5.9 || ^7.0 || ^8.0",
-                "psr/log": "^1.0.1 || ^2.0 || ^3.0"
-            },
-            "require-dev": {
-                "mockery/mockery": "^0.9 || ^1.0",
-                "phpunit/phpunit": "^4.8.36 || ^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.8 || ^9.3.3",
-                "symfony/var-dumper": "^2.6 || ^3.0 || ^4.0 || ^5.0"
-            },
-            "suggest": {
-                "symfony/var-dumper": "Pretty print complex values better with var-dumper available",
-                "whoops/soap": "Formats errors as SOAP responses"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.7-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Whoops\\": "src/Whoops/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Filipe Dobreira",
-                    "homepage": "https://github.com/filp",
-                    "role": "Developer"
-                }
-            ],
-            "description": "php error handling for cool kids",
-            "homepage": "https://filp.github.io/whoops/",
-            "keywords": [
-                "error",
-                "exception",
-                "handling",
-                "library",
-                "throwable",
-                "whoops"
-            ],
-            "support": {
-                "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.14.5"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/denis-sokolov",
-                    "type": "github"
-                }
-            ],
-            "time": "2022-01-07T12:00:00+00:00"
         },
         {
             "name": "fzaninotto/faker",
