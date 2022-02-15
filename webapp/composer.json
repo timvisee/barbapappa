@@ -13,6 +13,10 @@
             }
         },
         {
+            "type": "vcs",
+            "url": "https://github.com/timvisee/laravel-js-localization"
+        },
+        {
             "type": "package",
             "package": {
                 "name": "timvisee/laravel-has-many-sync",
@@ -67,7 +71,7 @@
         "laravel/tinker": "^2.7",
         "laravelcollective/html": "^6.3",
         "maatwebsite/excel": "^3.1",
-        "mariuzzo/laravel-js-localization": "^1.9",
+        "mariuzzo/laravel-js-localization": "dev-master",
         "sentry/sentry-laravel": "^2.11",
         "simplesoftwareio/simple-qrcode": "^2.0",
         "staudenmeir/eloquent-has-many-deep": "^1.15",

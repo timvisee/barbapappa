@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "37f56a993834a63de53d5e574299a586",
+    "content-hash": "f8287a31186a0e7f6f104010d1f9833e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3197,16 +3197,16 @@
         },
         {
             "name": "mariuzzo/laravel-js-localization",
-            "version": "v1.9.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/rmariuzzo/Laravel-JS-Localization.git",
-                "reference": "12531672e995296e280378251efb37f3d1285693"
+                "url": "https://github.com/timvisee/laravel-js-localization.git",
+                "reference": "e84fd191dd7af747e8f12600fc92a1568cf4d8e7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rmariuzzo/Laravel-JS-Localization/zipball/12531672e995296e280378251efb37f3d1285693",
-                "reference": "12531672e995296e280378251efb37f3d1285693",
+                "url": "https://api.github.com/repos/timvisee/laravel-js-localization/zipball/e84fd191dd7af747e8f12600fc92a1568cf4d8e7",
+                "reference": "e84fd191dd7af747e8f12600fc92a1568cf4d8e7",
                 "shasum": ""
             },
             "require": {
@@ -3220,6 +3220,7 @@
                 "orchestra/testbench": "^2.2 || ^3.0 || ^4.0 || ^5.0 || ^6.0 || ^7.0",
                 "phpunit/phpunit": "^4.0 || ^5.0 || ^6.0 || ^7.0 || ^8.0 || ^9.0"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -3233,7 +3234,11 @@
                     "Mariuzzo\\LaravelJsLocalization\\": "src/Mariuzzo/LaravelJsLocalization/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "Mariuzzo\\LaravelJsLocalization\\": "tests/specs"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -3274,9 +3279,9 @@
             "description": "Laravel Localization in JavaScript",
             "homepage": "https://github.com/rmariuzzo/laravel-js-localization",
             "keywords": [
-                "JS",
                 "i18n",
                 "javascript",
+                "js",
                 "lang",
                 "laravel",
                 "laravel 5",
@@ -3286,7 +3291,7 @@
                 "issues": "https://github.com/rmariuzzo/laravel-js-localization/issues",
                 "source": "https://github.com/rmariuzzo/laravel-js-localization"
             },
-            "time": "2022-02-09T09:35:03+00:00"
+            "time": "2022-02-15T14:40:55+00:00"
         },
         {
             "name": "markbaker/complex",
@@ -11124,6 +11129,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "mariuzzo/laravel-js-localization": 20,
         "timvisee/barpay": 20
     },
     "prefer-stable": false,
