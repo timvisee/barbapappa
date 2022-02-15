@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.1.150 (2022-02-15)
+
+Notable:
+
+- Automatically verify email addresses when using it with a magic login link, this removes the extra manual verification step and should improve the verified email ratio
+- When undoing an inventory change, ask to undo the related change as well, to fully undo a product move between two inventories
+- Remove message sent to users after they verified their email address, it was more annoying than useful
+- Update to Laravel 9, should improve overall performance
+
+Other:
+
+- Add icons to kiosk green/red success/abort screens
+- Fix white border above dark modal backgrounds in kiosk mode
+- Move kiosk success message to bottom, hide when showing cart buttons
+- In balance update emails, show if the balance did not change since the previous update
+- In balance emails, use better colors and styles for wallet buttons
+- Reorder community/bar stats items
+- Update dependencies
+
 ## 0.1.149 (2022-02-11)
 
 - Enlarge wallet and top-up buttons
