@@ -22,10 +22,10 @@
 @component('mail::mini_button', ['url' => $wallet['topUpUrl'], 'color' => $wallet['isNegative'] ? 'blue' : 'grey'])
 @lang('misc.topUp')
 @endcomponent
-@component('mail::mini_button', ['url' => $wallet['url'], 'color' => 'grey'])
+@component('mail::mini_button', ['url' => $wallet['url'], 'color' => 'grey', 'link' => true])
 @lang('misc.view')
 @endcomponent
-@component('mail::mini_button', ['url' => $wallet['statsUrl'], 'color' => 'grey'])
+@component('mail::mini_button', ['url' => $wallet['statsUrl'], 'color' => 'grey', 'link' => true])
 @lang('misc.stats')
 @endcomponent
 
