@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Mail;
  * @property int id
  * @property int user_id
  * @property-read User|null user
+ * @property int email_id
+ * @property-read Email|null email
  * @property string token
  * @property Carbon|null expire_at
  * @property string|null intended_url
@@ -105,6 +107,15 @@ class SessionLink extends Model {
      */
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the relation to the email this session link was requested on.
+     *
+     * @return Builder A relation to the email this link was requested on.
+     */
+    public function email() {
+        return $this->belongsTo(Email::class);
     }
 
     /**
