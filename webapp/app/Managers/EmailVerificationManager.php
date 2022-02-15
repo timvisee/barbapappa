@@ -3,7 +3,6 @@
 namespace App\Managers;
 
 use App\Jobs\CommitBalanceUpdatesForUser;
-use App\Mail\Email\Verified;
 use App\Mail\Email\Verify;
 use App\Models\BalanceImportAlias;
 use App\Models\Email;
@@ -167,18 +166,6 @@ class EmailVerificationManager {
             BalanceImportAlias::refreshEconomyMembersForUser($email->user);
             CommitBalanceUpdatesForUser::dispatch($email->user_id);
         });
-
-        try {
-            // If the user only has one verified email address, send a success and welcome message
-            if ($email->user()->first()->emails()->where('verified_at', '!=', null)->count() == 1) {
-                // Create a mailable
-                $recipient = new EmailRecipient($email);
-                $mailable = new Verified($recipient);
-
-                // Send the mailable
-                Mail::send($mailable);
-            }
-        } catch (\Exception $e) {}
 
         // Return the result
         return new EmailVerifyResult(EmailVerifyResult::OK);
