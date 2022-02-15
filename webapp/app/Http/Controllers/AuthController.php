@@ -28,8 +28,7 @@ class AuthController extends Controller {
                 ->with('email_lock', true);
 
         // Create and send session link
-        $link = SessionLink::create($email->user);
-        $link->sendMail($request->input('email'));
+        SessionLink::createForMailAndSend($email);
 
         // Show session link sent page
         return view('myauth.loginSentSession')
