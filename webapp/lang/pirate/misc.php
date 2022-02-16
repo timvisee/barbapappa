@@ -32,7 +32,7 @@ return [
     'delete' => 'Abandon',
     'reset' => 'Reset',
     'resetAll' => 'Reset all',
-    'clear' => 'Clear',
+    'toEmpty' => 'Empty',
     'deselect' => 'Deselect',
     'previously' => 'Previously',
     'continue' => 'Continue',

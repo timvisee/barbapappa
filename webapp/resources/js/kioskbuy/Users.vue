@@ -39,7 +39,7 @@
                     v-on:click.stop.prevent="_removeAllUserCarts(); query = ''"
                     href="#"
                     class="action negative">
-                {{ __('misc.reset') }}
+                {{ __('misc.toEmpty') }}
             </a>
         </h5>
 
