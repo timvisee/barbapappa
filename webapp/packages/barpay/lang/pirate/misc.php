@@ -21,7 +21,7 @@ return [
     'makeAChoice' => 'Make a choice',
     'receivingOnAccount' => 'Receiving on account',
     'visit' => 'Visit',
-    'cannotCancelPaymentCurrently' => 'Dis payment nay be cancelled at dis time.',
+    'cannotCancelPaymentCurrently' => 'Dis payment nay be aboart at dis time.',
     'justASecond' => 'Just a second...',
     'pay' => 'Pay',
     'iHaveNotPaid' => 'I have not paid',

@@ -895,9 +895,9 @@ return [
         'paymentsWaitingForAction' => 'Some payments are waiting for action by a crew manager, please review these as soon as possible.',
         'paymentsToApproveDescription' => 'Th\' following user payments be waiting for action by a crew manager. Please go through these as soon as possible to minimize payment times.',
         'paymentRequiresCommunityAction' => 'Dis payment awaits action by a crew manager. If ye nay have access to th\' receiving account, take no action and leave this check to rot for a different group manager who does have access.',
-        'cancel' => 'Cancel payment',
-        'cancelPaymentQuestion' => 'Yer about to cancel dis payment. Never cancel a payment for which yer already transfered money, or ye transfer might be lost. Ye be sure ye want to continue?',
-        'paymentCancelled' => 'Payment cancelled',
+        'cancel' => 'Aboart payment',
+        'cancelPaymentQuestion' => 'Yer about to aboart dis payment. Never aboart a payment for which yer already transfered money, or ye transfer might be lost. Ye be sure ye want to continue?',
+        'paymentCancelled' => 'Payment aboarted',
         'state' => [
             'init' => 'Initiated',
             'pendingUser' => 'Pendin\' user action',

@@ -17,7 +17,7 @@ return [
     'yesRemove' => 'Yay, sink!',
     'yesDelete' => 'Yay, sink!',
     'yesUndo' => 'Yay, sail back!',
-    'yesCancel' => 'Yay, sink!',
+    'yesCancel' => 'Yay, aboart!',
     'yesTerminate' => 'Yay, sink!',
     'no' => 'Nay',
     'noGoBack' => 'Nay, paddl\' back',
@@ -25,7 +25,7 @@ return [
     'accept' => 'Sail ho!',
     'or' => 'o\'',
     'of' => 'o\'',
-    'cancel' => 'Cancel',
+    'cancel' => 'Aboart',
     'recommended' => 'Recommended',
 
     'notYetImplemented' => 'Nay yet implemented.',
