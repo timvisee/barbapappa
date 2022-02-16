@@ -652,9 +652,15 @@ return [
             'title' => 'Users',
         ],
         'imports' => [
-            'title' => 'Imports',
+            'title' => 'Outstanding imports',
+            'description' => 'Dis report lists all non-zero balances from balance imports dat nay be committed to a pirate yet. These balances be for pirates that haven\'t registered, or haven\'t verified their e-bottle coordinate.',
             'aliasesPositiveBalance' => 'Aliases wit\' positive balance',
             'aliasesNegativeBalance' => 'Aliases wit\' negative balance',
+            'aliases' => 'Aliases',
+            'noAliases' => 'Nay aliases',
+            'selectSystem' => 'Select a balance import system to view details.',
+            'noSystems' => 'Dis economy nay have any balance import systems.',
+            'resolved' => 'Resolved?',
         ],
     ],
 

@@ -15,55 +15,99 @@
         <a href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item active">@lang('pages.finance.imports.title')</a>
     </div>
 
-    <p>@lang('pages.finance.description')</p>
-
-    <h3 class="ui horizontal divider header">
-        @lang('misc.balance')
-    </h3>
-    <div class="ui one small statistics">
-        <div class="statistic">
-            <div class="value">
-                {!! $cumulative->formatAmount(BALANCE_FORMAT_COLOR) !!}
-            </div>
-            <div class="label">@lang('pages.finance.walletSum')</div>
+    @if($systems->isEmpty())
+        <div class="ui warning message">
+            <span class="halflings halflings-warning-sign icon"></span>
+            @lang('pages.finance.imports.noSystems')
         </div>
-    </div>
+    @else
+        {{-- System selector --}}
+        {{-- TODO: implement a different selection method --}}
+        <div class="ui {{ num_name(count($systems)) }} item menu">
+            @foreach($systems as $s)
+                <a href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'systemId' => $s->id]) }}" class="item {{ ($system != null && $s?->id == $system->id) ? 'active' : '' }}">
+                    {{ $s->name }}
+                </a>
+            @endforeach
+        </div>
 
-    <h3 class="ui horizontal divider header">
-        @lang('pages.finance.imports.aliases')
-    </h3>
-    <div class="ui vertical menu fluid">
-        <h5 class="ui item header">
-            @lang('pages.finance.imports.aliasesNegativeBalance')
-            ({{ count($negatives) }})
-        </h5>
-        @forelse($negatives as $balance)
-            <div class="item">
-                {{ $balance['alias']->name }}
-                {!! $balance['total']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+        @if($system == null)
+            <div class="ui message">
+                @lang('pages.finance.imports.selectSystem')
             </div>
-        @empty
-            <div class="item">
-                <i>@lang('pages.finance.imports.noAliases')</i>
+        @else
+            <div class="ui divider hidden"></div>
+
+            <p>@lang('pages.finance.imports.description')</p>
+
+            <div class="ui one small statistics">
+                @if($resolved)
+                    <div class="statistic green">
+                        <div class="value">
+                            <span class="halflings halflings-ok" title="@lang('general.yes')"></span>
+                        </div>
+                        <div class="label">@lang('pages.finance.imports.resolved')</div>
+                    </div>
+                @else
+                    <div class="statistic red">
+                        <div class="value">
+                            <span class="halflings halflings-remove" title="@lang('general.no')"></span>
+                        </div>
+                        <div class="label">@lang('pages.finance.imports.resolved')</div>
+                    </div>
+                @endif
             </div>
-        @endforelse
-    </div>
-    <div class="ui vertical menu fluid">
-        <h5 class="ui item header">
-            @lang('pages.finance.imports.aliasesPositiveBalance')
-            ({{ count($positives) }})
-        </h5>
-        @forelse($positives as $balance)
-            <div class="item">
-                {{ $balance['alias']->name }}
-                {!! $balance['total']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+
+            {{-- TODO: not if zero, but if --}} 
+            @if(!$cumulative->isZero())
+                <div class="ui divider hidden"></div>
+
+                <div class="ui one small statistics">
+                    <div class="statistic">
+                        <div class="value">
+                            {!! $cumulative->formatAmount(BALANCE_FORMAT_COLOR) !!}
+                        </div>
+                        <div class="label">@lang('pages.finance.walletSum')</div>
+                    </div>
+                </div>
+            @endif
+
+            <div class="ui divider hidden"></div>
+
+            <div class="ui vertical menu fluid">
+                <h5 class="ui item header">
+                    @lang('pages.finance.imports.aliasesNegativeBalance')
+                    ({{ count($negatives) }})
+                </h5>
+                @forelse($negatives as $balance)
+                    <div class="item">
+                        {{ $balance['alias']->name }}
+                        {!! $balance['total']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                    </div>
+                @empty
+                    <div class="item">
+                        <i>@lang('pages.finance.imports.noAliases')</i>
+                    </div>
+                @endforelse
             </div>
-        @empty
-            <div class="item">
-                <i>@lang('pages.finance.imports.noAliases')</i>
+            <div class="ui vertical menu fluid">
+                <h5 class="ui item header">
+                    @lang('pages.finance.imports.aliasesPositiveBalance')
+                    ({{ count($positives) }})
+                </h5>
+                @forelse($positives as $balance)
+                    <div class="item">
+                        {{ $balance['alias']->name }}
+                        {!! $balance['total']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                    </div>
+                @empty
+                    <div class="item">
+                        <i>@lang('pages.finance.imports.noAliases')</i>
+                    </div>
+                @endforelse
             </div>
-        @endforelse
-    </div>
+        @endif
+    @endif
 
     <div class="ui divider hidden"></div>
 

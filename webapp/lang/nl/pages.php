@@ -653,11 +653,15 @@ return [
             'title' => 'Gebruikers',
         ],
         'imports' => [
-            'title' => 'Import',
+            'title' => 'Openstaande imports',
+            'description' => 'Dit rapport toont alle niet-nul balansen vanuit balansimports, waarbij het balans nog niet verrekend is met een gebruiker. Deze balansen zijn van mensen die zich niet geregistreerd hebben, of hun e-mailadres niet geverifiëerd hebben.',
             'aliasesPositiveBalance' => 'Aliassen met positief balans',
             'aliasesNegativeBalance' => 'Aliassen met negatief balans',
             'aliases' => 'Aliassen',
             'noAliases' => 'Geen aliassen',
+            'selectSystem' => 'Selecteer een balansimportsysteem om details te bekijken.',
+            'noSystems' => 'Deze economie heeft geen balansimportsystemen.',
+            'resolved' => 'Verrekend?',
         ],
     ],
 

@@ -653,10 +653,15 @@ return [
             'title' => 'Users',
         ],
         'imports' => [
-            'title' => 'Imports',
+            'title' => 'Outstanding imports',
+            'description' => 'This report lists all non-zero balances from balance imports that haven\'t been settled with a user yet. These balances are from people that haven\'t registered, or haven\'t verified their email address.',
             'aliasesPositiveBalance' => 'Aliases with positive balance',
             'aliasesNegativeBalance' => 'Aliases with negative balance',
+            'aliases' => 'Aliases',
             'noAliases' => 'No aliases',
+            'selectSystem' => 'Select a balance import system to view details.',
+            'noSystems' => 'This economy does not have any balance import systems.',
+            'resolved' => 'Resolved?',
         ],
     ],
 
