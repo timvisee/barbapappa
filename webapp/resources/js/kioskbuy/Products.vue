@@ -535,6 +535,14 @@
     }
 </style>
 
+<style scoped>
+    .ui.vertical.menu .halflings {
+        line-height: 0.6;
+        top: 3px;
+        margin-right: 0.5em;
+    }
+</style>
+
 <style lang="scss">
     .swap {
         color: rgba(0, 0, 0, .87);

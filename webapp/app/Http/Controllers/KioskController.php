@@ -131,7 +131,9 @@ class KioskController extends Controller {
         $members = $members
             ->map(function($m) {
                 $m->name = $m->name;
-                return $m->only(['id', 'name']);
+                $data = $m->only(['id', 'name']);
+                $data['registered'] = $m->user_id != null && $m->user_id > 0;
+                return $data;
             })
             ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
             ->values();
