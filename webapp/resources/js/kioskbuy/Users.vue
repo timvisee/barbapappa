@@ -69,6 +69,8 @@
                 href="#"
                 class="green item kiosk-select-item">
             <div class="item-text">
+                <span v-if="!user.registered" class="halflings halflings-tag"></span>
+
                 {{ user.name || __('misc.unknownUser') }}
             </div>
 
@@ -95,10 +97,12 @@
 
         <a v-for="user in users"
                 v-on:click.prevent.stop="onItemClick(user)"
-                v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
+                v-bind:class="{ disabled: buying || (!user.registered && !isUserSelected(user)), active: isUserSelected(user) }"
                 href="#"
                 class="green item kiosk-select-item">
             <div class="item-text">
+                <span v-if="!user.registered" class="halflings halflings-tag"></span>
+
                 {{ user.name || __('misc.unknownUser') }}
             </div>
 
@@ -127,10 +131,12 @@
         <a v-for="user in cart.map(c => c.user)"
                 v-if="!users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
                 v-on:click.prevent.stop="onItemClick(user)"
-                v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
+                v-bind:class="{ disabled: buying || (!user.registered && !isUserSelected(user)), active: isUserSelected(user) }"
                 href="#"
                 class="green item kiosk-select-item">
             <div class="item-text">
+                <span v-if="!user.registered" class="halflings halflings-tag"></span>
+
                 {{ user.name || __('misc.unknownUser') }}
             </div>
 
@@ -407,5 +413,13 @@
             color: rgba(0, 0, 0, .87);
             background: rgba(0, 0, 0, .08) !important;
         }
+    }
+</style>
+
+<style scoped>
+    .ui.vertical.menu .halflings {
+        line-height: 0.6;
+        top: 3px;
+        margin-right: 0.5em;
     }
 </style>
