@@ -112,7 +112,7 @@ return [
         ],
     ],
 
-    'empty_with' => 'Cannot enter multiple values.',
+    'others_empty' => 'Cannot enter multiple values.',
 
     /*
     |--------------------------------------------------------------------------

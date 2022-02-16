@@ -6,6 +6,7 @@ use App\Helpers\ValidationDefaults;
 use App\Jobs\UpdateProductExhaustedEconomy;
 use App\Models\Inventory;
 use App\Models\InventoryItemChange;
+use App\Rules\OthersEmpty;
 use App\Utils\MoneyAmountBag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -422,8 +423,8 @@ class InventoryController extends Controller {
         ];
         $messages = [];
         foreach($products as $p) {
-            $rules[$p['field'] . '_quantity'] = 'nullable|integer|empty_with:' . $p['field'] . '_delta';
-            $rules[$p['field'] . '_delta'] = 'nullable|integer|empty_with:' . $p['field'] . '_quantity';
+            $rules[$p['field'] . '_quantity'] = ['nullable', 'integer', new OthersEmpty($p['field'] . '_delta')];
+            $rules[$p['field'] . '_delta'] = ['nullable', 'integer', new OthersEmpty($p['field'] . '_quantity')];
             $messages[$p['field'] . '_quantity.integer'] = __('pages.inventories.mustBeInteger');
             $messages[$p['field'] . '_delta.integer'] = __('pages.inventories.mustBeInteger');
         }
