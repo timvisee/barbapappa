@@ -112,7 +112,7 @@ return [
         ],
     ],
 
-    'empty_with' => 'Meerdere waardes niet toegestaan.',
+    'others_empty' => 'Meerdere waardes niet toegestaan.',
 
     /*
     |--------------------------------------------------------------------------
