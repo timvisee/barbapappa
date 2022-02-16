@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.152 (2022-02-16)
+
+- Fix email delivery errors, sending over SMTP hosts didn't work
+- Fix payment processing errors, use correct dependencies along with bunq SDK
+- Fix inventory balance error
+- Update dependencies
+
 ## 0.1.151 (2022-02-15)
 
 - Fix missing language resources in deployment
