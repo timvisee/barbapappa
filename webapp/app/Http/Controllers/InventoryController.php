@@ -842,7 +842,7 @@ class InventoryController extends Controller {
                     'changed' => $item?->updated_at ?? $item?->created_at,
                 ];
             })
-            ->sortBy('product.name');
+            ->sortBy('product.name', SORT_NATURAL | SORT_FLAG_CASE);
 
         // Travel back in history
         if($time != null && $time->isPast()) {

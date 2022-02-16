@@ -27,8 +27,8 @@ class ProductController extends Controller {
         // Fetch products
         if(!empty($search))
             $products = $trashed
-                ? $economy->searchProducts($search)->onlyTrashed()->sortBy('name')
-                : $economy->searchProducts($search)->sortBy('name');
+                ? $economy->searchProducts($search)->onlyTrashed()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+                : $economy->searchProducts($search)->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
         else
             $products = $trashed
                 ? $economy->products()->onlyTrashed()->orderBy('name')->get()
@@ -333,7 +333,7 @@ class ProductController extends Controller {
             ->filter(function($p) use($products) {
                 return !$products->contains('inventory_product_id', $p->id);
             })
-            ->sortBy('name');
+            ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);
 
         return view('community.economy.product.inventoryProducts')
             ->with('economy', $economy)

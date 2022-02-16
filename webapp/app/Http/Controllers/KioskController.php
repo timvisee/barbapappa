@@ -133,7 +133,7 @@ class KioskController extends Controller {
                 $m->name = $m->name;
                 return $m->only(['id', 'name']);
             })
-            ->sortBy('name')
+            ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
             ->values();
 
         return $members;
@@ -192,7 +192,7 @@ class KioskController extends Controller {
 
         return [
             'top' => $top->values() ?? [],
-            'list' => $list->sortBy(['exhausted', 'name'])->values(),
+            'list' => $list->sortBy(['exhausted', 'name'], SORT_NATURAL | SORT_FLAG_CASE)->values(),
         ];
     }
 

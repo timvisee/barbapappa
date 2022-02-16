@@ -29,7 +29,7 @@ class BarProductController extends Controller {
         else
             $products = $bar->economy->products->sortBy(function($p) {
                 return $p->displayName();
-            });
+            }, SORT_NATURAL | SORT_FLAG_CASE);
 
         // Show the products page
         return view('bar.product.index')
