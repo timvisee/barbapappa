@@ -506,6 +506,9 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 Route::prefix('/finance')->middleware(FinanceController::permsView()->middleware())->group(function() {
                     // Index
                     Route::get('/', 'FinanceController@overview')->name('community.economy.finance.overview');
+
+                    Route::get('/users', 'FinanceController@users')->name('community.economy.finance.users');
+                    Route::get('/imports', 'FinanceController@imports')->name('community.economy.finance.imports');
                 });
             });
         });

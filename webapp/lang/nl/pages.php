@@ -646,6 +646,19 @@ return [
         'noAccountImport' => 'Geen account (import)',
         'membersWithNonZeroBalance' => 'Leden met saldo',
         'description' => 'Hier zie je een simpel financieel overzicht van de huidige economie staat. Gebruikers van saldoimports, die nog niet geregistreerd zijn en nog geen deel uitmaken van deze economie worden hier nog niet getoond.',
+        'overview' => [
+            'title' => 'Overzicht',
+        ],
+        'users' => [
+            'title' => 'Gebruikers',
+        ],
+        'imports' => [
+            'title' => 'Import',
+            'aliasesPositiveBalance' => 'Aliassen met positief balans',
+            'aliasesNegativeBalance' => 'Aliassen met negatief balans',
+            'aliases' => 'Aliassen',
+            'noAliases' => 'Geen aliassen',
+        ],
     ],
 
     /**

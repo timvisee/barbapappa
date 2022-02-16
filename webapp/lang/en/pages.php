@@ -646,6 +646,18 @@ return [
         'noAccountImport' => 'No account (import)',
         'membersWithNonZeroBalance' => 'Members with balance',
         'description' => 'This shows a simple financial report for the current economy state. Users from balance imports, that have not registered and joined this economy, are currently not listed here.',
+        'overview' => [
+            'title' => 'Overview',
+        ],
+        'users' => [
+            'title' => 'Users',
+        ],
+        'imports' => [
+            'title' => 'Imports',
+            'aliasesPositiveBalance' => 'Aliases with positive balance',
+            'aliasesNegativeBalance' => 'Aliases with negative balance',
+            'noAliases' => 'No aliases',
+        ],
     ],
 
     /**

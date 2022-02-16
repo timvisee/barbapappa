@@ -41,6 +41,7 @@ class MoneyAmountBag {
         $this->set(
             $this->getOrZero($amount->currency)->add($amount),
         );
+        return $this;
     }
 
     /**
@@ -51,6 +52,7 @@ class MoneyAmountBag {
     public function addBag(MoneyAmountBag $amount) {
         foreach($amount->amounts as $amount)
             $this->add($amount);
+        return $this;
     }
 
     /**
@@ -89,7 +91,7 @@ class MoneyAmountBag {
     }
 
     /**
-     * Get the amount for a specific currency.
+     * Set the amount for a specific currency.
      *
      * If the amount is zero, it will be removed from the list.
      *
@@ -202,6 +204,20 @@ class MoneyAmountBag {
                 $currency = $amount->currency;
 
         return new MoneyAmount($currency, $balance, $approximate);
+    }
+
+    /**
+     * Clone this money amount.
+     *
+     * @return MoneyAmount The cloned amount.
+     */
+    public function clone(): MoneyAmountBag {
+        $amounts = collect($this->amounts)
+            ->map(function($amount) {
+                return $amount->clone();
+            })
+            ->toArray();
+        return new Self($amounts);
     }
 
     /**

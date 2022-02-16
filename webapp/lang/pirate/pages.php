@@ -645,6 +645,17 @@ return [
         'noAccountImport' => 'No account (import)',
         'membersWithNonZeroBalance' => 'Members with booty',
         'description' => 'Dis shows a simple financial report for th\' current booty state. Pirates from booty imports, that nay be registered and joined dis booty, are currently not listed.',
+        'overview' => [
+            'title' => 'Overview',
+        ],
+        'users' => [
+            'title' => 'Users',
+        ],
+        'imports' => [
+            'title' => 'Imports',
+            'aliasesPositiveBalance' => 'Aliases wit\' positive balance',
+            'aliasesNegativeBalance' => 'Aliases wit\' negative balance',
+        ],
     ],
 
     /**

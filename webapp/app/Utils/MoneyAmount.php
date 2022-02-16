@@ -134,6 +134,15 @@ class MoneyAmount {
     }
 
     /**
+     * Clone this money amount.
+     *
+     * @return MoneyAmount The cloned amount.
+     */
+    public function clone(): MoneyAmount {
+        return clone $this;
+    }
+
+    /**
      * Format the amount.
      *
      * @param boolean [$format=BALANCE_FORMAT_PLAIN] The balance formatting type.

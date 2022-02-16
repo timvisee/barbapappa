@@ -10,8 +10,8 @@
     <h2 class="ui header">@yield('title')</h2>
 
     <div class="ui three item menu">
-        <a href="{{ route('community.economy.finance.overview', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item active">@lang('pages.finance.overview.title')</a>
-        <a href="{{ route('community.economy.finance.users', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">@lang('pages.finance.users.title')</a>
+        <a href="{{ route('community.economy.finance.overview', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">@lang('pages.finance.overview.title')</a>
+        <a href="{{ route('community.economy.finance.users', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item active">@lang('pages.finance.users.title')</a>
         <a href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">@lang('pages.finance.imports.title')</a>
     </div>
 
@@ -27,18 +27,6 @@
             </div>
             <div class="label">@lang('pages.finance.walletSum')</div>
         </div>
-    </div>
-
-    <h3 class="ui horizontal divider header">
-        @lang('pages.payments.title')
-    </h3>
-    <div class="ui one small statistics">
-        <a href="{{ route('community.economy.payment.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="statistic">
-            <div class="value">
-                {!! $paymentProgressingSum->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => $paymentProgressingSum->amount != 0]) !!}
-            </div>
-            <div class="label">@lang('pages.finance.paymentsInProgress')</div>
-        </a>
     </div>
 
     <h3 class="ui horizontal divider header">
