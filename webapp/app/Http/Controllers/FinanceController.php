@@ -52,9 +52,6 @@ class FinanceController extends Controller {
         $outstandingCumulative = ($openWalletsSum?->clone()?->toBag() ?? new MoneyAmountBag())
             ->addBag($importCumulative);
 
-        // Fetch uncommitted system balances
-        [$balances, $cumulative] = Self::fetchUncommittedBalanceImportSystemBalances($system);
-
         $paymentsProgressing = $economy->payments()->inProgress()->get();
         $paymentProgressingSum = $economy->sumAmounts($paymentsProgressing, 'money');
 
