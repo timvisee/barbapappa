@@ -37,7 +37,10 @@ class MoneyAmountBag {
      *
      * @param MoneyAmount $amount
      */
-    public function add(MoneyAmount $amount) {
+    public function add(?MoneyAmount $amount) {
+        if($amount == null)
+            return $this;
+
         $this->set(
             $this->getOrZero($amount->currency)->add($amount),
         );
@@ -49,7 +52,10 @@ class MoneyAmountBag {
      *
      * @param MoneyAmountBag $amount
      */
-    public function addBag(MoneyAmountBag $amount) {
+    public function addBag(?MoneyAmountBag $amount) {
+        if($amount == null)
+            return $this;
+
         foreach($amount->amounts as $amount)
             $this->add($amount);
         return $this;
@@ -60,7 +66,10 @@ class MoneyAmountBag {
      *
      * @param MoneyAmount $amount
      */
-    public function sub(MoneyAmount $amount) {
+    public function sub(?MoneyAmount $amount) {
+        if($amount == null)
+            return $this;
+
         $this->set(
             $this->getOrZero($amount->currency)->add($amount),
         );

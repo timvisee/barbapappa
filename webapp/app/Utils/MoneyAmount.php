@@ -54,7 +54,10 @@ class MoneyAmount {
      * @throws \Exception Throws if the currencies differ.
      */
     // TODO: do not mutate self here
-    public function add(MoneyAmount $amount) {
+    public function add(?MoneyAmount $amount) {
+        if($amount == null)
+            return $this;
+
         if($this->currency != $amount->currency)
             throw new \Exception("Cannot sum amounts, incompatible currencies");
         $this->amount += $amount->amount;
@@ -72,7 +75,10 @@ class MoneyAmount {
      * @throws \Exception Throws if the currencies differ.
      */
     // TODO: do not mutate self here
-    public function sub(MoneyAmount $amount) {
+    public function sub(?MoneyAmount $amount) {
+        if($amount == null)
+            return $this;
+
         if($this->currency != $amount->currency)
             throw new \Exception("Cannot sum amounts, incompatible currencies");
         $this->amount -= $amount->amount;
