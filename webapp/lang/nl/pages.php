@@ -649,8 +649,11 @@ return [
         'overview' => [
             'title' => 'Overzicht',
         ],
-        'users' => [
-            'title' => 'Gebruikers',
+        'members' => [
+            'title' => 'Leden',
+            'description' => 'Dit rapport toont alle niet-nul balansen in portemonnees van actieve/geregistreerde leden.',
+            'membersPositiveBalance' => 'Leden met positief balans',
+            'membersNegativeBalance' => 'Leden met negatief balans',
         ],
         'imports' => [
             'title' => 'Openstaande imports',

@@ -71,6 +71,28 @@ class Wallet extends Model {
     }
 
     /**
+     * Scope to wallets of registered users.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param bool $registered True to scope to registered users, false to scope
+     *      to unregistered users.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeRegistered($query, bool $registered = true) {
+        return $query->whereExists(function($query) use($registered) {
+            $query = $query->selectRaw('1')
+                ->from('economy_member')
+                ->whereRaw('wallet.economy_member_id = economy_member.id');
+
+            if($registered)
+                $query->whereNotNull('user_id');
+            else
+                $query->whereNull('user_id');
+        });
+    }
+
+    /**
      * Get the economy member this wallet model is from.
      *
      * @return The economy member.

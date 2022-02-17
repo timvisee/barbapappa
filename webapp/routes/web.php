@@ -507,7 +507,7 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     // Index
                     Route::get('/', 'FinanceController@overview')->name('community.economy.finance.overview');
 
-                    Route::get('/users', 'FinanceController@users')->name('community.economy.finance.users');
+                    Route::get('/members', 'FinanceController@members')->name('community.economy.finance.members');
                     Route::get('/imports/{systemId?}', 'FinanceController@imports')->name('community.economy.finance.imports');
                 });
             });

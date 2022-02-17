@@ -56,46 +56,62 @@ class FinanceController extends Controller {
     }
 
     /**
-     * Economy finance users page.
+     * Economy finance members page.
      *
      * @return Response
      */
-    public function users($communityId, $economyId) {
+    public function members($communityId, $economyId) {
         // Get the user, community, find the products
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
-        // Get the first currency, must have one
-        $firstCurrency = $economy->currencies()->first();
-        if($firstCurrency == null)
-            return redirect()
-                ->back()
-                ->with('error', __('pages.currencies.noCurrencies'));
+        // Get wallets for registered users
+        $wallets = $economy->wallets()->registered()->with('economyMember')->get();
+        $cumulative = $economy->sumAmounts($wallets, 'balance');
 
-        // TODO: only list wallets of registered users
-        $wallets = $economy->wallets;
-        $walletSum = $economy->sumAmounts($wallets, 'balance') ?? MoneyAmount::zero($firstCurrency);
-
-        // Gether balance for every member
-        $members = $economy->members;
-        $memberData = $members
-            ->map(function($member) {
-                return [
-                    'member' => $member,
-                    'balance' => $member->sumBalance(),
-                ];
-            })
-            ->filter(function($data) {
-                return $data['balance'] != null && $data['balance']->amount != 0;
-            })
-            ->sortByDesc(function($data) {
-                return $data['balance']->amount;
+        // Total balances
+        $balances = [];
+        $wallets
+            ->each(function($wallet) use(&$balances) {
+                if(!isset($balances[$wallet->economy_member_id]))
+                    $balances[$wallet->economy_member_id] = [
+                        'member' => $wallet->economyMember,
+                        'balance' => $wallet->getMoneyAmount()->toBag(),
+                    ];
+                else
+                    $balances[$wallet->economy_member_id]['balance']
+                        ->add($wallet->getMoneyAmount());
             });
 
-        return view('community.economy.finance.users')
+        // Sort data
+        $balances = collect($balances)
+            ->filter(function($data) {
+                return !$data['balance']->isZero();
+            })
+            ->map(function($balance) {
+                $balance['balanceNum'] = $balance['balance']->sumAmounts()->amount;
+                return $balance;
+            });
+
+        // Split balances into positives and negatives
+        [$positives, $negatives] = collect($balances)
+            ->partition(function($balance) {
+                return $balance['balanceNum'] > 0;
+            });
+        $positives = $positives
+            ->sortByDesc(function($item) {
+                return $item['balanceNum'];
+            });
+        $negatives = $negatives
+            ->sortBy(function($item) {
+                return $item['balanceNum'];
+            });
+
+        return view('community.economy.finance.members')
             ->with('economy', $economy)
-            ->with('walletSum', $walletSum)
-            ->with('memberData', $memberData);
+            ->with('cumulative', $cumulative)
+            ->with('positives', $positives)
+            ->with('negatives', $negatives);
     }
 
     /**

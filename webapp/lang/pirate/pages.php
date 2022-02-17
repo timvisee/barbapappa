@@ -648,8 +648,11 @@ return [
         'overview' => [
             'title' => 'Overview',
         ],
-        'users' => [
-            'title' => 'Users',
+        'members' => [
+            'title' => 'Pirates',
+            'description' => 'Dis report lists all non-zero balances in wallets of active/registered pirates.',
+            'membersPositiveBalance' => 'Pirates wit\' positive balance',
+            'membersNegativeBalance' => 'Pirates wit\' negative balance',
         ],
         'imports' => [
             'title' => 'Outstanding imports',
