@@ -668,11 +668,11 @@ return [
             'aliasesNegativeBalance' => 'Aliassen met negatief balans',
             'noNonZeroBalances' => 'Er zijn op dit moment geen verweesde portemonnees met een niet-nul balans.',
             'settled' => 'Afgerekend?',
-            'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers een account registreren en hun e-mailadres verifiëren. Of verreken deze handmatig en verander de portemonneebalans naar nul. Zodra alle openstaande portemonnees afgerekend zijn wordt hieronder een groen vinkje getoond.',
+            'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers een account registreren en hun e-mailadres verifiëren. Of verreken deze handmatig en verander de portemonneebalans naar nul. Zodra alle verweesde portemonnees zijn toegewezen wordt hieronder een groen vinkje getoond.',
         ],
         'imports' => [
-            'title' => 'Openstaande imports',
-            'description' => 'Dit rapport toont alle niet-nul balansen vanuit balansimports, waarbij het balans nog niet verrekend is met een gebruiker. Deze balansen zijn van mensen die zich niet geregistreerd hebben, of hun e-mailadres niet geverifiëerd hebben. Zodra deze gebruikers een account aanmaken en hun e-mailadres verifiëren zal hun getoonde balans toegewezen worden aan hun account.',
+            'title' => 'Ongeregelde imports',
+            'description' => 'Dit rapport toont alle niet-nul balansen vanuit balansimports, waarbij het balans nog niet verrekend/toegewezen is aan een gebruiker. Deze balansen zijn van mensen die zich niet geregistreerd hebben, of hun e-mailadres niet geverifiëerd hebben. Zodra deze gebruikers een account aanmaken en hun e-mailadres verifiëren zal hun getoonde balans toegewezen worden aan hun account.',
             'aliasesPositiveBalance' => 'Aliassen met positief balans',
             'aliasesNegativeBalance' => 'Aliassen met negatief balans',
             'aliases' => 'Aliassen',
@@ -680,7 +680,7 @@ return [
             'selectSystem' => 'Selecteer een balansimportsysteem om details te bekijken.',
             'noSystems' => 'Deze economie heeft geen balansimportsystemen.',
             'settled' => 'Afgerekend?',
-            'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers een account registreren en hun e-mailadres verifiëren. Of verreken deze handmatig en laat het balansimportitem vallen. Zodra alle openstaande imports afgerekend zijn wordt hieronder een groen vinkje getoond.',
+            'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers een account registreren en hun e-mailadres verifiëren. Of verreken deze handmatig en laat het balansimportitem vallen. Zodra alle imports afgerekend zijn wordt hieronder een groen vinkje getoond.',
         ],
     ],
 

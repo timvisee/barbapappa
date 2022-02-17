@@ -667,11 +667,11 @@ return [
             'aliasesNegativeBalance' => 'Aliases wit\' negative balance',
             'noNonZeroBalances' => 'There nay be orphaned wallets wit\' a non-zero balance.',
             'settled' => 'Settled?',
-            'howToSettle' => 'To settle these, users should register an account and verifiy their e-bottle coordinate. A green tick will be shown below when all outstanding wallets have been settled.',
+            'howToSettle' => 'To settle these, users should register an account and verifiy their e-bottle coordinate. A green tick will be shown below when all orphan wallets have been assigned.',
         ],
         'imports' => [
-            'title' => 'Outstanding imports',
-            'description' => 'Dis report lists all non-zero balances from balance imports dat nay be committed to a pirate yet. These balances be for pirates that haven\'t registered, or haven\'t verified their e-bottle coordinate. Once these users register an account and verify their email address, their balance listed here will be assigned to their account.',
+            'title' => 'Unsettled imports',
+            'description' => 'Dis report lists all non-zero balances from balance imports dat nay be settled/committed to a pirate yet. These balances be for pirates that haven\'t registered, or haven\'t verified their e-bottle coordinate. Once these users register an account and verify their email address, their balance listed here will be assigned to their account.',
             'aliasesPositiveBalance' => 'Aliases wit\' positive balance',
             'aliasesNegativeBalance' => 'Aliases wit\' negative balance',
             'aliases' => 'Aliases',
@@ -679,7 +679,7 @@ return [
             'selectSystem' => 'Select a balance import system to view details.',
             'noSystems' => 'Dis economy nay have any balance import systems.',
             'settled' => 'Settled?',
-            'howToSettle' => 'To settle these, users should register an account and verifiy their email address. Or settle these manually and drop the balance import entry. A green tick will be shown below when all outstanding imports have been settled.',
+            'howToSettle' => 'To settle these, users should register an account and verifiy their email address. Or settle these manually and drop the balance import entry. A green tick will be shown below when all imports have been settled.',
         ],
     ],
 
