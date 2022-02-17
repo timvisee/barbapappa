@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.154 (2022-02-17)
+
+- Hotfix for finance report error when there are no balance imports
+- Rename financial report outstanding imports to unsettled imports
+
 ## 0.1.153 (2022-02-17)
 
 Notable:
