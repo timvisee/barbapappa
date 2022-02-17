@@ -28,7 +28,7 @@ class FinanceController extends Controller {
         // Sum unclaimed wallet balances
         $openWallets = $economy->wallets()->registered(false)->get();
         $openWalletsSum = $economy->sumAmounts($openWallets, 'balance');
-        $openWalletsResolved = $economy
+        $openWalletsSettled = $economy
             ->wallets()
             ->registered(false)
             ->where('balance', '!=', 0)
@@ -37,12 +37,12 @@ class FinanceController extends Controller {
 
         // Sum uncommitted import balances
         $importCumulative = new MoneyAmountBag();
-        $importResolved = true;
+        $importSettled = true;
         foreach($economy->balanceImportSystems as $system) {
             $result = Self::fetchUncommittedBalanceImportSystemBalances($system);
             $importCumulative->addBag($result[1]);
             if(!$result[0]->isEmpty())
-                $importResolved = false;
+                $importSettled = false;
         }
 
         // Count totals and outstanding totals
@@ -64,8 +64,8 @@ class FinanceController extends Controller {
             ->with('paymentProgressingSum', $paymentProgressingSum)
             ->with('totalCumulative', $totalCumulative)
             ->with('outstandingCumulative', $outstandingCumulative)
-            ->with('openWalletsResolved', $openWalletsResolved)
-            ->with('importResolved', $importResolved);
+            ->with('openWalletsSettled', $openWalletsSettled)
+            ->with('importSettled', $importSettled);
     }
 
     /**
@@ -182,7 +182,7 @@ class FinanceController extends Controller {
         return view('community.economy.finance.aliasWallets')
             ->with('economy', $economy)
             ->with('cumulative', $cumulative)
-            ->with('resolved', $positives->isEmpty() && $negatives->isEmpty())
+            ->with('settled', $positives->isEmpty() && $negatives->isEmpty())
             ->with('positives', $positives)
             ->with('negatives', $negatives);
     }
@@ -225,7 +225,7 @@ class FinanceController extends Controller {
             ->with('economy', $economy)
             ->with('systems', $systems)
             ->with('system', $system)
-            ->with('resolved', $positives->isEmpty() && $negatives->isEmpty())
+            ->with('settled', $positives->isEmpty() && $negatives->isEmpty())
             ->with('positives', $positives)
             ->with('negatives', $negatives)
             ->with('cumulative', $cumulative ?? null);

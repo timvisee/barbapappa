@@ -67,8 +67,8 @@
         @lang('pages.finance.aliasWallets.title')
     </h3>
     <div class="ui one small statistics">
-        <a class="statistic {{ $openWalletsResolved ? 'green' : 'red' }}" href="{{ route('community.economy.finance.aliasWallets', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
-            @if($openWalletsResolved)
+        <a class="statistic {{ $openWalletsSettled ? 'green' : 'red' }}" href="{{ route('community.economy.finance.aliasWallets', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
+            @if($openWalletsSettled)
                 <div class="value">
                     <span class="halflings halflings-ok" title="@lang('general.yes')"></span>
                 </div>
@@ -77,7 +77,7 @@
                     <span class="halflings halflings-remove" title="@lang('general.no')"></span>
                 </div>
             @endif
-            <div class="label">@lang('pages.finance.aliasWallets.resolved')</div>
+            <div class="label">@lang('pages.finance.aliasWallets.settled')</div>
         </a>
     </div>
 
@@ -85,8 +85,8 @@
         @lang('pages.finance.imports.title')
     </h3>
     <div class="ui one small statistics">
-        <a class="statistic {{ $importResolved ? 'green' : 'red' }}" href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
-            @if($importResolved)
+        <a class="statistic {{ $importSettled ? 'green' : 'red' }}" href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
+            @if($importSettled)
                 <div class="value">
                     <span class="halflings halflings-ok" title="@lang('general.yes')"></span>
                 </div>
@@ -95,7 +95,7 @@
                     <span class="halflings halflings-remove" title="@lang('general.no')"></span>
                 </div>
             @endif
-            <div class="label">@lang('pages.finance.imports.resolved')</div>
+            <div class="label">@lang('pages.finance.imports.settled')</div>
         </div>
     </div>
 

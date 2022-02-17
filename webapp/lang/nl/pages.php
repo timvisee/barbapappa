@@ -648,7 +648,7 @@ return [
         'paymentsInProgress' => 'Verwerkende betalingen',
         'noAccountImport' => 'Geen account (import)',
         'membersWithNonZeroBalance' => 'Leden met saldo',
-        'description' => 'Hier zie je een simpel financieel overzicht van de huidige economie staat. Gebruikers van saldoimports, die nog niet geregistreerd zijn en nog geen deel uitmaken van deze economie worden hier nog niet getoond.',
+        'howToSettle' => 'Hoe af te rekenen?',
         'overview' => [
             'title' => 'Overzicht',
             'description' => 'Hier zie je een financieel overzicht van deze economie. De eerste sectie toont het cumulatieve balans van actieve/geregistreerde gebruikers. De andere secties tonen openstaande en nog-te-verrekenen balansen. Gebruik de tabs hierboven om elke sectie in detail te bekijken.',
@@ -659,6 +659,7 @@ return [
             'membersPositiveBalance' => 'Leden met positief balans',
             'membersNegativeBalance' => 'Leden met negatief balans',
             'noNonZeroBalances' => 'Er zijn op dit moment geen leden met een niet-nul balans.',
+            'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers hun openstaande saldo betalen via de app.',
         ],
         'aliasWallets' => [
             'title' => 'Openstaande portemonnees',
@@ -666,7 +667,8 @@ return [
             'aliasesPositiveBalance' => 'Aliassen met positief balans',
             'aliasesNegativeBalance' => 'Aliassen met negatief balans',
             'noNonZeroBalances' => 'Er zijn op dit moment geen gebruikers met een niet-nul balans.',
-            'resolved' => 'Verrekend?',
+            'settled' => 'Afgerekend?',
+            'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers een account registreren en hun e-mailadres verifiëren. Of verreken deze handmatig en verander de portemonneebalans naar nul. Zodra alle openstaande portemonnees afgerekend zijn wordt hieronder een groen vinkje getoond.',
         ],
         'imports' => [
             'title' => 'Openstaande imports',
@@ -677,7 +679,8 @@ return [
             'noAliases' => 'Geen aliassen',
             'selectSystem' => 'Selecteer een balansimportsysteem om details te bekijken.',
             'noSystems' => 'Deze economie heeft geen balansimportsystemen.',
-            'resolved' => 'Verrekend?',
+            'settled' => 'Afgerekend?',
+            'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers een account registreren en hun e-mailadres verifiëren. Of verreken deze handmatig en laat het balansimportitem vallen. Zodra alle openstaande imports afgerekend zijn wordt hieronder een groen vinkje getoond.',
         ],
     ],
 

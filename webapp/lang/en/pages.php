@@ -648,6 +648,7 @@ return [
         'paymentsInProgress' => 'Payments processing',
         'noAccountImport' => 'No account (import)',
         'membersWithNonZeroBalance' => 'Members with balance',
+        'howToSettle' => 'How to settle?',
         'overview' => [
             'title' => 'Overview',
             'description' => 'This shows a financial report overview of this economy. The first section lists the cumulative balance of active/registered members. The other sections include outstanding and yet-to-process balances. Use the tabs above to view every section in detail.',
@@ -658,6 +659,7 @@ return [
             'membersPositiveBalance' => 'Members with positive balance',
             'membersNegativeBalance' => 'Members with negative balance',
             'noNonZeroBalances' => 'There are currently no members with a non-zero balance.',
+            'howToSettle' => 'To settle these, users should pay their outstanding balance through the app.',
         ],
         'aliasWallets' => [
             'title' => 'Outstanding wallets',
@@ -665,7 +667,8 @@ return [
             'aliasesPositiveBalance' => 'Aliases with positive balance',
             'aliasesNegativeBalance' => 'Aliases with negative balance',
             'noNonZeroBalances' => 'There are currently no users with a non-zero balance.',
-            'resolved' => 'Resolved?',
+            'settled' => 'Settled?',
+            'howToSettle' => 'To settle these, users should register an account and verifiy their email address. Or settle these manually and zero the wallet balance. A green tick will be shown below when all outstanding wallets have been settled.',
         ],
         'imports' => [
             'title' => 'Outstanding imports',
@@ -676,7 +679,8 @@ return [
             'noAliases' => 'No aliases',
             'selectSystem' => 'Select a balance import system to view details.',
             'noSystems' => 'This economy does not have any balance import systems.',
-            'resolved' => 'Resolved?',
+            'settled' => 'Settled?',
+            'howToSettle' => 'To settle these, users should register an account and verifiy their email address. Or settle these manually and drop the balance import entry. A green tick will be shown below when all outstanding imports have been settled.',
         ],
     ],
 

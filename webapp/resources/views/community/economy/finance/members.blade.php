@@ -20,6 +20,19 @@
 
     <p>@lang('pages.finance.members.description')</p>
 
+    <div class="ui fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
+            @lang('pages.finance.howToSettle')
+        </div>
+        <div class="content">
+            <div class="ui info message">
+                <span class="halflings halflings-info-sign icon"></span>
+                @lang('pages.finance.members.howToSettle')
+            </div>
+        </div>
+    </div>
+
     <h3 class="ui horizontal divider header">
         @lang('pages.finance.members.title')
     </h3>

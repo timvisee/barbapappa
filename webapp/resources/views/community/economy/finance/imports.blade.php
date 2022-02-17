@@ -41,29 +41,42 @@
 
             <p>@lang('pages.finance.imports.description')</p>
 
+            <div class="ui fluid accordion">
+                <div class="title">
+                    <i class="dropdown icon"></i>
+                    @lang('pages.finance.howToSettle')
+                </div>
+                <div class="content">
+                    <div class="ui info message">
+                        <span class="halflings halflings-info-sign icon"></span>
+                        @lang('pages.finance.imports.howToSettle')
+                    </div>
+                </div>
+            </div>
+
             <h3 class="ui horizontal divider header">
                 @lang('pages.finance.imports.title')
             </h3>
 
             <div class="ui one small statistics">
-                @if($resolved)
+                @if($settled)
                     <div class="statistic green">
                         <div class="value">
                             <span class="halflings halflings-ok" title="@lang('general.yes')"></span>
                         </div>
-                        <div class="label">@lang('pages.finance.imports.resolved')</div>
+                        <div class="label">@lang('pages.finance.imports.settled')</div>
                     </div>
                 @else
                     <div class="statistic red">
                         <div class="value">
                             <span class="halflings halflings-remove" title="@lang('general.no')"></span>
                         </div>
-                        <div class="label">@lang('pages.finance.imports.resolved')</div>
+                        <div class="label">@lang('pages.finance.imports.settled')</div>
                     </div>
                 @endif
             </div>
 
-            @if(!$resolved)
+            @if(!$settled)
                 <br>
                 <div class="ui one small statistics">
                     <div class="statistic">
