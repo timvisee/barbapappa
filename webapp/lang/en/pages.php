@@ -648,9 +648,9 @@ return [
         'paymentsInProgress' => 'Payments processing',
         'noAccountImport' => 'No account (import)',
         'membersWithNonZeroBalance' => 'Members with balance',
-        'description' => 'This shows a simple financial report for the current economy state. Users from balance imports, that have not registered and joined this economy, are currently not listed here.',
         'overview' => [
             'title' => 'Overview',
+            'description' => 'This shows a financial report overview of this economy. The first section lists the cumulative balance of active/registered members. The other sections include outstanding and yet-to-process balances. Use the tabs above to view every section in detail.',
         ],
         'members' => [
             'title' => 'Members',

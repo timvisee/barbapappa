@@ -16,7 +16,9 @@
         <a href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">@lang('pages.finance.imports.title')</a>
     </div>
 
-    <p>@lang('pages.finance.description')</p>
+    <div class="ui divider hidden"></div>
+
+    <p>@lang('pages.finance.overview.description')</p>
 
     <h3 class="ui horizontal divider header">
         @lang('pages.finance.members.title')

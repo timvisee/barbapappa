@@ -647,9 +647,9 @@ return [
         'paymentsInProgress' => 'Payments processing',
         'noAccountImport' => 'No account (import)',
         'membersWithNonZeroBalance' => 'Members with booty',
-        'description' => 'Dis shows a simple financial report for th\' current booty state. Pirates from booty imports, that nay be registered and joined dis booty, are currently not listed.',
         'overview' => [
             'title' => 'Overview',
+            'description' => 'Dis shows a financial report overview of this economy. Th\' first section lists th\' cumulative balance of active/registered pirates. Th\' other sections include outstanding and yet-to-process balances. Use th\' tabs above to view every section in detail.',
         ],
         'members' => [
             'title' => 'Pirates',

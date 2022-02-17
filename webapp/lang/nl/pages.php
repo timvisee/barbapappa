@@ -651,6 +651,7 @@ return [
         'description' => 'Hier zie je een simpel financieel overzicht van de huidige economie staat. Gebruikers van saldoimports, die nog niet geregistreerd zijn en nog geen deel uitmaken van deze economie worden hier nog niet getoond.',
         'overview' => [
             'title' => 'Overzicht',
+            'description' => 'Hier zie je een financieel overzicht van deze economie. De eerste sectie toont het cumulatieve balans van actieve/geregistreerde gebruikers. De andere secties tonen openstaande en nog-te-verrekenen balansen. Gebruik de tabs hierboven om elke sectie in detail te bekijken.',
         ],
         'members' => [
             'title' => 'Leden',
