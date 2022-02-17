@@ -658,7 +658,7 @@ return [
             'membersPositiveBalance' => 'Pirates wit\' positive balance',
             'membersNegativeBalance' => 'Pirates wit\' negative balance',
             'noNonZeroBalances' => 'There nay be pirates wit\' a non-zero balance.',
-            'howToSettle' => 'To settle these, users should register an account and verifiy their e-bottle coordinate. Or settle these manually and zero the wallet balance.',
+            'howToSettle' => 'To settle these, users should register an account and verify their e-bottle coordinate. Or settle these manually and zero the wallet balance.',
         ],
         'aliasWallets' => [
             'title' => 'Oprhaned wallets',
@@ -667,7 +667,7 @@ return [
             'aliasesNegativeBalance' => 'Aliases wit\' negative balance',
             'noNonZeroBalances' => 'There nay be orphaned wallets wit\' a non-zero balance.',
             'settled' => 'Settled?',
-            'howToSettle' => 'To settle these, users should register an account and verifiy their e-bottle coordinate. A green tick will be shown below when all orphan wallets have been assigned.',
+            'howToSettle' => 'To settle these, users should register an account and verify their e-bottle coordinate. A green tick will be shown below when all orphan wallets have been assigned.',
         ],
         'imports' => [
             'title' => 'Unsettled imports',
@@ -679,7 +679,7 @@ return [
             'selectSystem' => 'Select a balance import system to view details.',
             'noSystems' => 'Dis economy nay have any balance import systems.',
             'settled' => 'Settled?',
-            'howToSettle' => 'To settle these, users should register an account and verifiy their email address. Or settle these manually and drop the balance import entry. A green tick will be shown below when all imports have been settled.',
+            'howToSettle' => 'To settle these, users should register an account and verify their email address. Or settle these manually and drop the balance import entry. A green tick will be shown below when all imports have been settled.',
         ],
     ],
 
