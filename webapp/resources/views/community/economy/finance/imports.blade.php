@@ -17,8 +17,8 @@
     </div>
 
     @if($systems->isEmpty())
-        <div class="ui warning message">
-            <span class="halflings halflings-warning-sign icon"></span>
+        <div class="ui success message">
+            <span class="halflings halflings-ok-sign icon"></span>
             @lang('pages.finance.imports.noSystems')
         </div>
     @else

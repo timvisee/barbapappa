@@ -79,7 +79,8 @@
         </div>
     @endif
     @if($positives->isEmpty() && $negatives->isEmpty())
-        <div class="ui message">
+        <div class="ui success message">
+            <span class="halflings halflings-ok-sign icon"></span>
             @lang('pages.finance.members.noNonZeroBalances')
         </div>
     @endif
