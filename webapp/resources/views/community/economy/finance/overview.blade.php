@@ -96,7 +96,7 @@
                 </div>
             @endif
             <div class="label">@lang('pages.finance.imports.settled')</div>
-        </div>
+        </a>
     </div>
 
     <div class="ui divider hidden"></div>
