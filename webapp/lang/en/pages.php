@@ -651,9 +651,10 @@ return [
         ],
         'members' => [
             'title' => 'Members',
-            'description' => 'This report lists all non-zero balances in wallets of active/registered members.',
+            'description' => 'This report lists all active/registered members that have a non-zero balance.',
             'membersPositiveBalance' => 'Members with positive balance',
             'membersNegativeBalance' => 'Members with negative balance',
+            'noNonZeroBalances' => 'There are currently no members with a non-zero balance.',
         ],
         'imports' => [
             'title' => 'Outstanding imports',

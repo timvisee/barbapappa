@@ -650,9 +650,10 @@ return [
         ],
         'members' => [
             'title' => 'Pirates',
-            'description' => 'Dis report lists all non-zero balances in wallets of active/registered pirates.',
+            'description' => 'Dis report lists all active/registered members that have a non-zero balance.',
             'membersPositiveBalance' => 'Pirates wit\' positive balance',
             'membersNegativeBalance' => 'Pirates wit\' negative balance',
+            'noNonZeroBalances' => 'There nay be pirates wit\' a non-zero balance.',
         ],
         'imports' => [
             'title' => 'Outstanding imports',

@@ -15,12 +15,15 @@
         <a href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">@lang('pages.finance.imports.title')</a>
     </div>
 
+    <div class="ui divider hidden"></div>
+
     <p>@lang('pages.finance.members.description')</p>
 
+    <h3 class="ui horizontal divider header">
+        @lang('pages.finance.members.title')
+    </h3>
+
     @if($cumulative != null)
-        <h3 class="ui horizontal divider header">
-            @lang('pages.wallets.title')
-        </h3>
         <div class="ui one small statistics">
             <div class="statistic">
                 <div class="value">
@@ -31,9 +34,8 @@
         </div>
     @endif
 
-    <h3 class="ui horizontal divider header">
-        @lang('misc.members')
-    </h3>
+    <div class="ui divider hidden"></div>
+
     @if(!$negatives->isEmpty())
         <div class="ui vertical menu fluid">
             <h5 class="ui item header">
@@ -68,6 +70,11 @@
                     <i>@lang('pages.barMembers.noMembers')</i>
                 </div>
             @endforelse
+        </div>
+    @endif
+    @if($positives->isEmpty() && $negatives->isEmpty())
+        <div class="ui message">
+            @lang('pages.finance.members.description')
         </div>
     @endif
 
