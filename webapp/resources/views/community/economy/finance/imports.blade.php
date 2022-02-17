@@ -9,9 +9,10 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    <div class="ui three item menu">
+    <div class="ui four item menu">
         <a href="{{ route('community.economy.finance.overview', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">@lang('pages.finance.overview.title')</a>
         <a href="{{ route('community.economy.finance.members', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">@lang('pages.finance.members.title')</a>
+        <a href="{{ route('community.economy.finance.aliasWallets', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item">@lang('pages.finance.aliasWallets.title')</a>
         <a href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="item active">@lang('pages.finance.imports.title')</a>
     </div>
 
@@ -70,7 +71,7 @@
                         <div class="value">
                             {!! $cumulative->formatAmount(BALANCE_FORMAT_COLOR) !!}
                         </div>
-                        <div class="label">@lang('pages.finance.walletSum')</div>
+                        <div class="label">@lang('pages.finance.outstandingBalance')</div>
                     </div>
                 </div>
             @endif

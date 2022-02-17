@@ -115,6 +115,66 @@ class FinanceController extends Controller {
     }
 
     /**
+     * Economy finance alias wallets page.
+     *
+     * @return Response
+     */
+    public function aliasWallets($communityId, $economyId) {
+        // Get the user, community, find the products
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // Get wallets for registered users
+        $wallets = $economy->wallets()->registered(false)->with('economyMember')->get();
+        $cumulative = $economy->sumAmounts($wallets, 'balance');
+
+        // Total balances
+        $balances = [];
+        $wallets
+            ->each(function($wallet) use(&$balances) {
+                if(!isset($balances[$wallet->economy_member_id]))
+                    $balances[$wallet->economy_member_id] = [
+                        'member' => $wallet->economyMember,
+                        'balance' => $wallet->getMoneyAmount()->toBag(),
+                    ];
+                else
+                    $balances[$wallet->economy_member_id]['balance']
+                        ->add($wallet->getMoneyAmount());
+            });
+
+        // Sort data
+        $balances = collect($balances)
+            ->filter(function($data) {
+                return !$data['balance']->isZero();
+            })
+            ->map(function($balance) {
+                $balance['balanceNum'] = $balance['balance']->sumAmounts()->amount;
+                return $balance;
+            });
+
+        // Split balances into positives and negatives
+        [$positives, $negatives] = collect($balances)
+            ->partition(function($balance) {
+                return $balance['balanceNum'] > 0;
+            });
+        $positives = $positives
+            ->sortByDesc(function($item) {
+                return $item['balanceNum'];
+            });
+        $negatives = $negatives
+            ->sortBy(function($item) {
+                return $item['balanceNum'];
+            });
+
+        return view('community.economy.finance.aliasWallets')
+            ->with('economy', $economy)
+            ->with('cumulative', $cumulative)
+            ->with('resolved', $positives->isEmpty() && $negatives->isEmpty())
+            ->with('positives', $positives)
+            ->with('negatives', $negatives);
+    }
+
+    /**
      * Economy finance imports page.
      *
      * @return Response

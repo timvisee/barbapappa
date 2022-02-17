@@ -641,7 +641,8 @@ return [
      */
     'finance' => [
         'title' => 'Financial report',
-        'walletSum' => 'Cumulative balance',
+        'cumulativeBalance' => 'Cumulative balance',
+        'outstandingBalance' => 'Outstanding balance',
         'paymentsInProgress' => 'In progress',
         'noAccountImport' => 'No account (import)',
         'membersWithNonZeroBalance' => 'Members with balance',
@@ -651,14 +652,22 @@ return [
         ],
         'members' => [
             'title' => 'Members',
-            'description' => 'This report lists all active/registered members that have a non-zero balance.',
+            'description' => 'This report lists all active/registered members that have a non-zero balance. These members are automatically notified, payments are processed through this app.',
             'membersPositiveBalance' => 'Members with positive balance',
             'membersNegativeBalance' => 'Members with negative balance',
             'noNonZeroBalances' => 'There are currently no members with a non-zero balance.',
         ],
+        'aliasWallets' => [
+            'title' => 'Outstanding wallets',
+            'description' => 'This report lists all users purchases are made for, that don\'t have an account. These purchases are made through the kiosk or by other users, on aliases in the balance import system. Once these users register an account and verify their email address, their balance listed here will be assigned to their account.',
+            'aliasesPositiveBalance' => 'Aliases with positive balance',
+            'aliasesNegativeBalance' => 'Aliases with negative balance',
+            'noNonZeroBalances' => 'There are currently no users with a non-zero balance.',
+            'resolved' => 'Resolved?',
+        ],
         'imports' => [
             'title' => 'Outstanding imports',
-            'description' => 'This report lists all non-zero balances from balance imports that haven\'t been settled with a user yet. These balances are from people that haven\'t registered, or haven\'t verified their email address.',
+            'description' => 'This report lists all non-zero balances from balance imports that haven\'t been settled with a user yet. These balances are from people that haven\'t registered, or haven\'t verified their email address. Once these users register an account and verify their email address, their balance listed here will be assigned to their account.',
             'aliasesPositiveBalance' => 'Aliases with positive balance',
             'aliasesNegativeBalance' => 'Aliases with negative balance',
             'aliases' => 'Aliases',

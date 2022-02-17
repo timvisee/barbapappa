@@ -641,7 +641,8 @@ return [
      */
     'finance' => [
         'title' => 'Financieel rapport',
-        'walletSum' => 'Cumulatief saldo',
+        'cumulativeBalance' => 'Cumulatief saldo',
+        'outstandingBalance' => 'Openstaand saldo',
         'paymentsInProgress' => 'In verwerking',
         'noAccountImport' => 'Geen account (import)',
         'membersWithNonZeroBalance' => 'Leden met saldo',
@@ -651,14 +652,22 @@ return [
         ],
         'members' => [
             'title' => 'Leden',
-            'description' => 'Dit rapport toont alle actieve/geregistreerde leden met een niet-nul balans.',
+            'description' => 'Dit rapport toont alle actieve/geregistreerde leden met een niet-nul balans. Deze gebruikers worden automatisch op de hoogte gebracht, betalingen worden verwerkt via deze app.',
             'membersPositiveBalance' => 'Leden met positief balans',
             'membersNegativeBalance' => 'Leden met negatief balans',
             'noNonZeroBalances' => 'Er zijn op dit moment geen leden met een niet-nul balans.',
         ],
+        'aliasWallets' => [
+            'title' => 'Openstaande portemonnees',
+            'description' => 'Dit rapport toont alle gebruikers waarvoor aankopen zijn gedaan, en geen account hebben. Deze aankopen zijn gedaan via de kiosk or door andere gebruikers, op aliassen uit het balansimportsysteem. Zodra deze gebruikers een account aanmaken en hun e-mailadres verifiëren zal hun getoonde balans toegewezen worden aan hun account.',
+            'aliasesPositiveBalance' => 'Aliassen met positief balans',
+            'aliasesNegativeBalance' => 'Aliassen met negatief balans',
+            'noNonZeroBalances' => 'Er zijn op dit moment geen gebruikers met een niet-nul balans.',
+            'resolved' => 'Verrekend?',
+        ],
         'imports' => [
             'title' => 'Openstaande imports',
-            'description' => 'Dit rapport toont alle niet-nul balansen vanuit balansimports, waarbij het balans nog niet verrekend is met een gebruiker. Deze balansen zijn van mensen die zich niet geregistreerd hebben, of hun e-mailadres niet geverifiëerd hebben.',
+            'description' => 'Dit rapport toont alle niet-nul balansen vanuit balansimports, waarbij het balans nog niet verrekend is met een gebruiker. Deze balansen zijn van mensen die zich niet geregistreerd hebben, of hun e-mailadres niet geverifiëerd hebben. Zodra deze gebruikers een account aanmaken en hun e-mailadres verifiëren zal hun getoonde balans toegewezen worden aan hun account.',
             'aliasesPositiveBalance' => 'Aliassen met positief balans',
             'aliasesNegativeBalance' => 'Aliassen met negatief balans',
             'aliases' => 'Aliassen',

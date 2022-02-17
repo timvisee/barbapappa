@@ -640,7 +640,8 @@ return [
      */
     'finance' => [
         'title' => 'Financial report',
-        'walletSum' => 'Cumulative balance',
+        'cumulativeBalance' => 'Cumulative balance',
+        'outstandingBalance' => 'Outstanding balance',
         'paymentsInProgress' => 'In progress',
         'noAccountImport' => 'No account (import)',
         'membersWithNonZeroBalance' => 'Members with booty',
@@ -650,14 +651,22 @@ return [
         ],
         'members' => [
             'title' => 'Pirates',
-            'description' => 'Dis report lists all active/registered members that have a non-zero balance.',
+            'description' => 'Dis report lists all active/registered members that have a non-zero balance. These members automatically be notified, payments be processed through dis app.',
             'membersPositiveBalance' => 'Pirates wit\' positive balance',
             'membersNegativeBalance' => 'Pirates wit\' negative balance',
             'noNonZeroBalances' => 'There nay be pirates wit\' a non-zero balance.',
         ],
+        'aliasWallets' => [
+            'title' => 'Outstanding wallets',
+            'description' => 'Dis report lists all users purchases are made for, that nay be registered. These purchases are made through th\' kiosk or by others, on aliases in th\' balance import system. Once these users register an account and verify their email address, their balance listed here will be assigned to their account.',
+            'aliasesPositiveBalance' => 'Aliases wit\' positive balance',
+            'aliasesNegativeBalance' => 'Aliases wit\' negative balance',
+            'noNonZeroBalances' => 'There nay be users wit\' a non-zero balance.',
+            'resolved' => 'Resolved?',
+        ],
         'imports' => [
             'title' => 'Outstanding imports',
-            'description' => 'Dis report lists all non-zero balances from balance imports dat nay be committed to a pirate yet. These balances be for pirates that haven\'t registered, or haven\'t verified their e-bottle coordinate.',
+            'description' => 'Dis report lists all non-zero balances from balance imports dat nay be committed to a pirate yet. These balances be for pirates that haven\'t registered, or haven\'t verified their e-bottle coordinate. Once these users register an account and verify their email address, their balance listed here will be assigned to their account.',
             'aliasesPositiveBalance' => 'Aliases wit\' positive balance',
             'aliasesNegativeBalance' => 'Aliases wit\' negative balance',
             'aliases' => 'Aliases',
