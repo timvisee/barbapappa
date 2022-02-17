@@ -137,6 +137,14 @@
                 </div>
             @endif
         @endif
+        <a href="{{ route('community.economy.finance.overview', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                ]) }}"
+                class="item">
+            @lang('pages.finance.title')
+            <span class="subtle">@lang('pages.economies.inEconomy')</span>
+        </a>
     </div>
 
     <div class="ui vertical menu fluid">
