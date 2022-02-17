@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.1.153 (2022-02-17)
+
+Notable:
+
+- Fully reimplement financial report feature, this now shows a more complete and cleaned interface classified in tabs, including: overview, members, orphaned wallets, unsettled balance imports
+- Integrate unsettled amounts from balance import into financial report, these amounts are significant but not visible before
+- Mark unregistered users in grey with a tag icon in kiosk mode, in an attempt to make it less likely to click on when a user is listed multiple times
+
+Other:
+
+- Add financial report button in bar manage screen
+- Improve item sorting in various places, such as kiosk mode. Alphabetical
+  sorting showed unexpected results when different capitalisation is used.
+- Improve some terminology used in kiosk mode
+- Improve styling of inline icons in kiosk mode
+- Various pirate speak improvements
+
 ## 0.1.152 (2022-02-16)
 
 - Fix email delivery errors, sending over SMTP hosts didn't work
