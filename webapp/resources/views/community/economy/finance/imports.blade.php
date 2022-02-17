@@ -64,8 +64,7 @@
             </div>
 
             @if(!$resolved)
-                <div class="ui divider hidden"></div>
-
+                <br>
                 <div class="ui one small statistics">
                     <div class="statistic">
                         <div class="value">

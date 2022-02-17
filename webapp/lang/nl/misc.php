@@ -196,6 +196,7 @@ return [
     'now' => 'now',
     'drained' => 'Leeg',
     'sameAs' => 'Zelfde als',
+    'totals' => 'Totalen',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',

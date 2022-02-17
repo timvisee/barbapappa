@@ -195,6 +195,7 @@ return [
     'now' => 'now',
     'drained' => 'Drained',
     'sameAs' => 'Same as',
+    'totals' => 'Totals',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

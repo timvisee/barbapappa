@@ -19,55 +19,82 @@
     <p>@lang('pages.finance.description')</p>
 
     <h3 class="ui horizontal divider header">
-        @lang('pages.wallets.title')
+        @lang('pages.finance.members.title')
     </h3>
     <div class="ui one small statistics">
-        <div class="statistic">
+        <a class="statistic" href="{{ route('community.economy.finance.members', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
             <div class="value">
-                {!! $walletSum->formatAmount(BALANCE_FORMAT_COLOR) !!}
+                {!! $membersCumulative?->formatAmount(BALANCE_FORMAT_COLOR) ?? 0 !!}
             </div>
             <div class="label">@lang('pages.finance.cumulativeBalance')</div>
-        </div>
+        </a>
     </div>
-
-    <h3 class="ui horizontal divider header">
-        @lang('pages.payments.title')
-    </h3>
+    <br>
     <div class="ui one small statistics">
         <a href="{{ route('community.economy.payment.index', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}" class="statistic">
             <div class="value">
-                {!! $paymentProgressingSum->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => $paymentProgressingSum->amount != 0]) !!}
+                {!! $paymentProgressingSum?->formatAmount(BALANCE_FORMAT_COLOR, ['neutral' => $paymentProgressingSum->amount != 0]) ?? 0 !!}
             </div>
             <div class="label">@lang('pages.finance.paymentsInProgress')</div>
         </a>
     </div>
 
     <h3 class="ui horizontal divider header">
-        @lang('misc.members')
+        @lang('misc.totals')
     </h3>
-    <div class="ui vertical menu fluid">
-        <h5 class="ui item header">
-            @lang('pages.finance.membersWithNonZeroBalance')
-            ({{ count($memberData) }})
-        </h5>
-        @forelse($memberData as $member)
-            <div class="item">
-                {{ $member['member']->name }}
-                @if($member['balance'])
-                    {!! $member['balance']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $totalCumulative?->formatAmount(BALANCE_FORMAT_COLOR) ?? 0 !!}
+            </div>
+            <div class="label">@lang('pages.finance.memberAndOutstandingCumulative')</div>
+        </div>
+    </div>
+    <br>
+    <div class="ui one small statistics">
+        <div class="statistic">
+            <div class="value">
+                {!! $outstandingCumulative?->formatAmount(BALANCE_FORMAT_COLOR) ?? 0 !!}
+            </div>
+            <div class="label">@lang('pages.finance.outstandingCumulative')</div>
+        </div>
+    </div>
 
-                    @unless($member['member']->user_id)
-                        <span class="sub-label">
-                            {{ lcfirst(__('pages.finance.noAccountImport')) }}
-                        </span>
-                    @endunless
-                @endif
-            </div>
-        @empty
-            <div class="item">
-                <i>@lang('pages.barMembers.noMembers')</i>
-            </div>
-        @endforelse
+
+    <h3 class="ui horizontal divider header">
+        @lang('pages.finance.aliasWallets.title')
+    </h3>
+    <div class="ui one small statistics">
+        <a class="statistic {{ $openWalletsResolved ? 'green' : 'red' }}" href="{{ route('community.economy.finance.aliasWallets', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
+            @if($openWalletsResolved)
+                <div class="value">
+                    <span class="halflings halflings-ok" title="@lang('general.yes')"></span>
+                </div>
+            @else
+                <div class="value">
+                    <span class="halflings halflings-remove" title="@lang('general.no')"></span>
+                </div>
+            @endif
+            <div class="label">@lang('pages.finance.aliasWallets.resolved')</div>
+        </a>
+    </div>
+
+    <h3 class="ui horizontal divider header">
+        @lang('pages.finance.imports.title')
+    </h3>
+    <div class="ui one small statistics">
+        <a class="statistic {{ $importResolved ? 'green' : 'red' }}" href="{{ route('community.economy.finance.imports', ['communityId' => $community->human_id, 'economyId' => $economy->id]) }}">
+            @if($importResolved)
+                <div class="value">
+                    <span class="halflings halflings-ok" title="@lang('general.yes')"></span>
+                </div>
+            @else
+                <div class="value">
+                    <span class="halflings halflings-remove" title="@lang('general.no')"></span>
+                </div>
+            @endif
+            <div class="label">@lang('pages.finance.imports.resolved')</div>
+        </div>
     </div>
 
     <div class="ui divider hidden"></div>
