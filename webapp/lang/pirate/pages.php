@@ -661,11 +661,11 @@ return [
             'howToSettle' => 'To settle these, users should register an account and verifiy their e-bottle coordinate. Or settle these manually and zero the wallet balance.',
         ],
         'aliasWallets' => [
-            'title' => 'Outstanding wallets',
+            'title' => 'Oprhaned wallets',
             'description' => 'Dis report lists all users purchases are made for, that nay be registered. These purchases are made through th\' kiosk or by others, on aliases in th\' balance import system. Once these users register an account and verify their email address, their balance listed here will be assigned to their account.',
             'aliasesPositiveBalance' => 'Aliases wit\' positive balance',
             'aliasesNegativeBalance' => 'Aliases wit\' negative balance',
-            'noNonZeroBalances' => 'There nay be users wit\' a non-zero balance.',
+            'noNonZeroBalances' => 'There nay be orphaned wallets wit\' a non-zero balance.',
             'settled' => 'Settled?',
             'howToSettle' => 'To settle these, users should register an account and verifiy their e-bottle coordinate. A green tick will be shown below when all outstanding wallets have been settled.',
         ],

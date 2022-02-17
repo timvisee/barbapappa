@@ -662,11 +662,11 @@ return [
             'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers hun openstaande saldo betalen via de app.',
         ],
         'aliasWallets' => [
-            'title' => 'Openstaande portemonnees',
+            'title' => 'Verweesde portemonnees',
             'description' => 'Dit rapport toont alle gebruikers waarvoor aankopen zijn gedaan, en geen account hebben. Deze aankopen zijn gedaan via de kiosk or door andere gebruikers, op aliassen uit het balansimportsysteem. Zodra deze gebruikers een account aanmaken en hun e-mailadres verifiëren zal hun getoonde balans toegewezen worden aan hun account.',
             'aliasesPositiveBalance' => 'Aliassen met positief balans',
             'aliasesNegativeBalance' => 'Aliassen met negatief balans',
-            'noNonZeroBalances' => 'Er zijn op dit moment geen gebruikers met een niet-nul balans.',
+            'noNonZeroBalances' => 'Er zijn op dit moment geen verweesde portemonnees met een niet-nul balans.',
             'settled' => 'Afgerekend?',
             'howToSettle' => 'Om deze balansen af te rekenen, moeten gebruikers een account registreren en hun e-mailadres verifiëren. Of verreken deze handmatig en verander de portemonneebalans naar nul. Zodra alle openstaande portemonnees afgerekend zijn wordt hieronder een groen vinkje getoond.',
         ],
