@@ -506,6 +506,10 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                 Route::prefix('/finance')->middleware(FinanceController::permsView()->middleware())->group(function() {
                     // Index
                     Route::get('/', 'FinanceController@overview')->name('community.economy.finance.overview');
+
+                    Route::get('/members', 'FinanceController@members')->name('community.economy.finance.members');
+                    Route::get('/alias-wallets', 'FinanceController@aliasWallets')->name('community.economy.finance.aliasWallets');
+                    Route::get('/imports/{systemId?}', 'FinanceController@imports')->name('community.economy.finance.imports');
                 });
             });
         });

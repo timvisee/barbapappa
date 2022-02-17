@@ -356,7 +356,7 @@ class Economy extends Model {
      * returned value is approximate, which is true when multiple currencies
      * ware summed.
      *
-     * @return MoneyAmount The summed amount.
+     * @return MoneyAmountBag The summed amount.
      */
     // TODO: move this to some utilty class, maybe into MoneyAmount
     // TODO: deprecate and remove?

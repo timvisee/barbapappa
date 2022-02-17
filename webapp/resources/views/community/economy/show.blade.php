@@ -50,6 +50,13 @@
                 class="item">
             @lang('pages.economyPayments.title')
         </a>
+        <a href="{{ route('community.economy.finance.overview', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                ]) }}"
+                class="item">
+            @lang('pages.finance.title')
+        </a>
         <a href="{{ route('community.economy.payservice.index', [
                     'communityId' => $community->human_id,
                     'economyId' => $economy->id,
@@ -63,13 +70,6 @@
                 ]) }}"
                 class="item">
             @lang('pages.balanceImport.title')
-        </a>
-        <a href="{{ route('community.economy.finance.overview', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                ]) }}"
-                class="item">
-            @lang('pages.finance.title')
         </a>
         @if(perms(EconomyWalletController::permsManage()))
             <a href="{{ route('community.economy.wallets.overview', [

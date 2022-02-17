@@ -400,3 +400,31 @@ if(!function_exists('set_env_locale')) {
         Carbon::setLocale($locale);
     }
 }
+
+if(!function_exists('num_name')) {
+    /**
+     * Get the name for a number.
+     *
+     * Implemented for [0, 12]
+     *
+     * @param string $locale The locale.
+     */
+    function num_name(int $num) {
+        switch($num) {
+            case 0: return 'zero';
+            case 1: return 'one';
+            case 2: return 'two';
+            case 3: return 'three';
+            case 4: return 'four';
+            case 5: return 'five';
+            case 6: return 'six';
+            case 7: return 'seven';
+            case 8: return 'eight';
+            case 9: return 'nine';
+            case 10: return 'ten';
+            case 11: return 'eleven';
+            case 12: return 'twelve';
+            default: throw new \Exception('Number out of range');
+        }
+    }
+}
