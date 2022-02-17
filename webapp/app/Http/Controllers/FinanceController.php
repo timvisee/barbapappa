@@ -112,7 +112,6 @@ class FinanceController extends Controller {
         $system = null;
         if($systemId != null)
             $system = $systems->find($systemId);
-
         [$positives, $negatives] = [collect(), collect()];
 
         if($system != null) {

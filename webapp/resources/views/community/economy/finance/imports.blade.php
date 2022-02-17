@@ -40,6 +40,10 @@
 
             <p>@lang('pages.finance.imports.description')</p>
 
+            <h3 class="ui horizontal divider header">
+                @lang('pages.finance.imports.title')
+            </h3>
+
             <div class="ui one small statistics">
                 @if($resolved)
                     <div class="statistic green">
@@ -58,8 +62,7 @@
                 @endif
             </div>
 
-            {{-- TODO: not if zero, but if --}} 
-            @if(!$cumulative->isZero())
+            @if(!$resolved)
                 <div class="ui divider hidden"></div>
 
                 <div class="ui one small statistics">
@@ -74,38 +77,34 @@
 
             <div class="ui divider hidden"></div>
 
-            <div class="ui vertical menu fluid">
-                <h5 class="ui item header">
-                    @lang('pages.finance.imports.aliasesNegativeBalance')
-                    ({{ count($negatives) }})
-                </h5>
-                @forelse($negatives as $balance)
-                    <div class="item">
-                        {{ $balance['alias']->name }}
-                        {!! $balance['total']->formatAmount(BALANCE_FORMAT_LABEL) !!}
-                    </div>
-                @empty
-                    <div class="item">
-                        <i>@lang('pages.finance.imports.noAliases')</i>
-                    </div>
-                @endforelse
-            </div>
-            <div class="ui vertical menu fluid">
-                <h5 class="ui item header">
-                    @lang('pages.finance.imports.aliasesPositiveBalance')
-                    ({{ count($positives) }})
-                </h5>
-                @forelse($positives as $balance)
-                    <div class="item">
-                        {{ $balance['alias']->name }}
-                        {!! $balance['total']->formatAmount(BALANCE_FORMAT_LABEL) !!}
-                    </div>
-                @empty
-                    <div class="item">
-                        <i>@lang('pages.finance.imports.noAliases')</i>
-                    </div>
-                @endforelse
-            </div>
+            @if(!$negatives->isEmpty())
+                <div class="ui vertical menu fluid">
+                    <h5 class="ui item header">
+                        @lang('pages.finance.imports.aliasesNegativeBalance')
+                        ({{ count($negatives) }})
+                    </h5>
+                    @foreach($negatives as $balance)
+                        <div class="item">
+                            {{ $balance['alias']->name }}
+                            {!! $balance['total']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+            @if(!$positives->isEmpty())
+                <div class="ui vertical menu fluid">
+                    <h5 class="ui item header">
+                        @lang('pages.finance.imports.aliasesPositiveBalance')
+                        ({{ count($positives) }})
+                    </h5>
+                    @foreach($positives as $balance)
+                        <div class="item">
+                            {{ $balance['alias']->name }}
+                            {!! $balance['total']->formatAmount(BALANCE_FORMAT_LABEL) !!}
+                        </div>
+                    @endforeach
+                </div>
+            @endif
         @endif
     @endif
 
