@@ -49,7 +49,7 @@
             <div class="value">
                 {!! $totalCumulative?->formatAmount(BALANCE_FORMAT_COLOR) ?? 0 !!}
             </div>
-            <div class="label">@lang('pages.finance.memberAndOutstandingCumulative')</div>
+            <div class="label">@lang('pages.finance.memberAndNonMemberCumulative')</div>
         </div>
     </div>
     <br>
@@ -58,7 +58,7 @@
             <div class="value">
                 {!! $outstandingCumulative?->formatAmount(BALANCE_FORMAT_COLOR) ?? 0 !!}
             </div>
-            <div class="label">@lang('pages.finance.outstandingCumulative')</div>
+            <div class="label">@lang('pages.finance.nonMemberCumulative')</div>
         </div>
     </div>
 
