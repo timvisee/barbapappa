@@ -749,8 +749,10 @@ class BarController extends Controller {
         $members = $members
             ->map(function($m) use($economy_member) {
                 $m->name = $m->name;
-                $m->me = $m->id == $economy_member->id;
-                return $m->only(['id', 'name', 'me']);
+                $data = $m->only(['id', 'name', 'me']);
+                $data['me'] = $m->id == $economy_member->id;
+                $data['registered'] = $data['me'] || $m->user_id != null && $m->user_id > 0;
+                return $data;
             });
 
         return $members;
