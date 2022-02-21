@@ -143,7 +143,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .item .action-button {
         float: right;
         border-radius: 0;
@@ -153,5 +153,11 @@
         /* TODO: do not use fixed height here */
         width: 42.8667px;
         height: 42.8667px;
+    }
+
+    .ui.vertical.menu .halflings {
+        line-height: 0.6;
+        top: 3px;
+        margin-right: 0.5em;
     }
 </style>
