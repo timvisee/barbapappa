@@ -135,7 +135,7 @@ class KioskController extends Controller {
                 $data['registered'] = $m->user_id != null && $m->user_id > 0;
                 return $data;
             })
-            ->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
+            ->sortBy([['registered', 'desc'], 'name'], SORT_NATURAL | SORT_FLAG_CASE)
             ->values();
 
         return $members;

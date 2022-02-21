@@ -24,9 +24,10 @@
 
         <a v-for="user in users"
                 v-on:click.prevent.stop="addSelected(user)"
-                v-bind:class="{ disabled: buying, active: user.active }"
+                v-bind:class="{ disabled: buying || (!user.active && !user.registered), active: user.active }"
                 href="#"
                 class="green item">
+            <span v-if="!user.registered" class="halflings halflings-tag"></span>
             {{ user.name || __('misc.unknownUser') }}
             <span v-if="user.me" class="subtle">({{ __('misc.me') }})</span>
         </a>
@@ -126,3 +127,11 @@
         },
     }
 </script>
+
+<style scoped>
+    .ui.vertical.menu .halflings {
+        line-height: 0.6;
+        top: 3px;
+        margin-right: 0.5em;
+    }
+</style>
