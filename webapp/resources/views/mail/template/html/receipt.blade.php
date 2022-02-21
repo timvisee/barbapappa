@@ -49,6 +49,11 @@
             <tr class="divider">
                 <td colspan="3"><hr /></td>
             </tr>
+            <tr>
+                <td></td>
+                <td>@lang('mail.receipts.subTotal')</td>
+                <td align="right"><strong>{!! $receipt['subTotal']->formatAmount() !!}</strong></td>
+            </tr>
         @endif
         <tr>
             <td></td>

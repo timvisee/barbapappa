@@ -183,6 +183,7 @@ return [
         'topUps' => 'Paid',
         'balanceImports' => 'Imported',
         'magic' => 'Other',
+        'subTotal' => 'Sub-total',
         'total' => 'Total',
         'receiveReceiptAfterEachVisit' => 'Receive a receipt of your purchases after each bar visit? Enable it in',
     ],
