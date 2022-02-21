@@ -137,6 +137,7 @@ class BarController extends Controller {
         // List the last product mutations
         $productMutations = $bar
             ->productMutations()
+            ->withTrashed()
             ->latest()
             ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
             ->limit(5)
@@ -335,6 +336,7 @@ class BarController extends Controller {
         // List the last product mutations
         $productMutations = $bar
             ->productMutations()
+            ->withTrashed()
             ->latest()
             ->paginate(25);
 
