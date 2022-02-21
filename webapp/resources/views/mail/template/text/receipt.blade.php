@@ -15,6 +15,7 @@
 @if($other['quantity'] ?? 1 != 1){{ $other['quantity'] }}× @endif{{ $other['name'] }} {!! $other['cost']->formatAmount() !!}
 @endforeach
 ----------------
+@lang('mail.receipts.subTotal') {!! $receipt['subTotal']->formatAmount() !!}
 @endif
 @lang('mail.receipts.total') {!! $receipt['total']->formatAmount() !!}
 ================

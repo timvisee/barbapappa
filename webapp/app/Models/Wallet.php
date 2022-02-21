@@ -407,6 +407,7 @@ class Wallet extends Model {
         $to ??= now();
 
         $products = [];
+        $productsAmount = new MoneyAmountBag();
         $paymentAmount = new MoneyAmountBag();
         $balanceImportAmount = new MoneyAmountBag();
         $magicAmount = new MoneyAmountBag();
@@ -460,7 +461,8 @@ class Wallet extends Model {
 
         // Build product list
         $products = collect($products)
-            ->map(function($p) use(&$totalAmount) {
+            ->map(function($p) use(&$productsAmount, &$totalAmount) {
+                $productsAmount->addBag($p['cost']);
                 $totalAmount->addBag($p['cost']);
                 return [
                     'name' => $p['product']?->displayName() ?? __('pages.products.deletedProduct'),
@@ -503,6 +505,7 @@ class Wallet extends Model {
             'to' => $to,
             'products' => $products,
             'others' => $others,
+            'subTotal' => $productsAmount,
             'total' => $totalAmount,
         ];
     }
