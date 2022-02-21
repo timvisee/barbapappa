@@ -1261,7 +1261,7 @@ class WalletController extends Controller {
             ->addSelect('product_id', DB::raw('SUM(quantity) AS quantity'))
             ->orderBy('quantity', 'DESC')
             ->get();
-        $products = Product::whereIn(
+        $products = Product::withTrashed()->whereIn(
             'id',
             $dist->take($limit)->pluck('product_id')
         )->get();

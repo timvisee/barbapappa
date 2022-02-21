@@ -436,7 +436,7 @@ class Wallet extends Model {
                 $mutation_product = $mutation->mutationable;
                 if(!isset($products[$mutation_product->product_id])) {
                     $products[$mutation_product->product_id] = [
-                        'product' => $mutation_product->product,
+                        'product' => $mutation_product->product()->withTrashed()->first(),
                         'cost' => $mutation->getMoneyAmount()->neg()->toBag(),
                         'quantity' => $mutation_product->quantity,
                     ];

@@ -211,7 +211,7 @@ class TransactionController extends Controller {
             ->each(function($mutation) use(&$products) {
                 $mut_product = $mutation->mutationable;
                 $products[$mut_product->product_id] = [
-                    'product' => $mut_product->product,
+                    'product' => $mut_product->product()->withTrashed()->first(),
                     'quantity' => $mut_product->quantity + ($products[$mut_product->product_id]['quantity'] ?? 0),
                 ];
             });

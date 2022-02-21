@@ -129,7 +129,7 @@
                     @if($data->quantity != 1)
                         <span class="subtle">{{ $data->quantity }}×</span>
                     @endif
-                    {{ ($product = $data->product) ? $product->displayName() : __('pages.products.unknownProduct') }}
+                    {{ ($product = $data->product()->withTrashed()->first()) ? $product->displayName() : __('pages.products.unknownProduct') }}
                     <span class="subtle">
                         @ {{ $data->bar->name }}
                     </span>

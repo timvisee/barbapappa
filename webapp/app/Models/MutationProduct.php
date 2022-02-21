@@ -34,6 +34,18 @@ class MutationProduct extends Model {
     ];
 
     /**
+     * Include trashed products.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWithTrashed($query) {
+        $query = $query->with(['product' => fn($q) => $q->withTrashed()]);
+        return $query;
+    }
+
+    /**
      * Get the product this mutation had an effect on.
      *
      * @return The affected product.
