@@ -557,14 +557,14 @@
         bottom: 0;
         left: 14px;
         right: 14px;
-        z-index: 999;
+        z-index: 1001;
 
         /* TODO: do not use this hack! */
         width: calc(100% - 28px) !important;
     }
 
     .ui.dimmer.on-top {
-        z-index: 1001;
+        z-index: 1002;
     }
 
     .ui.dimmer.positive {
