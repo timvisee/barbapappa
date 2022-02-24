@@ -217,69 +217,79 @@
     @endif
 
     {{-- Recent changes --}}
-    <div class="ui vertical menu fluid">
-        <h5 class="ui item header">
+    <div class="ui fluid accordion">
+        <div class="title">
+            <i class="dropdown icon"></i>
             {{ trans_choice('pages.inventories.last#Changes', $changes->count()) }}
-        </h5>
+        </div>
+        <div class="content">
+            <div class="ui vertical menu fluid">
+                <h5 class="ui item header">
+                    {{ trans_choice('pages.inventories.last#Changes', $changes->count()) }}
+                </h5>
 
-        @forelse($changes as $c)
-            @if(($product = $c->item?->product) != null)
-                <a class="item"
-                        href="{{ route('community.economy.inventory.product.change', [
+                @forelse($changes as $c)
+                    @if(($product = $c->item?->product) != null)
+                        <a class="item"
+                                href="{{ route('community.economy.inventory.product.change', [
+                                    // TODO: this is not efficient
+                                    'communityId' => $product->economy->community->human_id,
+                                    'economyId' => $product->economy_id,
+                                    'inventoryId' => $inventory->id,
+                                    'productId' => $product->id,
+                                    'changeId' => $c->id,
+                                ]) }}">
+                            @if(!empty($c->comment))
+                                <i>{{ $c->comment }}</i> ({{ $product->name }})
+                            @else
+                                @lang('pages.inventories.type.' . $c->type)
+                                ({{ $product->name }})
+                            @endif
+
+                            @if($c->user)
+                                <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
+                            @endif
+
+                            {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
+
+                            <span class="sub-label">
+                                @include('includes.humanTimeDiff', ['time' => $c->created_at])
+                            </span>
+                        </a>
+                    @else Details
+                        <div class="item disabled">
+                            @if(!empty($c->comment))
+                                <i>{{ $c->comment }}</i>
+                            @else
+                                @lang('pages.inventories.type.' . $c->type)
+                            @endif
+
+                            @if($c->user)
+                                <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
+                            @endif
+
+                            {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
+
+                            <span class="sub-label">
+                                @include('includes.humanTimeDiff', ['time' => $c->created_at])
+                            </span>
+                        </div>
+                    @endif
+                @empty
+                    <i class="item">@lang('pages.inventories.noChanges')...</i>
+                @endforelse
+                <a href="{{ route('community.economy.inventory.changes', [
                             // TODO: this is not efficient
-                            'communityId' => $product->economy->community->human_id,
-                            'economyId' => $product->economy_id,
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
                             'inventoryId' => $inventory->id,
-                            'productId' => $product->id,
-                            'changeId' => $c->id,
-                        ]) }}">
-                    @if(!empty($c->comment))
-                        <i>{{ $c->comment }}</i> ({{ $product->name }})
-                    @else
-                        @lang('pages.inventories.type.' . $c->type)
-                        ({{ $product->name }})
-                    @endif
-
-                    @if($c->user)
-                        <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
-                    @endif
-
-                    {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
-
-                    <span class="sub-label">
-                        @include('includes.humanTimeDiff', ['time' => $c->created_at])
-                    </span>
+                        ]) }}"
+                        class="ui large bottom attached button">
+                    @lang('pages.inventories.allChanges')...
                 </a>
-            @else
-                <div class="item disabled">
-                    @if(!empty($c->comment))
-                        <i>{{ $c->comment }}</i>
-                    @else
-                        @lang('pages.inventories.type.' . $c->type)
-                    @endif
-
-                    @if($c->user)
-                        <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
-                    @endif
-
-                    {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
-
-                    <span class="sub-label">
-                        @include('includes.humanTimeDiff', ['time' => $c->created_at])
-                    </span>
-                </div>
-            @endif
-        @empty
-            <i class="item">@lang('pages.inventories.noChanges')...</i>
-        @endforelse
-        <a href="{{ route('community.economy.inventory.changes', [
-                    'communityId' => $community->human_id,
-                    'economyId' => $economy->id,
-                    'inventoryId' => $inventory->id,
-                ]) }}"
-                class="ui large bottom attached button">
-            @lang('pages.inventories.allChanges')...
-        </a>
+            </div>
+            <br>
+        </div>
     </div>
 
     <div class="ui fluid accordion">

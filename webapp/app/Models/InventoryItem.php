@@ -78,11 +78,32 @@ class InventoryItem extends Model {
     /**
      * Whether this inventory item is considered exhausted.
      *
+     * @param bool $deep=false True to do a deep check, gives more reliable
+     *      results but is expensive.
+     *
      * @return bool True if exhausted, false if not.
      */
-    public function isExhausted() {
-        return $this->quantity == 0
-            && $this->updated_at->clone()->addSeconds(Self::EXHAUSTED_AFTER)->isPast();
+    public function isExhausted(bool $deep = false) {
+        // Never exhausted if there is a non-zero quantity
+        if($this->quantity != 0)
+            return false;
+
+        // Determine whether the last update time is considered exhausted
+        $last_update_exhausted = $this->updated_at < now()->subSeconds(Self::EXHAUSTED_AFTER);
+
+        // Deep checks
+        if($deep) {
+            // If product has no changes, and last update is within short
+            // time, consider it not exhausted
+            if($this->changes()->limit(1)->count() == 0 && !$last_update_exhausted)
+                return false;
+
+            // If last change is manual by admin, it is now exhausted
+            if($this->changes()->latest()->first()?->isManual() ?? false)
+                return true;
+        }
+
+        return $last_update_exhausted;
     }
 
     /**

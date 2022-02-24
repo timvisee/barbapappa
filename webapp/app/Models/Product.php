@@ -280,7 +280,7 @@ class Product extends Model {
      *
      * @return array
      */
-    private function inventoryProductsList() {
+    public function inventoryProductsList() {
         // Return current if no custom is configured
         if($this->inventoryProducts->isEmpty())
             return collect([[
