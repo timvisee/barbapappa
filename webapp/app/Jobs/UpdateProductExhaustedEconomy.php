@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Economy;
+use App\Models\InventoryItem;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -77,24 +78,40 @@ class UpdateProductExhaustedEconomy implements ShouldQueue {
             ->unique('id');
 
         // Update state for each product
-        foreach($products as $p) {
+        foreach($products as $product) {
             // Determine exhausted state.
             // - Never exhausted if no active inventory.
             // - Otherwise exhausted if exhausted in all active inventories.
-            if($inventories->isEmpty())
-                $exhausted = false;
-            else {
-                $exhausted = true;
-                foreach($inventories as $inventory)
-                    if(!$inventory->getItem($p)?->isExhausted(true))
-                        $exhausted = false;
+            $exhausted = false;
+            if(!$inventories->isEmpty()) {
+                // For a product, use the inventory product list to consider any
+                // alternative products that are configured.
+                foreach($product->inventoryProductsList() as $alt_product) {
+                    // Current alt product is exhausted, if exhausted in all inventories
+                    $alt_exhausted = true;
+                    foreach($inventories as $inventory) {
+                        // Check inventory item exhaustion, if null, consider it
+                        // exhausted after the exhaustion time has passed after creation
+                        $item = $inventory->getItem($alt_product['product']);
+                        $exhausted = $item?->isExhausted(true)
+                            ?? $product->created_at < now()->subSeconds(InventoryItem::EXHAUSTED_AFTER);
+                        if(!$exhausted)
+                            $alt_exhausted = false;
+                            break;
+                    }
+
+                    // If any alt product is exhausted, consider the whole product exhausted
+                    if($alt_exhausted) {
+                        $exhausted = true;
                         break;
+                    }
+                }
             }
 
             // Update state in database, without affecting last updated at
-            $p->exhausted = $exhausted;
-            $p->timestamps = false;
-            $p->save();
+            $product->exhausted = $exhausted;
+            $product->timestamps = false;
+            $product->save();
         }
     }
 
