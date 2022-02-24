@@ -89,7 +89,7 @@ class InventoryItem extends Model {
             return false;
 
         // Determine whether the last update time is considered exhausted
-        $last_update_exhausted = $this->updated_at->clone()->addSeconds(Self::EXHAUSTED_AFTER)->isPast();
+        $last_update_exhausted = $this->updated_at < now()->subSeconds(Self::EXHAUSTED_AFTER);
 
         // Deep checks
         if($deep) {

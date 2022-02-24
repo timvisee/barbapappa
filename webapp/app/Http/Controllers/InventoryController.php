@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\ValidationDefaults;
 use App\Jobs\UpdateProductExhaustedEconomy;
 use App\Models\Inventory;
+use App\Models\InventoryItem;
 use App\Models\InventoryItemChange;
 use App\Rules\OthersEmpty;
 use App\Utils\MoneyAmountBag;
@@ -834,11 +835,17 @@ class InventoryController extends Controller {
                 // TODO: this is inefficient, improve this
                 $item = $inventory->getItem($product);
                 $quantity = $item?->quantity ?? 0;
+
+                // Check inventory item exhaustion, if null, consider it
+                // exhausted after the exhaustion time has passed after creation
+                $exhausted = $item?->isExhausted(true)
+                    ?? $product->created_at < now()->subSeconds(InventoryItem::EXHAUSTED_AFTER);
+
                 return [
                     'product' => $product,
                     'item' => $item,
                     'quantity' => $quantity,
-                    'exhausted' => $item == null || $item->isExhausted(),
+                    'exhausted' => $exhausted,
                     'changed' => $item?->updated_at ?? $item?->created_at,
                 ];
             })

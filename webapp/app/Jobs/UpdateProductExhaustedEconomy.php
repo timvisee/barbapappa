@@ -86,7 +86,9 @@ class UpdateProductExhaustedEconomy implements ShouldQueue {
             else {
                 $exhausted = true;
                 foreach($inventories as $inventory)
-                    $exhausted = $exhausted && $inventory->getItem($p)?->isExhausted(true) ?? true;
+                    if(!$inventory->getItem($p)?->isExhausted(true))
+                        $exhausted = false;
+                        break;
             }
 
             // Update state in database, without affecting last updated at
