@@ -53,6 +53,16 @@ class InventoryItemChange extends Model {
     ];
 
     /**
+     * Change types that are considered manual.
+     */
+    const MANUAL_TYPES = [
+        Self::TYPE_BALANCE,
+        Self::TYPE_MOVE,
+        Self::TYPE_ADD_REMOVE,
+        Self::TYPE_SET,
+    ];
+
+    /**
      * Change type: balance by user, to rebalance inventory.
      */
     const TYPE_BALANCE = 1;
@@ -274,5 +284,12 @@ class InventoryItemChange extends Model {
             default:
                 throw new \Exception("Invalid format type given");
         }
+    }
+
+    /**
+     * Whether this is an event manually added by an administrator.
+     */
+    public function isManual() {
+        return $this->type != null && in_array($this->type, Self::MANUAL_TYPES);
     }
 }
