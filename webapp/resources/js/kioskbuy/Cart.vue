@@ -130,7 +130,7 @@
         left: 14px;
         right: 14px;
         bottom: 14px;
-        z-index: 1001;
+        z-index: 1010;
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15) !important;
 
         /* TODO: do not use this hack! */
