@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.1.155 (2022-02-24)
+
+- Greatly improve reliability of product exhaustion check logic, this now takes the product creation date, quantities of alternative inventory products and the type of recent manual inventory changes into account as well
+- On the inventory screen, put the recent changes list in collapsible to prevent confusing it for a list of current item quantities
+- Add product sub-total in receipt mail if non-products items are shown
+- Define sorting in kiosk and advanced buy widget, prioritize registered members
+- Mark unregistered users in gray with tag icon in advanced buy widget
+- Show name of trashed products in purchase log, wallet stats and receipt mail, where it showed 'Deleted product' before
+- Improve icon alignment in advanced buy widget, which caused layout resizing
+- Improve finance report message box visuals
+- Improve finance report terminology, rename outstanding to non-member
+- Improve installation instructions, use Windows compatible commands
+- Fix incorrect ordering and overlapping of some kiosk elements
+- Fix incorrect admin creation instruction in README
+- Fix broken back button on finance report page
+- Fix finance report error with empty economy
+- Fix some spelling mistakes
+
 ## 0.1.154 (2022-02-17)
 
 - Hotfix for finance report error when there are no balance imports
