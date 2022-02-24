@@ -61,7 +61,7 @@ To manage the Barbapappa instance, you must create an administrator user. Invoke
 the following console command with your credentials to create a new user:
 
 ```bash
-php ./artisan user:add example@example.com John Doe --password --administrator
+php ./artisan user:add example@example.com John Doe --password --admin
 ```
 
 After creation you may login at `/login`. The management pages can be reached at
