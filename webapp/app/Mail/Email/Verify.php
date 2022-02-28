@@ -11,11 +11,6 @@ use Illuminate\Mail\Mailable;
 class Verify extends PersonalizedEmail {
 
     /**
-     * Special email subject for when the user has just registered.
-     */
-    const SUBJECT_REGISTERED = 'mail.email.verify.subjectRegistered';
-
-    /**
      * Email subject normal verification messages.
      */
     const SUBJECT = 'mail.email.verify.subject';
@@ -57,11 +52,7 @@ class Verify extends PersonalizedEmail {
      */
     public function __construct(EmailRecipient $recipient, EmailVerification $emailVerification, $justRegistered = false) {
         // Construct the parent, dynamically figure out the subject
-        parent::__construct(
-            $recipient,
-            $justRegistered ? self::SUBJECT_REGISTERED : self::SUBJECT,
-            ['app' => config('app.name')]
-        );
+        parent::__construct($recipient, self::SUBJECT);
 
         $this->token = $emailVerification->token;
         $this->justRegistered = $justRegistered;
