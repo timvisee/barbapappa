@@ -18,7 +18,6 @@ return [
          */
         'verify' => [
             'subject' => 'Email verification',
-            'subjectRegistered' => ':app registration & email verification',
             'subtitle' => 'You\'re about to verify your email address.',
             'subtitleRegistered' => 'Your account is almost ready.',
             'registered' => 'Thank you for registering an account.',

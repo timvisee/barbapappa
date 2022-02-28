@@ -18,7 +18,6 @@ return [
          */
         'verify' => [
             'subject' => 'E-bottle check',
-            'subjectRegistered' => ':app new ship & e-bottle check',
             'subtitle' => 'You be \'bout to check yer e-bottle address',
             'subtitleRegistered' => 'Yer ship be almost sailable.',
             'registered' => 'Ahoy mate for entering a new ship.',
