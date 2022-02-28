@@ -736,7 +736,16 @@ class BarController extends Controller {
                 $members->pluck('user_id')
             ));
         } else
-            $members = $economy->members()->search($search)->showInBuy()->get();
+            $members = $economy
+                ->members()
+                ->search($search)
+                ->showInBuy()
+                ->get()
+                ->map(function($m) use($economy_member) {
+                    $m->registered = $m->user_id != null && $m->user_id > 0;
+                    return $m;
+                })
+                ->sortBy([['registered', 'desc'], 'name'], SORT_NATURAL | SORT_FLAG_CASE);
 
         // Always appent current user to list if visible and not yet included
         $hasCurrent = $members->contains(function($m) use($economy_member) {
@@ -753,8 +762,7 @@ class BarController extends Controller {
                 $data['me'] = $m->id == $economy_member->id;
                 $data['registered'] = $data['me'] || $m->user_id != null && $m->user_id > 0;
                 return $data;
-            })
-            ->sortBy([['registered', 'desc'], 'name'], SORT_NATURAL | SORT_FLAG_CASE);
+            });
 
         return $members;
     }
