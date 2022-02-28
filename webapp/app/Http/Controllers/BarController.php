@@ -741,7 +741,7 @@ class BarController extends Controller {
                 ->search($search)
                 ->showInBuy()
                 ->get()
-                ->map(function($m) use($economy_member) {
+                ->map(function($m) {
                     $m->registered = $m->user_id != null && $m->user_id > 0;
                     return $m;
                 })
