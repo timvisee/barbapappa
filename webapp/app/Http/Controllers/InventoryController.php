@@ -8,6 +8,7 @@ use App\Models\Inventory;
 use App\Models\InventoryItem;
 use App\Models\InventoryItemChange;
 use App\Rules\OthersEmpty;
+use App\Utils\MathUtil;
 use App\Utils\MoneyAmountBag;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -297,6 +298,41 @@ class InventoryController extends Controller {
                 return $p;
             });
 
+        // Pre-validate, solve math expressions
+        $rules = [];
+        $messages = [];
+        foreach($products as $p) {
+            $rules[$p['field'] . '_add'] = ['nullable', 'regex:' . MathUtil::EXPR_INT];
+            $rules[$p['field'] . '_remove'] = ['nullable', 'regex:' . MathUtil::EXPR_INT];
+            $messages[$p['field'] . '_add.integer'] = __('pages.inventories.mustBeIntegerExpr');
+            $messages[$p['field'] . '_remove.integer'] = __('pages.inventories.mustBeIntegerExpr');
+        }
+        $this->validate($request, $rules, $messages);
+        foreach($products as $p) {
+            $a = $p['field'] . '_add';
+            $r = $p['field'] . '_remove';
+            $err = false;
+
+            if($request->input($a) != null)
+                if(($res = MathUtil::solveInteger($request->input($a))) != null)
+                    $request->merge([$a => $res]);
+                else {
+                    add_session_error($a, __('pages.inventories.mustBeIntegerExpr'));
+                    $err = true;
+                }
+            if($request->input($r) != null)
+                if(($res = MathUtil::solveInteger($request->input($r))) != null)
+                    $request->merge([$r => $res]);
+                else {
+                    add_session_error($r, __('pages.inventories.mustBeIntegerExpr'));
+                    $err = true;
+                }
+
+            // Terminate if we catched errors
+            if($err)
+                return redirect()->back()->withInput();
+        }
+
         // Validate
         $rules = [
             'comment' => 'required|' . ValidationDefaults::DESCRIPTION,
@@ -411,6 +447,41 @@ class InventoryController extends Controller {
                 $p['field'] = 'product_' . $p['product']->id;
                 return $p;
             });
+
+        // Pre-validate, solve math expressions
+        $rules = [];
+        $messages = [];
+        foreach($products as $p) {
+            $rules[$p['field'] . '_quantity'] = ['nullable', 'regex:' . MathUtil::EXPR_INT];
+            $rules[$p['field'] . '_delta'] = ['nullable', 'regex:' . MathUtil::EXPR_INT];
+            $messages[$p['field'] . '_quantity.integer'] = __('pages.inventories.mustBeIntegerExpr');
+            $messages[$p['field'] . '_delta.integer'] = __('pages.inventories.mustBeIntegerExpr');
+        }
+        $this->validate($request, $rules, $messages);
+        foreach($products as $p) {
+            $q = $p['field'] . '_quantity';
+            $d = $p['field'] . '_delta';
+            $err = false;
+
+            if($request->input($q) != null)
+                if(($res = MathUtil::solveInteger($request->input($q))) != null)
+                    $request->merge([$q => $res]);
+                else {
+                    add_session_error($q, __('pages.inventories.mustBeIntegerExpr'));
+                    $err = true;
+                }
+            if($request->input($d) != null)
+                if(($res = MathUtil::solveInteger($request->input($d))) != null)
+                    $request->merge([$d => $res]);
+                else {
+                    add_session_error($d, __('pages.inventories.mustBeIntegerExpr'));
+                    $err = true;
+                }
+
+            // Terminate if we catched errors
+            if($err)
+                return redirect()->back()->withInput();
+        }
 
         // Validate
         $rules = [
@@ -549,6 +620,31 @@ class InventoryController extends Controller {
                 $p['field'] = 'product_' . $p['product']->id;
                 return $p;
             });
+
+        // Pre-validate, solve math expressions
+        $rules = [];
+        $messages = [];
+        foreach($products as $p) {
+            $rules[$p['field'] . '_quantity'] = ['nullable', 'regex:' . MathUtil::EXPR_INT];
+            $messages[$p['field'] . '_quantity.integer'] = __('pages.inventories.mustBeIntegerExpr');
+        }
+        $this->validate($request, $rules, $messages);
+        foreach($products as $p) {
+            $a = $p['field'] . '_quantity';
+            $err = false;
+
+            if($request->input($a) != null)
+                if(($res = MathUtil::solveInteger($request->input($a))) != null)
+                    $request->merge([$a => $res]);
+                else {
+                    add_session_error($a, __('pages.inventories.mustBeIntegerExpr'));
+                    $err = true;
+                }
+
+            // Terminate if we catched errors
+            if($err)
+                return redirect()->back()->withInput();
+        }
 
         // Validate
         $rules = [
