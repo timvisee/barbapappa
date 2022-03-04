@@ -379,7 +379,7 @@ if(!function_exists('normalize_price')) {
      *
      * @throws \Exception Throws if the given price value was invalid.
      */
-    function normalize_price(?float $price): ?float {
+    function normalize_price($price): ?float {
         return $price != null ? (float) str_replace(',', '.', $price) : null;
     }
 }
