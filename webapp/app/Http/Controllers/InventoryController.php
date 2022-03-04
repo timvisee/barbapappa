@@ -314,14 +314,14 @@ class InventoryController extends Controller {
             $err = false;
 
             if($request->input($a) != null)
-                if(($res = MathUtil::solveInteger($request->input($a))) != null)
+                if(($res = MathUtil::solveInt($request->input($a))) != null)
                     $request->merge([$a => $res]);
                 else {
                     add_session_error($a, __('pages.inventories.mustBeIntegerExpr'));
                     $err = true;
                 }
             if($request->input($r) != null)
-                if(($res = MathUtil::solveInteger($request->input($r))) != null)
+                if(($res = MathUtil::solveInt($request->input($r))) != null)
                     $request->merge([$r => $res]);
                 else {
                     add_session_error($r, __('pages.inventories.mustBeIntegerExpr'));
@@ -464,14 +464,14 @@ class InventoryController extends Controller {
             $err = false;
 
             if($request->input($q) != null)
-                if(($res = MathUtil::solveInteger($request->input($q))) != null)
+                if(($res = MathUtil::solveInt($request->input($q))) != null)
                     $request->merge([$q => $res]);
                 else {
                     add_session_error($q, __('pages.inventories.mustBeIntegerExpr'));
                     $err = true;
                 }
             if($request->input($d) != null)
-                if(($res = MathUtil::solveInteger($request->input($d))) != null)
+                if(($res = MathUtil::solveInt($request->input($d))) != null)
                     $request->merge([$d => $res]);
                 else {
                     add_session_error($d, __('pages.inventories.mustBeIntegerExpr'));
@@ -634,7 +634,7 @@ class InventoryController extends Controller {
             $err = false;
 
             if($request->input($a) != null)
-                if(($res = MathUtil::solveInteger($request->input($a))) != null)
+                if(($res = MathUtil::solveInt($request->input($a))) != null)
                     $request->merge([$a => $res]);
                 else {
                     add_session_error($a, __('pages.inventories.mustBeIntegerExpr'));

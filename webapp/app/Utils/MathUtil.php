@@ -27,26 +27,59 @@ class MathUtil {
      * @param string $expr The expression.
      * @return int|null The solved value, or null on failure.
      */
-    public static function solveInteger(string $expr) {
-        // TODO: add some form of error reporting, with an enum possibly
-        // TODO: ensure that devide uses float devide, so we can error if it
-        //       doesn't result in an integer number
+    public static function solveInt(string $expr): ?int {
+        // Solve + and -
+        $a = strpos($expr, '+');
+        $b = strpos($expr, '-');
+        if($a !== false && ($b === false || $a < $b)) {
+            $s1 = substr($expr, 0, $a);
+            $s2 = substr($expr, $a + 1);
+            $a = Self::solveInt($s1);
+            $b = Self::solveInt($s2);
+            return $a != null && $b != null ? $a + $b : null;
+        }
+        if($b !== false && ($a === false || $b < $a)) {
+            $s1 = substr($expr, 0, $b);
+            $s2 = substr($expr, $b + 1);
+            $a = Self::solveInt($s1);
+            $b = Self::solveInt($s2);
+            return $a != null && $b != null ? $a - $b : null;
+        }
 
-        // Input expression must match supported format
-        if(preg_match(Self::EXPR_INT, $expr) != 1)
-            return null;
+        // Solve * and /
+        $a = strpos($expr, '*');
+        $b = strpos($expr, '/');
+        if($a !== false && ($b === false || $a < $b)) {
+            $s1 = substr($expr, 0, $a);
+            $s2 = substr($expr, $a + 1);
+            $a = Self::solveInt($s1);
+            $b = Self::solveInt($s2);
+            return $a != null && $b != null ? $a * $b : null;
+        }
+        if($b !== false && ($a === false || $b < $a)) {
+            $s1 = substr($expr, 0, $b);
+            $s2 = substr($expr, $b + 1);
 
-        // Clean up expression from unused chars
-        $expr = str_replace([" ", "\n", "\r", "\t", "\v", "\x00", '_'], '', $expr);
+            // Do not allow dividing with remainder
+            $a = Self::solveInt($s1);
+            $b = Self::solveInt($s2);
+            return ($a != null && $b != null && $a % $b == 0) ? ($a / $b) : null;
+        }
 
-        // Solve expression
-        // TODO: WARNING: do not use eval, it is insecure, implement a solver ourselves
-        $value = eval('return ' . $expr . ';');
+        // We assume this to just be a number now
+        return Self::parseInt($expr);
+    }
 
-        // Output value must be an int
-        if(!is_int($value))
-            return null;
-
-        return $value;
+    /**
+     * Parse an integer from the given string.
+     *
+     * Returns null if the given value is no integer.
+     *
+     * @param int $val String value representing the integer.
+     * @return int|null Parsed value or null.
+     */
+    private static function parseInt($val): ?int {
+        $int = (int) $val;
+        return ((string) $int === (string) $val) ? $int : null;
     }
 }
