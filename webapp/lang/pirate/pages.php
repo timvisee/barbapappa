@@ -393,6 +393,7 @@ return [
         '#productsMoved' => '{0} Nay products moved|{1} One product moved|[2,*] :count products moved',
         'confirmChangeQuantities' => 'I confirm I want to update product quantities for these products with the entered amounts',
         'mustBeInteger' => 'Must be an integer.',
+        'mustBeIntegerExpr' => 'Must be an integer expression.',
         'changeType' => 'Change type',
         'type' => [
             1 => 'Balance',

@@ -394,6 +394,7 @@ return [
         '#productsMoved' => '{0} Geen producten verplaatst|{1} Één product verplaatst|[2,*] :count producten verplaatst',
         'confirmChangeQuantities' => 'Ik bevestig dat ik de productaantallen wil aanpassen op basis van de ingevulde hoeveelheiden',
         'mustBeInteger' => 'Moet een nummer zijn.',
+        'mustBeIntegerExpr' => 'Moet een nummer expressie zijn.',
         'changeType' => 'Aanpassingstype',
         'type' => [
             1 => 'Balansen',
