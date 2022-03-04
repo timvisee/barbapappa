@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.156 (2022-03-04)
+
+- Add support for using math expression on inventory pages
+- Fix top-up error when user enters custom amount with a comma rather than a dot
+- Fix incorrect sorting in advanced buy widget
+- Simplify verification email subject, it was too long
+
 ## 0.1.155 (2022-02-24)
 
 - Greatly improve reliability of product exhaustion check logic, this now takes the product creation date, quantities of alternative inventory products and the type of recent manual inventory changes into account as well
