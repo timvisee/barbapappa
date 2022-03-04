@@ -34,7 +34,6 @@ class InventoryController extends Controller {
      * @return Response
      */
     public function index(Request $request, $communityId, $economyId) {
-        $search = \Request::get('q');
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventories = $economy->inventories;
@@ -149,7 +148,6 @@ class InventoryController extends Controller {
      */
     public function doEdit(Request $request, $communityId, $economyId, $inventoryId) {
         // Get the community, find the inventory
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
@@ -204,7 +202,6 @@ class InventoryController extends Controller {
      */
     public function doDelete(Request $request, $communityId, $economyId, $inventoryId) {
         // Get the community, find the inventory
-        $user = barauth()->getUser();
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
