@@ -663,7 +663,7 @@ return [
             'howToSettle' => 'To settle these, users should pay their outstanding balance through the app.',
         ],
         'aliasWallets' => [
-            'title' => 'Oprhan wallets',
+            'title' => 'Orphan wallets',
             'description' => 'This report lists all users purchases are made for, that don\'t have an account. These purchases are made through the kiosk or by other users, on aliases in the balance import system. Once these users register an account and verify their email address, their balance listed here will be assigned to their account.',
             'aliasesPositiveBalance' => 'Aliases with positive balance',
             'aliasesNegativeBalance' => 'Aliases with negative balance',
