@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
-use App\Jobs\UpdateProductExhaustedEconomy;
 use App\Models\Inventory;
 use App\Models\InventoryItem;
 use App\Models\InventoryItemChange;
@@ -385,7 +384,7 @@ class InventoryController extends Controller {
         });
 
         // Dispatch job to update product exhausted state
-        UpdateProductExhaustedEconomy::dispatch($economy->id);
+        $inventory->dispatchUpdateProductExhausted();
 
         // Redirect to inventory
         return redirect()
@@ -536,7 +535,7 @@ class InventoryController extends Controller {
         });
 
         // Dispatch job to update product exhausted state
-        UpdateProductExhaustedEconomy::dispatch($economy->id);
+        $inventory->dispatchUpdateProductExhausted();
 
         // Redirect to inventory
         return redirect()
@@ -695,7 +694,7 @@ class InventoryController extends Controller {
         });
 
         // Dispatch job to update product exhausted state
-        UpdateProductExhaustedEconomy::dispatch($economy->id);
+        $inventory->dispatchUpdateProductExhausted();
 
         // Redirect to inventory
         return redirect()

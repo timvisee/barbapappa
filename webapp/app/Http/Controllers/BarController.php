@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Exports\BarPurchaseHistoryExport;
 use App\Helpers\ValidationDefaults;
-use App\Jobs\UpdateProductExhaustedEconomy;
 use App\Models\Bar;
 use App\Models\EconomyMember;
 use App\Models\InventoryItemChange;
@@ -472,7 +471,7 @@ class BarController extends Controller {
         // Dispatch job to update product exhausted state if different inventory
         // is assigned
         if($inventory_changed)
-            UpdateProductExhaustedEconomy::dispatch($bar->economy_id);
+            $bar->inventory?->dispatchUpdateProductExhausted();
 
         // Redirect the user to the account overview page
         return redirect()
