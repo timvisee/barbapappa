@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Jobs\UpdateProductExhaustedEconomy;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -254,5 +255,15 @@ class Inventory extends Model {
         });
 
         return $change;
+    }
+
+    /**
+     * Dispatch a job to update product exhaustion states based on the current
+     * inventory state.
+     *
+     * This dispatches a background job, to update these states eventually.
+     */
+    public function dispatchUpdateProductExhausted() {
+        UpdateProductExhaustedEconomy::dispatch($this->economy_id);
     }
 }
