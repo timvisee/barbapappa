@@ -12,6 +12,27 @@ use App\Perms\Builder\Config as PermsConfig;
 class CurrencyController extends Controller {
 
     /**
+     * A list of currency presets.
+     */
+    public const PRESETS = [
+        'EUR' => [
+            'name' => 'Euro',
+            'symbol' => '€',
+            'format' => '€1.0,00',
+        ],
+        'USD' => [
+            'name' => 'US Dollar',
+            'symbol' => '$',
+            'format' => '$1.0,00',
+        ],
+        'GBP' => [
+            'name' => 'British Pound',
+            'symbol' => '£',
+            'format' => '£1.0,00',
+        ],
+    ];
+
+    /**
      * Currency for community economy index.
      *
      * @return Response
@@ -82,6 +103,84 @@ class CurrencyController extends Controller {
             'code' => $request->input('code'),
             'symbol' => $request->input('symbol'),
             'format' => $request->input('format'),
+            'enabled' => is_checked($request->input('enabled')),
+            'allow_wallet' => is_checked($request->input('allow_wallet')),
+        ]);
+
+        // Redirect to the show view after creation
+        return redirect()
+            ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economy->id])
+            ->with('success', __('pages.currencies.currencyCreated'));
+    }
+
+    /**
+     * Show page to add a currency preset.
+     *
+     * @return Response
+     */
+    public function addPreset($communityId, $economyId, $code = null) {
+        // Get the community, find economy
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // Grab list of presets, mark already existing currencies
+        $existing = $economy->currencies()->pluck('code');
+        $presets = collect(Self::PRESETS)
+            ->map(function($p, $code) use($existing) {
+                $p['exists'] = $code != null && $existing->contains($code);
+                return $p;
+            });
+
+        // Show currency selection screen
+        if($code == null)
+            return view('community.economy.currency.add')
+                ->with('economy', $economy)
+                ->with('presets', $presets);
+
+        // Code must be a known preset
+        if(!isset(Self::PRESETS[$code])) {
+            add_session_error(null, __('pages.currencies.invalidPreset') . '.');
+            return redirect()->back()->withInput();
+        }
+
+        return view('community.economy.currency.createPreset')
+            ->with('economy', $economy)
+            ->with('code', $code)
+            ->with('preset', Self::PRESETS[$code]);
+    }
+
+    /**
+     * Add a community economy preset.
+     *
+     * @return Response
+     */
+    public function doAddPreset(Request $request, $communityId, $economyId) {
+        // Get the community, find economy
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // Code must be a known preset
+        $code = $request->input('code');
+        if(!isset(Self::PRESETS[$code])) {
+            add_session_error(null, __('pages.currencies.invalidPreset'));
+            return redirect()->back()->withInput();
+        }
+
+        // Ensure code doesn't exist already in this economy
+        $exists = $code != null && $economy->currencies()->where('code', $code)->limit(1)->count() > 0;
+        if($exists) {
+            add_session_error(null, __('pages.currencies.currencyExists'));
+            return redirect()->back()->withInput();
+        }
+
+        $preset = Self::PRESETS[$code];
+
+        // Create the economy currency configuration and save
+        $currency = $economy->currencies()->create([
+            'name' => $preset['name'],
+            'code' => $code,
+            'symbol' => $preset['symbol'],
+            'format' => $preset['format'],
             'enabled' => is_checked($request->input('enabled')),
             'allow_wallet' => is_checked($request->input('allow_wallet')),
         ]);

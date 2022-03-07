@@ -254,6 +254,8 @@ Route::prefix('/c')->middleware('auth')->group(function() {
                     Route::middleware(CurrencyController::permsManage()->middleware())->group(function() {
                         Route::get('/add', 'CurrencyController@create')->name('community.economy.currency.create');
                         Route::post('/', 'CurrencyController@doCreate')->name('community.economy.currency.doCreate');
+                        Route::get('/add-preset/{code?}', 'CurrencyController@addPreset')->name('community.economy.currency.addPreset');
+                        Route::post('/add-preset', 'CurrencyController@doAddPreset')->name('community.economy.currency.doAddPreset');
                     });
 
                     // Specific

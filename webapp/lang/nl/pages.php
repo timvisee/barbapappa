@@ -275,6 +275,7 @@ return [
         'change' => 'Valuta aanpassen',
         'noCurrencies' => 'Deze economie heeft geen valuta\'s',
         'createCurrency' => 'Valuta toevoegen',
+        'createCustomCurrency' => 'Aangepaste valuta toevoegen',
         'currencyCreated' => 'Valuta aangemaakt',
         'deleteQuestion' => 'Je staat op het punt deze valuta te verwijderen van deze economie. Weet je zeker dat je door wilt gaan?',
         'deleteVoidNotice' => 'Als je deze valuta verwijderd, zullen alle ingestelde prijzen in deze valuta verwijderd worden in bars die gebruik maken van deze economie.<br>Je kunt de valuta ook tijdelijk uitschakelen door deze aan te passen.',
@@ -303,6 +304,8 @@ return [
         'cannotDeleteHasPayment' => 'Je kunt deze valuta niet verwijderen, omdat een betaling gebruik maakt van deze valuta.',
         'cannotDeleteHasService' => 'Je kunt deze valuta niet verwijderen, omdat een betaalservice gebruik maakt van deze valuta.',
         'cannotDeleteHasChange' => 'Je kunt deze valuta niet verwijderen, omdat een balansimportverandering gebruik maakt van deze valuta.',
+        'invalidPreset' => 'Ongeldige preset.',
+        'currencyExists' => 'Deze valuta bestaat al.',
     ],
 
     /**

@@ -111,7 +111,7 @@ class ValidationDefaults {
     /**
      * A currency symbol.
      */
-    const CURRENCY_SYMBOL = 'string|min:1|max:25';
+    const CURRENCY_SYMBOL = 'string|min:1|max:8';
 
     /**
      * A currency format.

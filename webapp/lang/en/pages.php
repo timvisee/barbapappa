@@ -274,6 +274,7 @@ return [
         'change' => 'Change currency',
         'noCurrencies' => 'This economy has no currencies...',
         'createCurrency' => 'Add currency',
+        'createCustomCurrency' => 'Add custom currency',
         'currencyCreated' => 'The currency has been added to the economy.',
         'deleteQuestion' => 'You\'re about to remove this currency from this economy. Are you sure you want to continue?',
         'deleteVoidNotice' => 'When you remove this currency, all configured product prices for this currency will be voided in bars that use this economy.<br>You might want to disable this currency instead by changing it.',
@@ -302,6 +303,8 @@ return [
         'cannotDeleteHasPayment' => 'You cannot delete this currency, because a payment exists using this currency.',
         'cannotDeleteHasService' => 'You cannot delete this currency, because a payment service exists using this currency.',
         'cannotDeleteHasChange' => 'You cannot delete this currency, because a balance import change exists using this currency.',
+        'invalidPreset' => 'Invalid preset.',
+        'currencyExists' => 'This currency already exists.',
     ],
 
     /**
