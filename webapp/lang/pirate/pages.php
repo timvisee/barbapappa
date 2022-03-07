@@ -274,6 +274,7 @@ return [
         'change' => 'Change currency',
         'noCurrencies' => 'Dis booty be nay currencies...',
         'createCurrency' => 'Add currency',
+        'createCustomCurrency' => 'Add custom currency',
         'currencyCreated' => 'Th\' currency be added.',
         'deleteQuestion' => 'Yer \'bout to sink dis currency from dis booty. Ye be sure ye want to continue?',
         'deleteVoidNotice' => 'When ye remove dis booty, all configured loot prices for dis currency will be voided in bars dat use dis booty.<br>Ye may want to disable dis currency instead by changing it.',

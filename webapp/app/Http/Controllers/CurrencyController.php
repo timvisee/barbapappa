@@ -12,6 +12,27 @@ use App\Perms\Builder\Config as PermsConfig;
 class CurrencyController extends Controller {
 
     /**
+     * A list of currency presets.
+     */
+    public const PRESETS = [
+        'EUR' => [
+            'name' => 'Euro',
+            'symbol' => '€',
+            'format' => '€1.0,00',
+        ],
+        'USD' => [
+            'name' => 'US Dollar',
+            'symbol' => '$',
+            'format' => '$1.0,00',
+        ],
+        'GBP' => [
+            'name' => 'British Pound',
+            'symbol' => '£',
+            'format' => '£1.0,00',
+        ],
+    ];
+
+    /**
      * Currency for community economy index.
      *
      * @return Response
@@ -82,6 +103,64 @@ class CurrencyController extends Controller {
             'code' => $request->input('code'),
             'symbol' => $request->input('symbol'),
             'format' => $request->input('format'),
+            'enabled' => is_checked($request->input('enabled')),
+            'allow_wallet' => is_checked($request->input('allow_wallet')),
+        ]);
+
+        // Redirect to the show view after creation
+        return redirect()
+            ->route('community.economy.currency.index', ['communityId' => $communityId, 'economyId' => $economy->id])
+            ->with('success', __('pages.currencies.currencyCreated'));
+    }
+
+    /**
+     * Show page to add a currency preset.
+     *
+     * @return Response
+     */
+    public function addPreset($communityId, $economyId, $code = null) {
+        // Get the community, find economy
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // TODO: map presets, add 'exists' flag
+
+        // Show currency selection screen
+        if($code == null)
+            return view('community.economy.currency.add')
+                ->with('economy', $economy)
+                ->with('presets', Self::PRESETS);
+
+        // TODO: verify code is valid!
+
+        return view('community.economy.currency.createPreset')
+            ->with('economy', $economy)
+            ->with('code', $code)
+            ->with('preset', Self::PRESETS[$code]);
+    }
+
+    /**
+     * Add a community economy preset.
+     *
+     * @return Response
+     */
+    public function doAddPreset(Request $request, $communityId, $economyId) {
+        // Get the community, find economy
+        $community = \Request::get('community');
+        $economy = $community->economies()->findOrFail($economyId);
+
+        // TODO: validate preset code!
+        // TODO: ensure the code is unique!
+
+        $code = $request->input('code');
+        $preset = Self::PRESETS[$code];
+
+        // Create the economy currency configuration and save
+        $currency = $economy->currencies()->create([
+            'name' => $preset['name'],
+            'code' => $code,
+            'symbol' => $preset['symbol'],
+            'format' => $preset['format'],
             'enabled' => is_checked($request->input('enabled')),
             'allow_wallet' => is_checked($request->input('allow_wallet')),
         ]);
