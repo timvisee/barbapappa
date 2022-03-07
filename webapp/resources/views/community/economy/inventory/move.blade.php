@@ -61,6 +61,10 @@
 
         <div class="ui divider hidden"></div>
 
+        <p>
+            <i>@lang('pages.inventories.moveShowingOf', ['inventory' => $inventory->name])</i>
+        </p>
+
         {{-- Product list --}}
         <table class="ui celled table unstackable">
             <thead>

@@ -595,6 +595,7 @@ class InventoryController extends Controller {
         return view('community.economy.inventory.move')
             ->with('economy', $economy)
             ->with('inventory', $inventory)
+            ->with('count_inventory', $count_inventory)
             ->with('from_id', $from_id)
             ->with('to_id', $to_id)
             ->with('products', $products)
