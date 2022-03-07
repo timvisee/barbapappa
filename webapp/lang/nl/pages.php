@@ -386,6 +386,7 @@ return [
         'move' => 'Verplaatsen',
         'moveProducts' => 'Producten verplaatsen',
         'moveDescription' => 'Verplaats producten van dit inventaris naar een ander. Laat velden leeg om het verplaatsen van een product over te slaan.',
+        'moveShowingOf' => 'Hoeveelheden van :inventory worden getoont.',
         'defaultMoveComment' => 'Productverplaatsing tussen inventarissen',
         'fromInventory' => 'Van inventaris',
         'toInventory' => 'Naar inventaris',

@@ -385,6 +385,7 @@ return [
         'move' => 'Move',
         'moveProducts' => 'Move products',
         'moveDescription' => 'Move products from this inventory to another. Leave fields empty to skip moving a product.',
+        'moveShowingOf' => 'Showing quantities \'o :inventory.',
         'defaultMoveComment' => 'Move products between inventories',
         'fromInventory' => 'From inventory',
         'toInventory' => 'To inventory',

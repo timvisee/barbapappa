@@ -557,17 +557,8 @@ class InventoryController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
         $inventory = $economy->inventories()->findOrFail($inventoryId);
+        $count_inventory = $inventory;
         $products = $economy->products;
-
-        // Build list of (exhausted) products
-        [$products, $exhaustedProducts] = Self::getProductList($inventory)
-            ->map(function($p) {
-                $p['field'] = 'product_' . $p['product']->id;
-                return $p;
-            })
-            ->partition(function($p) {
-                return !$p['exhausted'];
-            });
 
         // Count number of products
         $moved_into = $inventory
@@ -586,12 +577,25 @@ class InventoryController extends Controller {
         $to_id = $other_inventories->count() == 1 ? $other_inventories[0]->id : null;
 
         // Swap from/to inventories if products are mostly moved into this
-        if($moved_into >= 0)
+        if($moved_into > 0) {
             [$from_id, $to_id] = [$to_id, $from_id];
+            $count_inventory = Inventory::findOrFail($from_id);
+        }
+
+        // Build list of (exhausted) products
+        [$products, $exhaustedProducts] = Self::getProductList($count_inventory)
+            ->map(function($p) {
+                $p['field'] = 'product_' . $p['product']->id;
+                return $p;
+            })
+            ->partition(function($p) {
+                return !$p['exhausted'];
+            });
 
         return view('community.economy.inventory.move')
             ->with('economy', $economy)
             ->with('inventory', $inventory)
+            ->with('count_inventory', $count_inventory)
             ->with('from_id', $from_id)
             ->with('to_id', $to_id)
             ->with('products', $products)
