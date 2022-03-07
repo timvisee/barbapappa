@@ -52,7 +52,6 @@
                             <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_add') ? 'error' : '' }}">
                                 {{ Form::text($p['field'] . '_add', '', [
                                     'placeholder' => 0,
-                                    'inputmode' => 'numeric',
                                 ]) }}
                                 {{-- Flush error for this field, inline rendering is bad --}}
                                 {{ ErrorRenderer::consume($p['field'] . '_add') }}
@@ -62,7 +61,6 @@
                             <div class="field inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_remove') ? 'error' : '' }}">
                                 {{ Form::text($p['field'] . '_remove', '', [
                                     'placeholder' => 0,
-                                    'inputmode' => 'numeric',
                                 ]) }}
                                 {{-- Flush error for this field, inline rendering is bad --}}
                                 {{ ErrorRenderer::consume($p['field'] . '_remove') }}
@@ -111,7 +109,6 @@
                                             inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_add') ? 'error' : '' }}">
                                             {{ Form::text($p['field'] . '_add', '', [
                                                 'placeholder' => 0,
-                                                'inputmode' => 'numeric',
                                             ]) }}
                                             {{-- Flush error for this field, inline rendering is bad --}}
                                             {{ ErrorRenderer::consume($p['field'] .
@@ -123,7 +120,6 @@
                                             inventory-balance-quantity-field {{ ErrorRenderer::hasError($p['field'] . '_remove') ? 'error' : '' }}">
                                             {{ Form::text($p['field'] . '_remove', '', [
                                                 'placeholder' => 0,
-                                                'inputmode' => 'numeric',
                                             ]) }}
                                             {{-- Flush error for this field, inline rendering is bad --}}
                                             {{ ErrorRenderer::consume($p['field'] . '_remove') }}
