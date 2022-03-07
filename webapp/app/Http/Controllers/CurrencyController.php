@@ -123,15 +123,25 @@ class CurrencyController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
-        // TODO: map presets, add 'exists' flag
+        // Grab list of presets, mark already existing currencies
+        $existing = $economy->currencies()->pluck('code');
+        $presets = collect(Self::PRESETS)
+            ->map(function($p, $code) use($existing) {
+                $p['exists'] = $code != null && $existing->contains($code);
+                return $p;
+            });
 
         // Show currency selection screen
         if($code == null)
             return view('community.economy.currency.add')
                 ->with('economy', $economy)
-                ->with('presets', Self::PRESETS);
+                ->with('presets', $presets);
 
-        // TODO: verify code is valid!
+        // Code must be a known preset
+        if(!isset(Self::PRESETS[$code])) {
+            add_session_error(null, __('pages.currencies.invalidPreset') . '.');
+            return redirect()->back()->withInput();
+        }
 
         return view('community.economy.currency.createPreset')
             ->with('economy', $economy)
@@ -149,10 +159,20 @@ class CurrencyController extends Controller {
         $community = \Request::get('community');
         $economy = $community->economies()->findOrFail($economyId);
 
-        // TODO: validate preset code!
-        // TODO: ensure the code is unique!
-
+        // Code must be a known preset
         $code = $request->input('code');
+        if(!isset(Self::PRESETS[$code])) {
+            add_session_error(null, __('pages.currencies.invalidPreset'));
+            return redirect()->back()->withInput();
+        }
+
+        // Ensure code doesn't exist already in this economy
+        $exists = $code != null && $economy->currencies()->where('code', $code)->limit(1)->count() > 0;
+        if($exists) {
+            add_session_error(null, __('pages.currencies.currencyExists'));
+            return redirect()->back()->withInput();
+        }
+
         $preset = Self::PRESETS[$code];
 
         // Create the economy currency configuration and save

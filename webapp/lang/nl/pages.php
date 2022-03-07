@@ -304,6 +304,8 @@ return [
         'cannotDeleteHasPayment' => 'Je kunt deze valuta niet verwijderen, omdat een betaling gebruik maakt van deze valuta.',
         'cannotDeleteHasService' => 'Je kunt deze valuta niet verwijderen, omdat een betaalservice gebruik maakt van deze valuta.',
         'cannotDeleteHasChange' => 'Je kunt deze valuta niet verwijderen, omdat een balansimportverandering gebruik maakt van deze valuta.',
+        'invalidPreset' => 'Ongeldige preset.',
+        'currencyExists' => 'Deze valuta bestaat al.',
     ],
 
     /**

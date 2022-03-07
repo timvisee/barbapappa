@@ -11,7 +11,7 @@
     <div class="ui vertical menu fluid">
         <h5 class="ui item header">@lang('misc.presets')</h5>
         @foreach($presets as $code => $data)
-            @unless($data['exists'] ?? false)
+            @if(!$data['exists'])
                 <a href="{{ route('community.economy.currency.addPreset', ['communityId' => $community->human_id, 'economyId' => $economy->id, 'code' => $code]) }}" class="item">
                     {{ $data['name'] }}: {{ $data['symbol'] }}
                 </a>

@@ -303,6 +303,8 @@ return [
         'cannotDeleteHasPayment' => 'You cannot delete this currency, because a payment exists using this currency.',
         'cannotDeleteHasService' => 'You cannot delete this currency, because a payment service exists using this currency.',
         'cannotDeleteHasChange' => 'You cannot delete this currency, because a balance import change exists using this currency.',
+        'invalidPreset' => 'Invalid preset.',
+        'currencyExists' => 'This currency already exists.',
     ],
 
     /**

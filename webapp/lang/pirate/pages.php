@@ -303,6 +303,8 @@ return [
         'cannotDeleteHasPayment' => 'Ye nay delete dis currency, because a payment exists using dis currency.',
         'cannotDeleteHasService' => 'Ye nay delete dis currency, because a payment service exists using dis currency.',
         'cannotDeleteHasChange' => 'Ye nay delete dis currency, because a booty import change exists using dis currency.',
+        'invalidPreset' => 'Invalid preset.',
+        'currencyExists' => 'Dis currency already exists.',
     ],
 
     /**
