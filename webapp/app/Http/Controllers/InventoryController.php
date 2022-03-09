@@ -309,15 +309,15 @@ class InventoryController extends Controller {
             $r = $p['field'] . '_remove';
             $err = false;
 
-            if($request->input($a) != null)
-                if(($res = MathUtil::solveInt($request->input($a))) != null)
+            if($request->input($a) !== null)
+                if(($res = MathUtil::solveInt($request->input($a))) !== null)
                     $request->merge([$a => $res]);
                 else {
                     add_session_error($a, __('pages.inventories.mustBeIntegerExpr'));
                     $err = true;
                 }
-            if($request->input($r) != null)
-                if(($res = MathUtil::solveInt($request->input($r))) != null)
+            if($request->input($r) !== null)
+                if(($res = MathUtil::solveInt($request->input($r))) !== null)
                     $request->merge([$r => $res]);
                 else {
                     add_session_error($r, __('pages.inventories.mustBeIntegerExpr'));
@@ -356,7 +356,7 @@ class InventoryController extends Controller {
                 $remove = $request->input($p['field'] . '_remove');
 
                 // Update add/remove
-                if($add != null) {
+                if($add !== null) {
                     $inventory->changeProduct(
                         $p['product'],
                         $type,
@@ -368,7 +368,7 @@ class InventoryController extends Controller {
                     );
                     $count += (int) $add;
                 }
-                if($remove != null) {
+                if($remove !== null) {
                     $inventory->changeProduct(
                         $p['product'],
                         $type,
@@ -459,15 +459,15 @@ class InventoryController extends Controller {
             $d = $p['field'] . '_delta';
             $err = false;
 
-            if($request->input($q) != null)
-                if(($res = MathUtil::solveInt($request->input($q))) != null)
+            if($request->input($q) !== null)
+                if(($res = MathUtil::solveInt($request->input($q))) !== null)
                     $request->merge([$q => $res]);
                 else {
                     add_session_error($q, __('pages.inventories.mustBeIntegerExpr'));
                     $err = true;
                 }
-            if($request->input($d) != null)
-                if(($res = MathUtil::solveInt($request->input($d))) != null)
+            if($request->input($d) !== null)
+                if(($res = MathUtil::solveInt($request->input($d))) !== null)
                     $request->merge([$d => $res]);
                 else {
                     add_session_error($d, __('pages.inventories.mustBeIntegerExpr'));
@@ -508,7 +508,7 @@ class InventoryController extends Controller {
                 $delta = $request->input($p['field'] . '_delta');
 
                 // Update quantity or delta
-                if($quantity != null) {
+                if($quantity !== null) {
                     $inventory->setProductQuantity(
                         $p['product'],
                         $type,
@@ -519,7 +519,7 @@ class InventoryController extends Controller {
                         null
                     );
                     $count += 1;
-                } else if($delta != null) {
+                } else if($delta !== null) {
                     $inventory->changeProduct(
                         $p['product'],
                         $type,
@@ -633,8 +633,8 @@ class InventoryController extends Controller {
             $a = $p['field'] . '_quantity';
             $err = false;
 
-            if($request->input($a) != null)
-                if(($res = MathUtil::solveInt($request->input($a))) != null)
+            if($request->input($a) !== null)
+                if(($res = MathUtil::solveInt($request->input($a))) !== null)
                     $request->merge([$a => $res]);
                 else {
                     add_session_error($a, __('pages.inventories.mustBeIntegerExpr'));
@@ -668,7 +668,7 @@ class InventoryController extends Controller {
         DB::transaction(function() use($products, $request, $from, $to, &$count) {
             foreach($products as $p) {
                 $quantity = $request->input($p['field'] . '_quantity');
-                if($quantity == null)
+                if($quantity === null)
                     continue;
                 $quantity = (int) $quantity;
 
