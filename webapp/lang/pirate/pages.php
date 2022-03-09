@@ -1314,7 +1314,7 @@ return [
         ],
         '429' => [
             'title' => '429 Too Many Requests',
-            'description' => 'Whoops! Too many requests be made to dis page recently on dis network. Please wait some time before trying again.',
+            'description' => 'Whoops! Too many requests be made to dis page recently on dis network. For security reasons we temporarily block fresh requests. Please wait some time before trying again.',
         ],
         '500' => [
             'title' => '500 Server Error',

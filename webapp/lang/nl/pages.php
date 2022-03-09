@@ -1315,7 +1315,7 @@ return [
         ],
         '429' => [
             'title' => '429 Too Many Requests',
-            'description' => 'Oeps! Er zijn recent teveel verzoeken gestuurd voor deze pagina via dit netwerk. Wacht even voordat je het opnieuw probeert.',
+            'description' => 'Oeps! Er zijn recent teveel verzoeken voor deze pagina gestuurd via dit netwerk. Om veiligheidsredenen blokkeren we daarom tijdelijk nieuwe verzoeken. Wacht even voordat je het opnieuw probeert.',
         ],
         '500' => [
             'title' => '500 Server Error',
