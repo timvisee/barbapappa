@@ -241,13 +241,20 @@ class SessionLink extends Model {
      *
      * This automatically saves the model to the database.
      *
+     * @param bool $overwrite True to overwrite an existing code.
      * @return string The new code.
      */
-    public function newCode() {
+    public function newCode($overwrite = true) {
+        // Do not overwrite an existing code
+        if(!$overwrite && $this->code !== null)
+            return $this->code;
+
+        // Generate new code
         $code = random_str(Self::CODE_LENGTH, Self::CODE_KEYSPACE);
         $this->code = $code;
         $this->code_expire_at = now()->addSeconds(config('app.auth_session_link_code_expire'));
         $this->save();
+
         return $code;
     }
 

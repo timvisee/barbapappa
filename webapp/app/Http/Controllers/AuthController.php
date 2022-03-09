@@ -52,7 +52,7 @@ class AuthController extends Controller {
         // If other session, generate code and show to user
         $is_forced = is_checked($request->input('force'));
         if(!$is_forced && !$link->isSameSession()) {
-            $code = $link->newCode();
+            $code = $link->newCode(false);
             return view('myauth.loginOtherSession')
                 ->with('token', $token)
                 ->with('code', $code);
