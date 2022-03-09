@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.157 (2022-03-09)
+
+- Add currency presets to economy screen, including EUR, USD, GBP
+- On inventory move screen, show quantities of source inventory and list the source name on top of the page, rather than showing quantities of a random inventory
+- Fix error when entering 0 as value in inventory fields
+- Fix some mobile device keyboards not showing math characters in inventory input fields
+- Fix typo in 'orphan wallet'
+
 ## 0.1.156 (2022-03-04)
 
 - Add support for using math expression on inventory pages
