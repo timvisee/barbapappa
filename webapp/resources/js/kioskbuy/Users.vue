@@ -419,7 +419,6 @@
 <style scoped>
     .ui.vertical.menu .halflings {
         line-height: 0.6;
-        top: 3px;
         margin-right: 0.5em;
     }
 </style>
