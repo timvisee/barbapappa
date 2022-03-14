@@ -41,7 +41,17 @@ return [
             'visitExplore' => 'If you aren\'t member of a community or bar yet, visit the Explore page to join one and add it to your personal dashboard.',
             'startUsingSeeDashboard' => 'To start using :app, take a look at your personalized dashboard.',
             'configureEmailPreferences' => 'To configure how often you receive email updates from :app, check out your email preferences panel.',
-        ]
+        ],
+
+        /**
+         * Email remove email.
+         */
+        'remove' => [
+            'subject' => 'Email removed',
+            'subtitle' => 'This email address has been removed from your account.',
+            'forSecurity' => 'We\'re just notifying you for security reasons.',
+            'noRemovedThenContact' => 'If you received this message but haven\'t removed this email address, please [contact](:contact) the :app team as soon as possible about this security incident.',
+        ],
     ],
 
     /**
@@ -90,7 +100,7 @@ return [
             'useNewPassword' => 'From now on, use your new password to login to your account.',
             'noChangeThenReset' => 'If you didn\'t change your password yourself, please change it as soon as possible using the following link:',
             'orContact' => 'Or [contact](:contact) the :app team directly about this security incident.',
-            'noChangeThenContact' => 'If you received this message but haven\'t changed your password, please [contact](:contact) the :app team as soon as possible about this security incident.',
+            'noChangeThenContact' => 'If you received this message but haven\'t changed your password, please [contact](:contact) the :contact team as soon as possible about this security incident.',
         ],
 
         /**
@@ -101,7 +111,7 @@ return [
             'forSecurity' => 'We\'re just notifying you for security reasons.',
             'noDisabledThenReset' => 'If you didn\'t disable your password yourself, please set a new one as soon as possible using the following link:',
             'orContact' => 'Or [contact](:contact) the :app team as soon as possible about this security incident.',
-            'noDisabledThenContact' => 'If you received this message but haven\'t disabled your password, please [contact](:contact) the :app team as soon as possible about this security incident.',
+            'noDisabledThenContact' => 'If you received this message but haven\'t disabled your password, please [contact](:contact) the :contact team as soon as possible about this security incident.',
         ],
     ],
 

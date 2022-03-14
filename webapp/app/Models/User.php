@@ -493,6 +493,7 @@ class User extends Model implements HasLocalePreference {
      *
      * @return array An array of email recipients to send a message to.
      */
+    // TODO: define proper return type here!
     public function buildEmailRecipients($email = null) {
         // TODO: only use verified addresses?
 

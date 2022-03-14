@@ -41,7 +41,17 @@ return [
             'visitExplore' => 'If ye nay be member of a crew or bar yet, visit th\' Explore page to join one and add it to yer personal dashboard.',
             'startUsingSeeDashboard' => 'To sail wit :app, navigate to yer pirate dashboard.',
             'configureEmailPreferences' => 'To mend th\' sails \'bout how often ye receive e-bottle parchments from :app, navigate to yer e-bottle preferences panel.',
-        ]
+        ],
+
+        /**
+         * Email remove email.
+         */
+        'remove' => [
+            'subject' => 'E-bottle coordinate removed',
+            'subtitle' => 'Dis e-bottle coordinate be sunk from yer account.',
+            'forSecurity' => 'Our jolly crew notified ye for piracy reasons.',
+            'noRemovedThenContact' => 'If ye received dis message but have nay sunk yer e-bottle coordinate, [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy incident.',
+        ],
     ],
 
     /**
