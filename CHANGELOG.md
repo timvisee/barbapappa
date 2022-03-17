@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.158 (2022-03-17)
+
+- When an email address is removed, send a message to it as security notification
+- Generate single magic link auth code, when authenticating through another session, don't change it every page reload as this was very annoying
+- Improve description on HTTP 429 page, hint user on why this error may be shown
+- Fix alignment of swap icons in kiosk view
+- Fix incorrect text in password disabled mail
+
 ## 0.1.157 (2022-03-09)
 
 - Add currency presets to economy screen, including EUR, USD, GBP
