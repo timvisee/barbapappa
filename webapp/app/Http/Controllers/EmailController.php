@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
+use App\Mail\Email\Remove;
 use App\Managers\EmailVerificationManager;
 use App\Models\Email;
-use App\Models\User;
 use App\Perms\AppRoles;
+use App\Utils\EmailRecipient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller {
 
@@ -317,6 +319,10 @@ class EmailController extends Controller {
             return redirect()
                 ->route('account.emails', ['userId' => $userId])
                 ->with('error', __('pages.accountPage.email.cannotDeleteMustHaveVerified'));
+
+        // Notify user about deleted email
+        $recipient = new EmailRecipient($email, $email->user);
+        Mail::send(new Remove($recipient));
 
         // Delete the email address
         $email->delete();

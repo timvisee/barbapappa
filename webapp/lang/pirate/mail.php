@@ -41,7 +41,17 @@ return [
             'visitExplore' => 'If ye nay be member of a crew or bar yet, visit th\' Explore page to join one and add it to yer personal dashboard.',
             'startUsingSeeDashboard' => 'To sail wit :app, navigate to yer pirate dashboard.',
             'configureEmailPreferences' => 'To mend th\' sails \'bout how often ye receive e-bottle parchments from :app, navigate to yer e-bottle preferences panel.',
-        ]
+        ],
+
+        /**
+         * Email remove email.
+         */
+        'remove' => [
+            'subject' => 'E-bottle coordinate removed',
+            'subtitle' => 'Dis e-bottle coordinate be sunk from yer account.',
+            'forSecurity' => 'Our jolly crew notified ye for piracy reasons.',
+            'noRemovedThenContact' => 'If ye received dis message but have nay sunk yer e-bottle coordinate, [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy incident.',
+        ],
     ],
 
     /**
@@ -90,7 +100,7 @@ return [
             'useNewPassword' => 'From now, use yer shiny passcode to enter ye ship.',
             'noChangeThenReset' => 'If ye did nay change yer passcode, change it as soon as possible using th\' following web coordinate.',
             'orContact' => 'Or [contact](:contact) th\' :app crew directly \'bout dis piracy incident.',
-            'noChangeThenContact' => 'If ye received dis message but have nay change yer passcode, [contact](:contact) th\' :contact crew as soon as possible \'bout dis piracy incident.',
+            'noChangeThenContact' => 'If ye received dis message but have nay change yer passcode, [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy incident.',
         ],
 
         /**
@@ -101,7 +111,7 @@ return [
             'forSecurity' => 'Our jolly crew notified ye for piracy reasons.',
             'noDisabledThenReset' => 'If ye did nay disdable yer passcode, change it as soon as possible using th\' following web coordinate:',
             'orContact' => 'Or [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy incident.',
-            'noDisabledThenContact' => 'If ye received dis message but have nay disabled yer passcode, [contact](:contact) th\' :contact crew as soon as possible \'bout dis piracy incident.',
+            'noDisabledThenContact' => 'If ye received dis message but have nay disabled yer passcode, [contact](:contact) th\' :app crew as soon as possible \'bout dis piracy incident.',
         ],
     ],
 
