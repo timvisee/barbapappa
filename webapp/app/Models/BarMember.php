@@ -132,9 +132,13 @@ class BarMember extends Pivot {
      * Get related economy member.
      *
      * This function is expensive.
+     *
+     * @return EconomyMember|null A community member for this member, if
+     * available.
      */
     public function fetchEconomyMember() {
         // Assert user isn't null
+        // TODO: should we error, even though we might return null if an economy member does not exist
         if($this->user_id == null)
             throw new \Exception("Cannot get economy member for bar member with no user");
 
@@ -143,16 +147,20 @@ class BarMember extends Pivot {
             ->economy
             ->members()
             ->where('user_id', $this->user_id)
-            ->firstOrFail();
+            ->first();
     }
 
     /**
      * Get related community member.
      *
      * This function is expensive.
+     *
+     * @return CommunityMember|null A community member for this member, if
+     * available.
      */
     public function fetchCommunityMember() {
         // Assert user isn't null
+        // TODO: should we error, even though we might return null if an economy member does not exist
         if($this->user_id == null)
             throw new \Exception("Cannot get community member for bar member with no user");
 
@@ -161,6 +169,6 @@ class BarMember extends Pivot {
             ->community
             ->members()
             ->where('user_id', $this->user_id)
-            ->firstOrFail();
+            ->first();
     }
 }
