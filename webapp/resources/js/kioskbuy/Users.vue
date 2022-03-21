@@ -85,7 +85,15 @@
             </div>
 
             <div class="item-buttons" v-if="getQuantity(user) > 0">
-                <div class="ui buttons">
+                <div class="ui two buttons">
+                    <a href="#"
+                            v-if="swapped"
+                            v-on:click.stop.prevent="viewUserCart(user)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-more"></i>
+                    </a>
+
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
                             v-bind:class="{ red: !isSelectMode(), disabled: buying }"
@@ -117,7 +125,15 @@
             </div>
 
             <div class="item-buttons" v-if="getQuantity(user) > 0">
-                <div class="ui buttons">
+                <div class="ui two buttons">
+                    <a href="#"
+                            v-if="swapped"
+                            v-on:click.stop.prevent="viewUserCart(user)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-more"></i>
+                    </a>
+
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
                             v-bind:class="{ red: !isSelectMode(), disabled: buying }"
@@ -151,7 +167,15 @@
             </div>
 
             <div class="item-buttons" v-if="getQuantity(user) > 0">
-                <div class="ui buttons">
+                <div class="ui two buttons">
+                    <a href="#"
+                            v-if="swapped"
+                            v-on:click.stop.prevent="viewUserCart(user)"
+                            v-bind:class="{ disabled: buying }"
+                            class="ui large button">
+                        <i class="glyphicons glyphicons-more"></i>
+                    </a>
+
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
                             v-bind:class="{ red: !isSelectMode(), disabled: buying }"
@@ -287,6 +311,13 @@
 
                 // Count user products
                 return userCart.products.reduce((sum, product) => product.quantity + sum, 0);
+            },
+
+            // Swap columns and view the given users cart
+            viewUserCart(user) {
+                this.swap();
+                this.reset();
+                this.toggleSelectUser(user);
             },
 
             // Reset selection
