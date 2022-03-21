@@ -91,7 +91,7 @@
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
                             class="ui large button">
-                        <i class="glyphicons glyphicons-more"></i>
+                        <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"
@@ -131,7 +131,7 @@
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
                             class="ui large button">
-                        <i class="glyphicons glyphicons-more"></i>
+                        <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"
@@ -173,7 +173,7 @@
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
                             class="ui large button">
-                        <i class="glyphicons glyphicons-more"></i>
+                        <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"

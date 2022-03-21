@@ -88,7 +88,7 @@
                             v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
                             class="ui large button">
-                        <i class="glyphicons glyphicons-more"></i>
+                        <i class="glyphicons glyphicons-hash"></i>
                     </a>
 
                     <a href="#"
@@ -131,7 +131,7 @@
                             v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
                             class="ui large button">
-                        <i class="glyphicons glyphicons-more"></i>
+                        <i class="glyphicons glyphicons-hash"></i>
                     </a>
 
                     <a href="#"
@@ -176,7 +176,7 @@
                             v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
                             class="ui large button">
-                        <i class="glyphicons glyphicons-more"></i>
+                        <i class="glyphicons glyphicons-hash"></i>
                     </a>
 
                     <a href="#"
