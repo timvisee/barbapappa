@@ -9,8 +9,9 @@
 
                 <div class="ui horizontal divider">{{ __('general.or') }}</div>
                 <a v-on:click.stop.prevent="swap()"
+                        class="ui basic button"
                         href="#">
-                    {{ __('pages.kiosk.swapColumns').toLowerCase() }}
+                    {{ __('pages.kiosk.swapColumns') }}
                 </a>
             </div>
         </div>
