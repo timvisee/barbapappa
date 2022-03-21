@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.159 (2022-03-21)
+
+- Show prices of exhausted products in grey label rather than blue
+- In kiosk mode, add a button to users having items in cart to inspect its current contents
+- In kiosk mode, choose better icons for the 'more' button in the product and user columns to better represent their function
+- In kiosk mode, restyle swap columns hint as button rather than a hyperlink
+- Improve email security banner showing contact information in case of an emergency, removed obsolete text
+- Fix error when viewing bar member, when user has manually left encapsulating community
+- Update dependencies
+
 ## 0.1.158 (2022-03-17)
 
 - When an email address is removed, send a message to it as security notification
