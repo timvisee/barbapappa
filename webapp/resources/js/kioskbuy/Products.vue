@@ -119,7 +119,10 @@
             </div>
 
             <div v-if="getQuantity(product) == 0" class="item-label">
-                <div class="ui blue label">{{ product.price_display }}</div>
+                <div class="ui label"
+                        v-bind:class="{ blue: !product.exhausted }">
+                    {{ product.price_display }}
+                </div>
             </div>
 
             <div v-if="getQuantity(product)" class="item-buttons">
