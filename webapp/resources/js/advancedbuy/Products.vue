@@ -37,7 +37,8 @@
                     class="ui red compact button action-button">×</a>
 
             <div v-if="getQuantity(product) == 0"
-                class="ui blue label">{{ product.price_display }}</div>
+                v-bind:class="{ blue: !product.exhausted }"
+                class="ui label">{{ product.price_display }}</div>
         </a>
 
         <i v-if="searching && products.length == 0 && query != ''" class="item">
@@ -66,7 +67,8 @@
                     v-on:click.stop.prevent="deselect(product.product)"
                     class="ui red compact button action-button">×</a>
 
-            <div class="ui blue label">{{ product.product.price_display }}</div>
+            <div class="ui label"
+                v-bind:class="{ blue: !product.exhausted }">{{ product.product.price_display }}</div>
         </a>
     </div>
 </template>
