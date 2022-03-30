@@ -1107,6 +1107,8 @@ return [
         'viewCart' => 'Continue looting',
         'resetCart' => 'Reset loot',
         'swapColumns' => 'Swap columns',
+        'productMode' => 'Product mode',
+        'userMode' => 'Pirate mode',
         'backToKiosk' => 'Back to kiosk',
         'noConnectionBanner' => 'Connection errrror! Pull the page down to refresh.',
     ],

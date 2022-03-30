@@ -1109,6 +1109,8 @@ return [
         'viewCart' => 'Verder winkelen',
         'resetCart' => 'Reset winkelwagen',
         'swapColumns' => 'Wissel kolommen',
+        'productMode' => 'Product modus',
+        'userMode' => 'Gebruiker modus',
         'backToKiosk' => 'Terug naar kiosk',
         'noConnectionBanner' => 'Geen verbinding! Sleep naar beneden om te verversen.',
     ],

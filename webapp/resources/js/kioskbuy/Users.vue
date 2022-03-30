@@ -7,11 +7,14 @@
             <div class="ui text">
                 {{ __('pages.kiosk.firstSelectProduct') }}
 
+                <div class="ui hidden divider"></div>
                 <div class="ui horizontal divider">{{ __('general.or') }}</div>
+                <div class="ui hidden divider"></div>
+
                 <a v-on:click.stop.prevent="swap()"
-                        class="ui basic button"
+                        class="ui big button"
                         href="#">
-                    {{ __('pages.kiosk.swapColumns') }}
+                    {{ __('pages.kiosk.userMode') }}
                 </a>
             </div>
         </div>
