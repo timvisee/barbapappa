@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.160 (2022-03-30)
+
+- In kiosk mode, make the swap column buttons more apparent and improve the used terminology
+- In kiosk mode, remove obsolete success message after buying a product
+- In kiosk mode, also revert columns to their default state on timeout
+
 ## 0.1.159 (2022-03-21)
 
 - Show prices of exhausted products in grey label rather than blue
