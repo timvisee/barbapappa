@@ -8,6 +8,7 @@
 - In kiosk mode, restyle swap columns hint as button rather than a hyperlink
 - Improve email security banner showing contact information in case of an emergency, removed obsolete text
 - Fix error when viewing bar member, when user has manually left encapsulating community
+- Attempt to fix removed email notification in production environment, this message somehow isn't being sent in non-development environments
 - Update dependencies
 
 ## 0.1.158 (2022-03-17)
