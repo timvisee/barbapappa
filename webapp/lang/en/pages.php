@@ -1108,6 +1108,8 @@ return [
         'viewCart' => 'Continue shopping',
         'resetCart' => 'Reset cart',
         'swapColumns' => 'Swap columns',
+        'productMode' => 'Product mode',
+        'userMode' => 'User mode',
         'backToKiosk' => 'Back to kiosk',
         'noConnectionBanner' => 'No connection! Pull the page down to refresh.',
     ],
