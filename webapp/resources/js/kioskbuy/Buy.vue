@@ -220,9 +220,6 @@
                         // Build the success message
                         let products = res.data.productCount;
                         let users = res.data.userCount;
-                        this.successMessage = users <= 1
-                            ? this.langChoice('pages.bar.advancedBuy.boughtProducts#', products)
-                            : this.langChoice('pages.bar.advancedBuy.boughtProductsUsers#', products, {users});
 
                         // Show bought overlay for 1 second
                         this.showBoughtOverlay = true;
