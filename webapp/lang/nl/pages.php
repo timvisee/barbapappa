@@ -1054,8 +1054,6 @@ return [
             'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',
             'buyProductsUsers#' => '{0} Koop geen producten voor :users leden|{1} Koop product voor :users leden|[2,*] Koop :count producten voor :users leden',
             'pressToConfirm' => 'Tik om te bevestigen',
-            'boughtProducts#' => '{0} Geen producten gekocht.|{1} Eén product gekocht.|[2,*] :count producten gekocht.',
-            'boughtProductsUsers#' => '{0} Geen producten gekocht voor :users leden.|{1} Eén product gekocht voor :users leden.|[2,*] :count producten gekocht voor :users leden.',
             'pageCloseWarning' => 'Je hebt producten geselecteerd of hebt producten in de winkelwagen die nog niet gekocht zijn. Je moet geselecteerde producten eerst aan ten minste één gebruiker toevoegen en daarna op de Koop knop drukken om de bestelling te voltooien, of de selectie gaat verloren.',
         ],
         'links' => [
