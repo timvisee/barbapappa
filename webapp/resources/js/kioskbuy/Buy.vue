@@ -272,8 +272,8 @@
 
                 // Set up order inactivity cancel timeout
                 this.orderCancelTimer = setTimeout(() => {
-                    // Skip if no users selected or nothing in cart
-                    if(this.selectedUsers.length == 0 && this.selectedProducts.length == 0 && this.cart.length == 0)
+                    // Skip if not swapped, no users selected or nothing in cart
+                    if(!this.swapped && this.selectedUsers.length == 0 && this.selectedProducts.length == 0 && this.cart.length == 0)
                         return;
 
                     // Cancel if cart is empty, otherwise show reset dialog
