@@ -52,7 +52,7 @@
             <tr>
                 <td></td>
                 <td>@lang('mail.receipts.subTotal')</td>
-                <td align="right"><strong>{!! $receipt['subTotal']->formatAmount() !!}</strong></td>
+                <td align="right">{!! $receipt['subTotal']->formatAmount() !!}</td>
             </tr>
         @endif
         <tr>
