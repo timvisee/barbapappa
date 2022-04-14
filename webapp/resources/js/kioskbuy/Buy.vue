@@ -275,6 +275,9 @@
                     // If not swapped, no users selected or nothing in cart, don´t show cancel overlay
                     let showCancelOverlay = !(!this.swapped && this.selectedUsers.length == 0 && this.selectedProducts.length == 0 && this.cart.length == 0);
 
+                    // TODO: also show cancel if search field has query value
+                    // TODO: on cancel, also reset search query values
+
                     // Cancel if cart is empty, otherwise show reset dialog
                     if(this.getTotalCartQuantity() <= 0)
                         this.cancel(showCancelOverlay);
