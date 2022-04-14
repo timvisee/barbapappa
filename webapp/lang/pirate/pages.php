@@ -1052,6 +1052,8 @@ return [
             'buyProducts#' => '{0} Get no loot|{1} Get loot|[2,*] Get :count loot',
             'buyProductsUsers#' => '{0} Get no loot for :users pirates|{1} Get loot for :users pirates|[2,*] Get :count loot for :users pirates',
             'pressToConfirm' => 'Sail ho?',
+            'boughtProducts#' => '{0} Not looted.|[1,*] :count looted.',
+            'boughtProductsUsers#' => '{0} No loot for :users pirates.|[1,*] :count loot for :users pirates.',
             'pageCloseWarning' => 'Ye selected or has loot in cart that nay be gotten yet. Ye must add loot selection to at least one pirate and tap th\' Get button to commit th\' purchase, or the selection will be lost.',
         ],
         'links' => [
