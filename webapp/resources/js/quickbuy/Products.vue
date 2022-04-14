@@ -8,7 +8,8 @@
                         @focus="e => e.target.select()"
                         id="quickbuy-search"
                         type="search"
-                        :placeholder="__('pages.products.clickBuyOrSearch') + '...'" />
+                        :placeholder="__('pages.products.clickBuyOrSearch') + '...'"
+                        autocomplete="off" />
                 <div v-if="searching" class="ui active inline tiny loader"></div>
                 <i v-if="!searching && !query" v-on:click.prevent.stop="search(query)" class="icon link">
                     <span class="glyphicons glyphicons-search"></span>

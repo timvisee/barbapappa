@@ -46,6 +46,7 @@
                     {{ Form::search('q', Request::input('q'), [
                         'id' => 'quickbuy-search',
                         'placeholder' => __('pages.products.clickBuyOrSearch') . '...',
+                        'autocomplete' => 'off',
                     ]) }}
                     <i class="icon link">
                         <span class="glyphicons glyphicons-search"></span>
