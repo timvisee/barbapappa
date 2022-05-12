@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.161 (2022-05-12)
+
+- On the top-up page, inform the user of currently active/processing payments
+- Show receipt subtotal below product list rather than below other cost entries, this should clarify that the subtotal is for products only.
+- In kiosk mode, reset search fields on purchase or cancel
+- In kiosk mode, prevent annoying browser auto complete menus in search fields
+- In kiosk mode, show red cancel overlay in more situations
+- Cancel bunq payment requests immediately to prevent double payments
+- Fix some typos
+- Update dependencies
+
 ## 0.1.160 (2022-03-30)
 
 - In kiosk mode, make the swap column buttons more apparent and improve the used terminology
