@@ -75,17 +75,6 @@ class PaymentBunqMeTab extends Model {
     const CANCEL_DELAY = 3;
 
     /**
-     * Number of seconds to delay closing (cancelling) the BunqMeTab payment
-     * request after it was successfully paid.
-     *
-     * If we close it immediately, the user is shown that the payment has
-     * expired without a chance to redirect back to our application.
-     *
-     * @var int
-     */
-    const COMPLETED_CANCEL_DELAY = 10 * 60;
-
-    /**
      * An ordered list of steps in this payment.
      */
     public const STEPS = [
@@ -262,17 +251,11 @@ class PaymentBunqMeTab extends Model {
         case Payment::STATE_REVOKED:
         case Payment::STATE_REJECTED:
         case Payment::STATE_FAILED:
+        case Payment::STATE_COMPLETED:
             // Cancel the BunqMeTab at bunq
             if($this->bunq_tab_id != null)
                 CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id)
                     ->delay(now()->addSeconds(Self::CANCEL_DELAY));
-            break;
-
-        case Payment::STATE_COMPLETED:
-            // Cancel the BunqMeTab at bunq after complete delay
-            if($this->bunq_tab_id != null)
-                CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id)
-                    ->delay(now()->addSeconds(Self::COMPLETED_CANCEL_DELAY));
             break;
 
         default:
