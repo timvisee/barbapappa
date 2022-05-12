@@ -8,6 +8,9 @@
 @foreach($receipt['products'] as $product)
 {{ $product['quantity'] ?? 1 }}× {{ $product['name'] ?? __('pages.products.unknownProduct') }} {!! $product['cost']->formatAmount() !!}
 @endforeach
+@if($receipt['others']->isNotEmpty())
+@lang('mail.receipts.subTotal') {!! $receipt['subTotal']->formatAmount() !!}
+@endif
 ----------------
 @endif
 @if($receipt['others']->isNotEmpty())
@@ -15,7 +18,6 @@
 @if($other['quantity'] ?? 1 != 1){{ $other['quantity'] }}× @endif{{ $other['name'] }} {!! $other['cost']->formatAmount() !!}
 @endforeach
 ----------------
-@lang('mail.receipts.subTotal') {!! $receipt['subTotal']->formatAmount() !!}
 @endif
 @lang('mail.receipts.total') {!! $receipt['total']->formatAmount() !!}
 ================
