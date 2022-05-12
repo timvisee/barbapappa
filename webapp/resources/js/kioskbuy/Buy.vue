@@ -43,6 +43,7 @@
             <div class="ui grid">
                 <div v-if="!swapped" class="seven wide column inline">
                     <Users
+                            ref="users"
                             v-on:swap="swap"
                             v-on:highlightProducts="highlightProducts"
                             :apiUrl="apiUrl"
@@ -59,6 +60,7 @@
                 </div>
                 <div class="nine wide column inline">
                     <Products
+                            ref="products"
                             v-on:swap="swap"
                             v-on:highlightUsers="highlightUsers"
                             :apiUrl="apiUrl"
@@ -77,6 +79,7 @@
                 </div>
                 <div v-if="swapped" class="seven wide column inline">
                     <Users
+                            ref="users"
                             v-on:swap="swap"
                             v-on:highlightProducts="highlightProducts"
                             :apiUrl="apiUrl"
@@ -250,13 +253,15 @@
                 this.selectedProducts.splice(0);
                 this.removeAllUserCarts();
 
+                // Reset query fields
+                this.$refs.users.query = '';
+                this.$refs.products.query = '';
+
                 // Reset swap
                 this.resetSwap();
 
                 // Hide reset modal
                 this.showResetModal = false;
-
-                // TODO: optionally reload list of users/products
             },
 
             // Confirming state.
