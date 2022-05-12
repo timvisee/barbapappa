@@ -939,7 +939,7 @@ return [
         'paymentRequiresCommunityAction' => 'This payment awaits action by a community manager. If you don\'t have access to the receiving bank account, do not take action and leave this check to a group manager who does have access.',
         'cancelPayment' => 'Cancel payment',
         'cancelPaymentQuestion' => 'You\'re about to aboart this payment. Never aboart a payment for which you\'ve already transfered money, or your transfer might be lost. Are you sure you want to continue?',
-        'paymentCancelled' => 'Payment aboarted',
+        'paymentCancelled' => 'Payment aborted',
         'state' => [
             'init' => 'Initiated',
             'pendingUser' => 'Pending user action',

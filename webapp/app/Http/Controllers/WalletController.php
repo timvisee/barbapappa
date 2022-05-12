@@ -674,6 +674,20 @@ class WalletController extends Controller {
                 ])
                 ->with('error', __('pages.wallets.noServiceConfiguredCannotTopUp', ['app' => config('app.name')]));
 
+        // Get active payments to notify user about on top of top-up page
+        $requireUserAction = $user
+            ->payments()
+            ->inProgress(true)
+            ->requireUserAction()
+            ->latest('updated_at')
+            ->get();
+        $inProgress = $user
+            ->payments()
+            ->inProgress(true)
+            ->latest('updated_at')
+            ->whereNotIn('id', $requireUserAction->pluck('id'))
+            ->get();
+
         return view('community.wallet.topUp')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
@@ -681,7 +695,9 @@ class WalletController extends Controller {
             ->with('amounts', $amounts)
             ->with('services', $services)
             ->with('montly_costs', $monthly_costs)
-            ->with('redemption', $is_redemption);
+            ->with('redemption', $is_redemption)
+            ->with('requireUserAction', $requireUserAction)
+            ->with('inProgress', $inProgress);
     }
 
     /**

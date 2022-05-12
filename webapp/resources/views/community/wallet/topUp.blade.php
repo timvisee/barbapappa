@@ -21,6 +21,27 @@
         </div>
     @endif
 
+    {{-- Payment list --}}
+    @php
+        $groups = [];
+        if($requireUserAction->isNotEmpty())
+            $groups[] = [
+                'header' => trans_choice('pages.payments.requiringAction#', count($requireUserAction)),
+                'payments' => $requireUserAction,
+            ];
+        if($inProgress->isNotEmpty())
+            $groups[] = [
+                'header' => trans_choice('pages.payments.inProgress#', count($inProgress)),
+                'payments' => $inProgress,
+            ];
+    @endphp
+    @if(!empty($groups))
+        @include('payment.include.list', [
+            'groups' => $groups,
+        ])
+        <div class="ui hidden divider"></div>
+    @endif
+
     {!! Form::open(['action' => [
         'WalletController@doTopUp',
         $community->human_id,
