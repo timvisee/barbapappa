@@ -192,7 +192,7 @@ return [
         'topUps' => 'Betaald',
         'balanceImports' => 'Geïmporteerd',
         'magic' => 'Overig',
-        'subTotal' => 'Sub-totaal',
+        'subTotal' => 'Subtotaal',
         'total' => 'Totaal',
         'receiveReceiptAfterEachVisit' => 'Een bonnetje van aankopen ontvangen na elk bezoek? Zet het aan in',
     ],

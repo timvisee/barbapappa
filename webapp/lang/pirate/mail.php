@@ -192,7 +192,7 @@ return [
         'topUps' => 'Paid',
         'balanceImports' => 'Imported',
         'magic' => '\'ther',
-        'subTotal' => 'Sub-tot \'ol',
+        'subTotal' => 'Subtot \'ol',
         'total' => 'Tot \'ol',
         'receiveReceiptAfterEachVisit' => 'Receive a receipt of yer loot after each bar visit? Enable it in',
     ],
