@@ -30,6 +30,13 @@
                     <td align="right">{!! $product['cost']->formatAmount() !!}</td>
                 </tr>
             @endforeach
+            @if($receipt['others']->isNotEmpty())
+                <tr>
+                    <td></td>
+                    <td><em>@lang('mail.receipts.subTotal')</em></td>
+                    <td align="right">{!! $receipt['subTotal']->formatAmount() !!}</td>
+                </tr>
+            @endif
             <tr class="divider">
                 <td colspan="3"><hr /></td>
             </tr>
@@ -48,11 +55,6 @@
             @endforeach
             <tr class="divider">
                 <td colspan="3"><hr /></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>@lang('mail.receipts.subTotal')</td>
-                <td align="right">{!! $receipt['subTotal']->formatAmount() !!}</td>
             </tr>
         @endif
         <tr>
