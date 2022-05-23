@@ -68,7 +68,7 @@ class EconomyController extends Controller {
 
         // Redirect to the show view after creation
         return redirect()
-            ->route('community.economy.currency.create', ['communityId' => $communityId, 'economyId' => $economy->id])
+            ->route('community.economy.currency.addPreset', ['communityId' => $communityId, 'economyId' => $economy->id])
             ->with('success', __('pages.economies.economyCreated'));
     }
 
