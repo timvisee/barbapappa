@@ -385,7 +385,9 @@ class Transaction extends Model {
      */
     public function canUndo($force = false) {
         // User must have manage permissions
-        if(!$this->hasManagePermission())
+        if(!$force && !$this->hasManagePermission())
+            return false;
+        if($force && !$this->hasAdminPermission())
             return false;
 
         // All mutations must be undoable
@@ -395,7 +397,7 @@ class Transaction extends Model {
         if(!$canUndo)
             return false;
 
-        // Assert the max lifetime for undoing, return result
+        // Can undo if forcing, or when within undo time
         return $force || !$this
             ->created_at
             ->copy()
@@ -508,6 +510,30 @@ class Transaction extends Model {
             ->count() > 0;
         if($isWalletOwner)
             return true;
+
+        // Find all communities this transaction is part of, fine if manager in any
+        $communities = $this->findCommunities();
+        foreach($communities as $community)
+            if(app('perms')->evaluate(CommunityRoles::presetManager(), $community, null))
+                return true;
+
+        return false;
+    }
+
+    /**
+     * Check whether the currently authenticated user has permission to
+     * administer this transaction.
+     *
+     * Note: this is expensive.
+     *
+     * @param bool [$manage=true] True to check for management permissions,
+     *      false for just viewing permission.
+     * @return boolean True if the user can view this transaction, false if not.
+     */
+    private function hasAdminPermission() {
+        // Must have regular permission
+        if(!$this->hasPermission(true))
+            return false;
 
         // Find all communities this transaction is part of, fine if manager in any
         $communities = $this->findCommunities();
