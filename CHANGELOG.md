@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.162 (2022-06-23)
+
+- Security fix: the transaction undo button for admins was usable by non-admins if the user had ownership of that transaction
+- After economy creation, show currency presets to add, instead of showing the advanced currency creation screen
+- Fix various typos
+- Update dependencies
+
 ## 0.1.161 (2022-05-12)
 
 - On the top-up page, inform the user of currently active/processing payments
