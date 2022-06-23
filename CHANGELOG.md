@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.163 (2022-06-23)
+
+- Bump minimum PHP version to 8.1
+
 ## 0.1.162 (2022-06-23)
 
 - Security fix: the transaction undo button for admins was usable by non-admins if the user had ownership of that transaction
