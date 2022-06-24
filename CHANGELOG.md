@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.164 (2022-06-24)
+
+- Update bunq API to fix payment processing issues
+- Update dependencies
+
 ## 0.1.163 (2022-06-23)
 
 - Bump minimum PHP version to 8.1
