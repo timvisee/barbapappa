@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10b2629ef74af69690d8f95da8f2f60a",
+    "content-hash": "5c6dfff06c91c4e2320e30aa07f28ff4",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -335,17 +335,11 @@
         },
         {
             "name": "bunq/sdk_php",
-            "version": "1.20.6.14",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bunq/sdk_php.git",
-                "reference": "3e7d70cd2056c1c0d3e0317f7c7f91940c8ae8d6"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bunq/sdk_php/zipball/3e7d70cd2056c1c0d3e0317f7c7f91940c8ae8d6",
-                "reference": "3e7d70cd2056c1c0d3e0317f7c7f91940c8ae8d6",
-                "shasum": ""
+                "reference": "fd4ad5fda4e69f9f7c083c38fb1e4c6a8548b42b"
             },
             "require": {
                 "composer-plugin-api": "~1.0 || ~2.0",
@@ -372,7 +366,16 @@
                     "bunq\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "bunq\\test\\": "tests/"
+                }
+            },
+            "scripts": {
+                "phpstan": [
+                    "./vendor/bin/phpstan analyse --level 2 src"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -394,10 +397,6 @@
                 "payment",
                 "sepa"
             ],
-            "support": {
-                "issues": "https://github.com/bunq/sdk_php/issues",
-                "source": "https://github.com/bunq/sdk_php/tree/1.20.6.14"
-            },
             "time": "2022-06-13T12:43:31+00:00"
         },
         {
@@ -9177,10 +9176,10 @@
             "dist": {
                 "type": "path",
                 "url": "packages/barpay",
-                "reference": "7d94850f962c09e84f1b2dd110757451b03aa632"
+                "reference": "72484a77f3678c827ebeb6dc6cf62b200c5f8061"
             },
             "require": {
-                "bunq/sdk_php": "^1.15"
+                "bunq/sdk_php": "dev-master#fd4ad5fda4e69f9f7c083c38fb1e4c6a8548b42b"
             },
             "type": "library",
             "extra": {
@@ -11603,6 +11602,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "bunq/sdk_php": 20,
         "mariuzzo/laravel-js-localization": 20,
         "timvisee/barpay": 20
     },
