@@ -21,7 +21,11 @@
             </tr>
             <tr>
                 <td>@lang('pages.bunqAccounts.checksEnabled')</td>
-                <td>{{ yesno($account->enable_checks) }}</td>
+                @if($account->enable_checks)
+                    <td>{{ yesno($account->enable_checks) }}</td>
+                @else
+                    <td><span class="ui text negative">{{ yesno($account->enable_checks) }}</span></td>
+                @endif
             </tr>
             <tr>
                 <td>@lang('barpay::misc.accountHolder')</td>
