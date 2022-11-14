@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.165 (2022-11-14)
+
+- Block search engines from crawling sensitive links
+
 ## 0.1.164 (2022-06-24)
 
 - Update bunq API to fix payment processing issues
