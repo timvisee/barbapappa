@@ -1,2 +1,15 @@
 User-agent: *
-Disallow:
+Disallow: /_debugbar/
+Disallow: /_ignition/
+Disallow: /ajax/
+Disallow: /auth/
+Disallow: /callback/
+Disallow: /email/
+Disallow: /kiosk/
+Disallow: /language/
+Disallow: /last/
+Disallow: /manage/
+Disallow: /notifications/
+Disallow: /password/
+Disallow: /payments/
+Disallow: /transactions/
