@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.166 (2022-12-01)
+
+- Change kiosk interface to be in dark mode
+
 ## 0.1.165 (2022-11-14)
 
 - Block search engines from crawling sensitive links
