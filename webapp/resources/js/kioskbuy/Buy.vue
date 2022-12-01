@@ -596,7 +596,13 @@
         line-height: 2;
     }
 
-    .ui.grid.inverted .column:first-child {
-        border-right: 1px solid #2d2e2f;
+    @media only screen and (max-width:767px) {
+        .ui.grid.inverted .column {
+            border-bottom: 1px solid #2d2e2f;
+
+            &:first-child {
+                border-right: 1px solid #2d2e2f;
+            }
+        }
     }
 </style>
