@@ -1,18 +1,18 @@
 <template>
-    <div class="ui vertical huge menu fluid panel-products">
+    <div class="ui vertical huge menu inverted fluid panel-products">
 
         <div v-if="!swapped && selectedUsers.length == 0"
                 v-on:click="hintUsers()"
-                class="ui inverted active dimmer">
-            <div class="ui text">
+                class="ui active dimmer">
+            <div class="ui text inverted">
                 {{ __('pages.kiosk.firstSelectUser') }}
 
                 <div class="ui hidden divider"></div>
-                <div class="ui horizontal divider">{{ __('general.or') }}</div>
+                <div class="ui horizontal divider hidden"></div>
                 <div class="ui hidden divider"></div>
 
                 <a v-on:click.stop.prevent="swap()"
-                        class="ui big button"
+                        class="ui big button secondary inverted"
                         href="#">
                     {{ __('pages.kiosk.productMode') }}
                 </a>
@@ -91,13 +91,13 @@
                     <a href="#"
                             v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button">
+                            class="ui large button black">
                         <i class="glyphicons glyphicons-hash"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            v-bind:class="{ red: !isSelectMode(), black: isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -124,7 +124,7 @@
 
             <div v-if="getQuantity(product) == 0" class="item-label">
                 <div class="ui label"
-                        v-bind:class="{ blue: !product.exhausted }">
+                        v-bind:class="{ blue: !product.exhausted, black: product.exhausted}">
                     {{ product.price_display }}
                 </div>
             </div>
@@ -134,13 +134,13 @@
                     <a href="#"
                             v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button">
+                            class="ui large button black">
                         <i class="glyphicons glyphicons-hash"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            v-bind:class="{ red: !isSelectMode(), black: isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -179,13 +179,13 @@
                     <a href="#"
                             v-on:click.stop.prevent="quantityModal(product)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button">
+                            class="ui large button black">
                         <i class="glyphicons glyphicons-hash"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="setQuantity(product, 0)"
-                            v-bind:class="{ red: !isSelectMode(), grey: isSelectMode(), disabled: buying }"
+                            v-bind:class="{ red: !isSelectMode(), black: isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -443,6 +443,11 @@
         font-weight: bold !important;
     }
 
+    /* Inverted colors */
+    .kiosk-select-item.active {
+        background: rgba(33, 186, 69, 0.45) !important;
+    }
+
     /* Prominent items on top of product list */
     .kiosk-select-item.prominent {
         font-size: 1.15em;
@@ -464,7 +469,8 @@
     }
     .kiosk-select-item.prominent:nth-of-type(5n+1).active {
         color: #db2828 !important;
-        background: rgba(219, 40, 40, 0.05) !important;
+        /* background: rgba(219, 40, 40, 0.05) !important; */
+        background: rgba(219, 40, 40, 0.45) !important;
     }
 
     .kiosk-select-item.prominent:nth-of-type(5n+2) {
@@ -475,7 +481,8 @@
     }
     .kiosk-select-item.prominent:nth-of-type(5n+2).active {
         color: #f2711c !important;
-        background: rgba(242, 113, 28, 0.05) !important;
+        /* background: rgba(242, 113, 28, 0.05) !important; */
+        background: rgba(242, 113, 28, 0.45) !important;
     }
 
     .kiosk-select-item.prominent:nth-of-type(5n+3) {
@@ -486,7 +493,8 @@
     }
     .kiosk-select-item.prominent:nth-of-type(5n+3).active {
         color: #fbbd08 !important;
-        background: rgba(251, 189, 8, 0.05) !important;
+        /* background: rgba(251, 189, 8, 0.05) !important; */
+        background: rgba(251, 189, 8, 0.45) !important;
     }
 
     .kiosk-select-item.prominent:nth-of-type(5n+4) {
@@ -497,7 +505,8 @@
     }
     .kiosk-select-item.prominent:nth-of-type(5n+4).active {
         color: #b5cc18 !important;
-        background: rgba(181, 204, 24, 0.05) !important;
+        /* background: rgba(181, 204, 24, 0.05) !important; */
+        background: rgba(181, 204, 24, 0.45) !important;
     }
 
     .kiosk-select-item.prominent:nth-of-type(5n+5) {
@@ -508,7 +517,8 @@
     }
     .kiosk-select-item.prominent:nth-of-type(5n+5).active {
         color: #21ba45 !important;
-        background: rgba(33, 186, 69, 0.05) !important;
+        /* background: rgba(33, 186, 69, 0.05) !important; */
+        background: rgba(33, 186, 69, 0.45) !important;
     }
 
     .kiosk-select-item.prominent .item-buttons .button {
@@ -543,10 +553,35 @@
     }
 </style>
 
-<style scoped>
+<style lang="scss" scoped>
     .ui.vertical.menu .halflings {
         line-height: 0.6;
         margin-right: 0.5em;
+    }
+
+    /* Inverted colors */
+    .menu.inverted .item .ui.button.black {
+        background: #1b1c1d80;
+
+        &:hover,
+        &:active,
+        &:focus {
+            background: #1b1c1db0;
+        }
+    }
+
+    .kiosk-select-item.disabled:not(.active) .item-text,
+    .kiosk-select-item.disabled:not(.active) .item-label .ui.label.black {
+        color: #686869 !important;
+    }
+
+    .ui.text.inverted {
+        color: #fff;
+    }
+
+    .ui.input input,
+    .subtle.quantity {
+        color: lightgray;
     }
 </style>
 

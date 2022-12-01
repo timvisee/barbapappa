@@ -92,3 +92,14 @@ a.toolbar-btn-message:active {
     background: rgba(0, 0, 0, 0.15);
   }
 }
+
+// Inverted colors
+.toolbar.inverted {
+    background: #1b1c1d;
+    border-bottom: 1px solid #2d2e2f;
+
+    .glyphicons,
+    img {
+        filter: invert(0.7);
+    }
+}

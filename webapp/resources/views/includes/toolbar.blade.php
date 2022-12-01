@@ -1,4 +1,4 @@
-<div class="toolbar">
+<div class="toolbar {{ ($layout_dark_mode ?? false) ? 'inverted' : '' }}">
 
     <div class="left">
         <a href="#"

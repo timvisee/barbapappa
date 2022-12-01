@@ -1,0 +1,27 @@
+.pushable .pusher.inverted {
+    background: #1b1c1d;
+}
+
+.ui.menu.inverted .icon.link .glyphicons {
+    filter: invert(0.7);
+}
+
+.inverted.transition.glow {
+    -webkit-animation-name: glow-inverted;
+    animation-name: glow-inverted;
+}
+
+@keyframes glow-inverted {
+    0% {
+        /* background-color: #fcfcfd; */
+        background-color: #806413;
+    }
+    30% {
+        /* background-color: #fff6cd; */
+        background-color: blend-normal(#806413, #1b1c1d);
+    }
+    100% {
+        /* background-color: #fcfcfd; */
+        background-color: #1b1c1d;
+    }
+}
