@@ -66,8 +66,8 @@
     @include('includes.sidebarMainMenu')
     @include('includes.sidebarMessages')
 
-    <div class="pusher">
-        @include('includes.toolbar')
+    <div class="pusher {{ ($layout_dark_mode ?? false) ? 'inverted' : '' }}">
+        @include('includes.toolbar', ['layout_dark_mode' => $layout_dark_mode ?? false])
 
         <div class="ui container page">
             @if(!isset($dontLeak) || !$dontLeak)

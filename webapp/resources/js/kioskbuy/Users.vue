@@ -1,18 +1,18 @@
 <template>
-    <div class="ui vertical huge menu fluid panel-users">
+    <div class="ui vertical huge menu inverted fluid panel-users">
 
         <div v-if="swapped && selectedProducts.length == 0"
                 v-on:click="hintProducts()"
-                class="ui inverted active dimmer">
-            <div class="ui text">
+                class="ui active dimmer">
+            <div class="ui text inverted">
                 {{ __('pages.kiosk.firstSelectProduct') }}
 
                 <div class="ui hidden divider"></div>
-                <div class="ui horizontal divider">{{ __('general.or') }}</div>
+                <div class="ui horizontal divider hidden"></div>
                 <div class="ui hidden divider"></div>
 
                 <a v-on:click.stop.prevent="swap()"
-                        class="ui big button"
+                        class="ui big button secondary inverted"
                         href="#">
                     {{ __('pages.kiosk.userMode') }}
                 </a>
@@ -94,13 +94,13 @@
                             v-if="swapped"
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button">
+                            class="ui large button black">
                         <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            v-bind:class="{ black: isSelectMode(), red: !isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -134,13 +134,13 @@
                             v-if="swapped"
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button">
+                            class="ui large button black">
                         <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            v-bind:class="{ black: isSelectMode(), red: !isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -176,13 +176,13 @@
                             v-if="swapped"
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button">
+                            class="ui large button black">
                         <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
+                            v-bind:class="{ black: isSelectMode(), red: !isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -456,5 +456,30 @@
     .ui.vertical.menu .halflings {
         line-height: 0.6;
         margin-right: 0.5em;
+    }
+
+    /* Inverted colors */
+    .menu.inverted .item .ui.button.black {
+        background: #1b1c1d80;
+
+        &:hover,
+        &:active,
+        &:focus {
+            background: #1b1c1db0;
+        }
+    }
+
+    .kiosk-select-item.disabled:not(.active) .item-text,
+    .kiosk-select-item.disabled:not(.active) .item-label .ui.label.black {
+        color: #686869 !important;
+    }
+
+    .ui.text.inverted {
+        color: #fff;
+    }
+
+    .ui.input input,
+    .subtle.quantity {
+        color: lightgray;
     }
 </style>

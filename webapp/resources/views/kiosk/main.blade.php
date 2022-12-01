@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['layout_dark_mode' => true])
 
 @section('title', __('misc.kiosk') . ': ' . $bar->name)
 
@@ -25,7 +25,7 @@
 
 @section('content')
     <div id="kioskbuy">
-        <div v-if="refreshing" class="ui active centered large text loader">
+        <div v-if="refreshing" class="ui active centered large text loader inverted">
             @lang('pages.kiosk.loading')...
         </div>
     </div>

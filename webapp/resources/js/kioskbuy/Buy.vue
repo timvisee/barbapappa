@@ -40,7 +40,7 @@
             </div>
 
             <!-- Users and product list, reverse if swapped -->
-            <div class="ui grid">
+            <div class="ui grid inverted">
                 <div v-if="!swapped" class="seven wide column inline">
                     <Users
                             ref="users"
@@ -594,5 +594,15 @@
         font-size: 2em;
         padding: 1em;
         line-height: 2;
+    }
+
+    @media only screen and (max-width:767px) {
+        .ui.grid.inverted .column {
+            border-bottom: 1px solid #2d2e2f;
+
+            &:first-child {
+                border-right: 1px solid #2d2e2f;
+            }
+        }
     }
 </style>
