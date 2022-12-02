@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.167 (2022-12-02)
+
+- Use dark PWA, webmanifest and theme color when in dark mode
+- Improve visuals and alignment of kiosk mode quantity selection modal
+- Improve visuals and alignment of kiosk mode swap buttons
+- Use blue selection color in kiosk mode
+- Change kiosk mode glow effect to blue color
+- Update dependencies
+
 ## 0.1.166 (2022-12-01)
 
 - Change kiosk interface to be in dark mode
