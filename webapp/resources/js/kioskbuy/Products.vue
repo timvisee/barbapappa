@@ -12,8 +12,9 @@
                 <div class="ui hidden divider"></div>
 
                 <a v-on:click.stop.prevent="swap()"
-                        class="ui big button secondary inverted"
+                        class="ui big button basic primary inverted mode-swap"
                         href="#">
+                    <i class="halflings halflings-reflect-y"></i>
                     {{ __('pages.kiosk.productMode') }}
                 </a>
             </div>
@@ -557,6 +558,15 @@
     .ui.vertical.menu .halflings {
         line-height: 0.6;
         margin-right: 0.5em;
+    }
+
+    .ui.button.mode-swap {
+        padding-left: 1em;
+        padding-right: 1em;
+
+        .halflings {
+            top: 2px;
+        }
     }
 
     /* Inverted colors */
