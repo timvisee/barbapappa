@@ -1115,6 +1115,7 @@ return [
         'userMode' => 'Gebruiker modus',
         'backToKiosk' => 'Terug naar kiosk',
         'noConnectionBanner' => 'Geen verbinding! Sleep naar beneden om te verversen.',
+        'changeQuantity' => 'Hoeveelheid aanpassen',
     ],
 
     /**

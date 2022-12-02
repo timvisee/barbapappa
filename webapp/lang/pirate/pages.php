@@ -1113,6 +1113,7 @@ return [
         'userMode' => 'Pirate mode',
         'backToKiosk' => 'Back to kiosk',
         'noConnectionBanner' => 'Connection errrror! Pull the page down to refresh.',
+        'changeQuantity' => 'Change quantity',
     ],
 
     /**
