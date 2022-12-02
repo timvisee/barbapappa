@@ -1,0 +1,44 @@
+{
+  "name": "Barbapappa",
+  "short_name": "BarApp",
+  "description": "Bar management application to manage transactions and inventory.",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/img/logo/logo_square.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/logo/logo_maskable_icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/img/logo/logo_square_x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "/dashboard",
+      "description": "Your personal dashboard"
+    },
+    {
+      "name": "Back to bar",
+      "url": "/last",
+      "description": "Navigate back to your last bar"
+    },
+    {
+      "name": "Account",
+      "url": "/account",
+      "description": "Your account preferences"
+    }
+  ],
+  "background_color": "#1b1c1d",
+  "theme_color": "#1b1c1d"
+}

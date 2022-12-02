@@ -6,7 +6,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="HandheldFriendly" content="True">
-    <meta name="theme-color" content="#e9e9e9">
+    @unless($layout_dark_mode ?? false)
+        <meta name="theme-color" content="#e9e9e9">
+    @else
+        <meta name="theme-color" content="#1b1c1d">
+    @endif
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/img/logo/logo_apple_touch_icon.png">
 
@@ -14,7 +18,11 @@
     <meta name="author" content="{{ config('app.author') }}">
     <meta name="description" content="{{ config('app.description') }}">
     <meta name="keywords" content="{{ config('app.keywords') }}">
-    <link rel="manifest" href="/manifest.webmanifest">
+    @unless($layout_dark_mode ?? false)
+        <link rel="manifest" href="/manifest.webmanifest">
+    @else
+        <link rel="manifest" href="/manifest-dark.webmanifest">
+    @endif
 
     {{-- CSRF Token --}}
     <meta name="csrf-token" content="{{ csrf_token() }}" />
