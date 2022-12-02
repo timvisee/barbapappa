@@ -13,15 +13,12 @@
 
 @keyframes glow-inverted {
     0% {
-        /* background-color: #fcfcfd; */
-        background-color: #806413;
+        background-color: #00b6f0;
     }
     30% {
-        /* background-color: #fff6cd; */
-        background-color: blend-normal(#806413, #1b1c1d);
+        background-color: blend-normal(#00b6f0, #1b1c1d);
     }
     100% {
-        /* background-color: #fcfcfd; */
         background-color: #1b1c1d;
     }
 }
