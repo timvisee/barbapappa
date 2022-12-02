@@ -5,50 +5,58 @@
                     @click="quantity = 1 + Math.floor(Math.random() * 10);"></i>
         </div>
         <div class="content">
-            <p>
-                <slot name="header">
-                    <div class="ui huge inverted form">
-                        <div class="quantity-ticker">
-                            <button class="ui left attached inverted huge negative button"
-                                    v-bind:class="{ disabled: quantity <= 0 }"
-                                    @click="changeQuantity(-1)">
-                                <i class="glyphicons glyphicons-minus"></i>
-                            </button>
-                            <input
-                                    type="number"
-                                    inputmode="numeric"
-                                    pattern="[0-9]*"
-                                    min="0"
-                                    max="100"
-                                    v-model="quantity"
-                                    class="attached"
-                                    @focus="e => e.target.select()"
-                                    @keyup.enter.stop.prevent="hide">
-                            <button class="ui right attached inverted huge positive button"
-                                    @click="changeQuantity(+1)">
-                                <i class="glyphicons glyphicons-plus"></i>
-                            </button>
+
+            <div class="ui grid display-inline-block">
+                <div class="row">
+                    <div class="column">
+                        <div class="ui huge form">
+                            <div class="quantity-ticker">
+                                <button class="ui left attached huge negative button"
+                                        v-bind:class="{ disabled: quantity <= 0 }"
+                                        @click="changeQuantity(-1)">
+                                    <i class="glyphicons glyphicons-minus"></i>
+                                </button>
+                                <input
+                                        type="number"
+                                        inputmode="numeric"
+                                        pattern="[0-9]*"
+                                        min="0"
+                                        max="100"
+                                        v-model="quantity"
+                                        class="ui fluid huge attached"
+                                        @focus="e => e.target.select()"
+                                        @keyup.enter.stop.prevent="hide">
+                                <button class="ui right attached huge positive button"
+                                        @click="changeQuantity(+1)">
+                                    <i class="glyphicons glyphicons-plus"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </slot>
-            </p>
+                </div>
 
-            <div style="text-align: center;">
-                <div v-for="qq in quantities">
-                    <button v-for="q in qq"
-                            class="ui huge inverted basic primary button quantity-button"
-                            v-on:click.prevent.stop="quantity = q"
-                            v-on:dblclick.prevent.stop="hide()">
-                        {{ q }}
-                    </button>
+                <div class="four column row" v-for="qq in quantities">
+                    <div class="column" v-for="q in qq">
+                        <button
+                                class="fluid ui huge inverted basic primary button quantity-button"
+                                v-on:click.prevent.stop="quantity = q"
+                                v-on:dblclick.prevent.stop="hide()">
+                            {{ q }}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="column">
+                        <div class="fluid ui primary ok huge inverted button"
+                                @click.prevent.stop="hide()">
+                            <i class="checkmark icon"></i>
+                            {{ __('pages.kiosk.changeQuantity') }}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="actions">
-            <div class="ui green ok huge inverted button">
-                <i class="checkmark icon"></i>
-                {{ __('general.accept') }}
-            </div>
+
         </div>
     </div>
 </template>
@@ -131,15 +139,13 @@
 
     .quantity-button {
         text-align: center;
-        width: 3em;
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-        margin: 0.5em !important;
+        padding-left: 1em !important;
+        padding-right: 1em !important;
     }
 
     .quantity-ticker {
         display: flex;
-        justify-content: center;
+        justify-content: stretch;
     }
 
     .quantity-ticker .button {
@@ -149,9 +155,13 @@
     }
 
     .quantity-ticker input {
+        flex-grow: 1;
         border-radius: 0 !important;
         width: 8em !important;
         text-align: center;
+        background: #1b1c1d !important;
+        color: #fff !important;
+        font-family: sans-serif;
     }
 
     /* Chrome, Safari, Edge, Opera */
@@ -163,15 +173,6 @@
 
     /* Firefox */
     .quantity-ticker input[type=number] {
-        -moz-appearance: textfield;
-    }
-
-    .ui.modal > .actions {
-        padding-top: 0 !important;
-        text-align: center !important;
-    }
-
-    .actions .button {
-        margin: 0 !important;
+        -moz-appearance: textfield !important;
     }
 </style>

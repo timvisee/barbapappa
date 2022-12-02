@@ -1114,6 +1114,7 @@ return [
         'userMode' => 'User mode',
         'backToKiosk' => 'Back to kiosk',
         'noConnectionBanner' => 'No connection! Pull the page down to refresh.',
+        'changeQuantity' => 'Change quantity',
     ],
 
     /**
