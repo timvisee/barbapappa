@@ -445,7 +445,7 @@
 
     /* Inverted colors */
     .kiosk-select-item.active {
-        background: rgba(33, 186, 69, 0.45) !important;
+        background: rgba(0, 182, 240, 0.45) !important;
     }
 
     /* Prominent items on top of product list */
