@@ -12,7 +12,7 @@
                 <div class="ui hidden divider"></div>
 
                 <a v-on:click.stop.prevent="swap()"
-                        class="ui big button basic primary inverted mode-swap"
+                        class="ui big button basic primary inverted dimmer-swap"
                         href="#">
                     <i class="halflings halflings-reflect-y"></i>
                     {{ __('pages.kiosk.productMode') }}
@@ -560,7 +560,7 @@
         margin-right: 0.5em;
     }
 
-    .ui.button.mode-swap {
+    .ui.button.dimmer-swap {
         padding-left: 1em;
         padding-right: 1em;
 
@@ -607,11 +607,12 @@
 
         display: block;
         padding: 13px 5px 13px 5px;
-        border-left: 1px solid rgba(34,36,38,.15);
+        border-left: 1px solid rgba(255, 255, 255, .08);
         transition: background .1s ease, color .1s ease;
 
         .glyphicons,
         .halflings {
+            top: 0px;
             width: 30px;
             height: 14px;
             margin: -1px 0 0 0;
