@@ -80,6 +80,7 @@ class BarController extends Controller {
             'name' => $request->input('name'),
             'slug' => $request->has('slug') ? $request->input('slug') : null,
             'description' => $request->input('description'),
+            'enabled' => is_checked($request->input('enabled')),
             'password' => $request->has('password') ? $request->input('password') : null,
             'show_explore' => is_checked($request->input('show_explore')),
             'show_community' => is_checked($request->input('show_community')),
@@ -458,6 +459,7 @@ class BarController extends Controller {
         $bar->name = $request->input('name');
         $bar->slug = $request->has('slug') ? $request->input('slug') : null;
         $bar->description = $request->input('description');
+        $bar->enabled = is_checked($request->input('enabled'));
         $bar->password = $request->has('password') ? $request->input('password') : null;
         $bar->show_explore = is_checked($request->input('show_explore'));
         $bar->show_community = is_checked($request->input('show_community'));
