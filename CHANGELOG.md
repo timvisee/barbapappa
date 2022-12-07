@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.168 (2022-12-07)
+
+- Add toggle to disable bar
+- Prevent purchases on disabled bar, redirect to dashboard
+- Disable kiosk for disabled bar
+
 ## 0.1.167 (2022-12-02)
 
 - Use dark PWA, webmanifest and theme color when in dark mode
