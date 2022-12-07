@@ -80,6 +80,7 @@ class BarController extends Controller {
             'name' => $request->input('name'),
             'slug' => $request->has('slug') ? $request->input('slug') : null,
             'description' => $request->input('description'),
+            'enabled' => is_checked($request->input('enabled')),
             'password' => $request->has('password') ? $request->input('password') : null,
             'show_explore' => is_checked($request->input('show_explore')),
             'show_community' => is_checked($request->input('show_community')),
@@ -458,6 +459,7 @@ class BarController extends Controller {
         $bar->name = $request->input('name');
         $bar->slug = $request->has('slug') ? $request->input('slug') : null;
         $bar->description = $request->input('description');
+        $bar->enabled = is_checked($request->input('enabled'));
         $bar->password = $request->has('password') ? $request->input('password') : null;
         $bar->show_explore = is_checked($request->input('show_explore'));
         $bar->show_community = is_checked($request->input('show_community'));
@@ -621,6 +623,13 @@ class BarController extends Controller {
         // Get the bar
         $bar = \Request::get('bar');
         $product = $bar->economy->products()->findOrFail(\Request::input('product_id'));
+
+        // Error if bar is disabled
+        if(!$bar->enabled) {
+            return redirect()
+                ->back()
+                ->with('error', __('pages.bar.disabled'));
+        }
 
         // Quick buy the product, format the price
         $details = $this->quickBuyProduct($bar, $product);
@@ -844,6 +853,13 @@ class BarController extends Controller {
         $economy = $bar->economy;
         $cart = collect($request->post());
         $self = $this;
+
+        // Error if bar is disabled
+        if(!$bar->enabled) {
+            return response()->json([
+                'message' => __('pages.bar.disabled'),
+            ])->setStatusCode(403);
+        }
 
         // Do everything in a database transaction
         $productCount = 0;

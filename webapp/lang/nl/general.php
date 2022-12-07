@@ -27,6 +27,7 @@ return [
     'of' => 'van',
     'cancel' => 'Annuleren',
     'recommended' => 'Aanbevolen',
+    'enabled' => 'Ingeschakeld',
 
     'notYetImplemented' => 'Nog niet geimplementeerd.',
 ];

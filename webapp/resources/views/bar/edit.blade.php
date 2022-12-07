@@ -24,6 +24,17 @@
 
         <div class="ui divider"></div>
 
+        <div class="inline field {{ ErrorRenderer::hasError('enabled') ? 'error' : '' }}">
+            <div class="ui checkbox">
+                {{ Form::checkbox('enabled', true, $bar->enabled, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('enabled', __('general.enabled')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('enabled') }}
+        </div>
+
+        <div class="ui divider"></div>
+
         <div class="ui message">
             <div class="header">@lang('misc.slug')</div>
             <p>@lang('pages.bar.slugDescription')</p>

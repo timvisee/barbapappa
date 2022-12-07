@@ -40,6 +40,7 @@ return [
         'yourPersonalDashboard' => 'Ye home port',
         'noBarsOrCommunities' => 'No bars \'o crews',
         'nothingHereNoMemberUseExploreButtons' => 'There be nothing to show here \'cause ye be no matey of any bar \'o crew. Find yer using th\' buttons.',
+        'backToDashboard' => 'Back to home port',
     ],
 
     /**
@@ -1030,6 +1031,8 @@ return [
         'exportPurchasesTitle' => 'Export purchases',
         'exportPurchasesDescription' => 'Dis page allows ye to export all purchases made in dis bar to a file.',
         'noPurchases' => 'No purchases',
+        'disabled' => 'Dis bar be disabled by another pirate.',
+        'disabledGotoDashboard' => 'Dis bar be disabled by another pirate. Go to yer home port to find yer current bar.',
         'poster' => [
             'thisBarUses' => 'Dis bar uses',
             'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',

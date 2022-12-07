@@ -27,6 +27,7 @@ return [
     'of' => 'of',
     'cancel' => 'Cancel',
     'recommended' => 'Recommended',
+    'enabled' => 'Enabled',
 
     'notYetImplemented' => 'Not yet implemented.',
 ];

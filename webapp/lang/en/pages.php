@@ -40,6 +40,7 @@ return [
         'yourPersonalDashboard' => 'Your personal dashboard',
         'noBarsOrCommunities' => 'No bars or communities',
         'nothingHereNoMemberUseExploreButtons' => 'There\'s nothing to show here because you aren\'t a member of any bar or community yet. Find yours using the following buttons.',
+        'backToDashboard' => 'Back to dashboard',
     ],
 
     /**
@@ -1031,6 +1032,8 @@ return [
         'exportPurchasesTitle' => 'Export purchases',
         'exportPurchasesDescription' => 'This page allows you to export all purchases made in this bar to a file.',
         'noPurchases' => 'No purchases',
+        'disabled' => 'This bar has been disabled by an administrator.',
+        'disabledGotoDashboard' => 'This bar has been disabled by an administrator. Go to the dashboard to find your current bar.',
         'poster' => [
             'thisBarUses' => 'This bar uses',
             'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',

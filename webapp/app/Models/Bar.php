@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\DB;
  * @property int economy_id
  * @property string|null slug
  * @property string|null description
+ * @property bool enabled
  * @property bool show_explore
  * @property bool show_community
  * @property bool self_enroll
@@ -51,6 +52,7 @@ class Bar extends Model {
         'economy_id',
         'name',
         'slug',
+        'enabled',
         'password',
         'show_explore',
         'show_community',

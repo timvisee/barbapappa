@@ -86,7 +86,7 @@ class PagesController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function last() {
-        // Obtain the users last bar ID, visit the page if any was found
+        // Obtain the users last bar ID, visit the page if any was found and enabled
         $bar = Bar::find(
             \DB::table('bar_member')
                 ->where('user_id', barauth()->getSessionUser()->id)
@@ -95,7 +95,7 @@ class PagesController extends Controller {
                 ->pluck('bar_id')
                 ->first()
         );
-        if($bar != null)
+        if($bar != null && $bar->enabled)
             return redirect()->route('bar.show', ['barId' => $bar->human_id]);
 
         // No last bar, visit the dashboard and tell the user

@@ -31,15 +31,27 @@
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
-    <div class="ui two item menu">
-        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forMe')</a>
-        <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}" class="item active">@lang('pages.bar.buy.forOthers')</a>
-    </div>
+    @if($bar->enabled)
+        <div class="ui two item menu">
+            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forMe')</a>
+            <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}" class="item active">@lang('pages.bar.buy.forOthers')</a>
+        </div>
 
-    <div id="advancedbuy">
-        <div class="ui active centered large loader"></div>
-    </div>
+        <div id="advancedbuy">
+            <div class="ui active centered large loader"></div>
+        </div>
 
-    <br>
-    <br>
+        <br>
+        <br>
+    @else
+        <div class="ui warning message">
+            <span class="halflings halflings-warning-sign icon"></span>
+            @lang('pages.bar.disabledGotoDashboard')
+        </div>
+
+        <a href="{{ route('dashboard') }}"
+                class="ui button basic">
+            @lang('pages.dashboard.backToDashboard')
+        </a>
+    @endif
 @endsection
