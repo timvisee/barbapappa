@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Bar;
 use App\Models\Currency;
 use App\Models\EconomyMember;
-use App\Models\InventoryItemChange;
 use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
@@ -560,6 +559,13 @@ class KioskController extends Controller {
         $economy = $bar->economy;
         $cart = collect($request->post());
         $self = $this;
+
+        // Error if bar is disabled
+        if(!$bar->enabled) {
+            return response()->json([
+                'message' => __('pages.bar.disabled'),
+            ])->setStatusCode(403);
+        }
 
         // Do everything in a database transaction
         $productCount = 0;

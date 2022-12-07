@@ -24,9 +24,16 @@
 @endpush
 
 @section('content')
-    <div id="kioskbuy">
-        <div v-if="refreshing" class="ui active centered large text loader inverted">
-            @lang('pages.kiosk.loading')...
+    @if($bar->enabled)
+        <div id="kioskbuy">
+            <div v-if="refreshing" class="ui active centered large text loader inverted">
+                @lang('pages.kiosk.loading')...
+            </div>
         </div>
-    </div>
+    @else
+        <div class="ui error message">
+            <span class="halflings halflings-exclamation-sign icon"></span>
+            @lang('pages.bar.disabled')
+        </div>
+    @endif
 @endsection
