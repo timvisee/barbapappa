@@ -91,7 +91,7 @@
                         window.scrollTo(0, 0);
                     })
                     .catch(err => {
-                        alert('Failed to purchase products, an error occurred');
+                        alert(err.response.data.message ?? 'Failed to purchase products, an error occurred');
                         console.error(err);
                     })
                     .finally(() => this.buying = false);

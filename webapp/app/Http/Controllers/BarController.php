@@ -624,6 +624,13 @@ class BarController extends Controller {
         $bar = \Request::get('bar');
         $product = $bar->economy->products()->findOrFail(\Request::input('product_id'));
 
+        // Error if bar is disabled
+        if(!$bar->enabled) {
+            return redirect()
+                ->back()
+                ->with('error', __('pages.bar.disabled'));
+        }
+
         // Quick buy the product, format the price
         $details = $this->quickBuyProduct($bar, $product);
         $transaction = $details['transaction'];
@@ -846,6 +853,13 @@ class BarController extends Controller {
         $economy = $bar->economy;
         $cart = collect($request->post());
         $self = $this;
+
+        // Error if bar is disabled
+        if(!$bar->enabled) {
+            return response()->json([
+                'message' => __('pages.bar.disabled'),
+            ])->setStatusCode(403);
+        }
 
         // Do everything in a database transaction
         $productCount = 0;
