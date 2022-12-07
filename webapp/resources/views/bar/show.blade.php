@@ -33,107 +33,119 @@
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
-    <div class="ui two item menu">
-        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item active">@lang('pages.bar.buy.forMe')</a>
-        <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forOthers')</a>
-    </div>
-
-    {{-- Quick buy list --}}
-    <div id="quickbuy" class="ui large vertical menu fluid">
-        {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET']) !!}
-            <div class="item">
-                <div class="ui transparent icon input">
-                    {{ Form::search('q', Request::input('q'), [
-                        'id' => 'quickbuy-search',
-                        'placeholder' => __('pages.products.clickBuyOrSearch') . '...',
-                        'autocomplete' => 'off',
-                    ]) }}
-                    <i class="icon link">
-                        <span class="glyphicons glyphicons-search"></span>
-                    </i>
-                </div>
-            </div>
-        {!! Form::close() !!}
-
-        @forelse($products as $product)
-            {!! Form::open(['action' => [
-                'BarController@quickBuy',
-                $bar->human_id,
-            ], 'method' => 'POST']) !!}
-                {!! Form::hidden('product_id', $product->id) !!}
-                <a href="#" onclick="event.preventDefault();this.parentNode.submit()" class="item">
-                    {{ $product->displayName() }}
-                    {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
-                </a>
-            {!! Form::close() !!}
-        @empty
-            <i class="item">@lang('pages.products.noProducts')</i>
-        @endforelse
-
-        <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
-                class="ui large bottom attached button">
-            @lang('pages.products.all')...
-        </a>
-    </div>
-
-    {{-- Recently bought products list --}}
-    @if($productMutations->isNotEmpty())
-        <div class="ui large top vertical menu fluid">
-            <h5 class="ui item header">
-                {{ trans_choice('pages.products.recentlyBoughtProducts#', $productMutations->sum('quantity')) }}
-            </h5>
-
-            @foreach($productMutations as $productMutation)
-                @php
-                    $self = barauth()->getUser()->id == $productMutation->mutation->owner_id;
-                    $linkTransaction = $self || perms(BarController::permsManage());
-                    $linkProduct = $productMutation->product_id != null;
-                @endphp
-
-                @if($linkTransaction || $linkProduct)
-                    <a class="item"
-                        href="{{ $linkTransaction ? route('transaction.show', [
-                            'transactionId' => $productMutation->mutation->transaction_id,
-                        ]) : route('bar.product.show', [
-                            'barId' => $bar->human_id,
-                            'productId' => $productMutation->product_id,
-                        ])}}">
-                @else
-                    <div class="item">
-                @endif
-
-                    @if($productMutation->quantity != 1)
-                        <span class="subtle">{{ $productMutation->quantity }}×</span>
-                    @endif
-
-                    {{ ($product = $productMutation->product) ?  $product->displayName() : __('pages.products.unknownProduct') }}
-                    {!! $productMutation->mutation->formatAmount(BALANCE_FORMAT_LABEL, [
-                        'color' => $self,
-                    ]) !!}
-
-                    @if($productMutation->mutation->owner_id)
-                        <span class="subtle">
-                            @lang('misc.by') {{ $productMutation->mutation->owner->first_name }}
-                        </span>
-                    @endif
-
-                    <span class="sub-label">
-                        @include('includes.humanTimeDiff', ['time' => $productMutation->updated_at ?? $productMutation->created_at, 'short' => true])
-                    </span>
-
-                @if($linkTransaction || $linkProduct)
-                    </a>
-                @else
-                    </div>
-                @endif
-            @endforeach
-
-            @if(perms(BarController::permsManage()))
-                <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                        class="ui large bottom attached button">
-                    @lang('pages.bar.allPurchases')...
-                </a>
-            @endif
+    @if($bar->enabled)
+        <div class="ui two item menu">
+            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item active">@lang('pages.bar.buy.forMe')</a>
+            <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forOthers')</a>
         </div>
+
+        {{-- Quick buy list --}}
+        <div id="quickbuy" class="ui large vertical menu fluid">
+            {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET']) !!}
+                <div class="item">
+                    <div class="ui transparent icon input">
+                        {{ Form::search('q', Request::input('q'), [
+                            'id' => 'quickbuy-search',
+                            'placeholder' => __('pages.products.clickBuyOrSearch') . '...',
+                            'autocomplete' => 'off',
+                        ]) }}
+                        <i class="icon link">
+                            <span class="glyphicons glyphicons-search"></span>
+                        </i>
+                    </div>
+                </div>
+            {!! Form::close() !!}
+
+            @forelse($products as $product)
+                {!! Form::open(['action' => [
+                    'BarController@quickBuy',
+                    $bar->human_id,
+                ], 'method' => 'POST']) !!}
+                    {!! Form::hidden('product_id', $product->id) !!}
+                    <a href="#" onclick="event.preventDefault();this.parentNode.submit()" class="item">
+                        {{ $product->displayName() }}
+                        {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
+                    </a>
+                {!! Form::close() !!}
+            @empty
+                <i class="item">@lang('pages.products.noProducts')</i>
+            @endforelse
+
+            <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
+                    class="ui large bottom attached button">
+                @lang('pages.products.all')...
+            </a>
+        </div>
+
+        {{-- Recently bought products list --}}
+        @if($productMutations->isNotEmpty())
+            <div class="ui large top vertical menu fluid">
+                <h5 class="ui item header">
+                    {{ trans_choice('pages.products.recentlyBoughtProducts#', $productMutations->sum('quantity')) }}
+                </h5>
+
+                @foreach($productMutations as $productMutation)
+                    @php
+                        $self = barauth()->getUser()->id == $productMutation->mutation->owner_id;
+                        $linkTransaction = $self || perms(BarController::permsManage());
+                        $linkProduct = $productMutation->product_id != null;
+                    @endphp
+
+                    @if($linkTransaction || $linkProduct)
+                        <a class="item"
+                            href="{{ $linkTransaction ? route('transaction.show', [
+                                'transactionId' => $productMutation->mutation->transaction_id,
+                            ]) : route('bar.product.show', [
+                                'barId' => $bar->human_id,
+                                'productId' => $productMutation->product_id,
+                            ])}}">
+                    @else
+                        <div class="item">
+                    @endif
+
+                        @if($productMutation->quantity != 1)
+                            <span class="subtle">{{ $productMutation->quantity }}×</span>
+                        @endif
+
+                        {{ ($product = $productMutation->product) ?  $product->displayName() : __('pages.products.unknownProduct') }}
+                        {!! $productMutation->mutation->formatAmount(BALANCE_FORMAT_LABEL, [
+                            'color' => $self,
+                        ]) !!}
+
+                        @if($productMutation->mutation->owner_id)
+                            <span class="subtle">
+                                @lang('misc.by') {{ $productMutation->mutation->owner->first_name }}
+                            </span>
+                        @endif
+
+                        <span class="sub-label">
+                            @include('includes.humanTimeDiff', ['time' => $productMutation->updated_at ?? $productMutation->created_at, 'short' => true])
+                        </span>
+
+                    @if($linkTransaction || $linkProduct)
+                        </a>
+                    @else
+                        </div>
+                    @endif
+                @endforeach
+
+                @if(perms(BarController::permsManage()))
+                    <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                            class="ui large bottom attached button">
+                        @lang('pages.bar.allPurchases')...
+                    </a>
+                @endif
+            </div>
+        @endif
+    @else
+        <div class="ui warning message">
+            <span class="halflings halflings-warning-sign icon"></span>
+            @lang('pages.bar.disabledGotoDashboard')
+        </div>
+
+        <a href="{{ route('dashboard') }}"
+                class="ui button basic">
+            @lang('pages.dashboard.backToDashboard')
+        </a>
     @endif
 @endsection

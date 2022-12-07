@@ -40,6 +40,7 @@ return [
         'yourPersonalDashboard' => 'Je persoonlijke dashboard',
         'noBarsOrCommunities' => 'Geen bars of groepen',
         'nothingHereNoMemberUseExploreButtons' => 'Er is hier niks om te zien omdat je nog geen lid bent van een bar of groep. Vind die van jouw met de onderstaande knoppen.',
+        'backToDashboard' => 'Terug naar dashboard',
     ],
 
     /**
@@ -1032,6 +1033,8 @@ return [
         'exportPurchasesTitle' => 'Exporteer aankopen',
         'exportPurchasesDescription' => 'Op deze pagina kun je alle aankopen die gemaakt zijn in deze bar naar een bestand exporteren.',
         'noPurchases' => 'Geen aankopen',
+        'disabled' => 'Deze bar is uitgeschakeld door een administrator.',
+        'disabledGotoDashboard' => 'Deze bar is uitgeschakeld door een administrator. Ga terug naar het dashboard om je huidige bar te zoeken.',
         'poster' => [
             'thisBarUses' => 'Deze bar gebruikt',
             'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties:',
