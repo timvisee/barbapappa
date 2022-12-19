@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Utils\MoneyAmount;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * Economy member model.
@@ -128,25 +129,31 @@ class EconomyMember extends Pivot {
         //     ->where('first_name', 'LIKE', '%' . escape_like($search) . '%')
         //     ->orWhere('last_name', 'LIKE', '%' . escape_like($search) . '%');
 
+        $startsWith = Str::startsWith($search, "^");
+        if($startsWith)
+            $search = Str::substr($search, 1);
+
         // Search for each word separately in the first/last name fields
         $query = $query
-            ->where(function($query) use($search) {
+            ->where(function($query) use($search, $startsWith) {
                 foreach(explode(' ', $search) as $word)
                     if(!empty($word))
-                        $query->whereExists(function($query) use($word) {
+                        $query->whereExists(function($query) use($word, $startsWith) {
                             $query->selectRaw('1')
                                 ->from('balance_import_alias')
                                 ->join('economy_member_alias', 'economy_member_alias.alias_id', 'balance_import_alias.id')
                                 ->whereRaw('economy_member.id = economy_member_alias.member_id')
-                                ->where('name', 'LIKE', '%' . escape_like($word) . '%');
+                                ->where('name', 'LIKE', (!$startsWith ? '%' : '' ) . escape_like($word) . '%');
                         })
-                        ->orWhereExists(function($query) use($word) {
+                        ->orWhereExists(function($query) use($word, $startsWith) {
                             $query->selectRaw('1')
                                 ->from('user')
                                 ->whereRaw('user.id = economy_member.user_id')
-                                ->where(function($query) use($word) {
-                                    $query->where('first_name', 'LIKE', '%' . escape_like($word) . '%')
-                                        ->orWhere('last_name', 'LIKE', '%' . escape_like($word) . '%');
+                                ->where(function($query) use($word, $startsWith) {
+                                    $query->where('first_name', 'LIKE', (!$startsWith ? '%' : '' ) . escape_like($word) . '%');
+
+                                    if(!$startsWith)
+                                        $query->orWhere('last_name', 'LIKE', (!$startsWith ? '%' : '' ) . escape_like($word) . '%');
                                 });
                         });
             });
@@ -154,8 +161,8 @@ class EconomyMember extends Pivot {
         // Search for each word separately in nickname field
         foreach(explode(' ', $search) as $word)
             $query = $query
-                ->orWhere('nickname', 'LIKE', '%' . escape_like($word) . '%')
-                ->orWhere('tags', 'LIKE', '%' . escape_like($word) . '%');
+                ->orWhere('nickname', 'LIKE', (!$startsWith ? '%' : '' ) . escape_like($word) . '%')
+                ->orWhere('tags', 'LIKE', (!$startsWith ? '%' : '' ) . escape_like($word) . '%');
 
         return $query;
     }
