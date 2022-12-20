@@ -59,7 +59,7 @@
             <div class="ui transparent icon input">
                 <input v-model="query"
                         @input="e => query = e.target.value"
-                        @focus="e => e.target.select()"
+                        @focus="e => { e.target.select(); showIndex = false; }"
                         id="user-search"
                         type="search"
                         :placeholder="__('pages.kiosk.searchUsers') + '...'"
@@ -249,6 +249,7 @@
         watch: {
             query: function() {
                 this.search(this.query);
+                this.showIndex = false;
             },
             selectedUsers: function (newSelectedUsers, oldSelectedUsers) {
                 // Glow product selection as visual clue
