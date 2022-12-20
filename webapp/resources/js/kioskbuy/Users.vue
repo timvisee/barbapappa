@@ -208,6 +208,14 @@
                 </a>
             </div>
         </div>
+        <a class="item kiosk-select-item"
+                v-if="showIndex"
+                v-on:click.prevent.stop="toggleIndex()"
+                href="#">
+            <div class="item-text">
+                {{ __('general.close') }}
+            </div>
+        </a>
 
         <i v-if="searching && users.length == 0 && query != ''" class="item">
             {{ __('pages.kiosk.searchingFor', {term: query}) }}...

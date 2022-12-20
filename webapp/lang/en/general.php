@@ -22,6 +22,7 @@ return [
     'no' => 'No',
     'noGoBack' => 'No, go back',
     'goBack' => 'Go back',
+    'close' => 'Close',
     'accept' => 'Accept',
     'or' => 'or',
     'of' => 'of',
