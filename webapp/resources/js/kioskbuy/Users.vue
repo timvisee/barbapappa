@@ -386,6 +386,7 @@
             // Select an index character
             selectIndex(char) {
                 this.query = '^' + char;
+                this.reset();
                 this.showIndex = false;
             },
         },
