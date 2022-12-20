@@ -210,7 +210,7 @@
         </div>
         <a class="item kiosk-select-item"
                 v-if="showIndex"
-                v-on:click.prevent.stop="toggleIndex()"
+                v-on:click.prevent.stop="closeIndex()"
                 href="#">
             <div class="item-text">
                 {{ __('general.close') }}
@@ -370,9 +370,17 @@
                 this.$emit('swap');
             },
 
-            // Show letter index
+            // Toggle alphabetical index
             toggleIndex() {
                 this.showIndex = !this.showIndex;
+            },
+
+            // Close index and reset it's query
+            closeIndex() {
+                this.showIndex = false;
+                if (this.query.startsWith('^')) {
+                    this.query = '';
+                }
             },
 
             // Select an index character
