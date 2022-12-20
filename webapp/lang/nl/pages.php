@@ -1114,6 +1114,7 @@ return [
         'viewCart' => 'Verder winkelen',
         'resetCart' => 'Reset winkelwagen',
         'swapColumns' => 'Wissel kolommen',
+        'toggleLetterIndex' => 'Wissel naar alfabetisch register',
         'productMode' => 'Product modus',
         'userMode' => 'Gebruiker modus',
         'backToKiosk' => 'Terug naar kiosk',

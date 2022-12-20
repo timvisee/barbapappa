@@ -1113,6 +1113,7 @@ return [
         'viewCart' => 'Continue shopping',
         'resetCart' => 'Reset cart',
         'swapColumns' => 'Swap columns',
+        'toggleLetterIndex' => 'Toggle alphabetical index',
         'productMode' => 'Product mode',
         'userMode' => 'User mode',
         'backToKiosk' => 'Back to kiosk',

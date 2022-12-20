@@ -25,7 +25,14 @@
             <span v-else>{{ __('pages.kiosk.addToUser') }}</span>
 
             <div class="header-actions">
-                <a v-if="!swapped"
+                <a v-on:click.stop.prevent="toggleIndex()"
+                        v-bind:class="{ active: showIndex }"
+                        href="#"
+                        :title="__('pages.kiosk.toggleLetterIndex')">
+                    <i class="halflings halflings-sort-by-alphabet"></i>
+                </a><!--
+
+                --><a v-if="!swapped"
                         v-on:click.stop.prevent="swap()"
                         href="#"
                         :title="__('pages.kiosk.swapColumns')">
@@ -69,7 +76,7 @@
 
         <!-- Always show selected user on top if not part of query results -->
         <a v-for="user in selectedUsers"
-                v-if="!users.some(u => u.id == user.id)"
+                v-if="!showIndex && !users.some(u => u.id == user.id)"
                 v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
@@ -110,6 +117,7 @@
         </a>
 
         <a v-for="user in users"
+                v-if="!showIndex"
                 v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying || (!user.registered && !isUserSelected(user)), active: isUserSelected(user) }"
                 href="#"
@@ -151,7 +159,7 @@
 
         <!-- Always show users having a cart on bottom if not part of query results -->
         <a v-for="user in cart.map(c => c.user)"
-                v-if="!users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
+                v-if="!showIndex && !users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
                 v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying || (!user.registered && !isUserSelected(user)), active: isUserSelected(user) }"
                 href="#"
@@ -191,6 +199,16 @@
             </div>
         </a>
 
+        <div class="ui grid container index" v-if="showIndex">
+            <div class="four column row">
+                <a class="column button" v-for="i in 26"
+                        v-on:click.prevent.stop="selectIndex(String.fromCharCode(96 + i))"
+                        href="#">
+                    {{ String.fromCharCode(64 + i) }}
+                </a>
+            </div>
+        </div>
+
         <i v-if="searching && users.length == 0 && query != ''" class="item">
             {{ __('pages.kiosk.searchingFor', {term: query}) }}...
         </i>
@@ -211,6 +229,7 @@
             return {
                 query: '',
                 searching: true,
+                showIndex: false,
                 users: [],
             };
         },
@@ -341,6 +360,17 @@
             swap() {
                 this.$emit('swap');
             },
+
+            // Show letter index
+            toggleIndex() {
+                this.showIndex = !this.showIndex;
+            },
+
+            // Select an index character
+            selectIndex(char) {
+                this.query = '^' + char;
+                this.showIndex = false;
+            },
         },
         mounted: function() {
             this.search();
@@ -444,6 +474,42 @@
 
         .negative {
             color: red;
+        }
+    }
+
+    .index {
+
+        border-top: 1px solid rgba(255, 255, 255, .08);
+        border-bottom: none;
+        margin: 0 !important;
+        border-bottom: none;
+
+        .row {
+            padding: 0 !important;
+            border-bottom: none !important;
+        }
+
+        .button {
+            display: flex !important;
+            align-items:center;
+            justify-content:center;
+
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 1em;
+            font-weight: bold;
+            aspect-ratio: 1;
+
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            border-right: 1px solid rgba(255, 255, 255, .08);
+            transition: background .1s ease, color .1s ease;
+
+            &:hover {
+                /* color: rgba(0, 0, 0, .87); */
+                /* background: rgba(0, 0, 0, .08) !important; */
+                background: #2d2e2f !important;
+            }
         }
     }
 </style>
