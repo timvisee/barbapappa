@@ -23,28 +23,30 @@
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectProducts') }}
 
-            <div v-if="swapped" class="action spacer"></div>
-            <a v-if="swapped"
-                    v-on:click.stop.prevent="swap()"
-                    href="#"
-                    class="swap"
-                    :title="__('pages.kiosk.swapColumns')">
-                <i class="halflings halflings-reflect-y"></i>
-            </a>
+            <div class="header-actions">
 
-            <a v-if="isSelectMode() && selectedProducts.length && !buying"
-                    v-on:click.stop.prevent="reset(); query = ''"
-                    href="#"
-                    class="action negative">
-                {{ __('misc.deselect') }}
-            </a>
 
-            <a v-if="!isSelectMode() && getCartSize() > 0 && !buying"
-                    v-on:click.stop.prevent="removeCart(); query = ''"
-                    href="#"
-                    class="action negative">
-                {{ __('misc.toEmpty') }}
-            </a>
+                <a v-if="swapped"
+                        v-on:click.stop.prevent="swap()"
+                        href="#"
+                        :title="__('pages.kiosk.swapColumns')">
+                    <i class="halflings halflings-reflect-y"></i>
+                </a><!--
+
+                --><a v-if="isSelectMode() && selectedProducts.length && !buying"
+                        v-on:click.stop.prevent="reset(); query = ''"
+                        href="#"
+                        class="negative">
+                    <i class="halflings halflings-remove"></i>
+                </a><!--
+
+                --><a v-if="!isSelectMode() && getCartSize() > 0 && !buying"
+                        v-on:click.stop.prevent="removeCart(); query = ''"
+                        href="#"
+                        class="negative">
+                    <i class="halflings halflings-trash"></i>
+                </a>
+            </div>
         </h5>
 
         <div class="item">
@@ -527,23 +529,6 @@
         line-height: 1.4 !important;;
     }
 
-    .action {
-        color: rgba(0,0,0,.87);
-        margin-left: 1em;
-        float: right;
-        line-height: 1 !important;
-    }
-
-    .action.negative {
-        color: red;
-    }
-
-    .action.spacer {
-        width: 40px;
-        height: 1px;
-        margin-left: 0;
-    }
-
     .ui.dimmer .text {
         padding: 1em;
         line-height: 2;
@@ -596,31 +581,41 @@
 </style>
 
 <style lang="scss">
-    .swap {
-        color: rgba(0, 0, 0, .87);
+    .header-actions {
         position: absolute;
         top: 0px;
         right: 0px;
-        width: 40px;
         height: 40px;
-        text-align: center;
-
         display: block;
-        padding: 13px 5px 13px 5px;
-        border-left: 1px solid rgba(255, 255, 255, .08);
-        transition: background .1s ease, color .1s ease;
 
-        .glyphicons,
-        .halflings {
-            top: 0px;
-            width: 30px;
-            height: 14px;
-            margin: -1px 0 0 0;
+        a {
+            /* color: rgba(0, 0, 0, .87); */
+            color: #fff;
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+            margin: 0;
+            padding: 13px 5px 13px 5px;
+            border-left: 1px solid rgba(255, 255, 255, .08);
+            transition: background .1s ease, color .1s ease;
+
+            &:hover {
+                /* color: rgba(0, 0, 0, .87); */
+                /* background: rgba(0, 0, 0, .08) !important; */
+                background: #2d2e2f !important;
+            }
+
+            .glyphicons,
+            .halflings {
+                top: 2px;
+                width: 30px;
+                height: 14px;
+                margin: -1px 0 0 0;
+            }
         }
 
-        &:hover {
-            color: rgba(0, 0, 0, .87);
-            background: rgba(0, 0, 0, .08) !important;
+        .negative {
+            color: red;
         }
     }
 </style>

@@ -24,35 +24,42 @@
             <span v-if="isSelectMode()">{{ __('pages.kiosk.selectUser') }}</span>
             <span v-else>{{ __('pages.kiosk.addToUser') }}</span>
 
-            <div v-if="!swapped" class="action spacer"></div>
-            <a v-if="!swapped"
-                    v-on:click.stop.prevent="swap()"
-                    href="#"
-                    class="swap"
-                    :title="__('pages.kiosk.swapColumns')">
-                <i class="halflings halflings-reflect-y"></i>
-            </a>
+            <div class="header-actions">
+                <a v-on:click.stop.prevent="toggleIndex()"
+                        v-bind:class="{ active: showIndex }"
+                        href="#"
+                        :title="__('pages.kiosk.toggleLetterIndex')">
+                    <i class="halflings halflings-sort-by-alphabet"></i>
+                </a><!--
 
-            <a v-if="isSelectMode() && selectedUsers.length && !buying"
-                    v-on:click.stop.prevent="reset(); query = ''"
-                    href="#"
-                    class="action negative">
-                {{ __('misc.deselect') }}
-            </a>
+                --><a v-if="!swapped"
+                        v-on:click.stop.prevent="swap()"
+                        href="#"
+                        :title="__('pages.kiosk.swapColumns')">
+                    <i class="halflings halflings-reflect-y"></i>
+                </a><!--
 
-            <a v-if="!isSelectMode() && _getTotalCartQuantity() > 0 && !buying"
-                    v-on:click.stop.prevent="_removeAllUserCarts(); query = ''"
-                    href="#"
-                    class="action negative">
-                {{ __('misc.toEmpty') }}
-            </a>
+                --><a v-if="isSelectMode() && selectedUsers.length && !buying"
+                        v-on:click.stop.prevent="reset(); query = ''"
+                        href="#"
+                        class="negative">
+                    <i class="halflings halflings-remove"></i>
+                </a><!--
+
+                --><a v-if="!isSelectMode() && _getTotalCartQuantity() > 0 && !buying"
+                        v-on:click.stop.prevent="_removeAllUserCarts(); query = ''"
+                        href="#"
+                        class="negative">
+                    <i class="halflings halflings-trash"></i>
+                </a>
+            </div>
         </h5>
 
         <div class="item">
             <div class="ui transparent icon input">
                 <input v-model="query"
                         @input="e => query = e.target.value"
-                        @focus="e => e.target.select()"
+                        @focus="e => { e.target.select(); showIndex = false; }"
                         id="user-search"
                         type="search"
                         :placeholder="__('pages.kiosk.searchUsers') + '...'"
@@ -69,7 +76,7 @@
 
         <!-- Always show selected user on top if not part of query results -->
         <a v-for="user in selectedUsers"
-                v-if="!users.some(u => u.id == user.id)"
+                v-if="!showIndex && !users.some(u => u.id == user.id)"
                 v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying, active: isUserSelected(user) }"
                 href="#"
@@ -110,6 +117,7 @@
         </a>
 
         <a v-for="user in users"
+                v-if="!showIndex"
                 v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying || (!user.registered && !isUserSelected(user)), active: isUserSelected(user) }"
                 href="#"
@@ -151,7 +159,7 @@
 
         <!-- Always show users having a cart on bottom if not part of query results -->
         <a v-for="user in cart.map(c => c.user)"
-                v-if="!users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
+                v-if="!showIndex && !users.some(u => u.id == user.id) && !selectedUsers.some(u => u.id == user.id)"
                 v-on:click.prevent.stop="onItemClick(user)"
                 v-bind:class="{ disabled: buying || (!user.registered && !isUserSelected(user)), active: isUserSelected(user) }"
                 href="#"
@@ -191,6 +199,24 @@
             </div>
         </a>
 
+        <div class="ui grid container index" v-if="showIndex">
+            <div class="four column row">
+                <a class="column button" v-for="i in 26"
+                        v-on:click.prevent.stop="selectIndex(String.fromCharCode(96 + i))"
+                        href="#">
+                    {{ String.fromCharCode(64 + i) }}
+                </a>
+            </div>
+        </div>
+        <a class="item kiosk-select-item"
+                v-if="showIndex"
+                v-on:click.prevent.stop="closeIndex()"
+                href="#">
+            <div class="item-text">
+                {{ __('general.close') }}
+            </div>
+        </a>
+
         <i v-if="searching && users.length == 0 && query != ''" class="item">
             {{ __('pages.kiosk.searchingFor', {term: query}) }}...
         </i>
@@ -211,6 +237,7 @@
             return {
                 query: '',
                 searching: true,
+                showIndex: false,
                 users: [],
             };
         },
@@ -230,6 +257,7 @@
         watch: {
             query: function() {
                 this.search(this.query);
+                this.showIndex = false;
             },
             selectedUsers: function (newSelectedUsers, oldSelectedUsers) {
                 // Glow product selection as visual clue
@@ -341,6 +369,26 @@
             swap() {
                 this.$emit('swap');
             },
+
+            // Toggle alphabetical index
+            toggleIndex() {
+                this.showIndex = !this.showIndex;
+            },
+
+            // Close index and reset it's query
+            closeIndex() {
+                this.showIndex = false;
+                if (this.query.startsWith('^')) {
+                    this.query = '';
+                }
+            },
+
+            // Select an index character
+            selectIndex(char) {
+                this.query = '^' + char;
+                this.reset();
+                this.showIndex = false;
+            },
         },
         mounted: function() {
             this.search();
@@ -358,27 +406,6 @@
     .item-icon::before {
         margin-left: 0.3em;
         padding: 0;
-    }
-
-    .right {
-        float: right;
-    }
-
-    .action {
-        color: rgba(0,0,0,.87);
-        margin-left: 1em;
-        float: right;
-        line-height: 1 !important;
-    }
-
-    .action.negative {
-        color: red;
-    }
-
-    .action.spacer {
-        width: 40px;
-        height: 1px;
-        margin-left: 0;
     }
 
     .active.green {
@@ -425,31 +452,82 @@
 </style>
 
 <style lang="scss">
-    .swap {
-        color: rgba(0, 0, 0, .87);
+    .header-actions {
         position: absolute;
         top: 0px;
         right: 0px;
-        width: 40px;
         height: 40px;
-        text-align: center;
-
         display: block;
-        padding: 13px 5px 13px 5px;
-        border-left: 1px solid rgba(255, 255, 255, .08);
-        transition: background .1s ease, color .1s ease;
 
-        .glyphicons,
-        .halflings {
-            top: 0px;
-            width: 30px;
-            height: 14px;
-            margin: -1px 0 0 0;
+        a {
+            /* color: rgba(0, 0, 0, .87); */
+            color: #fff;
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+            margin: 0;
+            padding: 13px 5px 13px 5px;
+            border-left: 1px solid rgba(255, 255, 255, .08);
+            transition: background .1s ease, color .1s ease;
+
+            &:hover {
+                /* color: rgba(0, 0, 0, .87); */
+                /* background: rgba(0, 0, 0, .08) !important; */
+                background: #2d2e2f !important;
+            }
+
+            &.active {
+                /* TODO: find proper color code here */
+                background: #0f617c !important;
+            }
+
+            .glyphicons,
+            .halflings {
+                top: 2px;
+                width: 30px;
+                height: 14px;
+                margin: -1px 0 0 0;
+            }
         }
 
-        &:hover {
-            color: rgba(0, 0, 0, .87);
-            background: rgba(0, 0, 0, .08) !important;
+        .negative {
+            color: red;
+        }
+    }
+
+    .index {
+
+        border-top: 1px solid rgba(255, 255, 255, .08);
+        border-bottom: none;
+        margin: 0 !important;
+        border-bottom: none;
+
+        .row {
+            padding: 0 !important;
+            border-bottom: none !important;
+        }
+
+        .button {
+            display: flex !important;
+            align-items:center;
+            justify-content:center;
+
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 1em;
+            font-weight: bold;
+            aspect-ratio: 1;
+
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            border-right: 1px solid rgba(255, 255, 255, .08);
+            transition: background .1s ease, color .1s ease;
+
+            &:hover {
+                /* color: rgba(0, 0, 0, .87); */
+                /* background: rgba(0, 0, 0, .08) !important; */
+                background: #2d2e2f !important;
+            }
         }
     }
 </style>

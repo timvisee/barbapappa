@@ -1112,6 +1112,7 @@ return [
         'viewCart' => 'Continue looting',
         'resetCart' => 'Reset loot',
         'swapColumns' => 'Swap columns',
+        'toggleLetterIndex' => 'Toggle alphabetical index',
         'productMode' => 'Product mode',
         'userMode' => 'Pirate mode',
         'backToKiosk' => 'Back to kiosk',

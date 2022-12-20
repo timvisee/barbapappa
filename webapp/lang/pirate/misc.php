@@ -32,8 +32,6 @@ return [
     'delete' => 'Abandon',
     'reset' => 'Reset',
     'resetAll' => 'Reset all',
-    'toEmpty' => 'Empty',
-    'deselect' => 'Deselect',
     'previously' => 'Previously',
     'continue' => 'Continue',
     'continueIn' => 'Continue in',

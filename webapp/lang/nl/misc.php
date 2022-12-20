@@ -32,8 +32,6 @@ return [
     'delete' => 'Verwijderen',
     'reset' => 'Reset',
     'resetAll' => 'Reset all',
-    'deselect' => 'Deselect',
-    'toEmpty' => 'Legen',
     'previously' => 'Voorheen',
     'continue' => 'Verder gaan',
     'continueIn' => 'Verder in',
