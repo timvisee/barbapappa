@@ -24,7 +24,7 @@
             <span v-if="isSelectMode()">{{ __('pages.kiosk.selectUser') }}</span>
             <span v-else>{{ __('pages.kiosk.addToUser') }}</span>
 
-            <div class="actions">
+            <div class="header-actions">
                 <a v-if="!swapped"
                         v-on:click.stop.prevent="swap()"
                         href="#"
@@ -404,7 +404,7 @@
 </style>
 
 <style lang="scss">
-    .actions {
+    .header-actions {
         position: absolute;
         top: 0px;
         right: 0px;
@@ -426,6 +426,11 @@
                 /* color: rgba(0, 0, 0, .87); */
                 /* background: rgba(0, 0, 0, .08) !important; */
                 background: #2d2e2f !important;
+            }
+
+            &.active {
+                /* TODO: find proper color code here */
+                background: #0f617c !important;
             }
 
             .glyphicons,

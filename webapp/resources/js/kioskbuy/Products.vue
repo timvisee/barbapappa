@@ -23,7 +23,7 @@
         <h5 class="ui item header">
             {{ __('pages.kiosk.selectProducts') }}
 
-            <div class="actions">
+            <div class="header-actions">
 
 
                 <a v-if="swapped"
@@ -581,7 +581,7 @@
 </style>
 
 <style lang="scss">
-    .actions {
+    .header-actions {
         position: absolute;
         top: 0px;
         right: 0px;
