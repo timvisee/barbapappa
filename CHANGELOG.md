@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.169 (2022-12-20)
+
+- Add alphabetical index for users in kiosk mode
+- Prefix search query with ^ to find users with a name starting with that query
+- Improve kiosk action buttons, use consistent look and placement
+
 ## 0.1.168 (2022-12-07)
 
 - Add toggle to disable bar
