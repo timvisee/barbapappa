@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.170 (2023-01-13)
+
+- Don't show leading ^ character in no search results message when searching
+  users that start with the given query
+
 ## 0.1.169 (2022-12-20)
 
 - Add alphabetical index for users in kiosk mode
