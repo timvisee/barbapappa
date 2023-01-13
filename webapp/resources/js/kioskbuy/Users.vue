@@ -218,13 +218,13 @@
         </a>
 
         <i v-if="searching && users.length == 0 && query != ''" class="item">
-            {{ __('pages.kiosk.searchingFor', {term: query}) }}...
+            {{ __('pages.kiosk.searchingFor', {term: queryText}) }}...
         </i>
         <i v-if="searching && users.length == 0 && query == ''" class="item">
             {{ __('misc.loading') }}...
         </i>
         <i v-if="!searching && users.length == 0" class="item">
-            {{ __('pages.kiosk.noUsersFoundFor', {term: query}) }}.
+            {{ __('pages.kiosk.noUsersFoundFor', {term: queryText}) }}.
         </i>
     </div>
 </template>
@@ -236,6 +236,7 @@
         data() {
             return {
                 query: '',
+                queryText: '',
                 searching: true,
                 showIndex: false,
                 users: [],
@@ -258,6 +259,7 @@
             query: function() {
                 this.search(this.query);
                 this.showIndex = false;
+                this.queryText = this.query.startsWith('^') ? this.query.substr(1) : this.query;
             },
             selectedUsers: function (newSelectedUsers, oldSelectedUsers) {
                 // Glow product selection as visual clue
