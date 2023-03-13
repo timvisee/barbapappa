@@ -13,7 +13,7 @@
 
         <!-- Confirming/buying, bought, cancelled overlay -->
         <div v-if="confirming || buying" @click="$refs.cart.unconfirm()" class="ui active dimmer on-top"></div>
-        <div v-if="showBoughtOverlay" class="ui active dimmer positive on-top">
+        <div v-if="showBoughtOverlay" class="ui active dimmer positive on-top" @click="showBoughtOverlay = false">
             <div class="ui text huge">
                 <div class="ui icon header">
                     <i class="glyphicons glyphicons-cart-tick logo"></i>
@@ -22,7 +22,7 @@
                 {{ __('misc.bought') }}!
             </div>
         </div>
-        <div v-if="showCancelledOverlay" class="ui active dimmer negative on-top">
+        <div v-if="showCancelledOverlay" class="ui active dimmer negative on-top" @click="showCancelledOverlay = false">
             <div class="ui text huge">
                 <div class="ui icon header">
                     <i class="glyphicons glyphicons-cart-out logo"></i>
