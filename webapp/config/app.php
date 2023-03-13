@@ -17,8 +17,8 @@ return [
     /**
      * Application version name and code.
      */
-    'version_name' => '0.1.170',
-    'version_code' => 170,
+    'version_name' => '0.1.171',
+    'version_code' => 171,
 
     'author' => 'Tim Visée',
     'description' => 'Bar management application to manage transactions and inventory',

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.171 (2023-03-13)
+
+- When confirming kiosk purchase and the view is darkened, cancel confirming by
+  tapping the darkened view
+- When kiosk green/red buy/cancel overlay is shown, close it early by tapping on
+  it
+- Increase kiosk green/red buy/cancel overlay time to 1.5 seconds
+- Hint users to switch to a cellular connection on the HTTP 429 error page
+
 ## 0.1.170 (2023-01-13)
 
 - Don't show leading ^ character in no search results message when searching
