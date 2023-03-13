@@ -12,7 +12,7 @@
         </div>
 
         <!-- Confirming/buying, bought, cancelled overlay -->
-        <div v-if="confirming || buying" class="ui active dimmer on-top"></div>
+        <div v-if="confirming || buying" @click="$refs.cart.unconfirm()" class="ui active dimmer on-top"></div>
         <div v-if="showBoughtOverlay" class="ui active dimmer positive on-top">
             <div class="ui text huge">
                 <div class="ui icon header">
@@ -106,7 +106,8 @@
                     :selectedUsers="selectedUsers"
                     :cart="cart"
                     :buying="buying"
-                    :_getTotalCartQuantity="getTotalCartQuantity" />
+                    :_getTotalCartQuantity="getTotalCartQuantity"
+                    ref="cart" />
 
             <!-- Cart reset modal -->
             <ResetModal :showModal="showResetModal" @onHide="showResetModal = false; heartbeat()" @onReset="cancel" />

@@ -79,6 +79,13 @@
                 this.setConfirmingCancel(false);
             },
 
+            unconfirm() {
+                if(this.confirmingBuy)
+                    this.setConfirmingBuy(false);
+                if(this.confirmingCancel)
+                    this.setConfirmingCancel(false);
+            },
+
             setConfirmingBuy(confirming = true) {
                 // Cancel any pending confirming timers
                 if(this.confirmingBuyTimer != null)
