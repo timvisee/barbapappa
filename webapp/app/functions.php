@@ -363,7 +363,7 @@ if(!function_exists('normalize_email')) {
      * @return string The normalized email address.
      */
     function normalize_email(string $email): string {
-        return strtolower(trim($email));
+        return mb_strtolower(trim($email));
     }
 }
 
