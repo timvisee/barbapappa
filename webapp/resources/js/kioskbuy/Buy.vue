@@ -145,7 +145,7 @@
     /**
      * Time to show bought/cancel overlay in seconds.
      */
-    const OVERLAY_TIMEOUT = 1;
+    const OVERLAY_TIMEOUT = 1.5;
 
     export default {
         components: {
