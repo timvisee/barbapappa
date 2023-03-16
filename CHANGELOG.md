@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.172 (2023-03-16)
+
+- Fix potential security issue, where duplicate email addresses could be used
+  with special characters in different casing
+
 ## 0.1.171 (2023-03-13)
 
 - When confirming kiosk purchase and the view is darkened, cancel confirming by
