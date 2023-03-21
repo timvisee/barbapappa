@@ -154,7 +154,7 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
         $to = new Pointer(
             'IBAN',
             $serviceable->iban,
-            $serviceable->account_holder
+            $serviceable->account_holder,
         );
 
         // Forward the payment
@@ -166,7 +166,7 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
                 . ' '
                 . __('barpay::service.bunq.paid', [], config('app.locale'))
                 . ': '
-                . $barPayment->getReference()
+                . $barPayment->getReference(),
         )->delay(now()->addSeconds(Self::FORWARD_DELAY));
     }
 
