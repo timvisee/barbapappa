@@ -156,11 +156,12 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      * @param ApiPayment $apiPayment The payment to send back.
      */
     private static function refundPayment(BunqAccount $account, ApiPayment $apiPayment) {
-        // Build a description
+        // Build a description and sanitize
         $description = [config('app.name') . ' ' . __('barpay::service.bunq.unknownPaymentRefund')];
         if(!empty($apiPayment->getDescription()))
             $description[] = $apiPayment->getDescription();
-        $description = substr(implode(': ', $description), 0, 140);
+        $description = implode(': ', $description);
+        $description = Self::sanitizePaymentDescription($description);
 
         // Build a pointer to send the money back to
         $counterparty = $apiPayment->getCounterpartyAlias();
@@ -240,6 +241,30 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
         return isset($matches[2])
             ? strtoupper(str_replace(' ', '', $matches[2]))
             : null;
+    }
+
+    /**
+     * Sanitize a payment description.
+     *
+     * This is required when sending a payment to a non-bunq bank, because it
+     * uses a SEPA transfer with a very limited set of description characters.
+     *
+     * This does:
+     * - Remove all non-allowed characters
+     * - Truncates to 140 characters
+     * - Trims
+     *
+     * Note: only alphanumeric characters, spaces and colons are kept.
+     *
+     * @param string $description The description to sanitize.
+     * @return string The sanitized description.
+     */
+    private static function sanitizePaymentDescription(string $description) {
+        return substr(
+            trim(preg_replace("/[^A-Za-z0-9: ]/", "", $description)),
+            0,
+            140,
+        );
     }
 
     /**
