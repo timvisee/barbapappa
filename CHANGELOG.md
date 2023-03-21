@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.173 (2023-03-21)
+
+- Fix issue where unrecognized manual payments were not refunded.
+  This happened if the description had special characters, breaking SEPA
+  payments due to horrendous requirements.
+
 ## 0.1.172 (2023-03-16)
 
 - Fix potential security issue, where duplicate email addresses could be used
