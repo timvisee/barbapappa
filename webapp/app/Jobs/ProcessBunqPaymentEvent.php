@@ -168,7 +168,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
         $to = new Pointer(
             'IBAN',
             $counterparty->getIban(),
-            $counterparty->getDisplayName()
+            $counterparty->getDisplayName(),
         );
 
         // Refund the money
@@ -201,7 +201,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
                 . ' '
                 . __('barpay::service.bunq.paid', [], config('app.locale'))
                 . ': '
-                . $barPayment->getReference()
+                . $barPayment->getReference(),
         );
     }
 
@@ -219,7 +219,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
             $account,
             $to,
             $apiPayment->getAmount(),
-            $description
+            $description,
         )->delay(now()->addSeconds(Self::FORWARD_DELAY));
     }
 

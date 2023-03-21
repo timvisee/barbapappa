@@ -99,7 +99,7 @@ class SendBunqPayment implements ShouldQueue {
             null,
             null,
             null,
-            []
+            [],
         );
     }
 
