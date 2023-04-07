@@ -1055,7 +1055,7 @@ return [
             'inCart' => 'In cart',
             'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
             'buyProductsUsers#' => '{0} Buy no products for :users users|{1} Buy product for :users users|[2,*] Buy :count products for :users users',
-            'pressToConfirm' => 'Tap again to confirm',
+            'pressToConfirm' => 'Confirm?',
             'boughtProducts#' => '{0} Bought no products.|{1} Bought product.|[2,*] Bought :count products.',
             'boughtProductsUsers#' => '{0} Bought no products for :users users.|{1} Bought product for :users users.|[2,*] Bought :count products for :users users.',
             'pageCloseWarning' => 'You have selected products or have products in cart that have not been bought yet. You must add a product selection to at least one user and tap the Buy button to commit the purchase, or the selection will be lost.',
