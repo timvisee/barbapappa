@@ -8,11 +8,13 @@
                 {{ __('pages.kiosk.firstSelectProduct') }}
 
                 <div class="ui hidden divider"></div>
-                <div class="ui horizontal divider hidden"></div>
+
+                <em class="opacity-50">{{ __('general.or') }}</em>
+
                 <div class="ui hidden divider"></div>
 
                 <a v-on:click.stop.prevent="swap()"
-                        class="ui big button basic primary inverted dimmer-swap"
+                        class="ui big button basic primary inverted dimmer-swap opacity-50"
                         href="#">
                     <i class="halflings halflings-retweet"></i>
                     {{ __('pages.kiosk.userMode') }}
@@ -572,5 +574,9 @@
     .ui.input input,
     .subtle.quantity {
         color: lightgray;
+    }
+
+    .opacity-50 {
+        opacity: 0.5;
     }
 </style>
