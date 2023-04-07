@@ -38,7 +38,7 @@ class BunqController extends Controller {
             Self::processEventsForAccount($payment->getMonetaryAccountId(), 0);
         else if(($bunqMeTab = $object->getBunqMeTab()) != null)
             Self::processEventsForAccount($bunqMeTab->getMonetaryAccountId(), 1);
-        else if (($bunqMeTab = $object->getBunqMeTabResultInquiry()) != null || ($bunqMeTab = $object->getBunqMeTabResponse()) != null) {
+        else if (($bunqMeTab = $object->getBunqMeTabResultInquiry()) != null || ($bunqMeTab = $object->getBunqMeTabResultResponse()) != null) {
             if(($payment = $bunqMeTab->getPayment()) != null)
                 if(($id = $payment->getMonetaryAccountId()) != null)
                     Self::processEventsForAccount($id, 1);
