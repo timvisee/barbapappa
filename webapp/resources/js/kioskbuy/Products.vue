@@ -14,7 +14,7 @@
                 <a v-on:click.stop.prevent="swap()"
                         class="ui big button basic primary inverted dimmer-swap"
                         href="#">
-                    <i class="halflings halflings-reflect-y"></i>
+                    <i class="halflings halflings-retweet"></i>
                     {{ __('pages.kiosk.productMode') }}
                 </a>
             </div>
@@ -25,12 +25,11 @@
 
             <div class="header-actions">
 
-
                 <a v-if="swapped"
                         v-on:click.stop.prevent="swap()"
                         href="#"
                         :title="__('pages.kiosk.swapColumns')">
-                    <i class="halflings halflings-reflect-y"></i>
+                    <i class="halflings halflings-retweet"></i>
                 </a><!--
 
                 --><a v-if="isSelectMode() && selectedProducts.length && !buying"
