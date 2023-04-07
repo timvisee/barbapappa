@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.174 (2023-04-07)
+
+- Fix error when handling some bunq iDeal callback states
+- Improve swap button icon in kiosk mode
+- Improve action and swap button text in kiosk mode, make secondary action less vibrant
+- Simplify confirm button text in kiosk mode
+
 ## 0.1.173 (2023-03-21)
 
 - Fix issue where unrecognized manual payments were not refunded.
