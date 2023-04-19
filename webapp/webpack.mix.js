@@ -19,7 +19,7 @@ mix.webpackConfig({
         new GenerateSW({
             // TODO: also cache js/vendor.js, css/vendor.css
             exclude: [
-                'images/vendor/flag-icons/flags/',
+                /images\/vendor\/flag-icons/,
             ],
             swDest: 'sw.js',
         }),
