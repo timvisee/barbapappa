@@ -349,6 +349,7 @@ return [
         'unknownProduct' => 'Unknown loot',
         'recentlyBoughtProducts#' => '{0} Recent loot|{1} Recently looted|[2,*] :count recently looted',
         'inventoryProductsDescription' => 'Normally, when dis product be bought, it be subtracted from th\' bar inventory. Here ye can specify an alternate list of products to subtract from th\' inventory when bought instead.<br><br>For example: for th\' product BaCo you may want to subtract Bacardi and Cola from the inventory rather than th\' BaCo product itself. Ye may set dis up by adding Bacardi and Cola to th\' list below.<br><br>If th\' list below contains any product, th\' current product won\'t be subtracted from th\' inventory. Explicitly add th\' current product to th\' list as well to subtract it from the inventory when bought. Remove all products from dis list to disable dis feature and revert back to normal.',
+        'inventoryProducts' => 'Alternate inventory products',
         'editInventoryProducts' => 'Edit inventory products',
         'addProduct' => 'Add product',
         'quantitiesUpdated' => 'Quantites updated.',
