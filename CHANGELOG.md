@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.175 (2023-04-19)
+
+- Fix kiosk layout on small screens by using less text in swap button
+- Fix broken text on product edit page
+
 ## 0.1.174 (2023-04-07)
 
 - Fix error when handling some bunq iDeal callback states
