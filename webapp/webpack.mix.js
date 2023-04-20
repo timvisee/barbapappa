@@ -18,8 +18,51 @@ mix.webpackConfig({
         }),
         new GenerateSW({
             // TODO: also cache js/vendor.js, css/vendor.css
+            cleanupOutdatedCaches: true,
             exclude: [
+                /js/,
                 /images\/vendor\/flag-icons/,
+            ],
+            runtimeCaching: [
+                {
+                    // TODO: set root URL to kiosk, but only in kiosk mode?
+                    urlPattern: ({url}) => url.pathname == '' || url.pathname == '/' || url.pathname == '/kiosk',
+                    handler: 'NetworkFirst',
+                    options: {
+                        cacheName: 'kiosk-app',
+                        expiration: {
+                            maxAgeSeconds: 600,
+                            maxEntries: 50,
+                        },
+                    },
+                },
+                {
+                    urlPattern: ({url}) => url.pathname.startsWith('/kiosk/api'),
+                    handler: 'StaleWhileRevalidate',
+                    options: {
+                        cacheName: 'kiosk-api',
+                        expiration: {
+                            maxAgeSeconds: 600,
+                            maxEntries: 300,
+                        },
+                    },
+                },
+                {
+                    urlPattern: ({url}) => {
+                        return url.pathname.startsWith('/js/')
+                        || url.pathname.startsWith('/css/')
+                        || url.pathname.startsWith('/fonts/')
+                        || url.pathname.startsWith('/img/logo/');
+                    },
+                    handler: 'CacheFirst',
+                    options: {
+                        cacheName: 'assets',
+                        expiration: {
+                            maxAgeSeconds: 600,
+                            maxEntries: 200,
+                        },
+                    },
+                },
             ],
             swDest: 'sw.js',
         }),
