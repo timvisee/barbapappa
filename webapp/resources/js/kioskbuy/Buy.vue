@@ -172,7 +172,7 @@
                 orderCancelTimer: null,
                 // Timer handle after which to force reload the interface
                 inactiveRefreshTimer: null,
-                stateOnline: true,
+                stateOnline: navigator.onLine,
                 // Whether to show the cart reset modal
                 showResetModal: false,
             };
