@@ -3,7 +3,7 @@ const path = require('path');
 let mix = require('laravel-mix');
 
 const WebpackShellPluginNext = require('webpack-shell-plugin-next');
-const { GenerateSW } = require('workbox-webpack-plugin');
+const {GenerateSW} = require('workbox-webpack-plugin');
 
 // Add shell command plugin configured to create JavaScript language file
 mix.webpackConfig({
@@ -38,19 +38,6 @@ mix.webpackConfig({
                         expiration: {
                             maxAgeSeconds: 600,
                             maxEntries: 50,
-                        },
-                    },
-                },
-                {
-                    urlPattern: ({url}) => url.pathname.startsWith('/kiosk/api/buy'),
-                    handler: 'NetworkFirst',
-                    method: 'POST',
-                    options: {
-                        cacheName: 'kiosk-app-post',
-                        networkTimeoutSeconds: 10,
-                        expiration: {
-                            maxAgeSeconds: 6000000,
-                            maxEntries: 5000,
                         },
                     },
                 },
