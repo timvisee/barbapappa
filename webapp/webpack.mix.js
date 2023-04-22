@@ -17,15 +17,17 @@ mix.webpackConfig({
             },
         }),
         new GenerateSW({
-            // TODO: also cache js/vendor.js, css/vendor.css
             cleanupOutdatedCaches: true,
             exclude: [
                 /js/,
                 /images\/vendor\/flag-icons/,
             ],
+            // navigateFallback: '/kiosk',
+            // navigateFallbackDenylist: [
+            //     /kiosk\/api/,
+            // ],
             runtimeCaching: [
                 {
-                    // TODO: set root URL to kiosk, but only in kiosk mode?
                     urlPattern: ({url}) => url.pathname == '' || url.pathname == '/' || url.pathname == '/kiosk',
                     handler: 'NetworkFirst',
                     options: {
