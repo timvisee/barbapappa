@@ -22,6 +22,14 @@ mix.webpackConfig({
                 /js/,
                 /images\/vendor\/flag-icons/,
             ],
+            swDest: 'sw.js',
+        }),
+        new GenerateSW({
+            cleanupOutdatedCaches: true,
+            exclude: [
+                /js/,
+                /images\/vendor\/flag-icons/,
+            ],
             // navigateFallback: '/kiosk',
             // navigateFallbackDenylist: [
             //     /kiosk\/api/,
@@ -66,7 +74,7 @@ mix.webpackConfig({
                     },
                 },
             ],
-            swDest: 'sw.js',
+            swDest: 'sw-kiosk.js',
         }),
     ]
 });
