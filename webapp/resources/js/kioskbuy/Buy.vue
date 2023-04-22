@@ -4,7 +4,18 @@
     <div>
         <div v-if="!stateOnline" class="banner">
             <span class="halflings halflings-exclamation-sign icon"></span>
-            {{ __('pages.kiosk.noConnectionBanner') }}
+            {{ __('pages.kiosk.bannerNoConnection') }}
+            <span v-if="buyQueueLength > 0" class="float-right">
+                {{ buyQueueLength }}&nbsp;
+                <span class="halflings halflings-synchronization icon"></span>
+            </span>
+        </div>
+        <div v-else-if="buyQueueLength > 0" class="banner warning">
+            <span class="halflings halflings-synchronization icon"></span>
+            {{ buyQueueLength == 1
+                ? __('pages.kiosk.bannerProcessingTransactionsOne')
+                : __('pages.kiosk.bannerProcessingTransactionsMany').replace(':count', buyQueueLength)
+            }}
         </div>
 
         <div v-if="refreshing" class="ui active centered indeterminate large text loader">
@@ -703,6 +714,14 @@
         margin-bottom: 1rem;
         padding: 1em;
         border-radius: .28571429rem;
+    }
+
+    .banner.warning {
+        background: #FF8C00;
+    }
+
+    .banner .float-right {
+        float: right;
     }
 
     .banner .icon {

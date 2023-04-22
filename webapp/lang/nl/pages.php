@@ -1119,7 +1119,9 @@ return [
         'productMode' => 'Selecteer product',
         'userMode' => 'Selecteer gebruiker',
         'backToKiosk' => 'Terug naar kiosk',
-        'noConnectionBanner' => 'Geen verbinding! Sleep naar beneden om te verversen.',
+        'bannerNoConnection' => 'Geen verbinding. Aankopen zijn vertraagd.',
+        'bannerProcessingTransactionsOne' => 'Nog één aankoop te verwerken...',
+        'bannerProcessingTransactionsMany' => 'Nog :count aankopen te verwerken...',
         'changeQuantity' => 'Hoeveelheid aanpassen',
     ],
 

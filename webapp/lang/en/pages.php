@@ -1117,7 +1117,9 @@ return [
         'productMode' => 'Select product',
         'userMode' => 'Select user',
         'backToKiosk' => 'Back to kiosk',
-        'noConnectionBanner' => 'No connection! Pull the page down to refresh.',
+        'bannerNoConnection' => 'No connection. Purchases are delayed.',
+        'bannerProcessingTransactionsOne' => 'One purchase to process...',
+        'bannerProcessingTransactionsMany' => ':count purchases to process...',
         'changeQuantity' => 'Change quantity',
     ],
 
