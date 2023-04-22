@@ -1,5 +1,3 @@
-// noinspection JSAnnotator
-
 const path = require('path');
 
 let mix = require('laravel-mix');
@@ -30,10 +28,7 @@ mix.webpackConfig({
                 /js/,
                 /images\/vendor\/flag-icons/,
             ],
-            // navigateFallback: '/kiosk',
-            // navigateFallbackDenylist: [
-            //     /kiosk\/api/,
-            // ],
+            navigationPreload: true,
             runtimeCaching: [
                 {
                     urlPattern: ({url}) => url.pathname == '' || url.pathname == '/' || url.pathname == '/kiosk',
@@ -47,10 +42,24 @@ mix.webpackConfig({
                     },
                 },
                 {
+                    urlPattern: ({url}) => url.pathname.startsWith('/kiosk/api/buy'),
+                    handler: 'NetworkFirst',
+                    method: 'POST',
+                    options: {
+                        cacheName: 'kiosk-app-post',
+                        networkTimeoutSeconds: 10,
+                        expiration: {
+                            maxAgeSeconds: 6000000,
+                            maxEntries: 5000,
+                        },
+                    },
+                },
+                {
                     urlPattern: ({url}) => url.pathname.startsWith('/kiosk/api'),
-                    handler: 'StaleWhileRevalidate',
+                    handler: 'NetworkFirst',
                     options: {
                         cacheName: 'kiosk-api',
+                        networkTimeoutSeconds: 5,
                         expiration: {
                             maxAgeSeconds: 600,
                             maxEntries: 300,
