@@ -342,16 +342,40 @@
             },
 
             // Search users with the given query
-            search(query = null, all = false) {
-                // Fetch the list of users, set searching state
+            search(query = null) {
+                // Fetch a list of users, set the searching state
                 this.searching = true;
-                this._searchRequest(query, all)
+                this._searchOnline(query)
+                    // Fallback to cache
+                    .then(null, err => {
+                        console.log('Falling back to user cache search');
+                        return this._searchCache(query).then(null, () => err);
+                    })
+                    // Handle result
                     .then(users => this.users = users)
+                    // Handle error
                     .catch(err => {
                         alert('An error occurred while listing users');
                         console.error(err);
                     })
                     .finally(() => this.searching = false);
+            },
+
+            // Search users with the given query online.
+            _searchOnline(query = null) {
+                return this._searchRequest(query, false);
+            },
+
+            // Search users with the given query in the cache.
+            _searchCache(query = null) {
+                return this
+                    ._searchRequest(null, true)
+                    .then(users => {
+                        return users;
+                    })
+                    .catch(err => {
+                        console.log('Searching in user cache failed: ' + err);
+                    });
             },
 
             // Do a search request.

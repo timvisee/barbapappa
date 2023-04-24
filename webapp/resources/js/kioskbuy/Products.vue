@@ -336,16 +336,40 @@
             },
 
             // Search products with the given query
-            search(query = null, all = false) {
+            search(query = null) {
                 // Fetch a list of products, set the searching state
                 this.searching = true;
-                this._searchRequest(query, all)
+                this._searchOnline(query)
+                    // Fallback to cache
+                    .then(null, err => {
+                        console.log('Falling back to product cache search');
+                        return this._searchCache(query).then(null, () => err);
+                    })
+                    // Handle result
                     .then(products => this.products = products)
+                    // Handle error
                     .catch(err => {
                         alert('An error occurred while listing products');
                         console.error(err);
                     })
                     .finally(() => this.searching = false);
+            },
+
+            // Search products with the given query online.
+            _searchOnline(query = null) {
+                return this._searchRequest(query, false);
+            },
+
+            // Search products with the given query in the cache.
+            _searchCache(query = null) {
+                return this
+                    ._searchRequest(null, true)
+                    .then(products => {
+                        return products;
+                    })
+                    .catch(err => {
+                        console.log('Searching in product cache failed: ' + err);
+                    });
             },
 
             // Do a search request.
