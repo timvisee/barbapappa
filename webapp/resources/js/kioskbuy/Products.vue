@@ -362,9 +362,46 @@
 
             // Search products with the given query in the cache.
             _searchCache(query = null) {
+                // Normalize query
+                var query = query.trim().toLowerCase();
+
                 return this
                     ._searchRequest(null, true)
                     .then(products => {
+                        // Simple local search, filter products based on query
+                        products.top = products.top || [];
+                        products.list = products.list.filter(product => {
+                            let name = product.name.toLowerCase();
+
+                            // Filter name by full or starting-with query
+                            if(query.startsWith('^')) {
+                                if(name.startsWith(query.substr(1))) return true;
+                            } else {
+                                if(name.includes(query)) return true;
+                            }
+
+                            let tags = product.tags == undefined
+                                ? []
+                                : product
+                                    .tags
+                                    .split(' ')
+                                    .filter(tag => tag !== '' && tag != undefined)
+                                    .map(tag => tag.toLowerCase());
+
+                            // Filter tags by full or starting-with query
+                            for (const tag of tags) {
+                                console.log();
+                                if(query.startsWith('^')) {
+                                    if(tag.startsWith(query.substr(1))) return true;
+                                } else {
+                                    if(tag.includes(query)) return true;
+                                }
+                            }
+
+                            // No match
+                            return false;
+                        });
+
                         return products;
                     })
                     .catch(err => {

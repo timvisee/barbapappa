@@ -368,9 +368,24 @@
 
             // Search users with the given query in the cache.
             _searchCache(query = null) {
+                // Normalize query
+                var query = query.trim().toLowerCase();
+
                 return this
                     ._searchRequest(null, true)
                     .then(users => {
+                        // Simple local search, filter users based on query
+                        users = users.filter(user => {
+                            let name = user.name.toLowerCase();
+
+                            // Filter by full or starting-with query
+                            if(query.startsWith('^')) {
+                                return name.startsWith(query.substr(1));
+                            } else {
+                                return name.includes(query);
+                            }
+                        });
+
                         return users;
                     })
                     .catch(err => {
