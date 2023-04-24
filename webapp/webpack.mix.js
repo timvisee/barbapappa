@@ -5,6 +5,9 @@ let mix = require('laravel-mix');
 const WebpackShellPluginNext = require('webpack-shell-plugin-next');
 const {GenerateSW} = require('workbox-webpack-plugin');
 
+const DAY_SECONDS = 86400;
+const MONTH_SECONDS = 2592000;
+
 // Add shell command plugin configured to create JavaScript language file
 mix.webpackConfig({
     plugins: [
@@ -33,26 +36,16 @@ mix.webpackConfig({
             navigationPreload: true,
             runtimeCaching: [
                 {
-                    urlPattern: ({url}) => url.pathname == '' || url.pathname == '/' || url.pathname == '/kiosk',
-                    handler: 'NetworkFirst',
-                    options: {
-                        cacheName: 'kiosk-app',
-                        expiration: {
-                            maxAgeSeconds: 600,
-                            maxEntries: 50,
-                        },
-                    },
-                },
-                {
                     urlPattern: ({url}) => {
                         return url.pathname.startsWith('/kiosk/api')
                             && url.searchParams.has('all');
                     },
                     handler: 'StaleWhileRevalidate',
                     options: {
-                        cacheName: 'kiosk-api-important',
+                        cacheName: 'kiosk-api-required',
                         expiration: {
-                            maxAgeSeconds: 600,
+                            maxAgeSeconds: MONTH_SECONDS,
+                            // Likely will never be more than 2
                             maxEntries: 5,
                         },
                     },
@@ -64,8 +57,22 @@ mix.webpackConfig({
                         cacheName: 'kiosk-api',
                         networkTimeoutSeconds: 5,
                         expiration: {
-                            maxAgeSeconds: 600,
-                            maxEntries: 300,
+                            // Quickly expire because this isn't super important
+                            maxAgeSeconds: DAY_SECONDS,
+                            // May be a lot
+                            maxEntries: 100,
+                        },
+                    },
+                },
+                {
+                    urlPattern: ({url}) => url.pathname == '' || url.pathname == '/' || url.pathname.startsWith('/kiosk'),
+                    handler: 'NetworkFirst',
+                    options: {
+                        cacheName: 'kiosk-app',
+                        expiration: {
+                            maxAgeSeconds: MONTH_SECONDS,
+                            // Likely will never be more than 3
+                            maxEntries: 10,
                         },
                     },
                 },
@@ -80,8 +87,9 @@ mix.webpackConfig({
                     options: {
                         cacheName: 'assets',
                         expiration: {
-                            maxAgeSeconds: 600,
-                            maxEntries: 200,
+                            maxAgeSeconds: MONTH_SECONDS,
+                            // May be a lot
+                            maxEntries: 100,
                         },
                     },
                 },
