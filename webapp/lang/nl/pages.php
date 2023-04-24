@@ -1121,8 +1121,8 @@ return [
         'userMode' => 'Selecteer gebruiker',
         'backToKiosk' => 'Terug naar kiosk',
         'bannerNoConnection' => 'Geen verbinding. Aankopen zijn vertraagd.',
-        'bannerProcessingTransactionsOne' => 'Nog één aankoop te verwerken...',
-        'bannerProcessingTransactionsMany' => 'Nog :count aankopen te verwerken...',
+        'bannerProcessingTransactionsOne' => 'Nog één aankoop te synchroniseren...',
+        'bannerProcessingTransactionsMany' => 'Nog :count aankopen te synchroniseren...',
         'changeQuantity' => 'Hoeveelheid aanpassen',
     ],
 

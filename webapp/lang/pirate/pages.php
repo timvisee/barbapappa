@@ -1119,8 +1119,8 @@ return [
         'userMode' => 'Select pirate',
         'backToKiosk' => 'Back to kiosk',
         'bannerNoConnection' => 'Connection errrror. Booty be delayed.',
-        'bannerProcessingTransactionsOne' => 'One purchase to process...',
-        'bannerProcessingTransactionsMany' => ':count purchases to process...',
+        'bannerProcessingTransactionsOne' => 'One purchase to synchronize...',
+        'bannerProcessingTransactionsMany' => ':count purchases to synchronize...',
         'changeQuantity' => 'Change quantity',
     ],
 
