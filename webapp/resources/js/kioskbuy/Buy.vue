@@ -133,7 +133,6 @@
     const Cart = require('./Cart.vue').default;
     const Products = require('./Products.vue').default;
     const Users = require('./Users.vue').default;
-
     const ResetModal = require('./ResetModal.vue').default;
 
     /**
@@ -172,6 +171,13 @@
      * Key for buy queue data to store in local storage.
      */
     const BUY_QUEUE_DATA_KEY = 'kiosk-buy-queue';
+
+    /**
+     * Delay between each buy queue item when draining the queue.
+     *
+     * This delay is required to prevent rate limiting.
+     */
+    const BUY_QUEUE_DRAIN_INTERVAL = 2;
 
     export default {
         components: {
@@ -661,7 +667,7 @@
             _buyQueueDrainAllDelayed() {
                 setTimeout(() => {
                     this._buyQueueDrainAll();
-                }, 1500);
+                }, BUY_QUEUE_DRAIN_INTERVAL * 1000);
             },
         },
     }
