@@ -369,9 +369,14 @@
                         return;
 
                     // Force refresh
+                    // Go to root to ensure client is authenticated, and to
+                    // update service worker cache for root page
                     console.log("Refreshing kiosk page after time of activity");
                     this.refreshing = true;
-                    window.location.reload();
+                    window.location.pathname = '/';
+
+                    // Backup refresh
+                    setTimeout(() => window.location.reload(), 60000);
                 }, INACTIVITY_REFRESH_TIMEOUT * 1000);
             },
 
