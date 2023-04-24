@@ -23,6 +23,8 @@ mix.webpackConfig({
             swDest: 'sw.js',
         }),
         new GenerateSW({
+            // Claim clients as soon as possible
+            clientsClaim: true,
             cleanupOutdatedCaches: true,
             exclude: [
                 /js/,
