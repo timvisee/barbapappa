@@ -9,6 +9,7 @@
 /public/fonts
 /public/flags
 /public/sw.js
+/public/sw-kiosk.js
 /public/workbox*.js
 /public/LICENSE
 

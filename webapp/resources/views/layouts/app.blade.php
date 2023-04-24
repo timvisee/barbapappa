@@ -62,10 +62,7 @@
     @stack('scripts')
 
     {{-- Preloads/prefetches --}}
-    <link rel="preload" href="{{ asset('sw.js') }}" as="worker">
-    <link rel="preload" href="{{ asset('fonts/glyphicons-regular.woff2') }}" as="font">
-    <link rel="preload" href="{{ asset('fonts/glyphicons-halflings-regular.woff2') }}" as="font">
-    <link rel="preload" href="{{ asset('css/themes/default/assets/fonts/icons.woff2') }}" as="font">
+    <link rel="prefetch" href="{{ asset('sw.js') }}" as="worker">
     <link rel="prefetch" href="{{ mix('js/widget/quickbuy.js') }}" as="script">
     <link rel="prefetch" href="{{ mix('js/widget/advancedbuy.js') }}" as="script">
 

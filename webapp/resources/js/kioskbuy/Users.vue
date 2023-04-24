@@ -234,16 +234,12 @@
 <script>
     import axios from 'axios';
 
+    /**
+     * Delay for warming up all users cache in service worker.
+     */
+    const CACHE_WARMUP_DELAY = 5;
+
     export default {
-        data() {
-            return {
-                query: '',
-                queryText: '',
-                searching: true,
-                showIndex: false,
-                users: [],
-            };
-        },
         props: [
             'apiUrl',
             'swapped',
@@ -257,6 +253,15 @@
             '_removeAllUserCarts',
             '_getTotalCartQuantity',
         ],
+        data() {
+            return {
+                query: '',
+                queryText: '',
+                searching: true,
+                showIndex: false,
+                users: [],
+            };
+        },
         watch: {
             query: function() {
                 this.search(this.query);
@@ -268,6 +273,16 @@
                 if(newSelectedUsers.length > 0)
                     this.$emit('highlightProducts');
             },
+        },
+        mounted: function() {
+            // Plain search for default user list
+            this.search();
+
+            // Warm up service worker cache for list of all users
+            setTimeout(
+                () => this._searchRequest(null, true),
+                CACHE_WARMUP_DELAY * 1000,
+            );
         },
         methods: {
             // If we're currently in user selection mode.
@@ -327,16 +342,68 @@
             },
 
             // Search users with the given query
-            search(query = '') {
-                // Fetch the list of users, set searching state
+            search(query = null) {
+                // Fetch a list of users, set the searching state
                 this.searching = true;
-                axios.get(this.apiUrl + `/members?q=${encodeURIComponent(query)}`)
-                    .then(res => this.users = res.data)
+                this._searchOnline(query)
+                    // Fallback to cache
+                    .then(null, err => {
+                        console.log('Falling back to user cache search');
+                        return this._searchCache(query).then(null, () => err);
+                    })
+                    // Handle result
+                    .then(users => this.users = users)
+                    // Handle error
                     .catch(err => {
                         alert('An error occurred while listing users');
                         console.error(err);
                     })
                     .finally(() => this.searching = false);
+            },
+
+            // Search users with the given query online.
+            _searchOnline(query = null) {
+                return this._searchRequest(query, false);
+            },
+
+            // Search users with the given query in the cache.
+            _searchCache(query = null) {
+                // Normalize query
+                var query = query.trim().toLowerCase();
+
+                return this
+                    ._searchRequest(null, true)
+                    .then(users => {
+                        // Simple local search, filter users based on query
+                        users = users.filter(user => {
+                            let name = user.name.toLowerCase();
+
+                            // Filter by full or starting-with query
+                            if(query.startsWith('^')) {
+                                return name.startsWith(query.substr(1));
+                            } else {
+                                return name.includes(query);
+                            }
+                        });
+
+                        return users;
+                    })
+                    .catch(err => {
+                        console.log('Searching in user cache failed: ' + err);
+                    });
+            },
+
+            // Do a search request.
+            _searchRequest(query = null, all = false) {
+                // Build URL
+                let url = new URL(this.apiUrl + '/members');
+                if(query != null && query.length > 0)
+                    url.searchParams.append('q', encodeURIComponent(query));
+                if(all)
+                    url.searchParams.append('all', 'true');
+
+                // Fetch a list of users
+                return axios.get(url.toString()).then(res => res.data);
             },
 
             // Get product quantity for user
@@ -393,9 +460,6 @@
                 this.reset();
                 this.showIndex = false;
             },
-        },
-        mounted: function() {
-            this.search();
         },
     }
 </script>

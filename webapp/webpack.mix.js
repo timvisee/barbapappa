@@ -1,11 +1,12 @@
-// noinspection JSAnnotator
-
 const path = require('path');
 
 let mix = require('laravel-mix');
 
 const WebpackShellPluginNext = require('webpack-shell-plugin-next');
-const { GenerateSW } = require('workbox-webpack-plugin');
+const {GenerateSW} = require('workbox-webpack-plugin');
+
+const DAY_SECONDS = 86400;
+const MONTH_SECONDS = 2592000;
 
 // Add shell command plugin configured to create JavaScript language file
 mix.webpackConfig({
@@ -17,11 +18,83 @@ mix.webpackConfig({
             },
         }),
         new GenerateSW({
-            // TODO: also cache js/vendor.js, css/vendor.css
+            cleanupOutdatedCaches: true,
             exclude: [
-                'images/vendor/flag-icons/flags/',
+                /js/,
+                /images\/vendor\/flag-icons/,
             ],
             swDest: 'sw.js',
+        }),
+        new GenerateSW({
+            // Claim clients as soon as possible
+            clientsClaim: true,
+            cleanupOutdatedCaches: true,
+            exclude: [
+                /js/,
+                /images\/vendor\/flag-icons/,
+            ],
+            navigationPreload: true,
+            runtimeCaching: [
+                {
+                    urlPattern: ({url}) => {
+                        return url.pathname.startsWith('/kiosk/api')
+                            && url.searchParams.has('all');
+                    },
+                    handler: 'StaleWhileRevalidate',
+                    options: {
+                        cacheName: 'kiosk-api-required',
+                        expiration: {
+                            maxAgeSeconds: MONTH_SECONDS,
+                            // Likely will never be more than 2
+                            maxEntries: 5,
+                        },
+                    },
+                },
+                {
+                    urlPattern: ({url}) => url.pathname.startsWith('/kiosk/api'),
+                    handler: 'NetworkFirst',
+                    options: {
+                        cacheName: 'kiosk-api',
+                        networkTimeoutSeconds: 5,
+                        expiration: {
+                            // Quickly expire because this isn't super important
+                            maxAgeSeconds: DAY_SECONDS,
+                            // May be a lot
+                            maxEntries: 100,
+                        },
+                    },
+                },
+                {
+                    urlPattern: ({url}) => url.pathname == '' || url.pathname == '/' || url.pathname.startsWith('/kiosk'),
+                    handler: 'NetworkFirst',
+                    options: {
+                        cacheName: 'kiosk-app',
+                        expiration: {
+                            maxAgeSeconds: MONTH_SECONDS,
+                            // Likely will never be more than 3
+                            maxEntries: 10,
+                        },
+                    },
+                },
+                {
+                    urlPattern: ({url}) => {
+                        return url.pathname.startsWith('/js/')
+                            || url.pathname.startsWith('/css/')
+                            || url.pathname.startsWith('/fonts/')
+                            || url.pathname.startsWith('/img/logo/');
+                    },
+                    handler: 'CacheFirst',
+                    options: {
+                        cacheName: 'assets',
+                        expiration: {
+                            maxAgeSeconds: MONTH_SECONDS,
+                            // May be a lot
+                            maxEntries: 100,
+                        },
+                    },
+                },
+            ],
+            swDest: 'sw-kiosk.js',
         }),
     ]
 });

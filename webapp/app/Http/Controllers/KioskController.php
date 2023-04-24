@@ -114,17 +114,22 @@ class KioskController extends Controller {
         $bar = kioskauth()->getBar();
         $economy = $bar->economy;
         $search = \Request::query('q');
+        $all = is_checked(\Request::query('all'));
+
+        // Determine whether to search or whether to show default member list
+        $doSearch = $all || !empty($search);
 
         // Return a default user list, or search based on a given query
-        if(empty($search))
+        if(!$doSearch)
             $members = self::getMemberList($bar, self::MEMBERS_LIMIT);
-        else
+        else {
             $members = $economy
                 ->members()
                 ->search($search)
                 ->showInKiosk()
-                ->limit(self::MEMBERS_LIMIT)
+                ->limit(!$all ? self::MEMBERS_LIMIT : null)
                 ->get();
+        }
 
         // Set and limit fields to repsond with and sort
         $members = $members
@@ -151,6 +156,8 @@ class KioskController extends Controller {
         // Get the bar and the search query
         $bar = kioskauth()->getBar();
         $economy = $bar->economy;
+        $search = \Request::get('q');
+        $all = is_checked(\Request::query('all'));
 
         // Select currency
         // TODO: find proper currency here, possibly show selection for it
@@ -167,10 +174,11 @@ class KioskController extends Controller {
         $currency = Currency::findOrFail($currency_id);
         $currencies = [$currency];
 
+        // Determine whether to search or whether to show default member list
+        $doSearch = $all || !empty($search);
+
         // Search, or use top products
-        $search = \Request::get('q');
-        $isSearch = !empty($search);
-        if($isSearch)
+        if($doSearch)
             $products = $bar->economy->searchProducts($search, [$currency->id]);
         else
             $products = self::getProductList($bar, self::PRODUCTS_LIMIT, [$currency->id]);
@@ -183,7 +191,7 @@ class KioskController extends Controller {
             });
 
         // Separate top products from list
-        if($isSearch) {
+        if($doSearch) {
             $top = collect();
             $list = $products;
         } else {
@@ -553,12 +561,23 @@ class KioskController extends Controller {
      *
      * @return Response
      */
+    // TODO: we must validate request data
     public function apiBuy(Request $request) {
         // Get the bar, current user and the search query
         $bar = kioskauth()->getBar();
         $economy = $bar->economy;
-        $cart = collect($request->post());
+        $buyData = $request->post();
         $self = $this;
+
+        // Take cart from request buy data
+        if(isset($buyData['cart'])) {
+            $cart = collect($buyData['cart']);
+        } else if(is_array($buyData)) {
+            // Backwards compatability: client version <= 0.1.175
+            $cart = collect($buyData);
+        } else {
+            throw new \Exception('Invalid buy data');
+        }
 
         // Error if bar is disabled
         if(!$bar->enabled) {
@@ -636,7 +655,8 @@ class KioskController extends Controller {
                 ->prices
                 ->whereStrict('currency_id', $currency->id)
                 ->first()
-                ->price;
+                ->price
+                ?? null;
             if($price == null)
                 throw new \Exception('Product does not have price in selected currency');
             $item['priceEach'] = $price * 1;

@@ -160,7 +160,7 @@
             {{ __('misc.loading') }}...
         </i>
         <i v-if="!searching && productCount == 0" class="item">
-            {{ __('pages.products.noProductsFoundFor', {term: query}) }}.
+            {{ __('pages.kiosk.noProductsFoundFor', {term: query}) }}.
         </i>
 
         <!-- Selected products not in list (always show on bottom) -->
@@ -207,10 +207,30 @@
 
     const QuantityModal = require('./QuantityModal.vue').default;
 
+    /**
+     * Delay for warming up all products cache in service worker.
+     */
+    const CACHE_WARMUP_DELAY = 5;
+
     export default {
         components: {
             QuantityModal,
         },
+        props: [
+            'apiUrl',
+            'swapped',
+            'selectedUsers',
+            'selectedProducts',
+            'cart',
+            'buying',
+            '_getUserCart',
+            '_getSelectCart',
+            '_getCartQuantity',
+            '_setCartQuantity',
+            '_addCartQuantity',
+            '_getCartSize',
+            '_removeCart',
+        ],
         data() {
             return {
                 query: '',
@@ -251,23 +271,15 @@
             },
         },
         mounted: function() {
+            // Plain search for default product list
             this.search();
+
+            // Warm up service worker cache for list of all users
+            setTimeout(
+                () => this._searchRequest(null, true),
+                CACHE_WARMUP_DELAY * 1000,
+            );
         },
-        props: [
-            'apiUrl',
-            'swapped',
-            'selectedUsers',
-            'selectedProducts',
-            'cart',
-            'buying',
-            '_getUserCart',
-            '_getSelectCart',
-            '_getCartQuantity',
-            '_setCartQuantity',
-            '_addCartQuantity',
-            '_getCartSize',
-            '_removeCart',
-        ],
         methods: {
             // If we're currently in user selection mode.
             isSelectMode() {
@@ -324,16 +336,90 @@
             },
 
             // Search products with the given query
-            search(query = '') {
+            search(query = null) {
                 // Fetch a list of products, set the searching state
                 this.searching = true;
-                axios.get(this.apiUrl + `/products?q=${encodeURIComponent(query)}`)
-                    .then(res => this.products = res.data)
+                this._searchOnline(query)
+                    // Fallback to cache
+                    .then(null, err => {
+                        console.log('Falling back to product cache search');
+                        return this._searchCache(query).then(null, () => err);
+                    })
+                    // Handle result
+                    .then(products => this.products = products)
+                    // Handle error
                     .catch(err => {
                         alert('An error occurred while listing products');
                         console.error(err);
                     })
                     .finally(() => this.searching = false);
+            },
+
+            // Search products with the given query online.
+            _searchOnline(query = null) {
+                return this._searchRequest(query, false);
+            },
+
+            // Search products with the given query in the cache.
+            _searchCache(query = null) {
+                // Normalize query
+                var query = query.trim().toLowerCase();
+
+                return this
+                    ._searchRequest(null, true)
+                    .then(products => {
+                        // Simple local search, filter products based on query
+                        products.top = products.top || [];
+                        products.list = products.list.filter(product => {
+                            let name = product.name.toLowerCase();
+
+                            // Filter name by full or starting-with query
+                            if(query.startsWith('^')) {
+                                if(name.startsWith(query.substr(1))) return true;
+                            } else {
+                                if(name.includes(query)) return true;
+                            }
+
+                            let tags = product.tags == undefined
+                                ? []
+                                : product
+                                    .tags
+                                    .split(' ')
+                                    .filter(tag => tag !== '' && tag != undefined)
+                                    .map(tag => tag.toLowerCase());
+
+                            // Filter tags by full or starting-with query
+                            for (const tag of tags) {
+                                console.log();
+                                if(query.startsWith('^')) {
+                                    if(tag.startsWith(query.substr(1))) return true;
+                                } else {
+                                    if(tag.includes(query)) return true;
+                                }
+                            }
+
+                            // No match
+                            return false;
+                        });
+
+                        return products;
+                    })
+                    .catch(err => {
+                        console.log('Searching in product cache failed: ' + err);
+                    });
+            },
+
+            // Do a search request.
+            _searchRequest(query = null, all = false) {
+                // Build URL
+                let url = new URL(this.apiUrl + '/products');
+                if(query != null && query.length > 0)
+                    url.searchParams.append('q', encodeURIComponent(query));
+                if(all)
+                    url.searchParams.append('all', 'true');
+
+                // Fetch a list of products
+                return axios.get(url.toString()).then(res => res.data);
             },
 
             // Check if given product is in current search result list
