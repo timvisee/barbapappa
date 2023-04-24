@@ -1104,6 +1104,7 @@ return [
         'searchUsers' => 'Search users',
         'searchingFor' => 'Searching :term...',
         'noUsersFoundFor' => 'Nobody for :term',
+        'noProductsFoundFor' => 'Nothing for :term',
         'firstSelectUser' => 'Select a member on the left to make a purchase',
         'firstSelectProduct' => 'Select products on the left to purchase for a member',
         'selectProducts' => 'Select products',

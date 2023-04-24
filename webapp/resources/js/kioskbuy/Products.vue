@@ -160,7 +160,7 @@
             {{ __('misc.loading') }}...
         </i>
         <i v-if="!searching && productCount == 0" class="item">
-            {{ __('pages.products.noProductsFoundFor', {term: query}) }}.
+            {{ __('pages.kiosk.noProductsFoundFor', {term: query}) }}.
         </i>
 
         <!-- Selected products not in list (always show on bottom) -->

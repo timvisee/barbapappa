@@ -1104,6 +1104,7 @@ return [
         'searchUsers' => 'Scavenge pirates',
         'searchingFor' => 'Scavenging :term...',
         'noUsersFoundFor' => 'Nay for :term',
+        'noProductsFoundFor' => 'Nay for :term',
         'firstSelectUser' => 'Select a pirate on the left to make a purchase',
         'firstSelectProduct' => 'Select loot on the left to purchase for a pirate',
         'selectProducts' => 'Select loot',

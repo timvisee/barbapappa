@@ -1106,6 +1106,7 @@ return [
         'searchUsers' => 'Zoek leden',
         'searchingFor' => 'Zoeken :term...',
         'noUsersFoundFor' => 'Niemand voor :term',
+        'noProductsFoundFor' => 'Niks voor :term',
         'firstSelectUser' => 'Selecteer links een lid om een aankoop voor te doen',
         'firstSelectProduct' => 'Selecteer links producten om voor een lid te kopen',
         'selectProducts' => 'Selecteer producten',
