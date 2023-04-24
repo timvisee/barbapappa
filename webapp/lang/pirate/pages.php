@@ -1109,7 +1109,7 @@ return [
         'firstSelectProduct' => 'Select loot on the left to purchase for a pirate',
         'selectProducts' => 'Select loot',
         'buyProducts#' => '{0} Get no loot|{1} Get loot|[2,*] Get :count loot',
-        'buyProductsUsers#' => '{0} Get no loot for :users pirates|[1,*] Get :count× for :users pirates',
+        'buyProductsUsers#' => '{0} Get no loot|[1,*] Get :count× / :users pirates',
         'cartTimeoutDescription' => 'Forgot purchase?<br><br>Selected loot nay be purchased yet.',
         'viewCart' => 'Continue looting',
         'resetCart' => 'Reset loot',

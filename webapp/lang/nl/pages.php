@@ -1111,7 +1111,7 @@ return [
         'firstSelectProduct' => 'Selecteer links producten om voor een lid te kopen',
         'selectProducts' => 'Selecteer producten',
         'buyProducts#' => '{0} Koop geen producten|{1} Koop product|[2,*] Koop :count producten',
-        'buyProductsUsers#' => '{0} Koop geen producten voor :users leden|[1,*] Koop :count× voor :users leden',
+        'buyProductsUsers#' => '{0} Koop geen producten|[1,*] Koop :count× / :users leden',
         'cartTimeoutDescription' => 'Vergeten af te rekenen?<br><br>Geselecteerde producten zijn nog niet afgerekend.',
         'viewCart' => 'Verder winkelen',
         'resetCart' => 'Reset winkelwagen',

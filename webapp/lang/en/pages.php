@@ -1109,7 +1109,7 @@ return [
         'firstSelectProduct' => 'Select products on the left to purchase for a member',
         'selectProducts' => 'Select products',
         'buyProducts#' => '{0} Buy no products|{1} Buy product|[2,*] Buy :count products',
-        'buyProductsUsers#' => '{0} Buy no products for :users users|[1,*] Buy :count× for :users users',
+        'buyProductsUsers#' => '{0} Buy no products|[1,*] Buy :count× / :users users',
         'cartTimeoutDescription' => 'Forgot purchase?<br><br>Selected products have not been purchased yet.',
         'viewCart' => 'Continue shopping',
         'resetCart' => 'Reset cart',
