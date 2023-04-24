@@ -303,11 +303,12 @@
                     ._sendBuyRequest(data, false)
                     // Fall back to deferred queue
                     .then(null, reject => {
+                        // If we got a response, don't queue, forward error
+                        if(reject.response)
+                            return Promise.reject(reject);
+
                         this._buyQueuePush(data);
                         return Promise.resolve({});
-                    })
-                    .catch(err => {
-                        alert('Error when buying products');
                     });
             },
 
