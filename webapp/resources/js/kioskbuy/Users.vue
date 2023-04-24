@@ -240,15 +240,6 @@
     const CACHE_WARMUP_DELAY = 5;
 
     export default {
-        data() {
-            return {
-                query: '',
-                queryText: '',
-                searching: true,
-                showIndex: false,
-                users: [],
-            };
-        },
         props: [
             'apiUrl',
             'swapped',
@@ -262,6 +253,15 @@
             '_removeAllUserCarts',
             '_getTotalCartQuantity',
         ],
+        data() {
+            return {
+                query: '',
+                queryText: '',
+                searching: true,
+                showIndex: false,
+                users: [],
+            };
+        },
         watch: {
             query: function() {
                 this.search(this.query);
@@ -273,6 +273,16 @@
                 if(newSelectedUsers.length > 0)
                     this.$emit('highlightProducts');
             },
+        },
+        mounted: function() {
+            // Plain search for default user list
+            this.search();
+
+            // Warm up service worker cache for list of all users
+            setTimeout(
+                () => this._searchRequest(null, true),
+                CACHE_WARMUP_DELAY * 1000,
+            );
         },
         methods: {
             // If we're currently in user selection mode.
@@ -411,16 +421,6 @@
                 this.reset();
                 this.showIndex = false;
             },
-        },
-        mounted: function() {
-            // Plain search for default user list
-            this.search();
-
-            // Warm up service worker cache for list of all users
-            setTimeout(
-                () => this._searchRequest(null, true),
-                CACHE_WARMUP_DELAY * 1000,
-            );
         },
     }
 </script>

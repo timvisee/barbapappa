@@ -216,6 +216,21 @@
         components: {
             QuantityModal,
         },
+        props: [
+            'apiUrl',
+            'swapped',
+            'selectedUsers',
+            'selectedProducts',
+            'cart',
+            'buying',
+            '_getUserCart',
+            '_getSelectCart',
+            '_getCartQuantity',
+            '_setCartQuantity',
+            '_addCartQuantity',
+            '_getCartSize',
+            '_removeCart',
+        ],
         data() {
             return {
                 query: '',
@@ -265,21 +280,6 @@
                 CACHE_WARMUP_DELAY * 1000,
             );
         },
-        props: [
-            'apiUrl',
-            'swapped',
-            'selectedUsers',
-            'selectedProducts',
-            'cart',
-            'buying',
-            '_getUserCart',
-            '_getSelectCart',
-            '_getCartQuantity',
-            '_setCartQuantity',
-            '_addCartQuantity',
-            '_getCartSize',
-            '_removeCart',
-        ],
         methods: {
             // If we're currently in user selection mode.
             isSelectMode() {
