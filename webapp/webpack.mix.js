@@ -44,6 +44,20 @@ mix.webpackConfig({
                     },
                 },
                 {
+                    urlPattern: ({url}) => {
+                        return url.pathname.startsWith('/kiosk/api')
+                            && url.searchParams.has('all');
+                    },
+                    handler: 'StaleWhileRevalidate',
+                    options: {
+                        cacheName: 'kiosk-api-important',
+                        expiration: {
+                            maxAgeSeconds: 600,
+                            maxEntries: 5,
+                        },
+                    },
+                },
+                {
                     urlPattern: ({url}) => url.pathname.startsWith('/kiosk/api'),
                     handler: 'NetworkFirst',
                     options: {
@@ -58,9 +72,9 @@ mix.webpackConfig({
                 {
                     urlPattern: ({url}) => {
                         return url.pathname.startsWith('/js/')
-                        || url.pathname.startsWith('/css/')
-                        || url.pathname.startsWith('/fonts/')
-                        || url.pathname.startsWith('/img/logo/');
+                            || url.pathname.startsWith('/css/')
+                            || url.pathname.startsWith('/fonts/')
+                            || url.pathname.startsWith('/img/logo/');
                     },
                     handler: 'CacheFirst',
                     options: {

@@ -207,6 +207,11 @@
 
     const QuantityModal = require('./QuantityModal.vue').default;
 
+    /**
+     * Delay for warming up all products cache in service worker.
+     */
+    const CACHE_WARMUP_DELAY = 5;
+
     export default {
         components: {
             QuantityModal,
@@ -251,7 +256,14 @@
             },
         },
         mounted: function() {
+            // Plain search for default product list
             this.search();
+
+            // Warm up service worker cache for list of all users
+            setTimeout(
+                () => this._searchRequest(null, true),
+                CACHE_WARMUP_DELAY * 1000,
+            );
         },
         props: [
             'apiUrl',
@@ -324,16 +336,29 @@
             },
 
             // Search products with the given query
-            search(query = '') {
+            search(query = null, all = false) {
                 // Fetch a list of products, set the searching state
                 this.searching = true;
-                axios.get(this.apiUrl + `/products?q=${encodeURIComponent(query)}`)
-                    .then(res => this.products = res.data)
+                this._searchRequest(query, all)
+                    .then(products => this.products = products)
                     .catch(err => {
                         alert('An error occurred while listing products');
                         console.error(err);
                     })
                     .finally(() => this.searching = false);
+            },
+
+            // Do a search request.
+            _searchRequest(query = null, all = false) {
+                // Build URL
+                let url = new URL(this.apiUrl + '/products');
+                if(query != null && query.length > 0)
+                    url.searchParams.append('q', encodeURIComponent(query));
+                if(all)
+                    url.searchParams.append('all', 'true');
+
+                // Fetch a list of products
+                return axios.get(url.toString()).then(res => res.data);
             },
 
             // Check if given product is in current search result list

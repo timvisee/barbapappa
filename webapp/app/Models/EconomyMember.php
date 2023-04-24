@@ -122,6 +122,10 @@ class EconomyMember extends Pivot {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSearch($query, $search) {
+        // Don't scope anything if the query is empty
+        if(empty(trim($search)))
+            return;
+
         // TODO: search for nicknames and a-like as well (members with null user)
         // return $query
         //     // ->selectRaw("CONCAT(user.first_name, ' ', users.last_name) AS name")

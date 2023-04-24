@@ -234,6 +234,11 @@
 <script>
     import axios from 'axios';
 
+    /**
+     * Delay for warming up all users cache in service worker.
+     */
+    const CACHE_WARMUP_DELAY = 5;
+
     export default {
         data() {
             return {
@@ -327,16 +332,29 @@
             },
 
             // Search users with the given query
-            search(query = '') {
+            search(query = null, all = false) {
                 // Fetch the list of users, set searching state
                 this.searching = true;
-                axios.get(this.apiUrl + `/members?q=${encodeURIComponent(query)}`)
-                    .then(res => this.users = res.data)
+                this._searchRequest(query, all)
+                    .then(users => this.users = users)
                     .catch(err => {
                         alert('An error occurred while listing users');
                         console.error(err);
                     })
                     .finally(() => this.searching = false);
+            },
+
+            // Do a search request.
+            _searchRequest(query = null, all = false) {
+                // Build URL
+                let url = new URL(this.apiUrl + '/members');
+                if(query != null && query.length > 0)
+                    url.searchParams.append('q', encodeURIComponent(query));
+                if(all)
+                    url.searchParams.append('all', 'true');
+
+                // Fetch a list of users
+                return axios.get(url.toString()).then(res => res.data);
             },
 
             // Get product quantity for user
@@ -395,7 +413,14 @@
             },
         },
         mounted: function() {
+            // Plain search for default user list
             this.search();
+
+            // Warm up service worker cache for list of all users
+            setTimeout(
+                () => this._searchRequest(null, true),
+                CACHE_WARMUP_DELAY * 1000,
+            );
         },
     }
 </script>

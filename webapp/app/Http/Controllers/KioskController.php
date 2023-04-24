@@ -114,17 +114,22 @@ class KioskController extends Controller {
         $bar = kioskauth()->getBar();
         $economy = $bar->economy;
         $search = \Request::query('q');
+        $all = is_checked(\Request::query('all'));
+
+        // Determine whether to search or whether to show default member list
+        $doSearch = $all || !empty($search);
 
         // Return a default user list, or search based on a given query
-        if(empty($search))
+        if(!$doSearch)
             $members = self::getMemberList($bar, self::MEMBERS_LIMIT);
-        else
+        else {
             $members = $economy
                 ->members()
                 ->search($search)
                 ->showInKiosk()
-                ->limit(self::MEMBERS_LIMIT)
+                ->limit(!$all ? self::MEMBERS_LIMIT : null)
                 ->get();
+        }
 
         // Set and limit fields to repsond with and sort
         $members = $members
@@ -151,6 +156,8 @@ class KioskController extends Controller {
         // Get the bar and the search query
         $bar = kioskauth()->getBar();
         $economy = $bar->economy;
+        $search = \Request::get('q');
+        $all = is_checked(\Request::query('all'));
 
         // Select currency
         // TODO: find proper currency here, possibly show selection for it
@@ -167,10 +174,11 @@ class KioskController extends Controller {
         $currency = Currency::findOrFail($currency_id);
         $currencies = [$currency];
 
+        // Determine whether to search or whether to show default member list
+        $doSearch = $all || !empty($search);
+
         // Search, or use top products
-        $search = \Request::get('q');
-        $isSearch = !empty($search);
-        if($isSearch)
+        if($doSearch)
             $products = $bar->economy->searchProducts($search, [$currency->id]);
         else
             $products = self::getProductList($bar, self::PRODUCTS_LIMIT, [$currency->id]);
@@ -183,7 +191,7 @@ class KioskController extends Controller {
             });
 
         // Separate top products from list
-        if($isSearch) {
+        if($doSearch) {
             $top = collect();
             $list = $products;
         } else {
