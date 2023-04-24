@@ -655,7 +655,8 @@ class KioskController extends Controller {
                 ->prices
                 ->whereStrict('currency_id', $currency->id)
                 ->first()
-                ->price;
+                ->price
+                ?? null;
             if($price == null)
                 throw new \Exception('Product does not have price in selected currency');
             $item['priceEach'] = $price * 1;
