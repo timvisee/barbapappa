@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.176 (2023-04-24)
+
+- Add offline support to kiosk mode. To use this, install the app as PWA. The app must connect to the internet at least once every month.
+- Make kiosk user/product search more reliable, fall back to searching cached users/products on error
+- Queue kiosk purchases if there is no connection, synchronize when connecting again
+- Shorten kiosk buy button text to prevent overflowing when buying for multiple users
+- Add kiosk specific service worker to handle offline mode and caching
+- Fix precache/prefetch configuration of main service worker
+- Fix rare error when buying products in kiosk mode
+
 ## 0.1.175 (2023-04-19)
 
 - Fix kiosk layout on small screens by using less text in swap button
