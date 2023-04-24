@@ -561,12 +561,23 @@ class KioskController extends Controller {
      *
      * @return Response
      */
+    // TODO: we must validate request data
     public function apiBuy(Request $request) {
         // Get the bar, current user and the search query
         $bar = kioskauth()->getBar();
         $economy = $bar->economy;
-        $cart = collect($request->post());
+        $buyData = $request->post();
         $self = $this;
+
+        // Take cart from request buy data
+        if(isset($buyData['cart'])) {
+            $cart = collect($buyData['cart']);
+        } else if(is_array($buyData)) {
+            // Backwards compatability: client version <= 0.1.175
+            $cart = collect($buyData);
+        } else {
+            throw new \Exception('Invalid buy data');
+        }
 
         // Error if bar is disabled
         if(!$bar->enabled) {

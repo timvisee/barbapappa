@@ -271,8 +271,13 @@
                     return;
                 this.buying = true;
 
+                // Create buy data object, add unique UUID
+                let buyData = {
+                    uuid: this.uuidv4(),
+                    cart: JSON.parse(JSON.stringify(this.cart)),
+                };
+
                 // Buy the products through an AJAX call
-                let buyData = JSON.parse(JSON.stringify(this.cart));
                 this._buyOrQueue(buyData)
                     .then(res => {
                         // Show bought overlay for 1 second
@@ -307,6 +312,7 @@
                         if(reject.response)
                             return Promise.reject(reject);
 
+                        // Add buy request to queue
                         this._buyQueuePush(data);
                         return Promise.resolve({});
                     });
@@ -674,6 +680,13 @@
                 setTimeout(() => {
                     this._buyQueueDrainAll();
                 }, BUY_QUEUE_DRAIN_INTERVAL * 1000);
+            },
+
+            // Generate random UUID.
+            uuidv4() {
+                return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+                    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+                );
             },
         },
     }
