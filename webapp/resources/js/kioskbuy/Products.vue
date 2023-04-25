@@ -390,7 +390,6 @@
 
                             // Filter tags by full or starting-with query
                             for (const tag of tags) {
-                                console.log();
                                 if(query.startsWith('^')) {
                                     if(tag.startsWith(query.substr(1))) return true;
                                 } else {
