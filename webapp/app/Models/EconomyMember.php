@@ -122,6 +122,11 @@ class EconomyMember extends Pivot {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSearch($query, $search) {
+        // Starts with search mode
+        $startsWith = Str::startsWith($search, "^");
+        if($startsWith)
+            $search = Str::substr($search, 1);
+
         // Don't scope anything if the query is empty
         if(empty(trim($search)))
             return;
@@ -132,10 +137,6 @@ class EconomyMember extends Pivot {
         //     // ->where('name', 'LIKE', '%' . escape_like($search) . '%')
         //     ->where('first_name', 'LIKE', '%' . escape_like($search) . '%')
         //     ->orWhere('last_name', 'LIKE', '%' . escape_like($search) . '%');
-
-        $startsWith = Str::startsWith($search, "^");
-        if($startsWith)
-            $search = Str::substr($search, 1);
 
         // Search for each word separately in the first/last name fields
         $query = $query
