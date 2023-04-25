@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.177 (2023-04-25)
+
+- In kiosk, fix incorrect query encoding causing some search queries to break
+- Remove support for searching products with ^ prefix
+- Handle searches with an empty query better
+
 ## 0.1.176 (2023-04-24)
 
 - Add offline support to kiosk mode. To use this, install the app as PWA. The app must connect to the internet at least once every month.
