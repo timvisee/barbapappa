@@ -373,12 +373,9 @@
                         products.list = products.list.filter(product => {
                             let name = product.name.toLowerCase();
 
-                            // Filter name by full or starting-with query
-                            if(query.startsWith('^')) {
-                                if(name.startsWith(query.substr(1))) return true;
-                            } else {
-                                if(name.includes(query)) return true;
-                            }
+                            // Filter name
+                            if(name.includes(query))
+                                return true;
 
                             let tags = product.tags == undefined
                                 ? []
@@ -390,11 +387,8 @@
 
                             // Filter tags by full or starting-with query
                             for (const tag of tags) {
-                                if(query.startsWith('^')) {
-                                    if(tag.startsWith(query.substr(1))) return true;
-                                } else {
-                                    if(tag.includes(query)) return true;
-                                }
+                                if(tag.includes(query))
+                                    return true;
                             }
 
                             // No match
