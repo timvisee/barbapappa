@@ -398,7 +398,7 @@
                 // Build URL
                 let url = new URL(this.apiUrl + '/members');
                 if(query != null && query.length > 0)
-                    url.searchParams.append('q', encodeURIComponent(query));
+                    url.searchParams.append('q', query);
                 if(all)
                     url.searchParams.append('all', 'true');
 
