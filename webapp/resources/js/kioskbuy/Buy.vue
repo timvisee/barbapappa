@@ -272,8 +272,10 @@
                 this.buying = true;
 
                 // Create buy data object, add unique UUID
+                let timestamp = Date.now() / 1000;
                 let buyData = {
                     uuid: this.uuidv4(),
+                    initiated_at: timestamp,
                     cart: JSON.parse(JSON.stringify(this.cart)),
                 };
 
