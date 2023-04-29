@@ -42,6 +42,12 @@
                 @endif
 
                 <span class="sub-label">
+                    @include('includes.humanTimeDiff', [
+                        'time' => $productMutation->updated_at ?? $productMutation->created_at,
+                        'absolute' => true,
+                        'short' => true,
+                    ])
+
                     {{-- Icon for delayed purchases --}}
                     @if($productMutation->mutation?->transaction?->isDelayed() ?? false)
                         <span class="halflings halflings-hourglass"></span>
@@ -51,12 +57,6 @@
                     @if($productMutation->mutation?->transaction?->initiated_by_kiosk ?? false)
                         <span class="halflings halflings-shopping-cart"></span>
                     @endif
-
-                    @include('includes.humanTimeDiff', [
-                        'time' => $productMutation->updated_at ?? $productMutation->created_at,
-                        'absolute' => true,
-                        'short' => true,
-                    ])
                 </span>
 
             </a>
