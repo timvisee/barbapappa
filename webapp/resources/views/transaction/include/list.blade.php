@@ -29,7 +29,11 @@
                         <span class="halflings halflings-shopping-cart"></span>
                     @endif
 
-                    @include('includes.humanTimeDiff', ['time' => $transaction->updated_at ?? $transaction->created_at, 'short' => true])
+                    @include('includes.humanTimeDiff', [
+                        'time' => $transaction->updated_at ?? $transaction->created_at,
+                        'absolute' => true,
+                        'short' => true,
+                    ])
                 </span>
             </a>
         @empty

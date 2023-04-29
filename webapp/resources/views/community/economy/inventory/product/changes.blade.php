@@ -62,7 +62,11 @@
                 {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
 
                 <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $c->created_at])
+                    @include('includes.humanTimeDiff', [
+                        'time' => $c->created_at,
+                        'absolute' => true,
+                        'short' => true,
+                    ])
                 </span>
             </a>
         @empty

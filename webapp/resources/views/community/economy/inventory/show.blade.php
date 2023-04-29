@@ -170,7 +170,11 @@
 
                 @if(isset($p['changed']))
                     <span class="sub-label">
-                        @include('includes.humanTimeDiff', ['time' => $p['changed']])
+                        @include('includes.humanTimeDiff', [
+                            'time' => $p['changed'],
+                            'absolute' => true,
+                            'short' => true,
+                        ])
                     </span>
                 @endif
             </a>
@@ -205,7 +209,11 @@
 
                             @if(isset($p['changed']))
                                 <span class="sub-label">
-                                    @include('includes.humanTimeDiff', ['time' => $p['changed']])
+                                    @include('includes.humanTimeDiff', [
+                                        'time' => $p['changed'],
+                                        'absolute' => true,
+                                        'short' => true,
+                                    ])
                                 </span>
                             @endif
                         </a>
@@ -253,7 +261,11 @@
                             {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
 
                             <span class="sub-label">
-                                @include('includes.humanTimeDiff', ['time' => $c->created_at])
+                                @include('includes.humanTimeDiff', [
+                                    'time' => $c->created_at,
+                                    'absolute' => true,
+                                    'short' => true,
+                                ])
                             </span>
                         </a>
                     @else Details
@@ -271,7 +283,11 @@
                             {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
 
                             <span class="sub-label">
-                                @include('includes.humanTimeDiff', ['time' => $c->created_at])
+                                @include('includes.humanTimeDiff', [
+                                    'time' => $c->created_at,
+                                    'absolute' => true,
+                                    'short' => true,
+                                ])
                             </span>
                         </div>
                     @endif

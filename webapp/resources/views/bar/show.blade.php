@@ -129,7 +129,11 @@
                                 <span class="halflings halflings-shopping-cart"></span>
                             @endif
 
-                            @include('includes.humanTimeDiff', ['time' => $productMutation->updated_at ?? $productMutation->created_at, 'short' => true])
+                            @include('includes.humanTimeDiff', [
+                                'time' => $productMutation->updated_at ?? $productMutation->created_at,
+                                'absolute' => true,
+                                'short' => true,
+                            ])
                         </span>
 
                     @if($linkTransaction || $linkProduct)

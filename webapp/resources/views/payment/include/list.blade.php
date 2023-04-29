@@ -26,7 +26,11 @@
 
                 {{-- TODO: show some other stat here --}}
                 <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $payment->updated_at ?? $payment->created_at, 'short' => true])
+                    @include('includes.humanTimeDiff', [
+                        'time' => $payment->updated_at ?? $payment->created_at,
+                        'absolute' => true,
+                        'short' => true,
+                    ])
                 </span>
             </a>
         @empty
