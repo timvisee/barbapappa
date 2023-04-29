@@ -34,6 +34,10 @@ class Transaction extends Model {
 
     protected $fillable = ['state', 'description', 'owner_id', 'initiated_by_id', 'initiated_by_other', 'initiated_by_kiosk', 'initiated_at'];
 
+    protected $casts = [
+        'initiated_at' => 'datetime',
+    ];
+
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
     const STATE_SUCCESS = 3;
