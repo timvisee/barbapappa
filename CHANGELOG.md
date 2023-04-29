@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.178 (2023-04-29)
+
+- Prevent committed kiosk transactions from replaying.
+  This could potentially happen when an offline kiosk reconnects with an
+  unstable connection to the server, causing purchases to be committed a
+  second time.
+- Show if and by how much time transactions are delayed, if they are synced
+  later from an offline kiosk
+- Show icons for kiosk and delayed transactions in transaction details and in
+  transaction list
+- Show less text in transaction/mutation lists to prevent text overflowing on
+  very small or narrow devices
+- Add details button to wallet balance label in main bar screen when user has
+  positive balance
+
 ## 0.1.177 (2023-04-25)
 
 - In kiosk, fix incorrect query encoding causing some search queries to break
