@@ -30,6 +30,10 @@
                 @lang('misc.by') <i>@lang('misc.unknownUser')</i>
             @endif
         @endif
+        @if($transaction->isDelayed())
+            <br>
+            @lang('misc.offline')
+        @endif
     </p>
 
     {{-- Amount & state icon --}}
@@ -284,6 +288,12 @@
                         <td>@lang('misc.firstSeen')</td>
                         <td>@include('includes.humanTimeDiff', ['time' => $transaction->created_at])</td>
                     </tr>
+                    @if($transaction->isDelayed())
+                        <tr>
+                            <td>@lang('misc.delayed') (@lang('misc.offline'))</td>
+                            <td>{{ $transaction->initiatedDelay()->forHumans() }}</td>
+                        </tr>
+                    @endif
                     @if($transaction->created_at != $transaction->updated_at)
                         <tr>
                             <td>@lang('misc.lastUpdated')</td>
