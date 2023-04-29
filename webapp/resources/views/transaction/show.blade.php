@@ -23,7 +23,9 @@
         @if($transaction->initiated_by_other)
             <br />
             @if($transaction->initiated_by_kiosk)
-                @lang('misc.via') @lang('misc.kiosk')
+                @lang('misc.via')
+                <span class="halflings halflings-shopping-cart"></span>
+                @lang('misc.kiosk')
             @elseif($transaction->initiatedBy)
                 @lang('misc.by') {{ $transaction->initiatedBy->name }}
             @else
@@ -32,6 +34,7 @@
         @endif
         @if($transaction->isDelayed())
             <br>
+            <span class="halflings halflings-hourglass"></span>
             @lang('misc.offline')
         @endif
     </p>
@@ -268,7 +271,10 @@
                         @if($transaction->initiated_by_kiosk)
                             <tr>
                                 <td>@lang('misc.madeVia')</td>
-                                <td>@lang('misc.kiosk')</td>
+                                <td>
+                                    <span class="halflings halflings-shopping-cart"></span>
+                                    @lang('misc.kiosk')
+                                </td>
                             </tr>
                         @endif
                         @if($transaction->initiated_by_id)
@@ -291,7 +297,10 @@
                     @if($transaction->isDelayed())
                         <tr>
                             <td>@lang('misc.delayed') (@lang('misc.offline'))</td>
-                            <td>{{ $transaction->initiatedDelay()->forHumans() }}</td>
+                            <td>
+                                <span class="halflings halflings-hourglass"></span>
+                                {{ $transaction->initiatedDelay()->forHumans() }}
+                            </td>
                         </tr>
                     @endif
                     @if($transaction->created_at != $transaction->updated_at)
