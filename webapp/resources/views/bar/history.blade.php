@@ -37,7 +37,7 @@
 
                 @if($productMutation->mutation->owner_id)
                     <span class="subtle">
-                        @lang('misc.by') {{ $productMutation->mutation->owner->first_name }}
+                        &middot;&nbsp;{{ $productMutation->mutation->owner->first_name }}
                     </span>
                 @endif
 

@@ -20,7 +20,7 @@
 
                 @if(isset($group['showUser']) && $group['showUser'] && $payment->user)
                     <span class="subtle">
-                        @lang('misc.by') {{ $payment->user->first_name }}
+                        &middot;&nbsp;{{ $payment->user->first_name }}
                     </span>
                 @endif
 
