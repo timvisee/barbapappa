@@ -306,7 +306,7 @@
                             <td>@lang('misc.delayed') (@lang('misc.offline'))</td>
                             <td>
                                 <span class="halflings halflings-hourglass"></span>
-                                {{ $transaction->initiatedDelay()->forHumans() }}
+                                {{ $transaction->initiatedDelay()->forHumans(null, null, 1) }}
                             </td>
                         </tr>
                     @endif
