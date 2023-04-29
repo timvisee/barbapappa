@@ -20,6 +20,13 @@
     <p class="align-center" title="@lang('misc.description')">
         {!!  $transaction->describe(true) !!}
 
+        <br>
+        @include('includes.humanTimeDiff', [
+            'time' => $transaction->updated_at ?? $transaction->created_at,
+            'absolute' => false,
+            'short' => false,
+        ])
+
         @if($transaction->initiated_by_other)
             <br />
             @if($transaction->initiated_by_kiosk)
