@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\ExpireDaily;
 use App\Jobs\ExpireHourly;
 use App\Jobs\ProcessAllBunqAccountEvents;
 use App\Jobs\SendBalanceUpdates;
@@ -34,10 +35,12 @@ class Kernel extends ConsoleKernel {
         $schedule->job(new UpdatePaymentStates)
             ->everyFifteenMinutes();
 
-        // Expire hourly job, invokes other expiration jobs
+        // Expire hourly and daily job, invokes other expiration jobs
         // Interval also defined in: ExpireHourly::retryUntil
         $schedule->job(new ExpireHourly)
             ->hourly();
+        $schedule->job(new ExpireDaily)
+            ->daily();
 
         // Send balance updates
         // Interval also defined in: SendBalanceUpdates::retryUntil
