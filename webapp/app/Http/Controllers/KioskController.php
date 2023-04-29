@@ -569,6 +569,13 @@ class KioskController extends Controller {
         $buyData = $request->post();
         $self = $this;
 
+        // Error if bar is disabled
+        if(!$bar->enabled) {
+            return response()->json([
+                'message' => __('pages.bar.disabled'),
+            ])->setStatusCode(403);
+        }
+
         // Take cart from request buy data
         if(isset($buyData['cart'])) {
             $cart = collect($buyData['cart']);
@@ -577,13 +584,6 @@ class KioskController extends Controller {
             $cart = collect($buyData);
         } else {
             throw new \Exception('Invalid buy data');
-        }
-
-        // Error if bar is disabled
-        if(!$bar->enabled) {
-            return response()->json([
-                'message' => __('pages.bar.disabled'),
-            ])->setStatusCode(403);
         }
 
         // Do everything in a database transaction
