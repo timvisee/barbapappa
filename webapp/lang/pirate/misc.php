@@ -195,6 +195,8 @@ return [
     'sameAs' => 'Same as',
     'totals' => 'Totals',
     'presets' => 'Presets',
+    'offline' => 'Offline',
+    'delayed' => 'Delayed',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

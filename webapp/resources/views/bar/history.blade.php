@@ -37,12 +37,26 @@
 
                 @if($productMutation->mutation->owner_id)
                     <span class="subtle">
-                        @lang('misc.by') {{ $productMutation->mutation->owner->first_name }}
+                        &middot;&nbsp;{{ $productMutation->mutation->owner->first_name }}
                     </span>
                 @endif
 
                 <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $productMutation->updated_at ?? $productMutation->created_at, 'short' => true])
+                    {{-- Icon for delayed purchases --}}
+                    @if($productMutation->mutation?->transaction?->isDelayed() ?? false)
+                        <span class="halflings halflings-hourglass"></span>
+                    @endif
+
+                    {{-- Icon for kiosk purchases --}}
+                    @if($productMutation->mutation?->transaction?->initiated_by_kiosk ?? false)
+                        <span class="halflings halflings-shopping-cart"></span>
+                    @endif
+
+                    @include('includes.humanTimeDiff', [
+                        'time' => $productMutation->updated_at ?? $productMutation->created_at,
+                        'absolute' => true,
+                        'short' => true,
+                    ])
                 </span>
 
             </a>

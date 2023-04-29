@@ -170,7 +170,11 @@
 
                 @if(isset($p['changed']))
                     <span class="sub-label">
-                        @include('includes.humanTimeDiff', ['time' => $p['changed']])
+                        @include('includes.humanTimeDiff', [
+                            'time' => $p['changed'],
+                            'absolute' => true,
+                            'short' => true,
+                        ])
                     </span>
                 @endif
             </a>
@@ -205,7 +209,11 @@
 
                             @if(isset($p['changed']))
                                 <span class="sub-label">
-                                    @include('includes.humanTimeDiff', ['time' => $p['changed']])
+                                    @include('includes.humanTimeDiff', [
+                                        'time' => $p['changed'],
+                                        'absolute' => true,
+                                        'short' => true,
+                                    ])
                                 </span>
                             @endif
                         </a>
@@ -247,13 +255,17 @@
                             @endif
 
                             @if($c->user)
-                                <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
+                                <span class="subtle">&middot;&nbsp;{{ $c->user->first_name }}</span>
                             @endif
 
                             {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
 
                             <span class="sub-label">
-                                @include('includes.humanTimeDiff', ['time' => $c->created_at])
+                                @include('includes.humanTimeDiff', [
+                                    'time' => $c->created_at,
+                                    'absolute' => true,
+                                    'short' => true,
+                                ])
                             </span>
                         </a>
                     @else Details
@@ -265,13 +277,17 @@
                             @endif
 
                             @if($c->user)
-                                <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
+                                <span class="subtle">&middot;&nbsp;{{ $c->user->first_name }}</span>
                             @endif
 
                             {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
 
                             <span class="sub-label">
-                                @include('includes.humanTimeDiff', ['time' => $c->created_at])
+                                @include('includes.humanTimeDiff', [
+                                    'time' => $c->created_at,
+                                    'absolute' => true,
+                                    'short' => true,
+                                ])
                             </span>
                         </div>
                     @endif

@@ -20,13 +20,17 @@
 
                 @if(isset($group['showUser']) && $group['showUser'] && $payment->user)
                     <span class="subtle">
-                        @lang('misc.by') {{ $payment->user->first_name }}
+                        &middot;&nbsp;{{ $payment->user->first_name }}
                     </span>
                 @endif
 
                 {{-- TODO: show some other stat here --}}
                 <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $payment->updated_at ?? $payment->created_at, 'short' => true])
+                    @include('includes.humanTimeDiff', [
+                        'time' => $payment->updated_at ?? $payment->created_at,
+                        'absolute' => true,
+                        'short' => true,
+                    ])
                 </span>
             </a>
         @empty

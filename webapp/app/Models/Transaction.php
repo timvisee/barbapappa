@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Perms\CommunityRoles;
 use Carbon\Carbon;
+use DateInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use App\Perms\CommunityRoles;
 
 /**
  * Transaction model.
@@ -17,10 +18,11 @@ use App\Perms\CommunityRoles;
  * @property int state
  * @property int|null reference_to
  * @property int|null owner_id
+ * @property-read User|null owner
  * @property int|null initiated_by_id
  * @property bool initiated_by_other
  * @property bool initiated_by_kiosk
- * @property-read User|null owner
+ * @property Carbon|null initiated_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -30,7 +32,11 @@ class Transaction extends Model {
 
     protected $with = ['mutations'];
 
-    protected $fillable = ['state', 'description', 'owner_id', 'initiated_by_id', 'initiated_by_other', 'initiated_by_kiosk'];
+    protected $fillable = ['state', 'description', 'owner_id', 'initiated_by_id', 'initiated_by_other', 'initiated_by_kiosk', 'initiated_at'];
+
+    protected $casts = [
+        'initiated_at' => 'datetime',
+    ];
 
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
@@ -47,6 +53,11 @@ class Transaction extends Model {
      * allows undoing.
      */
     const UNDO_MAX_LIFETIME = 15 * 60;
+
+    /**
+     * Time in seconds after which a transaction is considered to be delayed.
+     */
+    const DELAY_THRESHOLD_SECONDS = 60;
 
     /**
      * Get the mutations that are part of this transaction.
@@ -95,6 +106,38 @@ class Transaction extends Model {
     // TODO: rename this to initiatedByUser?
     public function initiatedBy() {
         return $this->belongsTo('App\Models\User', 'initiated_by_id');
+    }
+
+    /**
+     * Get the delay between initiating and committing this transaction.
+     *
+     * There could be a delay between the user submitting a transaction and
+     * committing it on the server, for example, when the kiosk interface is in
+     * offline mode for a while.
+     *
+     * @return CarbonInterval|null Initiated delay if known or null.
+     */
+    public function initiatedDelay() {
+        if($this->initiated_at == null || $this->created_at == null)
+            return null;
+        return $this->initiated_at->diffAsCarbonInterval($this->created_at);
+    }
+
+    /**
+     * Check whether we consider a transaction to be delayed based on its
+     * initiated at time.
+     *
+     * @return bool True if delayed, false if not.
+     */
+    public function isDelayed() {
+        // Get delay
+        $delay = $this->initiatedDelay();
+        if($delay == null)
+            return false;
+
+        // Determine if delayed
+        $delay_seconds = $delay->total('seconds');
+        return $delay_seconds >= Self::DELAY_THRESHOLD_SECONDS;
     }
 
     /**

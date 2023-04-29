@@ -34,7 +34,11 @@
                 </div>
 
                 <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $inventory->updated_at ?? $inventory->created_at])
+                    @include('includes.humanTimeDiff', [
+                        'time' => $inventory->updated_at ?? $inventory->created_at,
+                        'absolute' => true,
+                        'short' => true,
+                    ])
                 </span>
             </a>
         @empty

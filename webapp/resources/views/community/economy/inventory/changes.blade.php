@@ -58,7 +58,7 @@
                     @endif
 
                     @if($c->user)
-                        <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
+                        <span class="subtle">&middot;&nbsp;{{ $c->user->first_name }}</span>
                     @endif
 
                     {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
@@ -76,7 +76,7 @@
                     @endif
 
                     @if($c->user)
-                        <span class="subtle">@lang('misc.by') {{ $c->user->first_name }}</span>
+                        <span class="subtle">&middot;&nbsp;{{ $c->user->first_name }}</span>
                     @endif
 
                     {!! $c->formatQuantity(InventoryItemChange::FORMAT_LABEL) !!}
