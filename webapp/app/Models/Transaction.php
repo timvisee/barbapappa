@@ -55,6 +55,11 @@ class Transaction extends Model {
     const UNDO_MAX_LIFETIME = 15 * 60;
 
     /**
+     * Time in seconds after which a transaction is considered to be delayed.
+     */
+    const DELAY_THRESHOLD_SECONDS = 60;
+
+    /**
      * Get the mutations that are part of this transaction.
      * Ordered by their amount, positive (incoming) first, negative (outgoing) last.
      *
@@ -110,12 +115,29 @@ class Transaction extends Model {
      * committing it on the server, for example, when the kiosk interface is in
      * offline mode for a while.
      *
-     * @return DateInterval|null Initiated delay if known or null.
+     * @return CarbonInterval|null Initiated delay if known or null.
      */
     public function initiatedDelay() {
         if($this->initiated_at == null || $this->created_at == null)
             return null;
-        return $this->initiated_at->diff($this->created_at);
+        return $this->initiated_at->diffAsCarbonInterval($this->created_at);
+    }
+
+    /**
+     * Check whether we consider a transaction to be delayed based on its
+     * initiated at time.
+     *
+     * @return bool True if delayed, false if not.
+     */
+    public function isDelayed() {
+        // Get delay
+        $delay = $this->initiatedDelay();
+        if($delay == null)
+            return false;
+
+        // Determine if delayed
+        $delay_seconds = $delay->total('seconds');
+        return $delay_seconds >= Self::DELAY_THRESHOLD_SECONDS;
     }
 
     /**
