@@ -30,6 +30,14 @@
                             class="ui right pointing label red label-top-up">
                         <u>@lang('pages.wallets.topUpNow')</u>
                     </a>
+                @else
+                    <a href="{{ route('community.wallet.quickShow', [
+                                'communityId' => $community->human_id,
+                                'economyId' => $economy->id
+                            ]) }}"
+                            class="ui small right pointing label basic label-top-up">
+                        <u class="subtle">@lang('misc.details')</u>
+                    </a>
                 @endif
 
                 {{-- Balance label --}}
