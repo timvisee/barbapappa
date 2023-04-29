@@ -9,6 +9,7 @@ use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
+use App\Models\UuidCheck;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -54,6 +55,11 @@ class KioskController extends Controller {
      * field is cleared because then it is assumed to be malformed.
      */
     const TRANSACTION_INITIATED_AT_MAX_AGE = 2 * 30 * 24 * 60 * 60;
+
+    /**
+     * Time after which transaction UUID claims expire.
+     */
+    const UUID_CHECK_EXPIRE_SECONDS = 3 * 30 * 24 * 60 * 60;
 
     /**
      * Kiosk buy page.
@@ -588,13 +594,22 @@ class KioskController extends Controller {
         // Take cart from request buy data
         if(isset($buyData['cart'])) {
             $cart = collect($buyData['cart']);
+            $uuid = $buyData['uuid'];
             $initiated_at_timestamp = $buyData['initiated_at'] ?? null;
         } else if(is_array($buyData)) {
             // Backwards compatability: client version <= 0.1.175
             $cart = collect($buyData);
+            $uuid = null;
             $initiated_at_timestamp = null;
         } else {
             throw new \Exception('Invalid buy data');
+        }
+
+        // We want to prevent replaying transactions
+        // If UUID is already used, assume transaction is already processed
+        if($uuid != null && UuidCheck::hasUuid($uuid)) {
+            // TODO: log this
+            return [];
         }
 
         // Process initiated at timestamp
@@ -615,7 +630,14 @@ class KioskController extends Controller {
         // Do everything in a database transaction
         $productCount = 0;
         $userCount = $cart->count();
-        DB::transaction(function() use($bar, $economy, $cart, $initiated_at, $self, &$productCount) {
+        DB::transaction(function() use($bar, $economy, $cart, $uuid, $initiated_at, $self, &$productCount) {
+            // Claim UUID or return early
+            if($uuid != null) {
+                $uuid_expire_at = now()->addSeconds(Self::UUID_CHECK_EXPIRE_SECONDS);
+                if(!UuidCheck::claim($uuid, $uuid_expire_at, false))
+                    return [];
+            }
+
             // For each user, purchase the selected products
             $cart->each(function($userItem) use($bar, $economy, $initiated_at, $self, &$productCount) {
                 $user = $userItem['user'];

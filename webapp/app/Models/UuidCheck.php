@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -29,7 +28,6 @@ class UuidCheck extends Model {
     ];
 
     protected $casts = [
-        'uuid' => 'uuid',
         'expire_at' => 'datetime',
     ];
 
@@ -55,13 +53,28 @@ class UuidCheck extends Model {
     }
 
     /**
-     * Check for the given UUID.
+     * Check if the given UUID is registered.
      *
      * @param string $uuid The UUID to check.
-     * @param ?Carbon $expire_at Time after which this will expire.
-     * @return bool True if this UUID is unique and new, false if it already existed.
+     * @return bool True if this UUID is registered, false if not.
      */
-    public static function checkUuidUnique(string $uuid, ?Carbon $expire_at) {
+    public static function hasUuid(string $uuid) {
+        // Validate UUID
+        if(!Str::isUuid($uuid))
+            throw new \Exception("Given UUID is invalid");
+
+        return Self::where('uuid', trim($uuid))->limit(1)->count() > 0;
+    }
+
+    /**
+     * Cliam the given UUID, and make sure it is unique.
+     *
+     * @param string $uuid The UUID to claim.
+     * @param ?Carbon $expire_at Time after which this will expire.
+     * @param bool $throwException=true True to throw exception if UUID is not unique.
+     * @return bool True if UUID is claimed, false if not because it already existed.
+     */
+    public static function claim(string $uuid, ?Carbon $expire_at, bool $throwException = true) {
         // We must be in a database transaction
         assert_transaction();
 
@@ -73,8 +86,11 @@ class UuidCheck extends Model {
 
         // UUID must be new
         $hasUuid = Self::where('uuid', $uuid)->limit(1)->count() > 0;
-        if($hasUuid)
+        if($hasUuid) {
+            if($throwException)
+                throw new \Exception("Failed to claim UUID, it was already claimed");
             return false;
+        }
 
         // Create new UUID
         Self::create([
