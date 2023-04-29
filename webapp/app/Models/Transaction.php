@@ -21,6 +21,7 @@ use App\Perms\CommunityRoles;
  * @property bool initiated_by_other
  * @property bool initiated_by_kiosk
  * @property-read User|null owner
+ * @property Carbon|null initiated_at
  * @property Carbon created_at
  * @property Carbon updated_at
  */
@@ -30,7 +31,7 @@ class Transaction extends Model {
 
     protected $with = ['mutations'];
 
-    protected $fillable = ['state', 'description', 'owner_id', 'initiated_by_id', 'initiated_by_other', 'initiated_by_kiosk'];
+    protected $fillable = ['state', 'description', 'owner_id', 'initiated_by_id', 'initiated_by_other', 'initiated_by_kiosk', 'initiated_at'];
 
     const STATE_PENDING = 1;
     const STATE_PROCESSING = 2;
