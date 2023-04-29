@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Perms\CommunityRoles;
 use Carbon\Carbon;
+use DateInterval;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use App\Perms\CommunityRoles;
 
 /**
  * Transaction model.
@@ -17,10 +18,10 @@ use App\Perms\CommunityRoles;
  * @property int state
  * @property int|null reference_to
  * @property int|null owner_id
+ * @property-read User|null owner
  * @property int|null initiated_by_id
  * @property bool initiated_by_other
  * @property bool initiated_by_kiosk
- * @property-read User|null owner
  * @property Carbon|null initiated_at
  * @property Carbon created_at
  * @property Carbon updated_at
@@ -96,6 +97,21 @@ class Transaction extends Model {
     // TODO: rename this to initiatedByUser?
     public function initiatedBy() {
         return $this->belongsTo('App\Models\User', 'initiated_by_id');
+    }
+
+    /**
+     * Get the delay between initiating and committing this transaction.
+     *
+     * There could be a delay between the user submitting a transaction and
+     * committing it on the server, for example, when the kiosk interface is in
+     * offline mode for a while.
+     *
+     * @return DateInterval|null Initiated delay if known or null.
+     */
+    public function initiatedDelay() {
+        if($this->initiated_at == null || $this->created_at == null)
+            return null;
+        return $this->initiated_at->diff($this->created_at);
     }
 
     /**

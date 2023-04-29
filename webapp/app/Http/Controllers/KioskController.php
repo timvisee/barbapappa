@@ -9,6 +9,7 @@ use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -45,6 +46,14 @@ class KioskController extends Controller {
      * Limit of products to show that were recently bought.
      */
     const PRODUCT_RECENT_LIMIT = 4;
+
+    /**
+     * The maximum age of the 'initiated_at' field of a transaction in seconds.
+     *
+     * If the 'initiated_at' value is more seconds ago than specified here, the
+     * field is cleared because then it is assumed to be malformed.
+     */
+    const TRANSACTION_INITIATED_AT_MAX_AGE = 2 * 30 * 24 * 60 * 60;
 
     /**
      * Kiosk buy page.
@@ -579,19 +588,36 @@ class KioskController extends Controller {
         // Take cart from request buy data
         if(isset($buyData['cart'])) {
             $cart = collect($buyData['cart']);
+            $initiated_at_timestamp = $buyData['initiated_at'] ?? null;
         } else if(is_array($buyData)) {
             // Backwards compatability: client version <= 0.1.175
             $cart = collect($buyData);
+            $initiated_at_timestamp = null;
         } else {
             throw new \Exception('Invalid buy data');
+        }
+
+        // Process initiated at timestamp
+        $initiated_at = null;
+        if($initiated_at_timestamp != null) {
+            // Parse timestamp
+            $initiated_at = Carbon::createFromTimestamp($initiated_at_timestamp);
+
+            // Timestamp cannot be in the future
+            if($initiated_at->isFuture())
+                $initiated_at = now();
+
+            // Clear initiated at timestamp if it is too long ago
+            if($initiated_at->diffInSeconds() >= Self::TRANSACTION_INITIATED_AT_MAX_AGE)
+                $initiated_at = null;
         }
 
         // Do everything in a database transaction
         $productCount = 0;
         $userCount = $cart->count();
-        DB::transaction(function() use($bar, $economy, $cart, $self, &$productCount) {
+        DB::transaction(function() use($bar, $economy, $cart, $initiated_at, $self, &$productCount) {
             // For each user, purchase the selected products
-            $cart->each(function($userItem) use($bar, $economy, $self, &$productCount) {
+            $cart->each(function($userItem) use($bar, $economy, $initiated_at, $self, &$productCount) {
                 $user = $userItem['user'];
                 $products = collect($userItem['products']);
 
@@ -603,7 +629,7 @@ class KioskController extends Controller {
                 });
 
                 // Buy the products, increase product count
-                $result = $self->buyProducts($bar, $member, $products);
+                $result = $self->buyProducts($bar, $member, $products, $initiated_at);
                 $productCount += $result['productCount'];
             });
         });
@@ -622,10 +648,12 @@ class KioskController extends Controller {
      * @param EconomyMember $economy_member The economy member to buy the products for.
      * @param array $products [[quantity: int, product: Product]] List of
      *      products and quantities to buy.
+     * @param Carbon|null $initiated_at Time at which the transaction was
+     *      initiated.
      */
     // TODO: support paying in multiple currencies for different products at the same time
     // TODO: make a request when paying for other users
-    function buyProducts(Bar $bar, EconomyMember $economy_member, $products) {
+    function buyProducts(Bar $bar, EconomyMember $economy_member, $products, ?Carbon $initiated_at) {
         $products = collect($products);
 
         // Build a list of preferred currencies for the member, filter currencies
@@ -675,7 +703,7 @@ class KioskController extends Controller {
         // TODO: create a nice generic builder for the actions below
         $out = null;
         $productCount = 0;
-        DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, &$out, &$productCount) {
+        DB::transaction(function() use($bar, $products, $user_id, $wallet, $currency, $price, $initiated_at, &$out, &$productCount) {
             // TODO: last_transaction is used here but never defined
 
             // Create the transaction or use last transaction
@@ -685,6 +713,7 @@ class KioskController extends Controller {
                 'initiated_by_id' => null,
                 'initiated_by_other' => true,
                 'initiated_by_kiosk' => true,
+                'initiated_at' => $initiated_at,
             ]);
 
             // Determine whether the product was free
