@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.179 (2023-05-01)
+
+- Fix server error when user agent string of client is larger than 191
+  characters. This happened on some Xiaomi Redmi phones and browsers.
+
 ## 0.1.178 (2023-04-29)
 
 - Prevent committed kiosk transactions from replaying.
