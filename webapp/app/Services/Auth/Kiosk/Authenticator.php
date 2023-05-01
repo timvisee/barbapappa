@@ -9,6 +9,7 @@ use App\Utils\TokenGenerator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Str;
 use Sentry;
 
 /**
@@ -121,7 +122,7 @@ class Authenticator {
         // Generate an unique token and get the IP address
         $token = self::generateUniqueToken();
         $ip = Request::ip();
-        $userAgent = Request::userAgent();
+        $userAgent = Str::of(Request::userAgent())->limit(KioskSession::USER_AGENT_MAX_LENGTH);
         $expire = Carbon::now()->addSecond(self::SESSION_EXPIRE);
 
         // Create the new kiosk session object and save it

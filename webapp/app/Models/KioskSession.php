@@ -30,6 +30,11 @@ class KioskSession extends Model {
     ];
 
     /**
+     * Maximum length in characters a user agent string may be.
+     */
+    public const USER_AGENT_MAX_LENGTH = 8192;
+
+    /**
      * A scope for active sessions.
      *
      * @param Builder $query Query builder.
