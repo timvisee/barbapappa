@@ -150,6 +150,13 @@
                     </a>
                 @endif
             </div>
+        @else
+            @if(perms(BarController::permsManage()))
+                <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                        class="ui large fluid basic button">
+                    @lang('pages.bar.allPurchases')...
+                </a>
+            @endif
         @endif
     @else
         <div class="ui warning message">
