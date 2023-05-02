@@ -133,7 +133,6 @@ return [
     'withdraw' => 'Withdraw',
     'visit' => 'Visit',
     'me' => 'Me',
-    'catalog' => 'Catalog',
     'unknown' => 'Unknown',
     'unknownUser' => 'Unknown user',
     'submitter' => 'Submitter',

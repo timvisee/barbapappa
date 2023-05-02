@@ -43,7 +43,7 @@
         </i>
 
         <a :href="url + '/products'" class="ui large bottom attached button">
-            {{ __('misc.catalog') }}
+            {{ __('pages.products.all') }}...
         </a>
     </div>
 </template>
