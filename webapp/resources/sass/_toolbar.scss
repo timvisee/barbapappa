@@ -103,3 +103,17 @@ a.toolbar-btn-message:active {
         filter: invert(0.7);
     }
 }
+
+
+// Messages attached to toolbar on smaller screens
+@media not screen, (max-width: 767px) {
+    .ui.message.attach-toolbar {
+        margin-top: -1.5em;
+        margin-left: -1em;
+        margin-right: -1em;
+        margin-bottom: -0.5em;
+        border-radius: 0;
+        box-shadow: none;
+        border-bottom: 1px solid #ddd;
+    }
+}
