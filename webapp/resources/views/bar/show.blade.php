@@ -72,7 +72,7 @@
             @endforelse
 
             <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
-                    class="ui large bottom attached button">
+                    class="ui large bottom attached basic button">
                 @lang('pages.products.all')...
             </a>
         </div>
@@ -145,11 +145,18 @@
 
                 @if(perms(BarController::permsManage()))
                     <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                            class="ui large bottom attached button">
+                            class="ui large bottom attached basic button">
                         @lang('pages.bar.allPurchases')...
                     </a>
                 @endif
             </div>
+        @else
+            @if(perms(BarController::permsManage()))
+                <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                        class="ui large fluid basic button">
+                    @lang('pages.bar.allPurchases')...
+                </a>
+            @endif
         @endif
     @else
         <div class="ui warning message">

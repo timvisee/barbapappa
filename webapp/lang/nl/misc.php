@@ -133,7 +133,6 @@ return [
     'withdraw' => 'Opnemen',
     'visit' => 'Visit',
     'me' => 'Ikzelf',
-    'catalog' => 'Catalogus',
     'unknown' => 'Onbekend',
     'unknownUser' => 'Onbekende gebruiker',
     'submitter' => 'Indiener',

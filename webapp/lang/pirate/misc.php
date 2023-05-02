@@ -132,7 +132,6 @@ return [
     'deposited' => 'Deposited',
     'withdraw' => 'Withdraw',
     'me' => 'Me',
-    'catalog' => 'Catalog',
     'unknown' => 'Unknown',
     'unknownUser' => 'Unknown pirate',
     'submitter' => 'Submitter',
