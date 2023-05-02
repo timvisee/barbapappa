@@ -42,7 +42,7 @@
             {{ __('pages.products.noProductsFoundFor', {term: query}) }}.
         </i>
 
-        <a :href="url + '/products'" class="ui large bottom attached button">
+        <a :href="url + '/products'" class="ui large bottom attached basic button">
             {{ __('pages.products.all') }}...
         </a>
     </div>
