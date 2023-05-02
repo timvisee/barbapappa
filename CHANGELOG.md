@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.180 (2023-05-02)
+
+- Always show 'All purchases' button on bottom of bar page for administrators,
+  even if there are no recent purchases
+- Simplify style of action buttons on bottom of product and purchases list
+- Improve red low balance message style, attach it to the toolbar on small
+  screens
+- Fix quick buy widget having different button text
+
 ## 0.1.179 (2023-05-01)
 
 - Fix server error when user agent string of client is larger than 191
