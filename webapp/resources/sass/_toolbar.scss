@@ -107,13 +107,20 @@ a.toolbar-btn-message:active {
 
 // Messages attached to toolbar on smaller screens
 @media not screen, (max-width: 767px) {
-    .ui.message.attach-toolbar {
-        margin-top: -1.5em;
+    .ui.toolbar-messages > .ui.message {
+        margin-top: -1.0em;
         margin-left: -1em;
         margin-right: -1em;
-        margin-bottom: -0.5em;
         border-radius: 0;
         box-shadow: none;
         border-bottom: 1px solid #ddd;
+
+        &:first-child {
+            margin-top: -1.5em;
+        }
+
+        &:last-child {
+            margin-bottom: -0.5em;
+        }
     }
 }

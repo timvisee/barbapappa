@@ -15,7 +15,7 @@
     <script type="text/javascript" src="{{ mix('js/widget/advancedbuy.js') }}" async></script>
 @endpush
 
-@section('content')
+@push('toolbar-messages')
     {{-- Low balance message --}}
     @if(isset($userBalance) && $userBalance->amount < 0 && !empty($bar->low_balance_text))
         <div class="ui error message attach-toolbar">
@@ -27,7 +27,9 @@
             ]) }}">@lang('pages.wallets.topUpNow')</a>.
         </div>
     @endif
+@endpush
 
+@section('content')
     @include('bar.include.barHeader')
     @include('bar.include.joinBanner')
 
