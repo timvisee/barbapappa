@@ -84,7 +84,10 @@
                 @include('partials.breadcrumbs', $breadcrumbs)
             @endif
 
-            @include('includes.message')
+            <div class="ui toolbar-messages">
+                @include('includes.message')
+                @stack('toolbar-messages')
+            </div>
 
             @yield('content')
         </div>
