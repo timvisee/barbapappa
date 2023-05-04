@@ -24,7 +24,7 @@
             <a href="{{ route('community.wallet.quickTopUp', [
                 'communityId' => $community->human_id,
                 'economyId' => $economy->id
-            ]) }}">@lang('pages.wallets.topUpNow')</a>.
+            ]) }}">@lang('pages.wallets.topUpNow')</a>
         </div>
     @endif
 @endpush
