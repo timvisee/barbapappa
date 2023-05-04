@@ -79,15 +79,15 @@
                 @include('includes.impersonate')
             @endif
 
-            <div class="ui toolbar-messages">
-                @include('includes.message')
-                @stack('toolbar-messages')
-            </div>
-
             {{-- Breadcrumbs --}}
             @if(isset($breadcrumbs) && $breadcrumbs->count() > 1)
                 @include('partials.breadcrumbs', $breadcrumbs)
             @endif
+
+            <div class="ui toolbar-messages">
+                @include('includes.message')
+                @stack('toolbar-messages')
+            </div>
 
             @yield('content')
         </div>
