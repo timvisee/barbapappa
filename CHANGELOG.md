@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.181 (2023-05-04)
+
+- Put page messages in a container, attached to the toolbar
+- Fix style of messages breaking when multiple were shown after each other
+
 ## 0.1.180 (2023-05-02)
 
 - Always show 'All purchases' button on bottom of bar page for administrators,
