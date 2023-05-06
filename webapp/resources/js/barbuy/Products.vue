@@ -172,11 +172,6 @@
 
     const QuantityModal = require('./QuantityModal.vue').default;
 
-    /**
-     * Delay for warming up all products cache in service worker.
-     */
-    const CACHE_WARMUP_DELAY = 5;
-
     export default {
         components: {
             QuantityModal,
@@ -236,12 +231,6 @@
         mounted: function() {
             // Plain search for default product list
             this.search();
-
-            // Warm up service worker cache for list of all users
-            setTimeout(
-                () => this._searchRequest(null, true),
-                CACHE_WARMUP_DELAY * 1000,
-            );
         },
         methods: {
             // If we're currently in user selection mode.
@@ -311,11 +300,6 @@
                 // Fetch a list of products, set the searching state
                 this.searching = true;
                 this._searchOnline(query)
-                    // Fallback to cache
-                    .then(null, err => {
-                        console.log('Falling back to product cache search');
-                        return this._searchCache(query).then(null, () => err);
-                    })
                     // Handle result, only update if still searching same query
                     .then(products => {
                         if(query == this.query)
@@ -336,45 +320,6 @@
             // Search products with the given query online.
             _searchOnline(query = '') {
                 return this._searchRequest(query, false);
-            },
-
-            // Search products with the given query in the cache.
-            _searchCache(query = '') {
-                // Normalize query
-                var query = query.trim().toLowerCase();
-
-                return this
-                    ._searchRequest(null, true)
-                    .then(products => {
-                        // Simple local search, filter products based on query
-                        return products.filter(product => {
-                            let name = product.name.toLowerCase();
-
-                            // Filter name
-                            if(name.includes(query))
-                                return true;
-
-                            let tags = product.tags == undefined
-                                ? []
-                                : product
-                                    .tags
-                                    .split(' ')
-                                    .filter(tag => tag !== '' && tag != undefined)
-                                    .map(tag => tag.toLowerCase());
-
-                            // Filter tags by full or starting-with query
-                            for (const tag of tags) {
-                                if(tag.includes(query))
-                                    return true;
-                            }
-
-                            // No match
-                            return false;
-                        });
-                    })
-                    .catch(err => {
-                        console.log('Searching in product cache failed: ' + err);
-                    });
             },
 
             // Do a search request.

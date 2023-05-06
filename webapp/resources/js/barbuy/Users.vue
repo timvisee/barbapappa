@@ -234,11 +234,6 @@
 <script>
     import axios from 'axios';
 
-    /**
-     * Delay for warming up all users cache in service worker.
-     */
-    const CACHE_WARMUP_DELAY = 5;
-
     export default {
         props: [
             'apiUrl',
@@ -277,12 +272,6 @@
         mounted: function() {
             // Plain search for default user list
             this.search();
-
-            // Warm up service worker cache for list of all users
-            setTimeout(
-                () => this._searchRequest(null, true),
-                CACHE_WARMUP_DELAY * 1000,
-            );
         },
         methods: {
             // If we're currently in user selection mode.
@@ -346,11 +335,6 @@
                 // Fetch a list of users, set the searching state
                 this.searching = true;
                 this._searchOnline(query)
-                    // Fallback to cache
-                    .then(null, err => {
-                        console.log('Falling back to user cache search');
-                        return this._searchCache(query).then(null, () => err);
-                    })
                     // Handle result, only update if still searching same query
                     .then(users => {
                         if(query == this.query)
@@ -371,33 +355,6 @@
             // Search users with the given query online.
             _searchOnline(query = '') {
                 return this._searchRequest(query, false);
-            },
-
-            // Search users with the given query in the cache.
-            _searchCache(query = '') {
-                // Normalize query
-                var query = query.trim().toLowerCase();
-
-                return this
-                    ._searchRequest(null, true)
-                    .then(users => {
-                        // Simple local search, filter users based on query
-                        users = users.filter(user => {
-                            let name = user.name.toLowerCase();
-
-                            // Filter by full or starting-with query
-                            if(query.startsWith('^')) {
-                                return name.startsWith(query.substr(1));
-                            } else {
-                                return name.includes(query);
-                            }
-                        });
-
-                        return users;
-                    })
-                    .catch(err => {
-                        console.log('Searching in user cache failed: ' + err);
-                    });
             },
 
             // Do a search request.
