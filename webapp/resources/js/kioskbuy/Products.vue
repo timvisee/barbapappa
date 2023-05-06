@@ -345,14 +345,21 @@
                         console.log('Falling back to product cache search');
                         return this._searchCache(query).then(null, () => err);
                     })
-                    // Handle result
-                    .then(products => this.products = products)
+                    // Handle result, only update if still searching same query
+                    .then(products => {
+                        if(query == this.query)
+                            this.products = products;
+                    })
                     // Handle error
                     .catch(err => {
                         alert('An error occurred while listing products');
                         console.error(err);
                     })
-                    .finally(() => this.searching = false);
+                    // Stop searching state, if still searching same query
+                    .finally(() => {
+                        if(query == this.query)
+                            this.searching = false;
+                    });
             },
 
             // Search products with the given query online.

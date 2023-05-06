@@ -351,14 +351,21 @@
                         console.log('Falling back to user cache search');
                         return this._searchCache(query).then(null, () => err);
                     })
-                    // Handle result
-                    .then(users => this.users = users)
+                    // Handle result, only update if still searching same query
+                    .then(users => {
+                        if(query == this.query)
+                            this.users = users;
+                    })
                     // Handle error
                     .catch(err => {
                         alert('An error occurred while listing users');
                         console.error(err);
                     })
-                    .finally(() => this.searching = false);
+                    // Stop searching state, if still searching same query
+                    .finally(() => {
+                        if(query == this.query)
+                            this.searching = false;
+                    });
             },
 
             // Search users with the given query online.
