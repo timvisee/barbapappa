@@ -342,7 +342,7 @@
             },
 
             // Search users with the given query
-            search(query = null) {
+            search(query = '') {
                 // Fetch a list of users, set the searching state
                 this.searching = true;
                 this._searchOnline(query)
@@ -351,23 +351,30 @@
                         console.log('Falling back to user cache search');
                         return this._searchCache(query).then(null, () => err);
                     })
-                    // Handle result
-                    .then(users => this.users = users)
+                    // Handle result, only update if still searching same query
+                    .then(users => {
+                        if(query == this.query)
+                            this.users = users;
+                    })
                     // Handle error
                     .catch(err => {
                         alert('An error occurred while listing users');
                         console.error(err);
                     })
-                    .finally(() => this.searching = false);
+                    // Stop searching state, if still searching same query
+                    .finally(() => {
+                        if(query == this.query)
+                            this.searching = false;
+                    });
             },
 
             // Search users with the given query online.
-            _searchOnline(query = null) {
+            _searchOnline(query = '') {
                 return this._searchRequest(query, false);
             },
 
             // Search users with the given query in the cache.
-            _searchCache(query = null) {
+            _searchCache(query = '') {
                 // Normalize query
                 var query = query.trim().toLowerCase();
 
@@ -394,7 +401,7 @@
             },
 
             // Do a search request.
-            _searchRequest(query = null, all = false) {
+            _searchRequest(query = '', all = false) {
                 // Build URL
                 let url = new URL(this.apiUrl + '/members');
                 if(query != null && query.length > 0)

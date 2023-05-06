@@ -129,7 +129,7 @@ class BarController extends Controller {
 
         // Search, or show top products
         $search = \Request::get('q');
-        if(!empty($search))
+        if(!($search === null || trim($search) === ''))
             $products = $bar->economy->searchProducts($search, $currency_ids);
         else
             $products = $bar->economy->quickBuyProducts($currency_ids);
@@ -693,7 +693,7 @@ class BarController extends Controller {
 
         // Search, or use top products
         $search = \Request::get('q');
-        if(!empty($search))
+        if(!($search === null || trim($search) === ''))
             $products = $bar->economy->searchProducts($search, $currency_ids);
         else
             $products = $bar->economy->quickBuyProducts($currency_ids, Self::ADVANCED_BUY_PRODUCT_LIMIT);
@@ -724,7 +724,7 @@ class BarController extends Controller {
         $product_ids = json_decode(\Request::query('product_ids'));
 
         // Return a default user list, or search based on a given query
-        if(empty($search)) {
+        if(($search === null || trim($search) === '')) {
             // Build list of members, add self
             $members = collect([$economy_member]);
 

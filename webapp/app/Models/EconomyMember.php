@@ -128,7 +128,7 @@ class EconomyMember extends Pivot {
             $search = Str::substr($search, 1);
 
         // Don't scope anything if the query is empty
-        if(empty(trim($search)))
+        if(($search === null || trim($search) === ''))
             return;
 
         // TODO: search for nicknames and a-like as well (members with null user)

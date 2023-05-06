@@ -25,7 +25,7 @@ class ProductController extends Controller {
         $trashed = is_checked($request->query('trashed'));
 
         // Fetch products
-        if(!empty($search))
+        if(!($search === null || trim($search) === ''))
             $products = $trashed
                 ? $economy->searchProducts($search)->onlyTrashed()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)
                 : $economy->searchProducts($search)->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE);

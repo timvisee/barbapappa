@@ -632,12 +632,10 @@ class Economy extends Model {
             ->products()
             ->havingCurrency($currency_ids);
 
-        // Define the query
-        if(!empty($search))
-            $products = $products->search($search);
-
-        // Put exhausted products last
-        $products = $products->orderBy('exhausted');
+        // Define the query, put exhausted products last
+        $products = $products
+            ->search($search)
+            ->orderBy('exhausted');
 
         // Fetch the products and return
         return $products->get();
