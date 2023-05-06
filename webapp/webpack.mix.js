@@ -18,7 +18,6 @@ mix.webpackConfig({
             },
         }),
         new GenerateSW({
-            cleanupOutdatedCaches: true,
             exclude: [
                 /js/,
                 /images\/vendor\/flag-icons/,
@@ -28,7 +27,6 @@ mix.webpackConfig({
         new GenerateSW({
             // Claim clients as soon as possible
             clientsClaim: true,
-            cleanupOutdatedCaches: true,
             exclude: [
                 /js/,
                 /images\/vendor\/flag-icons/,
