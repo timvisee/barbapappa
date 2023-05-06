@@ -336,7 +336,7 @@
             },
 
             // Search products with the given query
-            search(query = null) {
+            search(query = '') {
                 // Fetch a list of products, set the searching state
                 this.searching = true;
                 this._searchOnline(query)
@@ -363,12 +363,12 @@
             },
 
             // Search products with the given query online.
-            _searchOnline(query = null) {
+            _searchOnline(query = '') {
                 return this._searchRequest(query, false);
             },
 
             // Search products with the given query in the cache.
-            _searchCache(query = null) {
+            _searchCache(query = '') {
                 // Normalize query
                 var query = query.trim().toLowerCase();
 
@@ -410,7 +410,7 @@
             },
 
             // Do a search request.
-            _searchRequest(query = null, all = false) {
+            _searchRequest(query = '', all = false) {
                 // Build URL
                 let url = new URL(this.apiUrl + '/products');
                 if(query != null && query.length > 0)
