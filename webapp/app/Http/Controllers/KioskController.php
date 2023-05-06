@@ -132,7 +132,7 @@ class KioskController extends Controller {
         $all = is_checked(\Request::query('all'));
 
         // Determine whether to search or whether to show default member list
-        $doSearch = $all || !empty($search);
+        $doSearch = $all || !($search === null || $search === '');
 
         // Return a default user list, or search based on a given query
         if(!$doSearch)
@@ -190,7 +190,7 @@ class KioskController extends Controller {
         $currencies = [$currency];
 
         // Determine whether to search or whether to show default member list
-        $doSearch = $all || !empty($search);
+        $doSearch = $all || !($search === null || $search === '');
 
         // Search, or use top products
         if($doSearch)

@@ -81,8 +81,8 @@ class BarMember extends Pivot {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSearch($query, $search) {
-        // Don't scope if empty
-        if(empty($search))
+        // Don't scope if search is empty
+        if($search === null || trim($search) === '')
             return $query;
 
         // Search for each word separately in the first/last name fields

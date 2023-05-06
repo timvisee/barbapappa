@@ -126,6 +126,10 @@ class Product extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeSearch($query, $search) {
+        // Don't scope if search is empty
+        if($search === null || $search === '')
+            return $query;
+
         return $query
             ->where('name', 'LIKE', '%' . escape_like($search) . '%')
             ->orWhere('tags', 'LIKE', '%' . escape_like($search) . '%')
