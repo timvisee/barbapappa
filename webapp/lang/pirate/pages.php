@@ -1055,7 +1055,7 @@ return [
         ],
         'buy' => [
             'forMe' => 'Get yerself',
-            'forOthers' => 'For crew/more',
+            'forOthers' => 'For crew',
         ],
         'advancedBuy' => [
             'tapProducts' => 'Select loot to get for any pirate.',

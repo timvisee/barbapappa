@@ -1055,7 +1055,7 @@ return [
         ],
         'buy' => [
             'forMe' => 'Buy myself',
-            'forOthers' => 'For others/more',
+            'forOthers' => 'For others',
         ],
         'advancedBuy' => [
             'tapProducts' => 'Select products to buy for any user.',

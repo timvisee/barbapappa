@@ -1057,7 +1057,7 @@ return [
         ],
         'buy' => [
             'forMe' => 'Koop zelf',
-            'forOthers' => 'Voor anderen/meer',
+            'forOthers' => 'Voor anderen',
         ],
         'advancedBuy' => [
             'tapProducts' => 'Selecteer producten die je voor iemand wilt kopen.',
