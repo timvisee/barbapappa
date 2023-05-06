@@ -142,6 +142,9 @@ mix.js(
     'resources/js/advancedbuy/advancedbuy.js',
     'public/js/widget',
 ).js(
+    'resources/js/barbuy/barbuy.js',
+    'public/js/widget',
+).js(
     'resources/js/kioskbuy/kioskbuy.js',
     'public/js/widget',
 ).vue({ version: 2 });

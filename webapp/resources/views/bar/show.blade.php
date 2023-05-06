@@ -11,10 +11,10 @@
 @push('scripts')
     <script type="text/javascript">
         // Provide API base url to client-side buy widget
-        var barapp_quickbuy_api_url = '{{ route("bar.buy.api", ["barId" => $bar->human_id]) }}';
+        var barapp_barbuy_api_url = '{{ route("bar.buy.api", ["barId" => $bar->human_id]) }}';
     </script>
 
-    <script type="text/javascript" src="{{ mix('js/widget/quickbuy.js') }}" async></script>
+    <script type="text/javascript" src="{{ mix('js/widget/barbuy.js') }}" async></script>
 @endpush
 
 @push('toolbar-messages')
@@ -36,48 +36,14 @@
     @include('bar.include.joinBanner')
 
     @if($bar->enabled)
-        <div class="ui two item menu">
-            <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}" class="item active">@lang('pages.bar.buy.forMe')</a>
-            <a href="{{ route('bar.buy', ['barId' => $bar->human_id]) }}" class="item">@lang('pages.bar.buy.forOthers')</a>
+        <div id="barbuy">
+            <div v-if="refreshing" class="ui active centered text loader">
+                {{-- TODO: improve this message --}}
+                @lang('misc.loading')...
+            </div>
         </div>
 
-        {{-- Quick buy list --}}
-        <div id="quickbuy" class="ui large vertical menu fluid">
-            {!! Form::open(['action' => ['BarController@show', $bar->human_id], 'method' => 'GET']) !!}
-                <div class="item">
-                    <div class="ui transparent icon input">
-                        {{ Form::search('q', Request::input('q'), [
-                            'id' => 'quickbuy-search',
-                            'placeholder' => __('pages.products.clickBuyOrSearch') . '...',
-                            'autocomplete' => 'off',
-                        ]) }}
-                        <i class="icon link">
-                            <span class="glyphicons glyphicons-search"></span>
-                        </i>
-                    </div>
-                </div>
-            {!! Form::close() !!}
-
-            @forelse($products as $product)
-                {!! Form::open(['action' => [
-                    'BarController@quickBuy',
-                    $bar->human_id,
-                ], 'method' => 'POST']) !!}
-                    {!! Form::hidden('product_id', $product->id) !!}
-                    <a href="#" onclick="event.preventDefault();this.parentNode.submit()" class="item">
-                        {{ $product->displayName() }}
-                        {!! $product->formatPrice($currencies, BALANCE_FORMAT_LABEL, ['neutral' => true]) !!}
-                    </a>
-                {!! Form::close() !!}
-            @empty
-                <i class="item">@lang('pages.products.noProducts')</i>
-            @endforelse
-
-            <a href="{{ route('bar.product.index', ['barId' => $bar->human_id]) }}"
-                    class="ui large bottom attached basic button">
-                @lang('pages.products.all')...
-            </a>
-        </div>
+        <br />
 
         {{-- Recently bought products list --}}
         @if($productMutations->isNotEmpty())
