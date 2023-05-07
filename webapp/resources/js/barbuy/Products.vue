@@ -492,6 +492,11 @@
         }
     }
 
+    .item-label .ui.label {
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
+    }
+
     /* Inverted colors
     .menu.inverted .item .ui.button.black {
         background: #1b1c1d80;
