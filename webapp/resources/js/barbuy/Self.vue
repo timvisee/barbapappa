@@ -22,11 +22,8 @@
         <!-- Product list -->
         <Products
                 ref="products"
-                v-on:swap="swap"
-                v-on:highlightUsers="highlightUsers"
                 :apiUrl="apiUrl"
                 :self="true"
-                :swapped="swapped"
                 :selectedUsers="selectedUsers"
                 :selectedProducts="selectedProducts"
                 :cart="cart"
@@ -89,7 +86,6 @@
         },
         data() {
             return {
-                swapped: false,
                 selectedUsers: [],
                 selectedProducts: [],
                 cart: [],
@@ -216,11 +212,7 @@
                 this.removeAllUserCarts();
 
                 // Reset query fields
-                this.$refs.users.query = '';
                 this.$refs.products.query = '';
-
-                // Reset swap
-                this.resetSwap();
             },
 
             // Confirming state.
@@ -239,41 +231,6 @@
                 event.preventDefault();
                 event.returnValue = msg;
                 return msg;
-            },
-
-            // Swap the view.
-            swap() {
-                // Toggle swap.
-                this.swapped = !this.swapped;
-
-                // Highlight first column
-                if(!this.swapped)
-                    setTimeout(() => this.highlightUsers(), 0);
-                else
-                    this.highlightProducts();
-            },
-
-            // Reset swap state.
-            resetSwap() {
-                // If swapped, reset
-                if(this.swapped)
-                    this.swap();
-            },
-
-            // Hint to select a user.
-            highlightUsers() {
-                // TODO: propegate to users model
-                $('.panel-users')
-                    .transition('stop')
-                    .transition('glow');
-            },
-
-            // Hint to select products.
-            highlightProducts() {
-                // TODO: propegate to products model
-                $('.panel-products')
-                    .transition('stop')
-                    .transition('glow');
             },
 
             // Get cart for given user.
