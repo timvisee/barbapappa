@@ -51,16 +51,6 @@
     const OVERLAY_TIMEOUT = 1.5;
 
     /**
-     * Timeout for buy requests in seconds.
-     */
-    const BUY_REQUEST_TIMEOUT = 5;
-
-    /**
-     * Timeout for buy requests draining in the background in seconds.
-     */
-    const BUY_REQUEST_BACKGROUND_TIMEOUT = 30;
-
-    /**
      * Key for buy queue data to store in local storage.
      */
     const BUY_QUEUE_DATA_KEY = 'barbuy-self-buy-queue';
@@ -379,9 +369,7 @@
             // Has no error handling, retry or fallback methods.
             _sendBuyRequest(data, isBackground) {
                 return axios
-                    .post(this.apiUrl + '/buy/self', data, {
-                        timeout: (isBackground ? BUY_REQUEST_BACKGROUND_TIMEOUT : BUY_REQUEST_TIMEOUT) * 1000,
-                    });
+                    .post(this.apiUrl + '/buy/self', data);
             },
 
             // Load all buy queue data.
