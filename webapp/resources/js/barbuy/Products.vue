@@ -162,8 +162,7 @@
             </div>
         </a>
 
-        <!-- TODO: set proper URL here -->
-        <a v-if="self" href="./products"
+        <a v-if="self" :href="barUrl + '/products'"
                 class="ui large bottom attached basic button">
             {{ __('pages.products.all') }}...
         </a>
@@ -184,6 +183,7 @@
         },
         props: [
             'apiUrl',
+            'barUrl',
             'self',
             'swapped',
             'selectedUsers',

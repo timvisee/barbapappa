@@ -11,6 +11,7 @@
 @push('scripts')
     <script type="text/javascript">
         // Provide API base url to client-side buy widget
+        var barapp_bar_url = '{{ route("bar.show", ["barId" => $bar->human_id]) }}';
         var barapp_barbuy_api_url = '{{ route("bar.buy.api", ["barId" => $bar->human_id]) }}';
     </script>
 

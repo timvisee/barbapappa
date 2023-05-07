@@ -13,7 +13,7 @@
         </div>
 
         <!-- Main UI -->
-        <Self v-if="self" :apiUrl="apiUrl" />
+        <Self v-if="self" :apiUrl="apiUrl" :barUrl="barUrl" />
         <Other v-else :apiUrl="apiUrl" />
     </div>
 </template>
@@ -97,6 +97,7 @@
             };
         },
         props: [
+            'barUrl',
             'apiUrl',
         ],
         watch: {

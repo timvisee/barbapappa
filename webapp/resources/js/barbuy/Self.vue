@@ -6,6 +6,7 @@
         <Products
                 ref="products"
                 :apiUrl="apiUrl"
+                :barUrl="barUrl"
                 :self="true"
                 :selectedUsers="selectedUsers"
                 :selectedProducts="selectedProducts"
@@ -95,6 +96,7 @@
         },
         props: [
             'apiUrl',
+            'barUrl',
         ],
         watch: {
             successMessage: function(newMsg, oldMsg) {
