@@ -92,7 +92,7 @@
                     <div class="ui active inline mini loader"></div>
                 </div>
 
-                <div v-else-if="getQuantity(product) == 0" class="ui label"
+                <div v-else-if="self || getQuantity(product) == 0" class="ui label"
                         v-bind:class="{ blue: !product.exhausted, disabled: product.exhausted}">
                     {{ product.price_display }}
                 </div>
