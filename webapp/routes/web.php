@@ -598,6 +598,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
                 Route::get('/', null)->name('bar.buy.api');
                 Route::get('/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
                 Route::get('/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
+                Route::middleware('throttle:30,1')->post('/buy/self', 'BarController@apiBuySelfInstant')->middleware(BarController::permsUser()->middleware());
                 Route::middleware('throttle:30,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
             });
         });

@@ -85,14 +85,20 @@
                 {{ product.name }}
             </div>
 
-            <div v-if="getQuantity(product) == 0" class="item-label">
-                <div class="ui label"
+            <div class="item-label">
+                <div v-if="getBuyQueueQuantity(product) > 0" class="ui label basic">
+                    <span class="subtle">{{ getBuyQueueQuantity(product) }}</span>
+                    &nbsp;
+                    <div class="ui active inline mini loader"></div>
+                </div>
+
+                <div v-else-if="getQuantity(product) == 0" class="ui label"
                         v-bind:class="{ blue: !product.exhausted, disabled: product.exhausted}">
                     {{ product.price_display }}
                 </div>
             </div>
 
-            <div v-if="getQuantity(product)" class="item-buttons">
+            <div v-if="!self && getQuantity(product)" class="item-buttons">
                 <div class="ui two buttons">
                     <a href="#"
                             v-on:click.stop.prevent="quantityModal(product)"
@@ -137,7 +143,7 @@
                 {{ product.name }}
             </div>
 
-            <div class="item-buttons">
+            <div v-if="!self" class="item-buttons">
                 <div class="ui two buttons">
                     <a href="#"
                             v-on:click.stop.prevent="quantityModal(product)"
@@ -184,6 +190,8 @@
             'selectedProducts',
             'cart',
             'buying',
+            'buyCounts',
+            '_buyProduct',
             '_getUserCart',
             '_getSelectCart',
             '_getCartQuantity',
@@ -191,6 +199,7 @@
             '_addCartQuantity',
             '_getCartSize',
             '_removeCart',
+            '_getBuyQueueQuantity',
         ],
         data() {
             return {
@@ -260,7 +269,12 @@
 
             // Get the selection quantity for a given product
             getQuantity(product) {
-                return this._getCartQuantity(this.getCart(), product);
+                if(this.self) {
+                    let id = product.id;
+                    return (id in this.buyCounts) ? this.buyCounts[id] : 0;
+                } else {
+                    return this._getCartQuantity(this.getCart(), product);
+                }
             },
 
             // Set product quantity in user cart.
@@ -268,12 +282,24 @@
                 return this._setCartQuantity(this.getCart(true), product, quantity);
             },
 
+            // Get the selection quantity for a given product
+            getBuyQueueQuantity(product) {
+                return this._getBuyQueueQuantity === undefined
+                    ? 0
+                    : this._getBuyQueueQuantity(product);
+            },
+
             // Called when clicking on a product
             clickProduct(product) {
                 if(this.self)
-                    alert('BUY: ' + product.name);
+                    this.userBuyProduct(product);
                 else
                     this.changeQuantity(product, 1);
+            },
+
+            // Immediately buy product by current user
+            userBuyProduct(product) {
+                this._buyProduct(product);
             },
 
             // Change quantity by given amount

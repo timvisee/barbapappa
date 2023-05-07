@@ -11,13 +11,6 @@
                 <span class="halflings halflings-synchronization icon"></span>
             </span>
         </div>
-        <div v-else-if="buyQueueLength > 0" class="banner warning">
-            <span class="halflings halflings-synchronization icon"></span>
-            {{ buyQueueLength == 1
-                ? __('pages.kiosk.bannerProcessingTransactionsOne')
-                : __('pages.kiosk.bannerProcessingTransactionsMany').replace(':count', buyQueueLength)
-            }}
-        </div>
 
         <!-- Product list -->
         <Products
@@ -28,14 +21,24 @@
                 :selectedProducts="selectedProducts"
                 :cart="cart"
                 :buying="buying"
+                :buyCounts="buyCounts"
+                :_buyProduct="buy"
                 :_getUserCart="getUserCart"
                 :_getSelectCart="getSelectCart"
                 :_getCartQuantity="getCartQuantity"
                 :_setCartQuantity="setCartQuantity"
                 :_addCartQuantity="addCartQuantity"
                 :_getCartSize="getCartSize"
-                :_removeCart="removeCart" />
+                :_removeCart="removeCart"
+                :_getBuyQueueQuantity="getBuyQueueQuantity" />
 
+        <!-- TODO: add cancel button! -->
+        <div v-if="buyQueueLength > 0" class="banner warning">
+            <span class="halflings halflings-synchronization icon"></span>
+            {{ buyQueueLength == 1
+                ? __('pages.kiosk.bannerProcessingTransactionsOne')
+                : __('pages.kiosk.bannerProcessingTransactionsMany').replace(':count', buyQueueLength)
+            }}
         </div>
     </div>
 </template>
@@ -70,7 +73,7 @@
     /**
      * Key for buy queue data to store in local storage.
      */
-    const BUY_QUEUE_DATA_KEY = 'kiosk-buy-queue';
+    const BUY_QUEUE_DATA_KEY = 'barbuy-self-buy-queue';
 
     /**
      * Delay between each buy queue item when draining the queue.
@@ -97,10 +100,13 @@
                 // Timer handle after which to clear the success message
                 decayTimer: null,
                 stateOnline: navigator.onLine,
+                // Cache holding the buy queue state
+                buyQueueCache: [],
                 // Number of items currently in the deferred buy queue
                 buyQueueLength: 0,
                 // True when we're currently draining
                 buyQueueDraining: false,
+                buyCounts: {},
             };
         },
         props: [
@@ -142,19 +148,21 @@
             }
         },
         methods: {
-            // Commit the current cart as purchase
-            buy() {
-                // Do not buy if already buying
-                if(this.buying)
-                    return;
-                this.buying = true;
+            // Buy the given product
+            buy(product) {
+                // Increase buy count
+                let id = product.id;
+                if(id in this.buyCounts)
+                    this.buyCounts[id] += 1;
+                else
+                    this.buyCounts[id] = 1;
 
                 // Create buy data object, add unique UUID
                 let timestamp = Date.now() / 1000;
                 let buyData = {
                     uuid: this.uuidv4(),
                     initiated_at: timestamp,
-                    cart: JSON.parse(JSON.stringify(this.cart)),
+                    product: JSON.parse(JSON.stringify(product)),
                 };
 
                 // Buy the products through an AJAX call
@@ -183,19 +191,13 @@
             // Attempt to buy products.
             // Will try over network. Falls back to defer buy on buy queue.
             _buyOrQueue(data) {
-                return this
-                    // Attempt to submit buy POST
-                    ._sendBuyRequest(data, false)
-                    // Fall back to deferred queue
-                    .then(null, reject => {
-                        // If we got a response, don't queue, forward error
-                        if(reject.response)
-                            return Promise.reject(reject);
+                // Persistent queue
+                this._buyQueuePush(data);
 
-                        // Add buy request to queue
-                        this._buyQueuePush(data);
-                        return Promise.resolve({});
-                    });
+                // Drain queue
+                this._buyQueueDrainAll();
+
+                return Promise.resolve({});
             },
 
             // Cancel everything
@@ -318,6 +320,11 @@
                 this.setCartQuantity(cart, product, this.getCartQuantity(cart, product) + diff);
             },
 
+            // Get quantity of products in buy queue
+            getBuyQueueQuantity(product) {
+                return this.buyQueueCache.filter(d => d.product.id == product.id).length;
+            },
+
             // Merge products from cart into other cart.
             mergeCart(from, target) {
                 if(from == null || target == null || from.products == undefined || target.products == undefined)
@@ -373,18 +380,22 @@
             // Has no error handling, retry or fallback methods.
             _sendBuyRequest(data, isBackground) {
                 return axios
-                    .post(this.apiUrl + '/buy', data, {
+                    .post(this.apiUrl + '/buy/self', data, {
                         timeout: (isBackground ? BUY_REQUEST_BACKGROUND_TIMEOUT : BUY_REQUEST_TIMEOUT) * 1000,
                     });
             },
 
             // Load all buy queue data.
             _buyQueueLoad() {
-                return JSON.parse(localStorage.getItem(BUY_QUEUE_DATA_KEY)) || [];
+                this.buyQueueCache =
+                    JSON.parse(localStorage.getItem(BUY_QUEUE_DATA_KEY)) || [];
+                return this.buyQueueCache;
             },
 
             // Store all buy queue data.
             _buyQueueStore(queue) {
+                this.buyQueueCache = queue;
+
                 if(queue.length !== 0) {
                     localStorage.setItem(BUY_QUEUE_DATA_KEY, JSON.stringify(queue));
                 } else {

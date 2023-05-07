@@ -167,7 +167,7 @@
     /**
      * Key for buy queue data to store in local storage.
      */
-    const BUY_QUEUE_DATA_KEY = 'kiosk-buy-queue';
+    const BUY_QUEUE_DATA_KEY = 'barbuy-other-buy-queue';
 
     /**
      * Delay between each buy queue item when draining the queue.

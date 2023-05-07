@@ -11,6 +11,7 @@ use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
+use App\Models\UuidCheck;
 use App\Perms\BarRoles;
 use App\Services\Auth\Authenticator as UserAuthenticator;
 use App\Utils\MoneyAmountBag;
@@ -31,6 +32,11 @@ class BarController extends Controller {
      * The limit for advanced buy products to show.
      */
     const ADVANCED_BUY_PRODUCT_LIMIT = 8;
+
+    /**
+     * Time after which transaction UUID claims expire.
+     */
+    const UUID_CHECK_EXPIRE_SECONDS = 3 * 30 * 24 * 60 * 60;
 
     /**
      * Amount of time in seconds to separate summary sections.
@@ -1164,6 +1170,84 @@ class BarController extends Controller {
             ->filter(function($member) {
                 return $member != null;
             });
+    }
+
+    /**
+     * API route for buying products in the users advanced buying cart.
+     *
+     * @return Response
+     */
+    public function apiBuySelfInstant(Request $request) {
+        // TODO: we receive 'count', what is that?
+
+        // Get the bar, current user and the search query
+        $bar = \Request::get('bar');
+        $economy = $bar->economy;
+        $buyData = $request->post();
+        $self = $this;
+
+        // Error if bar is disabled
+        if(!$bar->enabled) {
+            return response()->json([
+                'message' => __('pages.bar.disabled'),
+            ])->setStatusCode(403);
+        }
+
+        // Take product from request buy data
+        if(isset($buyData['product'])) {
+            $product = collect($buyData['product']);
+            $uuid = $buyData['uuid'];
+            $initiated_at_timestamp = $buyData['initiated_at'] ?? null;
+        } else {
+            throw new \Exception('Invalid buy data');
+        }
+
+        // We want to prevent replaying transactions
+        // If UUID is already used, assume transaction is already processed
+        if($uuid != null && UuidCheck::hasUuid($uuid)) {
+            // TODO: log this
+            return [];
+        }
+
+        // Fetch product
+        // TODO: what to do here on failure
+        $product = $economy
+            ->products()
+            ->withTrashed()
+            ->findOrFail($product['id']);
+
+        // Buy product
+        $details = null;
+        DB::transaction(function() use($self, $uuid, $bar, $product, &$details) {
+            // Claim UUID or return early
+            if($uuid != null) {
+                $uuid_expire_at = now()->addSeconds(Self::UUID_CHECK_EXPIRE_SECONDS);
+                if(!UuidCheck::claim($uuid, $uuid_expire_at, false))
+                    // TODO: is this return broken?
+                    return [];
+            }
+
+            // Quick buy the product
+            $details = $self->quickBuyProduct($bar, $product);
+        });
+
+        // Format the price
+        $transaction = $details['transaction'];
+        $cost = $details['currency']->format($details['price']);
+
+        // Build a success message
+        $msg = __('pages.bar.boughtProductForPrice', [
+            'product' => $product->displayName(),
+            'price' => $cost,
+        ]) . '.';
+        $msg .= ' <a href="' . route('transaction.undo', [
+            'transactionId' => $transaction->id
+        ]) . '">' . __('misc.undo') . '</a>';
+
+        // Redirect back to the bar
+        return redirect()
+            ->route('bar.show', ['barId' => $bar->human_id])
+            ->with('successHtml', $msg);
     }
 
     /**
