@@ -464,7 +464,8 @@
 
     /* Inverted colors */
     .kiosk-select-item.active {
-        background: rgba(0, 182, 240, 0.45) !important;
+        /* background: rgba(0, 182, 240, 0.45) !important; */
+        background: rgba(0, 182, 240, 0.2) !important;
     }
 
     .ui.dimmer .text {
