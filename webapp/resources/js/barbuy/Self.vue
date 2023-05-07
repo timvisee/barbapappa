@@ -11,7 +11,7 @@
                 :selectedUsers="selectedUsers"
                 :selectedProducts="selectedProducts"
                 :cart="cart"
-                :buying="buying"
+                :buying="false"
                 :buyCounts="buyCounts"
                 :_buyProduct="buy"
                 :_getUserCart="getUserCart"
@@ -47,11 +47,6 @@
     const SUCCESS_MESSAGE_TIMEOUT = 5;
 
     /**
-     * Time to show bought/cancel overlay in seconds.
-     */
-    const OVERLAY_TIMEOUT = 1.5;
-
-    /**
      * Key for buy queue data to store in local storage.
      */
     const BUY_QUEUE_DATA_KEY = 'barbuy-self-buy-queue';
@@ -78,10 +73,6 @@
                 selectedUsers: [],
                 selectedProducts: [],
                 cart: [],
-                confirming: false,
-                buying: false,
-                showBoughtOverlay: false,
-                showCancelledOverlay: false,
                 successMessage: undefined,
                 // Timer handle after which to clear the success message
                 decayTimer: null,
@@ -90,7 +81,9 @@
                 buyQueueCache: [],
                 // True when we're currently draining
                 buyQueueDraining: false,
+                // Current purchase count for user, used to show count on client
                 buyCounts: {},
+                // Timer for resetting the purchase count
                 buyCountResetTimer: null,
             };
         },
@@ -126,9 +119,8 @@
             this.buyQueueCache = this._buyQueueLoad();
 
             // Drain any items from buy queue if we're online
-            if(this.stateOnline) {
+            if(this.stateOnline)
                 this._buyQueueDrainAllDelayed();
-            }
         },
         methods: {
             // Buy the given product
@@ -148,61 +140,11 @@
                     product: JSON.parse(JSON.stringify(product)),
                 };
 
-                // Buy the products through an AJAX call
-                this._buyOrQueue(buyData)
-                    .then(res => {
-                        // Show bought overlay for 1 second
-                        this.showBoughtOverlay = true;
-                        setTimeout(() => this.showBoughtOverlay = false, OVERLAY_TIMEOUT * 1000);
+                // Add item to buy queue
+                this._buyQueuePush(buyData);
 
-                        // Cancel all current selections
-                        this.cancel(false);
-
-                        // Reset scroll
-                        window.scrollTo(0, 0);
-
-                        // Process any queued purchases
-                        this._buyQueueDrainAllDelayed();
-                    })
-                    .catch(err => {
-                        alert(err.response.data.message ?? 'Failed to purchase products, an error occurred');
-                        console.error(err);
-                    })
-                    .finally(() => this.buying = false);
-            },
-
-            // Attempt to buy products.
-            // Will try over network. Falls back to defer buy on buy queue.
-            _buyOrQueue(data) {
-                // Persistent queue
-                this._buyQueuePush(data);
-
-                // Drain queue
+                // Initiate draining queue
                 this._buyQueueDrainAll();
-
-                return Promise.resolve({});
-            },
-
-            // Cancel everything
-            cancel(showOverlay = true) {
-                // Show cancelled overlay for 1 second
-                if(showOverlay) {
-                    this.showCancelledOverlay = true;
-                    setTimeout(() => this.showCancelledOverlay = false, OVERLAY_TIMEOUT * 1000);
-                }
-
-                // Reset selections
-                this.selectedUsers.splice(0);
-                this.selectedProducts.splice(0);
-                this.removeAllUserCarts();
-
-                // Reset query fields
-                this.$refs.products.query = '';
-            },
-
-            // Confirming state.
-            setConfirming(confirming) {
-                this.confirming = !!confirming;
             },
 
             onClose(event) {
@@ -246,19 +188,6 @@
 
                 // Return cart or null
                 return this.selectedProducts[0] || null;
-            },
-
-            // Get quantity of all user carts.
-            getTotalCartQuantity() {
-                if(this.cart == null || this.cart.length == 0)
-                    return 0;
-
-                return this.cart
-                    .map(i => i.products
-                        .map(p => p.quantity)
-                        .reduce((a, b) => a + b)
-                    )
-                    .reduce((a, b) => a + b);
             },
 
             // Get the selection quantity for a given product
@@ -308,17 +237,6 @@
                 return this.buyQueueCache.filter(d => d.product.id == product.id).length;
             },
 
-            // Merge products from cart into other cart.
-            mergeCart(from, target) {
-                if(from == null || target == null || from.products == undefined || target.products == undefined)
-                    return;
-
-                // Change quantities in target to merge.
-                from.products.forEach((item) => {
-                    this.addCartQuantity(target, item.product, item.quantity);
-                });
-            },
-
             // Get the number of products in the given cart.
             getCartSize(cart) {
                 if(cart == null || cart.products == undefined)
@@ -341,11 +259,6 @@
                 }
 
                 this.removeUserCart(cart.user);
-            },
-
-            // Remove all user carts.
-            removeAllUserCarts() {
-                this.cart.splice(0);
             },
 
             // Remove the cart for a given user.
@@ -447,6 +360,10 @@
                             }, BUY_COUNT_RESET_DELAY * 1000);
                         }
                     })
+                    .catch(err => {
+                        alert(err.response.data.message ?? 'Failed to purchase products, an error occurred');
+                        console.error(err);
+                    })
                     .finally(() => {
                         this.buyQueueDraining = false;
                     });
@@ -482,46 +399,6 @@
 </script>
 
 <style lang="scss">
-    .notification {
-        position: fixed !important;
-        bottom: 0;
-        left: 14px;
-        right: 14px;
-        z-index: 1001;
-
-        /* TODO: do not use this hack! */
-        width: calc(100% - 28px) !important;
-    }
-
-    .ui.dimmer.on-top {
-        z-index: 1002;
-    }
-
-    .ui.dimmer.positive {
-        background-color: rgba(33, 186, 69, .85);
-        color: white;
-
-        .glyphicons {
-            color: white;
-        }
-    }
-
-    .ui.dimmer.negative {
-        background-color: rgba(219, 40, 40, .85);
-        color: white;
-
-        .glyphicons {
-            color: white;
-        }
-    }
-
-    .ui.dimmer .text.huge {
-        font-weight: bold;
-        font-size: 2em;
-        padding: 1em;
-        line-height: 2;
-    }
-
     .float-right {
         float: right;
     }
