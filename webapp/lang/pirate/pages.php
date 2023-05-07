@@ -1047,6 +1047,9 @@ return [
         'tallySummaryDescriptionSum' => ':quantity tallies from :from until now',
         'disabled' => 'Dis bar be disabled by another pirate.',
         'disabledGotoDashboard' => 'Dis bar be disabled by another pirate. Go to yer home port to find yer current bar.',
+        'bannerNoConnection' => 'Connection errrror. Cannot purchase.',
+        'bannerProcessingTransactionsOne' => 'Synchronizing one purchase...',
+        'bannerProcessingTransactionsMany' => 'Synchronizing :count purchases...',
         'poster' => [
             'thisBarUses' => 'Dis bar uses',
             'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',

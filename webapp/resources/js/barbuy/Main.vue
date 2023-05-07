@@ -9,7 +9,7 @@
 
         <div v-if="!stateOnline" class="ui message error">
             <span class="halflings halflings-exclamation-sign icon"></span>
-            {{ __('misc.noConnection') }}.
+            {{ __('pages.bar.bannerNoConnection') }}
         </div>
 
         <!-- Main UI -->

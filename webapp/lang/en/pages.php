@@ -1047,6 +1047,9 @@ return [
         'tallySummaryDescriptionSum' => ':quantity tallies from :from until now',
         'disabled' => 'This bar has been disabled by an administrator.',
         'disabledGotoDashboard' => 'This bar has been disabled by an administrator. Go to the dashboard to find your current bar.',
+        'bannerNoConnection' => 'No connection. Cannot purchase.',
+        'bannerProcessingTransactionsOne' => 'Synchronizing one purchase...',
+        'bannerProcessingTransactionsMany' => 'Synchronizing :count purchases...',
         'poster' => [
             'thisBarUses' => 'This bar uses',
             'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',

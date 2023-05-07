@@ -22,13 +22,13 @@
                 :_removeCart="removeCart"
                 :_getBuyQueueQuantity="getBuyQueueQuantity" />
 
-        <!-- TODO: add cancel button! -->
         <div v-if="buyQueueCache.length > 0" class="ui message warning">
             <span class="halflings halflings-synchronization icon"></span>
             {{ buyQueueCache.length == 1
-                ? __('pages.kiosk.bannerProcessingTransactionsOne')
-                : __('pages.kiosk.bannerProcessingTransactionsMany').replace(':count', buyQueueCache.length)
+                ? __('pages.bar.bannerProcessingTransactionsOne')
+                : __('pages.bar.bannerProcessingTransactionsMany').replace(':count', buyQueueCache.length)
             }}
+            <a href="#" @click.prevent.stop="resetBuyQueue" class="float-right">{{ __('general.stop') }}</a>
         </div>
     </div>
 </template>
@@ -370,6 +370,11 @@
                     this.cart.splice(i, 1);
             },
 
+            // Reset the current buy queue.
+            resetBuyQueue() {
+                this._buyQueueStore([]);
+            },
+
             // Send a buy request with the given data.
             // Has no error handling, retry or fallback methods.
             _sendBuyRequest(data, isBackground) {
@@ -528,5 +533,9 @@
         font-size: 2em;
         padding: 1em;
         line-height: 2;
+    }
+
+    .float-right {
+        float: right;
     }
 </style>
