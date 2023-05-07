@@ -70,7 +70,7 @@
      *
      * This delay is required to prevent rate limiting.
      */
-    const BUY_QUEUE_DRAIN_INTERVAL = 2;
+    const BUY_QUEUE_DRAIN_INTERVAL = 1;
 
     /**
      * Seconds after which we reset the buy counts.
