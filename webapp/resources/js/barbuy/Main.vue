@@ -13,8 +13,8 @@
         </div>
 
         <!-- Main UI -->
-        <Self v-if="self" :apiUrl="apiUrl" :barUrl="barUrl" />
-        <Other v-else :apiUrl="apiUrl" />
+        <Self ref="self" v-if="self" :apiUrl="apiUrl" :barUrl="barUrl" />
+        <Other ref="other" v-else :apiUrl="apiUrl" />
     </div>
 </template>
 
@@ -222,16 +222,10 @@
             },
 
             onClose(event) {
-                // Do not prevent closing if nothing is selected
-                if(this.cart.length == 0)
-                    return;
-
-                // Prevent closing the page, set a warning message
-                let msg = this.__('pages.bar.advancedBuy.pageCloseWarning');
-                console.log(msg);
-                event.preventDefault();
-                event.returnValue = msg;
-                return msg;
+                if(this.self)
+                    return this.$refs.self.onClose(event);
+                else
+                    return this.$refs.other.onClose(event);
             },
 
             // Swap the view.

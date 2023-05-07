@@ -122,9 +122,6 @@
             window.addEventListener("online", (e) => this.stateOnline = true);
             window.addEventListener("offline", (e) => this.stateOnline = false);
 
-            // Prevent accidental closing
-            window.addEventListener('beforeunload', this.onClose);
-
             // Update buy queue length
             this.buyQueueCache = this._buyQueueLoad();
 
@@ -209,8 +206,8 @@
             },
 
             onClose(event) {
-                // Do not prevent closing if nothing is selected
-                if(this.cart.length == 0)
+                // Do not prevent closing if nothing is in queue
+                if(this.buyQueueCache.length == 0)
                     return;
 
                 // Prevent closing the page, set a warning message

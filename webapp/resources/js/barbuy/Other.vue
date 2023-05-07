@@ -213,9 +213,6 @@
             window.addEventListener("online", (e) => this.stateOnline = true);
             window.addEventListener("offline", (e) => this.stateOnline = false);
 
-            // Prevent accidental closing
-            window.addEventListener('beforeunload', this.onClose);
-
             // Update buy queue length
             this.buyQueueLength = this._buyQueueLoad().length;
 
