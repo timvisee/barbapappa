@@ -82,6 +82,11 @@
      */
     const BUY_QUEUE_DRAIN_INTERVAL = 2;
 
+    /**
+     * Seconds after which we reset the buy counts.
+     */
+    const BUY_COUNT_RESET_DELAY = 5;
+
     export default {
         components: {
             Cart,
@@ -107,6 +112,7 @@
                 // True when we're currently draining
                 buyQueueDraining: false,
                 buyCounts: {},
+                buyCountResetTimer: null,
             };
         },
         props: [
@@ -454,6 +460,15 @@
 
                         // Pop first item from queue
                         this._buyQueuePop();
+
+                        // Start timer to reset counts after a while
+                        if(this.buyCountResetTimer != null)
+                            clearTimeout(this.buyCountResetTimer);
+                        if(this._buyQueueLoad().length == 0) {
+                            this.buyCountResetTimer = setTimeout(() => {
+                                this.buyCounts = {};
+                            }, BUY_COUNT_RESET_DELAY * 1000);
+                        }
                     })
                     .finally(() => {
                         this.buyQueueDraining = false;
