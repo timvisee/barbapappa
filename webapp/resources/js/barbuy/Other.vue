@@ -2,23 +2,6 @@
 
 <template>
     <div>
-        <div v-if="!stateOnline" class="banner">
-            <span class="halflings halflings-exclamation-sign icon"></span>
-            /* TODO: change this text */
-            {{ __('pages.kiosk.bannerNoConnection') }}
-            <span v-if="buyQueueLength > 0" class="float-right">
-                {{ buyQueueLength }}&nbsp;
-                <span class="halflings halflings-synchronization icon"></span>
-            </span>
-        </div>
-        <div v-else-if="buyQueueLength > 0" class="banner warning">
-            <span class="halflings halflings-synchronization icon"></span>
-            {{ buyQueueLength == 1
-                ? __('pages.kiosk.bannerProcessingTransactionsOne')
-                : __('pages.kiosk.bannerProcessingTransactionsMany').replace(':count', buyQueueLength)
-            }}
-        </div>
-
         <div v-if="refreshing" class="ui active centered indeterminate large text loader">
             {{ __('misc.refreshing') }}...
         </div>

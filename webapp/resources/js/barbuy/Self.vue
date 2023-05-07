@@ -2,16 +2,6 @@
 
 <template>
     <div>
-        <div v-if="!stateOnline" class="banner">
-            <span class="halflings halflings-exclamation-sign icon"></span>
-            /* TODO: change this text */
-            {{ __('pages.kiosk.bannerNoConnection') }}
-            <span v-if="buyQueueLength > 0" class="float-right">
-                {{ buyQueueLength }}&nbsp;
-                <span class="halflings halflings-synchronization icon"></span>
-            </span>
-        </div>
-
         <!-- Product list -->
         <Products
                 ref="products"
@@ -33,7 +23,7 @@
                 :_getBuyQueueQuantity="getBuyQueueQuantity" />
 
         <!-- TODO: add cancel button! -->
-        <div v-if="buyQueueLength > 0" class="banner warning">
+        <div v-if="buyQueueLength > 0" class="ui message warning">
             <span class="halflings halflings-synchronization icon"></span>
             {{ buyQueueLength == 1
                 ? __('pages.kiosk.bannerProcessingTransactionsOne')
@@ -505,26 +495,6 @@
 </script>
 
 <style lang="scss">
-    .banner {
-        background: #db2828;
-        color: #fff;
-        margin-bottom: 1rem;
-        padding: 1em;
-        border-radius: .28571429rem;
-    }
-
-    .banner.warning {
-        background: #FF8C00;
-    }
-
-    .banner .float-right {
-        float: right;
-    }
-
-    .banner .icon {
-        margin-right: .35em;
-    }
-
     .notification {
         position: fixed !important;
         bottom: 0;

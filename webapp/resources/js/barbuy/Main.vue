@@ -2,15 +2,14 @@
 
 <template>
     <div>
-        <div v-if="!stateOnline" class="banner">
-            <span class="halflings halflings-exclamation-sign icon"></span>
-            /* TODO: change this text */
-            {{ __('pages.kiosk.bannerNoConnection') }}
-        </div>
-
         <div class="ui two item menu">
             <a href="#" class="item" @click.prevent.stop="self = true" v-bind:class="{ active: self }">{{ __('pages.bar.buy.forMe') }}</a>
             <a href="#" class="item" @click.prevent.stop="self = false" v-bind:class="{ active: !self }">{{ __('pages.bar.buy.forOthers') }}</a>
+        </div>
+
+        <div v-if="!stateOnline" class="ui message error">
+            <span class="halflings halflings-exclamation-sign icon"></span>
+            {{ __('misc.noConnection') }}.
         </div>
 
         <!-- Main UI -->
@@ -515,27 +514,6 @@
 </script>
 
 <style lang="scss">
-
-    .banner {
-        background: #db2828;
-        color: #fff;
-        margin-bottom: 1rem;
-        padding: 1em;
-        border-radius: .28571429rem;
-    }
-
-    .banner.warning {
-        background: #FF8C00;
-    }
-
-    .banner .float-right {
-        float: right;
-    }
-
-    .banner .icon {
-        margin-right: .35em;
-    }
-
     .notification {
         position: fixed !important;
         bottom: 0;
