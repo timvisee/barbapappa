@@ -23,11 +23,11 @@
                 :_getBuyQueueQuantity="getBuyQueueQuantity" />
 
         <!-- TODO: add cancel button! -->
-        <div v-if="buyQueueLength > 0" class="ui message warning">
+        <div v-if="buyQueueCache.length > 0" class="ui message warning">
             <span class="halflings halflings-synchronization icon"></span>
-            {{ buyQueueLength == 1
+            {{ buyQueueCache.length == 1
                 ? __('pages.kiosk.bannerProcessingTransactionsOne')
-                : __('pages.kiosk.bannerProcessingTransactionsMany').replace(':count', buyQueueLength)
+                : __('pages.kiosk.bannerProcessingTransactionsMany').replace(':count', buyQueueCache.length)
             }}
         </div>
     </div>
@@ -97,8 +97,6 @@
                 stateOnline: navigator.onLine,
                 // Cache holding the buy queue state
                 buyQueueCache: [],
-                // Number of items currently in the deferred buy queue
-                buyQueueLength: 0,
                 // True when we're currently draining
                 buyQueueDraining: false,
                 buyCounts: {},
@@ -136,7 +134,7 @@
             window.addEventListener('beforeunload', this.onClose);
 
             // Update buy queue length
-            this.buyQueueLength = this._buyQueueLoad().length;
+            this.buyQueueCache = this._buyQueueLoad();
 
             // Drain any items from buy queue if we're online
             if(this.stateOnline) {
@@ -390,16 +388,13 @@
 
             // Store all buy queue data.
             _buyQueueStore(queue) {
-                this.buyQueueCache = queue;
-
                 if(queue.length !== 0) {
                     localStorage.setItem(BUY_QUEUE_DATA_KEY, JSON.stringify(queue));
                 } else {
                     localStorage.removeItem(BUY_QUEUE_DATA_KEY);
                 }
 
-                // Update buy queue length when storing data
-                this.buyQueueLength = queue.length || 0;
+                this.buyQueueCache = queue;
             },
 
             // Push a new buy item into the buy queue.
