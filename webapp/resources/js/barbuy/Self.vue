@@ -23,6 +23,13 @@
                 :_removeCart="removeCart"
                 :_getBuyQueueQuantity="getBuyQueueQuantity" />
 
+        <!-- History -->
+        <History
+                ref="history"
+                :apiUrl="apiUrl"
+                :barUrl="barUrl" />
+
+        <!-- Buy queue notification -->
         <div v-if="buyQueueCache.length > 0" class="ui message warning">
             <span class="halflings halflings-synchronization icon"></span>
             {{ buyQueueCache.length == 1
@@ -40,6 +47,7 @@
     // TODO: remove cart?
     const Cart = require('./Cart.vue').default;
     const Products = require('./Products.vue').default;
+    const History = require('./History.vue').default;
 
     /**
      * Success message timeout in seconds.
@@ -67,6 +75,7 @@
         components: {
             Cart,
             Products,
+            History,
         },
         data() {
             return {
@@ -359,6 +368,8 @@
                                 this.buyCounts = {};
                             }, BUY_COUNT_RESET_DELAY * 1000);
                         }
+
+                        this.onBoughtProduct();
                     })
                     .catch(err => {
                         alert(err.response.data.message ?? 'Failed to purchase products, an error occurred');
@@ -386,6 +397,12 @@
                 setTimeout(() => {
                     this._buyQueueDrainAll();
                 }, BUY_QUEUE_DRAIN_INTERVAL * 1000);
+            },
+
+            // Fired when a product is succesfully bought (in the background)
+            onBoughtProduct() {
+                // Refresh history
+                this.$refs.history.refresh();
             },
 
             // Generate random UUID.

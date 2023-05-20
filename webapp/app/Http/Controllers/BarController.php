@@ -148,6 +148,30 @@ class BarController extends Controller {
         else
             $products = $bar->economy->quickBuyProducts($currency_ids);
 
+        // Show the bar page
+        return view('bar.show')
+            ->with('economy', $bar->economy)
+            ->with('joined', $bar->isJoined($user))
+            ->with('mustVerify', $user->needsToVerifyEmail())
+            ->with('userBalance', $bar->economy->calcUserBalance())
+            ->with('products', $products)
+            ->with('currencies', $currencies);
+    }
+
+    /**
+     * Bar mini history page.
+     *
+     * @return Response
+     */
+    public function widgetHistory($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Show info page if user does not have user role
+        if(!perms(Self::permsUser()) || !$bar->isJoined($user))
+            throw new \Exception('No permission');
+
         // List the last product mutations
         $show_history = ($bar->show_history && perms(Self::permsUser())) || perms(Self::permsManage());
         if($show_history) {
@@ -164,13 +188,7 @@ class BarController extends Controller {
         }
 
         // Show the bar page
-        return view('bar.show')
-            ->with('economy', $bar->economy)
-            ->with('joined', $bar->isJoined($user))
-            ->with('mustVerify', $user->needsToVerifyEmail())
-            ->with('userBalance', $bar->economy->calcUserBalance())
-            ->with('products', $products)
-            ->with('currencies', $currencies)
+        return view('bar.include.miniHistory')
             ->with('productMutations', $productMutations);
     }
 

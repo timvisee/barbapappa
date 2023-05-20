@@ -586,6 +586,7 @@ Route::prefix('/b')->middleware('auth')->group(function() {
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         // Show, info, advanced buy
         Route::get('/', 'BarController@show')->name('bar.show');
+        Route::get('/widget/history', 'BarController@widgetHistory')->name('bar.widget.history');
         Route::get('/info', 'BarController@info')->name('bar.info');
 
         // Advanced buy
