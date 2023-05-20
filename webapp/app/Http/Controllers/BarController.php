@@ -135,27 +135,12 @@ class BarController extends Controller {
             $member->pivot->save();
         }
 
-        // Build a list of preferred currencies for the user
-        // TODO: if there's only one currency, that is usable, use null to
-        //       greatly simplify product queries
-        $currencies = Self::userCurrencies($bar, $user);
-        $currency_ids = $currencies->pluck('id');
-
-        // Search, or show top products
-        $search = \Request::get('q');
-        if(!($search === null || trim($search) === ''))
-            $products = $bar->economy->searchProducts($search, $currency_ids);
-        else
-            $products = $bar->economy->quickBuyProducts($currency_ids);
-
         // Show the bar page
         return view('bar.show')
             ->with('economy', $bar->economy)
             ->with('joined', $bar->isJoined($user))
             ->with('mustVerify', $user->needsToVerifyEmail())
-            ->with('userBalance', $bar->economy->calcUserBalance())
-            ->with('products', $products)
-            ->with('currencies', $currencies);
+            ->with('userBalance', $bar->economy->calcUserBalance());
     }
 
     /**
