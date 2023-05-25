@@ -4,7 +4,7 @@
             <i class="glyphicons glyphicons-hash logo"
                     @click="quantity = 1 + Math.floor(Math.random() * 10);"></i>
         </div>
-        <div class="content">
+        <div class="content text-align-center">
 
             <div class="ui grid display-inline-block">
                 <div class="row">
@@ -162,6 +162,10 @@
         background: #1b1c1d !important;
         color: #fff !important;
         font-family: sans-serif;
+    }
+
+    .text-align-center {
+        text-align: center;
     }
 
     /* Chrome, Safari, Edge, Opera */
