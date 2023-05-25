@@ -202,7 +202,7 @@
         </a>
 
         <div class="ui grid container index" v-if="showIndex">
-            <div class="four column row">
+            <div class="six column row">
                 <a class="column button" v-for="i in 26"
                         v-on:click.prevent.stop="selectIndex(String.fromCharCode(96 + i))"
                         href="#">
