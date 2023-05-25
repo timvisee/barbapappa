@@ -507,8 +507,7 @@
             }
 
             &.active {
-                /* TODO: find proper color code here */
-                background: #0f617c !important;
+                background: rgba(0, 182, 240, 0.2) !important;
             }
 
             .glyphicons,
