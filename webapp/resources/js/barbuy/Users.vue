@@ -525,8 +525,7 @@
     }
 
     .index {
-
-        border-top: 1px solid rgba(255, 255, 255, .08);
+        border-top: 1px solid rgba(0, 0, 0, .08);
         border-bottom: none;
         margin: 0 !important;
         border-bottom: none;
@@ -541,21 +540,20 @@
             align-items:center;
             justify-content:center;
 
-            color: #fff;
+            color: rgba(0, 0, 0, 0.87);
             text-align: center;
             margin: 0;
             padding: 1em;
             font-weight: bold;
             aspect-ratio: 1;
 
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-            border-right: 1px solid rgba(255, 255, 255, .08);
+            border-bottom: 1px solid rgba(0, 0, 0, .08);
+            border-right: 1px solid rgba(0, 0, 0, .08);
             transition: background .1s ease, color .1s ease;
 
             &:hover {
                 /* color: rgba(0, 0, 0, .87); */
-                /* background: rgba(0, 0, 0, .08) !important; */
-                background: #2d2e2f !important;
+                background: rgba(0, 0, 0, .08) !important;
             }
         }
     }

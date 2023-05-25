@@ -587,7 +587,6 @@
     }
 
     .index {
-
         border-top: 1px solid rgba(255, 255, 255, .08);
         border-bottom: none;
         margin: 0 !important;
