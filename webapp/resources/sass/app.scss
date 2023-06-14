@@ -316,6 +316,13 @@ a.subtle.link:hover {
     animation: pirate-img 8s ease-in-out 1s both;
 }
 
+.glyphicons.chunk-spacer {
+    display: block;
+    text-align: center;
+    margin: -0.75em 0;
+    color: darkgray;
+}
+
 @keyframes pirate {
     0% {
         opacity: 0;

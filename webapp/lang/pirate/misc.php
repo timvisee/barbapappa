@@ -196,6 +196,7 @@ return [
     'presets' => 'Presets',
     'offline' => 'Offline',
     'delayed' => 'Delayed',
+    'earlier' => 'earlier',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',
