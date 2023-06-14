@@ -42,6 +42,7 @@
                         'time' => $productMutation->updated_at ?? $productMutation->created_at,
                         'absolute' => false,
                         'short' => false,
+                        'ucfirst' => true,
                     ])
 
                     {{-- Relative delay --}}
