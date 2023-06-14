@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.182 (2023-06-14)
+
+- In purchase history list, separate purchases in chunks if more than 6 hours apart
+- Increase number of items per page in purchase history from 25 to 50
+- Add previous/next pagination buttons to purchase history list
+- Fix kiosk showing incorrect search results if previous search was late
+- Fix kiosk not handling empty searches properly
+- Don't clear service worker caches on new release
+
 ## 0.1.181 (2023-05-04)
 
 - Put page messages in a container, attached to the toolbar
