@@ -323,6 +323,14 @@ a.subtle.link:hover {
     color: darkgray;
 }
 
+.glyphicons.list-more::before {
+    padding: 0 !important;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
 @keyframes pirate {
     0% {
         opacity: 0;

@@ -54,6 +54,12 @@
                 </h5>
             @endif
 
+            @if($loop->first && !empty($productMutations->previousPageUrl()))
+                <a class="item text-align-center" href="{{ $productMutations->previousPageUrl() }}">
+                    <span class="glyphicons glyphicons-more list-more subtle"></span>
+                </a>
+            @endif
+
             <a class="item"
                 href="{{ route('transaction.show', [
                     'transactionId' => $productMutation->mutation->transaction_id,
@@ -92,6 +98,12 @@
                     @endif
                 </span>
             </a>
+
+            @if($loop->last && !empty($productMutations->nextPageUrl()))
+                <a class="item text-align-center" href="{{ $productMutations->nextPageUrl() }}">
+                    <span class="glyphicons glyphicons-more list-more subtle"></span>
+                </a>
+            @endif
 
             @php
                 $previous = $productMutation;
