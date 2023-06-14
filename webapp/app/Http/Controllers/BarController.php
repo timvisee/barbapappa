@@ -338,7 +338,7 @@ class BarController extends Controller {
             ->productMutations()
             ->withTrashed()
             ->latest()
-            ->paginate(25);
+            ->paginate(50);
 
         // Show the bar page
         return view('bar.history')

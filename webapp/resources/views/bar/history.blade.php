@@ -4,6 +4,8 @@
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.history', $bar);
     $menusection = 'bar_manage';
+
+    const SEPARATE_DELAY_SECONDS = 60 * 60 * 6;
 @endphp
 
 @section('content')
@@ -19,7 +21,44 @@
         @forelse($productMutations as $productMutation)
             @php
                 $self = barauth()->getUser()->id == $productMutation->mutation->owner_id;
+
+                // Show divider if delay to previous reaches threshold
+                $showDivider = false;
+                if(isset($previous)) {
+                    $delay = $previous->created_at->diffAsCarbonInterval($productMutation->created_at);
+                    if($delay->total('seconds') >= SEPARATE_DELAY_SECONDS)
+                        $showDivider = true;
+                }
             @endphp
+
+            @if($showDivider)
+                </div>
+                <span class="glyphicons glyphicons-option-vertical chunk-spacer"></span>
+                <div class="ui top vertical menu fluid">
+            @endif
+            @if($showDivider || $loop->first)
+                <h5 class="ui item header">
+                    @include('includes.humanTimeDiff', [
+                        'time' => $productMutation->updated_at ?? $productMutation->created_at,
+                        'absolute' => false,
+                        'short' => false,
+                        'ucfirst' => true,
+                    ])
+
+                    {{-- Relative delay --}}
+                    @if(isset($delay))
+                        <span class="subtle">
+                            &nbsp;&middot;&nbsp; {{ $delay->forHumans(null, false, 1) }} @lang('misc.earlier')
+                        </span>
+                    @endif
+                </h5>
+            @endif
+
+            @if($loop->first && !empty($productMutations->previousPageUrl()))
+                <a class="item text-align-center" href="{{ $productMutations->previousPageUrl() }}">
+                    <span class="glyphicons glyphicons-more list-more subtle"></span>
+                </a>
+            @endif
 
             <a class="item"
                 href="{{ route('transaction.show', [
@@ -58,8 +97,17 @@
                         <span class="halflings halflings-shopping-cart"></span>
                     @endif
                 </span>
-
             </a>
+
+            @if($loop->last && !empty($productMutations->nextPageUrl()))
+                <a class="item text-align-center" href="{{ $productMutations->nextPageUrl() }}">
+                    <span class="glyphicons glyphicons-more list-more subtle"></span>
+                </a>
+            @endif
+
+            @php
+                $previous = $productMutation;
+            @endphp
         @empty
             <i class="item">@lang('pages.bar.noPurchases')...</i>
         @endforelse
