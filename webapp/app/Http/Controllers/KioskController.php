@@ -739,6 +739,7 @@ class KioskController extends Controller {
             if($uuid != null) {
                 $uuid_expire_at = now()->addSeconds(Self::UUID_CHECK_EXPIRE_SECONDS);
                 if(!UuidCheck::claim($uuid, $uuid_expire_at, false))
+                    // TODO: is this return broken?
                     return [];
             }
 

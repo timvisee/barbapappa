@@ -998,6 +998,8 @@ class BarController extends Controller {
         if(!perms(Self::permsUser()) || !$bar->isJoined($user))
             return $this->info($barId);
 
+        // TODO: can we remove this page entirely?
+
         // Show the bar page
         return view('bar.buy')
             ->with('economy', $bar->economy)
@@ -1251,6 +1253,33 @@ class BarController extends Controller {
         return redirect()
             ->route('bar.show', ['barId' => $bar->human_id])
             ->with('successHtml', $msg);
+
+//         // Do everything in a database transaction
+//         $productCount = 0;
+//         $userCount = $cart->count();
+//         DB::transaction(function() use($bar, $economy, $cart, $self, &$productCount) {
+//             // For each user, purchase the selected products
+//             $cart->each(function($userItem) use($bar, $economy, $self, &$productCount) {
+//                 $user = $userItem['user'];
+//                 $products = collect($userItem['products']);
+
+//                 // Retrieve user and product models from database
+//                 $member = $economy->members()->showInBuy(true)->findOrFail($user['id']);
+//                 $products = $products->map(function($product) use($economy) {
+//                     $product['product'] = $economy->products()->findOrFail($product['product']['id']);
+//                     return $product;
+//                 });
+
+//                 // Buy the products, increase product count
+//                 $result = $self->buyProducts($bar, $member, $products);
+//                 $productCount += $result['productCount'];
+//             });
+
+//         // Return some useful stats
+//         return [
+//             'productCount' => $productCount,
+//             'userCount' => $userCount,
+//         ];
     }
 
     /**
