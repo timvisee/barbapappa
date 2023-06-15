@@ -840,6 +840,7 @@ return [
         'undoQuestion' => 'You\'re about to undo this transaction. Are you sure you want to continue?',
         'viewTransaction' => 'View transaction',
         'linkedTransaction' => 'Linked transaction',
+        'delayedBecauseOffline' => 'This transaction was made on a device that was not connected to the internet. It therefore appeared :delay late in your wallet.',
         'state' => [
             'pending' => 'Pending',
             'processing' => 'Processing',

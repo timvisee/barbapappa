@@ -840,6 +840,7 @@ return [
         'undoQuestion' => 'Yer \'bout to undo this transaction. Ye be sure ye want to continue?',
         'viewTransaction' => 'View transaction',
         'linkedTransaction' => 'Linked transaction',
+        'delayedBecauseOffline' => 'Dis transaction be made on a device that nay be connected to the seas. It therefore appeared :delay late in yer booty.',
         'state' => [
             'pending' => 'Pendin\'',
             'processing' => 'Processin\'',

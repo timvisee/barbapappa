@@ -841,6 +841,7 @@ return [
         'undoQuestion' => 'Je staat op het punt deze transactie ongedaan te maken. Weet je zeker dat je door wilt gaan?',
         'viewTransaction' => 'Bekijk transactie',
         'linkedTransaction' => 'Gekoppelde transactie',
+        'delayedBecauseOffline' => 'Deze transactie is gemaakt op een apparaat dat niet verbonden was met het internet. Daarom is deze :delay later in je portemonnee verschenen.',
         'state' => [
             'pending' => 'In afwachting',
             'processing' => 'Bezig met verwerken',
