@@ -126,6 +126,15 @@
         </div>
     @endif
 
+    @if($transaction->isDelayed())
+        <div class="ui info message">
+            <span class="halflings halflings-hourglass icon"></span>
+            @lang('pages.transactions.delayedBecauseOffline', [
+                'delay' => $transaction->initiatedDelay()->forHumans(['parts' => 2, 'join' => true]),
+            ])
+        </div>
+    @endif
+
     @if(!empty($realtedObjects[MutationProduct::class]))
         <div class="ui top vertical menu fluid">
             <h5 class="ui item header">
