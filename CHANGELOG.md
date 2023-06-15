@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.183 (2023-06-15)
+
+- Show message on transaction page to describe the transaction was delayed if it was made on an offline device
+- Decrease purchase history separating from 6 to 2.5 hours
+
 ## 0.1.182 (2023-06-14)
 
 - In purchase history list, separate purchases in chunks if more than 6 hours apart
