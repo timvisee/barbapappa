@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.184 (2023-07-05)
+
+- Fix bunq API error in production due to outdated client
+- Update dependencies
+
 ## 0.1.183 (2023-06-15)
 
 - Show message on transaction page to describe the transaction was delayed if it was made on an offline device
