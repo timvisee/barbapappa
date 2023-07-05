@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "10b2629ef74af69690d8f95da8f2f60a",
+    "content-hash": "a1ccaf4bcd67b269fb7ec43ba95e97e7",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -9537,10 +9537,10 @@
             "dist": {
                 "type": "path",
                 "url": "packages/barpay",
-                "reference": "7d94850f962c09e84f1b2dd110757451b03aa632"
+                "reference": "34f3689ba79a5ebc7b688b1ab2287823d6a6f56e"
             },
             "require": {
-                "bunq/sdk_php": "^1.15"
+                "bunq/sdk_php": "^1.22"
             },
             "type": "library",
             "extra": {
