@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.185 (2023-07-05)
+
+- Fix bunq API error in production
+
 ## 0.1.184 (2023-07-05)
 
 - Fix bunq API error in production due to outdated client
