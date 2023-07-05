@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a1ccaf4bcd67b269fb7ec43ba95e97e7",
+    "content-hash": "b23acb641aef69b844a5503d9ad41b83",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -329,17 +329,11 @@
         },
         {
             "name": "bunq/sdk_php",
-            "version": "1.22.15.21",
+            "version": "dev-v1.22.15.21-patched",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bunq/sdk_php.git",
-                "reference": "2fd0a00fd46bdeb7e84c148856633de84cfd9f60"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/bunq/sdk_php/zipball/2fd0a00fd46bdeb7e84c148856633de84cfd9f60",
-                "reference": "2fd0a00fd46bdeb7e84c148856633de84cfd9f60",
-                "shasum": ""
+                "url": "https://github.com/timvisee/sdk_php.git",
+                "reference": "bc76cf6e806767d2ce4740c706532ef711bbecc2"
             },
             "require": {
                 "composer-plugin-api": "~1.0 || ~2.0",
@@ -366,7 +360,16 @@
                     "bunq\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "bunq\\test\\": "tests/"
+                }
+            },
+            "scripts": {
+                "phpstan": [
+                    "./vendor/bin/phpstan analyse --level 2 src"
+                ]
+            },
             "license": [
                 "MIT"
             ],
@@ -388,11 +391,7 @@
                 "payment",
                 "sepa"
             ],
-            "support": {
-                "issues": "https://github.com/bunq/sdk_php/issues",
-                "source": "https://github.com/bunq/sdk_php/tree/1.22.15.21"
-            },
-            "time": "2023-06-27T16:21:17+00:00"
+            "time": "2023-07-04T13:33:40+00:00"
         },
         {
             "name": "clue/stream-filter",
@@ -9533,14 +9532,14 @@
         },
         {
             "name": "timvisee/barpay",
-            "version": "dev-653-fix-bunq-queue-error-in-production",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "packages/barpay",
-                "reference": "34f3689ba79a5ebc7b688b1ab2287823d6a6f56e"
+                "reference": "66a3ce9ad9df562682fed399fa066c501cd3c276"
             },
             "require": {
-                "bunq/sdk_php": "^1.22"
+                "bunq/sdk_php": "dev-v1.22.15.21-patched#bc76cf6e806767d2ce4740c706532ef711bbecc2"
             },
             "type": "library",
             "extra": {
@@ -11741,6 +11740,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "bunq/sdk_php": 20,
         "mariuzzo/laravel-js-localization": 20,
         "timvisee/barpay": 20
     },
