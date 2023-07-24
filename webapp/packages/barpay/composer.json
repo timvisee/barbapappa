@@ -3,12 +3,6 @@
   "description": "Laravel payment processing framework for Barbapappa",
   "type": "library",
   "license": "AGPL-3.0",
-  "repositories": [
-    {
-        "type": "git",
-        "url": "https://github.com/timvisee/sdk_php.git"
-    }
-  ],
   "authors": [
     {
       "name": "timvisee",
@@ -17,7 +11,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
-    "bunq/sdk_php": "dev-v1.22.15.21-patched#bc76cf6e806767d2ce4740c706532ef711bbecc2"
+    "bunq/sdk_php": "^1.23.0.51"
   },
   "autoload": {
     "psr-4": {
