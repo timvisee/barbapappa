@@ -103,7 +103,7 @@
                 @if($payment->isInProgress())
                     <a href="{{ route('payment.pay', ['paymentId' => $payment->id]) }}"
                             class="ui button positive">
-                        @lang('misc.progress')
+                        @lang('misc.continue')
                     </a>
                 @endif
                 @if($payment->canCancel())

@@ -93,8 +93,6 @@ return [
     'disable' => 'Uitschakelen',
     'disabled' => 'Uitgeschakeld',
     'archived' => 'Gearchiveerd',
-    'progress' => 'Voortgang',
-    'showProgress' => 'Toon voortgang',
     'showAll' => 'Bekijk alles',
     'view' => 'Bekijken',
     'details' => 'Details',

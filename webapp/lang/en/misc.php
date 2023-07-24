@@ -93,8 +93,6 @@ return [
     'disable' => 'Disable',
     'disabled' => 'Disabled',
     'archived' => 'Archived',
-    'progress' => 'Progress',
-    'showProgress' => 'Show progress',
     'showAll' => 'Show all',
     'view' => 'View',
     'details' => 'Details',
