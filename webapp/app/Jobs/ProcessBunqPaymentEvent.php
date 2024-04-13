@@ -34,6 +34,13 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      */
     const FORWARD_DELAY = 6;
 
+    /**
+     * Parts of payment descriptions which we should ignore.
+     */
+    const IGNORE_DESCRIPTIONS = [
+        'Payment was reverted for technical reasons',
+    ];
+
     private $accountId;
     private $apiPaymentId;
 
@@ -74,9 +81,18 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
             ->getValue();
         $amount = $apiPayment->getAmount();
         $amountValue = (float) $amount->getValue();
+        $description = $apiPayment->getDescription();
 
         // Ignore negative amounts, or amounts not in euro
         if($amountValue <= 0 || $amount->getCurrency() != 'EUR')
+            return;
+
+        // Ignore payments which contain specific descriptions
+        $hasIgnoreDescription = collect(Self::IGNORE_DESCRIPTIONS)
+            ->contains(function($ignore) use($description) {
+                return str_contains($description, $ignore);
+            });
+        if($hasIgnoreDescription)
             return;
 
         // Attempt to handle this as bunq IBAN transaction
