@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.185 (2023-04-13)
+
+- Prevent infinite loops in automatic payment handling
+- Update bunq SDK
+
 ## 0.1.185 (2023-07-05)
 
 - Fix bunq API error in production
