@@ -51,13 +51,6 @@ class ProcessBunqAccountEvents implements ShouldQueue {
     const EMPTY_RETRY_AFTER = 15;
 
     /**
-     * Parts of payment descriptions which we should ignore.
-     */
-    const IGNORE_DESCRIPTIONS = [
-        'Payment was reverted for technical reasons',
-    ];
-
-    /**
      * The ID of a bunq account model to handle new events for.
      *
      * @var int
@@ -161,17 +154,8 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 if(is_null($o))
                     return false;
 
+                // Process payments if we received money in euros
                 if(($payment = $o->getPayment()) != null) {
-                    // Ignore payments which contain specific descriptions
-                    $ignores = collect(Self::IGNORE_DESCRIPTIONS);
-                    $description = $payment->getDescription();
-                    $ignoreAny = $ignores->contains(function($ignore) use($description) {
-                        return str_contains($description, $ignore);
-                    });
-                    if($ignoreAny)
-                        return false;
-
-                    // Process payments if we received money in euros
                     $amount = $payment->getAmount();
                     $amountValue = (float) $amount->getValue();
                     return $amountValue >= 0 && $amount->getCurrency() == 'EUR';
