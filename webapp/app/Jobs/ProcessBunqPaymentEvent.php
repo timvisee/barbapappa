@@ -38,7 +38,11 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      * Parts of payment descriptions which we should ignore.
      */
     const IGNORE_DESCRIPTIONS = [
-        'Payment was reverted for technical reasons',
+        // Contains these if we got a Barbapappa reverted payment back
+        'unknown payment refund',
+        'terugbetaling onbekende storting',
+        // Contains this when bunq count not send payment to counter party
+        'payment was reverted for technical reasons',
     ];
 
     private $accountId;
@@ -90,7 +94,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
         // Ignore payments which contain specific descriptions
         $hasIgnoreDescription = collect(Self::IGNORE_DESCRIPTIONS)
             ->contains(function($ignore) use($description) {
-                return str_contains($description, $ignore);
+                return str_contains(strtolower($description), strtolower($ignore));
             });
         if($hasIgnoreDescription)
             return;
