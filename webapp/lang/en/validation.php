@@ -94,6 +94,7 @@ return [
     'url'                  => 'The :attribute format is invalid.',
     'iban'                 => 'Enter a valid IBAN.',
     'bic'                  => 'Enter a valid BIC.',
+    'recaptchav3'          => 'The reCAPTCHA check failed, please try again later.',
 
     /*
     |--------------------------------------------------------------------------
@@ -129,6 +130,7 @@ return [
         'invalidate_other_sessions' => 'log out on other devices',
         'iban' => 'IBAN',
         'bic' => 'BIC',
+        'g-recaptcha-response' => 'reCAPTCHA',
     ],
 
 ];

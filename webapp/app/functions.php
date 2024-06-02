@@ -428,3 +428,14 @@ if(!function_exists('num_name')) {
         }
     }
 }
+
+if(!function_exists('is_recaptcha_enabled')) {
+    /**
+     * Whether the reCAPTCHa check is enabled.
+     *
+     * @return bool True if enabled, false if not.
+     */
+    function is_recaptcha_enabled() {
+        return !empty(trim(config('recaptchav3.sitekey')));
+    }
+}

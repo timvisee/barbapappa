@@ -24,10 +24,13 @@ class LoginController extends Controller {
 
     public function doLogin(Request $request) {
         // Validate
-        $this->validate($request, [
+        $rules = [
             'email' => 'required|' . ValidationDefaults::EMAIL,
             'password' => 'required|' . ValidationDefaults::USER_PASSWORD,
-        ]);
+        ];
+        if(is_recaptcha_enabled())
+            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.5';
+        $this->validate($request, $rules);
 
         // Authenticate
         $result = barauth()->getAuthenticator()->authCredentials(
@@ -69,9 +72,12 @@ class LoginController extends Controller {
                 ->route('login');
 
         // Validate
-        $this->validate($request, [
+        $rules = [
             'email' => 'required|' . ValidationDefaults::EMAIL,
-        ]);
+        ];
+        if(is_recaptcha_enabled())
+            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.5';
+        $this->validate($request, $rules);
 
         // Find a user with this email address, register if not existant
         $email = Email::where('email', $request->input('email'))->first();
