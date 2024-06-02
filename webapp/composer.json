@@ -67,6 +67,7 @@
         "guzzlehttp/guzzle": "^7.4.3",
         "hisorange/browser-detect": "^4.4",
         "intervention/validation": "^3.1",
+        "josiasmontag/laravel-recaptchav3": "^1.0",
         "laravel/framework": "^9.0.1",
         "laravel/tinker": "^2.7",
         "laravelcollective/html": "^6.3",
