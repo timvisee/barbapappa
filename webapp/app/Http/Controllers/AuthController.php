@@ -16,9 +16,12 @@ class AuthController extends Controller {
      */
     public function doContinue(Request $request) {
         // Validate
-        $this->validate($request, [
+        $rules = [
             'email' => 'required|' . ValidationDefaults::EMAIL,
-        ]);
+        ];
+        if(is_recaptcha_enabled())
+            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.5';
+        $this->validate($request, $rules);
 
         // Find a user with this email address, register if not existant
         $email = Email::where('email', $request->input('email'))->first();

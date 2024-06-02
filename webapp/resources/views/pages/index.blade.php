@@ -22,6 +22,11 @@
             {{ ErrorRenderer::inline('email') }}
         </div>
 
+        @if(is_recaptcha_enabled())
+            {!! RecaptchaV3::initJs() !!}
+            {!! RecaptchaV3::field('login') !!}
+        @endif
+
         {!! Form::close() !!}
     @else
         <div class="ui stackable two column grid">
