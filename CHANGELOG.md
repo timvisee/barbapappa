@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.188 (2023-06-02)
+
+- Support PHP 8.1 and up
+
 ## 0.1.187 (2023-06-02)
 
 - Add reCAPTCHA check to authentication pages
