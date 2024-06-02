@@ -39,6 +39,8 @@ class RegisterController extends Controller {
             'last_name' => 'required|' . ValidationDefaults::LAST_NAME,
             'accept_terms' => 'required',
         ];
+        if(is_recaptcha_enabled())
+            $rules['g-recaptcha-response'] = 'required|recaptchav3:register,0.5';
         if($with_password)
             $rules['password'] = 'required|' . ValidationDefaults::USER_PASSWORD . '|confirmed';
         $this->validate($request, $rules, [
