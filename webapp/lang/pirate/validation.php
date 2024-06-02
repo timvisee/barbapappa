@@ -94,6 +94,7 @@ return [
     'url'                  => 'Th\' :attribute format be sunken.',
     'iban'                 => 'Enter a valid IBAN.',
     'bic'                  => 'Enter a valid BIC.',
+    'recaptchav3'          => 'The reCAPTCHA check failed, please try again later.',
 
     /*
     |--------------------------------------------------------------------------
@@ -135,6 +136,7 @@ return [
         'invalidate_other_sessions' => 'sink other ships',
         'iban' => 'IBAN',
         'bic' => 'BIC',
+        'g-recaptcha-response' => 'reCAPTCHA',
     ],
 
 ];

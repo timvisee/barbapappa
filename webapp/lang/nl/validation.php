@@ -94,6 +94,7 @@ return [
     'url'                  => 'Het formaat in het :attribute veld is ongeldig.',
     'iban'                 => 'Vul een geldige IBAN in.',
     'bic'                  => 'Vul een geldige BIC in.',
+    'recaptchav3'          => 'The reCAPTCHA check failed, please try again later.',
 
     /*
     |--------------------------------------------------------------------------
@@ -157,6 +158,7 @@ return [
         'symbol' => 'symbool',
         'format' => 'formaat',
         'method' => 'methode',
+        'g-recaptcha-response' => 'reCAPTCHA',
     ],
 
 ];
