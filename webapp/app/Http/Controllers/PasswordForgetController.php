@@ -24,9 +24,12 @@ class PasswordForgetController extends Controller {
 
     public function doRequest(Request $request) {
         // Validate
-        $this->validate($request, [
+        $rules = [
             'email' => 'required|' . ValidationDefaults::EMAIL,
-        ]);
+        ];
+        if(is_recaptcha_enabled())
+            $rules['g-recaptcha-response'] = 'required|recaptchav3:request-password,0.5';
+        $this->validate($request, $rules);
 
         // Get the email address
         /** @noinspection PhpDynamicAsStaticMethodCallInspection */

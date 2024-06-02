@@ -21,5 +21,10 @@
             </div>
         </div>
 
+        @if(is_recaptcha_enabled())
+            {!! RecaptchaV3::initJs() !!}
+            {!! RecaptchaV3::field('request-password') !!}
+        @endif
+
     {!! Form::close() !!}
 @endsection
