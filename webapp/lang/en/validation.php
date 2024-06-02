@@ -94,7 +94,7 @@ return [
     'url'                  => 'The :attribute format is invalid.',
     'iban'                 => 'Enter a valid IBAN.',
     'bic'                  => 'Enter a valid BIC.',
-    'recaptchav3'          => 'Failed to bypass reCAPTCHA check, please try again later.',
+    'recaptchav3'          => 'The reCAPTCHA check failed, please try again later.',
 
     /*
     |--------------------------------------------------------------------------
