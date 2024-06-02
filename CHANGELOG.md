@@ -1,6 +1,11 @@
 # Changelog
 
-## 0.1.185 (2023-04-13)
+## 0.1.187 (2023-06-02)
+
+- Add reCAPTCHA check to authentication pages
+- Update dependencies
+
+## 0.1.186 (2023-04-13)
 
 - Prevent infinite loops in automatic payment handling
 - Update bunq SDK
