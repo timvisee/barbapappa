@@ -31,5 +31,10 @@
         </div>
     </div>
 
+    @if(is_recaptcha_enabled())
+        {!! RecaptchaV3::initJs() !!}
+        {!! RecaptchaV3::field('login') !!}
+    @endif
+
     {!! Form::close() !!}
 @endsection
