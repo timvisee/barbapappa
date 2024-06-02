@@ -1,4 +1,4 @@
-image: php:8.1
+image: php:8.3
 
 stages:
   - test
