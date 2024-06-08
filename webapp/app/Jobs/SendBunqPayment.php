@@ -96,10 +96,6 @@ class SendBunqPayment implements ShouldQueue {
             $this->to,
             $this->description,
             $account->monetary_account_id,
-            null,
-            null,
-            null,
-            [],
         );
     }
 
