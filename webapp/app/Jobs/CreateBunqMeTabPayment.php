@@ -105,8 +105,6 @@ class CreateBunqMeTabPayment implements ShouldQueue {
         $bunqMeTabId = BunqMeTab::create(
             $bunqMeTabEntry,
             $account->monetary_account_id,
-            null,
-            []
         )->getValue();
 
         // Fetch details for created BunqMe Tab

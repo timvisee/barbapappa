@@ -73,7 +73,7 @@ class CancelBunqMeTabPayment implements ShouldQueue {
         BunqMeTab::update(
             $this->tab_id,
             $account->monetary_account_id,
-            'CANCELLED'
+            'CANCELLED',
         );
     }
 
