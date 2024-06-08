@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.189 (2023-06-08)
+
+- Fix error in bunq iDeal payments, make them more robust
+
 ## 0.1.188 (2023-06-02)
 
 - Support PHP 8.1 and up
