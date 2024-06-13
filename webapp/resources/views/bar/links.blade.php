@@ -35,7 +35,7 @@
                                 data-url="{{ route('bar.show', ['barId' => $bar->human_id]) }}">
                             <i class="glyphicons glyphicons-share"></i>
                         </button>
-                        <code class="literal copy">{{ route('bar.join', ['barId' => $bar->human_id, 'code' => $bar->password]) }}</code>
+                        <code class="literal copy">{{ route('bar.join', ['barId' => $bar->human_id]) }}</code>
                     </td>
                 </tr>
             @endif
