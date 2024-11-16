@@ -29,7 +29,7 @@ class LoginController extends Controller {
             'password' => 'required|' . ValidationDefaults::USER_PASSWORD,
         ];
         if(is_recaptcha_enabled())
-            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.5';
+            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.15';
         $this->validate($request, $rules);
 
         // Authenticate
@@ -76,7 +76,7 @@ class LoginController extends Controller {
             'email' => 'required|' . ValidationDefaults::EMAIL,
         ];
         if(is_recaptcha_enabled())
-            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.5';
+            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.15';
         $this->validate($request, $rules);
 
         // Find a user with this email address, register if not existant
