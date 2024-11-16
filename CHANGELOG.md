@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.190 (2023-11-16)
+
+- Relax reCAPTCHA check on login pages
+- Fix bar link without code still including the code
+
 ## 0.1.189 (2023-06-08)
 
 - Fix error in bunq iDeal payments, make them more robust
