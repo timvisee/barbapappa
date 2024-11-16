@@ -20,7 +20,7 @@ class AuthController extends Controller {
             'email' => 'required|' . ValidationDefaults::EMAIL,
         ];
         if(is_recaptcha_enabled())
-            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.5';
+            $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.15';
         $this->validate($request, $rules);
 
         // Find a user with this email address, register if not existant
