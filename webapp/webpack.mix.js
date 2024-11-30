@@ -33,6 +33,7 @@ mix.webpackConfig({
             ],
             navigationPreload: true,
             runtimeCaching: [
+                // Cache request fetching all users/products
                 {
                     urlPattern: ({url}) => {
                         return url.pathname.startsWith('/kiosk/api')
@@ -48,15 +49,16 @@ mix.webpackConfig({
                         },
                     },
                 },
+                // Cache regular user and product searches
+                // Always respond with cache but bump cache in the background
                 {
                     urlPattern: ({url}) => url.pathname.startsWith('/kiosk/api'),
-                    handler: 'NetworkFirst',
+                    handler: 'StaleWhileRevalidate',
                     options: {
                         cacheName: 'kiosk-api',
-                        networkTimeoutSeconds: 5,
                         expiration: {
-                            // Quickly expire because this isn't super important
-                            maxAgeSeconds: DAY_SECONDS,
+                            // Expire in a week, not super important
+                            maxAgeSeconds: 7 * DAY_SECONDS,
                             // May be a lot
                             maxEntries: 100,
                         },

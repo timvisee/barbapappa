@@ -337,13 +337,16 @@
 
             // Search products with the given query
             search(query = '') {
+                // Normalize query
+                var query = query.trim().toLowerCase().replace(/\s\s+/g, ' ');
+
                 // Fetch a list of products, set the searching state
                 this.searching = true;
                 this._searchOnline(query)
                     // Fallback to cache
                     .then(null, err => {
-                        console.log('Falling back to product cache search');
-                        return this._searchCache(query).then(null, () => err);
+                        console.log('Falling back to offline product search');
+                        return this._searchOffline(query).then(null, () => err);
                     })
                     // Handle result, only update if still searching same query
                     .then(products => {
@@ -367,11 +370,9 @@
                 return this._searchRequest(query, false);
             },
 
-            // Search products with the given query in the cache.
-            _searchCache(query = '') {
-                // Normalize query
-                var query = query.trim().toLowerCase();
-
+            // Search products offline.
+            // Local search implementation on cached list of products.
+            _searchOffline(query = '') {
                 return this
                     ._searchRequest(null, true)
                     .then(products => {
