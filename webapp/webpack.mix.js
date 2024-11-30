@@ -60,7 +60,7 @@ mix.webpackConfig({
                             // Expire in a week, not super important
                             maxAgeSeconds: 7 * DAY_SECONDS,
                             // May be a lot
-                            maxEntries: 100,
+                            maxEntries: 250,
                         },
                     },
                 },
