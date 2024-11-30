@@ -342,8 +342,8 @@
                 this._searchOnline(query)
                     // Fallback to cache
                     .then(null, err => {
-                        console.log('Falling back to product cache search');
-                        return this._searchCache(query).then(null, () => err);
+                        console.log('Falling back to offline product search');
+                        return this._searchOffline(query).then(null, () => err);
                     })
                     // Handle result, only update if still searching same query
                     .then(products => {
@@ -367,8 +367,9 @@
                 return this._searchRequest(query, false);
             },
 
-            // Search products with the given query in the cache.
-            _searchCache(query = '') {
+            // Search products offline.
+            // Local search implementation on cached list of products.
+            _searchOffline(query = '') {
                 // Normalize query
                 var query = query.trim().toLowerCase();
 
