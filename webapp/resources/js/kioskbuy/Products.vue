@@ -337,6 +337,9 @@
 
             // Search products with the given query
             search(query = '') {
+                // Normalize query
+                var query = query.trim().toLowerCase().replace(/\s\s+/g, ' ');
+
                 // Fetch a list of products, set the searching state
                 this.searching = true;
                 this._searchOnline(query)
@@ -370,9 +373,6 @@
             // Search products offline.
             // Local search implementation on cached list of products.
             _searchOffline(query = '') {
-                // Normalize query
-                var query = query.trim().toLowerCase();
-
                 return this
                     ._searchRequest(null, true)
                     .then(products => {

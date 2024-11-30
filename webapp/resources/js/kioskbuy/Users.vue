@@ -343,6 +343,9 @@
 
             // Search users with the given query
             search(query = '') {
+                // Normalize query
+                var query = query.trim().toLowerCase().replace(/\s\s+/g, ' ');
+
                 // Fetch a list of users, set the searching state
                 this.searching = true;
                 this._searchOnline(query)
@@ -376,9 +379,6 @@
             // Search users offline.
             // Local search implementation on cached list of users.
             _searchOffline(query = '') {
-                // Normalize query
-                var query = query.trim().toLowerCase();
-
                 return this
                     ._searchRequest(null, true)
                     .then(users => {
