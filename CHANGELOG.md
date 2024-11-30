@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.191 (2023-11-30)
+
+- Make search results in kiosk mode instant if any result is cached, bump stale cache in the background
+- On expired CSRF token, force refresh kiosk mode instead of showing an error
+
 ## 0.1.190 (2023-11-16)
 
 - Relax reCAPTCHA check on login pages
