@@ -296,6 +296,16 @@
                         this._buyQueueDrainAllDelayed();
                     })
                     .catch(err => {
+                        // CSRF token mismatch, must refresh page
+                        if(err.response.status == 419) {
+                            this.cancel(true);
+                            alert('Failed to purchase products. Please try again after refreshing the page.');
+                            console.error('Failed to purchase products, refreshing page...');
+                            console.error('Response text: ' + err.response.data.message ?? '?');
+                            window.location.reload(true);
+                            return;
+                        }
+
                         alert(err.response.data.message ?? 'Failed to purchase products, an error occurred');
                         console.error(err);
                     })
