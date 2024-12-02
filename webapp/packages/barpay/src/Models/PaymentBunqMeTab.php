@@ -75,6 +75,15 @@ class PaymentBunqMeTab extends Model {
     const CANCEL_DELAY = 3;
 
     /**
+     * Number of seconds to delay marking a BunqMeTab payment request as
+     * completed. After completing the payment, users will not be able to pay
+     * again.
+     *
+     * @var int
+     */
+    const COMPLETE_DELAY = 60;
+
+    /**
      * An ordered list of steps in this payment.
      */
     public const STEPS = [
@@ -251,11 +260,17 @@ class PaymentBunqMeTab extends Model {
         case Payment::STATE_REVOKED:
         case Payment::STATE_REJECTED:
         case Payment::STATE_FAILED:
-        case Payment::STATE_COMPLETED:
             // Cancel the BunqMeTab at bunq
             if($this->bunq_tab_id != null)
                 CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id)
                     ->delay(now()->addSeconds(Self::CANCEL_DELAY));
+            break;
+
+        case Payment::STATE_COMPLETED:
+            // Cancel the BunqMeTab at bunq to prevent users paying a second time
+            if($this->bunq_tab_id != null)
+                CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id)
+                    ->delay(now()->addSeconds(Self::COMPLETE_DELAY));
             break;
 
         default:

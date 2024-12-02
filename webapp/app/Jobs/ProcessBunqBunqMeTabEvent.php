@@ -132,8 +132,6 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
 
             // Settle the payment
             $barPayment->settle(Payment::STATE_COMPLETED);
-
-            // TODO: on settlement: cancel bunqme tab link
         });
 
         // We handled the payment
