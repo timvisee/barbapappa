@@ -335,10 +335,14 @@
                 this._removeCart(this.getCart());
             },
 
+            // Normalize search query
+            normalizeQuery(query) {
+                return query.trim().toLowerCase().replace(/\s\s+/g, ' ');
+            },
+
             // Search products with the given query
             search(query = '') {
-                // Normalize query
-                var query = query.trim().toLowerCase().replace(/\s\s+/g, ' ');
+                var query = this.normalizeQuery(query);
 
                 // Fetch a list of products, set the searching state
                 this.searching = true;
@@ -350,7 +354,7 @@
                     })
                     // Handle result, only update if still searching same query
                     .then(products => {
-                        if(query == this.query)
+                        if(query == this.normalizeQuery(this.query))
                             this.products = products;
                     })
                     // Handle error
@@ -360,7 +364,7 @@
                     })
                     // Stop searching state, if still searching same query
                     .finally(() => {
-                        if(query == this.query)
+                        if(query == this.normalizeQuery(this.query))
                             this.searching = false;
                     });
             },
