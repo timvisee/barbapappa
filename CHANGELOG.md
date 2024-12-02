@@ -3,7 +3,7 @@
 ## 0.1.195 (2023-12-02)
 
 - Add full offline search to kiosk mode for instant user and product searches
-- Simplify wallet redemption policy if balance is not negative
+- Simplify wallet redemption page if balance is not negative
 - Keep iDeal payment links active for longer, prevent 'payment revoked' message on payment processor page
 
 ## 0.1.194 (2023-12-02)
