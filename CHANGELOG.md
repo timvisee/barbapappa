@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.193 (2023-12-02)
+
+- Revert changes from 0.1.191 and 0.1.192 potentially breaking kiosk mode search
+
 ## 0.1.192 (2023-11-30)
 
 - Increase number of cached results from 100 to 250 in kiosk mode
