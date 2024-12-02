@@ -351,8 +351,8 @@
                 this._searchOnline(query)
                     // Fallback to cache
                     .then(null, err => {
-                        console.log('Falling back to user cache search');
-                        return this._searchCache(query).then(null, () => err);
+                        console.log('Falling back to offline user search');
+                        return this._searchOffline(query).then(null, () => err);
                     })
                     // Handle result, only update if still searching same query
                     .then(users => {
@@ -376,8 +376,9 @@
                 return this._searchRequest(query, false);
             },
 
-            // Search users with the given query in the cache.
-            _searchCache(query = '') {
+            // Search users offline.
+            // Local search implementation on cached list of users.
+            _searchOffline(query = '') {
                 return this
                     ._searchRequest(null, true)
                     .then(users => {
