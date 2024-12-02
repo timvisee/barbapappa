@@ -358,9 +358,11 @@
                 this.searching = true;
 
                 // Fast offline search to populate results
+                var hasOfflineResults = false;
                 if(query != '') {
                     let results = this._searchOffline(query);
                     if(results != null) {
+                        hasOfflineResults = true;
                         this.products = results;
                     }
                 }
@@ -373,7 +375,8 @@
                     })
                     // Handle error
                     .catch(err => {
-                        alert('An error occurred while listing products');
+                        if(!hasOfflineResults)
+                            alert('An error occurred while listing products');
                         console.error(err);
                     })
                     // Stop searching state, if still searching same query

@@ -364,9 +364,11 @@
                 this.searching = true;
 
                 // Fast offline search to populate results
+                var hasOfflineResults = false;
                 if(query != '') {
                     let results = this._searchOffline(query);
                     if(results != null) {
+                        hasOfflineResults = true;
                         this.users = results;
                     }
                 }
@@ -379,7 +381,8 @@
                     })
                     // Handle error
                     .catch(err => {
-                        alert('An error occurred while listing users');
+                        if(!hasOfflineResults)
+                            alert('An error occurred while listing users');
                         console.error(err);
                     })
                     // Stop searching state, if still searching same query
