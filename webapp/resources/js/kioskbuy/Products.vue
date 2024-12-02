@@ -208,9 +208,9 @@
     const QuantityModal = require('./QuantityModal.vue').default;
 
     /**
-     * Delay for warming up all products cache in service worker.
+     * Delay for fetching all products for offline search.
      */
-    const CACHE_WARMUP_DELAY = 5;
+    const CACHE_WARMUP_DELAY = 2;
 
     export default {
         components: {
@@ -241,6 +241,8 @@
                 },
                 quantityModalQuantity: null,
                 quantityModalCallback: null,
+                // Cache of all products for offline search
+                offlineProducts: [],
             };
         },
         computed: {
@@ -274,9 +276,18 @@
             // Plain search for default product list
             this.search();
 
-            // Warm up service worker cache for list of all users
+            // Fetch copy of all products for offline search
             setTimeout(
-                () => this._searchRequest(null, true),
+                () => {
+                    this._searchRequest(null, true)
+                        .then(products => {
+                            this.offlineProducts = products;
+                        })
+                        .catch(err => {
+                            console.log('Failed to fetch offline copy of products');
+                            this.offlineProducts = [];
+                        });
+                },
                 CACHE_WARMUP_DELAY * 1000,
             );
         },
@@ -344,14 +355,17 @@
             search(query = '') {
                 var query = this.normalizeQuery(query);
 
-                // Fetch a list of products, set the searching state
                 this.searching = true;
+
+                // Fast offline search to populate results
+                if(query != '') {
+                    let results = this._searchOffline(query);
+                    if(results != null) {
+                        this.products = results;
+                    }
+                }
+
                 this._searchOnline(query)
-                    // Fallback to cache
-                    .then(null, err => {
-                        console.log('Falling back to offline product search');
-                        return this._searchOffline(query).then(null, () => err);
-                    })
                     // Handle result, only update if still searching same query
                     .then(products => {
                         if(query == this.normalizeQuery(this.query))
@@ -375,43 +389,41 @@
             },
 
             // Search products offline.
-            // Local search implementation on cached list of products.
+            // Attempt to search through offline copy of products.
             _searchOffline(query = '') {
-                return this
-                    ._searchRequest(null, true)
-                    .then(products => {
-                        // Simple local search, filter products based on query
-                        products.top = products.top || [];
-                        products.list = products.list.filter(product => {
-                            let name = product.name.toLowerCase();
+                if(this.offlineProducts.length == 0)
+                    return null;
 
-                            // Filter name
-                            if(name.includes(query))
-                                return true;
+                let products = structuredClone(this.offlineProducts);
 
-                            let tags = product.tags == undefined
-                                ? []
-                                : product
-                                    .tags
-                                    .split(' ')
-                                    .filter(tag => tag !== '' && tag != undefined)
-                                    .map(tag => tag.toLowerCase());
+                // Simple local search, filter products based on query
+                products.top = products.top || [];
+                products.list = products.list.filter(product => {
+                    let name = product.name.toLowerCase();
 
-                            // Filter tags by full or starting-with query
-                            for (const tag of tags) {
-                                if(tag.includes(query))
-                                    return true;
-                            }
+                    // Filter name
+                    if(name.includes(query))
+                        return true;
 
-                            // No match
-                            return false;
-                        });
+                    let tags = product.tags == undefined
+                        ? []
+                        : product
+                            .tags
+                            .split(' ')
+                            .filter(tag => tag !== '' && tag != undefined)
+                            .map(tag => tag.toLowerCase());
 
-                        return products;
-                    })
-                    .catch(err => {
-                        console.log('Searching in product cache failed: ' + err);
-                    });
+                    // Filter tags by full or starting-with query
+                    for (const tag of tags) {
+                        if(tag.includes(query))
+                            return true;
+                    }
+
+                    // No match
+                    return false;
+                });
+
+                return products;
             },
 
             // Do a search request.
