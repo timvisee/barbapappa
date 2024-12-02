@@ -235,9 +235,9 @@
     import axios from 'axios';
 
     /**
-     * Delay for warming up all users cache in service worker.
+     * Delay for fetching all users for offline search.
      */
-    const CACHE_WARMUP_DELAY = 5;
+    const CACHE_WARMUP_DELAY = 2;
 
     export default {
         props: [
@@ -260,6 +260,8 @@
                 searching: true,
                 showIndex: false,
                 users: [],
+                // Cache of all users for offline search
+                offlineUsers: [],
             };
         },
         watch: {
@@ -278,9 +280,18 @@
             // Plain search for default user list
             this.search();
 
-            // Warm up service worker cache for list of all users
+            // Fetch copy of all users for offline search
             setTimeout(
-                () => this._searchRequest(null, true),
+                () => {
+                    this._searchRequest(null, true)
+                        .then(users => {
+                            this.offlineUsers = users;
+                        })
+                        .catch(err => {
+                            console.log('Failed to fetch offline copy of users');
+                            this.offlineUsers = [];
+                        });
+                },
                 CACHE_WARMUP_DELAY * 1000,
             );
         },
@@ -350,14 +361,17 @@
             search(query = '') {
                 var query = this.normalizeQuery(query);
 
-                // Fetch a list of users, set the searching state
                 this.searching = true;
+
+                // Fast offline search to populate results
+                if(query != '') {
+                    let results = this._searchOffline(query);
+                    if(results != null) {
+                        this.users = results;
+                    }
+                }
+
                 this._searchOnline(query)
-                    // Fallback to cache
-                    .then(null, err => {
-                        console.log('Falling back to offline user search');
-                        return this._searchOffline(query).then(null, () => err);
-                    })
                     // Handle result, only update if still searching same query
                     .then(users => {
                         if(query == this.normalizeQuery(this.query))
@@ -381,28 +395,22 @@
             },
 
             // Search users offline.
-            // Local search implementation on cached list of users.
+            // Attempt to search through offline copy of users.
             _searchOffline(query = '') {
-                return this
-                    ._searchRequest(null, true)
-                    .then(users => {
-                        // Simple local search, filter users based on query
-                        users = users.filter(user => {
-                            let name = user.name.toLowerCase();
+                if(this.offlineUsers.length == 0)
+                    return null;
 
-                            // Filter by full or starting-with query
-                            if(query.startsWith('^')) {
-                                return name.startsWith(query.substr(1));
-                            } else {
-                                return name.includes(query);
-                            }
-                        });
+                // Simple local search, filter users based on query
+                return this.offlineUsers.filter(user => {
+                    let name = user.name.toLowerCase();
 
-                        return users;
-                    })
-                    .catch(err => {
-                        console.log('Searching in user cache failed: ' + err);
-                    });
+                    // Filter by full or starting-with query
+                    if(query.startsWith('^')) {
+                        return name.startsWith(query.substr(1));
+                    } else {
+                        return name.includes(query);
+                    }
+                });
             },
 
             // Do a search request.
