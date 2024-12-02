@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.194 (2023-12-02)
+
+- Fix search results in kiosk mode not showing with query normalization
+- Reapply changes from 0.1.191 and 0.1.192
+
 ## 0.1.193 (2023-12-02)
 
 - Revert changes from 0.1.191 and 0.1.192 potentially breaking kiosk mode search
