@@ -777,6 +777,7 @@ return [
         'backToWallet' => 'Back to wallet',
         'walletTransactions' => 'Wallet transactions',
         'noServiceConfiguredCannotTopUp' => 'Ye nay top-up yer wallet through :app. Th\' bar \'o crew administrator nay configured any payment method. Please ask at yer bar for further info.',
+        'walletBalanceSettled' => 'Yer wallet balance be settled',
     ],
 
     /**

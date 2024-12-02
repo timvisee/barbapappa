@@ -641,15 +641,6 @@ class WalletController extends Controller {
             ->supportsDeposit()
             ->get();
 
-        // Redirect to normal top-up page if user cannot redempt because balance
-        // isn't below zero
-        if($is_redemption && $wallet->balance >= 0.0)
-            return redirect()->route('community.wallet.topUp', [
-                'communityId' => $economy->community_id,
-                'economyId' => $economy->id,
-                'walletId' => $wallet->id,
-            ]);
-
         if(!$is_redemption) {
             // Predict monthly costs, build set of top-up amounts
             $monthly_costs = $wallet->predictMonthlyCosts();
@@ -657,11 +648,15 @@ class WalletController extends Controller {
         } else {
             // On redemption, only show option to top-up to zero
             $monthly_costs = null;
-            $amounts = [[
-                'amount' => -$wallet->balance,
-                'note' => strtolower(__('pages.paymentService.redemption')),
-                'selected' => true,
-            ]];
+            if($wallet->balance < 0.0) {
+                $amounts = [[
+                    'amount' => -$wallet->balance,
+                    'note' => strtolower(__('pages.paymentService.redemption')),
+                    'selected' => true,
+                ]];
+            } else {
+                $amounts = [];
+            }
         }
 
         // There must be a usable service
