@@ -10,7 +10,7 @@
     <p>@lang('pages.license.description')</p>
 
     <p>
-        <a href="https://choosealicense.com/licenses/gpl-3.0/"
+        <a href="https://choosealicense.com/licenses/agpl-3.0/"
                 target="_blank"
                 class="ui button basic">
             @lang('pages.license.licenseSummary')
