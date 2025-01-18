@@ -393,6 +393,30 @@ class BarController extends Controller {
     }
 
     /**
+     * Bar summary page.
+     *
+     * @return Response
+     */
+    public function summary($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+
+        // List the last product mutations
+        $productMutations = $bar
+            ->productMutations()
+            ->withTrashed()
+            ->latest()
+            ->paginate(50);
+
+        $users = $productMutations
+            ->groupBy('mutation.owner.id');
+
+        // Show the purchase summary page
+        return view('bar.summary')
+            ->with('users', $users);
+    }
+
+    /**
      * Bar management page.
      *
      * @return Response

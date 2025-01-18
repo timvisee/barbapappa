@@ -631,6 +631,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             Route::get('/history/export', 'BarController@exportHistory')->name('bar.history.export');
             Route::post('/history/export', 'BarController@doExportHistory')->name('bar.history.doExport');
 
+            // Summary
+            Route::get('/summary', 'BarController@summary')->name('bar.summary');
+
             // Useful links
             Route::get('/links', 'BarController@links')->name('bar.links');
 
