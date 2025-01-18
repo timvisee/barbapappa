@@ -414,8 +414,8 @@ class BarController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'time_from' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|before:time_to|before_or_equal:' . now()->toDateTimeString(),
-            'time_to' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|after:time_from|before_or_equal:' . now()->toDateTimeString(),
+            'time_from' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|before_or_equal:time_to|before_or_equal:' . now()->toDateTimeString(),
+            'time_to' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|after_or_equal:time_from|before_or_equal:' . now()->toDateTimeString(),
         ]);
         $specificPeriod = $request->query('time_from') != null && $request->query('time_to') != null;
 
