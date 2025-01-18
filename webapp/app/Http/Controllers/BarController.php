@@ -405,56 +405,92 @@ class BarController extends Controller {
      *
      * @return Response
      */
-    public function summary($barId) {
+    public function summary(Request $request, $barId) {
         $CHUNK_SIZE = 100;
         $MAX_ITEMS = 1000;
 
         // Get the bar and session user
         $bar = \Request::get('bar');
 
-        // Build list of recent purchases
-        $productMutations = collect();
-        for($offset = 0; $offset < $MAX_ITEMS; $offset += $CHUNK_SIZE) {
-            $chunk = $bar
+        // Validate
+        $this->validate($request, [
+            'time_from' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|before:time_to|before_or_equal:' . now()->toDateTimeString(),
+            'time_to' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|after:time_from|before_or_equal:' . now()->toDateTimeString(),
+        ]);
+        $specificPeriod = $request->query('time_from') != null && $request->query('time_to') != null;
+
+        // Get items from range or just recent items
+        if($specificPeriod) {
+            $timeFrom = $request->query('time_from');
+            $timeFrom = $timeFrom != null ? Carbon::parse($timeFrom) : null;
+            $timeTo = $request->query('time_to');
+            $timeTo = $timeTo != null ? Carbon::parse($timeTo) : null;
+            $timeFrom ??= ($timeTo ?? now())->clone()->subMonth()->max($bar->created_at);
+            $timeTo ??= now();
+
+            $productMutations = $bar
                 ->productMutations()
                 ->withTrashed()
                 ->with('mutation')
                 ->latest()
-                ->offset($offset)
-                ->limit($CHUNK_SIZE)
+                ->where('created_at', '>=', $timeFrom)
+                ->where('created_at', '<=', $timeTo)
+                ->limit($MAX_ITEMS)
                 ->get();
+        } else {
+            // Build list of recent purchases
+            $productMutations = collect();
+            for($offset = 0; $offset < $MAX_ITEMS; $offset += $CHUNK_SIZE) {
+                $chunk = $bar
+                    ->productMutations()
+                    ->withTrashed()
+                    ->with('mutation')
+                    ->latest()
+                    ->offset($offset)
+                    ->limit($CHUNK_SIZE)
+                    ->get();
 
-            // If chunk is empty, we're done
-            if($chunk->isEmpty())
-                break;
-
-            // If start of chunk is too old, don't include any of it and we're done
-            $last = $productMutations->last();
-            if($last != null) {
-                $delay = $last->created_at->diffAsCarbonInterval($chunk->first()->created_at);
-                if($delay->total('seconds') >= Self::SUMMARY_SEPARATE_DELAY_SECONDS) {
+                // If chunk is empty, we're done
+                if($chunk->isEmpty())
                     break;
+
+                // If start of chunk is too old, don't include any of it and we're done
+                $last = $productMutations->last();
+                if($last != null) {
+                    $delay = $last->created_at->diffAsCarbonInterval($chunk->first()->created_at);
+                    if($delay->total('seconds') >= Self::SUMMARY_SEPARATE_DELAY_SECONDS) {
+                        break;
+                    }
                 }
+
+                // Try to find time gap in chunk, if found only include upto that point and we're done
+                $end = false;
+                for($i = 0; $i < $chunk->count() - 1; $i++) {
+                    $delay = $chunk[$i]->created_at->diffAsCarbonInterval($chunk[$i + 1]->created_at);
+                    if($delay->total('seconds') >= Self::SUMMARY_SEPARATE_DELAY_SECONDS) {
+                        $productMutations = $productMutations->concat($chunk->take($i + 1));
+                        $end = true;
+                        break;
+                    }
+                }
+                if($end)
+                    break;
+
+                $productMutations = $productMutations->concat($chunk);
+
+                // If chunk was smaller requested size we've reached the end
+                if($chunk->count() < $CHUNK_SIZE)
+                    break;
             }
 
-            // Try to find time gap in chunk, if found only include upto that point and we're done
-            $end = false;
-            for($i = 0; $i < $chunk->count() - 1; $i++) {
-                $delay = $chunk[$i]->created_at->diffAsCarbonInterval($chunk[$i + 1]->created_at);
-                if($delay->total('seconds') >= Self::SUMMARY_SEPARATE_DELAY_SECONDS) {
-                    $productMutations = $productMutations->concat($chunk->take($i + 1));
-                    $end = true;
-                    break;
-                }
-            }
-            if($end)
-                break;
-
-            $productMutations = $productMutations->concat($chunk);
-
-            // If chunk was smaller requested size we've reached the end
-            if($chunk->count() < $CHUNK_SIZE)
-                break;
+            $timeFrom = $productMutations->map(function($productMutation) {
+                return $productMutation->created_at;
+            })
+            ->min() ?? now();
+            $timeTo = $productMutations->map(function($productMutation) {
+                return $productMutation->updated_at ?? $productMutation->created_at;
+            })
+            ->max() ?? now();
         }
         $showingLimited = $productMutations->count() >= $MAX_ITEMS;
 
@@ -510,15 +546,6 @@ class BarController extends Controller {
             })
             ->sortBy('amountRaw');
 
-        // Global summaries
-        $timeFrom = $summary->map(function($userSummary) {
-            return $userSummary['oldestUpdated'];
-        })
-        ->min() ?? now();
-        $timeTo = $summary->map(function($userSummary) {
-            return $userSummary['newestUpdated'];
-        })
-        ->max() ?? now();
         $amount = new MoneyAmountBag($summary->map(function($userSummary) {
             return $userSummary['amount'];
         }));
@@ -529,6 +556,7 @@ class BarController extends Controller {
             ->with('showingLimited', $showingLimited)
             ->with('quantity', $productMutations->count())
             ->with('amount', $amount)
+            ->with('specificPeriod', $specificPeriod)
             ->with('timeFrom', $timeFrom)
             ->with('timeTo', $timeTo);
     }

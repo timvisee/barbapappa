@@ -197,6 +197,9 @@ return [
     'delayed' => 'Vertraagd',
     'earlier' => 'eerder',
     'summary' => 'Samenvatting',
+    'recent' => 'Recent',
+    'specificPeriod' => 'Specific period',
+    'apply' => 'Toepassen',
 
     'cannotBeUndone' => 'Deze operatie kan niet teruggedraaid worden.',
     'trashingCanBeUndone' => 'Het item wordt verplaatst naar de prullenbak. Deze operatie kan teruggedraaid worden door het item te herstellen vanuit de prullenbak.',
