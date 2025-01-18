@@ -69,7 +69,7 @@
                     <span class="subtle">{{ $productMutation->quantity }}×</span>
                 @endif
 
-                {{ ($product = $productMutation->product) ?  $product->displayName() : __('pages.products.unknownProduct') }}
+                {{ ($product = $productMutation->product) ? $product->displayName() : __('pages.products.unknownProduct') }}
                 {!! $productMutation->mutation->formatAmount(BALANCE_FORMAT_LABEL, [
                     'color' => $self,
                 ]) !!}
