@@ -45,32 +45,44 @@
         </h5>
 
         @foreach($userSummary['products'] as $userProducts)
-            <a class="item"
-                href="{{ route('transaction.show', [
-                    'transactionId' => 0,
-                ]) }}">
+            {{-- Start item, link to user if owner is a bar member --}}
+            @if($userSummary['member'] != null)
+                <a class="item"
+                    href="{{ route('bar.member.show', [
+                        'barId' => $bar->human_id,
+                        'memberId' => $userSummary['member']->id,
+                    ]) }}">
+            @else
+                <div class="item">
+            @endif
 
-                @if($userProducts['quantity'] != 1)
-                    <span class="subtle">{{ $userProducts['quantity'] }}×</span>
+            @if($userProducts['quantity'] != 1)
+                <span class="subtle">{{ $userProducts['quantity'] }}×</span>
+            @endif
+
+            {{ $userProducts['name'] }}
+            {!! $userProducts['amount']->formatAmount(BALANCE_FORMAT_LABEL, [
+                'color' => false,
+            ]) !!}
+
+            <span class="sub-label">
+                {{-- Icon for delayed purchases --}}
+                @if($userProducts['anyDelayed'])
+                    <span class="halflings halflings-hourglass"></span>
                 @endif
 
-                {{ $userProducts['name'] }}
-                {!! $userProducts['amount']->formatAmount(BALANCE_FORMAT_LABEL, [
-                    'color' => false,
-                ]) !!}
+                {{-- Icon for kiosk purchases --}}
+                @if($userProducts['anyInitiatedByKiosk'])
+                    <span class="halflings halflings-shopping-cart"></span>
+                @endif
+            </span>
 
-                <span class="sub-label">
-                    {{-- Icon for delayed purchases --}}
-                    @if($userProducts['anyDelayed'])
-                        <span class="halflings halflings-hourglass"></span>
-                    @endif
-
-                    {{-- Icon for kiosk purchases --}}
-                    @if($userProducts['anyInitiatedByKiosk'])
-                        <span class="halflings halflings-shopping-cart"></span>
-                    @endif
-                </span>
-            </a>
+            {{-- End item --}}
+            @if($userSummary['member'] != null)
+                </a>
+            @else
+                </div>
+            @endif
         @endforeach
 
         </div>

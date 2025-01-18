@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\BarPurchaseHistoryExport;
 use App\Helpers\ValidationDefaults;
 use App\Models\Bar;
+use App\Models\BarMember;
 use App\Models\EconomyMember;
 use App\Models\InventoryItemChange;
 use App\Models\Mutation;
@@ -413,7 +414,7 @@ class BarController extends Controller {
         $summary = $productMutations
             // Group product mutations by user
             ->groupBy('mutation.owner.id')
-            ->map(function($productMutations) {
+            ->map(function($productMutations) use($bar) {
                 // Group product mutations by product
                 $products = $productMutations
                     ->groupBy('product.id')
@@ -441,8 +442,17 @@ class BarController extends Controller {
                     return $product['amount'];
                 }));
 
+                $owner = $productMutations->first()?->mutation?->owner;
+                if($owner != null) {
+                    $member = $bar
+                        ->members()
+                        ->user($owner)
+                        ->first();
+                }
+
                 return [
-                    'owner' => $productMutations->first()?->mutation?->owner,
+                    'owner' => $owner,
+                    'member' => $member ?? null,
                     'newestUpdated' => $productMutations->first()->updated_at ?? $productMutations->first()->created_at,
                     'oldestUpdated' => $productMutations->last()->updated_at ?? $productMutations->last()->created_at,
                     'products' => $products,
