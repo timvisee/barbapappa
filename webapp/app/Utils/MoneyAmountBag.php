@@ -22,14 +22,21 @@ class MoneyAmountBag {
     /**
      * Constructor.
      *
-     * @param array[MoneyAmount] $amounts Money amounts.
+     * @param array[MoneyAmount | MoneyAmountBag] $amounts Money amounts.
      */
     public function __construct($amounts = []) {
         $this->amounts = collect();
 
         $amounts = collect($amounts ?? []);
         foreach($amounts as $amount)
-            $this->add($amount);
+            if($amount instanceof MoneyAmount)
+                $this->add($amount);
+            else if($amount instanceof MoneyAmountBag)
+                $this->addBag($amount);
+            else if($amount == null)
+                continue;
+            else
+                throw new \Exception('Invalid amount type');
     }
 
     /**

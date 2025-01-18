@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\MoneyAmount;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -41,8 +42,7 @@ class MutationProduct extends Model {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeWithTrashed($query) {
-        $query = $query->with(['product' => fn($q) => $q->withTrashed()]);
-        return $query;
+        return $query->with(['product' => fn($q) => $q->withTrashed()]);
     }
 
     /**
@@ -117,6 +117,15 @@ class MutationProduct extends Model {
         if($this->bar != null)
             return collect([$this->bar->community]);
         return collect();
+    }
+
+    /**
+     * Get the mutation amount as money amount.
+     *
+     * @return MoneyAmount The amount as money amount.
+     */
+    public function getMoneyAmount() {
+        return $this->mutation->getMoneyAmount();
     }
 
     /**

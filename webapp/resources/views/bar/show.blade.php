@@ -146,17 +146,29 @@
                 @endforeach
 
                 @if(perms(BarController::permsManage()))
-                    <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                            class="ui large bottom attached basic button">
-                        @lang('pages.bar.allPurchases')...
+                    <div class="ui two large basic bottom attached buttons">
+                        <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                                class="ui button">
+                            @lang('pages.bar.allPurchases')
+                        </a>
+                        <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
+                                class="ui button">
+                            @lang('misc.summary')
+                        </a>
                     </a>
                 @endif
             </div>
         @else
             @if(perms(BarController::permsManage()))
-                <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                        class="ui large fluid basic button">
-                    @lang('pages.bar.allPurchases')...
+                <div class="ui two large basic buttons">
+                    <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                            class="ui button">
+                        @lang('pages.bar.allPurchases')
+                    </a>
+                    <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
+                            class="ui button">
+                        @lang('misc.summary')
+                    </a>
                 </a>
             @endif
         @endif

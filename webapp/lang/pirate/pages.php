@@ -1034,6 +1034,10 @@ return [
         'exportPurchasesTitle' => 'Export purchases',
         'exportPurchasesDescription' => 'Dis page allows ye to export all purchases made in dis bar to a file.',
         'noPurchases' => 'No purchases',
+        'purchaseSummary' => 'Purchase summary',
+        'purchaseSummaryDescription' => 'Dis page shows a summary of recent purcahsed loot by pirates in dis bar.',
+        'purchaseSummaryLimited' => 'Limited amount of purchases shown, th\' not be complete.',
+        'purchaseSummaryDescriptionSum' => ':quantity purchases for :amount from :from to :to',
         'disabled' => 'Dis bar be disabled by another pirate.',
         'disabledGotoDashboard' => 'Dis bar be disabled by another pirate. Go to yer home port to find yer current bar.',
         'poster' => [
