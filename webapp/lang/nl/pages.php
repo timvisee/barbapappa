@@ -419,6 +419,7 @@ return [
         'periodReport' => 'Perioderapport',
         'periodOfFromTo' => 'Periode van :period, van :from tot :to',
         'period' => [
+            'day' => 'Dag',
             'week' => 'Week',
             'month' => 'Maand',
             'year' => 'Jaar',

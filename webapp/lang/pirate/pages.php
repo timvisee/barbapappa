@@ -418,6 +418,7 @@ return [
         'periodReport' => 'Period report',
         'periodOfFromTo' => 'Period of :period, from :from to :to',
         'period' => [
+            'day' => 'Day',
             'week' => 'Week',
             'month' => 'Month',
             'year' => 'Year',

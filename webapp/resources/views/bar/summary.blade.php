@@ -48,6 +48,49 @@
 
             <button class="ui button blue" type="submit">@lang('misc.apply')</button>
 
+            <div class="ui buttons">
+                @if(!$bar->created_at->addDay()->isFuture())
+                    <a href="{{ route('bar.summary', [
+                                'barId' => $bar->id,
+                                'time_from' => now()->subDay()->max($bar->created_at)->toDateTimeLocalString('minute'),
+                                'time_to' => now()->toDateTimeLocalString('minute'),
+                            ]) }}"
+                            class="ui button">
+                        @lang('pages.inventories.period.day')
+                    </a>
+                @endif
+                @if(!$bar->created_at->addWeek()->isFuture())
+                    <a href="{{ route('bar.summary', [
+                                'barId' => $bar->id,
+                                'time_from' => now()->subWeek()->max($bar->created_at)->toDateTimeLocalString('minute'),
+                                'time_to' => now()->toDateTimeLocalString('minute'),
+                            ]) }}"
+                            class="ui button">
+                        @lang('pages.inventories.period.week')
+                    </a>
+                @endif
+                @if(!$bar->created_at->addMonth()->isFuture())
+                    <a href="{{ route('bar.summary', [
+                                'barId' => $bar->id,
+                                'time_from' => now()->subMonth()->max($bar->created_at)->toDateTimeLocalString('minute'),
+                                'time_to' => now()->toDateTimeLocalString('minute'),
+                            ]) }}"
+                            class="ui button">
+                        @lang('pages.inventories.period.month')
+                    </a>
+                @endif
+                @if(!$bar->created_at->addYear()->isFuture())
+                    <a href="{{ route('bar.summary', [
+                                'barId' => $bar->id,
+                                'time_from' => now()->subYear()->max($bar->created_at)->toDateTimeLocalString('minute'),
+                                'time_to' => now()->toDateTimeLocalString('minute'),
+                            ]) }}"
+                            class="ui button">
+                        @lang('pages.inventories.period.year')
+                    </a>
+                @endif
+            </div>
+
             <div class="ui hidden divider"></div>
         {!! Form::close() !!}
     @endif
