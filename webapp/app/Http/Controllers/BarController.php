@@ -144,6 +144,7 @@ class BarController extends Controller {
         $productMutations = $bar
             ->productMutations()
             ->withTrashed()
+            ->with('mutation')
             ->latest()
             ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
             ->limit(5)
@@ -343,6 +344,7 @@ class BarController extends Controller {
         $productMutations = $bar
             ->productMutations()
             ->withTrashed()
+            ->with('mutation')
             ->latest()
             ->paginate(50);
 
@@ -360,7 +362,7 @@ class BarController extends Controller {
         // Get the bar
         $bar = \Request::get('bar');
 
-        $firstDate = (new Carbon($bar->productMutations()->min('mutation_product.created_at')))
+        $firstDate = (new Carbon($bar->productMutations()->with('mutation')->min('mutation_product.created_at')))
             ->toDateString();
         $lastDate = today()->toDateString();
 
@@ -416,6 +418,7 @@ class BarController extends Controller {
             $chunk = $bar
                 ->productMutations()
                 ->withTrashed()
+                ->with('mutation')
                 ->latest()
                 ->offset($offset)
                 ->limit($CHUNK_SIZE)
