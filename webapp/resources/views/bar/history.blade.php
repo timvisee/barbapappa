@@ -5,7 +5,9 @@
     $breadcrumbs = Breadcrumbs::generate('bar.history', $bar);
     $menusection = 'bar_manage';
 
-    const SEPARATE_DELAY_SECONDS = 60 * 60 * 2.5;
+    use \App\Http\Controllers\BarController;
+
+    const SEPARATE_DELAY_SECONDS = BarController::SUMMARY_SEPARATE_DELAY_SECONDS;
 @endphp
 
 @section('content')
