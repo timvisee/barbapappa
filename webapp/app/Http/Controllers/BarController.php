@@ -13,6 +13,7 @@ use App\Models\MutationWallet;
 use App\Models\Transaction;
 use App\Perms\BarRoles;
 use App\Services\Auth\Authenticator as UserAuthenticator;
+use App\Utils\MoneyAmountBag;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Http\Request;
@@ -408,12 +409,46 @@ class BarController extends Controller {
             ->latest()
             ->paginate(50);
 
-        $users = $productMutations
-            ->groupBy('mutation.owner.id');
+        // Create summary of purchases
+        $summary = $productMutations
+            // Group product mutations by user
+            ->groupBy('mutation.owner.id')
+            ->map(function($productMutations) {
+                // Group product mutations by product
+                $products = $productMutations
+                    ->groupBy('product.id')
+                    ->map(function($productMutations) {
+                        $product = $productMutations->first()?->product;
+                        $amount = new MoneyAmountBag($productMutations->map(function($productMutation) {
+                            return $productMutation->getMoneyAmount();
+                        }));
+
+                        return [
+                            'name' => $product ? $product->displayName() : __('pages.products.unknownProduct'),
+                            'quantity' => $productMutations->sum('quantity'),
+                            'amount' => $amount,
+                            'amountRaw' => $amount->sumAmounts()->amount,
+                        ];
+                    })
+                    ->sortBy('amountRaw');
+                $amount = new MoneyAmountBag($products->map(function($product) {
+                    return $product['amount'];
+                }));
+
+                return [
+                    'owner' => $productMutations->first()?->mutation?->owner,
+                    'newestUpdated' => $productMutations->first()->updated_at ?? $productMutations->first()->created_at,
+                    'oldestUpdated' => $productMutations->last()->updated_at ?? $productMutations->last()->created_at,
+                    'products' => $products,
+                    'amount' => $amount,
+                    'amountRaw' => $amount->sumAmounts()->amount,
+                ];
+            })
+            ->sortBy('amountRaw');
 
         // Show the purchase summary page
         return view('bar.summary')
-            ->with('users', $users);
+            ->with('summary', $summary);
     }
 
     /**
