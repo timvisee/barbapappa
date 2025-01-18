@@ -508,10 +508,22 @@ class BarController extends Controller {
             })
             ->sortBy('amountRaw');
 
+        $timeFrom = $summary->map(function($userSummary) {
+            return $userSummary['oldestUpdated'];
+        })
+        ->min();
+        $timeTo = $summary->map(function($userSummary) {
+            return $userSummary['newestUpdated'];
+        })
+        ->max();
+
         // Show the purchase summary page
         return view('bar.summary')
             ->with('summary', $summary)
-            ->with('showingLimited', $showingLimited);
+            ->with('showingLimited', $showingLimited)
+            ->with('quantity', $productMutations->count())
+            ->with('timeFrom', $timeFrom)
+            ->with('timeTo', $timeTo);
     }
 
     /**

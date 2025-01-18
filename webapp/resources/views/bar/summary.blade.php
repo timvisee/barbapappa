@@ -13,6 +13,14 @@
 
     <p>@lang('pages.bar.purchaseSummaryDescription')</p>
 
+    <p>
+        @lang('pages.bar.purchaseSummaryDescriptionSum', [
+            'quantity' => $quantity,
+            'from' => $timeFrom->longAbsoluteDiffForHumans(null, null),
+            'to' => $timeTo->longRelativeDiffForHumans(null, null),
+        ]):
+    </p>
+
     <div class="ui hidden divider"></div>
 
     @if($showingLimited)

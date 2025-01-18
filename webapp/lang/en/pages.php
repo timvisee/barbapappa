@@ -1037,6 +1037,7 @@ return [
         'purchaseSummary' => 'Purchase summary',
         'purchaseSummaryDescription' => 'This page shows a summary of recent purcahsed products by users in this bar.',
         'purchaseSummaryLimited' => 'Limited amount of purchases shown, the list is incomplete.',
+        'purchaseSummaryDescriptionSum' => ':quantity purchases from :from to :to',
         'disabled' => 'This bar has been disabled by an administrator.',
         'disabledGotoDashboard' => 'This bar has been disabled by an administrator. Go to the dashboard to find your current bar.',
         'poster' => [
