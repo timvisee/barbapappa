@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.197 (2025-01-18)
+
+- Add period selector t o recent purchase summary page
+- On inventory report page, don't show range buttons outside of valid range
+
 ## 0.1.196 (2025-01-18)
 
 - Add recent purchase summary page
