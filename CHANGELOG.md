@@ -1,48 +1,48 @@
 # Changelog
 
-## 0.1.195 (2023-12-02)
+## 0.1.195 (2024-12-02)
 
 - Add full offline search to kiosk mode for instant user and product searches
 - Simplify wallet redemption page if balance is not negative
 - Keep iDeal payment links active for longer, prevent 'payment revoked' message on payment processor page
 
-## 0.1.194 (2023-12-02)
+## 0.1.194 (2024-12-02)
 
 - Fix search results in kiosk mode not showing with query normalization
 - Reapply changes from 0.1.191 and 0.1.192
 
-## 0.1.193 (2023-12-02)
+## 0.1.193 (2024-12-02)
 
 - Revert changes from 0.1.191 and 0.1.192 potentially breaking kiosk mode search
 
-## 0.1.192 (2023-11-30)
+## 0.1.192 (2024-11-30)
 
 - Increase number of cached results from 100 to 250 in kiosk mode
 
-## 0.1.191 (2023-11-30)
+## 0.1.191 (2024-11-30)
 
 - Make search results in kiosk mode instant if any result is cached, bump stale cache in the background
 - On expired CSRF token, force refresh kiosk mode instead of showing an error
 
-## 0.1.190 (2023-11-16)
+## 0.1.190 (2024-11-16)
 
 - Relax reCAPTCHA check on login pages
 - Fix bar link without code still including the code
 
-## 0.1.189 (2023-06-08)
+## 0.1.189 (2024-06-08)
 
 - Fix error in bunq iDeal payments, make them more robust
 
-## 0.1.188 (2023-06-02)
+## 0.1.188 (2024-06-02)
 
 - Support PHP 8.1 and up
 
-## 0.1.187 (2023-06-02)
+## 0.1.187 (2024-06-02)
 
 - Add reCAPTCHA check to authentication pages
 - Update dependencies
 
-## 0.1.186 (2023-04-13)
+## 0.1.186 (2024-04-13)
 
 - Prevent infinite loops in automatic payment handling
 - Update bunq SDK
