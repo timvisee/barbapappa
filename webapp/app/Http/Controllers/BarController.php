@@ -426,6 +426,12 @@ class BarController extends Controller {
                         return [
                             'name' => $product ? $product->displayName() : __('pages.products.unknownProduct'),
                             'quantity' => $productMutations->sum('quantity'),
+                            'anyDelayed' => $productMutations->contains(function($productMutation) {
+                                return $productMutation?->mutation?->transaction?->isDelayed() ?? false;
+                            }),
+                            'anyInitiatedByKiosk' => $productMutations->contains(function($productMutation) {
+                                return $productMutation?->mutation?->transaction?->initiated_by_kiosk ?? false;
+                            }),
                             'amount' => $amount,
                             'amountRaw' => $amount->sumAmounts()->amount,
                         ];

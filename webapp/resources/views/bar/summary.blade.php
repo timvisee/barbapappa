@@ -59,8 +59,17 @@
                     'color' => false,
                 ]) !!}
 
+                <span class="sub-label">
+                    {{-- Icon for delayed purchases --}}
+                    @if($userProducts['anyDelayed'])
+                        <span class="halflings halflings-hourglass"></span>
+                    @endif
 
-
+                    {{-- Icon for kiosk purchases --}}
+                    @if($userProducts['anyInitiatedByKiosk'])
+                        <span class="halflings halflings-shopping-cart"></span>
+                    @endif
+                </span>
             </a>
         @endforeach
 
