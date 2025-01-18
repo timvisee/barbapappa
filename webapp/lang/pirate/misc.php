@@ -196,6 +196,9 @@ return [
     'delayed' => 'Delayed',
     'earlier' => 'earlier',
     'summary' => 'Summary',
+    'recent' => 'Recent',
+    'specificPeriod' => 'Specific period',
+    'apply' => 'Apply',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

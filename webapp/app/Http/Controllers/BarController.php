@@ -405,12 +405,19 @@ class BarController extends Controller {
      *
      * @return Response
      */
-    public function summary($barId) {
+    public function summary(Request $request, $barId) {
         $CHUNK_SIZE = 100;
         $MAX_ITEMS = 1000;
 
         // Get the bar and session user
         $bar = \Request::get('bar');
+
+        // Validate
+        $this->validate($request, [
+            'time_from' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|before:time_to|before_or_equal:' . now()->toDateTimeString(),
+            'time_to' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|after:time_from|before_or_equal:' . now()->toDateTimeString(),
+        ]);
+        $specificPeriod = $request->query('time_from') != null && $request->query('time_to') != null;
 
         // Build list of recent purchases
         $productMutations = collect();
@@ -529,6 +536,7 @@ class BarController extends Controller {
             ->with('showingLimited', $showingLimited)
             ->with('quantity', $productMutations->count())
             ->with('amount', $amount)
+            ->with('specificPeriod', $specificPeriod)
             ->with('timeFrom', $timeFrom)
             ->with('timeTo', $timeTo);
     }
