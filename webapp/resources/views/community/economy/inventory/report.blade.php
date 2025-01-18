@@ -39,17 +39,19 @@
         <button class="ui button blue" type="submit">@lang('misc.report')</button>
 
         <div class="ui buttons">
-            <a href="{{ route('community.economy.inventory.report', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                        'inventoryId' => $inventory->id,
-                        'time_from' => now()->subWeek()->max($inventory->created_at)->toDateTimeLocalString('minute'),
-                        'time_to' => now()->toDateTimeLocalString('minute'),
-                    ]) }}"
-                    class="ui button">
-                @lang('pages.inventories.period.week')
-            </a>
             @if(!$inventory->created_at->addWeek()->isFuture())
+                <a href="{{ route('community.economy.inventory.report', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'inventoryId' => $inventory->id,
+                            'time_from' => now()->subWeek()->max($inventory->created_at)->toDateTimeLocalString('minute'),
+                            'time_to' => now()->toDateTimeLocalString('minute'),
+                        ]) }}"
+                        class="ui button">
+                    @lang('pages.inventories.period.week')
+                </a>
+            @endif
+            @if(!$inventory->created_at->addMonth()->isFuture())
                 <a href="{{ route('community.economy.inventory.report', [
                             'communityId' => $community->human_id,
                             'economyId' => $economy->id,
@@ -61,7 +63,7 @@
                     @lang('pages.inventories.period.month')
                 </a>
             @endif
-            @if(!$inventory->created_at->addMonth()->isFuture())
+            @if(!$inventory->created_at->addYear()->isFuture())
                 <a href="{{ route('community.economy.inventory.report', [
                             'communityId' => $community->human_id,
                             'economyId' => $economy->id,
