@@ -13,21 +13,22 @@
 
     <p>@lang('pages.bar.purchaseSummaryDescription')</p>
 
-    <p>
-        @lang('pages.bar.purchaseSummaryDescriptionSum', [
-            'quantity' => $quantity,
-            'from' => $timeFrom->longAbsoluteDiffForHumans(null, null),
-            'to' => $timeTo->longRelativeDiffForHumans(null, null),
-        ]):
-    </p>
+    @if($summary->isNotEmpty())
+        <p>
+            @lang('pages.bar.purchaseSummaryDescriptionSum', [
+                'quantity' => $quantity,
+                'amount' => !$amount->isZero() ? $amount->formatAmount(BALANCE_FORMAT_COLOR) : 0,
+                'from' => $timeFrom->longAbsoluteDiffForHumans(null, null),
+                'to' => $timeTo->longRelativeDiffForHumans(null, null),
+            ]):
+        </p>
 
-    <div class="ui hidden divider"></div>
-
-    @if($showingLimited)
-        <div class="ui warning message">
-            <span class="halflings halflings-warning-sign icon"></span>
-            @lang('pages.bar.purchaseSummaryLimited')
-        </div>
+        @if($showingLimited)
+            <div class="ui warning message">
+                <span class="halflings halflings-warning-sign icon"></span>
+                @lang('pages.bar.purchaseSummaryLimited')
+            </div>
+        @endif
     @endif
 
     @forelse($summary as $userSummary)
@@ -103,7 +104,7 @@
         </div>
 
     @empty
-        <i class="item">@lang('pages.bar.noPurchases')...</i>
+        <p>@lang('pages.bar.noPurchases')...</p>
     @endforelse
 
     <p>

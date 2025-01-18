@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Exports\BarPurchaseHistoryExport;
 use App\Helpers\ValidationDefaults;
 use App\Models\Bar;
-use App\Models\BarMember;
 use App\Models\EconomyMember;
 use App\Models\InventoryItemChange;
 use App\Models\Mutation;
@@ -508,20 +507,25 @@ class BarController extends Controller {
             })
             ->sortBy('amountRaw');
 
+        // Global summaries
         $timeFrom = $summary->map(function($userSummary) {
             return $userSummary['oldestUpdated'];
         })
-        ->min();
+        ->min() ?? now();
         $timeTo = $summary->map(function($userSummary) {
             return $userSummary['newestUpdated'];
         })
-        ->max();
+        ->max() ?? now();
+        $amount = new MoneyAmountBag($summary->map(function($userSummary) {
+            return $userSummary['amount'];
+        }));
 
         // Show the purchase summary page
         return view('bar.summary')
             ->with('summary', $summary)
             ->with('showingLimited', $showingLimited)
             ->with('quantity', $productMutations->count())
+            ->with('amount', $amount)
             ->with('timeFrom', $timeFrom)
             ->with('timeTo', $timeTo);
     }
