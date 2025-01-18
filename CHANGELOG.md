@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.196 (2025-01-18)
+
+- Add recent purchase summary page
+
 ## 0.1.195 (2024-12-02)
 
 - Add full offline search to kiosk mode for instant user and product searches
