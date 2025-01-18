@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.198 (2025-01-18)
+
+- On purchase summary page, fix empty period selection not being allowed
+
 ## 0.1.197 (2025-01-18)
 
 - Add period selector t o recent purchase summary page
