@@ -41,14 +41,14 @@
             <span class="subtle">
                 &nbsp;&middot;&nbsp;
                 @include('includes.humanTimeDiff', [
-                    'time' => $userSummary['newestUpdated'],
+                    'time' => $userSummary['oldestUpdated'],
                     'absolute' => true,
                     'short' => true,
                 ])
-                @if($userSummary['newestUpdated'] != $userSummary['oldestUpdated'])
-                    -
+                @if($userSummary['oldestUpdated'] != $userSummary['newestUpdated'])
+                    @lang('misc.to')
                     @include('includes.humanTimeDiff', [
-                        'time' => $userSummary['oldestUpdated'],
+                        'time' => $userSummary['newestUpdated'],
                         'absolute' => true,
                         'short' => true,
                     ])

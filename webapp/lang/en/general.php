@@ -29,7 +29,6 @@ return [
     'cancel' => 'Cancel',
     'recommended' => 'Recommended',
     'enabled' => 'Enabled',
-    'summary' => 'Summary',
 
     'notYetImplemented' => 'Not yet implemented.',
 ];

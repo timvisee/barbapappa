@@ -153,7 +153,7 @@
                         </a>
                         <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
                                 class="ui button">
-                            @lang('general.summary')
+                            @lang('misc.summary')
                         </a>
                     </a>
                 @endif
@@ -167,7 +167,7 @@
                     </a>
                     <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
                             class="ui button">
-                        @lang('general.summary')
+                        @lang('misc.summary')
                     </a>
                 </a>
             @endif

@@ -29,7 +29,6 @@ return [
     'cancel' => 'Annuleren',
     'recommended' => 'Aanbevolen',
     'enabled' => 'Ingeschakeld',
-    'summary' => 'Samenvatting',
 
     'notYetImplemented' => 'Nog niet geimplementeerd.',
 ];
