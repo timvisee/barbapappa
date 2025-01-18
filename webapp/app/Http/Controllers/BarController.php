@@ -454,6 +454,7 @@ class BarController extends Controller {
             if($chunk->count() < $CHUNK_SIZE)
                 break;
         }
+        $showingLimited = $productMutations->count() >= $MAX_ITEMS;
 
         // Create summary of purchases
         $summary = $productMutations
@@ -509,7 +510,8 @@ class BarController extends Controller {
 
         // Show the purchase summary page
         return view('bar.summary')
-            ->with('summary', $summary);
+            ->with('summary', $summary)
+            ->with('showingLimited', $showingLimited);
     }
 
     /**

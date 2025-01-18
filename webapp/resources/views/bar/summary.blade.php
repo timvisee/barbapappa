@@ -15,6 +15,13 @@
 
     <div class="ui hidden divider"></div>
 
+    @if($showingLimited)
+        <div class="ui warning message">
+            <span class="halflings halflings-warning-sign icon"></span>
+            @lang('pages.bar.purchaseSummaryLimited')
+        </div>
+    @endif
+
     @forelse($summary as $userSummary)
         <div class="ui top vertical menu fluid">
 

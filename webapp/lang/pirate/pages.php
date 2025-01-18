@@ -1036,6 +1036,7 @@ return [
         'noPurchases' => 'No purchases',
         'purchaseSummary' => 'Purchase summary',
         'purchaseSummaryDescription' => 'Dis page shows a summary of recent purcahsed loot by pirates in dis bar.',
+        'purchaseSummaryLimited' => 'Limited amount of purchases shown, th\' not be complete.',
         'disabled' => 'Dis bar be disabled by another pirate.',
         'disabledGotoDashboard' => 'Dis bar be disabled by another pirate. Go to yer home port to find yer current bar.',
         'poster' => [
