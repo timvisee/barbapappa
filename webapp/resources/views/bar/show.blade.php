@@ -155,7 +155,7 @@
                                 class="ui button">
                             @lang('misc.summary')
                         </a>
-                    </a>
+                    </div>
                 @endif
             </div>
         @else
@@ -169,7 +169,7 @@
                             class="ui button">
                         @lang('misc.summary')
                     </a>
-                </a>
+                </div>
             @endif
         @endif
     @else
