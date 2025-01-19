@@ -145,32 +145,31 @@
                     @endif
                 @endforeach
 
-                @if(perms(BarController::permsManage()))
-                    <div class="ui two large basic bottom attached buttons">
-                        <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                                class="ui button">
-                            @lang('pages.bar.allPurchases')
-                        </a>
-                        <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
-                                class="ui button">
-                            @lang('misc.summary')
-                        </a>
-                    </div>
-                @endif
+                <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+                        class="ui large basic button bottom attached">
+                    @lang('pages.bar.tallySummary')...
+                </a>
             </div>
         @else
-            @if(perms(BarController::permsManage()))
-                <div class="ui two large basic buttons">
-                    <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                            class="ui button">
-                        @lang('pages.bar.allPurchases')
-                    </a>
-                    <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
-                            class="ui button">
-                        @lang('misc.summary')
-                    </a>
-                </div>
-            @endif
+            <p>
+                <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+                        class="ui large basic button fluid">
+                    @lang('pages.bar.tallySummary')...
+                </a>
+            </p>
+        @endif
+
+        @if(perms(BarController::permsManage()))
+            <div class="ui two large basic buttons">
+                <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                        class="ui button">
+                    @lang('pages.bar.allPurchases')
+                </a>
+                <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
+                        class="ui button">
+                    @lang('misc.summary')
+                </a>
+            </div>
         @endif
     @else
         <div class="ui warning message">
