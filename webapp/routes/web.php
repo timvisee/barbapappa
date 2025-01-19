@@ -620,6 +620,9 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         // Stats
         Route::get('/stats', 'BarController@stats')->name('bar.stats');
 
+        // Tally summary
+        Route::get('/tally', 'BarController@tally')->name('bar.tally');
+
         // Management pages
         Route::prefix('/manage')->middleware(BarController::permsManage()->middleware())->group(function() {
             // Index
