@@ -1039,6 +1039,10 @@ return [
         'purchaseSummaryDescription' => 'Dis page shows a summary of recent purchased loot by pirates in dis bar.',
         'purchaseSummaryLimited' => 'Nay showing all purchases, there are too many. Dis not be complete.',
         'purchaseSummaryDescriptionSum' => ':quantity purchases for :amount from :from to :to',
+        'tallySummary' => 'Tallies',
+        'tallySummaryDescription' => 'Th\' number of gotten loot by pirates in dis bar.',
+        'tallySummaryLimited' => 'Nay showing all tallies, there are too many.',
+        'tallySummaryDescriptionSum' => ':quantity tallies from :from until now',
         'disabled' => 'Dis bar be disabled by another pirate.',
         'disabledGotoDashboard' => 'Dis bar be disabled by another pirate. Go to yer home port to find yer current bar.',
         'poster' => [

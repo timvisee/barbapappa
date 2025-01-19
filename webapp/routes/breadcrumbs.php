@@ -322,6 +322,11 @@ Breadcrumbs::for('bar.summary', function(BreadcrumbTrail $trail, $bar) {
     $trail->push(__('pages.bar.purchaseSummary'), route('bar.summary', ['barId' => $bar->human_id]));
 });
 
+Breadcrumbs::for('bar.tally', function(BreadcrumbTrail $trail, $bar) {
+    $trail->parent('bar.show', $bar);
+    $trail->push(__('pages.bar.tally'), route('bar.tally', ['barId' => $bar->human_id]));
+});
+
 Breadcrumbs::for('bar.links', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.manage', $bar);
     $trail->push(__('misc.links'), route('bar.links', ['barId' => $bar->human_id]));

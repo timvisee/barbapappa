@@ -163,6 +163,9 @@
         @else
             <div class="item disabled">@lang('pages.bar.purchaseSummary')</div>
         @endif
+        <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}" class="item">
+            @lang('pages.bar.tallySummary')
+        </a>
         @if(perms(BarController::permsManage()))
             <a href="{{ route('bar.links', ['barId' => $bar->human_id]) }}" class="item">
                 @lang('pages.bar.links.title')

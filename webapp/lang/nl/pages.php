@@ -1041,6 +1041,10 @@ return [
         'purchaseSummaryDescription' => 'Op deze pagina zie je een samenvatting van alle recent gekochte producten per gebruiker.',
         'purchaseSummaryLimited' => 'Niet alle aankopen getoond, het zijn er teveel. Deze lijst is incompleet.',
         'purchaseSummaryDescriptionSum' => ':quantity aankopen voor :amount van :from tot :to',
+        'tallySummary' => 'Turfjes',
+        'tallySummaryDescription' => 'Het aantal gekochte producten per gebruiker in de bar.',
+        'tallySummaryLimited' => 'Niet alle turfjes worden getoond, het zijn er teveel.',
+        'tallySummaryDescriptionSum' => ':quantity turfjes van :from tot nu',
         'disabled' => 'Deze bar is uitgeschakeld door een administrator.',
         'disabledGotoDashboard' => 'Deze bar is uitgeschakeld door een administrator. Ga terug naar het dashboard om je huidige bar te zoeken.',
         'poster' => [
