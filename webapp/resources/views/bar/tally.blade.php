@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
-@section('title', __('pages.bar.purchaseSummary'))
+@section('title', __('pages.bar.tallySummary'))
 @php
-    $breadcrumbs = Breadcrumbs::generate('bar.summary', $bar);
+    $breadcrumbs = Breadcrumbs::generate('bar.tally', $bar);
     $menusection = 'bar_manage';
 @endphp
 
@@ -12,8 +12,8 @@
     </h2>
 
     <div class="ui two item menu">
-        <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}" class="item {{ !$specificPeriod ? 'active' : '' }}">@lang('misc.recent')</a>
-        <a href="{{ route('bar.summary', [
+        <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}" class="item {{ !$specificPeriod ? 'active' : '' }}">@lang('misc.recent')</a>
+        <a href="{{ route('bar.tally', [
             'barId' => $bar->human_id,
             'time_from' => $timeFrom->toDateTimeLocalString('minute'),
             'time_to' => $timeTo->toDateTimeLocalString('minute'),
@@ -50,7 +50,7 @@
 
             <div class="ui buttons">
                 @if(!$bar->created_at->addDay()->isFuture())
-                    <a href="{{ route('bar.summary', [
+                    <a href="{{ route('bar.tally', [
                                 'barId' => $bar->id,
                                 'time_from' => now()->subDay()->max($bar->created_at)->toDateTimeLocalString('minute'),
                                 'time_to' => now()->toDateTimeLocalString('minute'),
@@ -60,7 +60,7 @@
                     </a>
                 @endif
                 @if(!$bar->created_at->addWeek()->isFuture())
-                    <a href="{{ route('bar.summary', [
+                    <a href="{{ route('bar.tally', [
                                 'barId' => $bar->id,
                                 'time_from' => now()->subWeek()->max($bar->created_at)->toDateTimeLocalString('minute'),
                                 'time_to' => now()->toDateTimeLocalString('minute'),
@@ -70,7 +70,7 @@
                     </a>
                 @endif
                 @if(!$bar->created_at->addMonth()->isFuture())
-                    <a href="{{ route('bar.summary', [
+                    <a href="{{ route('bar.tally', [
                                 'barId' => $bar->id,
                                 'time_from' => now()->subMonth()->max($bar->created_at)->toDateTimeLocalString('minute'),
                                 'time_to' => now()->toDateTimeLocalString('minute'),
@@ -79,29 +79,18 @@
                         @lang('pages.inventories.period.month')
                     </a>
                 @endif
-                @if(!$bar->created_at->addYear()->isFuture())
-                    <a href="{{ route('bar.summary', [
-                                'barId' => $bar->id,
-                                'time_from' => now()->subYear()->max($bar->created_at)->toDateTimeLocalString('minute'),
-                                'time_to' => now()->toDateTimeLocalString('minute'),
-                            ]) }}"
-                            class="ui button">
-                        @lang('pages.inventories.period.year')
-                    </a>
-                @endif
             </div>
 
             <div class="ui hidden divider"></div>
         {!! Form::close() !!}
     @endif
 
-    <p>@lang('pages.bar.purchaseSummaryDescription')</p>
+    <p>@lang('pages.bar.tallySummaryDescription')</p>
 
-    @if($summary->isNotEmpty())
+    @if($tallies->isNotEmpty())
         <p>
-            @lang('pages.bar.purchaseSummaryDescriptionSum', [
+            @lang('pages.bar.tallySummaryDescriptionSum', [
                 'quantity' => $quantity,
-                'amount' => !$amount->isZero() ? $amount->formatAmount(BALANCE_FORMAT_COLOR) : 0,
                 'from' => $timeFrom->longAbsoluteDiffForHumans(null, null),
                 'to' => $timeTo->longRelativeDiffForHumans(null, null),
             ]):
@@ -110,80 +99,40 @@
         @if($showingLimited)
             <div class="ui warning message">
                 <span class="halflings halflings-warning-sign icon"></span>
-                @lang('pages.bar.purchaseSummaryLimited')
+                @lang('pages.bar.tallySummaryLimited')
             </div>
         @endif
     @endif
 
-    @forelse($summary as $userSummary)
+    @forelse($tallies as $userTally)
         <div class="ui top vertical menu fluid">
 
-        <h5 class="ui item header">
-            {{ $userSummary['owner']?->name }}
+        {{-- Start item, link to user if owner is a bar member --}}
+        @if($userTally['member'] != null)
+            <a class="item"
+                href="{{ route('bar.member.show', [
+                    'barId' => $bar->human_id,
+                    'memberId' => $userTally['member']->id,
+                ]) }}">
+        @else
+            <div class="item">
+        @endif
 
-            {{-- Relative delay --}}
-            <span class="subtle">
-                &nbsp;&middot;&nbsp;
-                @include('includes.humanTimeDiff', [
-                    'time' => $userSummary['oldestUpdated'],
-                    'absolute' => true,
-                    'short' => true,
-                ])
-                @if($userSummary['oldestUpdated'] != $userSummary['newestUpdated'])
-                    @lang('misc.to')
-                    @include('includes.humanTimeDiff', [
-                        'time' => $userSummary['newestUpdated'],
-                        'absolute' => true,
-                        'short' => true,
-                    ])
-                @endif
-            </span>
+        {{ $userTally['owner']?->name }} ({{ $userTally['quantity'] }})
 
-            {!! $userSummary['amount']->formatAmount(BALANCE_FORMAT_LABEL, [
-                'color' => true,
-            ]) !!}
-        </h5>
+        <span style="float: right; font-weight: bold;">
+            @for($i = 0; $i < $userTally['quantity'] % 5; $i += 1)|@endfor
+            @for($i = 0; $i < floor($userTally['quantity'] / 5); $i += 1)
+                <s>|||||</s>
+            @endfor
+        </span>
 
-        @foreach($userSummary['products'] as $userProducts)
-            {{-- Start item, link to user if owner is a bar member --}}
-            @if($userSummary['member'] != null)
-                <a class="item"
-                    href="{{ route('bar.member.show', [
-                        'barId' => $bar->human_id,
-                        'memberId' => $userSummary['member']->id,
-                    ]) }}">
-            @else
-                <div class="item">
-            @endif
-
-            @if($userProducts['quantity'] != 1)
-                <span class="subtle">{{ $userProducts['quantity'] }}×</span>
-            @endif
-
-            {{ $userProducts['name'] }}
-            {!! $userProducts['amount']->formatAmount(BALANCE_FORMAT_LABEL, [
-                'color' => false,
-            ]) !!}
-
-            <span class="sub-label">
-                {{-- Icon for delayed purchases --}}
-                @if($userProducts['anyDelayed'])
-                    <span class="halflings halflings-hourglass"></span>
-                @endif
-
-                {{-- Icon for kiosk purchases --}}
-                @if($userProducts['anyInitiatedByKiosk'])
-                    <span class="halflings halflings-shopping-cart"></span>
-                @endif
-            </span>
-
-            {{-- End item --}}
-            @if($userSummary['member'] != null)
-                </a>
-            @else
-                </div>
-            @endif
-        @endforeach
+        {{-- End item --}}
+        @if($userTally['member'] != null)
+            </a>
+        @else
+            </div>
+        @endif
 
         </div>
 
@@ -192,7 +141,7 @@
     @endforelse
 
     <p>
-        <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
+        <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')
         </a>

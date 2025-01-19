@@ -655,37 +655,13 @@ class BarController extends Controller {
         }
         $showingLimited = $productMutations->count() >= $MAX_ITEMS;
 
-        // Create summary of purchases
-        $summary = $productMutations
+        // Sum up all tallies, grouped by user
+        $tallies = $productMutations
             // Group product mutations by user
             ->groupBy('mutation.owner.id')
             ->map(function($productMutations) use($bar) {
-                // Group product mutations by product
-                $products = $productMutations
-                    ->groupBy('product.id')
-                    ->map(function($productMutations) {
-                        $product = $productMutations->first()?->product;
-                        $amount = new MoneyAmountBag($productMutations->map(function($productMutation) {
-                            return $productMutation->getMoneyAmount();
-                        }));
-
-                        return [
-                            'name' => $product ? $product->displayName() : __('pages.products.unknownProduct'),
-                            'quantity' => $productMutations->sum('quantity'),
-                            'anyDelayed' => $productMutations->contains(function($productMutation) {
-                                return $productMutation?->mutation?->transaction?->isDelayed() ?? false;
-                            }),
-                            'anyInitiatedByKiosk' => $productMutations->contains(function($productMutation) {
-                                return $productMutation?->mutation?->transaction?->initiated_by_kiosk ?? false;
-                            }),
-                            'amount' => $amount,
-                            'amountRaw' => $amount->sumAmounts()->amount,
-                        ];
-                    })
-                    ->sortBy('amountRaw');
-                $amount = new MoneyAmountBag($products->map(function($product) {
-                    return $product['amount'];
-                }));
+                // Get total product quantity
+                $quantity = $productMutations->sum('quantity');
 
                 $owner = $productMutations->first()?->mutation?->owner;
                 if($owner != null) {
@@ -698,25 +674,16 @@ class BarController extends Controller {
                 return [
                     'owner' => $owner,
                     'member' => $member ?? null,
-                    'newestUpdated' => $productMutations->first()->updated_at ?? $productMutations->first()->created_at,
-                    'oldestUpdated' => $productMutations->last()->updated_at ?? $productMutations->last()->created_at,
-                    'products' => $products,
-                    'amount' => $amount,
-                    'amountRaw' => $amount->sumAmounts()->amount,
+                    'quantity' => $quantity,
                 ];
             })
-            ->sortBy('amountRaw');
-
-        $amount = new MoneyAmountBag($summary->map(function($userSummary) {
-            return $userSummary['amount'];
-        }));
+            ->sortByDesc('quantity');
 
         // Show the purchase summary page
         return view('bar.tally')
-            ->with('summary', $summary)
+            ->with('tallies', $tallies)
             ->with('showingLimited', $showingLimited)
-            ->with('quantity', $productMutations->count())
-            ->with('amount', $amount)
+            ->with('quantity', $productMutations->sum('quantity'))
             ->with('specificPeriod', $specificPeriod)
             ->with('timeFrom', $timeFrom)
             ->with('timeTo', $timeTo);
