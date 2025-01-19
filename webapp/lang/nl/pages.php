@@ -1039,7 +1039,7 @@ return [
         'noPurchases' => 'Geen aankopen',
         'purchaseSummary' => 'Aankoopsamenvatting',
         'purchaseSummaryDescription' => 'Op deze pagina zie je een samenvatting van alle recent gekochte producten per gebruiker.',
-        'purchaseSummaryLimited' => 'Beperkt aantal aankopen getoond, de lijst is incompleet.',
+        'purchaseSummaryLimited' => 'Niet alle aankopen getoond, het zijn er teveel. Deze lijst is incompleet.',
         'purchaseSummaryDescriptionSum' => ':quantity aankopen voor :amount van :from tot :to',
         'disabled' => 'Deze bar is uitgeschakeld door een administrator.',
         'disabledGotoDashboard' => 'Deze bar is uitgeschakeld door een administrator. Ga terug naar het dashboard om je huidige bar te zoeken.',
