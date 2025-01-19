@@ -90,6 +90,8 @@ class BarController extends Controller {
             'password' => $request->has('password') ? $request->input('password') : null,
             'show_explore' => is_checked($request->input('show_explore')),
             'show_community' => is_checked($request->input('show_community')),
+            'show_history' => is_checked($request->input('show_history')),
+            'show_tallies' => is_checked($request->input('show_tallies')),
             'self_enroll' => is_checked($request->input('self_enroll')),
             'low_balance_text' => $request->input('low_balance_text'),
         ]);
@@ -780,6 +782,8 @@ class BarController extends Controller {
         $bar->password = $request->has('password') ? $request->input('password') : null;
         $bar->show_explore = is_checked($request->input('show_explore'));
         $bar->show_community = is_checked($request->input('show_community'));
+        $bar->show_history = is_checked($request->input('show_history'));
+        $bar->show_tallies = is_checked($request->input('show_tallies'));
         $bar->self_enroll = is_checked($request->input('self_enroll'));
         $bar->inventory_id = $request->input('inventory');
         $bar->low_balance_text = $request->input('low_balance_text');

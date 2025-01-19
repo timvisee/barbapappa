@@ -1001,6 +1001,8 @@ return [
         'showExploreDescription' => 'List on public \'Explore bars\' page',
         'showCommunityDescription' => 'List on crew page for crew mateies',
         'selfEnrollDescription' => 'Allow self enrollment (wit\' code if specified)',
+        'showHistoryDescription' => 'Show up to 5 recent purchases to all pirates on bar page',
+        'showTalliesDescription' => 'Show tally summary to all pirates with recent purchase quantity by everybody',
         'joinAfterCreate' => 'Join th\' bar after creating.',
         'created' => 'Th\' bar be created.',
         'updated' => 'Th\' bar be updated.',
