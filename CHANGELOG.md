@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.199 (2025-01-19)
+
+- Add public tally page, showing purchased product quantity by everybody over the last day, week or month
+- Add configurable bar permissions to show/hide recent purchase history to everybody
+- Add configurable bar permissions to show/hide public tally page to everybody
+- Fix showing incorrect total quantity on purchase summary page
+- Improve localized text on purchase summary page
+
 ## 0.1.198 (2025-01-18)
 
 - On purchase summary page, fix empty period selection not being allowed
