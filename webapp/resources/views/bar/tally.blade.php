@@ -46,41 +46,39 @@
         @endif
     @endif
 
-    @forelse($tallies as $userTally)
-        <div class="ui top vertical menu fluid">
+    <div class="ui top vertical menu fluid">
+        @forelse($tallies as $userTally)
+            {{-- Start item, link to user if owner is a bar member --}}
+            @if($userTally['member'] != null)
+                <a class="item"
+                    href="{{ route('bar.member.show', [
+                        'barId' => $bar->human_id,
+                        'memberId' => $userTally['member']->id,
+                    ]) }}">
+            @else
+                <div class="item">
+            @endif
 
-        {{-- Start item, link to user if owner is a bar member --}}
-        @if($userTally['member'] != null)
-            <a class="item"
-                href="{{ route('bar.member.show', [
-                    'barId' => $bar->human_id,
-                    'memberId' => $userTally['member']->id,
-                ]) }}">
-        @else
-            <div class="item">
-        @endif
+            {{ $userTally['owner']?->name }} ({{ $userTally['quantity'] }})
 
-        {{ $userTally['owner']?->name }} ({{ $userTally['quantity'] }})
+            <span style="float: right; font-weight: bold;">
+                @for($i = 0; $i < $userTally['quantity'] % 5; $i += 1)|@endfor
+                @for($i = 0; $i < floor($userTally['quantity'] / 5); $i += 1)
+                    <s>|||||</s>
+                @endfor
+            </span>
 
-        <span style="float: right; font-weight: bold;">
-            @for($i = 0; $i < $userTally['quantity'] % 5; $i += 1)|@endfor
-            @for($i = 0; $i < floor($userTally['quantity'] / 5); $i += 1)
-                <s>|||||</s>
-            @endfor
-        </span>
+            {{-- End item --}}
+            @if($userTally['member'] != null)
+                </a>
+            @else
+                </div>
+            @endif
 
-        {{-- End item --}}
-        @if($userTally['member'] != null)
-            </a>
-        @else
-            </div>
-        @endif
-
-        </div>
-
-    @empty
-        <p>@lang('pages.bar.noPurchases')...</p>
-    @endforelse
+        @empty
+            <i class="item">@lang('pages.bar.noPurchases')...</i>
+        @endforelse
+    </div>
 
     <p>
         <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
