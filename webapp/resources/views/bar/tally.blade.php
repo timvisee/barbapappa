@@ -4,6 +4,8 @@
 @php
     $breadcrumbs = Breadcrumbs::generate('bar.tally', $bar);
     $menusection = 'bar_manage';
+
+    use \App\Http\Controllers\BarController;
 @endphp
 
 @section('content')
@@ -49,7 +51,7 @@
     <div class="ui top vertical menu fluid">
         @forelse($tallies as $userTally)
             {{-- Start item, link to user if owner is a bar member --}}
-            @if($userTally['member'] != null)
+            @if($userTally['member'] != null && perms(BarController::permsManage()))
                 <a class="item"
                     href="{{ route('bar.member.show', [
                         'barId' => $bar->human_id,
@@ -69,7 +71,7 @@
             </span>
 
             {{-- End item --}}
-            @if($userTally['member'] != null)
+            @if($userTally['member'] != null && perms(BarController::permsManage()))
                 </a>
             @else
                 </div>

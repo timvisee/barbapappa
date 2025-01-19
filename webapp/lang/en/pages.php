@@ -1001,6 +1001,8 @@ return [
         'showExploreDescription' => 'List on public \'Explore bars\' page',
         'showCommunityDescription' => 'List on community page for community members',
         'selfEnrollDescription' => 'Allow self enrollment (with code if specified)',
+        'showHistoryDescription' => 'Show up to 5 recent purchases to all users on bar page',
+        'showTalliesDescription' => 'Show tally summary to all users with recent purchase quantity by everybody',
         'joinAfterCreate' => 'Join the bar after creating.',
         'created' => 'The bar has been created.',
         'updated' => 'The bar has been updated.',

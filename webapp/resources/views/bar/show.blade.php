@@ -145,18 +145,22 @@
                     @endif
                 @endforeach
 
-                <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
-                        class="ui large basic button bottom attached">
-                    @lang('pages.bar.tallySummary')...
-                </a>
+                @if(($bar->show_tallies && perms(BarController::permsUser())) || perms(BarController::permsManage()))
+                    <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+                            class="ui large basic button bottom attached">
+                        @lang('pages.bar.tallySummary')...
+                    </a>
+                @endif
             </div>
         @else
-            <p>
-                <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
-                        class="ui large basic button fluid">
-                    @lang('pages.bar.tallySummary')...
-                </a>
-            </p>
+            @if(($bar->show_tallies && perms(BarController::permsUser())) || perms(BarController::permsManage()))
+                <p>
+                    <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+                            class="ui large basic button fluid">
+                        @lang('pages.bar.tallySummary')...
+                    </a>
+                </p>
+            @endif
         @endif
 
         @if(perms(BarController::permsManage()))

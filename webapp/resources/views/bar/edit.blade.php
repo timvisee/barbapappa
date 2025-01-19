@@ -165,6 +165,26 @@
             {{ ErrorRenderer::inline('self_enroll') }}
         </div>
 
+        <div class="ui divider"></div>
+
+        <div class="inline field {{ ErrorRenderer::hasError('show_history') ? 'error' : '' }}">
+            <div class="ui checkbox">
+                {{ Form::checkbox('show_history', true, $bar->show_history, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('show_history', __('pages.bar.showHistoryDescription')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('show_history') }}
+        </div>
+
+        <div class="inline field {{ ErrorRenderer::hasError('show_tallies') ? 'error' : '' }}">
+            <div class="ui checkbox">
+                {{ Form::checkbox('show_tallies', true, $bar->show_tallies, ['tabindex' => 0, 'class' => 'hidden']) }}
+                {{ Form::label('show_tallies', __('pages.bar.showTalliesDescription')) }}
+            </div>
+            <br />
+            {{ ErrorRenderer::inline('show_tallies') }}
+        </div>
+
         <br />
 
         <button class="ui button primary" type="submit">@lang('misc.saveChanges')</button>

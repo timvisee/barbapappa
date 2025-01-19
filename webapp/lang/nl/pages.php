@@ -1003,6 +1003,8 @@ return [
         'showExploreDescription' => 'Toon on publieke \'Ontdek bars\' pagina',
         'showCommunityDescription' => 'Toon op groepspagina voor groepsleden',
         'selfEnrollDescription' => 'Sta zelf inschrijven toe (met code als gespecificeerd)',
+        'showHistoryDescription' => 'Toon tot 5 recente aankopen aan alle gebruikers op de barpagina',
+        'showTalliesDescription' => 'Toon turfjesoverzicht aan alle gebruikers met recente aankopen door iedereen',
         'joinAfterCreate' => 'Schrijf je in bij de bar na het aanmaken',
         'created' => 'De bar is aangemaakt.',
         'updated' => 'De bar is aangepast.',
