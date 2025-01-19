@@ -554,7 +554,7 @@ class BarController extends Controller {
         return view('bar.summary')
             ->with('summary', $summary)
             ->with('showingLimited', $showingLimited)
-            ->with('quantity', $productMutations->count())
+            ->with('quantity', $productMutations->sum('quantity'))
             ->with('amount', $amount)
             ->with('specificPeriod', $specificPeriod)
             ->with('timeFrom', $timeFrom)
