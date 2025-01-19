@@ -141,14 +141,19 @@ class BarController extends Controller {
             $products = $bar->economy->quickBuyProducts($currency_ids);
 
         // List the last product mutations
-        $productMutations = $bar
-            ->productMutations()
-            ->withTrashed()
-            ->with('mutation')
-            ->latest()
-            ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
-            ->limit(5)
-            ->get();
+        $show_history = ($bar->show_history && perms(Self::permsUser())) || perms(Self::permsManage());
+        if($show_history) {
+            $productMutations = $bar
+                ->productMutations()
+                ->withTrashed()
+                ->with('mutation')
+                ->latest()
+                ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
+                ->limit(5)
+                ->get();
+        } else {
+            $productMutations = collect();
+        }
 
         // Show the bar page
         return view('bar.show')
@@ -572,6 +577,15 @@ class BarController extends Controller {
 
         // Get the bar and session user
         $bar = \Request::get('bar');
+
+        // Ensure user has permission to show tallies
+        // Needs to be enabled in bar or user needs to have manage permisisons
+        $show_tallies = ($bar->show_tallies && perms(Self::permsUser())) || perms(Self::permsManage());
+        if(!$show_tallies) {
+            return redirect()
+                ->route('bar.show', ['barId' => $barId])
+                ->with('error', __('misc.noPermission'));
+        }
 
         // Validate
         $this->validate($request, [

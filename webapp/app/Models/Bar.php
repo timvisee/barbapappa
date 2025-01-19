@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\DB;
  * @property bool enabled
  * @property bool show_explore
  * @property bool show_community
+ * @property bool show_history
+ * @property bool show_tallies
  * @property bool self_enroll
  * @property string|null password
  * @property int|null inventory_id
@@ -56,6 +58,8 @@ class Bar extends Model {
         'password',
         'show_explore',
         'show_community',
+        'show_history',
+        'show_tallies',
         'self_enroll',
         'low_balance_text',
     ];
