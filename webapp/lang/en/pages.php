@@ -1040,9 +1040,9 @@ return [
         'purchaseSummaryLimited' => 'Not all purchases shown, because there are too many. This list is incomplete.',
         'purchaseSummaryDescriptionSum' => ':quantity purchases for :amount from :from to :to',
         'tallySummary' => 'Tallies',
-        'tallySummaryDescription' => 'These tallies show the number of products purchased by users in this bar.',
+        'tallySummaryDescription' => 'The number of purchased products by users in this bar.',
         'tallySummaryLimited' => 'Not all tallies are shown, because there are too many.',
-        'tallySummaryDescriptionSum' => ':quantity tallies from :from to :to',
+        'tallySummaryDescriptionSum' => ':quantity tallies from :from until now',
         'disabled' => 'This bar has been disabled by an administrator.',
         'disabledGotoDashboard' => 'This bar has been disabled by an administrator. Go to the dashboard to find your current bar.',
         'poster' => [

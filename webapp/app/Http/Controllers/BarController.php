@@ -692,8 +692,7 @@ class BarController extends Controller {
             ->with('showingLimited', $showingLimited)
             ->with('quantity', $productMutations->sum('quantity'))
             ->with('period', $period)
-            ->with('timeFrom', $timeFrom)
-            ->with('timeTo', $timeTo);
+            ->with('timeFrom', $timeFrom);
     }
 
     /**

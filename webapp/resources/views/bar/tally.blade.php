@@ -34,8 +34,7 @@
         <p>
             @lang('pages.bar.tallySummaryDescriptionSum', [
                 'quantity' => $quantity,
-                'from' => $timeFrom->longAbsoluteDiffForHumans(null, null),
-                'to' => $timeTo->longRelativeDiffForHumans(null, null),
+                'from' => $timeFrom->longRelativeDiffForHumans(null, null),
             ]):
         </p>
 
