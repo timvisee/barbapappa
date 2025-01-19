@@ -11,79 +11,22 @@
         @yield('title')
     </h2>
 
-    <div class="ui two item menu">
-        <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}" class="item {{ !$specificPeriod ? 'active' : '' }}">@lang('misc.recent')</a>
+    <div class="ui four item menu">
+        <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+            class="item {{ !isset($period) ? 'active' : '' }}">@lang('misc.recent')</a>
         <a href="{{ route('bar.tally', [
             'barId' => $bar->human_id,
-            'time_from' => $timeFrom->toDateTimeLocalString('minute'),
-            'time_to' => $timeTo->toDateTimeLocalString('minute'),
-        ]) }}" class="item {{ $specificPeriod ? 'active' : '' }}">@lang('misc.specificPeriod')</a>
+            'period' => 'day',
+        ]) }}" class="item {{ $period == 'day' ? 'active' : '' }}">@lang('pages.inventories.period.day')</a>
+        <a href="{{ route('bar.tally', [
+            'barId' => $bar->human_id,
+            'period' => 'week',
+        ]) }}" class="item {{ $period == 'week' ? 'active' : '' }}">@lang('pages.inventories.period.week')</a>
+        <a href="{{ route('bar.tally', [
+            'barId' => $bar->human_id,
+            'period' => 'month',
+        ]) }}" class="item {{ $period == 'month' ? 'active' : '' }}">@lang('pages.inventories.period.month')</a>
     </div>
-
-    {{-- Period input --}}
-    @if($specificPeriod)
-        {!! Form::open([
-            'method' => 'GET',
-            'class' => 'ui form'
-        ]) !!}
-            <div class="two fields">
-                <div class="required field {{ ErrorRenderer::hasError('time_from') ? 'error' : '' }}">
-                    {{ Form::label('time_from', __('misc.fromTime') . ':') }}
-                    {{ Form::datetimeLocal('time_from', $timeFrom?->toDateTimeLocalString('minute'), [
-                        'min' => $bar->created_at->floorDay()->toDateTimeLocalString('minute'),
-                        'max' => now()->toDateTimeLocalString('minute'),
-                    ]) }}
-                    {{ ErrorRenderer::inline('time_from') }}
-                </div>
-
-                <div class="required field {{ ErrorRenderer::hasError('time_to') ? 'error' : '' }}">
-                    {{ Form::label('time_to', __('misc.toTime') . ':') }}
-                    {{ Form::datetimeLocal('time_to', ($timeTo ?? now())->toDateTimeLocalString('minute'), [
-                        'min' => $bar->created_at->floorDay()->toDateTimeLocalString('minute'),
-                        'max' => now()->toDateTimeLocalString('minute'),
-                    ]) }}
-                    {{ ErrorRenderer::inline('time_to') }}
-                </div>
-            </div>
-
-            <button class="ui button blue" type="submit">@lang('misc.apply')</button>
-
-            <div class="ui buttons">
-                @if(!$bar->created_at->addDay()->isFuture())
-                    <a href="{{ route('bar.tally', [
-                                'barId' => $bar->id,
-                                'time_from' => now()->subDay()->max($bar->created_at)->toDateTimeLocalString('minute'),
-                                'time_to' => now()->toDateTimeLocalString('minute'),
-                            ]) }}"
-                            class="ui button">
-                        @lang('pages.inventories.period.day')
-                    </a>
-                @endif
-                @if(!$bar->created_at->addWeek()->isFuture())
-                    <a href="{{ route('bar.tally', [
-                                'barId' => $bar->id,
-                                'time_from' => now()->subWeek()->max($bar->created_at)->toDateTimeLocalString('minute'),
-                                'time_to' => now()->toDateTimeLocalString('minute'),
-                            ]) }}"
-                            class="ui button">
-                        @lang('pages.inventories.period.week')
-                    </a>
-                @endif
-                @if(!$bar->created_at->addMonth()->isFuture())
-                    <a href="{{ route('bar.tally', [
-                                'barId' => $bar->id,
-                                'time_from' => now()->subMonth()->max($bar->created_at)->toDateTimeLocalString('minute'),
-                                'time_to' => now()->toDateTimeLocalString('minute'),
-                            ]) }}"
-                            class="ui button">
-                        @lang('pages.inventories.period.month')
-                    </a>
-                @endif
-            </div>
-
-            <div class="ui hidden divider"></div>
-        {!! Form::close() !!}
-    @endif
 
     <p>@lang('pages.bar.tallySummaryDescription')</p>
 

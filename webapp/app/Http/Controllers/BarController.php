@@ -575,19 +575,26 @@ class BarController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'time_from' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|before_or_equal:time_to|before_or_equal:' . now()->toDateTimeString(),
-            'time_to' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|after_or_equal:time_from|before_or_equal:' . now()->toDateTimeString(),
+            'period' => 'nullable|in:day,week,month',
         ]);
-        $specificPeriod = $request->query('time_from') != null && $request->query('time_to') != null;
+        $period = $request->query('period');
 
         // Get items from range or just recent items
-        if($specificPeriod) {
-            $timeFrom = $request->query('time_from');
-            $timeFrom = $timeFrom != null ? Carbon::parse($timeFrom) : null;
-            $timeTo = $request->query('time_to');
-            $timeTo = $timeTo != null ? Carbon::parse($timeTo) : null;
-            $timeFrom ??= ($timeTo ?? now())->clone()->subMonth()->max($bar->created_at);
-            $timeTo ??= now();
+        if(isset($period)) {
+            $timeTo = now()->addMinute();
+            switch($period) {
+            case 'day':
+                $timeFrom = now()->subDay();
+                break;
+            case 'week':
+                $timeFrom = now()->subWeek();
+                break;
+            case 'month':
+                $timeFrom = now()->subMonth();
+                break;
+            default:
+                throw new \Exception('Invalid period');
+            }
 
             $productMutations = $bar
                 ->productMutations()
@@ -684,7 +691,7 @@ class BarController extends Controller {
             ->with('tallies', $tallies)
             ->with('showingLimited', $showingLimited)
             ->with('quantity', $productMutations->sum('quantity'))
-            ->with('specificPeriod', $specificPeriod)
+            ->with('period', $period)
             ->with('timeFrom', $timeFrom)
             ->with('timeTo', $timeTo);
     }
