@@ -324,7 +324,7 @@ Breadcrumbs::for('bar.summary', function(BreadcrumbTrail $trail, $bar) {
 
 Breadcrumbs::for('bar.tally', function(BreadcrumbTrail $trail, $bar) {
     $trail->parent('bar.show', $bar);
-    $trail->push(__('pages.bar.tally'), route('bar.tally', ['barId' => $bar->human_id]));
+    $trail->push(__('pages.bar.tallySummary'), route('bar.tally', ['barId' => $bar->human_id]));
 });
 
 Breadcrumbs::for('bar.links', function(BreadcrumbTrail $trail, $bar) {
