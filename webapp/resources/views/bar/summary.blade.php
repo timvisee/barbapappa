@@ -119,7 +119,7 @@
         <div class="ui top vertical menu fluid">
 
         <h5 class="ui item header">
-            {{ $userSummary['owner']?->name }}
+            {{ $userSummary['owner']?->name ?? __('misc.unknownUser') }}
 
             {{-- Relative delay --}}
             <span class="subtle">
@@ -160,7 +160,7 @@
                 <span class="subtle">{{ $userProducts['quantity'] }}×</span>
             @endif
 
-            {{ $userProducts['name'] }}
+            {{ $userProducts['name'] ?? __('misc.unknownProduct') }}
             {!! $userProducts['amount']->formatAmount(BALANCE_FORMAT_LABEL, [
                 'color' => false,
             ]) !!}

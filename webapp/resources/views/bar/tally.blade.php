@@ -61,7 +61,8 @@
                 <div class="item">
             @endif
 
-            {{ $userTally['owner']?->name }} ({{ $userTally['quantity'] }})
+            {{ $userTally['owner']?->name ?? __('misc.unknownUser') }}
+            ({{ $userTally['quantity'] }})
 
             <span style="float: right; font-weight: bold;">
                 @for($i = 0; $i < $userTally['quantity'] % 5; $i += 1)|@endfor
