@@ -118,7 +118,17 @@
     @forelse($summary as $userSummary)
         <div class="ui top vertical menu fluid">
 
-        <h5 class="ui item header">
+        {{-- Start user header, link to user if known --}}
+        @if($userSummary['member'] != null)
+            <a class="header item"
+                href="{{ route('bar.member.show', [
+                    'barId' => $bar->human_id,
+                    'memberId' => $userSummary['member']->id,
+                ]) }}">
+        @else
+            <div class="item">
+        @endif
+
             {{ $userSummary['owner']?->name ?? __('misc.unknownUser') }}
 
             {{-- Relative delay --}}
@@ -142,15 +152,22 @@
             {!! $userSummary['amount']->formatAmount(BALANCE_FORMAT_LABEL, [
                 'color' => true,
             ]) !!}
-        </h5>
+
+        {{-- End user header --}}
+        @if($userSummary['member'] != null)
+            </a>
+        @else
+            </div>
+        @endif
 
         @foreach($userSummary['products'] as $userProducts)
-            {{-- Start item, link to user if owner is a bar member --}}
-            @if($userSummary['member'] != null)
+            {{-- Start product item, link to product if known --}}
+            @if($userProducts['product'] != null)
                 <a class="item"
-                    href="{{ route('bar.member.show', [
-                        'barId' => $bar->human_id,
-                        'memberId' => $userSummary['member']->id,
+                    href="{{ route('community.economy.product.show', [
+                        'communityId' => $bar->community_id,
+                        'economyId' => $userProducts['product']->economy_id,
+                        'productId' => $userProducts['product']->id,
                     ]) }}">
             @else
                 <div class="item">
@@ -177,8 +194,8 @@
                 @endif
             </span>
 
-            {{-- End item --}}
-            @if($userSummary['member'] != null)
+            {{-- End product item --}}
+            @if($userProducts['product'] != null)
                 </a>
             @else
                 </div>
