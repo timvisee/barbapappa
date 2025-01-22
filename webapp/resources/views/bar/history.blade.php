@@ -126,6 +126,15 @@
                         class="item">
                     @lang('misc.export')
                 </a>
+                <div class="divider"></div>
+                <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
+                        class="item">
+                    @lang('pages.bar.purchaseSummary')
+                </a>
+                <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+                        class="item">
+                    @lang('pages.bar.tallySummary')
+                </a>
             </div>
         </div>
 

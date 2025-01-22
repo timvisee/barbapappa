@@ -704,13 +704,14 @@ class BarController extends Controller {
             })
             ->sortByDesc('quantity');
 
-        // Show the purchase summary page
+        // Show the purchase tally page
         return view('bar.tally')
             ->with('tallies', $tallies)
             ->with('showingLimited', $showingLimited)
             ->with('quantity', $productMutations->sum('quantity'))
             ->with('period', $period)
-            ->with('timeFrom', $timeFrom);
+            ->with('timeFrom', $timeFrom)
+            ->with('timeTo', $timeTo);
     }
 
     /**

@@ -79,16 +79,6 @@
                         @lang('pages.inventories.period.month')
                     </a>
                 @endif
-                @if(!$bar->created_at->addYear()->isFuture())
-                    <a href="{{ route('bar.summary', [
-                                'barId' => $bar->id,
-                                'time_from' => now()->subYear()->max($bar->created_at)->toDateTimeLocalString('minute'),
-                                'time_to' => now()->toDateTimeLocalString('minute'),
-                            ]) }}"
-                            class="ui button">
-                        @lang('pages.inventories.period.year')
-                    </a>
-                @endif
             </div>
 
             <div class="ui hidden divider"></div>
@@ -209,6 +199,21 @@
     @endforelse
 
     <p>
+        <div class="ui floating right labeled icon dropdown button">
+            <i class="dropdown icon"></i>
+            @lang('misc.manage')
+            <div class="menu">
+                <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                        class="item">
+                    @lang('pages.bar.purchases')
+                </a>
+                <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+                        class="item">
+                    @lang('pages.bar.tallySummary')
+                </a>
+            </div>
+        </div>
+
         <a href="{{ route('bar.manage', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')

@@ -84,6 +84,32 @@
     </div>
 
     <p>
+        @if(perms(BarController::permsManage()))
+            <div class="ui floating right labeled icon dropdown button">
+                <i class="dropdown icon"></i>
+                @lang('misc.manage')
+                <div class="menu">
+                    <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                            class="item">
+                        @lang('pages.bar.purchases')
+                    </a>
+                    @if(!isset($timeFrom) || !isset($timeTo))
+                        <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
+                            class="item">
+                    @else
+                        <a href="{{ route('bar.summary', [
+                            'barId' => $bar->human_id,
+                            'time_from' => $timeFrom->toDateTimeLocalString('minute'),
+                            'time_to' => $timeTo->ceilMinute()->toDateTimeLocalString('minute'),
+                        ]) }}"
+                                class="item">
+                    @endif
+                        @lang('pages.bar.purchaseSummary')
+                    </a>
+                </div>
+            </div>
+        @endif
+
         <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
                 class="ui button basic">
             @lang('pages.bar.backToBar')
