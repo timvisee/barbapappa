@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.200 (2025-01-22)
+
+- Interlink tally, purchase summary and history pages with dropdown menu for convenience
+- On purchase summary page, link headers to members and items to products
+- Change user session expiry time to 2.5 years
+- On tally page, render absolute count as subtle text
+- Fix incorrect title on tally page
+- Fix time range selection not including upper bound
+- Fix time range selection disallowing current time in some cases
+- Fix error when trying to render name of unknown user or product
+
 ## 0.1.199 (2025-01-19)
 
 - Add public tally page, showing purchased product quantity by everybody over the last day, week or month
