@@ -83,7 +83,7 @@
                 <div class="ui action input">
                     {{ Form::datetimeLocal('time', $time->toDateTimeLocalString('minute'), [
                         'min' => $inventory->created_at->floorDay()->toDateTimeLocalString('minute'),
-                        'max' => now()->toDateTimeLocalString('minute'),
+                        'max' => now()->ceilMinute()->toDateTimeLocalString('minute'),
                     ]) }}
                     <button class="ui button purple" type="submit">@lang('misc.go')!</button>
                 </div>

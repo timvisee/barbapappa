@@ -21,16 +21,16 @@
                 {{ Form::label('time_from', __('misc.fromTime') . ':') }}
                 {{ Form::datetimeLocal('time_from', $timeFrom?->toDateTimeLocalString('minute'), [
                     'min' => $inventory->created_at->floorDay()->toDateTimeLocalString('minute'),
-                    'max' => now()->toDateTimeLocalString('minute'),
+                    'max' => now()->ceilMinute()->toDateTimeLocalString('minute'),
                 ]) }}
                 {{ ErrorRenderer::inline('time_from') }}
             </div>
 
             <div class="required field {{ ErrorRenderer::hasError('time_to') ? 'error' : '' }}">
                 {{ Form::label('time_to', __('misc.toTime') . ':') }}
-                {{ Form::datetimeLocal('time_to', ($timeTo ?? now())->toDateTimeLocalString('minute'), [
+                {{ Form::datetimeLocal('time_to', ($timeTo ?? now()->ceilMinute())->toDateTimeLocalString('minute'), [
                     'min' => $inventory->created_at->floorDay()->toDateTimeLocalString('minute'),
-                    'max' => now()->toDateTimeLocalString('minute'),
+                    'max' => now()->ceilMinute()->toDateTimeLocalString('minute'),
                 ]) }}
                 {{ ErrorRenderer::inline('time_to') }}
             </div>
@@ -45,7 +45,7 @@
                             'economyId' => $economy->id,
                             'inventoryId' => $inventory->id,
                             'time_from' => now()->subWeek()->max($inventory->created_at)->toDateTimeLocalString('minute'),
-                            'time_to' => now()->toDateTimeLocalString('minute'),
+                            'time_to' => now()->ceilMinute()->toDateTimeLocalString('minute'),
                         ]) }}"
                         class="ui button">
                     @lang('pages.inventories.period.week')
@@ -57,7 +57,7 @@
                             'economyId' => $economy->id,
                             'inventoryId' => $inventory->id,
                             'time_from' => now()->subMonth()->max($inventory->created_at)->toDateTimeLocalString('minute'),
-                            'time_to' => now()->toDateTimeLocalString('minute'),
+                            'time_to' => now()->ceilMinute()->toDateTimeLocalString('minute'),
                         ]) }}"
                         class="ui button">
                     @lang('pages.inventories.period.month')
@@ -69,7 +69,7 @@
                             'economyId' => $economy->id,
                             'inventoryId' => $inventory->id,
                             'time_from' => now()->subYear()->max($inventory->created_at)->toDateTimeLocalString('minute'),
-                            'time_to' => now()->toDateTimeLocalString('minute'),
+                            'time_to' => now()->ceilMinute()->toDateTimeLocalString('minute'),
                         ]) }}"
                         class="ui button">
                     @lang('pages.inventories.period.year')

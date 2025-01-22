@@ -100,7 +100,7 @@ class InventoryController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'time' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|before_or_equal:' . now()->toDateTimeString(),
+            'time' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|before_or_equal:' . now()->ceilMinute()->toDateTimeString(),
         ]);
 
         // Parse time if set
@@ -724,8 +724,8 @@ class InventoryController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'time_from' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|before:time_to|before_or_equal:' . now()->toDateTimeString(),
-            'time_to' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|after:time_from|before_or_equal:' . now()->toDateTimeString(),
+            'time_from' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|before:time_to|before_or_equal:' . now()->ceilMinute()->toDateTimeString(),
+            'time_to' => 'nullable|date|after_or_equal:' . $inventory->created_at->floorDay()->toDateTimeString() . '|after:time_from|before_or_equal:' . now()->ceilMinute()->toDateTimeString(),
         ]);
 
         // Parse times if set, default to past month
@@ -735,6 +735,7 @@ class InventoryController extends Controller {
         $timeTo = $timeTo != null ? Carbon::parse($timeTo) : null;
         $timeFrom ??= ($timeTo ?? now())->clone()->subMonth()->max($inventory->created_at);
         $timeTo ??= now();
+        $timeTo = $timeTo->min(now());
 
         // Build response
         $response = view('community.economy.inventory.report')

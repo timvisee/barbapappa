@@ -421,8 +421,8 @@ class BarController extends Controller {
 
         // Validate
         $this->validate($request, [
-            'time_from' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|before_or_equal:time_to|before_or_equal:' . now()->toDateTimeString(),
-            'time_to' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|after_or_equal:time_from|before_or_equal:' . now()->toDateTimeString(),
+            'time_from' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|before_or_equal:time_to|before_or_equal:' . now()->ceilMinute()->toDateTimeString(),
+            'time_to' => 'nullable|date|after_or_equal:' . $bar->created_at->floorDay()->toDateTimeString() . '|after_or_equal:time_from|before_or_equal:' . now()->ceilMinute()->toDateTimeString(),
         ]);
         $specificPeriod = $request->query('time_from') != null && $request->query('time_to') != null;
 
@@ -434,6 +434,7 @@ class BarController extends Controller {
             $timeTo = $timeTo != null ? Carbon::parse($timeTo) : null;
             $timeFrom ??= ($timeTo ?? now())->clone()->subMonth()->max($bar->created_at);
             $timeTo ??= now();
+            $timeTo = $timeTo->min(now());
 
             $productMutations = $bar
                 ->productMutations()
@@ -598,7 +599,7 @@ class BarController extends Controller {
 
         // Get items from range or just recent items
         if(isset($period)) {
-            $timeTo = now()->addMinute();
+            $timeTo = now();
             switch($period) {
             case 'day':
                 $timeFrom = now()->subDay();
