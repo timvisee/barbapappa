@@ -87,7 +87,7 @@
         @if(perms(BarController::permsManage()))
             <div class="ui floating right labeled icon dropdown button">
                 <i class="dropdown icon"></i>
-                @lang('misc.manage')
+                @lang('misc.moreInfo')
                 <div class="menu">
                     <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
                             class="item">
