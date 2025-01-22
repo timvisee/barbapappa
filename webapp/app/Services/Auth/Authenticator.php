@@ -35,7 +35,7 @@ class Authenticator {
     /**
      * Session expiration time in seconds.
      */
-    const SESSION_EXPIRE = 356 * 24 * 60 * 60;
+    const SESSION_EXPIRE = 2.5 * 356 * 24 * 60 * 60;
 
     /**
      * Length in characters of the session token.
