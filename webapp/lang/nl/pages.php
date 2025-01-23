@@ -1049,7 +1049,7 @@ return [
         'tallySummaryDescriptionSum' => ':quantity turfjes van :from tot nu',
         'disabled' => 'Deze bar is uitgeschakeld door een administrator.',
         'disabledGotoDashboard' => 'Deze bar is uitgeschakeld door een administrator. Ga terug naar het dashboard om je huidige bar te zoeken.',
-        'bannerNoConnection' => 'Geen verbinding. Kopen niet mogelijk.',
+        'bannerNoConnection' => 'Geen verbinding. Verbind opnieuw om je aankoop te voltooien.',
         'bannerProcessingTransactionsOne' => 'Nog één aankoop aan het synchroniseren...',
         'bannerProcessingTransactionsMany' => 'Nog :count aankopen aan het synchroniseren...',
         'poster' => [
