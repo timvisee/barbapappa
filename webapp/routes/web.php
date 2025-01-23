@@ -592,7 +592,8 @@ Route::prefix('/b')->middleware('auth')->group(function() {
         // Advanced buy
         Route::prefix('/buy')->group(function() {
             // Main page
-            Route::get('/', 'BarController@buy')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
+            // TODO: change to @buy and show separate page by default
+            Route::get('/', 'BarController@show')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
 
             // API calls
             Route::prefix('/api')->group(function() {

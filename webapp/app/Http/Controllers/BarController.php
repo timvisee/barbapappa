@@ -984,29 +984,28 @@ class BarController extends Controller {
             ->with('successHtml', $msg);
     }
 
-    /**
-     * Bar advanced buy page.
-     *
-     * @return Response
-     */
-    public function buy($barId) {
-        // Get the bar and session user
-        $bar = \Request::get('bar');
-        $user = barauth()->getSessionUser();
+    // TODO: remove this entirely?
+    // /**
+    //  * Bar advanced buy page.
+    //  *
+    //  * @return Response
+    //  */
+    // public function buy($barId) {
+    //     // Get the bar and session user
+    //     $bar = \Request::get('bar');
+    //     $user = barauth()->getSessionUser();
 
-        // Show info page if user does not have user role
-        if(!perms(Self::permsUser()) || !$bar->isJoined($user))
-            return $this->info($barId);
+    //     // Show info page if user does not have user role
+    //     if(!perms(Self::permsUser()) || !$bar->isJoined($user))
+    //         return $this->info($barId);
 
-        // TODO: can we remove this page entirely?
-
-        // Show the bar page
-        return view('bar.buy')
-            ->with('economy', $bar->economy)
-            ->with('joined', $bar->isJoined($user))
-            ->with('mustVerify', $user->needsToVerifyEmail())
-            ->with('userBalance', $bar->economy->calcUserBalance());
-    }
+    //     // Show the bar page
+    //     return view('bar.buy')
+    //         ->with('economy', $bar->economy)
+    //         ->with('joined', $bar->isJoined($user))
+    //         ->with('mustVerify', $user->needsToVerifyEmail())
+    //         ->with('userBalance', $bar->economy->calcUserBalance());
+    // }
 
     /**
      * API route for listing products in this bar, that a user can buy.
