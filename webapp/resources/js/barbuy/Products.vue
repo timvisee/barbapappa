@@ -23,7 +23,8 @@
         </div>
 
         <h5 class="ui item header">
-            {{ __('pages.kiosk.selectProducts') }}
+            <span v-if="self">{{ __('pages.bar.tapToBuyProducts') }}</span>
+            <span v-else>{{ __('pages.kiosk.selectProducts') }}</span>
 
             <div class="header-actions">
 
