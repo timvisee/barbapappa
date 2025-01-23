@@ -20,7 +20,7 @@
     @lang('misc.kiosk')
 </a>
 <a href="{{ route('kiosk.tally') }}"
-        class="item {{ $r == 'kiosk.history' ? ' active' : '' }}">
+        class="item {{ $r == 'kiosk.tally' ? ' active' : '' }}">
     <i class="glyphicons glyphicons-signal"></i>
     @lang('pages.bar.tallySummary')
 </a>
