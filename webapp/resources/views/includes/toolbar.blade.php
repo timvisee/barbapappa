@@ -21,8 +21,8 @@
         @if(kioskauth()->isAuth())
             <a href="{{ route('kiosk.join') }}" class="glyphicons glyphicons-user-add"></a>
             <a href="{{ route('kiosk.tally') }}" class="glyphicons glyphicons-signal"></a>
-            <a href="{{ route('kiosk.history') }}" class="glyphicons glyphicons-history"></a>
-            <a href="{{ route('kiosk.main') }}" class="glyphicons glyphicons-shop"></a>
+            <a href="{{ route('kiosk.history') }}" class="glyphicons glyphicons-eye-open"></a>
+            <a href="{{ route('kiosk.main') }}" class="glyphicons glyphicons-shopping-cart"></a>
         @elseif(barauth()->isAuth())
             @if(isset($notificationCounts) && $notificationCounts['unread'] > 0)
                 <a href="#"
