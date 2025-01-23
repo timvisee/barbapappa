@@ -705,11 +705,6 @@ class KioskController extends Controller {
             $cart = collect($buyData['cart']);
             $uuid = $buyData['uuid'];
             $initiated_at_timestamp = $buyData['initiated_at'] ?? null;
-        } else if(is_array($buyData)) {
-            // Backwards compatability: client version <= 0.1.175
-            $cart = collect($buyData);
-            $uuid = null;
-            $initiated_at_timestamp = null;
         } else {
             throw new \Exception('Invalid buy data');
         }
@@ -744,6 +739,7 @@ class KioskController extends Controller {
             if($uuid != null) {
                 $uuid_expire_at = now()->addSeconds(Self::UUID_CHECK_EXPIRE_SECONDS);
                 if(!UuidCheck::claim($uuid, $uuid_expire_at, false))
+                    // TODO: is this return broken?
                     return [];
             }
 

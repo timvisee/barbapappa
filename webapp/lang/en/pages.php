@@ -319,7 +319,7 @@ return [
         'clickBuyOrSearch' => 'Click products to buy or search',
         '#products' => '{0} No products|{1} 1 product|[2,*] :count products',
         'noProducts' => 'No products...',
-        'searchingFor' => 'Searching for :term...',
+        'searchingFor' => 'Searching for :term',
         'noProductsFoundFor' => 'No products found for :term',
         'manageProduct' => 'Manage product',
         'manageProducts' => 'Manage products',
@@ -1047,6 +1047,10 @@ return [
         'tallySummaryDescriptionSum' => ':quantity tallies from :from until now',
         'disabled' => 'This bar has been disabled by an administrator.',
         'disabledGotoDashboard' => 'This bar has been disabled by an administrator. Go to the dashboard to find your current bar.',
+        'tapToBuyProducts' => 'Tap to buy products',
+        'bannerNoConnection' => 'No connection. Reconnect to complete your purchase.',
+        'bannerProcessingTransactionsOne' => 'Synchronizing one purchase...',
+        'bannerProcessingTransactionsMany' => 'Synchronizing :count purchases...',
         'poster' => [
             'thisBarUses' => 'This bar uses',
             'toDigitallyManage' => 'to digitally manage payments and inventory for consumptions',
@@ -1055,7 +1059,7 @@ return [
         ],
         'buy' => [
             'forMe' => 'Buy myself',
-            'forOthers' => 'For others/more',
+            'forOthers' => 'For others',
         ],
         'advancedBuy' => [
             'tapProducts' => 'Select products to buy for any user.',
@@ -1115,7 +1119,7 @@ return [
         'selectUser' => 'Select member',
         'addToUser' => 'Add to member',
         'searchUsers' => 'Search users',
-        'searchingFor' => 'Searching :term...',
+        'searchingFor' => 'Searching :term',
         'noUsersFoundFor' => 'Nobody for :term',
         'noProductsFoundFor' => 'Nothing for :term',
         'firstSelectUser' => 'Select a member on the left to make a purchase',

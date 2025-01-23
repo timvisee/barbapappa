@@ -319,7 +319,7 @@ return [
         'clickBuyOrSearch' => 'Tap loot to get or search',
         '#products' => '{0} Nay loot|{1} 1 loot|[2,*] :count loot',
         'noProducts' => 'Nay loot...',
-        'searchingFor' => 'Scavenging for :term...',
+        'searchingFor' => 'Scavenging for :term',
         'noProductsFoundFor' => 'Nay loot for :term',
         'manageProduct' => 'Manage loot',
         'manageProducts' => 'Manage loot',
@@ -1047,6 +1047,10 @@ return [
         'tallySummaryDescriptionSum' => ':quantity tallies from :from until now',
         'disabled' => 'Dis bar be disabled by another pirate.',
         'disabledGotoDashboard' => 'Dis bar be disabled by another pirate. Go to yer home port to find yer current bar.',
+        'tapToBuyProducts' => 'Tap to loot',
+        'bannerNoConnection' => 'Connection errrror. Reconnect to complete yer purchase.',
+        'bannerProcessingTransactionsOne' => 'Synchronizing one purchase...',
+        'bannerProcessingTransactionsMany' => 'Synchronizing :count purchases...',
         'poster' => [
             'thisBarUses' => 'Dis bar uses',
             'toDigitallyManage' => 'to digitally manage booty and stock for consumptions',
@@ -1055,7 +1059,7 @@ return [
         ],
         'buy' => [
             'forMe' => 'Get yerself',
-            'forOthers' => 'For crew/more',
+            'forOthers' => 'For crew',
         ],
         'advancedBuy' => [
             'tapProducts' => 'Select loot to get for any pirate.',
@@ -1115,7 +1119,7 @@ return [
         'selectUser' => 'Select pirate',
         'addToUser' => 'Add to pirate',
         'searchUsers' => 'Scavenge pirates',
-        'searchingFor' => 'Scavenging :term...',
+        'searchingFor' => 'Scavenging :term',
         'noUsersFoundFor' => 'Nay for :term',
         'noProductsFoundFor' => 'Nay for :term',
         'firstSelectUser' => 'Select a pirate on the left to make a purchase',

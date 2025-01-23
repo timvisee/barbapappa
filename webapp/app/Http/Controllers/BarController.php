@@ -11,6 +11,7 @@ use App\Models\Mutation;
 use App\Models\MutationProduct;
 use App\Models\MutationWallet;
 use App\Models\Transaction;
+use App\Models\UuidCheck;
 use App\Perms\BarRoles;
 use App\Services\Auth\Authenticator as UserAuthenticator;
 use App\Utils\MoneyAmountBag;
@@ -31,6 +32,11 @@ class BarController extends Controller {
      * The limit for advanced buy products to show.
      */
     const ADVANCED_BUY_PRODUCT_LIMIT = 8;
+
+    /**
+     * Time after which transaction UUID claims expire.
+     */
+    const UUID_CHECK_EXPIRE_SECONDS = 3 * 30 * 24 * 60 * 60;
 
     /**
      * Amount of time in seconds to separate summary sections.
@@ -129,18 +135,27 @@ class BarController extends Controller {
             $member->pivot->save();
         }
 
-        // Build a list of preferred currencies for the user
-        // TODO: if there's only one currency, that is usable, use null to
-        //       greatly simplify product queries
-        $currencies = Self::userCurrencies($bar, $user);
-        $currency_ids = $currencies->pluck('id');
+        // Show the bar page
+        return view('bar.show')
+            ->with('economy', $bar->economy)
+            ->with('joined', $bar->isJoined($user))
+            ->with('mustVerify', $user->needsToVerifyEmail())
+            ->with('userBalance', $bar->economy->calcUserBalance());
+    }
 
-        // Search, or show top products
-        $search = \Request::get('q');
-        if(!($search === null || trim($search) === ''))
-            $products = $bar->economy->searchProducts($search, $currency_ids);
-        else
-            $products = $bar->economy->quickBuyProducts($currency_ids);
+    /**
+     * Bar mini history page.
+     *
+     * @return Response
+     */
+    public function widgetHistory($barId) {
+        // Get the bar and session user
+        $bar = \Request::get('bar');
+        $user = barauth()->getSessionUser();
+
+        // Show info page if user does not have user role
+        if(!perms(Self::permsUser()) || !$bar->isJoined($user))
+            throw new \Exception('No permission');
 
         // List the last product mutations
         $show_history = ($bar->show_history && perms(Self::permsUser())) || perms(Self::permsManage());
@@ -158,13 +173,7 @@ class BarController extends Controller {
         }
 
         // Show the bar page
-        return view('bar.show')
-            ->with('economy', $bar->economy)
-            ->with('joined', $bar->isJoined($user))
-            ->with('mustVerify', $user->needsToVerifyEmail())
-            ->with('userBalance', $bar->economy->calcUserBalance())
-            ->with('products', $products)
-            ->with('currencies', $currencies)
+        return view('bar.include.miniHistory')
             ->with('productMutations', $productMutations);
     }
 
@@ -975,27 +984,28 @@ class BarController extends Controller {
             ->with('successHtml', $msg);
     }
 
-    /**
-     * Bar advanced buy page.
-     *
-     * @return Response
-     */
-    public function buy($barId) {
-        // Get the bar and session user
-        $bar = \Request::get('bar');
-        $user = barauth()->getSessionUser();
+    // TODO: remove this entirely?
+    // /**
+    //  * Bar advanced buy page.
+    //  *
+    //  * @return Response
+    //  */
+    // public function buy($barId) {
+    //     // Get the bar and session user
+    //     $bar = \Request::get('bar');
+    //     $user = barauth()->getSessionUser();
 
-        // Show info page if user does not have user role
-        if(!perms(Self::permsUser()) || !$bar->isJoined($user))
-            return $this->info($barId);
+    //     // Show info page if user does not have user role
+    //     if(!perms(Self::permsUser()) || !$bar->isJoined($user))
+    //         return $this->info($barId);
 
-        // Show the bar page
-        return view('bar.buy')
-            ->with('economy', $bar->economy)
-            ->with('joined', $bar->isJoined($user))
-            ->with('mustVerify', $user->needsToVerifyEmail())
-            ->with('userBalance', $bar->economy->calcUserBalance());
-    }
+    //     // Show the bar page
+    //     return view('bar.buy')
+    //         ->with('economy', $bar->economy)
+    //         ->with('joined', $bar->isJoined($user))
+    //         ->with('mustVerify', $user->needsToVerifyEmail())
+    //         ->with('userBalance', $bar->economy->calcUserBalance());
+    // }
 
     /**
      * API route for listing products in this bar, that a user can buy.
@@ -1171,12 +1181,119 @@ class BarController extends Controller {
      *
      * @return Response
      */
+    public function apiBuySelfInstant(Request $request) {
+        // TODO: we receive 'count', what is that?
+
+        // Get the bar, current user and the search query
+        $bar = \Request::get('bar');
+        $economy = $bar->economy;
+        $buyData = $request->post();
+        $self = $this;
+
+        // Error if bar is disabled
+        if(!$bar->enabled) {
+            return response()->json([
+                'message' => __('pages.bar.disabled'),
+            ])->setStatusCode(403);
+        }
+
+        // Take product from request buy data
+        if(isset($buyData['product'])) {
+            $product = collect($buyData['product']);
+            $uuid = $buyData['uuid'];
+            $initiated_at_timestamp = $buyData['initiated_at'] ?? null;
+        } else {
+            throw new \Exception('Invalid buy data');
+        }
+
+        // We want to prevent replaying transactions
+        // If UUID is already used, assume transaction is already processed
+        if($uuid != null && UuidCheck::hasUuid($uuid)) {
+            // TODO: log this
+            return [];
+        }
+
+        // Fetch product
+        // TODO: what to do here on failure
+        $product = $economy
+            ->products()
+            ->withTrashed()
+            ->findOrFail($product['id']);
+
+        // Buy product
+        $details = null;
+        DB::transaction(function() use($self, $uuid, $bar, $product, &$details) {
+            // Claim UUID or return early
+            if($uuid != null) {
+                $uuid_expire_at = now()->addSeconds(Self::UUID_CHECK_EXPIRE_SECONDS);
+                if(!UuidCheck::claim($uuid, $uuid_expire_at, false))
+                    // TODO: is this return broken?
+                    return [];
+            }
+
+            // Quick buy the product
+            $details = $self->quickBuyProduct($bar, $product);
+        });
+
+        // Format the price
+        $transaction = $details['transaction'];
+        $cost = $details['currency']->format($details['price']);
+
+        // Build a success message
+        $msg = __('pages.bar.boughtProductForPrice', [
+            'product' => $product->displayName(),
+            'price' => $cost,
+        ]) . '.';
+        $msg .= ' <a href="' . route('transaction.undo', [
+            'transactionId' => $transaction->id
+        ]) . '">' . __('misc.undo') . '</a>';
+
+        // Redirect back to the bar
+        return redirect()
+            ->route('bar.show', ['barId' => $bar->human_id])
+            ->with('successHtml', $msg);
+
+//         // Do everything in a database transaction
+//         $productCount = 0;
+//         $userCount = $cart->count();
+//         DB::transaction(function() use($bar, $economy, $cart, $self, &$productCount) {
+//             // For each user, purchase the selected products
+//             $cart->each(function($userItem) use($bar, $economy, $self, &$productCount) {
+//                 $user = $userItem['user'];
+//                 $products = collect($userItem['products']);
+
+//                 // Retrieve user and product models from database
+//                 $member = $economy->members()->showInBuy(true)->findOrFail($user['id']);
+//                 $products = $products->map(function($product) use($economy) {
+//                     $product['product'] = $economy->products()->findOrFail($product['product']['id']);
+//                     return $product;
+//                 });
+
+//                 // Buy the products, increase product count
+//                 $result = $self->buyProducts($bar, $member, $products);
+//                 $productCount += $result['productCount'];
+//             });
+
+//         // Return some useful stats
+//         return [
+//             'productCount' => $productCount,
+//             'userCount' => $userCount,
+//         ];
+    }
+
+    /**
+     * API route for buying products in the users advanced buying cart.
+     *
+     * @return Response
+     */
     public function apiBuyBuy(Request $request) {
         // Get the bar, current user and the search query
         $bar = \Request::get('bar');
         $economy = $bar->economy;
-        $cart = collect($request->post());
+        $cart = collect($request->post()['cart'] ?? []);
         $self = $this;
+
+        // TODO: validate cart has items!
 
         // Error if bar is disabled
         if(!$bar->enabled) {
