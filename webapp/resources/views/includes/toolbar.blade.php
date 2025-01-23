@@ -20,6 +20,7 @@
     <div class="right">
         @if(kioskauth()->isAuth())
             <a href="{{ route('kiosk.join') }}" class="glyphicons glyphicons-user-add"></a>
+            <a href="{{ route('kiosk.tally') }}" class="glyphicons glyphicons-signal"></a>
             <a href="{{ route('kiosk.history') }}" class="glyphicons glyphicons-history"></a>
             <a href="{{ route('kiosk.main') }}" class="glyphicons glyphicons-shop"></a>
         @elseif(barauth()->isAuth())

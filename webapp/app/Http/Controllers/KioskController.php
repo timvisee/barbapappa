@@ -77,6 +77,28 @@ class KioskController extends Controller {
     }
 
     /**
+     * Kiosk tally summary page.
+     *
+     * @return Response
+     */
+    public function tally() {
+        // Get the bar and session user
+        $bar = kioskauth()->getBar();
+
+        // List the last product mutations
+        $productMutations = $bar
+            ->productMutations()
+            ->latest()
+            ->where('created_at', '>', now()->subSeconds(config('bar.bar_recent_product_transaction_period')))
+            ->get();
+
+        // Show the kiosk join page
+        return view('kiosk.tally')
+            ->with('bar', $bar)
+            ->with('productMutations', $productMutations);
+    }
+
+    /**
      * Kiosk history page.
      *
      * @return Response
