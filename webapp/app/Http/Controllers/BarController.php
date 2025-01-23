@@ -1291,8 +1291,10 @@ class BarController extends Controller {
         // Get the bar, current user and the search query
         $bar = \Request::get('bar');
         $economy = $bar->economy;
-        $cart = collect($request->post());
+        $cart = collect($request->post()['cart'] ?? []);
         $self = $this;
+
+        // TODO: validate cart has items!
 
         // Error if bar is disabled
         if(!$bar->enabled) {
