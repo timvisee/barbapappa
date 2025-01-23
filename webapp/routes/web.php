@@ -824,6 +824,7 @@ Route::prefix('/manage')->middleware(AppController::permsAdminister()->middlewar
 Route::prefix('/kiosk')->middleware('kiosk')->group(function() {
     // Kiosk pages
     Route::get('/', 'KioskController@main')->name('kiosk.main');
+    Route::get('/tally', 'KioskController@tally')->name('kiosk.tally');
     Route::get('/history', 'KioskController@history')->name('kiosk.history');
     Route::get('/join', 'KioskController@join')->name('kiosk.join');
 

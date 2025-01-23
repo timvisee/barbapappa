@@ -16,12 +16,17 @@
 {{-- Menu items --}}
 <a href="{{ route('kiosk.main') }}"
         class="item {{ $r == 'kiosk.main' ? ' active' : '' }}">
-    <i class="glyphicons glyphicons-shop"></i>
+    <i class="glyphicons glyphicons-shopping-cart"></i>
     @lang('misc.kiosk')
+</a>
+<a href="{{ route('kiosk.tally') }}"
+        class="item {{ $r == 'kiosk.tally' ? ' active' : '' }}">
+    <i class="glyphicons glyphicons-signal"></i>
+    @lang('pages.bar.tallySummary')
 </a>
 <a href="{{ route('kiosk.history') }}"
         class="item {{ $r == 'kiosk.history' ? ' active' : '' }}">
-    <i class="glyphicons glyphicons-history"></i>
+    <i class="glyphicons glyphicons-eye-open"></i>
     @lang('pages.bar.purchases')
 </a>
 <a href="{{ route('kiosk.join') }}"

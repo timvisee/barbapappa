@@ -195,7 +195,9 @@
         </div>
 
     @empty
-        <p>@lang('pages.bar.noPurchases')...</p>
+        <div class="ui top vertical menu fluid">
+            <i class="item">@lang('pages.bar.noPurchases')...</i>
+        </div>
     @endforelse
 
     <p>

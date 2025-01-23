@@ -93,7 +93,7 @@
                             class="item">
                         @lang('pages.bar.purchases')
                     </a>
-                    @if(!isset($timeFrom) || !isset($timeTo))
+                    @if(!isset($period) || !isset($timeFrom) || !isset($timeTo))
                         <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
                             class="item">
                     @else
