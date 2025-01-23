@@ -29,31 +29,34 @@
 
     <h2 class="ui header center aligned">@yield('title')</h2>
 
-    {{-- Recently bought products list --}}
+    @if($tallies->isNotEmpty() && $showingLimited)
+        <div class="ui large warning message">
+            <span class="halflings halflings-warning-sign icon"></span>
+            @lang('pages.bar.tallySummaryLimited')
+        </div>
+    @endif
+
     <div class="ui top vertical huge menu fluid">
         <h5 class="ui item header">
-            {{ trans_choice('pages.products.recentlyBoughtProducts#', $productMutations->sum('quantity')) }}
+            @lang('pages.bar.tallySummaryDescriptionSum', [
+                'quantity' => $quantity,
+                'from' => $timeFrom->longRelativeDiffForHumans(null, null),
+            ]):
         </h5>
 
-        @forelse($productMutations as $productMutation)
+        @forelse($tallies as $userTally)
             <div class="item">
-                @if($productMutation->quantity != 1)
-                    <span class="subtle">{{ $productMutation->quantity }}×</span>
-                @endif
+                {{ $userTally['owner']?->name ?? __('misc.unknownUser') }}
+                <span class="subtle">({{ $userTally['quantity'] }})</span>
 
-                {{ ($product = $productMutation->product) ?  $product->displayName() : __('pages.products.unknownProduct') }}
-                {!! $productMutation->mutation->formatAmount(BALANCE_FORMAT_LABEL) !!}
-
-                @if($productMutation->mutation->owner_id)
-                    <span class="subtle">
-                        @lang('misc.by') {{ $productMutation->mutation->owner->first_name }}
-                    </span>
-                @endif
-
-                <span class="sub-label">
-                    @include('includes.humanTimeDiff', ['time' => $productMutation->updated_at ?? $productMutation->created_at, 'short' => true])
+                <span style="float: right; font-weight: bold;">
+                    @for($i = 0; $i < $userTally['quantity'] % 5; $i += 1)|@endfor
+                    @for($i = 0; $i < floor($userTally['quantity'] / 5); $i += 1)
+                        <s>|||||</s>
+                    @endfor
                 </span>
             </div>
+
         @empty
             <i class="item">@lang('pages.bar.noPurchases')...</i>
         @endforelse
