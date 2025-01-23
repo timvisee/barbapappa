@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.0 (2025-01-23)
+
+- Redesign personal bar page, show interactive kiosk-like interface (beta)
+- On personal bar page, buy large amount of products by rapidly tapping product
+- On personal bar page, don't forget purchases if closing bar page too early after buying product
+- On personal bar page, queue product purchases if device is offline
+- On personal bar page, buy product selection for other members
+- On personal bar page, for other members, buy product selection
+- Add tally summary page to kiosk mode
+- In kiosk mode, change page icons for tally and history pages
+- On tally page, show absolute count with multiplication symbol
+- On tally page, don't include period in link to summary page if just viewing recent tallies
+- On purchase summary page, fix wrong style for no purchases message
+
 ## 0.1.200 (2025-01-22)
 
 - Interlink tally, purchase summary and history pages with dropdown menu for convenience
