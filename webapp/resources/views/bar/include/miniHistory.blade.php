@@ -68,18 +68,33 @@
             @endif
         @endforeach
 
-        @if(perms(BarController::permsManage()))
-            <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                    class="ui large bottom attached basic button">
-                @lang('pages.bar.allPurchases')...
+        @if(($bar->show_tallies && perms(BarController::permsUser())) || perms(BarController::permsManage()))
+            <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+                    class="ui large basic button bottom attached">
+                @lang('pages.bar.tallySummary')...
             </a>
         @endif
     </div>
 @else
-    @if(perms(BarController::permsManage()))
-        <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
-                class="ui large fluid basic button">
-            @lang('pages.bar.allPurchases')...
-        </a>
+    @if(($bar->show_tallies && perms(BarController::permsUser())) || perms(BarController::permsManage()))
+        <p>
+            <a href="{{ route('bar.tally', ['barId' => $bar->human_id]) }}"
+                    class="ui large basic button fluid">
+                @lang('pages.bar.tallySummary')...
+            </a>
+        </p>
     @endif
+@endif
+
+@if(perms(BarController::permsManage()))
+    <div class="ui two large basic buttons">
+        <a href="{{ route('bar.history', ['barId' => $bar->human_id]) }}"
+                class="ui button">
+            @lang('pages.bar.allPurchases')
+        </a>
+        <a href="{{ route('bar.summary', ['barId' => $bar->human_id]) }}"
+                class="ui button">
+            @lang('misc.summary')
+        </a>
+    </div>
 @endif
