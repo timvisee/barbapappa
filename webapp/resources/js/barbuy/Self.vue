@@ -284,6 +284,7 @@
             // Reset the current buy queue.
             resetBuyQueue() {
                 this._buyQueueStore([]);
+                this.buyCounts = {};
             },
 
             // Send a buy request with the given data.
