@@ -320,7 +320,7 @@ return [
         'clickBuyOrSearch' => 'Klik op producten om te kopen of zoek',
         '#products' => '{0} Geen producten|{1} 1 product|[2,*] :count producten',
         'noProducts' => 'Geen producten...',
-        'searchingFor' => 'Zoeken naar :term...',
+        'searchingFor' => 'Zoeken naar :term',
         'noProductsFoundFor' => 'Geen producten gevonden voor :term',
         'manageProduct' => 'Beheer product',
         'manageProducts' => 'Beheer producten',
@@ -1049,6 +1049,10 @@ return [
         'tallySummaryDescriptionSum' => ':quantity turfjes van :from tot nu',
         'disabled' => 'Deze bar is uitgeschakeld door een administrator.',
         'disabledGotoDashboard' => 'Deze bar is uitgeschakeld door een administrator. Ga terug naar het dashboard om je huidige bar te zoeken.',
+        'tapToBuyProducts' => 'Druk om producten te kopen',
+        'bannerNoConnection' => 'Geen verbinding. Verbind opnieuw om je aankoop te voltooien.',
+        'bannerProcessingTransactionsOne' => 'Nog één aankoop aan het synchroniseren...',
+        'bannerProcessingTransactionsMany' => 'Nog :count aankopen aan het synchroniseren...',
         'poster' => [
             'thisBarUses' => 'Deze bar gebruikt',
             'toDigitallyManage' => 'om digitaal betalingen en inventaris te beheren voor consumpties:',
@@ -1057,7 +1061,7 @@ return [
         ],
         'buy' => [
             'forMe' => 'Koop zelf',
-            'forOthers' => 'Voor anderen/meer',
+            'forOthers' => 'Voor anderen',
         ],
         'advancedBuy' => [
             'tapProducts' => 'Selecteer producten die je voor iemand wilt kopen.',
@@ -1117,7 +1121,7 @@ return [
         'selectUser' => 'Selecteer lid',
         'addToUser' => 'Toevoegen aan lid',
         'searchUsers' => 'Zoek leden',
-        'searchingFor' => 'Zoeken :term...',
+        'searchingFor' => 'Zoeken :term',
         'noUsersFoundFor' => 'Niemand voor :term',
         'noProductsFoundFor' => 'Niks voor :term',
         'firstSelectUser' => 'Selecteer links een lid om een aankoop voor te doen',

@@ -199,6 +199,7 @@ return [
     'recent' => 'Recent',
     'specificPeriod' => 'Specific period',
     'apply' => 'Apply',
+    'noConnection' => 'No connection',
 
     'cannotBeUndone' => 'Th\' operation nay be reverted.',
     'trashingCanBeUndone' => 'Th\' item be trashed. Dis operation can be reverted, by restoring th\' item from trash.',

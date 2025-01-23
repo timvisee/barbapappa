@@ -586,18 +586,21 @@ Route::prefix('/b')->middleware('auth')->group(function() {
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         // Show, info, advanced buy
         Route::get('/', 'BarController@show')->name('bar.show');
+        Route::get('/widget/history', 'BarController@widgetHistory')->name('bar.widget.history');
         Route::get('/info', 'BarController@info')->name('bar.info');
 
         // Advanced buy
         Route::prefix('/buy')->group(function() {
             // Main page
-            Route::get('/', 'BarController@buy')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
+            // TODO: change to @buy and show separate page by default
+            Route::get('/', 'BarController@show')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
 
             // API calls
             Route::prefix('/api')->group(function() {
                 Route::get('/', null)->name('bar.buy.api');
                 Route::get('/products', 'BarController@apiBuyProducts')->middleware(BarController::permsUser()->middleware());
                 Route::get('/members', 'BarController@apiBuyMembers')->middleware(BarController::permsUser()->middleware());
+                Route::middleware('throttle:30,1')->post('/buy/self', 'BarController@apiBuySelfInstant')->middleware(BarController::permsUser()->middleware());
                 Route::middleware('throttle:30,1')->post('/buy', 'BarController@apiBuyBuy')->middleware(BarController::permsUser()->middleware());
             });
         });

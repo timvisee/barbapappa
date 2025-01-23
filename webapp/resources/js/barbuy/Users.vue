@@ -1,10 +1,10 @@
 <template>
-    <div class="ui vertical huge menu inverted fluid panel-users">
+    <div class="ui vertical large menu fluid panel-users">
 
         <div v-if="swapped && selectedProducts.length == 0"
                 v-on:click="hintProducts()"
-                class="ui active dimmer">
-            <div class="ui text inverted">
+                class="ui active inverted dimmer">
+            <div class="ui text">
                 {{ __('pages.kiosk.firstSelectProduct') }}
 
                 <div class="ui hidden divider"></div>
@@ -14,7 +14,7 @@
                 <div class="ui hidden divider"></div>
 
                 <a v-on:click.stop.prevent="swap()"
-                        class="ui big button basic primary inverted dimmer-swap opacity-50"
+                        class="ui big button basic primary dimmer-swap opacity-50"
                         href="#">
                     <i class="halflings halflings-retweet"></i>
                     {{ __('pages.kiosk.userMode') }}
@@ -104,13 +104,13 @@
                             v-if="swapped"
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button black">
+                            class="ui large button">
                         <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ black: isSelectMode(), red: !isSelectMode(), disabled: buying }"
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -145,13 +145,13 @@
                             v-if="swapped"
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button black">
+                            class="ui large button">
                         <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ black: isSelectMode(), red: !isSelectMode(), disabled: buying }"
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -187,13 +187,13 @@
                             v-if="swapped"
                             v-on:click.stop.prevent="viewUserCart(user)"
                             v-bind:class="{ disabled: buying }"
-                            class="ui large button black">
+                            class="ui large button">
                         <i class="glyphicons glyphicons-shopping-cart"></i>
                     </a>
 
                     <a href="#"
                             v-on:click.stop.prevent="_removeUserCart(user)"
-                            v-bind:class="{ black: isSelectMode(), red: !isSelectMode(), disabled: buying }"
+                            v-bind:class="{ red: !isSelectMode(), disabled: buying }"
                             class="ui large button">
                         <i class="glyphicons glyphicons-remove"></i>
                     </a>
@@ -202,7 +202,7 @@
         </a>
 
         <div class="ui grid container index" v-if="showIndex">
-            <div class="four column row">
+            <div class="six column row">
                 <a class="column button" v-for="i in 26"
                         v-on:click.prevent.stop="selectIndex(String.fromCharCode(96 + i))"
                         href="#">
@@ -234,11 +234,6 @@
 <script>
     import axios from 'axios';
 
-    /**
-     * Delay for fetching all users for offline search.
-     */
-    const CACHE_WARMUP_DELAY = 2;
-
     export default {
         props: [
             'apiUrl',
@@ -260,8 +255,6 @@
                 searching: true,
                 showIndex: false,
                 users: [],
-                // Cache of all users for offline search
-                offlineUsers: [],
             };
         },
         watch: {
@@ -279,21 +272,6 @@
         mounted: function() {
             // Plain search for default user list
             this.search();
-
-            // Fetch copy of all users for offline search
-            setTimeout(
-                () => {
-                    this._searchRequest(null, true)
-                        .then(users => {
-                            this.offlineUsers = users;
-                        })
-                        .catch(err => {
-                            console.log('Failed to fetch offline copy of users');
-                            this.offlineUsers = [];
-                        });
-                },
-                CACHE_WARMUP_DELAY * 1000,
-            );
         },
         methods: {
             // If we're currently in user selection mode.
@@ -352,42 +330,24 @@
                 return this.isSelectMode() && this.selectedUsers.some(u => u.id == user.id);
             },
 
-            // Normalize search query
-            normalizeQuery(query) {
-                return query.trim().toLowerCase().replace(/\s\s+/g, ' ');
-            },
-
             // Search users with the given query
             search(query = '') {
-                var query = this.normalizeQuery(query);
-
+                // Fetch a list of users, set the searching state
                 this.searching = true;
-
-                // Fast offline search to populate results
-                var hasOfflineResults = false;
-                if(query != '') {
-                    let results = this._searchOffline(query);
-                    if(results != null) {
-                        hasOfflineResults = true;
-                        this.users = results;
-                    }
-                }
-
                 this._searchOnline(query)
                     // Handle result, only update if still searching same query
                     .then(users => {
-                        if(query == this.normalizeQuery(this.query))
+                        if(query == this.query)
                             this.users = users;
                     })
                     // Handle error
                     .catch(err => {
-                        if(!hasOfflineResults)
-                            alert('An error occurred while listing users');
+                        alert('An error occurred while listing users');
                         console.error(err);
                     })
                     // Stop searching state, if still searching same query
                     .finally(() => {
-                        if(query == this.normalizeQuery(this.query))
+                        if(query == this.query)
                             this.searching = false;
                     });
             },
@@ -395,25 +355,6 @@
             // Search users with the given query online.
             _searchOnline(query = '') {
                 return this._searchRequest(query, false);
-            },
-
-            // Search users offline.
-            // Attempt to search through offline copy of users.
-            _searchOffline(query = '') {
-                if(this.offlineUsers.length == 0)
-                    return null;
-
-                // Simple local search, filter users based on query
-                return this.offlineUsers.filter(user => {
-                    let name = user.name.toLowerCase();
-
-                    // Filter by full or starting-with query
-                    if(query.startsWith('^')) {
-                        return name.startsWith(query.substr(1));
-                    } else {
-                        return name.includes(query);
-                    }
-                });
             },
 
             // Do a search request.
@@ -514,8 +455,8 @@
 
     .kiosk-select-item .item-buttons .button {
         text-align: center;
-        padding: .92857143em 1.125em;
-        line-height: 1.1;
+        line-height: 2.4;
+        padding: 0 1.125em;
         border-radius: 0 !important;
     }
 
@@ -551,8 +492,7 @@
         display: block;
 
         a {
-            /* color: rgba(0, 0, 0, .87); */
-            color: #fff;
+            color: rgba(0, 0, 0, .87);
             display: inline-block;
             width: 40px;
             text-align: center;
@@ -563,13 +503,11 @@
 
             &:hover {
                 /* color: rgba(0, 0, 0, .87); */
-                /* background: rgba(0, 0, 0, .08) !important; */
-                background: #2d2e2f !important;
+                background: rgba(0, 0, 0, .08) !important;
             }
 
             &.active {
-                /* TODO: find proper color code here */
-                background: #0f617c !important;
+                background: rgba(0, 182, 240, 0.2) !important;
             }
 
             .glyphicons,
@@ -587,7 +525,7 @@
     }
 
     .index {
-        border-top: 1px solid rgba(255, 255, 255, .08);
+        border-top: 1px solid rgba(0, 0, 0, .08);
         border-bottom: none;
         margin: 0 !important;
         border-bottom: none;
@@ -602,21 +540,20 @@
             align-items:center;
             justify-content:center;
 
-            color: #fff;
+            color: rgba(0, 0, 0, 0.87);
             text-align: center;
             margin: 0;
             padding: 1em;
             font-weight: bold;
             aspect-ratio: 1;
 
-            border-bottom: 1px solid rgba(255, 255, 255, .08);
-            border-right: 1px solid rgba(255, 255, 255, .08);
+            border-bottom: 1px solid rgba(0, 0, 0, .08);
+            border-right: 1px solid rgba(0, 0, 0, .08);
             transition: background .1s ease, color .1s ease;
 
             &:hover {
                 /* color: rgba(0, 0, 0, .87); */
-                /* background: rgba(0, 0, 0, .08) !important; */
-                background: #2d2e2f !important;
+                background: rgba(0, 0, 0, .08) !important;
             }
         }
     }
@@ -637,7 +574,7 @@
         }
     }
 
-    /* Inverted colors */
+    /* Inverted colors
     .menu.inverted .item .ui.button.black {
         background: #1b1c1d80;
 
@@ -665,4 +602,5 @@
     .opacity-50 {
         opacity: 0.5;
     }
+    */
 </style>
