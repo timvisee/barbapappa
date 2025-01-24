@@ -87,11 +87,11 @@
             </div>
 
             <div class="item-label">
-                <div v-if="getBuyQueueQuantity(product) > 0" class="ui label basic">
+                <span v-if="getBuyQueueQuantity(product) > 0">
                     <span class="subtle">{{ getBuyQueueQuantity(product) }}</span>
                     &nbsp;
                     <div class="ui active inline mini loader"></div>
-                </div>
+                </span>
 
                 <i v-else-if="self && getQuantity(product) > 0" class="ui text positive glyphicons glyphicons-ok"></i>
 
