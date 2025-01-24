@@ -1087,7 +1087,8 @@ class BarController extends Controller {
                     $m->registered = $m->user_id != null && $m->user_id > 0;
                     return $m;
                 })
-                ->sortBy([['registered', 'desc'], 'name'], SORT_NATURAL | SORT_FLAG_CASE);
+                ->sortBy([['registered', 'desc'], 'name'], SORT_NATURAL | SORT_FLAG_CASE)
+                ->values();
 
         // Always appent current user to list if visible and not yet included
         $hasCurrent = $members->contains(function($m) use($economy_member) {
