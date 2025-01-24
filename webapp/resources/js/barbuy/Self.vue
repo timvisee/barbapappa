@@ -1,42 +1,49 @@
 <!-- User buy page component for self -->
 
 <template>
-    <div>
-        <!-- Product list -->
-        <Products
-                ref="products"
-                :apiUrl="apiUrl"
-                :barUrl="barUrl"
-                :self="true"
-                :selectedUsers="selectedUsers"
-                :selectedProducts="selectedProducts"
-                :cart="cart"
-                :buying="false"
-                :buyCounts="buyCounts"
-                :_buyProduct="buy"
-                :_getUserCart="getUserCart"
-                :_getSelectCart="getSelectCart"
-                :_getCartQuantity="getCartQuantity"
-                :_setCartQuantity="setCartQuantity"
-                :_addCartQuantity="addCartQuantity"
-                :_getCartSize="getCartSize"
-                :_removeCart="removeCart"
-                :_getBuyQueueQuantity="getBuyQueueQuantity" />
+    <div class="ui stackable 2 column grid">
+        <div class="nine wide column inline">
 
-        <!-- History -->
-        <History
-                ref="history"
-                :apiUrl="apiUrl"
-                :barUrl="barUrl" />
+            <!-- Product list -->
+            <Products
+                    ref="products"
+                    :apiUrl="apiUrl"
+                    :barUrl="barUrl"
+                    :self="true"
+                    :selectedUsers="selectedUsers"
+                    :selectedProducts="selectedProducts"
+                    :cart="cart"
+                    :buying="false"
+                    :buyCounts="buyCounts"
+                    :_buyProduct="buy"
+                    :_getUserCart="getUserCart"
+                    :_getSelectCart="getSelectCart"
+                    :_getCartQuantity="getCartQuantity"
+                    :_setCartQuantity="setCartQuantity"
+                    :_addCartQuantity="addCartQuantity"
+                    :_getCartSize="getCartSize"
+                    :_removeCart="removeCart"
+                    :_getBuyQueueQuantity="getBuyQueueQuantity" />
 
-        <!-- Buy queue notification -->
-        <div v-if="buyQueueCache.length > 0" class="ui message warning">
-            <span class="halflings halflings-synchronization icon"></span>
-            {{ buyQueueCache.length == 1
-                ? __('pages.bar.bannerProcessingTransactionsOne')
-                : __('pages.bar.bannerProcessingTransactionsMany').replace(':count', buyQueueCache.length)
-            }}
-            <a href="#" @click.prevent.stop="resetBuyQueue" class="float-right">{{ __('general.stop') }}</a>
+        </div>
+        <div class="seven wide column inline">
+
+            <!-- History -->
+            <History
+                    ref="history"
+                    :apiUrl="apiUrl"
+                    :barUrl="barUrl" />
+
+            <!-- Buy queue notification -->
+            <div v-if="buyQueueCache.length > 0" class="ui message warning">
+                <span class="halflings halflings-synchronization icon"></span>
+                {{ buyQueueCache.length == 1
+                    ? __('pages.bar.bannerProcessingTransactionsOne')
+                    : __('pages.bar.bannerProcessingTransactionsMany').replace(':count', buyQueueCache.length)
+                }}
+                <a href="#" @click.prevent.stop="resetBuyQueue" class="float-right">{{ __('general.stop') }}</a>
+            </div>
+
         </div>
     </div>
 </template>
