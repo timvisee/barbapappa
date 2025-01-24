@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 (2025-01-23)
+
+- On personal bar page, fix error when searching members
+- On personal bar page, simplify loader when product purchase is in queue
+- Render personal bar page in two columns on big screens
+- Show breadcrumbs on the top of the page on smaller screens (991 pixels wide and up)
+
 ## 0.2.0 (2025-01-23)
 
 - Redesign personal bar page, show interactive kiosk-like interface (beta)
