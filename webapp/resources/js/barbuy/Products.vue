@@ -88,7 +88,7 @@
 
             <div class="item-label">
                 <span v-if="getBuyQueueQuantity(product) > 0">
-                    <span class="subtle">{{ getBuyQueueQuantity(product) }}</span>
+                    <span v-if="getBuyQueueQuantity(product) >= 2" class="subtle">{{ getBuyQueueQuantity(product) }}</span>
                     &nbsp;
                     <div class="ui active inline mini loader"></div>
                 </span>
