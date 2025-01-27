@@ -1212,9 +1212,13 @@ class BarController extends Controller {
             'transactionId' => $transaction->id
         ]) . '">' . __('misc.undo') . '</a>';
 
+        $userBalance = $economy->calcUserBalance();
+
         // Purcahse succesful, return stats
         return [
             'productCount' => 1,
+            'userBalanceRaw' => $userBalance->amount,
+            'userBalanceText' => $userBalance->formatAmount(),
         ];
 
 //         // Do everything in a database transaction
@@ -1288,10 +1292,14 @@ class BarController extends Controller {
             });
         });
 
-        // Return some useful stats
+        $userBalance = $economy->calcUserBalance();
+
+        // Purcahse succesful, return stats
         return [
             'productCount' => $productCount,
             'userCount' => $userCount,
+            'userBalanceRaw' => $userBalance->amount,
+            'userBalanceText' => $userBalance->formatAmount(),
         ];
     }
 
