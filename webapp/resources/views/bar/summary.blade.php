@@ -116,7 +116,7 @@
                     'memberId' => $userSummary['member']->id,
                 ]) }}">
         @else
-            <div class="item">
+            <div class="header item">
         @endif
 
             {{ $userSummary['owner']?->name ?? __('misc.unknownUser') }}
