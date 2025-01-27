@@ -1212,10 +1212,10 @@ class BarController extends Controller {
             'transactionId' => $transaction->id
         ]) . '">' . __('misc.undo') . '</a>';
 
-        // Redirect back to the bar
-        return redirect()
-            ->route('bar.show', ['barId' => $bar->human_id])
-            ->with('successHtml', $msg);
+        // Purcahse succesful, return stats
+        return [
+            'productCount' => 1,
+        ];
 
 //         // Do everything in a database transaction
 //         $productCount = 0;
