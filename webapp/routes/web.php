@@ -685,9 +685,6 @@ Route::prefix('/b')->middleware('auth')->group(function() {
             Route::get('/{productId}', 'BarProductController@show')->name('bar.product.show');
         });
 
-        // Quick buy products
-        Route::middleware('throttle:20,1')->post('/quick-buy', 'BarController@quickBuy')->name('bar.quickBuy');
-
         // Bar members, require view perms
         Route::prefix('/members')->middleware(BarMemberController::permsView()->middleware())->group(function() {
             // Index

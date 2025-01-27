@@ -947,43 +947,6 @@ class BarController extends Controller {
             ->with('success', __('pages.bar.leftThisBar'));
     }
 
-    /**
-     * Quick buy a product.
-     *
-     * @return Response
-     */
-    public function quickBuy($barId) {
-        // Get the bar
-        $bar = \Request::get('bar');
-        $product = $bar->economy->products()->findOrFail(\Request::input('product_id'));
-
-        // Error if bar is disabled
-        if(!$bar->enabled) {
-            return redirect()
-                ->back()
-                ->with('error', __('pages.bar.disabled'));
-        }
-
-        // Quick buy the product, format the price
-        $details = $this->quickBuyProduct($bar, $product);
-        $transaction = $details['transaction'];
-        $cost = $details['currency']->format($details['price']);
-
-        // Build a success message
-        $msg = __('pages.bar.boughtProductForPrice', [
-            'product' => $product->displayName(),
-            'price' => $cost,
-        ]) . '.';
-        $msg .= ' <a href="' . route('transaction.undo', [
-            'transactionId' => $transaction->id
-        ]) . '">' . __('misc.undo') . '</a>';
-
-        // Redirect back to the bar
-        return redirect()
-            ->route('bar.show', ['barId' => $bar->human_id])
-            ->with('successHtml', $msg);
-    }
-
     // TODO: remove this entirely?
     // /**
     //  * Bar advanced buy page.
