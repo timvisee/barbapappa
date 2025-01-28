@@ -57,24 +57,6 @@
     </table>
 
     <p>
-        @if($bar->enabled)
-            @if($format_price = $product->formatPrice($currencies, BALANCE_FORMAT_PLAIN))
-                {!! Form::open(['action' => [
-                    'BarController@quickBuy',
-                    $bar->human_id,
-                ], 'method' => 'POST', 'class' => 'ui inline form']) !!}
-                    {!! Form::hidden('product_id', $product->id) !!}
-
-                    <div class="ui labeled button" tabindex="0">
-                        {{ Form::submit(__('pages.bar.quickBuy'), ['class' => 'ui button blue']) }}
-                        <div class="ui basic left pointing blue label">
-                            {{ $format_price }}
-                        </div>
-                    </div>
-                {!! Form::close() !!}
-            @endif
-        @endif
-
         @if(perms(CommunityRoles::presetManager()))
             <div class="ui floating right labeled icon dropdown button">
                 <i class="dropdown icon"></i>

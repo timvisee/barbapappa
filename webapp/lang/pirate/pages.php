@@ -1008,7 +1008,6 @@ return [
         'updated' => 'Th\' bar be updated.',
         'mustCreateEconomyFirst' => 'To create a bar, ye must create booty first.',
         'backToBar' => 'Back to bar',
-        'quickBuy' => 'Get now',
         'boughtProductForPrice' => 'Got :product for :price',
         'noDescription' => 'Dis bar be nay description',
         'manageBar' => 'Manage bar',
