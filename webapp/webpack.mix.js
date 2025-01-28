@@ -136,12 +136,6 @@ mix.js(
 
 // App widgets
 mix.js(
-    'resources/js/quickbuy/quickbuy.js',
-    'public/js/widget',
-).js(
-    'resources/js/advancedbuy/advancedbuy.js',
-    'public/js/widget',
-).js(
     'resources/js/barbuy/barbuy.js',
     'public/js/widget',
 ).js(

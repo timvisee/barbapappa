@@ -947,29 +947,6 @@ class BarController extends Controller {
             ->with('success', __('pages.bar.leftThisBar'));
     }
 
-    // TODO: remove this entirely?
-    // /**
-    //  * Bar advanced buy page.
-    //  *
-    //  * @return Response
-    //  */
-    // public function buy($barId) {
-    //     // Get the bar and session user
-    //     $bar = \Request::get('bar');
-    //     $user = barauth()->getSessionUser();
-
-    //     // Show info page if user does not have user role
-    //     if(!perms(Self::permsUser()) || !$bar->isJoined($user))
-    //         return $this->info($barId);
-
-    //     // Show the bar page
-    //     return view('bar.buy')
-    //         ->with('economy', $bar->economy)
-    //         ->with('joined', $bar->isJoined($user))
-    //         ->with('mustVerify', $user->needsToVerifyEmail())
-    //         ->with('userBalance', $bar->economy->calcUserBalance());
-    // }
-
     /**
      * API route for listing products in this bar, that a user can buy.
      *

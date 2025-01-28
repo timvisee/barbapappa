@@ -10,7 +10,7 @@
 <div class="item header spaced">{{ $bar->name }}:</div>
 
 <a href="{{ route('bar.show', ['barId' => $bar->human_id]) }}"
-        class="item {{ $r == 'bar.show' || $r == 'bar.buy' ? ' active' : '' }}">
+        class="item {{ $r == 'bar.show' ? ' active' : '' }}">
     <i class="glyphicons glyphicons-beer"></i>
     @lang('misc.bar')
 </a>
