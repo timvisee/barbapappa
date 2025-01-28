@@ -586,14 +586,14 @@ Route::prefix('/b')->middleware('auth')->group(function() {
     Route::prefix('/{barId}')->middleware(['selectBar'])->group(function() {
         // Show, info, advanced buy
         Route::get('/', 'BarController@show')->name('bar.show');
+        Route::get('#others', null)->name('bar.buy');
         Route::get('/widget/history', 'BarController@widgetHistory')->name('bar.widget.history');
         Route::get('/info', 'BarController@info')->name('bar.info');
 
         // Advanced buy
         Route::prefix('/buy')->group(function() {
-            // Main page
-            // TODO: change to @buy and show separate page by default
-            Route::get('/', 'BarController@show')->middleware(BarController::permsUser()->middleware())->name('bar.buy');
+            // Redirect to new buy for others page
+            Route::redirect('/', '/b/{barId}#others');
 
             // API calls
             Route::prefix('/api')->group(function() {

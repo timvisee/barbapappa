@@ -31,7 +31,7 @@
         },
         data() {
             return {
-                self: true,
+                self: (window.location.hash != "#others"),
                 stateOnline: navigator.onLine,
             };
         },
@@ -49,6 +49,9 @@
                 // When we come online, try to drain buy queue
                 this._buyQueueDrainAllDelayed();
             },
+            self: function(newSelf) {
+                window.location.hash = newSelf ? "" : "#others";
+            },
         },
         created() {
             // Listen to network events
@@ -56,7 +59,7 @@
             window.addEventListener("offline", (e) => this.stateOnline = false);
 
             // Prevent accidental closing
-            window.addEventListener('beforeunload', this.onClose);
+            window.addEventListener("beforeunload", this.onClose);
         },
         methods: {
             onClose(event) {
