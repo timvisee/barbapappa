@@ -29,11 +29,6 @@
 
         <!-- Main UI -->
         <div v-if="!refreshing">
-            <div v-if="successMessage && cart.length == 0" class="ui success floating message notification">
-                <span class="halflings halflings-ok-sign icon"></span>
-                {{ successMessage }}
-            </div>
-
             <!-- Users and product list, reverse if swapped -->
             <div class="ui stackable 2 column grid">
                 <div v-if="!swapped" class="seven wide column inline">
@@ -176,7 +171,6 @@
                 refreshing: false,
                 showBoughtOverlay: false,
                 showCancelledOverlay: false,
-                successMessage: undefined,
                 // Timer handle after which to clear the success message
                 decayTimer: null,
                 stateOnline: navigator.onLine,
@@ -191,14 +185,6 @@
             'updateUserBalance',
         ],
         watch: {
-            successMessage: function(newMsg, oldMsg) {
-                if(newMsg != undefined) {
-                    clearTimeout(this.decayTimer);
-                    this.decayTimer = setTimeout(() => {
-                        this.successMessage = undefined;
-                    }, SUCCESS_MESSAGE_TIMEOUT * 1000);
-                }
-            },
             stateOnline: function(newState) {
                 // Skip if we're now online
                 if(!newState) {
