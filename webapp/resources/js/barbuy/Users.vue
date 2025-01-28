@@ -121,7 +121,7 @@
         <a v-for="user in users"
                 v-if="!showIndex"
                 v-on:click.prevent.stop="onItemClick(user)"
-                v-bind:class="{ disabled: buying || (!user.registered && !isUserSelected(user)), active: isUserSelected(user) }"
+                v-bind:class="{ disabled: buying || (!user.registered && !isUserSelected(user)), active: isUserSelected(user) || (!isSelectMode() && getQuantity(user) > 0) }"
                 href="#"
                 class="green item kiosk-select-item">
             <div class="item-text">
