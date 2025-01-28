@@ -57,11 +57,6 @@
     const History = require('./History.vue').default;
 
     /**
-     * Success message timeout in seconds.
-     */
-    const SUCCESS_MESSAGE_TIMEOUT = 5;
-
-    /**
      * Key for buy queue data to store in local storage.
      */
     const BUY_QUEUE_DATA_KEY = 'barbuy-self-buy-queue';
@@ -108,14 +103,6 @@
             'barUrl',
         ],
         watch: {
-            successMessage: function(newMsg, oldMsg) {
-                if(newMsg != undefined) {
-                    clearTimeout(this.decayTimer);
-                    this.decayTimer = setTimeout(() => {
-                        this.successMessage = undefined;
-                    }, SUCCESS_MESSAGE_TIMEOUT * 1000);
-                }
-            },
             stateOnline: function(newState) {
                 // Skip if we're now online
                 if(!newState) {
