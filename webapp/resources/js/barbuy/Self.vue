@@ -368,7 +368,7 @@
                         this.onBoughtProduct();
 
                         // Update user balance
-                        if(response.data && response.data.userBalanceRaw !== undefined) {
+                        if(response.data) {
                             this.updateUserBalance(
                                 response.data.userBalanceRaw,
                                 response.data.userBalanceText,

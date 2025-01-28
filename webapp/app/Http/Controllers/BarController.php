@@ -1217,8 +1217,8 @@ class BarController extends Controller {
         // Purcahse succesful, return stats
         return [
             'productCount' => 1,
-            'userBalanceRaw' => $userBalance->amount,
-            'userBalanceText' => $userBalance->formatAmount(),
+            'userBalanceRaw' => $userBalance?->amount,
+            'userBalanceText' => $userBalance?->formatAmount(),
         ];
 
 //         // Do everything in a database transaction
@@ -1298,8 +1298,8 @@ class BarController extends Controller {
         return [
             'productCount' => $productCount,
             'userCount' => $userCount,
-            'userBalanceRaw' => $userBalance->amount,
-            'userBalanceText' => $userBalance->formatAmount(),
+            'userBalanceRaw' => $userBalance?->amount,
+            'userBalanceText' => $userBalance?->formatAmount(),
         ];
     }
 

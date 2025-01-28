@@ -67,7 +67,10 @@
             },
 
             // Update user balance in element outside widget
-            updateUserBalance(value = 0, text) {
+            updateUserBalance(value, text) {
+                if(value === undefined || value === null)
+                    return;
+
                 let element = document.getElementById('user-balance');
                 if(element == null)
                     return;
