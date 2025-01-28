@@ -51,8 +51,6 @@
 <script>
     import axios from 'axios';
 
-    // TODO: remove cart?
-    const Cart = require('./Cart.vue').default;
     const Products = require('./Products.vue').default;
     const History = require('./History.vue').default;
 
@@ -75,7 +73,6 @@
 
     export default {
         components: {
-            Cart,
             Products,
             History,
         },
