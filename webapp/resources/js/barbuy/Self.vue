@@ -149,8 +149,8 @@
             },
 
             onClose(event) {
-                // Do not prevent closing if nothing is in queue
-                if(this.buyQueueCache.length == 0)
+                // Do not prevent closing if user has nothing in cart or in buy queue
+                if(this.cart.length == 0 && this.buyQueueCache.length == 0)
                     return;
 
                 // Prevent closing the page, set a warning message
