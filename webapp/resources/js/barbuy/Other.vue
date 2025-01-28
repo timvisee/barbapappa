@@ -188,6 +188,7 @@
         },
         props: [
             'apiUrl',
+            'updateUserBalance',
         ],
         watch: {
             successMessage: function(newMsg, oldMsg) {
@@ -266,8 +267,18 @@
                 return this
                     // Attempt to submit buy POST
                     ._sendBuyRequest(data, false)
+                    // Update rendered user balance
+                    .then(response => {
+                        // Update user balance
+                        if(response.data && response.data.userBalanceRaw !== undefined) {
+                            this.updateUserBalance(
+                                response.data.userBalanceRaw,
+                                response.data.userBalanceText,
+                            );
+                        }
+                    })
                     // Fall back to deferred queue
-                    .then(null, reject => {
+                    .catch(reject => {
                         // If we got a response, don't queue, forward error
                         if(reject.response)
                             return Promise.reject(reject);

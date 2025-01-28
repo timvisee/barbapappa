@@ -101,6 +101,7 @@
         props: [
             'apiUrl',
             'barUrl',
+            'updateUserBalance',
         ],
         watch: {
             stateOnline: function(newState) {
@@ -349,7 +350,7 @@
 
                 return this
                     ._sendBuyRequest(item, true)
-                    .then(() => {
+                    .then(response => {
                         // TODO: do some sanity checks, we have data field?
 
                         // Pop first item from queue
@@ -365,6 +366,14 @@
                         }
 
                         this.onBoughtProduct();
+
+                        // Update user balance
+                        if(response.data && response.data.userBalanceRaw !== undefined) {
+                            this.updateUserBalance(
+                                response.data.userBalanceRaw,
+                                response.data.userBalanceText,
+                            );
+                        }
                     })
                     .catch(err => {
                         alert(err.response.data.message ?? 'Failed to purchase products, an error occurred');

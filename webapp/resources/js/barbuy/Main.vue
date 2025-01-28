@@ -13,8 +13,8 @@
         </div>
 
         <!-- Main UI -->
-        <Self ref="self" v-if="self" :apiUrl="apiUrl" :barUrl="barUrl" />
-        <Other ref="other" v-else :apiUrl="apiUrl" />
+        <Self ref="self" v-if="self" :apiUrl="apiUrl" :barUrl="barUrl" :updateUserBalance="updateUserBalance" />
+        <Other ref="other" v-else :apiUrl="apiUrl" :updateUserBalance="updateUserBalance" />
     </div>
 </template>
 
@@ -65,6 +65,26 @@
                 else
                     return this.$refs.other.onClose(event);
             },
+
+            // Update user balance in element outside widget
+            updateUserBalance(value = 0, text) {
+                let element = document.getElementById('user-balance');
+                if(element == null)
+                    return;
+
+                // Update element
+                var classes = '';
+                if(value < 0)
+                    classes = 'red';
+                else if(value > 0)
+                    classes = 'green';
+                element.innerHTML = '<div class="ui label ' + classes + '">' + (text || value) + '</div>';
+
+                // Animate element
+                $(element)
+                    .transition('stop')
+                    .transition('pulse');
+            }
         },
     }
 </script>

@@ -45,6 +45,7 @@
                             'communityId' => $community->human_id,
                             'economyId' => $economy->id,
                         ]) }}"
+                        id="user-balance"
                         class="balance">
                     {!! $userBalance->formatAmount(BALANCE_FORMAT_LABEL) !!}
                 </a>
