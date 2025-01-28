@@ -208,8 +208,9 @@
             '_getBuyQueueQuantity',
         ],
         data() {
+            let queryParams = new URLSearchParams(window.location.search);
             return {
-                query: '',
+                query: queryParams.get('q') || '',
                 searching: true,
                 products: [],
                 quantityModalQuantity: null,
@@ -245,7 +246,7 @@
         },
         mounted: function() {
             // Plain search for default product list
-            this.search();
+            this.search(this.query);
         },
         methods: {
             // If we're currently in user selection mode.

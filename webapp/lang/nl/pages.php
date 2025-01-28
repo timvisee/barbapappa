@@ -1010,6 +1010,7 @@ return [
         'updated' => 'De bar is aangepast.',
         'mustCreateEconomyFirst' => 'Voor een nieuwe bar moest je eerst een economie aanmaken.',
         'backToBar' => 'Terug naar bar',
+        'quickBuy' => 'Nu kopen',
         'boughtProductForPrice' => ':product gekocht voor :price',
         'noDescription' => 'Deze bar heeft geen beschrijving',
         'manageBar' => 'Beheer bar',

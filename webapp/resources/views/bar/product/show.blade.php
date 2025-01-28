@@ -57,6 +57,21 @@
     </table>
 
     <p>
+        @if($bar->enabled)
+            @if($format_price = $product->formatPrice($currencies, BALANCE_FORMAT_PLAIN))
+                <div class="ui right labeled button" tabindex="0">
+                    <a href="{{ route('bar.show', ['barId' => $bar->human_id, 'q' => $product->name]) }}"
+                            class="ui blue button">
+                        @lang('pages.bar.quickBuy')
+                    </a>
+                    <a href="{{ route('bar.show', ['barId' => $bar->human_id, 'q' => $product->name]) }}"
+                            class="ui basic left pointing blue label">
+                        {{ $format_price }}
+                    </a>
+                </div>
+            @endif
+        @endif
+
         @if(perms(CommunityRoles::presetManager()))
             <div class="ui floating right labeled icon dropdown button">
                 <i class="dropdown icon"></i>
