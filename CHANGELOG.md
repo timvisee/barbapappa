@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.2 (2025-01-28)
+
+- Update user balance in real time when buying products
+- Don't allow users to leave personal bar page if product purchase is ongoing or queued
+- Improve user selection rendering in product purchase widget, highlight users with items in cart
+- In product catalog, direct quick buy button to product purchase widget
+- On personal bar page, simplify purchase queue spinner
+- Fix not rendering all users in bold on purchase summary page
+- Fix personal bar page API responses rendering full pages
+- Fix legacy page routing, redirect to new endpoints
+- Completely remove legacy product purchase widgets
+
 ## 0.2.1 (2025-01-23)
 
 - On personal bar page, fix error when searching members
