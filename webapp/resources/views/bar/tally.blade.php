@@ -52,11 +52,19 @@
         @forelse($tallies as $userTally)
             {{-- Start item, link to user if owner is a bar member --}}
             @if($userTally['member'] != null && perms(BarController::permsManage()))
-                <a class="item"
-                    href="{{ route('bar.member.show', [
+                @if(!isset($period) || !isset($timeFrom) || !isset($timeTo))
+                    <a href="{{ route('bar.summary', [
                         'barId' => $bar->human_id,
-                        'memberId' => $userTally['member']->id,
-                    ]) }}">
+                    ]) }}#member-{{ $userTally['member']->id }}"
+                            class="item">
+                @else
+                    <a href="{{ route('bar.summary', [
+                        'barId' => $bar->human_id,
+                        'time_from' => $timeFrom->toDateTimeLocalString('minute'),
+                        'time_to' => $timeTo->ceilMinute()->toDateTimeLocalString('minute'),
+                    ]) }}#member-{{ $userTally['member']->id }}"
+                            class="item">
+                @endif
             @else
                 <div class="item">
             @endif

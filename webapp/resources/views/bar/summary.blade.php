@@ -108,9 +108,10 @@
     @forelse($summary as $userSummary)
         <div class="ui top vertical menu fluid">
 
-        {{-- Start user header, link to user if known --}}
+        {{-- Start user header, link to user summary if known --}}
         @if($userSummary['member'] != null)
-            <a class="header item"
+            <a id="member-{{ $userSummary['member']->id }}"
+                class="header item"
                 href="{{ route('bar.member.show', [
                     'barId' => $bar->human_id,
                     'memberId' => $userSummary['member']->id,
