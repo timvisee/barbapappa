@@ -18,7 +18,6 @@
                 @else
                     {{ config('app.version_name') }}
                 @endif
-                <span class="subtle">({{ config('app.version_code') }})</span>
             </i>
         </p>
     </div>
