@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.3 (2025-02-14)
+
+- Link tally members to their product summary, instead of their member page
+- Remove version code number, just keep version string
+
 ## 0.2.2 (2025-01-28)
 
 - Update user balance in real time when buying products
