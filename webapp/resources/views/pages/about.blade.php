@@ -12,11 +12,11 @@
         <p>
             <i>
                 @if(!empty($source_version_page = config('app.source_version_page')))
-                    <a href="{{ str_replace('{}', config('app.version_name'), $source_version_page) }}" target="_blank">
-                        {{ config('app.version_name') }}
+                    <a href="{{ str_replace('{}', config('app.version'), $source_version_page) }}" target="_blank">
+                        {{ config('app.version') }}
                     </a>
                 @else
-                    {{ config('app.version_name') }}
+                    {{ config('app.version') }}
                 @endif
             </i>
         </p>

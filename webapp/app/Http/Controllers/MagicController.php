@@ -16,7 +16,7 @@ class MagicController extends Controller {
      */
     public function version() {
         return [
-            'version' => config('app.version_name'),
+            'version' => config('app.version'),
             'source' => config('app.source'),
             'env' => config('app.env'),
         ];
