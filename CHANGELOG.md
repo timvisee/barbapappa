@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.6 (2025-05-13)
+
+- Fix configuration of bunq notification URLs since API update
+
 ## 0.2.5 (2025-05-13)
 
 - Update bunq SDK
