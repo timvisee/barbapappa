@@ -22,7 +22,7 @@ class BunqController extends Controller {
             return 'OK';
 
         // Get the NotificationUrlObject section to parse
-        $json = json_encode(json_decode($json, true)['NotificationUrlObject']);
+        $json = json_encode(json_decode($json, true)['NotificationUrl']);
 
         // Create the NotificationUrl object
         $notification = NotificationUrlObject::createFromJsonString($json);
