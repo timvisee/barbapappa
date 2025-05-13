@@ -11,7 +11,7 @@ use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use bunq\Http\Pagination;
-use bunq\Model\Generated\Endpoint\Event;
+use bunq\Model\Generated\Endpoint\EventApiObject;
 
 /**
  * Process all events on the given bunq account, that have not yet been
@@ -125,7 +125,7 @@ class ProcessBunqAccountEvents implements ShouldQueue {
         $pagination->setNewerId($account->last_event_id ?? 0);
 
         // List account events, return if emtpy
-        $events = Event::listing(array_merge(
+        $events = EventApiObject::listing(array_merge(
                 [
                     'monetary_account_id' => $account->monetary_account_id,
                     'status' => 'FINALIZED',

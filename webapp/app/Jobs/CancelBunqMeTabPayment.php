@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
-use bunq\Model\Generated\Endpoint\BunqMeTab;
+use bunq\Model\Generated\Endpoint\BunqMeTabApiObject;
 
 class CancelBunqMeTabPayment implements ShouldQueue {
 
@@ -70,7 +70,7 @@ class CancelBunqMeTabPayment implements ShouldQueue {
         $account->loadBunqContext();
 
         // Cancel the request
-        BunqMeTab::update(
+        BunqMeTabApiObject::update(
             $this->tab_id,
             $account->monetary_account_id,
             'CANCELLED',

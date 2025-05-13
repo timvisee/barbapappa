@@ -9,9 +9,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
-use bunq\Model\Generated\Endpoint\Payment;
-use bunq\Model\Generated\Object\Amount;
-use bunq\Model\Generated\Object\Pointer;
+use bunq\Model\Generated\Endpoint\PaymentApiObject;
+use bunq\Model\Generated\Object\AmountObject;
+use bunq\Model\Generated\Object\PointerObject;
 
 class SendBunqPayment implements ShouldQueue {
 
@@ -32,14 +32,14 @@ class SendBunqPayment implements ShouldQueue {
     /**
      * The target to send the money to.
      *
-     * @var Pointer
+     * @var PointerObject
      */
     private $to;
 
     /**
      * The amount of money to send.
      *
-     * @var Amount
+     * @var AmountObject
      */
     private $amount;
 
@@ -54,13 +54,13 @@ class SendBunqPayment implements ShouldQueue {
      * Create a new job instance.
      *
      * @param BunqAccount $account The bunq account to send the money from.
-     * @param Amount $amount The amount.
-     * @param Pointer $to The target to send the money to.
+     * @param AmountObject $amount The amount.
+     * @param PointerObject $to The target to send the money to.
      * @param string $description The description.
      *
      * @return void
      */
-    public function __construct(BunqAccount $account, Pointer $to, Amount $amount, string $description) {
+    public function __construct(BunqAccount $account, PointerObject $to, AmountObject $amount, string $description) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
@@ -91,7 +91,7 @@ class SendBunqPayment implements ShouldQueue {
         $account->loadBunqContext();
 
         // Send the payment
-        Payment::create(
+        PaymentApiObject::create(
             $this->amount,
             $this->to,
             $this->description,

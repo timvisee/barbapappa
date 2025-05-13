@@ -6,7 +6,7 @@ use App\Jobs\ProcessBunqAccountEvents;
 use App\Models\BunqAccount;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use bunq\Model\Generated\Object\NotificationUrl;
+use bunq\Model\Generated\Object\NotificationUrlObject;
 
 class BunqController extends Controller {
 
@@ -21,11 +21,11 @@ class BunqController extends Controller {
         if(empty(trim($json)))
             return 'OK';
 
-        // Get the NotificationUrl section to parse
-        $json = json_encode(json_decode($json, true)['NotificationUrl']);
+        // Get the NotificationUrlObject section to parse
+        $json = json_encode(json_decode($json, true)['NotificationUrlObject']);
 
         // Create the NotificationUrl object
-        $notification = NotificationUrl::createFromJsonString($json);
+        $notification = NotificationUrlObject::createFromJsonString($json);
         $category = $notification->getCategory();
         $object = $notification->getObject();
 

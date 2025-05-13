@@ -12,8 +12,8 @@ use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
 use bunq\Exception\BadRequestException;
 use bunq\Http\Pagination;
-use bunq\Model\Generated\Endpoint\Event;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
+use bunq\Model\Generated\Endpoint\EventApiObject;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
 use bunq\Util\BunqEnumApiEnvironmentType;
 
 class BunqAccountController extends Controller {
@@ -125,7 +125,7 @@ class BunqAccountController extends Controller {
         }
 
         // List the last account event, obtain its ID
-        $events = Event::listing([
+        $events = EventApiObject::listing([
                 'monetary_account_id' => $monetaryAccount->getId(),
                 'status' => 'FINALIZED',
                 'count' => 1,
@@ -207,7 +207,7 @@ class BunqAccountController extends Controller {
         // Get first monetary account
         $pagination = new Pagination();
         $pagination->setCount(1);
-        $monetaryAccounts = MonetaryAccountBank::listing(
+        $monetaryAccounts = MonetaryAccountBankApiObject::listing(
             [],
             $pagination->getUrlParamsCountOnly()
         )->getValue();
@@ -237,7 +237,7 @@ class BunqAccountController extends Controller {
         }
 
         // List the last account event, obtain its ID
-        $events = Event::listing([
+        $events = EventApiObject::listing([
                 'monetary_account_id' => $monetaryAccount->getId(),
                 'status' => 'FINALIZED',
                 'count' => 1,
@@ -284,7 +284,7 @@ class BunqAccountController extends Controller {
      * If none was found, `null` is returned.
      *
      * @param string $iban IBAN to look for, must be normalized.
-     * @return MonetaryAccountBank|null The monetary bank account, or null.
+     * @return MonetaryAccountBankApiObject|null The monetary bank account, or null.
      */
     private static function findBunqAccountWithIban(string $iban) {
         // Configure pagination
@@ -292,7 +292,7 @@ class BunqAccountController extends Controller {
         $pagination->setCount(200);
 
         // List all monetary accounts, filter to active accounts
-        $monetaryAccounts = MonetaryAccountBank::listing(
+        $monetaryAccounts = MonetaryAccountBankApiObject::listing(
             [],
             $pagination->getUrlParamsCountOnly()
         )->getValue();
@@ -315,10 +315,10 @@ class BunqAccountController extends Controller {
      * Get the IBAN for a given monetary bank account.
      * If the account does not have an IBAN configured, null is returned.
      *
-     * @param MonetaryAccountBank $monetaryAccount The monetary account.
+     * @param MonetaryAccountBankApiObject $monetaryAccount The monetary account.
      * @return string|null The IBAN for this account, or null.
      */
-    private static function getBunqMonetaryAccountIban(MonetaryAccountBank $monetaryAccount) {
+    private static function getBunqMonetaryAccountIban(MonetaryAccountBankApiObject $monetaryAccount) {
         return collect($monetaryAccount->getAlias())
             ->filter(function($alias) {
                 return $alias->getType() === 'IBAN';

@@ -7,7 +7,7 @@ use App\Jobs\CreateBunqMeTabPayment;
 use BarPay\Controllers\PaymentBunqMeTabController;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use bunq\Model\Generated\Object\Amount;
+use bunq\Model\Generated\Object\AmountObject;
 
 /**
  * BunqMe Tab payment data class.
@@ -189,7 +189,7 @@ class PaymentBunqMeTab extends Model {
         $account = $serviceable->bunqAccount;
 
         // Define the amount to pay
-        $amount = new Amount(
+        $amount = new AmountObject(
             number_format($payment->money, 2, '.', ''),
             'EUR'
         );

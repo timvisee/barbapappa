@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Crypt;
 use bunq\Context\ApiContext;
 use bunq\Context\BunqContext;
 use bunq\Model\Core\NotificationFilterUrlMonetaryAccountInternal;
-use bunq\Model\Generated\Endpoint\MonetaryAccountBank;
-use bunq\Model\Generated\Object\NotificationFilterUrl;
+use bunq\Model\Generated\Endpoint\MonetaryAccountBankApiObject;
+use bunq\Model\Generated\Object\NotificationFilterUrlObject;
 
 /**
  * bunq account model.
@@ -191,10 +191,10 @@ class BunqAccount extends Model {
      * TODO: automatically call `loadBunqContext` if currently in a different
      * context.
      *
-     * @return MonetaryAccountBank The monetary bank account, or an error.
+     * @return MonetaryAccountBankApiObject The monetary bank account, or an error.
      */
     public function fetchMonetaryAccount() {
-        return MonetaryAccountBank::get($this->monetary_account_id)->getValue();
+        return MonetaryAccountBankApiObject::get($this->monetary_account_id)->getValue();
     }
 
     /**
@@ -211,11 +211,11 @@ class BunqAccount extends Model {
         // Build a list of filters to use if we have HTTPS, error otherwise
         $filters = [];
         if(is_url_secure()) {
-            $filters[] = new NotificationFilterUrl(
+            $filters[] = new NotificationFilterUrlObject(
                 'PAYMENT',
                 route('callback.bunq')
             );
-            $filters[] = new NotificationFilterUrl(
+            $filters[] = new NotificationFilterUrlObject(
                 'BUNQME_TAB',
                 route('callback.bunq')
             );
