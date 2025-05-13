@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.4 (2025-05-13)
+
+- Update bunq SDK
+- Don't send multiple magic links if user is already authenticated
+
 ## 0.2.3 (2025-02-14)
 
 - Link tally members to their product summary, instead of their member page
