@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.5 (2025-05-13)
+
+- Update bunq SDK
+- On manual IBAN payment, refresh bunq events when payment is confirmed
+
 ## 0.2.4 (2025-05-13)
 
 - Update bunq SDK
