@@ -14,8 +14,8 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use bunq\Model\Generated\Endpoint\Payment as ApiPayment;
-use bunq\Model\Generated\Object\Pointer;
+use bunq\Model\Generated\Endpoint\PaymentApiObject as ApiPayment;
+use bunq\Model\Generated\Object\PointerObject;
 
 class ProcessBunqPaymentEvent implements ShouldQueue {
 
@@ -185,7 +185,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
 
         // Build a pointer to send the money back to
         $counterparty = $apiPayment->getCounterpartyAlias();
-        $to = new Pointer(
+        $to = new PointerObject(
             'IBAN',
             $counterparty->getIban(),
             $counterparty->getDisplayName(),
@@ -206,7 +206,7 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      */
     private static function forwardPayment(BunqAccount $account, ApiPayment $apiPayment, Payment $barPayment, ServiceBunqIban $serviceable) {
         // Build a pointer to send the money to
-        $to = new Pointer(
+        $to = new PointerObject(
             'IBAN',
             $serviceable->iban,
             $serviceable->account_holder
@@ -230,10 +230,10 @@ class ProcessBunqPaymentEvent implements ShouldQueue {
      *
      * @param BunqAccount $account The bunq account that is used.
      * @param ApiPayment $apiPayment The payment to send.
-     * @param Pointer $pointer The target to send the payment to.
+     * @param PointerObject $pointer The target to send the payment to.
      * @param string $description The payment description.
      */
-    private static function sendPayment(BunqAccount $account, ApiPayment $apiPayment, Pointer $to, string $description) {
+    private static function sendPayment(BunqAccount $account, ApiPayment $apiPayment, PointerObject $to, string $description) {
         // Queue the payment sending action
         SendBunqPayment::dispatch(
             $account,

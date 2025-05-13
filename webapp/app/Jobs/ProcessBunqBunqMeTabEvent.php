@@ -14,9 +14,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
-use bunq\Model\Generated\Endpoint\BunqMeTab;
-use bunq\Model\Generated\Object\Amount;
-use bunq\Model\Generated\Object\Pointer;
+use bunq\Model\Generated\Endpoint\BunqMeTabApiObject;
+use bunq\Model\Generated\Object\AmountObject;
+use bunq\Model\Generated\Object\PointerObject;
 
 class ProcessBunqBunqMeTabEvent implements ShouldQueue {
 
@@ -50,7 +50,7 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct(BunqAccount $account, BunqMeTab $tabResult) {
+    public function __construct(BunqAccount $account, BunqMeTabApiObject $tabResult) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
@@ -78,7 +78,7 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
         $account->loadBunqContext();
 
         // Fetch the bunqme tab payment, and gather some facts
-        $bunqMeTab = BunqMeTab::get($this->tabId, $account->monetary_account_id)
+        $bunqMeTab = BunqMeTabApiObject::get($this->tabId, $account->monetary_account_id)
             ->getValue();
 
         // Attempt to handle this as bunq IBAN transaction
@@ -99,7 +99,7 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
      * @param BunqMeTabResultResponse $tabResponse The received bunq API payment model.
      * @return bool True if handled, false if not.
      */
-    private static function handleBunqMeTabEvent(BunqAccount $account, BunqMeTab $bunqMeTab) {
+    private static function handleBunqMeTabEvent(BunqAccount $account, BunqMeTabApiObject $bunqMeTab) {
         // Find the bar payment related to this request
         $barPaymentable = PaymentBunqMeTab::where('bunq_tab_id', $bunqMeTab->getId())
             ->first();
@@ -142,14 +142,14 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
      * Forward the payment to the configured community IBAN.
      *
      * @param BunqAccount $account The bunq account.
-     * @param Amount $amount The amount to send.
+     * @param AmountObject $amount The amount to send.
      * @param Payment $barPayment The bar payment model we're forwarding for.
      * @param ServiceBunqMeTab $serviceable The bunqme tab serviceable, holding
      *      the account to forward to.
      */
-    private static function forwardPayment(BunqAccount $account, Amount $amount, Payment $barPayment, ServiceBunqMeTab $serviceable) {
+    private static function forwardPayment(BunqAccount $account, AmountObject $amount, Payment $barPayment, ServiceBunqMeTab $serviceable) {
         // Build a pointer to send the money to
-        $to = new Pointer(
+        $to = new PointerObject(
             'IBAN',
             $serviceable->iban,
             $serviceable->account_holder,

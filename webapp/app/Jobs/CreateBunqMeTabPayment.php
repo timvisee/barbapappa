@@ -10,9 +10,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\SerializesModels;
-use bunq\Model\Generated\Endpoint\BunqMeTab;
-use bunq\Model\Generated\Endpoint\BunqMeTabEntry;
-use bunq\Model\Generated\Object\Amount;
+use bunq\Model\Generated\Endpoint\BunqMeTabApiObject;
+use bunq\Model\Generated\Endpoint\BunqMeTabEntryApiObject;
+use bunq\Model\Generated\Object\AmountObject;
 
 class CreateBunqMeTabPayment implements ShouldQueue {
 
@@ -57,11 +57,11 @@ class CreateBunqMeTabPayment implements ShouldQueue {
      *
      * @param BunqAccount $account The bunq account to send the money from.
      * @param Payment $payment The payment model to create this payment for.
-     * @param Amount $amount The amount.
+     * @param AmountObject $amount The amount.
      *
      * @return void
      */
-    public function __construct(BunqAccount $account, Payment $payment, Amount $amount) {
+    public function __construct(BunqAccount $account, Payment $payment, AmountObject $amount) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
@@ -95,20 +95,20 @@ class CreateBunqMeTabPayment implements ShouldQueue {
         $account->loadBunqContext();
 
         // Build the BunqMe Tab entry
-        $bunqMeTabEntry = new BunqMeTabEntry(
+        $bunqMeTabEntry = new BunqMeTabEntryApiObject(
             $this->amount,
             $payment->getReference() . "\n" . config('app.name') . ': ' . __('barpay::payment.bunqmetab.paymentForWalletTopUp'),
             route('payment.pay', ['paymentId' => $this->payment_id, 'returned' => true])
         );
 
         // Create the BunqMe Tab entry
-        $bunqMeTabId = BunqMeTab::create(
+        $bunqMeTabId = BunqMeTabApiObject::create(
             $bunqMeTabEntry,
             $account->monetary_account_id,
         )->getValue();
 
         // Fetch details for created BunqMe Tab
-        $bunqMeTab = BunqMeTab::get(
+        $bunqMeTab = BunqMeTabApiObject::get(
             $bunqMeTabId,
             $account->monetary_account_id,
             []
