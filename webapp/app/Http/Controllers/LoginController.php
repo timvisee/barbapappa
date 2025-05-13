@@ -79,6 +79,13 @@ class LoginController extends Controller {
             $rules['g-recaptcha-response'] = 'required|recaptchav3:login,0.15';
         $this->validate($request, $rules);
 
+        // If already authenticated, don't send an email
+        if(barauth()->isAuth()) {
+            return redirect()
+                ->intended(route('dashboard'))
+                ->with('success', __('auth.loggedIn'));
+        }
+
         // Find a user with this email address, register if not existant
         $email = Email::where('email', $request->input('email'))->first();
         if(empty($email)) {
