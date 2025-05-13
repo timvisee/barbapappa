@@ -2,12 +2,20 @@
 
 namespace BarPay\Controllers;
 
+use App\Jobs\ProcessBunqAccountEvents;
 use BarPay\Models\Payment;
 use BarPay\Models\PaymentBunqIban;
 use Illuminate\Http\Request;
 
 // TODO: extend something else, possibly a trait
 class PaymentBunqIbanController {
+
+    /**
+     * The number of seconds to wait for handling bunq account updates.
+     *
+     * @var int
+     */
+    const REFRESH_BUNQ_AFTER = 10;
 
     public static function stepTransfer(Payment $payment, PaymentBunqIban $paymentable, $response) {
         // Get some parameters
@@ -49,6 +57,13 @@ class PaymentBunqIbanController {
 
         // Update the payment state and step
         $payment->setState(Payment::STATE_PENDING_AUTO);
+
+        // Handle new bunq account events now
+        $bunqAccount = $paymentable->getBunqAccount();
+        if($bunqAccount != null) {
+            ProcessBunqAccountEvents::dispatch($bunqAccount)
+                ->delay(now()->addSeconds(Self::REFRESH_BUNQ_AFTER));
+        }
 
         return $response;
     }
