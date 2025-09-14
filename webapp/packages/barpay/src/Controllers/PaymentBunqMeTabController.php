@@ -25,7 +25,6 @@ class PaymentBunqMeTabController {
     }
 
     public static function stepReceipt(Payment $payment, PaymentBunqMeTab $paymentable, $response) {
-        return $response
-            ->with('bunq_tab_url', $paymentable->bunq_tab_url);
+        return $response;
     }
 }
