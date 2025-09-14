@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.7 (2025-09-14)
+
+- Automatically redirect to payment processor page once payment is started
+- Proxy payment processor page through route to prevent opening the payment page a second time after payment
+- Show different payment spinner texts if starting payment takes longer than expected
+- On bunq account settings page, always show no callback warning if not using HTTPS
+
 ## 0.2.6 (2025-05-13)
 
 - Fix configuration of bunq notification URLs since API update
