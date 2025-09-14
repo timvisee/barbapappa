@@ -277,4 +277,26 @@ class PaymentBunqMeTab extends Model {
             break;
         }
     }
+
+    /**
+     * Get the URL for an external page on which a payment must be completed. If
+     * there currently is no such page, or the payment has already been
+     * completed, this returns null.
+     *
+     * We redirect to this through the payment.payRedirect route, so that the
+     * user is not routed to the payment page directly.
+     *
+     * @returns string|null The payment page URL or null.
+     */
+    public function getPaymentPageUrl() {
+        // Must have bunq payment ID
+        if($this->bunq_tab_id == null)
+            return null;
+
+        // If settled, don't need to pay anymore
+        if($this->settled_at != null)
+            return null;
+
+        return $this->bunq_tab_url;
+    }
 }

@@ -129,6 +129,32 @@ class PaymentController extends Controller {
     }
 
     /**
+     * Redirect to the (external) payment page.
+     *
+     * @return Response
+     */
+    public function payRedirect(Request $request, $paymentId) {
+        // Get the user, find the payment and paymentable
+        $user = barauth()->getUser();
+        $payment = $user->payments()->findOrFail($paymentId);
+        $paymentable = $payment->paymentable;
+
+        // Force update the payment state
+        $payment->updateState();
+
+        // If payment is in progress and ready to be paid, open page
+        if($payment->isInProgress()) {
+            if(($paymentUrl = $paymentable->getPaymentPageUrl()) != null) {
+                return \Redirect::to($paymentUrl);
+            }
+        }
+
+        // Redirect to regular payment page
+        return redirect()
+            ->route('payment.pay', ['paymentId' => $payment->id]);
+    }
+
+    /**
      * Show the payment cancellation page.
      *
      * @return Response

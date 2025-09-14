@@ -762,6 +762,7 @@ Route::prefix('/payments')->middleware(['throttle:60,1', 'auth'])->group(functio
         // Pay
         Route::get('/pay', 'PaymentController@pay')->name('payment.pay');
         Route::post('/pay', 'PaymentController@doPay')->name('payment.doPay');
+        Route::get('/pay/go', 'PaymentController@payRedirect')->name('payment.payRedirect');
 
         // Cancel
         Route::get('/cancel', 'PaymentController@cancel')->name('payment.cancel');
