@@ -1,6 +1,6 @@
 <div class="ui divider hidden"></div>
 
-<a href="{{ url()->current() }}" class="ui loading button primary big">...</a>
+<a href="{{ \Request::getRequestUri() }}" class="ui loading button primary big">...</a>
 
 <div class="ui left pointing blue label">
     @lang('barpay::misc.justASecond')
@@ -25,7 +25,7 @@
         class="ui button negative basic">
     @lang('general.cancel')
 </a>
-<a href="{{ url()->current() }}"
+<a href="{{ \Request::getRequestUri() }}"
         class="ui button basic"
         title="@lang('misc.refresh')">
     @lang('misc.refresh')

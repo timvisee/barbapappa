@@ -77,7 +77,7 @@ class PaymentController extends Controller {
      *
      * @return Response
      */
-    public function pay($paymentId) {
+    public function pay(Request $request, $paymentId) {
         // Get the user, find the payment and paymentable
         $user = barauth()->getUser();
         $payment = $user->payments()->findOrFail($paymentId);
@@ -94,7 +94,8 @@ class PaymentController extends Controller {
         $response = view('payment.pay')
             ->with('payment', $payment)
             ->with('steps', $payment->getStepsData())
-            ->with('stepView', $paymentable->getStepPayView());
+            ->with('stepView', $paymentable->getStepPayView())
+            ->with('open', is_checked($request->query('open') ?? false));
 
         // Run through paymentable controller action as well, return
         return ($paymentable::CONTROLLER)::{$paymentable->getStepAction()}($payment, $paymentable, $response);

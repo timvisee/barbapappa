@@ -786,6 +786,8 @@ class WalletController extends Controller {
         // Redirect to the payment page
         return redirect()->route('payment.pay', [
             'paymentId' => $payment->id,
+            // Automatically redirect and open to payment page (if any)
+            'open' => true,
         ]);
     }
 
