@@ -15,6 +15,7 @@ class PaymentBunqMeTabController {
 
     public static function stepPay(Payment $payment, PaymentBunqMeTab $paymentable, $response) {
         return $response
+            // Now unused because we redirect through payment.payRedirect route
             ->with('bunq_tab_url', $paymentable->bunq_tab_url);
     }
 

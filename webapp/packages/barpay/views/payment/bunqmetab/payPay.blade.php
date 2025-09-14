@@ -2,7 +2,7 @@
 
 <div class="ui divider hidden"></div>
 
-<a href="{{ $bunq_tab_url }}" class="ui button primary big">
+<a href="{{ route('payment.payRedirect', ['paymentId' => $payment->id]) }}" class="ui button primary big">
     @lang('barpay::misc.pay')
 </a>
 
@@ -30,5 +30,5 @@
 
 {{-- If open parameter is set, automatically redirect and open to payment page --}}
 @if($open)
-    <script>setTimeout(() => { window.location = '{{ $bunq_tab_url }}'; }, 1);</script>
+    <script>setTimeout(() => { window.location = '{{ route('payment.payRedirect', ['paymentId' => $payment->id]) }}'; }, 1);</script>
 @endif
