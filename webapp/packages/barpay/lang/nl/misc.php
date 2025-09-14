@@ -22,6 +22,8 @@ return [
     'receivingOnAccount' => 'Ontvangen op rekening',
     'cannotCancelPaymentCurrently' => 'Deze betaling kan op dit moment niet geannulleerd worden.',
     'justASecond' => 'Even geduld...',
+    'takingSomeTime' => 'Iets langer wachten...',
+    'tryAgainLater' => 'Probeer later opnieuw...',
     'pay' => 'Betaal',
     'iHaveNotPaid' => 'Ik heb nog niet betaald',
 

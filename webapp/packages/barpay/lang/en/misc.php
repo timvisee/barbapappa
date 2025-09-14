@@ -22,6 +22,8 @@ return [
     'receivingOnAccount' => 'Receiving on account',
     'cannotCancelPaymentCurrently' => 'This payment cannot be cancelled at this time.',
     'justASecond' => 'Just a second...',
+    'takingSomeTime' => 'Taking some time...',
+    'tryAgainLater' => 'Try again later...',
     'pay' => 'Pay',
     'iHaveNotPaid' => 'I have not paid',
 

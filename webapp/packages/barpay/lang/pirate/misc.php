@@ -23,6 +23,8 @@ return [
     'visit' => 'Visit',
     'cannotCancelPaymentCurrently' => 'Dis payment nay be aboart at dis time.',
     'justASecond' => 'Just a second...',
+    'takingSomeTime' => 'Taking some time...',
+    'tryAgainLater' => 'Try again later...',
     'pay' => 'Pay',
     'iHaveNotPaid' => 'I have not paid',
 
