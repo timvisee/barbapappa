@@ -152,7 +152,7 @@ if(!function_exists('is_checked')) {
      * @return boolean True if checked, false if not.
      */
     function is_checked($value) {
-        return $value == 'true' || $value == 'on' || $value == '1';
+        return $value === true || $value == 'true' || $value == 'on' || $value == '1';
     }
 }
 
