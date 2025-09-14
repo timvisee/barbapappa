@@ -27,3 +27,8 @@
         class="ui button negative basic">
     @lang('general.cancel')
 </a>
+
+{{-- If open parameter is set, automatically redirect and open to payment page --}}
+@if($open)
+    <script>setTimeout(() => { window.location = '{{ $bunq_tab_url }}'; }, 1);</script>
+@endif
