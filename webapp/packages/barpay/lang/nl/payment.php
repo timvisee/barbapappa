@@ -55,7 +55,7 @@ return [
 
     'bunqmetab' => [
         'waitOnReceipt' => 'Aan het wachten tot de betaling ontvangen is. Dit kan tot een aantal dagen duren.',
-        'waitOnCreate' => 'De betaling wordt aangemaakt in de achtergrond. Even geduld alsjeblieft.',
+        'waitOnCreate' => 'De betaling wordt gestart in de achtergrond. Even geduld alsjeblieft.',
         'pleasePay' => 'Klik op de \'Betaal\' knop en voltooi de betaling via bunq.',
         'handledByBunq' => 'Je betaling zal behandeld worden door bunq, een bank die hiervoor een service verleent. Je kunt met iDeal betalen op de bunq-betaalpagina.',
         'paymentForWalletTopUp' => 'Betaling voor portemonnee storting',
