@@ -9,6 +9,13 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
+    @if(!is_url_secure())
+        <div class="ui warning message">
+            <span class="halflings halflings-warning-sign icon"></span>
+            @lang('pages.bunqAccounts.noHttpsNoCallbacks')
+        </div>
+    @endif
+
     <table class="ui compact celled definition table">
         <tbody>
             <tr>

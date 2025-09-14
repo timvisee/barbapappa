@@ -219,8 +219,7 @@ class BunqAccount extends Model {
                 'BUNQME_TAB',
                 route('callback.bunq')
             );
-        } else
-            $message = __('pages.bunqAccounts.noHttpsNoCallbacks');
+        }
 
         // Set the filters
         NotificationFilterUrlMonetaryAccountInternal::createWithListResponse(
