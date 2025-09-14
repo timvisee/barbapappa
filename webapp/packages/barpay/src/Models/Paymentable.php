@@ -111,6 +111,20 @@ trait Paymentable {
     }
 
     /**
+     * Get the URL for an external page on which a payment must be completed. If
+     * there currently is no such page, or the payment has already been
+     * completed, this returns null.
+     *
+     * We redirect to this through the payment.payRedirect route, so that the
+     * user is not routed to the payment page directly.
+     *
+     * @returns string|null The payment page URL or null.
+     */
+    public function getPaymentPageUrl() {
+        return null;
+    }
+
+    /**
      * Get a translation for this payment.
      *
      * @return string|null The translation or null if non existent.
