@@ -217,7 +217,7 @@
             <p>
                 <p>
                     <button class="fluid ui huge button positive"
-                        type="submit">@lang('pages.wallets.continueToPayment')</button>
+                        type="submit">@lang('misc.pay')</button>
                 </p>
                 <a href="{{ route('community.wallet.topUp', [
                             'communityId' => $community->human_id,

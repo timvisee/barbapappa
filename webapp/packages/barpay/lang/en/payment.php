@@ -71,5 +71,6 @@ return [
             'pay' => 'Pay via bunq',
             'receipt' => 'Wait on receipt',
         ],
+        'continueToPayment' => 'Continue to payment',
     ],
 ];
