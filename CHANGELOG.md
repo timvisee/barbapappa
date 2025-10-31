@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.8 (2025-11-01)
+
+- Simplify wallet op up page, show amount and payment method in separate views
+- On wallet top up page, round suggested amounts up to next multiple
+- Revamp payment creation page a bit
+
 ## 0.2.7 (2025-09-14)
 
 - Automatically redirect to payment processor page once payment is started
