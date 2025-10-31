@@ -39,7 +39,7 @@
         <div class="field {{ ErrorRenderer::hasError('slug') ? 'error' : '' }}">
             {{ Form::label('slug', __('misc.slug') . ':') }}
             <div class="ui labeled input">
-                {{ Form::label('slug', '/c/', ['class' => 'ui label']) }}
+                {{ Form::label('slug', '/c/', ['class' => 'ui label basic']) }}
                 {{ Form::text('slug', $community->slug, ['placeholder' => __('pages.community.slugPlaceholder')]) }}
             </div>
             {{ ErrorRenderer::inline('slug') }}
