@@ -37,8 +37,11 @@
         class="ui button negative basic">
     @lang('general.cancel')
 </a>
-<a href="{{ \Request::getRequestUri() }}"
-        class="ui button basic"
-        title="@lang('misc.refresh')">
-    @lang('misc.refresh')
-</a>
+
+@if($secondsPassed >= 60)
+    <a href="{{ \Request::getRequestUri() }}"
+            class="ui button basic"
+            title="@lang('misc.refresh')">
+        @lang('misc.refresh')
+    </a>
+@endif
