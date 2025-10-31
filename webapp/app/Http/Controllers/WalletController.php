@@ -641,6 +641,17 @@ class WalletController extends Controller {
             ->supportsDeposit()
             ->get();
 
+        // Redirect old redemption page URL to payment method selection
+        if($is_redemption && $wallet->isNegative()) {
+            return redirect()
+                ->route('community.wallet.topUp', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                    'amount' => -$wallet->balance,
+                ]);
+        }
+
         if(!$is_redemption) {
             // Predict monthly costs, build set of top-up amounts
             $monthly_costs = $wallet->predictMonthlyCosts();
