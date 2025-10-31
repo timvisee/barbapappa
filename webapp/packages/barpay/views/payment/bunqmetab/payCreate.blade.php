@@ -1,8 +1,12 @@
 <div class="ui divider hidden"></div>
+<div class="ui hidden divider"></div>
+<div class="ui hidden divider"></div>
 
-<a href="{{ \Request::getRequestUri() }}" class="ui loading button primary big">...</a>
+<div class="ui active centered large inline loader"></div>
 
-<div class="ui left pointing label">
+<div class="ui hidden divider"></div>
+
+<p class="align-center">
     @if(($secondsPassed = $payment->created_at?->diffInSeconds()) < 6)
         @lang('barpay::misc.justASecond')
     @elseif($secondsPassed < 60)
@@ -10,8 +14,10 @@
     @else
         @lang('barpay::misc.tryAgainLater')
     @endif
-</div>
+</p>
 
+<div class="ui hidden divider"></div>
+<div class="ui hidden divider"></div>
 <div class="ui divider hidden"></div>
 
 <div class="ui info message">
