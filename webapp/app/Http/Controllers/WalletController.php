@@ -573,19 +573,23 @@ class WalletController extends Controller {
 
         // Add advance amounts based on monthly estimate
         if(!$monthly_costs->isZero()) {
-            if($wallet->balance < $monthly_costs->amount)
+            if($wallet->balance < $monthly_costs->amount * 3) {
+                $amount = next_multiple_of($monthly_costs->amount * 3 - $wallet->balance, 5);
                 $amounts->push([
-                        'amount' => $monthly_costs->amount - $wallet->balance,
-                        'sum' => $monthly_costs->amount,
+                        'amount' => $amount,
+                        'sum' => $amount + $wallet->balance,
+                        'note' => __('pages.paymentService.noteTimeAdvance', ['time' => '3m']),
+                    ]);
+            }
+            if($wallet->balance < $monthly_costs->amount) {
+                $amount = next_multiple_of($monthly_costs->amount - $wallet->balance, 5);
+                $amounts->push([
+                        'amount' => $amount,
+                        'sum' => $amount + $wallet->balance,
                         'note' => __('pages.paymentService.noteTimeAdvance', ['time' => '1m']),
                         'selected' => true,
                     ]);
-            if($wallet->balance < $monthly_costs->amount * 3)
-                $amounts->push([
-                        'amount' => $monthly_costs->amount * 3 - $wallet->balance,
-                        'sum' => $monthly_costs->amount * 3,
-                        'note' => __('pages.paymentService.noteTimeAdvance', ['time' => '3m']),
-                    ]);
+            }
         }
 
         // Add default amounts (sum >= 0), limit to 6 amounts max

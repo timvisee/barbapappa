@@ -439,3 +439,14 @@ if(!function_exists('is_recaptcha_enabled')) {
         return !empty(trim(config('recaptchav3.sitekey')));
     }
 }
+
+if(!function_exists('next_multiple_of')) {
+    /**
+     * Round up to the next multiple of '$x', including itself.
+     *
+     * @return number
+     */
+    function next_multiple_of($n,$x=5) {
+        return (ceil($n)%$x === 0) ? round($n) : round(($n+$x/2)/$x)*$x;
+    }
+}
