@@ -493,7 +493,7 @@ return [
         'startedWillUseOldDetails' => 'Payments that have already been initiated might still use the old details, even after changing them here.',
         'startedWillComplete' => 'No new payments will be accepted using this service. However, payments that have already been initiated will still be completed.',
         'amountInCurrency' => 'Amount in :currency',
-        'amountToTopUpInCurrency' => 'Amount to top up with in :currency',
+        'amountToTopUp' => 'Amount to top up',
         'youSpendAboutEachMonth' => 'You spend :amount each month.',
         'noteTimeAdvance' => '+:time advance',
         'redemption' => 'Redemption',
@@ -779,6 +779,7 @@ return [
         'walletTransactions' => 'Wallet transactions',
         'noServiceConfiguredCannotTopUp' => 'You cannot top-up your wallet through :app. The bar or community administrator has not configured any payment method. Please ask at the bar for further information.',
         'walletBalanceSettled' => 'Your wallet balance is settled',
+        'payCustomAmount' => 'Pay custom amount',
     ],
 
     /**

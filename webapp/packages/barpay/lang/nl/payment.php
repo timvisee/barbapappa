@@ -71,5 +71,6 @@ return [
             'pay' => 'Betalen via bunq',
             'receipt' => 'Wacht op bevestiging',
         ],
+        'continueToPayment' => 'Door naar betaling',
     ],
 ];

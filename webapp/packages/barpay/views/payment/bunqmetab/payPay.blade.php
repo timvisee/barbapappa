@@ -2,8 +2,8 @@
 
 <div class="ui divider hidden"></div>
 
-<a href="{{ route('payment.payRedirect', ['paymentId' => $payment->id]) }}" class="ui button primary big">
-    @lang('barpay::misc.pay')
+<a href="{{ route('payment.payRedirect', ['paymentId' => $payment->id]) }}" class="fluid ui huge button positive">
+    @lang('barpay::payment.bunqmetab.continueToPayment')
 </a>
 
 <div class="ui divider hidden"></div>

@@ -57,7 +57,7 @@
     <div class="required field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
         {{ Form::label('amount', __('pages.paymentService.amountInCurrency', ['currency' => $currency->name]) . ':') }}
         <div class="ui labeled input">
-            {{ Form::label('amount', $currency->symbol, ['class' => 'ui label']) }}
+            {{ Form::label('amount', $currency->symbol, ['class' => 'ui label basic']) }}
             {{ Form::text('amount', '', ['id' => 'amount', 'inputmode' => 'decimal', 'placeholder' => '1.23']) }}
         </div>
         {{ ErrorRenderer::inline('amount') }}

@@ -189,6 +189,15 @@ class Wallet extends Model {
     }
 
     /**
+     * If the wallet balance is negative.
+     *
+     * @return boolean True if the balance is negative, false if not.
+     */
+    public function isNegative() {
+        return $this->balance < 0;
+    }
+
+    /**
      * Get the wallet balance as money amount.
      *
      * @return MoneyAmount The balance as money amount.

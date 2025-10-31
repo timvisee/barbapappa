@@ -84,7 +84,7 @@
                     <div class="field {{ ErrorRenderer::hasError($field) ? 'error' : '' }}">
                         {{ Form::label($field, $currency->name . ':') }}
                         <div class="ui labeled input">
-                            {{ Form::label($field, $currency->symbol, ['class' => 'ui label']) }}
+                            {{ Form::label($field, $currency->symbol, ['class' => 'ui label basic']) }}
                             {{ Form::text($field, $value, ['id' => $field, 'placeholder' => '1.23']) }}
                         </div>
                         {{ ErrorRenderer::inline($field) }}

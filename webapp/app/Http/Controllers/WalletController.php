@@ -562,6 +562,15 @@ class WalletController extends Controller {
      */
     private function walletTopUpAmounts(Wallet $wallet, MoneyAmount $monthly_costs) {
         $default_amounts = collect([5, 10, 20, 50, 100]);
+        $next_multiple_steps = [
+            0 => 1,
+            2 => 2,
+            5 => 5,
+            20 => 10,
+            50 => 25,
+            100 => 50,
+            200 => 100,
+        ];
         $amounts = collect();
 
         // Amount to zero balance
@@ -573,19 +582,23 @@ class WalletController extends Controller {
 
         // Add advance amounts based on monthly estimate
         if(!$monthly_costs->isZero()) {
-            if($wallet->balance < $monthly_costs->amount)
+            if($wallet->balance < $monthly_costs->amount * 3) {
+                $amount = next_multiple_of_stepped($monthly_costs->amount * 3 - $wallet->balance, $next_multiple_steps);
                 $amounts->push([
-                        'amount' => $monthly_costs->amount - $wallet->balance,
-                        'sum' => $monthly_costs->amount,
+                        'amount' => $amount,
+                        'sum' => $amount + $wallet->balance,
+                        'note' => __('pages.paymentService.noteTimeAdvance', ['time' => '3m']),
+                    ]);
+            }
+            if($wallet->balance < $monthly_costs->amount) {
+                $amount = next_multiple_of_stepped($monthly_costs->amount - $wallet->balance, $next_multiple_steps);
+                $amounts->push([
+                        'amount' => $amount,
+                        'sum' => $amount + $wallet->balance,
                         'note' => __('pages.paymentService.noteTimeAdvance', ['time' => '1m']),
                         'selected' => true,
                     ]);
-            if($wallet->balance < $monthly_costs->amount * 3)
-                $amounts->push([
-                        'amount' => $monthly_costs->amount * 3 - $wallet->balance,
-                        'sum' => $monthly_costs->amount * 3,
-                        'note' => __('pages.paymentService.noteTimeAdvance', ['time' => '3m']),
-                    ]);
+            }
         }
 
         // Add default amounts (sum >= 0), limit to 6 amounts max
@@ -641,6 +654,17 @@ class WalletController extends Controller {
             ->supportsDeposit()
             ->get();
 
+        // Redirect old redemption page URL to payment method selection
+        if($is_redemption && $wallet->isNegative()) {
+            return redirect()
+                ->route('community.wallet.topUp', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                    'amount' => -$wallet->balance,
+                ]);
+        }
+
         if(!$is_redemption) {
             // Predict monthly costs, build set of top-up amounts
             $monthly_costs = $wallet->predictMonthlyCosts();
@@ -683,6 +707,18 @@ class WalletController extends Controller {
             ->whereNotIn('id', $requireUserAction->pluck('id'))
             ->get();
 
+        // Validate user input
+        $request->validate([
+            'amount' => ['nullable', ValidationDefaults::PRICE_POSITIVE],
+            'payment_service' => [
+                'nullable',
+                Rule::in($services->pluck('id')),
+            ],
+        ]);
+        $amount = normalize_price($request->query('amount'));
+        $service = $request->query('method');
+        $service = isset($service) ? $services->firstWhere('id', $service) : null;
+
         return view('community.wallet.topUp')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
@@ -692,7 +728,9 @@ class WalletController extends Controller {
             ->with('montly_costs', $monthly_costs)
             ->with('redemption', $is_redemption)
             ->with('requireUserAction', $requireUserAction)
-            ->with('inProgress', $inProgress);
+            ->with('inProgress', $inProgress)
+            ->with('amount', $amount)
+            ->with('service', $service);
     }
 
     /**

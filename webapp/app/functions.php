@@ -439,3 +439,34 @@ if(!function_exists('is_recaptcha_enabled')) {
         return !empty(trim(config('recaptchav3.sitekey')));
     }
 }
+
+if(!function_exists('next_multiple_of')) {
+    /**
+     * Round up to the next multiple of '$x', including itself.
+     *
+     * @return number
+     */
+    function next_multiple_of($n, $x = 5) {
+        return (ceil($n)%$x === 0) ? ceil($n) : ceil(($n+$x/2)/$x)*$x;
+    }
+}
+
+if(!function_exists('next_multiple_of_stepped')) {
+    /**
+     * Round up to the next multiple of '$x', including itself.
+     *
+     * '$x' is stepped. The highest key below '$n' is used as multiple.
+     *
+     * @return number
+     */
+    function next_multiple_of_stepped($n, $x = [0 => 5]) {
+        $multiplier = collect($x)
+            ->reverse()
+            ->firstWhere(function($value, $key) use ($n) {
+                return $n >= $key;
+            });
+        return $multiplier != null
+            ? next_multiple_of($n, $multiplier)
+            : $n;
+    }
+}

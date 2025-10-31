@@ -494,7 +494,7 @@ return [
         'startedWillUseOldDetails' => 'Betalingen die al geïnitieerd zijn gebruiken mogelijk nog oude gegevens, ook nadat je ze hier aanpast.',
         'startedWillComplete' => 'Er zullen geen nieuwe betalingen geaccepteerd worden met deze service. Betaling die al geïnitieerd zijn zullen echter wel nog worden afgemaakt.',
         'amountInCurrency' => 'Bedrag in :currency',
-        'amountToTopUpInCurrency' => 'Bedrag om mee op te waarderen in :currency',
+        'amountToTopUp' => 'Bedrag om mee op te waarderen',
         'youSpendAboutEachMonth' => 'Je besteedt :amount per maand.',
         'noteTimeAdvance' => '+:time voorschot',
         'redemption' => 'Aflossing',
@@ -780,6 +780,7 @@ return [
         'walletTransactions' => 'Portemonnee transacties',
         'noServiceConfiguredCannotTopUp' => 'Je kunt je portemonnee niet via :app opwaarderen. De bar of groepsadministrator heeft geen betaalmethode geconfigureerd. Vraag er naar bij de bar voor meer informatie.',
         'walletBalanceSettled' => 'Je portemonneesaldo is verrekend',
+        'payCustomAmount' => 'Betaal specifiek bedrag',
     ],
 
     /**

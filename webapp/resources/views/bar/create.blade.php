@@ -50,7 +50,7 @@
         <div class="field {{ ErrorRenderer::hasError('slug') ? 'error' : '' }}">
             {{ Form::label('slug', __('misc.slug') . ':') }}
             <div class="ui labeled input">
-                {{ Form::label('slug', '/b/', ['class' => 'ui label']) }}
+                {{ Form::label('slug', '/b/', ['class' => 'ui label basic']) }}
                 {{ Form::text('slug', '', ['placeholder' => __('pages.bar.slugPlaceholder')]) }}
             </div>
             {{ ErrorRenderer::inline('slug') }}

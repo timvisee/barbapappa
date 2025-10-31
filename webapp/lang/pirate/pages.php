@@ -493,7 +493,7 @@ return [
         'startedWillUseOldDetails' => 'Payments that already be initiated might still use old details, even after changing them here.',
         'startedWillComplete' => 'Nay fresh payments be accepted using dis service. However, payments that have already been initiated still be completed.',
         'amountInCurrency' => 'Amount in :currency',
-        'amountToTopUpInCurrency' => 'Amount to top up wit\' in :currency',
+        'amountToTopUp' => 'Amount to top up',
         'youSpendAboutEachMonth' => 'Ye spend :amount each month.',
         'noteTimeAdvance' => '+:time advance',
         'redemption' => 'Fine',
@@ -779,6 +779,7 @@ return [
         'walletTransactions' => 'Wallet transactions',
         'noServiceConfiguredCannotTopUp' => 'Ye nay top-up yer wallet through :app. Th\' bar \'o crew administrator nay configured any payment method. Please ask at yer bar for further info.',
         'walletBalanceSettled' => 'Yer wallet balance be settled',
+        'payCustomAmount' => 'Pay custom amount',
     ],
 
     /**
