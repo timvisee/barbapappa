@@ -9,58 +9,53 @@
 @section('content')
     <h2 class="ui header">@yield('title')</h2>
 
-    @if(!$redemption)
-        <div class="ui two item menu">
-            <a href="{{ route('community.wallet.topUp', [
-                'communityId' => $community->human_id,
-                'economyId' => $economy->id,
-                'walletId' => $wallet->id
-            ]) }}"
-                class="item active">@lang('misc.deposit')</a>
-            <a href="#" class="item disabled">@lang('misc.withdraw')</a>
-        </div>
-    @endif
+    @if(!isset($amount) || $amount == 0)
 
-    {{-- Payment list --}}
-    @php
-        $groups = [];
-        if($requireUserAction->isNotEmpty())
-            $groups[] = [
-                'header' => trans_choice('pages.payments.requiringAction#', count($requireUserAction)),
-                'payments' => $requireUserAction,
-            ];
-        if($inProgress->isNotEmpty())
-            $groups[] = [
-                'header' => trans_choice('pages.payments.inProgress#', count($inProgress)),
-                'payments' => $inProgress,
-            ];
-    @endphp
-    @if(!empty($groups))
-        @include('payment.include.list', [
-            'groups' => $groups,
-        ])
-        <div class="ui hidden divider"></div>
-    @endif
-
-    {!! Form::open(['action' => [
-        'WalletController@doTopUp',
-        $community->human_id,
-        $economy->id,
-        $wallet->id,
-    ], 'method' => 'POST', 'class' => 'ui form']) !!}
-
-        <div class="ui hidden divider"></div>
-
-        <div class="ui hidden divider"></div>
-
-        <div class="ui one small statistics">
-            <div class="statistic">
-                <div class="value">
-                    {!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}
-                </div>
-                <div class="label">@lang('misc.balance')</div>
+        @if(!$redemption)
+            <div class="ui two item menu">
+                <a href="{{ route('community.wallet.topUp', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id
+                ]) }}"
+                    class="item active">@lang('misc.deposit')</a>
+                <a href="#" class="item disabled">@lang('misc.withdraw')</a>
             </div>
-        </div>
+        @endif
+
+        {{-- Pending payment list --}}
+        @php
+            $groups = [];
+            if($requireUserAction->isNotEmpty())
+                $groups[] = [
+                    'header' => trans_choice('pages.payments.requiringAction#', count($requireUserAction)),
+                    'payments' => $requireUserAction,
+                ];
+            if($inProgress->isNotEmpty())
+                $groups[] = [
+                    'header' => trans_choice('pages.payments.inProgress#', count($inProgress)),
+                    'payments' => $inProgress,
+                ];
+        @endphp
+        @if(!empty($groups))
+            @include('payment.include.list', [
+                'groups' => $groups,
+            ])
+            <div class="ui hidden divider"></div>
+        @endif
+
+        <div class="ui hidden divider"></div>
+
+        <p>
+            <div class="ui one small statistics">
+                <div class="statistic">
+                    <div class="value">
+                        {!! $wallet->formatBalance(BALANCE_FORMAT_COLOR) !!}
+                    </div>
+                    <div class="label">@lang('misc.balance')</div>
+                </div>
+            </div>
+        </p>
 
         {{-- Show spending estimate --}}
         @if($montly_costs != null && !$montly_costs->isZero())
@@ -71,24 +66,24 @@
             <div class="ui hidden divider"></div>
         @endif
 
+        {{-- Amount selection --}}
         @if(!empty($amounts))
-
-            {{-- Amount selection --}}
             <div class="ui vertical menu fluid field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
                 <h5 class="ui item header">
-                    @lang('pages.paymentService.amountToTopUpInCurrency', ['currency' => $currency->name]):
+                    @lang('pages.paymentService.amountToTopUp'):
                 </h5>
 
                 @foreach($amounts as $amount)
-                    <div class="item inline {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
-                        <div class="ui radio checkbox">
-                            {{ Form::radio('amount', $amount['amount'], $amount['selected'] ?? false, ['class' => 'hidden', 'tabindex' => 0]) }}
-                            <label for="amount">
-                                @lang('pages.paymentService.pay')
-                                {!! $currency->format($amount['amount'], BALANCE_FORMAT_COLOR) !!}
-                            </label>
+                    <a href="{{ route('community.wallet.topUp', [
+                        'communityId' => $community->human_id,
+                        'economyId' => $economy->id,
+                        'walletId' => $wallet->id,
+                        'amount' => $amount['amount'],
+                    ]) }}" class="item inline {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
+                        @lang('pages.paymentService.pay')
+                        <i class="chevron right icon"></i>
 
-                        </div>
+                        {!! $currency->format($amount['amount'], BALANCE_FORMAT_COLOR) !!}
 
                         @if(isset($amount['sum']))
                             <span class="ui label">
@@ -102,83 +97,144 @@
                                 {{ $amount['note'] }}
                             </span>
                         @endif
-                    </div>
+                    </a>
                 @endforeach
 
-                {{-- Custom top-up amount if not top-upping for redemption --}}
-                @if(!$redemption)
-                    <div class="item inline {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
-                        <div class="ui radio checkbox">
-                            {{ Form::radio('amount', '', false, ['class' => 'hidden', 'tabindex' => 0]) }}
-                            <label for="amount">@lang('pages.paymentService.pay')</label>
-                        </div>
+                <div class="item inline">
 
-                        <div class="field checkbox-list-inline-field {{ ErrorRenderer::hasError('amount_custom') ? 'error' : '' }}">
-                            <div class="ui inline labeled input">
-                                {{ Form::label('amount_custom', $currency->symbol, ['class' => 'ui label']) }}
-                                {{ Form::text('amount_custom', '', ['id' => 'amount_custom', 'inputmode' => 'decimal', 'placeholder' => '1.23']) }}
-                            </div>
+                    {!! Form::open(['action' => [
+                        'WalletController@doTopUp',
+                        $community->human_id,
+                        $economy->id,
+                        $wallet->id,
+                    ], 'method' => 'GET', 'class' => 'ui form']) !!}
+                        <span>@lang('pages.wallets.payCustomAmount')</span><br><br>
+                        <div class="ui form inline">
+                                <div class="field {{ ErrorRenderer::hasError('amount') ? 'error' : '' }}">
+                                    <div class="ui labeled action input">
+                                        {{ Form::label('amount', $currency->symbol, ['class' => 'ui basic label']) }}
+                                        {{ Form::text('amount', '', ['id' => 'amount', 'inputmode' => 'decimal', 'placeholder' => '1.23']) }}
+                                        <button class="ui icon button basic"
+                                            type="submit"><i class="chevron right icon"></i></button> 
+                                    </div>
+                                </div>
                         </div>
-                    </div>
-                @endif
+                        {{ ErrorRenderer::alert('amount') }}
+                    {!! Form::close() !!}
 
-                @if($redemption)
-                    <div class="item">
-                        @lang('general.or') <a href="{{ route('community.wallet.topUp', [
-                            'communityId' => $economy->community_id,
-                            'economyId' => $economy->id,
-                            'walletId' => $wallet->id,
-                        ]) }}">{{ strtolower(__('pages.paymentService.topUpWithLargerAmount')) }}</a>
-                    </div>
-                @endif
+                </div>
             </div>
-            {{ ErrorRenderer::alert('amount') }}
-            {{ ErrorRenderer::alert('amount_custom') }}
-
-            {{-- Payment service selection --}}
-            <div class="ui vertical menu fluid field {{ ErrorRenderer::hasError('payment_service') ? 'error' : '' }}">
-                <h5 class="ui item header">
-                    @lang('pages.paymentService.selectPaymentServiceToUse'):
-                </h5>
-
-                @foreach($services as $service)
-                    <div class="item inline {{ ErrorRenderer::hasError('payment_service') ? 'error' : '' }}">
-                        <div class="ui radio checkbox">
-                            {{ Form::radio('payment_service', $service->id, false, ['class' => 'hidden', 'tabindex' => 0]) }}
-                            {{ Form::label('payment_service', $service->displayName()) }}
-                        </div>
-
-                        <span class="ui orange label">
-                            {{ $service->serviceable->__('duration') }}
-                        </span>
-                    </div>
-                @endforeach
-            </div>
-            {{ ErrorRenderer::alert('payment_service') }}
-
         @else
             <p class="align-center">
                 @lang('pages.wallets.walletBalanceSettled')!
             </p>
+            <div class="ui hidden divider"></div>
         @endif
 
+        <a href="{{ route('community.wallet.show', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                ]) }}"
+                class="fluid ui button basic">
+            @lang('general.cancel')
+        </a>
+
+    @elseif(!isset($service))
+
+        <div class="ui hidden divider"></div>
+        <p>
+            <div class="ui one small statistics">
+                <div class="statistic">
+                    <div class="label">@lang('misc.pay')</div>
+                    <div class="value">
+                        {!! $wallet->currency->format($amount, BALANCE_FORMAT_COLOR) !!}
+                    </div>
+                </div>
+            </div>
+        </p>
         <div class="ui hidden divider"></div>
 
-        <p>
-            @if(!empty($amounts) || !$redemption)
-                <button class="fluid ui huge button positive"
-                    type="submit">@lang('pages.wallets.topUp')</button>
-                <br>
-            @endif
-            <a href="{{ route('community.wallet.show', [
-                        'communityId' => $community->human_id,
-                        'economyId' => $economy->id,
-                        'walletId' => $wallet->id,
-                    ]) }}"
-                    class="fluid ui button basic">
-                @lang('general.cancel')
-            </a>
-        </p>
+        {{-- Payment service selection --}}
+        <div class="ui vertical menu fluid field {{ ErrorRenderer::hasError('payment_service') ? 'error' : '' }}">
+            <h5 class="ui item header">
+                @lang('pages.paymentService.selectPaymentServiceToUse'):
+            </h5>
 
-    {!! Form::close() !!}
+            @foreach($services as $service)
+                <a href="{{ route('community.wallet.topUp', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                    'amount' => $amount,
+                    'method' => $service->id,
+                ]) }}" class="item inline {{ ErrorRenderer::hasError('payment_service') ? 'error' : '' }}">
+                    {{ $service->displayName() }}
+
+                    <i class="chevron right icon"></i>
+
+                    <span class="ui orange label">
+                        {{ $service->serviceable->__('duration') }}
+                    </span>
+                </a>
+            @endforeach
+        </div>
+
+        <a href="{{ route('community.wallet.topUp', [
+                    'communityId' => $community->human_id,
+                    'economyId' => $economy->id,
+                    'walletId' => $wallet->id,
+                ]) }}"
+                class="fluid ui button basic">
+            @lang('general.goBack')
+        </a>
+
+    @else
+
+        <div class="ui hidden divider"></div>
+        <p>
+            <div class="ui one small statistics">
+                <div class="statistic">
+                    <div class="label">@lang('misc.pay')</div>
+                    <div class="value">
+                        {!! $wallet->currency->format($amount, BALANCE_FORMAT_COLOR) !!}
+                    </div>
+                    <div class="label">
+                        @lang('misc.via') {!! $service->displayName() !!}
+                    </div>
+                </div>
+            </div>
+        </p>
+        <div class="ui hidden divider"></div>
+
+        {!! Form::open(['action' => [
+            'WalletController@doTopUp',
+            $community->human_id,
+            $economy->id,
+            $wallet->id,
+        ], 'method' => 'POST', 'class' => 'ui form']) !!}
+
+            <p>
+                <p>
+                    <button class="fluid ui huge button positive"
+                        type="submit">@lang('pages.wallets.continueToPayment')</button>
+                </p>
+                <a href="{{ route('community.wallet.topUp', [
+                            'communityId' => $community->human_id,
+                            'economyId' => $economy->id,
+                            'walletId' => $wallet->id,
+                            'amount' => $amount,
+                        ]) }}"
+                        class="fluid ui button basic">
+                    @lang('general.goBack')
+                </a>
+            </p>
+
+            {{ Form::hidden('amount', $amount) }}
+            {{ Form::hidden('payment_service', $service->id) }}
+
+        {!! Form::close() !!}
+
+    @endif
+
 @endsection

@@ -683,6 +683,18 @@ class WalletController extends Controller {
             ->whereNotIn('id', $requireUserAction->pluck('id'))
             ->get();
 
+        // Validate user input
+        $request->validate([
+            'amount' => ['nullable', ValidationDefaults::PRICE_POSITIVE],
+            'payment_service' => [
+                'nullable',
+                Rule::in($services->pluck('id')),
+            ],
+        ]);
+        $amount = normalize_price($request->query('amount'));
+        $service = $request->query('method');
+        $service = isset($service) ? $services->firstWhere('id', $service) : null;
+
         return view('community.wallet.topUp')
             ->with('economy', $economy)
             ->with('wallet', $wallet)
@@ -692,7 +704,9 @@ class WalletController extends Controller {
             ->with('montly_costs', $monthly_costs)
             ->with('redemption', $is_redemption)
             ->with('requireUserAction', $requireUserAction)
-            ->with('inProgress', $inProgress);
+            ->with('inProgress', $inProgress)
+            ->with('amount', $amount)
+            ->with('service', $service);
     }
 
     /**
