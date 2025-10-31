@@ -562,6 +562,15 @@ class WalletController extends Controller {
      */
     private function walletTopUpAmounts(Wallet $wallet, MoneyAmount $monthly_costs) {
         $default_amounts = collect([5, 10, 20, 50, 100]);
+        $next_multiple_steps = [
+            0 => 1,
+            2 => 2,
+            5 => 5,
+            20 => 10,
+            50 => 25,
+            100 => 50,
+            200 => 100,
+        ];
         $amounts = collect();
 
         // Amount to zero balance
@@ -574,7 +583,7 @@ class WalletController extends Controller {
         // Add advance amounts based on monthly estimate
         if(!$monthly_costs->isZero()) {
             if($wallet->balance < $monthly_costs->amount * 3) {
-                $amount = next_multiple_of($monthly_costs->amount * 3 - $wallet->balance, 5);
+                $amount = next_multiple_of_stepped($monthly_costs->amount * 3 - $wallet->balance, $next_multiple_steps);
                 $amounts->push([
                         'amount' => $amount,
                         'sum' => $amount + $wallet->balance,
@@ -582,7 +591,7 @@ class WalletController extends Controller {
                     ]);
             }
             if($wallet->balance < $monthly_costs->amount) {
-                $amount = next_multiple_of($monthly_costs->amount - $wallet->balance, 5);
+                $amount = next_multiple_of_stepped($monthly_costs->amount - $wallet->balance, $next_multiple_steps);
                 $amounts->push([
                         'amount' => $amount,
                         'sum' => $amount + $wallet->balance,
