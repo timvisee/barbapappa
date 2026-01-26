@@ -42,8 +42,8 @@ return [
      * Transfer through a bunqme tab payment request.
      */
     'bunqmetab' => [
-        'name' => 'iDeal payment',
-        'nameAdmin' => 'iDeal payment (through bunq)',
+        'name' => 'iDeal/Wero payment',
+        'nameAdmin' => 'iDeal/Wero payment (through bunq)',
         'duration' => 'instant',
     ],
 ];
