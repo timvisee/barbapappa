@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.9 (2026-01-28)
+
+- Rename iDeal payments to iDeal/Wero
+- Fix crash in background worker when linked bunq account uses sorted payments
+
 ## 0.2.8 (2025-11-01)
 
 - Simplify wallet op up page, show amount and payment method in separate views
