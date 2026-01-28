@@ -42,6 +42,8 @@ class BunqController extends Controller {
             if(($payment = $bunqMeTab->getPayment()) != null)
                 if(($id = $payment->getMonetaryAccountId()) != null)
                     Self::processEventsForAccount($id, 1);
+        else if(($payment_batch = $object->getPaymentBatch()) != null) {
+            // ignore payment batch
         } else
             throw new \Exception('Unhandled notification type');
 
