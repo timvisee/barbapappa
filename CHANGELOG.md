@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.10 (2026-01-30)
+
+- Fix syntax error in bunq payment handler
+
 ## 0.2.9 (2026-01-28)
 
 - Rename iDeal payments to iDeal/Wero
