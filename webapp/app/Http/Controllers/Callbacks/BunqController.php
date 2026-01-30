@@ -34,18 +34,19 @@ class BunqController extends Controller {
             return 'OK';
 
         // Handle the notification, update bunq events for its monetary account
-        if(($payment = $object->getPayment()) != null)
+        if(($payment = $object->getPayment()) != null) {
             Self::processEventsForAccount($payment->getMonetaryAccountId(), 0);
-        else if(($bunqMeTab = $object->getBunqMeTab()) != null)
+        } else if(($bunqMeTab = $object->getBunqMeTab()) != null) {
             Self::processEventsForAccount($bunqMeTab->getMonetaryAccountId(), 1);
-        else if (($bunqMeTab = $object->getBunqMeTabResultInquiry()) != null || ($bunqMeTab = $object->getBunqMeTabResultResponse()) != null) {
+        } else if (($bunqMeTab = $object->getBunqMeTabResultInquiry()) != null || ($bunqMeTab = $object->getBunqMeTabResultResponse()) != null) {
             if(($payment = $bunqMeTab->getPayment()) != null)
                 if(($id = $payment->getMonetaryAccountId()) != null)
                     Self::processEventsForAccount($id, 1);
-        else if(($payment_batch = $object->getPaymentBatch()) != null) {
+        } else if($object->getPaymentBatch() != null) {
             // ignore payment batch
-        } else
+        } else {
             throw new \Exception('Unhandled notification type');
+        }
 
         return 'OK';
     }
