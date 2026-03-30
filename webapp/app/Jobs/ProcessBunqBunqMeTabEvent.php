@@ -86,7 +86,7 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
             return;
 
         // TODO: send a message to admin instead, should not reach this
-        \Log::error(new \Exception('Unhandled BunqMe Tab payment, should refund?'));
+        throw new \Exception('Unhandled BunqMe Tab payment, should refund?');
     }
 
     /**
@@ -103,11 +103,15 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
         // Find the bar payment related to this request
         $barPaymentable = PaymentBunqMeTab::where('bunq_tab_id', $bunqMeTab->getId())
             ->first();
-        if($barPaymentable == null)
-            return;
+        if($barPaymentable == null) {
+            \Log::error('Unhandled BunqMe Tab payment: barPaymentable is null (id: ' . $bunqMeTab->getId() . ')');
+            return false;
+        }
         $barPayment = $barPaymentable->payment;
-        if(!$barPayment->isInProgress())
-            return;
+        if(!$barPayment->isInProgress()) {
+            \Log::error('Unhandled BunqMe Tab payment: barPayment is not in progress');
+            return false;
+        }
 
         // Gather facts
         $amount = $bunqMeTab->getBunqmeTabEntry()->getAmountInquired();
