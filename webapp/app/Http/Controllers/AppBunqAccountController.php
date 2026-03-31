@@ -6,6 +6,8 @@ use App\Helpers\ValidationDefaults;
 use App\Jobs\ProcessBunqAccountEvents;
 use App\Jobs\ProcessBunqBunqMeTabEvent;
 use BarPay\Models\PaymentBunqMeTab;
+use BarPay\Models\ServiceBunqIban;
+use BarPay\Models\ServiceBunqMeTab;
 use App\Models\BunqAccount;
 use App\Scopes\EnabledScope;
 use Illuminate\Http\Request;
@@ -365,8 +367,10 @@ class AppBunqAccountController extends Controller {
             ->whereHas('payment', function($query) {
                 $query->inProgress();
             })
-            ->whereHas('payment.service.serviceable', function($query) use($account) {
-                $query->where('bunq_account_id', $account->id);
+            ->whereHas('payment.service', function($query) use($account) {
+                $query->whereHasMorph('serviceable', [ServiceBunqMeTab::class, ServiceBunqIban::class], function($query) use($account) {
+                    $query->where('bunq_account_id', $account->id);
+                });
             })
             ->get()
             ->each(function($paymentable, $i) use($account) {
