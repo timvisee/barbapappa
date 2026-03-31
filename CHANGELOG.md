@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.12 (2026-03-31)
+
+- Fix bunq payment handling, rework payment processing to correctly recognize payments with recent API changes
+- When running bunq account housekeeping, also check all bunq me tabs that are in progress for payment
+- Fix crashes in various views with deleted payment services or products
+- Rename iDeal/Wero payments to iDEAL | Wero
+
 ## 0.2.11 (2026-03-31)
 
 - Improve error reporting in bunq me tab handling
