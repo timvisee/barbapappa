@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.13 (2026-03-31)
+
+- Fix error when running housekeeping on bunq account
+
 ## 0.2.12 (2026-03-31)
 
 - Fix bunq payment handling, rework payment processing to correctly recognize payments with recent API changes
