@@ -53,8 +53,8 @@ class PaymentBunqMeTab extends Model {
      * The number of seconds the transaction will expire after, if the user
      * didn't transfer any money.
      */
-    // TODO: require at least 12 hours left when users open the external payment page
-    public const EXPIRE_UNTRANSFERRED = 1.5 * 24 * 60 * 60;
+    // TODO: require at least 12 more hours when users open the external payment page
+    public const EXPIRE_UNTRANSFERRED = 3.0 * 24 * 60 * 60;
 
     /**
      * The number of seconds the transaction will expire after, if the user did
