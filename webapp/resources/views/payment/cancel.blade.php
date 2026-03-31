@@ -24,7 +24,7 @@
             </tr>
             <tr>
                 <td>@lang('pages.paymentService.serviceType')</td>
-                <td>{{ $payment->service->displayName() }}</td>
+                <td>{{ $payment->service?->displayName() ?? __lang('pages.paymentService.unknownService') }}</td>
             </tr>
         </tbody>
     </table>

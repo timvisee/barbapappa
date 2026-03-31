@@ -27,6 +27,7 @@ return [
     'tryAgainLater' => 'Try again later...',
     'pay' => 'Pay',
     'iHaveNotPaid' => 'I have not paid',
+    'unknownService' => 'Unknown payment service',
 
     'mustBeCorrect' => 'Please double-check th\' correctness of credentials below. Mateies transfering money to \'n incorrect account may cause inreversable damage.',
     'mayClosePageWillNotify' => 'Ye may close dis page now. Ye be notified by e-bottle message when th\' status of dis payment changes.',

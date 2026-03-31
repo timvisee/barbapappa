@@ -26,6 +26,7 @@ return [
     'tryAgainLater' => 'Probeer later opnieuw...',
     'pay' => 'Betaal',
     'iHaveNotPaid' => 'Ik heb nog niet betaald',
+    'unknownService' => 'Onbekende betaalservice',
 
     'mustBeCorrect' => 'Dubbel-check alsjeblieft de gegevens hieronder. Gebruikers die geld naar het verkeerde account overmaken kan voor onherstelbare schade zorgen.',
     'mayClosePageWillNotify' => 'Je kunt deze pagina nu sluiten. Je wordt op de hoogste gesteld via e-mail wanneer de status van deze betaling veranderd.',

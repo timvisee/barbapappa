@@ -165,6 +165,9 @@ class Service extends Model {
      * @return string Display name.
      */
     public function displayName($admin = false) {
+        if($this->serviceable == null)
+            return __('barpay::misc.unknownService');
+
         return $this->serviceable::name($admin);
     }
 
