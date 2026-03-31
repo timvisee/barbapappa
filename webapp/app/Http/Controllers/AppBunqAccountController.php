@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\ValidationDefaults;
 use App\Jobs\ProcessBunqAccountEvents;
+use App\Jobs\ProcessBunqBunqMeTabEvent;
+use BarPay\Models\PaymentBunqMeTab;
 use App\Models\BunqAccount;
 use App\Scopes\EnabledScope;
 use Illuminate\Http\Request;
@@ -354,9 +356,23 @@ class AppBunqAccountController extends Controller {
         // Load the bunq API context
         $account->loadBunqContext();
 
-        // Update bunq account settings, dispatch job to process pending events
+        // Update bunq account settings, dispatch jobs to process pending events
         $message = $account->updateBunqAccountSettings();
         ProcessBunqAccountEvents::dispatch($account);
+
+        // Process in-progress bunq me tab payments for this account
+        PaymentBunqMeTab::whereNotNull('bunq_tab_id')
+            ->whereHas('payment', function($query) {
+                $query->inProgress();
+            })
+            ->whereHas('payment.service.serviceable', function($query) use($account) {
+                $query->where('bunq_account_id', $account->id);
+            })
+            ->get()
+            ->each(function($paymentable, $i) use($account) {
+                ProcessBunqBunqMeTabEvent::dispatch($account, $paymentable->bunq_tab_id)
+                    ->delay(now()->addMinutes($i));
+            });
 
         // Redirect back to the show page
         $response = redirect()
