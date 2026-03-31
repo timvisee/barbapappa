@@ -129,6 +129,7 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 [
                     'monetary_account_id' => $account->monetary_account_id,
                     'status' => 'FINALIZED',
+                    'display_user_event' => 'false',
                 ],
                 $pagination->getUrlParamsNextPage()
             ), [])->getValue();
@@ -140,10 +141,11 @@ class ProcessBunqAccountEvents implements ShouldQueue {
             return;
         }
 
-        // Update last event ID we've processed, check whether we're done
-        $account->last_event_id = $events->last()->getId();
-        $account->save();
+        // Store last event ID and check whether we're done
+        $last_event_id = $events->last()->getId();
         $completed = $events->count() < $pagination->getCount();
+
+        \Log::info('bunq events: processing ' . $events->count() . ' events');
 
         // Handle each not-yet-handled event
         $events = $events
@@ -179,14 +181,29 @@ class ProcessBunqAccountEvents implements ShouldQueue {
 
             // Spawn a job corresponding to the event type
             if(!is_null($payment = $o->getPayment()))
-                $job = ProcessBunqPaymentEvent::dispatch($account, $payment)
+                ProcessBunqPaymentEvent::dispatch($account, $payment)
                     ->delay($delay);
-            else if(!is_null($tab = $o->getBunqMeTab()))
-                $job = ProcessBunqBunqMeTabEvent::dispatch($account, $tab)
+            else if(!is_null($tab = $o->getBunqMeTab())) {
+                // Note: these events don't seem to fire anymore, keeping it here just in case
+                ProcessBunqBunqMeTabEvent::dispatch($account, $tab)
                     ->delay($delay);
+            }
             else
                 throw new \Exception('Attempting to handle bunq event with unhandled type');
+
+            // Assert event ID is always newer
+            if ($account->last_event_id != null && $account->last_event_id > $event->getId())
+                throw new \Exception('Last bunq event ID must be monotonically increasing, but got ' . $account->last_event_id . ' followed by ' . $event->getId());
+
+            // Bump last checked event ID so we don't handle it a second time
+            $account->last_event_id = $event->getId();
+            $account->save();
         });
+
+        // If last event ID is higher than what we stored, bump it again
+        // We use this to still mark events as handled even if they were filtered out above
+        if($account->last_event_id == null || $account->last_event_id < $last_event_id)
+            $account->last_event_id = $last_event_id;
 
         // Update last checked time, since we've now covered all events
         $account->checked_at = now();

@@ -50,12 +50,14 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct(BunqAccount $account, BunqMeTabApiObject $tabResult) {
+    public function __construct(BunqAccount $account, $tabResult) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
         $this->accountId = $account->id;
-        $this->tabId = $tabResult->getId();
+        $this->tabId = $tabResult instanceof BunqMeTabApiObject
+            ? $tabResult->getId()
+            : $tabResult;
     }
 
     /**
@@ -85,8 +87,7 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
         if(Self::handleBunqMeTabEvent($account, $bunqMeTab))
             return;
 
-        // TODO: send a message to admin instead, should not reach this
-        throw new \Exception('Unhandled BunqMe Tab payment, should refund?');
+        // \Log::info('bunq me tab: not handling, may not be paid yet or may already be completed');
     }
 
     /**
@@ -104,12 +105,12 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
         $barPaymentable = PaymentBunqMeTab::where('bunq_tab_id', $bunqMeTab->getId())
             ->first();
         if($barPaymentable == null) {
-            \Log::error('Unhandled BunqMe Tab payment: barPaymentable is null (id: ' . $bunqMeTab->getId() . ')');
+            \Log::error('bunq me tab: not handling payment, cannot find paymentable (id: ' . $bunqMeTab->getId() . ')');
             return false;
         }
         $barPayment = $barPaymentable->payment;
         if(!$barPayment->isInProgress()) {
-            \Log::error('Unhandled BunqMe Tab payment: barPayment is not in progress');
+            \Log::error('bunq me tab: not handling payment, payment not in progress');
             return false;
         }
 
@@ -120,8 +121,10 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
 
         // Were done if not inquired
         $inquiries = $bunqMeTab->getResultInquiries();
-        if(count($inquiries) <= 0)
+        if(count($inquiries) <= 0) {
+            \Log::error('bunq me tab: not accepting payment, payment has no inquiries yet');
             return true;
+        }
 
         // TODO: do amount check, once payment data from bunq API isn't null anymore
 
