@@ -169,6 +169,8 @@ class ProcessBunqAccountEvents implements ShouldQueue {
             })
             ->values();
 
+        \Log::info('bunq events: processing ' . $events->count() . ' events');
+
         // Spawn a job for each event
         $events->each(function($event, $i) use($account) {
             // Obtain the object

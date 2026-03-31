@@ -16,6 +16,8 @@ class BunqController extends Controller {
      * @return Response
      */
     public function index(Request $request) {
+        \Log::debug('bunq callback: callback received');
+
         // Get the JSON body content as string, return if no data is given
         $json = $request->getContent();
         if(empty(trim($json)))
@@ -30,19 +32,25 @@ class BunqController extends Controller {
         $object = $notification->getObject();
 
         // Only handle specific types
-        if($category != 'PAYMENT' && $category != 'BUNQME_TAB')
+        if($category != 'PAYMENT' && $category != 'BUNQME_TAB') {
+            \Log::debug('bunq callback: unhandled callback type: ' . $category);
             return 'OK';
+        }
 
         // Handle the notification, update bunq events for its monetary account
         if(($payment = $object->getPayment()) != null) {
+            \Log::debug('bunq callback: processing regular payment');
             Self::processEventsForAccount($payment->getMonetaryAccountId(), 0);
         } else if(($bunqMeTab = $object->getBunqMeTab()) != null) {
+            \Log::debug('bunq callback: processing bunq me tab payment');
             Self::processEventsForAccount($bunqMeTab->getMonetaryAccountId(), 1);
         } else if (($bunqMeTab = $object->getBunqMeTabResultInquiry()) != null || ($bunqMeTab = $object->getBunqMeTabResultResponse()) != null) {
+            \Log::debug('bunq callback: processing bunq me tab payment inquiry');
             if(($payment = $bunqMeTab->getPayment()) != null)
                 if(($id = $payment->getMonetaryAccountId()) != null)
                     Self::processEventsForAccount($id, 1);
         } else if($object->getPaymentBatch() != null) {
+            \Log::debug('bunq callback: ignoring payment batch');
             // ignore payment batch
         } else {
             throw new \Exception('Unhandled notification type');
