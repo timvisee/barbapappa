@@ -129,6 +129,7 @@ class ProcessBunqAccountEvents implements ShouldQueue {
                 [
                     'monetary_account_id' => $account->monetary_account_id,
                     'status' => 'FINALIZED',
+                    'display_user_event' => 'false',
                 ],
                 $pagination->getUrlParamsNextPage()
             ), [])->getValue();

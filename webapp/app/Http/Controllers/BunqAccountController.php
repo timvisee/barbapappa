@@ -128,6 +128,7 @@ class BunqAccountController extends Controller {
         $events = EventApiObject::listing([
                 'monetary_account_id' => $monetaryAccount->getId(),
                 'status' => 'FINALIZED',
+                'display_user_event' => 'false',
                 'count' => 1,
             ], [])->getValue();
         $last_event_id = collect($events)
@@ -240,6 +241,7 @@ class BunqAccountController extends Controller {
         $events = EventApiObject::listing([
                 'monetary_account_id' => $monetaryAccount->getId(),
                 'status' => 'FINALIZED',
+                'display_user_event' => 'false',
                 'count' => 1,
             ], [])->getValue();
         $last_event_id = collect($events)
