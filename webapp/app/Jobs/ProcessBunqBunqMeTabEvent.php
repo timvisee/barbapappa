@@ -50,12 +50,14 @@ class ProcessBunqBunqMeTabEvent implements ShouldQueue {
      *
      * @return void
      */
-    public function __construct(BunqAccount $account, BunqMeTabApiObject $tabResult) {
+    public function __construct(BunqAccount $account, $tabResult) {
         // Set queue
         $this->onQueue(Self::QUEUE);
 
         $this->accountId = $account->id;
-        $this->tabId = $tabResult->getId();
+        $this->tabId = $tabResult instanceof BunqMeTabApiObject
+            ? $tabResult->getId()
+            : $tabResult;
     }
 
     /**

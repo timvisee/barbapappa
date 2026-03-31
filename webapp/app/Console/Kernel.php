@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Jobs\ExpireDaily;
 use App\Jobs\ExpireHourly;
 use App\Jobs\ProcessAllBunqAccountEvents;
+use App\Jobs\ProcessAllBunqMeTabEvents;
 use App\Jobs\SendBalanceUpdates;
 use App\Jobs\SendReceipts;
 use App\Jobs\UpdatePaymentStates;
@@ -60,6 +61,11 @@ class Kernel extends ConsoleKernel {
         // Process all pending bunq events twice a day
         // Interval also defined in: ProcessAllBunqAccountEvents::retryUntil
         $schedule->job(new ProcessAllBunqAccountEvents)
+            ->twiceDaily(0, 12);
+
+        // Process all in-progress bunq me tab payments twice a day
+        // Interval also defined in: ProcessAllBunqMeTabEvents::retryUntil
+        $schedule->job(new ProcessAllBunqMeTabEvents)
             ->twiceDaily(0, 12);
     }
 
