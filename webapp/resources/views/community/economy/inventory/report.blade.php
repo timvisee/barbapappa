@@ -187,13 +187,13 @@
 
                 @foreach($purchaseVolumes as $p)
                     <a class="item"
-                            href="{{ route('community.economy.inventory.product.show', [
+                            href="{{ $p['product'] != null ? route('community.economy.inventory.product.show', [
                                 // TODO: this is not efficient
                                 'communityId' => $p['product']->economy->community->human_id,
                                 'economyId' => $p['product']->economy_id,
                                 'inventoryId' => $inventory->id,
                                 'productId' => $p['product']->id,
-                            ]) }}">
+                            ]) : '#' }}">
                         {{ $p['product']->displayName() }}
 
                         <div class="ui blue label">
