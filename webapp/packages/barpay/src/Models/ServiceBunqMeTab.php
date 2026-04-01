@@ -54,7 +54,7 @@ class ServiceBunqMeTab extends Model {
      * @return Relation to the bunq account.
      */
     public function bunqAccount() {
-        return $this->belongsTo(BunqAccount::class);
+        return $this->belongsTo(BunqAccount::class)->withTrashed();
     }
 
     /**

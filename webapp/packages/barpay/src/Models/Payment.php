@@ -254,7 +254,7 @@ class Payment extends Model {
      * @return Relation to the used service.
      */
     public function service() {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Service::class)->withTrashed();
     }
 
     /**

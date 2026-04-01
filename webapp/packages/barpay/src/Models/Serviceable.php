@@ -11,7 +11,7 @@ trait Serviceable {
      * @return Relation to the service.
      */
     public function service() {
-        return $this->morphOne(Service::class, 'serviceable');
+        return $this->morphOne(Service::class, 'serviceable')->withTrashed();
     }
 
     /**
