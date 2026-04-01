@@ -168,7 +168,7 @@ class PaymentBunqMeTab extends Model {
      */
     // TODO: use a relation, make this more efficient
     public function getBunqAccount() {
-        return $this->payment->service->serviceable->bunqAccount;
+        return $this->payment->service->serviceable?->bunqAccount;
     }
 
     /**
@@ -261,15 +261,15 @@ class PaymentBunqMeTab extends Model {
         case Payment::STATE_REJECTED:
         case Payment::STATE_FAILED:
             // Cancel the BunqMeTab at bunq
-            if($this->bunq_tab_id != null)
-                CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id)
+            if($this->bunq_tab_id != null && !is_null($bunq_account = $this->getBunqAccount()))
+                CancelBunqMeTabPayment::dispatch($bunq_account, $this->bunq_tab_id)
                     ->delay(now()->addSeconds(Self::CANCEL_DELAY));
             break;
 
         case Payment::STATE_COMPLETED:
             // Cancel the BunqMeTab at bunq to prevent users paying a second time
-            if($this->bunq_tab_id != null)
-                CancelBunqMeTabPayment::dispatch($this->getBunqAccount(), $this->bunq_tab_id)
+            if($this->bunq_tab_id != null && !is_null($bunq_account = $this->getBunqAccount()))
+                CancelBunqMeTabPayment::dispatch($bunq_account, $this->bunq_tab_id)
                     ->delay(now()->addSeconds(Self::COMPLETE_DELAY));
             break;
 

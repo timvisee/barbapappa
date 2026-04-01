@@ -64,9 +64,10 @@ class Service extends Model {
     public static function boot() {
         parent::boot();
 
-        // Cascade delete to serviceable
+        // Cascade delete to serviceable only on force delete
         static::deleting(function($model) {
-            $model->serviceable()->delete();
+            if($model->isForceDeleting())
+                $model->serviceable()->delete();
         });
     }
 
