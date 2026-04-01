@@ -145,7 +145,7 @@ class PaymentBunqIban extends Model {
      */
     // TODO: use a relation, make this more efficient
     public function getBunqAccount() {
-        return $this->payment->service->serviceable->bunqAccount;
+        return $this->payment->service->serviceable?->bunqAccount;
     }
 
     /**
