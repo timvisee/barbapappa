@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.14 (2026-04-01)
+
+- Fix disabling a payment service accidentally deleting service details, breaking pending payments
+- Fix payment service soft deletes not being handled properly
+- Abort bunq me tab payments if bunq account got disconnected
+
 ## 0.2.13 (2026-03-31)
 
 - Fix error when running housekeeping on bunq account
