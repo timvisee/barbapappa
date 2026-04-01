@@ -11,6 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\Middleware\RateLimited;
 use Illuminate\Queue\Middleware\WithoutOverlapping;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Process all bunq me tab payments that are still in progress.
@@ -64,6 +65,20 @@ class ProcessAllBunqMeTabEvents implements ShouldQueue {
             ->get()
             ->each(function($paymentable, $i) {
                 $account = $paymentable->getBunqAccount();
+
+                // If bunq account got unlinked, abort payment on our end
+                if(is_null($account)) {
+                    \Log::error("bunq me tab: marking payment as failed because connection to bunq account is lost (paymentable id: {$paymentable->id})");
+
+                    $payment = $paymentable->payment;
+                    if($payment->isInProgress()) {
+                        DB::transaction(function() use($payment) {
+                            $payment->settle(Payment::STATE_FAILED, true);
+                        });
+                    }
+                    return;
+                }
+
                 ProcessBunqBunqMeTabEvent::dispatch($account, $paymentable->bunq_tab_id)
                     ->delay(now()->addMinutes($i));
             });
